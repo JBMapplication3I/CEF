@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-12">
+        <h1 ng-bind="categoryDetailInfoPage.category.DisplayName || categoryDetailInfoPage.category.Name"></h1>
+        <h2 ng-bind="categoryDetailInfoPage.category.Type.DisplayName || categoryDetailInfoPage.category.Type.Name"></h2>
+        <h3 ng-if="categoryDetailInfoPage.category.Parent.Name.length"
+            ><a ui-sref-plus uisrp-area="category" uisrp-path="{{categoryDetailInfoPage.category.Parent.SeoUrl}}"
+                ng-bind="categoryDetailInfoPage.category.Parent.DisplayName || categoryDetailInfoPage.category.Parent.Name"></a></h3>
+        <div ng-bind-html="categoryDetailInfoPage.category.Description"></div>
+    </div>
+</div>

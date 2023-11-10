@@ -1,0 +1,159 @@
+// Styles for the product catalog page both grid and list views
+
+//.breadcrumbs {
+//    margin: 15px 10px 30px 10px;
+//
+//    > div {
+//        a:link, a:visited {
+//            color: $gray-lighty;
+//        }
+//        a:hover {
+//            color: $primary;
+//        }
+//    }
+//}
+//
+//// Pagination
+//.cef-product-pagination {
+//    margin: 40px 15px 60px 0;
+//    ul {
+//        float: right;
+//    }
+//    li {
+//        padding: 0;
+//        list-style: none;
+//        display: block;
+//        float: left;
+//    }
+//    a {
+//        cursor: pointer;
+//        color: #58585b;
+//        display: block;
+//        padding: 1px 6px;
+//        border-radius: 4px;
+//        border: 1px solid #F6F7F8;
+//    }
+//    .prevnext a { color: #d1d1d1; }
+//    a:active { cursor: pointer; }
+//    a:hover,
+//    .prevnext a:hover,
+//    .active a {
+//        color: #fff;
+//        background: #42bfdf;
+//        text-decoration: none;
+//    }
+//}
+//
+//cef-product-paginator ul.pagination {
+//    margin: 0;
+//    vertical-align: bottom;
+//}
+//
+//#category-tree {
+//    > ul {
+//        list-style: none;
+//        margin-bottom: 0;
+//        margin-left: 0;
+//        ul {
+//            list-style: none;
+//        }
+//    }
+//}
+//
+//.compare-description {
+//    height: 250px;
+//    overflow: hidden;
+//    p {
+//        display: -webkit-box;
+//        line-height: 1.5;
+//        -webkit-line-clamp: 12;
+//        -webkit-box-orient: vertical;
+//        overflow: hidden;
+//        text-overflow: ellipsis;
+//    }
+//}
+//
+//// Product Catalog Page
+//cef-applied-filters,
+//cef-product-category-filter,
+//cef-multi-category-filter,
+//cef-product-attribute-json-filter-wrapper,
+//cef-product-attribute-json-filter,
+//cef-product-attribute-filter,
+//cef-product-compare {
+//    .panel-collapse.collapse.in {
+//        max-height: 500px;
+//        overflow-x: hidden;
+//        overflow-y: scroll;
+//        /*padding-right: 15px;*/
+//    }
+//}
+//
+//cef-multi-category-filter {
+//    li.active {
+//        > span.category {
+//            a {
+//                span {
+//                    font-weight: bold;
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//.catalog-result-card, .product-card {
+//    // Row 1: Image
+//    .product-image { height: 250px; overflow: hidden; }
+//    // Row 2: Name (Title)
+//    .product-title {
+//        > p {
+//            color: $gray-lighty;
+//            overflow: hidden;
+//            text-overflow: ellipsis;
+//            display: -webkit-box;
+//            -webkit-box-orient: vertical;
+//            font-weight: bold;
+//            font-size: $font-size-lg;
+//            line-height: $line-height-base;
+//            // Defaults are what rows-2 is
+//            height: ceil($font-size-lg * $line-height-base * 2); -webkit-line-clamp: 2;
+//        }
+//        &.rows-1 { > p { height: ceil($font-size-lg * $line-height-base * 1); -webkit-line-clamp: 1; } }
+//        &.rows-2 { > p { height: ceil($font-size-lg * $line-height-base * 2); -webkit-line-clamp: 2; } }
+//        &.rows-3 { > p { height: ceil($font-size-lg * $line-height-base * 3); -webkit-line-clamp: 3; } }
+//        &.rows-4 { > p { height: ceil($font-size-lg * $line-height-base * 4); -webkit-line-clamp: 4; } }
+//        &.rows-5 { > p { height: ceil($font-size-lg * $line-height-base * 5); -webkit-line-clamp: 5; } }
+//    }
+//    // Row 3: SKU
+//    .product-sku { color: $gray-lighty; }
+//    // Row 4: Short Description
+//    .product-short-desc {
+//        color: $gray-lighty;
+//        overflow: hidden;
+//        display: -webkit-box;
+//        -webkit-box-orient: vertical;
+//        text-overflow: ellipsis;
+//        font-size: $font-size-base;
+//        line-height: $line-height-base;
+//        // Defaults are what rows-2 is
+//        height: $font-size-base * $line-height-base * 2; -webkit-line-clamp: 2;
+//        &.rows-1 { height: ceil($font-size-base * $line-height-base * 1); -webkit-line-clamp: 1; }
+//        &.rows-2 { height: ceil($font-size-base * $line-height-base * 2); -webkit-line-clamp: 2; }
+//        &.rows-3 { height: ceil($font-size-base * $line-height-base * 3); -webkit-line-clamp: 3; }
+//        &.rows-4 { height: ceil($font-size-base * $line-height-base * 4); -webkit-line-clamp: 4; }
+//        &.rows-5 { height: ceil($font-size-base * $line-height-base * 5); -webkit-line-clamp: 5; }
+//    }
+//    // Row 5: Pricing
+//    .product-pricing { color: $gray-lighty; }
+//    // Row 6: Add to Cart or View Details buttons
+//    // Row 7: Controls (Add to Wish List, etc)
+//    .card-controls {
+//        .btn-link {
+//            color: $gray-lighty;
+//            padding: 6px;
+//        }
+//        &:empty {
+//            display: none;
+//        }
+//    }
+//}

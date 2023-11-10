@@ -1,0 +1,97 @@
+<div class="modal-header bg-dark text-light"
+     ng-show="shoppingListAddToModalCtrl.addListDisplay && shoppingListAddToModalCtrl.cartTypes.length">
+    <h3 class="modal-title"
+        sid="SelectAShoppingListModalText"
+        data-translate="ui.storefront.userDashboard2.controls.addToShoppingList.SelectAShoppingList"></h3>
+    <button type="button" class="close"
+            id="btnCloseShoppingListModal"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="shoppingListAddToModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span sid="CloseShoppingListBtn" class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body"
+     ng-show="shoppingListAddToModalCtrl.addListDisplay && shoppingListAddToModalCtrl.cartTypes.length">
+    <select class="form-control mb-3"
+            id="shoppingListSelect" name="shoppingListSelect"
+            ng-options="cart as cart.Name for cart in shoppingListAddToModalCtrl.cartTypes"
+            ng-model="shoppingListAddToModalCtrl.listItem">
+        <option value="" data-translate="ui.storefront.userDashboard2.controls.addToShoppingList.SelectAShoppingList"></option>
+    </select>
+    <p ng-show="shoppingListAddToModalCtrl.createdMessage" class="alert alert-success mb-0" role="alert"
+       ><span sid="ShoppingListModalProductText"
+         ng-bind="shoppingListAddToModalCtrl.productName"></span>&nbsp;<!--
+       --><span sid="ShoppingListModalProductAddedText"
+         data-translate="ui.storefront.userDashboard2.controls.addToShoppingList.HasBeenAddedTo"></span>&nbsp;<!--
+       --><span sid="ShoppingListAddToModalCreatedText"
+         class="bold" ng-bind="shoppingListAddToModalCtrl.createdMessage"></span></p>
+</div>
+<div class="modal-footer"
+     ng-show="shoppingListAddToModalCtrl.addListDisplay && shoppingListAddToModalCtrl.cartTypes.length">
+    <button type="button" class="btn btn-secondary"
+            id="closeSelectShoppingListModal"
+            ng-click="shoppingListAddToModalCtrl.close()"
+            data-translate="ui.storefront.userDashboard2.controls.createShoppingList.BackToExistingLists"></button>
+    <button type="button" class="btn btn-secondary"
+            id="btnModalCreateShoppingList" name="btnModalCreateShoppingList"
+            ng-click="shoppingListAddToModalCtrl.createAddViewToggle()"
+            data-translate="ui.storefront.userDashboard2.controls.addToShoppingList.CreateAndAddAnother"></button>
+    <button type="button" class="btn btn-primary"
+            id="addToShoppingListModalBtn"
+            ng-disabled="shoppingListAddToModalCtrl.isInList(shoppingListAddToModalCtrl.listItem)"
+            ng-click="shoppingListAddToModalCtrl.addToList(shoppingListAddToModalCtrl.listItem)"
+            data-translate="{{shoppingListAddToModalCtrl.isInList(shoppingListAddToModalCtrl.listItem)
+                ? 'ui.storefront.userDashboard2.controls.addToShoppingList.AlreadyInThisList'
+                : 'ui.storefront.userDashboard2.controls.addToShoppingList.AddToList' }}"></button>
+</div>
+<div class="modal-header bg-dark text-light"
+     ng-show="shoppingListAddToModalCtrl.createListDisplay || !shoppingListAddToModalCtrl.cartTypes.length">
+    <h3 class="modal-title"
+        sid="NewShoppingListModalTitleText"
+        data-translate="ui.storefront.userDashboard2.controls.createShoppingList.NewShoppingListName">
+    </h3>
+    <button type="button" class="close"
+            id="btnCloseNewShoppingListModal"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="shoppingListAddToModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span sid="CloseNewShoppingListBtn" class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body"
+     ng-form="shoppingListAddToModalCtrl.forms.ShoppingList"
+     ng-show="shoppingListAddToModalCtrl.createListDisplay || !shoppingListAddToModalCtrl.cartTypes.length">
+    <div class="form-group" ng-class="{'has-error': shoppingListAddToModalCtrl.forms.ShoppingList.txtName.$invalid}">
+        <label class="control-label" for="txtName">
+            <span sid="NewShoppingListModalFieldText"
+              data-translate="ui.storefront.userDashboard2.controls.createShoppingList.NewShoppingListName"
+              ></span>&nbsp;<!--
+            --><span class="text-danger">*</span>
+        </label>
+        <input type="text" class="form-control"
+               id="txtName" name="txtName"
+               ng-required="true"
+               ng-keypress="shoppingListAddToModalCtrl.inputKeyPress($event)"
+               ng-model="shoppingListAddToModalCtrl.shoppingList" />
+    </div>
+    <div ng-show="shoppingListAddToModalCtrl.createdMessage" class="alert alert-success"
+        sid="ShoppingListModalNameText">
+        <span ng-bind="shoppingListAddToModalCtrl.createdMessage"></span>&nbsp;<!--
+        --><span sid="ShoppingListCreatedText" data-translate="ui.storefront.userDashboard2.controls.createShoppingList.HasBeenCreated"></span>
+    </div>
+</div>
+<div class="modal-footer text-right"
+     ng-show="shoppingListAddToModalCtrl.createListDisplay || !shoppingListAddToModalCtrl.cartTypes.length">
+    <button type="button" class="btn btn-secondary"
+            id="btnModalCreateListBackToExisting" name="btnModalCreateListBackToExisting"
+            data-translate="ui.storefront.userDashboard2.controls.createShoppingList.BackToExistingLists"
+            ng-click="shoppingListAddToModalCtrl.close()"></button>
+    <button type="button" class="btn btn-success"
+            id="btnModalCreateListSubmit" name="btnModalCreateListSubmit"
+            data-translate="ui.storefront.userDashboard2.controls.createShoppingList.CreateList"
+            ng-disabled="shoppingListAddToModalCtrl.forms.ShoppingList.$invalid || shoppingListAddToModalCtrl.viewState.running"
+            ng-click="shoppingListAddToModalCtrl.createShoppingList(shoppingListAddToModalCtrl.shoppingList, false)"></button>
+</div>

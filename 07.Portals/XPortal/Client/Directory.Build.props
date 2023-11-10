@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- Shared Titles/Metadata -->
+  <PropertyGroup>
+    <Description>Part of the CEF system.</Description>
+    <Product>Clarity eCommerce Framework</Product>
+    <Company>Clarity Ventures, Inc.</Company>
+    <Authors>Clarity Ventures, Inc.</Authors>
+    <Copyright>Copyright © 2011-2023</Copyright>
+  </PropertyGroup>
+
+  <!-- Output -->
+  <PropertyGroup>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <!-- Client Versioning -->
+  <PropertyGroup>
+    <Deterministic>false</Deterministic>
+    <AssemblyVersion>2021.4.2.*</AssemblyVersion>
+    <FileVersion>2021.4</FileVersion>
+    <Version>2021.4.2</Version>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+
+  <!-- C# Lang features -->
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <LangVersion>latestmajor</LangVersion>
+    <!-- Treat null reference warnings as errors -->
+    <WarningsAsErrors Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+      CS8597,CS8600,CS8601,CS8602,CS8603,CS8604,CS8609,CS8613,CS8614,CS8618,CS8619,CS8620,CS8621,CS8625,CS8629,CS8631,CS8632,CS8634,CS8714,CS8764,CS8765,CS8766,CS8767,CS8768,CS8769
+    </WarningsAsErrors>
+    <TreatWarningsAsErrors Condition="'$(BuildingInsideVisualStudio)' != 'true'">true</TreatWarningsAsErrors>
+    <!--
+      Make sure any documentation comments which are included in code get checked for syntax during the build, but do
+      not report warnings for missing comments.
+      CS1573: Parameter 'parameter' has no matching param tag in the XML comment for 'parameter' (but other parameters do)
+      CS1591: Missing XML comment for publicly visible type or member 'Type_or_Member'
+      CS1712: Type parameter 'type_parameter' has no matching typeparam tag in the XML comment on 'type_or_member' (but other type parameters do)
+    -->
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+  </PropertyGroup>
+
+  <!-- Configuration Specific Settings -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;JETBRAINS_ANNOTATIONS;CLIENT</DefineConstants>
+    <WarningLevel>5</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>JETBRAINS_ANNOTATIONS;CLIENT</DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DebugType Condition="'$(Configuration)' == 'Debug'">full</DebugType>
+    <DebugType Condition="'$(Configuration)' != 'Debug'">portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- Shared package references, mostly analyzers -->
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+    <!--<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />-->
+    <!-- <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.354" PrivateAssets="all" /> -->
+    <!-- <PackageReference Include="StyleCop.CSharp.Async.Rules" Version="6.1.41" PrivateAssets="all" /> -->
+    <!-- <PackageReference Include="Microsoft.CodeAnalysis" Version="4.0.1" /> -->
+    <!--<PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" Version="4.0.1" PrivateAssets="all" />-->
+  </ItemGroup>
+
+  <!-- Adding stylecop settings as a linked file for the analyzers
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+    <None Remove="Settings.StyleCop" />
+  </ItemGroup>
+  -->
+</Project>

@@ -1,0 +1,51 @@
+<!-- submitQuote template -->
+<div class="row mb-3">
+  <div ng-if="sqCtrl.viewState.running || sqCtrl.service.anyStepIsBuilding(sqCtrl.cartType)"
+    cef-loading-widget
+    overlay="true"
+    message="sqCtrl.viewState.waitMessage">
+  </div>
+  <div class="col-12 py-5"
+    ng-show="sqCtrl.service.showEmptyCartMessage">
+    <div cef-submit-quote-cart-empty></div>
+  </div>
+  <div class="col-12" id="submit-quote-checkout"
+    ng-hide="sqCtrl.service.anyStepIsBuilding(sqCtrl.cartType)
+      || sqCtrl.service.showEmptyCartMessage"
+    translate-cloak>
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-tk-8 offset-tk-2 col-fk-8 offset-fk-3">
+        <h1 class="mt-3" sid="CheckoutSubmitQuoteText"
+          data-translate="ui.storefront.common.SubmitQuote">
+        </h1>
+      </div>
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-tk-6 offset-tk-2 col-fk-4 offset-fk-3 order-2 order-md-1">
+        <div ng-repeat="step in sqCtrl.service.steps[sqCtrl.cartType]
+                        | orderBy: ['order']"
+          class="row">
+          <div class="col-12">
+            <div ng-include="step.templateURL | corsLink: 'ui'"></div>
+          </div>
+        </div>
+        <div class="row" ng-if="sqCtrl.viewState.hasError">
+          <div class="col-12">
+            <div uib-alert class="alert-danger"
+              ng-bind="sqCtrl.viewState.errorMessage">
+            </div>
+           </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-tk-3 col-fk-2 order-1 order-md-2"
+        ng-hide="sqCtrl.service.anyStepIsBuilding(sqCtrl.cartType)
+          || sqCtrl.service.isQuoteComplete">
+        <div cef-mini-cart
+          type="sqCtrl.cartType"
+          quantity-items-iterate="4"
+          no-initial-load="true"
+          hide-shipping="!sqCtrl.cefConfig.featureSet.shipping.enabled
+            || !sqCtrl.service.showShippingSubtotal">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

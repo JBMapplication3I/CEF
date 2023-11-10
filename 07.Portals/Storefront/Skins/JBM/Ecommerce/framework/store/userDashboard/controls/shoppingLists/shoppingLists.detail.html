@@ -1,0 +1,241 @@
+<div class="row">
+    <div class="col form-inline">
+      <div ng-if="!sldCtrl.viewState.edit">
+        <span class="h2" sid="ShoppingListNameText"
+          ng-bind="sldCtrl.cartType.DisplayName ? sldCtrl.cartType.DisplayName : sldCtrl.cartType.Name">
+        </span>
+        <button type="button" class="btn btn-link mb-3"
+          id="btnEditShoppingListName"
+          name="btnEditShoppingListName"
+          ng-click="sldCtrl.toggleEdit()"
+          translate-attr="{ title: 'ui.storefront.common.Edit',
+                            'aria-label': 'ui.storefront.common.Edit'}">
+          <i class="far fa-pencil"></i>
+          <span sid="ShoppingListEditBtn" class="sr-only"
+            data-translate="ui.storefront.common.Edit">
+          </span>
+        </button>
+      </div>
+      <div ng-if="sldCtrl.viewState.edit"
+        class="form-group mb-3">
+        <div class="input-group">
+          <input type="text" class="form-control"
+            id="editedShoppingListName" name="editedShoppingListName"
+            placeholder="{{sldCtrl.cartName}}"
+            ng-keydown="sldCtrl.updateNameEnter($event)"
+            ng-model="sldCtrl.newCartName" />
+          <span sid="EditShoppingListNameBtn" class="input-group-append input-group-btn">
+            <button type="button" class="btn btn-link"
+              id="btnSaveShoppingListNameEdit"
+              name="btnSaveShoppingListNameEdit"
+              translate-attr="{ title: 'ui.storefront.common.Save',
+                                'aria-label': 'ui.storefront.common.Save'}"
+              ng-click="sldCtrl.updateName()">
+              <i class="far fa-save"></i>
+              <span sid="EditShoppingListNameSaveBtn" class="sr-only"
+                data-translate="ui.storefront.common.Save">
+              </span>
+            </button>
+            <button type="button" class="btn btn-link"
+              id="btnCancelShoppingListNameEdit"
+              name="btnCancelShoppingListNameEdit"
+              translate-attr="{ title: 'ui.storefront.common.Cancel',
+                                'aria-label': 'ui.storefront.common.Cancel'}"
+              ng-click="sldCtrl.toggleEdit()">
+              <i class="far fa-undo"></i>
+              <span sid="EditShoppingListNameCancelBtn" class="sr-only"
+                data-translate="ui.storefront.common.Cancel">
+              </span>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-primary mb-3"
+        id="btnAddAllToCart"
+        name="btnAddAllToCart"
+        translate-attr="{ title: 'ui.storefront.cart.addAllToCart',
+                          'aria-label': 'ui.storefront.cart.addAllToCart' }"
+        data-translate="ui.storefront.cart.addAllToCart"
+        ng-disabled="!sldCtrl.cartItems.length"
+        ng-click="sldCtrl.addAllToCart()">
+      </button>
+      <!-- <button type="button" class="btn btn-primary mb-3"
+        id="btnShareWithAccountUsers"
+        name="btnShareWithAccountUsers"
+        translate-attr="{ title: 'ui.storefront.userDashboard2.controls.shoppingListDetail.ShareWithAccountUsers',
+                          'aria-label': 'ui.storefront.userDashboard2.controls.shoppingListDetail.ShareWithAccountUsers' }"
+        data-translate="ui.storefront.userDashboard2.controls.shoppingListDetail.ShareWithAccountUsers"
+        ng-disabled="!sldCtrl.cartItems.length"
+        ng-click="sldCtrl.shareWithAccountUsers()">
+      </button> -->
+      <button type="button" class="btn btn-primary mb-3"
+        id="btnShareWithAccountUsers"
+        name="btnShareWithAccountUsers"
+        ng-disabled="!sldCtrl.cartItems.length"
+        ng-click="sldCtrl.shareWithAccountUsers()">
+        Share with Account
+      </button>
+      <button type="button" class="btn btn-secondary mb-3"
+        id="btnClearShoppingList"
+        name="btnClearShoppingList"
+        translate-attr="{ title: 'ui.storefront.common.Clear',
+                          'aria-label': 'ui.storefront.common.Clear' }"
+        data-translate="ui.storefront.common.Clear"
+        ng-disabled="!sldCtrl.cartItems.length"
+        ng-click="sldCtrl.clearList()">
+      </button>
+      <button type="button" class="btn btn-secondary mb-3"
+        id="btnDeleteShoppingList"
+        name="btnDeleteShoppingList"
+        translate-attr="{ title: 'ui.storefront.common.Delete',
+                          'aria-label': 'ui.storefront.common.Delete' }"
+        data-translate="ui.storefront.common.Delete"
+        ng-click="sldCtrl.deleteList()">
+      </button>
+    </div>
+    <div class="col-12" ng-if="!sldCtrl.cartItems.length">
+      <span sid="NoItemsAddedTxt" class="h4"
+        data-translate="ui.storefront.userDashboard2.controls.shoppingListDetail.NoItemsHaveBeenAddedToThisShoppingList">
+      </span>
+    </div>
+    <div class="col-12" ng-if="sldCtrl.cartItems.length">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover table-striped table-bordered"
+          id="shopping-list-cart-table">
+          <thead>
+            <tr class="first last">
+              <th class="d-none d-sm-table-cell"></th>
+              <th class="w-16 xs-w-24" data-translate="ui.storefront.cart.SKU"></th>
+              <th class="sm-w-32 md-w-40 lg-w-40" data-translate="ui.storefront.common.Name"></th>
+              <th class="w-8 text-center" data-translate="ui.storefront.common.Price"></th>
+              <th class="w-8 text-center" data-translate="ui.storefront.common.UoM"></th>
+              <th class="w-8 text-center" data-translate="ui.storefront.common.Subtotal"></th>
+              <th class="sm-w-24 md-w-16 lg-w-16 text-center"
+                colspan="2"
+                data-translate="ui.storefront.common.Quantity">
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody ng-form="sldCtrl.forms.SalesItems">
+            <tr ng-repeat="item in sldCtrl.cartItems">
+              <td class="form-control-table-cell d-none d-sm-table-cell p-0">
+                <div cef-product-card-thumbnail-widget
+                  product-id="item.ProductID"
+                  product-image="item.ProductPrimaryImage"
+                  width="100"
+                  height="100"
+                  index="$index">
+                </div>
+              </td>
+              <td>
+                <a id="product{{$index}}Key"
+                  ui-sref-plus uisrp-is-product="true"
+                  uisrp-path="{{item.ProductSeoUrl}}">
+                  <label class="form-control-static font-weight-normal"
+                    ng-bind="item.ProductKey">
+                  </label>
+                </a>
+              </td>
+              <td>
+                <a id="product{{$index}}Name"
+                  ui-sref-plus uisrp-is-product="true"
+                  uisrp-path="{{item.ProductSeoUrl}}">
+                  <label class="form-control-static font-weight-normal"
+                    ng-bind="item.ProductName">
+                  </label>
+                </a>
+              </td>
+              <td class="text-right">
+                <span class="d-block form-control-static font-weight-normal text-right"
+                  sid="ShoppingListLineItemPrice_{{$index}}"
+                  ng-class="{'strike-through small text-disabled': item.UnitCorePrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0}"
+                  ng-bind="item.UnitCorePrice | globalizedCurrency">
+                </span>
+                <span class="d-block form-control-static font-weight-normal text-right text-danger"
+                  sid="ShoppingListLineItemSalePrice_{{$index}}"
+                  ng-if="item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                  ng-bind="item.UnitSoldPrice | globalizedCurrency">
+                </span>
+              </td>
+              <td class="text-right">
+                <label class="d-block form-control-static font-weight-normal text-right"
+                  sid="OrderRequestLineItemPriceSubtotal_{{$index}}"
+                  ng-bind="item.SerializableAttributes.SelectedUOM .Value | bracketWrap">
+                </label>
+              </td>
+              <td class="text-right">
+                <label class="d-block form-control-static font-weight-normal text-right"
+                  sid="ShoppingListLineItemPriceSubtotal_{{$index}}"
+                  ng-bind="item.ExtendedPrice | globalizedCurrency">
+                </label>
+              </td>
+              <td>
+                <div cef-add-to-cart-quantity-selector
+                  sales-item="item"
+                  item="item.Product"
+                  item-id="item.ProductID"
+                  item-name="item.ProductName"
+                  item-seo-url="item.ProductSeoUrl"
+                  default-value="1"
+                  current-value="item.Quantity"
+                  is-required="false"
+                  step="1"
+                  index="$index">
+                </div>
+              </td>
+              <td class="text-center">
+                <div cef-add-to-cart-button
+                  sales-item="item"
+                  item-id="item.ProductID"
+                  item-name="item.ProductName"
+                  item-seo-url="item.ProductSeoUrl"
+                  default-value="1"
+                  current-value="item.Quantity"
+                  show-icon="true"
+                  show-text="false"
+                  ship-option=""
+                  out-of-stock-links-to-details="false"
+                  debug="false"
+                  index="$index">
+                </div>
+              </td>
+              <td class="text-center">
+                <button type="button" class="btn btn-link text-danger"
+                  id="btnRemoveItem{{$index}}FromShoppingList"
+                  name="btnRemoveItem{{$index}}FromShoppingList"
+                  translate-attr="{ title: 'ui.storefront.product.catalog.results.gridFull.removeFromShoppingList',
+                                    'aria-label': 'ui.storefront.product.catalog.results.gridFull.removeFromShoppingList' }"
+                  ng-click="sldCtrl.removeCartItem(item.ID)">
+                  <i class="far fa-trash fa-lg"></i><!--
+                  --><span class="sr-only"
+                    data-translate="ui.storefront.product.catalog.results.gridFull.removeFromShoppingList">
+                  </span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--
+    <div class="col">
+      <div class="mb-3"
+        cef-email-cart
+        type="sldCtrl.cartName">
+      </div>
+    </div>
+    -->
+    <div class="col-auto">
+      <a class="btn btn-secondary mb-3"
+        id="shoppingListHref" name="shoppingListHref"
+        ui-sref-plus uisrp-is-dashboard="true"
+        uisrp-state="userDashboard.shoppingLists.list">
+        <span sid="ShoppingListBackBtn" data-translate="ui.storefront.userDashboard.shoppingLists.BackToShoppingLists">
+        </span>
+      </a>
+    </div>
+  </div>
+  

@@ -1,0 +1,75 @@
+﻿<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-tk-5 row-cols-fk-6"
+  id="results-grid" name="results-grid"
+  ng-if="scprgCtrl.service.productSearchViewModel.WithMaps">
+  <div ng-repeat="product in scprgCtrl.service.productSearchViewModel.WithMaps
+                  | orderBy: scprgCtrl.service.getSorter()"
+    class="col mb-3 catalog-result-card"
+    id="cardCatalogGridProduct_{{product.ID}}"
+    name="cardCatalogGridProduct_{{product.ID}}">
+    <div class="card" ng-if="product && product.SeoUrl">
+      <!-- Product Image -->
+      <div class="card-img-top bg-white"
+        cef-product-card-thumbnail-widget
+        product-id="product.ID"
+        product-image="product.PrimaryImageFileName"
+        width="scprgCtrl.thumbW"
+        height="scprgCtrl.thumbH"
+        index="$index">
+      </div>
+      <div class="card-body py-3 px-0">
+        <!-- Product Name -->
+        <div cef-product-card-name-widget
+          product-id="product.ID"
+          rows="scprgCtrl.nameR"
+          index="$index">
+        </div>
+        <!-- Product SKU Information -->
+        <div class="card-text my-1"
+          ng-if="!scprgCtrl.hideK"
+          cef-product-card-sku-widget
+          product-id="product.ID"
+          hide-sku="scprgCtrl.hideK">
+        </div>
+        <!-- Product Stock Information -->
+        <div class="card-text my-1"
+          ng-if="!scprgCtrl.hideS"
+          cef-product-card-stock-widget
+          product-id="product.ID"
+          hide-stock="scprgCtrl.hideS">
+        </div>
+        <!-- Product Short Description -->
+        <div class="card-text my-1"
+          ng-if="!scprgCtrl.hideD"
+          cef-product-card-short-desc-widget
+          product-id="product.ID"
+          rows="scprgCtrl.shortDescR">
+        </div>
+        <!-- Product Pricing -->
+        <div class="my-1"
+          cef-product-card-pricing-widget
+          product-id="product.ID"
+          display-style="scprgCtrl.pds">
+        </div>
+      </div>
+      <div class="card-footer p-0">
+        <!-- Call to Action Button -->
+        <div cef-product-card-action-button-widget
+          product-id="product.ID"
+          quick-add="scprgCtrl.quickA"
+          button-view="scprgCtrl.abv">
+        </div>
+      </div>
+      <!-- Controls -->
+      <div class="card-footer p-0 card-controls"
+        ng-if="!scprgCtrl.hideI"
+        cef-product-card-controls-widget
+        product-id="product.ID"
+        hide-favorites-list="scprgCtrl.hideFL"
+        hide-wish-list="scprgCtrl.hideWL"
+        hide-notify-me="scprgCtrl.hideNM"
+        hide-compare="scprgCtrl.hideC"
+        hide-icons="scprgCtrl.hideI">
+      </div>
+    </div>
+  </div>
+</div>

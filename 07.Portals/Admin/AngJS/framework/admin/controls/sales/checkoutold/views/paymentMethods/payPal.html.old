@@ -1,0 +1,9 @@
+﻿<div class="row">
+    <div class="col-md-12" ng-form="cefCheckoutCtrl.forms.PayPal">
+        <!-- Note: Don't translate "PayPal" -->
+        <h1>PayPal<sup>&trade;</sup></h1>
+        <div ng-show="cefCheckoutCtrl.paypal.error"
+             class="alert alert-danger"
+             ng-bind-html="cefCheckoutCtrl.paypal.message"></div>
+    </div>
+</div>

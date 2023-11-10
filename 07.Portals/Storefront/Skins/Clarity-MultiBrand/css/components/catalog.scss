@@ -1,0 +1,23 @@
+// Clarity Catalog Styles, for CEF-2020.1.x+ w/ BS4
+.catalog-result-card, .product-card {
+    .card-title, .card-text {
+        > span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            font-size: $font-size-base;
+            line-height: $line-height-base;
+            // Defaults are what rows-2 is
+            height: ceil($font-size-base * $line-height-base * 2); -webkit-line-clamp: 2;
+            &.rows-1 { height: ceil($font-size-base * $line-height-base * 1); -webkit-line-clamp: 1; }
+            //&.rows-2 { height: ceil($font-size-base * $line-height-base * 2); -webkit-line-clamp: 2; }
+            &.rows-3 { height: ceil($font-size-base * $line-height-base * 3); -webkit-line-clamp: 3; }
+            &.rows-4 { height: ceil($font-size-base * $line-height-base * 4); -webkit-line-clamp: 4; }
+            &.rows-5 { height: ceil($font-size-base * $line-height-base * 5); -webkit-line-clamp: 5; }
+        }
+    }
+    .card-title {
+        font-weight: bold;
+    }
+}

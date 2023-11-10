@@ -1,0 +1,36 @@
+<div ng-form="nifgCtrl.forms.{{nifgCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="{'has-error': nifgCtrl.formInvalid}">
+  <label class="control-label" for="nud{{nifgCtrl.formIdentifier}}"
+    uib-tooltip="{{nifgCtrl.tooltip}}"
+    tooltip-placement="auto top-left">
+    <span data-translate="{{nifgCtrl.labelKey}}"
+      >{{nifgCtrl.labelText}}</span><!--
+    --><span ng-if="nifgCtrl.required" class="text-danger">&nbsp;*</span><!--
+    --><span ng-if="nifgCtrl.tooltip" class="text-info"
+      >&nbsp;<i class="far fa-question-circle"></i></span>
+  </label>
+  <div class="input-group">
+    <div class="input-group-addon" ng-if="nifgCtrl.isCurrency">
+      <i class="far fa-dollar-sign"></i>
+    </div>
+    <input type="number" class="form-control" ng-class="nifgCtrl.inputClass"
+      id="nud{{nifgCtrl.formIdentifier}}"
+      name="nud{{nifgCtrl.formIdentifier}}"
+      translate-attr="{ placeholder: nifgCtrl.placeholderKey }"
+      placeholder="{{nifgCtrl.placeholderText}}"
+      min="{{nifgCtrl.min || ''}}"
+      max="{{nifgCtrl.max || ''}}"
+      step="{{nifgCtrl.step || 1}}"
+      ng-disabled="nifgCtrl.disabled"
+      ng-required="nifgCtrl.required"
+      ng-model-options="nifgCtrl.options"
+      ng-model="nifgCtrl.property" />
+    <div class="input-group-addon" ng-if="nifgCtrl.isPercent">
+      <i class="far fa-percent"></i>
+    </div>
+  </div>
+  <div ng-messages-multiple ng-messages="nifgCtrl.formError" role="alert">
+    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+</div>

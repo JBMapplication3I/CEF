@@ -1,0 +1,156 @@
+﻿<div class="container-fluid form-vertical pt-3"
+  ng-form="loginCtrl.forms.login">
+  <div class="row">
+    <div ng-if="loginCtrl.cefConfig.authProvider !== 'dnnSSO'"
+      class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+      <h1 data-translate="ui.admin.controls.login.PleaseSignIn"></h1>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group"
+            ng-class="{'has-error': loginCtrl.forms.login.$dirty
+                                    && loginCtrl.forms.login.txtLoginUsername.$invalid}">
+            <label class="control-label" for="txtLoginUsername"
+              data-translate="ui.admin.common.Username">
+            </label>
+            <div class="input-group">
+              <input type="text" class="form-control"
+                id="txtLoginUsername" name="txtLoginUsername"
+                autocomplete="username"
+                autofocus
+                translate-attr="{ placeholder: 'ui.admin.controls.login.EnterYourUsername' }"
+                ng-keydown="loginCtrl.keySubmit($event)"
+                ng-disabled="loginCtrl.cvViewStateService.isRunning()"
+                ng-required="true"
+                ng-model="loginCtrl.loginData.Username" />
+            </div>
+          </div>
+          <div class="form-group"
+            ng-class="{'has-error': loginCtrl.forms.login.$dirty
+                                    && loginCtrl.forms.login.pwLoginPassword.$invalid}">
+            <label class="control-label" for="pwLoginPassword"
+              data-translate="ui.admin.common.Password">
+            </label>
+            <div class="input-group">
+              <input type="password" class="form-control"
+                id="pwLoginPassword" name="pwLoginPassword"
+                autocomplete="current-password"
+                translate-attr="{ placeholder: 'ui.admin.controls.login.EnterYourPassword' }"
+                ng-disabled="loginCtrl.cvViewStateService.isRunning()"
+                ng-keydown="loginCtrl.keySubmit($event)"
+                ng-required="true"
+                ng-model="loginCtrl.loginData.Password" />
+            </div>
+          </div>
+          <div ng-if="loginCtrl.showMFA"
+                class="form-group col-xs-12"
+                ng-class="{'has-error': loginCtrl.forms.login.$dirty
+                                        && loginCtrl.forms.login.txtMFAPrompt.$invalid}">
+                <label class="control-label" for="txtMFAPrompt"
+                    uib-tooltip="{{'ui.admin.controls.login.MFAAuthToken.Tooltip' | translate}}"
+                    data-translate="ui.admin.controls.login.MFARequired">
+                </label>
+                <span class="d-block"
+                  data-translate="ui.admin.controls.login.ReceiveCode"></span>
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary"
+                        id="mfaEmail" name="mfaEmail"
+                        ng-if="loginCtrl.mfaResult.Email"
+                        ng-click="loginCtrl.requestMFATokenViaEmail()">
+                        Email:&nbsp;<!--
+                        --><span ng-bind-html="loginCtrl.emailFirstAndLastFour | trustedHtml"></span>
+                    </button>
+                    <button type="button" class="btn btn-primary"
+                        id="mfaSMS" name="mfaSMS"
+                        ng-if="loginCtrl.mfaResult.Phone"
+                        ng-click="loginCtrl.requestMFATokenViaSMS()">
+                        SMS:&nbsp;&bull;&bull;&bull;-&bull;&bull;&bull;-<!--
+                        --><span ng-bind="loginCtrl.mfaResult.PhoneLastFour"></span>
+                    </button>
+                </div>
+            </div>
+            <div ng-if="loginCtrl.showMFA"
+                class="form-group col-xs-12"
+                ng-class="{'has-error': loginCtrl.forms.login.$dirty
+                                        && loginCtrl.forms.login.txtMFAPrompt.$invalid}">
+                <label class="control-label" for="txtMFAPrompt"
+                uib-tooltip="{{'ui.admin.controls.login.MFAAuthToken.Tooltip'}}"
+                data-translate="ui.admin.controls.login.AuthToken">
+                </label>
+                <div class="input-group">
+                <input type="text" class="form-control"
+                    id="txtMFAPrompt" name="txtMFAPrompt"
+                    autocomplete="off"
+                    translate-attr="{ placeholder: 'ui.admin.controls.login.EnterYourAuthToken' }"
+                    ng-keydown="loginCtrl.keySubmit($event)"
+                    ng-required="true"
+                    ng-model="loginCtrl.loginData.MFAToken" />
+                    <!--ng-disabled="loginCtrl.cvViewStateService.isRunning()"-->
+                    <!-- <button type="button" class="btn btn-primary"
+                    id="resend" name="resend"
+                    ng-click="loginCtrl.submit('resend')">Resend</button> -->
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group btn-group-justified">
+              <button type="button" class="btn btn-primary btn-block"
+                id="btnSignIn" name="btnSignIn"
+                ng-disabled="loginCtrl.forms.login.$invalid"
+                ng-click="loginCtrl.doLogin()"
+                data-translate="ui.admin.controls.login.SignIn">
+                <!--was on ng-disabled: || loginCtrl.cvViewStateService.isRunning()-->
+              </button>
+            </div>
+            <a class="btn btn-info btn-block"
+             id="btnCancel" name="btnCancel"
+             ui-sref-plus uisrp-is-home="true" target="_self">
+             <span data-translate="ui.admin.common.Cancel"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div ng-if="loginCtrl.showWait()"
+        class="row mt-3"
+        role="alert">
+        <div class="col-sm-12">
+          <div class="cvLoginValidationMessage alert alert-info"
+            ng-bind="loginCtrl.cvViewStateService.waitMessage(loginCtrl.viewStateName)">
+          </div>
+        </div>
+      </div>
+      <div ng-if="loginCtrl.showError()"
+        class="row mt-3"
+        role="alert">
+        <div class="col-sm-12">
+          <div class="cvLoginValidationMessage alert alert-danger"
+            data-translate="ui.admin.controls.login.YourLogInInformationWasIncorrect">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-if="loginCtrl.cefConfig.authProvider === 'dnnSSO'"
+      class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+      <div style="text-align: center;" >
+        <h1 class="mb-3" data-translate="ui.admin.controls.login.YouAreNotSignedIn"></h1>
+        <p data-translate="ui.admin.controls.login.PleaseSignInToDNNBelow"></p>
+        <a class="btn btn-primary mb-3"
+          ui-sref-plus uisrp-root="/Login?returnUrl=%2fAdmin%2fClarity-Ecommerce-Admin"
+          target="_self">
+          <span data-translate="ui.admin.controls.login.SignInToDNN"></span>
+        </a>
+      </div>
+      <div ng-if="loginCtrl.showError()"
+        class="row mt-3"
+        role="alert">
+        <div class="col-sm-12">
+          <div class="cvLoginValidationMessage alert alert-danger"
+            data-translate="ui.admin.controls.login.YourLogInInformationWasIncorrect">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

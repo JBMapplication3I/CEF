@@ -1,0 +1,61 @@
+﻿<cv-page
+  ng-if="$root.cvSecurityService.hasPermission('Admin.Inventory.Vendors')"
+ caption="Manage Vendors"
+ head-icon="fa-users">
+  <cv-widget>
+    <widget-menu-item
+      caption="Add Vendor"
+      icon-class="fa-plus-circle"
+      click="$root.$state.go('inventory.vendors.detail',{ID:'New'})"
+      permissions="Vendors.Vendor.Create'">
+    </widget-menu-item>
+    <widget-body ng-controller="SearchController as search">
+      <cv-grid
+        show-pager="true"
+        page-sizes="8,16,32,64,128"
+        server-paging="true"
+        filter-side="true"
+        force-show-labels="true"
+        on-search="search.getVendors"
+        on-deactivate="search.deactivateVendor"
+        on-reactivate="search.reactivateVendor"
+        on-delete="search.deleteVendor"
+        edit-state="inventory.vendors.detail,[ID]"
+        permissions-base="Vendors.Vendor">
+        <cv-column
+          filter
+          field="ID"
+          title="#"
+          width="5%" />
+        <cv-column
+          filter
+          field="CustomKey"
+          title="Key"
+          width="20%" />
+        <cv-column
+          filter
+          field="Name"
+          width="20%" />
+        <cv-column
+          field="ContactPhone"
+          title="Phone"
+          width="20%" />
+        <cv-column
+          field="ContactFax"
+          title="Fax"
+          width="20%" />
+        <cv-column
+          field="ContactEmail"
+          title="Email"
+          width="30%" />
+        <cv-column
+          field="AllowDropShip"
+          title="Drop Ship?"
+          width="5%"
+          type="boolean"
+          header-class="text-center"
+          cell-class="text-center" />
+      </cv-grid>
+    </widget-body>
+  </cv-widget>
+</cv-page>

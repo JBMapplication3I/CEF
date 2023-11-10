@@ -1,0 +1,112 @@
+﻿// <copyright file="UsedInAddendums.Admin.cs" company="clarity-ventures.com">
+// Copyright (c) 2020-2023 clarity-ventures.com. All rights reserved.
+// </copyright>
+// <summary>Implements the used in addendums classes</summary>
+// ReSharper disable MissingXmlDoc
+#pragma warning disable SA1134 // Attributes should not share line
+#pragma warning disable SA1502 // Element should not be on a single line
+#pragma warning disable SA1516 // Elements should be separated by blank line
+namespace Clarity.Ecommerce.Service
+{
+    [UsedInAdmin] public partial class AdminClearCartShippingRateQuoteForUser { }
+    [UsedInAdmin] public partial class AdminGetProductFull { }
+    [UsedInAdmin] public partial class AdminGetStoreFull { }
+    [UsedInAdmin] public partial class ApplyCartShippingRateQuote { }
+    [UsedInAdmin] public partial class ApproveReview { }
+    [UsedInAdmin] public partial class CheckCountryExistsByCode { }
+    [UsedInAdmin] public partial class CheckCountryExistsByKey { }
+    [UsedInAdmin] public partial class CheckCountryExistsByName { }
+    [UsedInAdmin] public partial class CheckDiscountCodeExistsByCode { }
+    [UsedInAdmin] public partial class CheckRecordVersionExistsByName { }
+    [UsedInAdmin] public partial class CheckRegionExistsByCode { }
+    [UsedInAdmin] public partial class CheckRegionExistsByKey { }
+    [UsedInAdmin] public partial class CheckRegionExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceStateExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceStateExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceStateExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceStatusExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceStatusExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceStatusExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceTypeExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceTypeExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesInvoiceTypeExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesOrderStateExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesOrderStateExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesOrderStateExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesOrderStatusExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesOrderStatusExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesOrderStatusExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesOrderTypeExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesOrderTypeExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesOrderTypeExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesQuoteExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesQuoteStateExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesQuoteStateExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesQuoteStateExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesQuoteStatusExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesQuoteStatusExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesQuoteStatusExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesQuoteTypeExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesQuoteTypeExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesQuoteTypeExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesReturnStateExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesReturnStateExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesReturnStateExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesReturnStatusExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesReturnStatusExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesReturnStatusExistsByName { }
+    [UsedInAdmin] public partial class CheckSalesReturnTypeExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckSalesReturnTypeExistsByKey { }
+    [UsedInAdmin] public partial class CheckSalesReturnTypeExistsByName { }
+    [UsedInAdmin] public partial class CheckUserExistsByKey { }
+    [UsedInAdmin] public partial class CheckUserStatusExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckUserStatusExistsByKey { }
+    [UsedInAdmin] public partial class CheckUserStatusExistsByName { }
+    [UsedInAdmin] public partial class CheckUserTypeExistsByDisplayName { }
+    [UsedInAdmin] public partial class CheckUserTypeExistsByKey { }
+    [UsedInAdmin] public partial class CheckUserTypeExistsByName { }
+    [UsedInAdmin] public partial class ClearPriceCache { }
+    [UsedInAdmin] public partial class CloneStore { }
+    [UsedInAdmin] public partial class ConvertCurrencyValueAtoB { }
+    [UsedInAdmin] public partial class CreateAddressInBook { }
+    [UsedInAdmin] public partial class CreateUserWalletEntryAsCSR { }
+    [UsedInAdmin] public partial class DeactivateUserWalletEntryAsCSR { }
+    [UsedInAdmin] public partial class GetAddressBookAsAdmin { }
+    [UsedInAdmin] public partial class GetCartShippingRateQuotes { }
+    [UsedInAdmin] public partial class GetCategorySiteMapContent { }
+    [UsedInAdmin] public partial class GetCategoryTree { }
+    [UsedInAdmin] public partial class GetCurrencyByKey { }
+    [UsedInAdmin] public partial class GetCurrentAccount { }
+    [UsedInAdmin] public partial class GetCurrentBrand { }
+    [UsedInAdmin] public partial class GetCurrentUser { }
+    [UsedInAdmin] public partial class GetCurrentUserName { }
+    [UsedInAdmin] public partial class GetDiscountsForOrder { }
+    [UsedInAdmin] public partial class GetInventoryLocationRegionsByInventoryLocationID { }
+    [UsedInAdmin] public partial class GetLanguageByKey { }
+    [UsedInAdmin] public partial class GetSettingByName { }
+    [UsedInAdmin] public partial class GetSettingsByGroupName { }
+    [UsedInAdmin] public partial class GetStoredFileUrl { }
+    [UsedInAdmin] public partial class GetStoreInventoryLocationsMatrix { }
+    [UsedInAdmin] public partial class GetStoreRegionsByStoreID { }
+    [UsedInAdmin] public partial class GetTimeZonesList { }
+    [UsedInAdmin] public partial class GetUploadStoredFileResults { }
+    [UsedInAdmin] public partial class GetUserByKey { }
+    [UsedInAdmin] public partial class GetUserWallet { }
+    [UsedInAdmin] public partial class GetUserWalletAsCSR { }
+    [UsedInAdmin] public partial class GetUserWalletEntryByIDAsCSR { }
+    [UsedInAdmin] public partial class MarkAccountContactAsDefaultBilling { }
+    [UsedInAdmin] public partial class MarkAccountContactAsNeitherBillingNorShipping { }
+    [UsedInAdmin] public partial class MarkAccountContactAsPrimaryShipping { }
+    [UsedInAdmin] public partial class RegenerateCategorySiteMap { }
+    [UsedInAdmin] public partial class RestrictedRegionCheck { }
+    [UsedInAdmin] public partial class ReversePhonePrefixToCityRegionCountry { }
+    [UsedInAdmin] public partial class SendSalesOrderConfirmationEmail { }
+    [UsedInAdmin] public partial class UnapproveReview { }
+    [UsedInAdmin] public partial class UpdateUserWalletEntryAsCSR { }
+    [UsedInAdmin] public partial class UploadStoredFile { }
+    [UsedInAdmin] public partial class UpsertBrandProduct { }
+    [UsedInAdmin] public partial class UpsertContact { }
+    [UsedInAdmin] public partial class UpsertRecordVersion { }
+    [UsedInAdmin] public partial class UpsertSalesQuote { }
+    [UsedInAdmin] public partial class UpsertStoreProduct { }
+}

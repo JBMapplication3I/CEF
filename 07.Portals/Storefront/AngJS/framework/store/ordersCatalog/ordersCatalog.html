@@ -1,0 +1,79 @@
+<div ng-if="ordersCatalogCtrl.showPanel">
+    <div class="featured-section-title">
+        <h3 data-translate="ui.storefront.common.Shop"></h3>
+        <h4><span data-translate="ui.storefront.product.ordersCatalog.Featured"></span> <b data-translate="ui.storefront.common.Product.Plural"></b></h4>
+        <a class="btn btn-link" ui-sref-plus uisrp-area="catalog"
+           ><b><span data-translate="ui.storefront.common.ViewAll"></span>&nbsp;<i class="far fa-angle-double-right"></i></b></a>
+    </div>
+    <div class="row featured-products">
+        <div class="col-md-3">
+            <div class="btn-group hidden-on-mobile">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span data-translate="ui.storefront.product.ordersCatalog.FilterByCategory"></span>&nbsp;<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu featured-products-category-list">
+                    <li ng-repeat="category in ordersCatalogCtrl.category">
+                        <a ng-click="ordersCatalogCtrl.grabProducts(category.ID)"
+                           ng-hide="category.Name === 'Featured Products'" ng-bind="category.Name"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-12" ng-show="ordersCatalogCtrl.productList.length === 0">
+                    <p data-translate="ui.storefront.common.NoResultsFound"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-6 product-grid" ng-repeat="p in ordersCatalogCtrl.productList | limitTo: 6">
+                    <a ui-sref-plus uisrp-is-product="true" uisrp-path="{{p.SeoUrl}}"
+                       class="product-grid-img hover">
+                        <span class="btn btn-primary" data-translate="ui.storefront.common.ProductDetail.Plural"></span>
+                        <div class="landing-product-overlay transition"></div>
+                        <img class="img-fluid d-block mx-auto"
+                             alt="{{p.name}}"
+                             ng-src="{{p.PrimaryImageFileName
+                                | corsImageLink : 'products' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+                    </a>
+                    <h5 class="product-title"><a ui-sref-plus uisrp-is-product="true" uisrp-path="{{p.SeoUrl}}" ng-bind="p.Name"></a></h5>
+                    <hr />
+                    <p ng-bind="p.ShortDescription"></p>
+                    <hr />
+                    <p class="list-price" ng-hide="!p.readPrices().isSale">
+                        <span data-translate="ui.storefront.product.ordersCatalog.ListPrice"></span>&nbsp;<!--
+                        --><span ng-bind="p.readPrices().base | globalizedCurrency"></span>
+                    </p>
+                    <p class="our-price">
+                        <span data-translate="ui.storefront.product.ordersCatalog.OurPrice"></span>&nbsp;<!--
+                        --><span ng-bind="p.readPrices().base | globalizedCurrency"></span>
+                    </p>
+                    <p class="sale-price" ng-hide="!p.readPrices().haveBase && !p.readPrices().haveSale">
+                        <span data-translate="ui.storefront.common.SalePrice"></span>&nbsp;<!--
+                        --><span ng-bind="p.readPrices().sale | globalizedCurrency"></span>
+                    </p>
+                    <hr />
+                    <p class="savings"
+                       ng-hide="!p.readPrices().haveBase && !p.readPrices().haveSale">
+                        <span data-translate="ui.storefront.common.Saving.Plural"></span>&nbsp;<!--
+                        --><span ng-bind="p.readPrices().base - p.readPrices().sale | globalizedCurrency"></span>
+                    </p>
+                    <p class="the-price"
+                        ng-if="p.readPrices().isSale"
+                        ng-bind="p.readPrices().sale | globalizedCurrency">
+                    </p>
+                    <p class="the-price"
+                        ng-if="!p.readPrices().isSale"
+                        ng-bind="p.readPrices().base | globalizedCurrency">
+                    </p>
+                    <p class="add-to-cart float-right">
+                        <button type="button" class="btn btn-yellow"
+                            data-translate="ui.storefront.cart.addToCart"
+                            ng-click="ordersCatalogCtrl.addToCart(p.ID)">
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

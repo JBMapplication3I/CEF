@@ -1,0 +1,25 @@
+﻿<div class="row" ng-form="cefCheckoutCtrl.forms.taxExemptions">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label class="control-label" for="txtTaxExemptionNumber"
+                   data-translate="ui.admin.checkout.modularCheckout.views.taxExemptions.AreYouTaxExempt.Question"></label>
+            <input type="text" class="form-control"
+                   id="txtTaxExemptionNumber" name="txtTaxExemptionNumber"
+                   translate-attr="{ placeholder: 'ui.admin.controls.accounts.accountDetail.TaxExemptionNo' }"
+                   ng-required="false"
+                   ng-model="cefCheckoutCtrl.taxExemptionNumber" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12" ng-if="cefCheckoutCtrl.showVatID">
+        <div class="form-group">
+            <label class="control-label" for="txtVatId"
+                   data-translate="ui.admin.checkout.views.paymentInformation.VatID"></label>
+            <input type="text" class="form-control"
+                   id="txtVatId" name="txtVatId"
+                   ng-required="false"
+                   ng-model="cefCheckoutCtrl.paymentData.VatID" />
+        </div>
+    </div>
+</div>

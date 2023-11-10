@@ -1,0 +1,68 @@
+<div class="card product-card border-0" ng-if="scprgCtrl.product">
+  <!-- Product Image, with controls in the overlay -->
+  <div class="card-img-top bg-white"
+    cef-product-card-thumbnail-with-overlay-widget
+    product-id="scprgCtrl.product.ID"
+    product-image="scprgCtrl.product.PrimaryImageFileName"
+    width="scprgCtrl.thumbW"
+    height="scprgCtrl.thumbH"
+    index="scprgCtrl.index"
+    hide-favorites-list="scprgCtrl.hideFL"
+    hide-wish-list="scprgCtrl.hideWL"
+    hide-notify-me="scprgCtrl.hideNM"
+    hide-compare="scprgCtrl.hideC"
+    hide-icons="scprgCtrl.hideI">
+  </div>
+  <div class="card-body py-3 px-0">
+    <!-- Product Name -->
+    <div cef-product-card-name-gen-widget
+      product-id="scprgCtrl.product.ID"
+      rows="scprgCtrl.nameR"
+      index="scprgCtrl.index">
+    </div>
+    <!-- Product Short Description -->
+    <div class="card-text my-1"
+      ng-if="!scprgCtrl.hideD"
+      cef-product-card-short-desc-gen-widget
+      product-id="scprgCtrl.product.ID"
+      rows="scprgCtrl.shortDescR">
+    </div>
+    <div class="card-text mt-1">
+      <div class="row no-gutters">
+        <div class="col-auto">
+          <!-- Product SKU Information -->
+          <div class="my-1"
+            ng-if="!scprgCtrl.hideK"
+            cef-product-card-sku-gen-widget
+            product-id="scprgCtrl.product.ID"
+            hide-sku="scprgCtrl.hideK">
+          </div>
+          <!-- Product Stock Information -->
+          <div class="card-text mt-1"
+            ng-if="!scprgCtrl.hideS"
+            cef-product-card-stock-gen-widget
+            product-id="scprgCtrl.product.ID"
+            hide-stock="scprgCtrl.hideS">
+          </div>
+        </div>
+        <div class="col text-right">
+          <!-- Product Pricing -->
+          <div class="mt-1"
+            cef-product-card-pricing-gen-widget
+            product-id="scprgCtrl.product.ID"
+            display-style="scprgCtrl.pds">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body py-1 px-0" ng-if="!(scprgCtrl.hideCta == 'true')">
+    <!-- Call to Action Button -->
+    <div cef-product-card-action-button-gen-widget
+      product-id="scprgCtrl.product.ID"
+      quick-add="scprgCtrl.quickAdd"
+      button-view="scprgCtrl.actionButtonView"
+      index="scprgCtrl.index">
+    </div>
+  </div>
+</div>

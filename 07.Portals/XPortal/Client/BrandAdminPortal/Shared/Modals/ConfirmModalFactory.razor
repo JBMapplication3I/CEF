@@ -1,0 +1,107 @@
+﻿<Modal @ref="modalRef">
+  <ModalContent Centered="true">
+    <ModalHeader Background="Background.Dark" TextColor="TextColor.Light" Padding="Padding.Is2.OnY">
+      <ModalTitle>@Title</ModalTitle>
+      <CloseButton
+        TextColor="TextColor.Light"
+        Clicked="@(() => HideModalAsync(false))"
+      />
+    </ModalHeader>
+    <ModalBody Padding="Padding.Is0.FromBottom">
+      @Message
+    </ModalBody>
+    <ModalFooter Background="Background.Dark" Padding="Padding.Is2.OnY">
+      <Blazorise.Button
+        Color="Color.Secondary"
+        Clicked="@(() => HideModalAsync(false))">
+        @CancelText
+      </Blazorise.Button>
+      <Blazorise.Button
+        Color="Color.Primary"
+        Clicked="@(() => HideModalAsync(true))">
+        @OKText
+      </Blazorise.Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+
+@code
+{
+  private Action<bool>? Callback { get; set; }
+
+  private Func<bool, Task>? CallbackAsync { get; set; }
+
+  private Modal? modalRef;
+
+  /// <summary>Shows.</summary>
+  /// <param name="message">The message.</param>
+  /// <returns>A Task.</returns>
+  public Task ShowAsync(
+    string message,
+    string title = "Please confirm",
+    string okText = "OK",
+    string cancelText = "Cancel",
+    Action<bool>? callback = null)
+  {
+    Message = message;
+    Title = title;
+    OKText = okText;
+    CancelText = cancelText;
+    Callback = callback;
+    Result = false;
+    return modalRef!.Show();
+  }
+
+  /// <summary>Shows.</summary>
+  /// <param name="message">The message.</param>
+  /// <returns>A Task.</returns>
+  public Task ShowAsync(
+    string message,
+    string title = "Please confirm",
+    string okText = "OK",
+    string cancelText = "Cancel",
+    Func<bool, Task>? callback = null)
+  {
+    Message = message;
+    Title = title;
+    OKText = okText;
+    CancelText = cancelText;
+    CallbackAsync = callback;
+    Result = false;
+    return modalRef!.Show();
+  }
+
+  /// <summary>Gets or sets the message.</summary>
+  /// <value>The message.</value>
+  public string Message { get; set; } = string.Empty;
+
+  /// <summary>Gets or sets the title.</summary>
+  /// <value>The title.</value>
+  public string Title { get; set; } = "Please confirm";
+
+  /// <summary>Gets or sets the ok text.</summary>
+  /// <value>The ok text.</value>
+  public string OKText { get; set; } = "OK";
+
+  /// <summary>Gets or sets the cancel text.</summary>
+  /// <value>The cancel text.</value>
+  public string CancelText { get; set; } = "Cancel";
+
+  /// <summary>Gets a value indicating whether the result was true or false.</summary>
+  /// <value>True if result, false if not.</value>
+  public bool Result { get; private set; }
+
+  private async Task HideModalAsync(bool result)
+  {
+    Result = result;
+    await modalRef!.Hide();
+    if (Callback is not null)
+    {
+      Callback(result);
+    }
+    else if (CallbackAsync is not null)
+    {
+      await CallbackAsync(result).ConfigureAwait(false);
+    }
+  }
+}

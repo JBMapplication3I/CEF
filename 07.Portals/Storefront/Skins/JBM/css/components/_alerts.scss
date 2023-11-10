@@ -1,0 +1,37 @@
+.alert {
+	&.alert-success {
+		border: $border-width solid #B8DAFF;
+		background-color: #CCE5FF;
+		color: #153166;
+	}
+
+	&.alert-secondary {
+		border: $border-width solid #d6d8db;
+		background-color: #e2e3e5;
+		color: #445259;
+	}
+
+	&.alert-success {
+		border: $border-width solid #c3e6cb;
+		background-color: #d4edda;
+		color: #254200;
+	}
+
+	&.alert-danger {
+		border: $border-width solid #f5c6cb;
+		background-color: #f8d7da;
+		color: #8f2d36;
+	}
+
+	&.alert-warning {
+		border: $border-width solid #fdeeba;
+		background-color: #fdf3cd;
+		color: #634d04;
+	}
+
+	&.alert-info {
+		border: $border-width solid #bee5eb;
+		background-color: #d1ecf1;
+		color: #267180;
+	}
+}

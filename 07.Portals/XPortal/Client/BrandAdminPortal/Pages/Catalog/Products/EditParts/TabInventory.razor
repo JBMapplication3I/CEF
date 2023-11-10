@@ -1,0 +1,165 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+<Heading Size="HeadingSize.Is2">Inventory</Heading>
+<Div Class="d-flex justify-content-between">
+  <TextFormGroup
+    FormIdentifier="Unit of Measure"
+    LabelText="Unit of Measure"
+    PlaceholderText="Each"
+    @bind-Value="Record.UnitOfMeasure"
+    Required="true"
+    Disabled="@ViewState.InputDisable"
+    TooltipText="Informs the customer how units of the product are sold. Usually 'each', singular, however it could be in multiples in a single box, etc. For example, envelopes in a '100-count box'."
+    ShowValidTooltip="true"
+    StartTouched="true"
+  />
+  @if (IncludeInventory && RawInventory is not null)
+  {
+    <NumericFormGroup
+      TValue="decimal?"
+      FormIdentifier="Stock Quantity"
+      IsHorizontal="false"
+      LabelText="Stock Quantity"
+      PlaceholderText="0"
+      @bind-Value="@RawInventory.QuantityPresent"
+      Step="1"
+      Required="true"
+      Disabled="@Record.IsUnlimitedStock"
+      TooltipText="@("The quantity of the product available for purchase at the time it was last updated. Allocations will be subtracted from this amount to show the customers an \"available\" amount.")"
+      ShowValidTooltip="true"
+      StartTouched="true"
+      InputClasses="text-right"
+    />
+    <NumericFormGroup
+      TValue="decimal?"
+      FormIdentifier="Stock Quantity Allocated"
+      IsHorizontal="false"
+      LabelText="Stock Quantity Allocated"
+      PlaceholderText="0"
+      @bind-Value="@RawInventory.QuantityAllocated"
+      Step="1"
+      Required="true"
+      Disabled="@Record.IsUnlimitedStock"
+      TooltipText="The amount of stock allocated to purchases since the last time the Quantity value was updated."
+      ShowValidTooltip="true"
+      StartTouched="true"
+      InputClasses="text-right"
+    />
+  }
+  <ToggleFormGroup
+    TValue="bool"
+    @bind-Value="@Record.IsUnlimitedStock"
+    IsOptionToggled="@(_ => Record.IsUnlimitedStock)"
+    ToggleOnText="Yes"
+    ToggleOffText="No"
+    Disabled="false"
+    SwitchColor="Color.Success"
+    FormIdentifier="IsUnlimitedStock"
+    LabelText="Unlimited Stock?"
+    Required="false"
+    TooltipText="@("The product is considered \"always available\" when it comes to stock checks.")"
+  />
+  @if (CEFConfig.featureSet?.inventory?.backOrder?.enabled == true)
+  {
+    <ToggleFormGroup
+      TValue="bool"
+      FormIdentifier="AllowBackOrder"
+      @bind-Value="Record.AllowBackOrder"
+      IsOptionToggled="@(_ => Record.AllowBackOrder)"
+      LabelText="Allow Backorder"
+      SwitchColor="Color.Info"
+      ToggleOnText="Allowed"
+      ToggleOffText="Not Allowed"
+      Disabled="Record.IsUnlimitedStock"
+      Required="false"
+      TooltipText="The product is still allowed to be ordered when there is no remaining inventory available."
+    />
+  }
+</Div>
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+    await Task.WhenAll(LoadInventoryForEditingAsync()).ConfigureAwait(false);
+#endif
+  }
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    return Task.CompletedTask;
+  }
+
+  /// <summary>Extended record data calls on after save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataCallsOnAfterSaveAsync(DateTime timestamp)
+  {
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+    return SaveInventoryAsync();
+#else
+    return Task.CompletedTask;
+#endif
+  }
+
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+  private bool IncludeInventory => true;
+  private CalculatedInventory? RawInventory { get; set; }
+
+  private async Task LoadInventoryForEditingAsync()
+  {
+    DebugBeginMethod();
+    var r = await cvApi.CalculateInventory(new() { ID = Record.ID }).ConfigureAwait(false);
+    if (r?.data?.ActionSucceeded != true)
+    {
+      ConsoleDebug("ERROR! Reading inventory data failed");
+      ConsoleDebug(r?.ToString());
+      return;
+    }
+    RawInventory = r.data.Result!;
+    if (RawInventory!.QuantityAllocated is null)
+    {
+      RawInventory.QuantityAllocated = 0m;
+    }
+    DebugEndMethod();
+  }
+
+  private async Task SaveInventoryAsync()
+  {
+    DebugBeginMethod();
+    if (RawInventory is null)
+    {
+      DebugEndMethod();
+      return;
+    }
+    await cvApi.UpdateInventoryForProduct(
+      new()
+      {
+        ID = Record.ID,
+        Quantity = RawInventory.QuantityPresent,
+        QuantityAllocated = RawInventory.QuantityAllocated,
+      })
+      .ConfigureAwait(false);
+    DebugEndMethod();
+  }
+#else
+  private bool IncludeInventory => false;
+  private CalculatedInventory? RawInventory { get; set; } = null;
+#endif
+}

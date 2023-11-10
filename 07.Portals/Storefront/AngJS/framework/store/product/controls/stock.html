@@ -1,0 +1,54 @@
+<div ng-if="psCtrl.visible"
+  class="row cef-product-stock"
+  id="pnlProductDetailsStock" name="pnlProductDetailsStock">
+  <div ng-if="psCtrl.showUnlimitedStock()" class="col-auto">
+    <div class="alert alert-success py-1 px-2 mb-3"
+      data-translate="ui.storefront.common.Unlimited">
+    </div>
+  </div>
+  <div ng-if="psCtrl.showStockAmountForUOMs()" class="col-auto">
+    <div class="alert alert-success py-1 px-2 mb-3">
+      <span ng-bind="psCtrl.getUOMStockQuantity(psCtrl.product) | number:0"></span>&nbsp;<!--
+      --><span data-translate="ui.storefront.common.InStock"></span>
+    </div>
+  </div>
+  <div ng-if="psCtrl.showOnBackOrder()" class="col-auto">
+    <div class="alert alert-warning py-1 px-2 mb-3 d-none"
+      data-translate="ui.storefront.common.OnBackorder">
+    </div>
+  </div>
+  <div ng-if="psCtrl.showOutOfStock()" class="col-auto">
+    <div class="alert alert-danger py-1 px-2 mb-3"
+      data-translate="ui.storefront.common.OutOfStock">
+    </div>
+  </div>
+  <div class="col-auto" ng-if="psCtrl.cefConfig.featureSet.carts.notifyMeWhenInStock.enabled">
+    <button ng-if="psCtrl.showNotifyMe()"
+      type="button" class="btn btn-link d-inline-block"
+      id="btnProductDetailNotifyMe" name="btnProductDetailNotifyMe"
+      translate-attr="{ title: 'ui.storefront.common.NotifyMeWhenInStock',
+                        'aria-label': 'ui.storefront.common.NotifyMeWhenInStock' }"
+      ng-click="psCtrl.click(true)">
+      <i class="far fa-bell"></i>
+      <span class="sr-only"
+        data-translate="ui.storefront.common.NotifyMeWhenInStock">
+      </span>
+    </button>
+    <button ng-if="psCtrl.showDontNotifyMe()"
+      type="button" class="btn btn-link d-inline-block"
+      id="btnProductDetailDontNotifyMe" name="btnProductDetailDontNotifyMe"
+      translate-attr="{ title: 'ui.storefront.common.DontNotifyMeWhenInStock',
+                        'aria-label': 'ui.storefront.common.NotifyMeWhenInStock' }"
+      ng-click="psCtrl.click(false)">
+      <i class="fas fa-bell"></i>
+      <span class="sr-only"
+        data-translate="ui.storefront.common.DontNotifyMeWhenInStock">
+      </span>
+    </button>
+  </div>
+  <div cef-loading-widget
+    overlay="false" size="2"
+    ng-if="psCtrl.loading"
+    message="psCtrl.viewState.waitMessage">
+  </div>
+</div>

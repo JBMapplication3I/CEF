@@ -1,0 +1,30 @@
+// Clarity Header Styles, for CEF-2020.1.x+ w/ BS4
+
+.bg-dark-blue {
+  background-color: $dark-blue;
+}
+
+#headerBotContent {
+  > div.navbar-nav {
+    > ul.navbar-nav {
+      // Is a Dropdown menu
+      > li.navbar-nav > ul.nav > li.nav-item.dropdown,
+      // Is a direct link
+      > li.nav-item {
+        > a {
+          color: $white;
+          border-radius: 0;
+        }
+        &:hover, &:focus, &.show {
+          > a {
+            text-decoration: none;
+            color: $white;
+            background-color: $blue !important;
+            outline: none;
+          }
+        }
+      }
+      // NOTE: The inner parts of the menu are handled in navMegaMenu.scss
+    }
+  }
+}

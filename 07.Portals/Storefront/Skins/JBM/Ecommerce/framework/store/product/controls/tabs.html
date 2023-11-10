@@ -1,0 +1,107 @@
+﻿<div class="row">
+  <uib-tabset class="col-12"
+    template-url="/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/product/controls/tabs.tabset.html">
+    <uib-tab id="tabMoreInformation"
+      template-url="/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/product/controls/tabs.tab.html">
+      <uib-tab-heading>
+        <span data-translate="ui.storefront.product.details.MoreInformation"></span>
+      </uib-tab-heading>
+      <div class="row description">
+        <div class="col-12"
+          ng-if="productDetailTabsCtrl.product.Description">
+          <h3 sid="ProductOverviewText"
+            data-translate="ui.storefront.product.detail.productDetails.productOverview">
+          </h3>
+          <div sid="ProductOverviewDescriptionText"
+            ng-bind-html="productDetailTabsCtrl.product.Description">
+          </div>
+        </div>
+        <div ng-repeat="fullTab in productDetailTabsCtrl.fullTabSet | filter: {'key':'default-tab'}"
+           class="col-12 mt-3">
+          <div ng-repeat="group in fullTab.groups | orderBy: ['sort','header']">
+            <h3 sid="SpecificationsText" ng-bind="group.header"></h3>
+            <dl>
+              <dt ng-repeat-start="attr in group.attrs | orderBy: ['SortOrder','DisplayName','Name','CustomKey']"
+                sid="{{attr.CustomKey}}Text"
+                ng-bind="attr.DisplayName || attr.Name || attr.CustomKey"></dt>
+              <dd ng-repeat-end>
+                <span ng-if="!attr.IsMarkup">
+                  <span ng-bind="productDetailTabsCtrl.productAttr(attr.CustomKey).Value"></span>&nbsp;<!--
+                  --><span ng-bind="productDetailTabsCtrl.productAttr(attr.CustomKey).UofM"></span>
+                </span>
+                <span ng-if="attr.IsMarkup"
+                  ng-bind-html="productDetailTabsCtrl.productAttr(attr.CustomKey).Value">
+                </span>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab ng-repeat="fullTab in productDetailTabsCtrl.fullTabSet
+                        | filter: {'key':'!default-tab'}
+                        | orderBy: ['sort','header']"
+      heading="{{fullTab.header}}"
+      id="tab{{$index}}"
+      template-url="/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/product/controls/tabs.tab.html">
+      <div ng-repeat="group in fullTab.groups | orderBy: ['sort','header']">
+        <h3 ng-bind="group.header"></h3>
+        <dl>
+          <dt ng-repeat-start="attr in group.attrs | orderBy: ['SortOrder','DisplayName','Name','CustomKey']"
+            ng-bind="attr.DisplayName || attr.Name || attr.CustomKey">
+          </dt>
+          <dd ng-repeat-end>
+            <span ng-if="!attr.IsMarkup">
+              <span ng-bind="productDetailTabsCtrl.productAttr(attr.CustomKey).Value"></span>&nbsp;<!--
+              --><span ng-bind="productDetailTabsCtrl.productAttr(attr.CustomKey).UofM"></span>
+            </span>
+            <span ng-if="attr.IsMarkup"
+              ng-bind-html="productDetailTabsCtrl.productAttr(attr.CustomKey).Value | trustedHtml">
+            </span>
+          </dd>
+        </dl>
+      </div>
+    </uib-tab>
+    <uib-tab
+      id="tabStoredFiles"
+      template-url="/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/product/controls/tabs.tab.html">
+      <uib-tab-heading>
+        Stored Files
+      </uib-tab-heading>
+      <h3 sid="ProductStoredFilesText">
+        Stored Files
+      </h3>
+      <div>
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <ul>
+              <li ng-if="!productDetailTabsCtrl.product.StoredFiles.length">
+                <span colspan="3"
+                  data-translate="ui.storefront.common.NoStoredFilesHaveBeenAdded"></span>
+              </li>
+              <li ng-repeat="storedFile in productDetailTabsCtrl.product.StoredFiles">
+                <a class="form-control-static" target="_blank"
+                  ng-href="{{(storedFile.StoredFileName || storedFile.Slave.FileName) | corsStoredFilesLink: 'products'}}"
+                  ng-bind="storedFile.StoredFileName || storedFile.Name">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </uib-tab>
+    <uib-tab ng-if="productDetailTabsCtrl.cefConfig.featureSet.reviews.enabled"
+      id="tabReviews"
+      template-url="/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/product/controls/tabs.tab.html">
+      <uib-tab-heading>
+        <span data-translate="ui.storefront.product.widgets.relatedProducts.Reviews"></span>
+      </uib-tab-heading>
+      <h3 sid="ProductReviewsText"
+        data-translate="ui.storefront.product.detail.productDetails.productReviews">
+      </h3>
+      <div cef-reviews-main
+        product-id="productDetailTabsCtrl.product.ID">
+      </div>
+    </uib-tab>
+  </uib-tabset>
+</div>

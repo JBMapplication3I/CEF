@@ -1,0 +1,103 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.UI.XPortal.VendorAdminPortal.Client</AssemblyName>
+    <PackageId>Clarity.Ecommerce.UI.XPortal.VendorAdminPortal.Client</PackageId>
+    <RootNamespace>Clarity.Ecommerce.UI.XPortal.SharedLibrary</RootNamespace>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <ProjectGuid>{BA9D3B79-546A-4F63-B0E8-37C03F816D80}</ProjectGuid>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+    <UseBlazorWebAssembly>true</UseBlazorWebAssembly>
+    <custom_excludes>
+      ..\BrandAdminPortal\Pages\Catalog\Auctions\**;
+      ..\BrandAdminPortal\Pages\Catalog\Categories\**;
+      ..\BrandAdminPortal\Pages\Catalog\Discounts\**;
+      ..\BrandAdminPortal\Pages\Catalog\Listings\**;
+      ..\BrandAdminPortal\Pages\Catalog\Lots\**;
+      ..\BrandAdminPortal\Pages\Catalog\Warehouses\**;
+      ..\BrandAdminPortal\Pages\Customers\Accounts\**;
+      ..\BrandAdminPortal\Pages\Customers\Users\**;
+      ..\BrandAdminPortal\Pages\Details\Currencies\**;
+      ..\BrandAdminPortal\Pages\Details\Languages\**;
+      ..\BrandAdminPortal\Pages\Details\Nations\**;
+      ..\BrandAdminPortal\Pages\Details\Notifications\**;
+      ..\BrandAdminPortal\Pages\Details\Stores\**;
+      ..\BrandAdminPortal\Pages\Details\Purchasing.*;
+      ..\BrandAdminPortal\Pages\Details\Reports.*;
+      ..\BrandAdminPortal\Pages\Sales\**;
+    </custom_excludes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;JETBRAINS_ANNOTATIONS;CLIENT;VENDORADMIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>JETBRAINS_ANNOTATIONS;CLIENT;VENDORADMIN</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\BrandAdminPortal\**\*.cs" Exclude="$(custom_excludes)" />
+    <Content Include="..\BrandAdminPortal\**\*.razor" Exclude="$(custom_excludes)" />
+    <None Include="..\BrandAdminPortal\**\*.editorconfig" Exclude="$(custom_excludes)" />
+    <None Include="..\BrandAdminPortal\**\*.scss" Exclude="$(custom_excludes)" />
+    <None Include="..\BrandAdminPortal\**\*.css" Exclude="$(custom_excludes)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="..\BrandAdminPortal\obj\**" />
+    <None Remove="..\BrandAdminPortal\obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabFranchises.razor.cs" />
+    <Compile Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabStores.razor.cs" />
+    <Compile Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabVendors.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\ModalEditFranchiseProduct.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\ModalEditStoreProduct.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\ModalEditVendorProduct.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabAssociations.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabCategories.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabDesigner.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabFranchises.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabInventory.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabManufacturers.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabNotifications.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabReturning.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabStores.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabTaxes.razor" />
+    <Content Remove="..\BrandAdminPortal\Pages\Catalog\Products\EditParts\TabVendors.razor" />
+    <Content Remove="..\BrandAdminPortal\Shared\Modals\AccountUserRoleModal.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="Blazor.Extensions.Logging" Version="2.0.4" />
+    <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
+    <PackageReference Include="Blazorise" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.Components" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.DataGrid" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.RichTextEdit" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.TreeView" Version="0.9.5.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="ServiceStack.Blazor" Version="5.13.3" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="19.4.0.54" />
+    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="19.4.0.54" />
+    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+</Project>

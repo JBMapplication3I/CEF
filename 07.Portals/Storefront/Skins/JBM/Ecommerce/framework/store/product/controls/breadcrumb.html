@@ -1,0 +1,31 @@
+﻿<nav aria-label="breadcrumb">
+  <span class="breadcrumb-prefix"
+    ng-if="pdbCtrl.prefix.length"
+    ng-bind="pdbCtrl.prefix">
+  </span>
+  <ol class="breadcrumb bg-transparent py-2">
+    <li class="breadcrumb-item text-primary"
+      ng-if="pdbCtrl.firstItem"
+      ng-bind="pdbCtrl.firstItem">
+    </li>
+    <li class="breadcrumb-item text-primary"><a id="btnHomeBreadcrumb"
+      ui-sref-plus uisrp-area="site" uisrp-is-home="true"
+      ><span data-translate="ui.storefront.common.Home"></span></a></li>
+    <li class="breadcrumb-item"><a id="btnCatalogBreadcrumb"
+      ui-sref-plus uisrp-area="catalog"
+      ><span data-translate="ui.storefront.product.detail.productDetails.Catalog"></span></a></li>
+    <li class="breadcrumb-item"
+      ng-repeat="cat in pdbCtrl.categoryList">
+      <a cef-catalog-category-link category-id="cat.ID"></a>
+    </li>
+    <li class="breadcrumb-item breadcrumb-last-item"
+      sid="ProductBreadcrumbText"
+      ng-if="pdbCtrl.lastItem"
+      ng-bind="pdbCtrl.lastItem">
+    </li>
+  </ol>
+  <span class="breadcrumb-suffix"
+    ng-if="pdbCtrl.suffix"
+    ng-bind="pdbCtrl.suffix">
+  </span>
+</nav>

@@ -1,0 +1,175 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="emailQueueDetailCtrl.record"
+         new-kind-key="ui.admin.common.EmailQueue.New"
+         existing-kind-key="ui.admin.common.EmailQueue">
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 setting-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': emailQueueDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<!--
+                                     --><span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="emailQueueDetailCtrl.forms.Details">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.BasicInformation"></h3></div></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <text-input-form-group
+                                    key="CustomKey"
+                                    ng-model="emailQueueDetailCtrl.record.CustomKey"
+                                    label-key="ui.admin.common.Key"
+                                    tooltip-key="ui.admin.common.CustomKey.Tooltip"
+                                    placeholder-key="ui.admin.common.Key"
+                                    max-length="128"
+                                    ng-required="false">
+                                </text-input-form-group>
+                                <div class="row">
+                                    <select-form-group
+                                        class="col-sm-6"
+                                        key="TypeID"
+                                        ng-model="emailQueueDetailCtrl.record.TypeID"
+                                        selections="emailQueueDetailCtrl.types"
+                                        label-key="ui.admin.common.Tab"
+                                        tooltip-key="ui.admin.common.Type.Tooltip"
+                                        include-null="true" null-key="ui.admin.common.Type.SelectA"
+                                        ng-required="true">
+                                    </select-form-group>
+                                    <select-form-group
+                                        class="col-sm-6"
+                                        key="StatusID"
+                                        ng-model="emailQueueDetailCtrl.record.StatusID"
+                                        selections="emailQueueDetailCtrl.statuses"
+                                        label-key="ui.admin.common.Status"
+                                        tooltip-key="ui.admin.common.Status.Tooltip"
+                                        include-null="true" null-key="ui.admin.common.Status.SelectA"
+                                        ng-required="true">
+                                    </select-form-group>
+                                </div>
+                                <div class="row">
+                                    <toggle-form-group
+                                        class="col-sm-6"
+                                        key="HasError"
+                                        ng-model="emailQueueDetailCtrl.record.HasError"
+                                        label-key="ui.admin.common.HasError"
+                                        tog-on-key="ui.admin.common.Yes" tog-on-style="btn-primary"
+                                        tog-off-key="ui.admin.common.No" tog-off-style="btn-info"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                    <number-input-form-group
+                                        class="col-sm-6"
+                                        key="Attempts"
+                                        ng-model="emailQueueDetailCtrl.record.Attempts"
+                                        label-key="ui.admin.common.Attempts"
+                                        tooltip-key="ui.admin.controls.system.emailQueueDetail.Attempts.Tooltip"
+                                        placeholder-key="ui.admin.common.Attempts"
+                                        step="1"
+                                        precision="0"
+                                        ng-required="false">
+                                    </number-input-form-group>
+                                </div>
+                                <text-input-form-group
+                                    key="AddressFrom"
+                                    ng-model="emailQueueDetailCtrl.record.AddressFrom"
+                                    label-key="ui.admin.common.AddressFrom"
+                                    tooltip-key="ui.admin.controls.system.emailQueueDetail.AddressFrom.Tooltip"
+                                    placeholder-key="ui.admin.common.From"
+                                    max-length="512"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <!-- NOTE: Only one of these To/CC/BCC is required at a time, the others can be blank -->
+                                <text-input-form-group
+                                    key="AddressesTo"
+                                    ng-model="emailQueueDetailCtrl.record.AddressesTo"
+                                    label-key="ui.admin.common.AddressesTo"
+                                    tooltip-key="ui.admin.controls.system.emailQueueDetail.AddressesTo.Tooltip"
+                                    placeholder-key="ui.admin.common.To"
+                                    max-length="1024"
+                                    ng-required="!emailQueueDetailCtrl.record.AddressesCc && !emailQueueDetailCtrl.record.AddressesBcc">
+                                </text-input-form-group>
+                                <text-input-form-group
+                                    key="AddressesCc"
+                                    ng-model="emailQueueDetailCtrl.record.AddressesCc"
+                                    label-key="ui.admin.common.AddressesCc"
+                                    tooltip-key="ui.admin.controls.system.emailQueueDetail.AddressesCc.Tooltip"
+                                    placeholder-key="ui.admin.common.Cc"
+                                    max-length="1024"
+                                    ng-required="!emailQueueDetailCtrl.record.AddressesTo && !emailQueueDetailCtrl.record.AddressesBcc">
+                                </text-input-form-group>
+                                <text-input-form-group
+                                    key="AddressesBcc"
+                                    ng-model="emailQueueDetailCtrl.record.AddressesBcc"
+                                    label-key="ui.admin.common.AddressesBcc"
+                                    tooltip-key="ui.admin.controls.system.emailQueueDetail.AddressesBcc.Tooltip"
+                                    placeholder-key="ui.admin.common.Bcc"
+                                    max-length="1024"
+                                    ng-required="!emailQueueDetailCtrl.record.AddressesTo && !emailQueueDetailCtrl.record.AddressesCc">
+                                </text-input-form-group>
+                            </div>
+                            <div class="col-md-6">
+                                <text-input-form-group
+                                    key="Subject"
+                                    ng-model="emailQueueDetailCtrl.record.Subject"
+                                    label-key="ui.admin.common.Subject"
+                                    tooltip-key="ui.admin.controls.system.emailQueueDetail.Subject.Tooltip"
+                                    placeholder-key="ui.admin.common.Subject"
+                                    max-length="255"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <div class="row">
+                                    <!-- TODO: Coming Soon
+                                    <select-form-group
+                                        class="col-sm-6"
+                                        key="TemplateID"
+                                        ng-model="emailQueueDetailCtrl.record.TemplateID"
+                                        selections="emailQueueDetailCtrl.templates"
+                                        label-key="ui.admin.common.Template"
+                                        tooltip-key="ui.admin.controls.system.emailQueueDetail.Template.Tooltip"
+                                        include-null="true" null-key="ui.admin.common.Template.SelectA"
+                                        ng-required="false">
+                                    </select-form-group>-->
+                                    <toggle-form-group
+                                        class="col-sm-6"
+                                        key="IsHtml"
+                                        ng-model="emailQueueDetailCtrl.record.IsHtml"
+                                        label-key="ui.admin.controls.system.emailQueueDetail.IsHTML"
+                                        tog-on-key="ui.admin.controls.system.emailQueueDetail.HTML" tog-on-style="btn-primary"
+                                        tog-off-key="ui.admin.controls.system.emailQueueDetail.PlainText" tog-off-style="btn-info"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                </div>
+                                <textarea-wysiwyg-form-group
+                                    key="Body"
+                                    ng-if="emailQueueDetailCtrl.record.IsHtml"
+                                    ng-model="emailQueueDetailCtrl.record.Body"
+                                    label-key="ui.admin.common.Body"
+                                    tooltip-key="ui.admin.controls.system.emailQueueDetail.Body.HTML.Tooltip"
+                                    placeholder-key="ui.admin.common.Body"
+                                    ng-required="true">
+                                </textarea-wysiwyg-form-group>
+                                <textarea-form-group
+                                    key="Body"
+                                    ng-if="!emailQueueDetailCtrl.record.IsHtml"
+                                    ng-model="emailQueueDetailCtrl.record.Body"
+                                    label-key="ui.admin.common.Body"
+                                    tooltip-key="ui.admin.controls.system.emailQueueDetail.Body.PlainText.Tooltip"
+                                    placeholder-key="ui.admin.common.Body"
+                                    ng-required="true">
+                                </textarea-form-group>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="emailQueueDetailCtrl"
+                return-state="system.emailQueues.list"
+                permissions-base="Messaging.EmailQueue">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+﻿<div class="row" id="results-list" ng-init="kind = 'categories'">
+  <div ng-repeat="recordID in sccalCtrl.service.activeSearchViewModel.ResultIDs
+                  | orderBy: sccalCtrl.service.getSorter()"
+    class="col-12 product mb-3 catalog-result-card"
+    id="storeListBlock{{recordID}}">
+    <div ng-if="sccalCtrl.service.getCachedByAllCategories(recordID)"
+      class="row">
+      <div class="col-sm-6 col-md-4">
+        <a ui-sref-plus
+            uisrp-is-catalog="true"
+            uisrp-state="searchCatalog.products.results.both"
+            uisrp-params="{
+                'category': '{{sccalCtrl.service.getCachedByAllCategories(recordID).Name}}|{{sccalCtrl.service.getCachedByAllCategories(recordID).CustomKey}}',
+                'term': null
+              }">
+          <img class="img-fluid d-block mx-auto"
+            alt="{{sccalCtrl.service.getCachedByAllCategories(recordID).Name}}"
+            ng-src="{{sccalCtrl.service.getCachedByAllCategories(recordID).PrimaryImageFileName
+              | corsImageLink : kind : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+            onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';"
+          />
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-8">
+        <div class="row">
+          <div class="col-12">
+            <a class="product-title rows-2"
+              title="{{sccalCtrl.service.getCachedByAllCategories(recordID).Name}}"
+              ui-sref-plus
+              uisrp-is-catalog="true"
+              uisrp-state="searchCatalog.products.results.both"
+              uisrp-params="{
+                  'category': '{{sccalCtrl.service.getCachedByAllCategories(recordID).Name}}|{{sccalCtrl.service.getCachedByAllCategories(recordID).CustomKey}}',
+                  'term': null
+                }">
+              <p ng-bind="sccalCtrl.service.getCachedByAllCategories(recordID).Name"></p>
+            </a>
+          </div>
+          <div class="col-12">
+            <p class="product-short-desc rows-2"
+              ng-bind="sccalCtrl.service.getCachedByAllCategories(recordID).ShortDescription">
+            </p>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6">
+            <p>
+              <a class="btn btn-block btn-lg btn-primary"
+                ui-sref-plus
+                uisrp-is-catalog="true"
+                uisrp-state="searchCatalog.products.results.both"
+                uisrp-params="{
+                    'category': '{{sccalCtrl.service.getCachedByAllCategories(recordID).Name}}|{{sccalCtrl.service.getCachedByAllCategories(recordID).CustomKey}}',
+                    'term': null
+                  }">
+                <span data-translate="ui.storefront.common.ViewDetails"></span>
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

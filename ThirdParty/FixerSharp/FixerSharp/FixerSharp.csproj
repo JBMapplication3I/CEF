@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net452;net472;netstandard1.1;netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
+    <PackageId>FixerSharp</PackageId>
+    <Authors>Ryan Morrin</Authors>
+    <Description>Currency conversion using the fixer.io API</Description>
+    <Copyright>Copyright 2015 Ryan Morrin</Copyright>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://github.com/rmorrin/FixerSharp/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/rmorrin/FixerSharp</PackageProjectUrl>
+    <PackageTags>currency conversion exchange rate fixer.io</PackageTags>
+    <Version>1.2.2.1</Version>
+    <Nullable>enable</Nullable>
+    <LangVersion>latestmajor</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)'=='net452' ">
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)'=='net472' ">
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+</Project>

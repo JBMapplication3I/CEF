@@ -1,0 +1,44 @@
+﻿<div class="row">
+    <div class="col-md-6">
+        <!-- TODO: Replace with contact address block widget -->
+        <p>
+            <small>
+                <span class="block bold" ng-show="cefCheckoutCtrl.selectedAddressShipping.Address.CustomKey" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Address.CustomKey"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Email1" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Email1"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Phone1" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Phone1"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Phone2" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Phone2"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Phone3" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Phone3"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Fax1" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Fax1"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Company" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Name"></span>
+            </small>
+        </p>
+    </div>
+    <div class="col-md-6">
+        <p>
+            <small>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.FirstName" ng-bind="cefCheckoutCtrl.selectedAddressShipping.FirstName + ' ' + cefCheckoutCtrl.selectedAddressShipping.LastName"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Address.Street1" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Address.Street1"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Address.Street2" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Address.Street2"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Address.Street3" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Address.Street3"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Address.City">{{cefCheckoutCtrl.selectedAddressShipping.Address.City}}, {{cefCheckoutCtrl.selectedAddressShipping.Address.RegionCode || cefCheckoutCtrl.selectedAddressShipping.Address.Region.Code}} {{cefCheckoutCtrl.selectedAddressShipping.Address.PostalCode}}</span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressShipping.Address.CountryName" ng-bind="cefCheckoutCtrl.selectedAddressShipping.Address.CountryName"></span>
+            </small>
+        </p>
+    </div>
+    <div class="col-md-12" ng-if="cefCheckoutCtrl.showSplitShipping && cefCheckoutCtrl.shippingChoice==='multi'">
+        <p>
+            <span data-translate="ui.admin.checkout.modularCheckout.views.summaries.shippingSummary.SplitShippingTotal.Message"></span>&nbsp;<!--
+            --><span class="bold" ng-bind="cefCheckoutCtrl.cvCartService.totalTargetedCartsShipping()"></span>&nbsp;<!--
+            --><span data-translate="ui.admin.checkout.modularCheckout.views.summaries.shippingSummary.UpdatedGrandTotal.Colon"></span>&nbsp;<!--
+            --><span class="bold" ng-bind="cefCheckoutCtrl.cvCartService.grandTotal()"></span>
+        </p>
+    </div>
+    <div class="col-md-12" ng-if="cefCheckoutCtrl.showSplitShipping && cefCheckoutCtrl.shippingChoice==='single'">
+        <p>
+            <span data-translate="ui.admin.checkout.modularCheckout.views.summaries.shippingSummary.SingleShippingTotal.Message"></span>&nbsp;<!--
+            --><span class="bold" ng-bind="cefCheckoutCtrl.cvCartService.totalTargetedCartsShipping()"></span>&nbsp;<!--
+            --><span data-translate="ui.admin.checkout.modularCheckout.views.summaries.shippingSummary.UpdatedGrandTotal.Colon"></span>&nbsp;<!--
+            --><span class="bold" ng-bind="cefCheckoutCtrl.cvCartService.grandTotal()"></span>
+        </p>
+    </div>
+</div>

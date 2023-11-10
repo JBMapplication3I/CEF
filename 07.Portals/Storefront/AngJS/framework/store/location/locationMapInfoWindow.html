@@ -1,0 +1,29 @@
+<div class="cef-store-location-map-info-window">
+    <address>
+        <b>{{parameter.model.Name}}</b><br />
+        <small>
+            {{parameter.model.Contact.Address.Street1}}<br />
+            {{parameter.model.Contact.Address.City}}, {{parameter.model.Contact.Address.RegionCode}}&nbsp;<!--
+            -->{{parameter.model.Contact.Address.PostalCode}}<br />
+            <span data-translate="ui.storefront.common.Phone"></span>&nbsp;<!--
+            --><a ng-href="tel:{{parameter.model.Contact.Phone1}}">{{parameter.model.Contact.Phone1}}</a>
+            <span ng-if="parameter.model.Website">
+                <br />
+                <a ng-href="{{parameter.model.Website}}" target="_blank">{{parameter.model.Website}}</a>
+            </span>
+        </small>
+    </address>
+    <location-store-hours store="parameter.model" short-format="true" small-text="true"></location-store-hours>
+    <p>&nbsp;</p>
+    <a class="btn btn-primary" target="_blank"
+       ng-href="{{parameter.model.mapUrl}}"
+       data-translate="ui.storefront.common.GetDirection.Plural"></a>
+    <a ng-if="parameter.isUserStore(parameter.model.ID)"
+       class="btn btn-primary"
+       ng-click="parameter.onButtonClick()"
+       data-translate="ui.storefront.common.ViewProduct.Plural"></a>
+    <a ng-if="!parameter.isUserStore(parameter.model.ID)"
+       class="btn btn-primary"
+       ng-click="parameter.onButtonClick()"
+       data-translate="ui.storefront.location.locationMapInfoWindow.makeThisMyStore"></a>
+</div>

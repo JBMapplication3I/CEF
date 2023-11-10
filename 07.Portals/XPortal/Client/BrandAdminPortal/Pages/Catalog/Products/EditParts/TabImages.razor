@@ -1,0 +1,32 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+@*Included in the control <Heading Size="HeadingSize.Is2">Images</Heading>*@
+<RecordImages
+  TMaster="ProductModel"
+  TImageModel="ProductImageModel"
+  TImageTypeModel="TypeModel"
+  TCreateImageCall="MVC.Api.Endpoints.CreateProductImage"
+  CreateImageCallAsync="async i => (await cvApi.CreateProductImage(i).ConfigureAwait(false)).data!.Result"
+  Record="Record"
+/>
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    return Task.CompletedTask;
+  }
+}

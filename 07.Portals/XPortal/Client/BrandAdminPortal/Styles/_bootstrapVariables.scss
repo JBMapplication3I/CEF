@@ -1,0 +1,374 @@
+$bootstrap-sass-asset-helper: false !default;
+
+// Variables
+
+$spacer: 1rem !default;
+$spacers: () !default;
+$spacers: map-merge(
+  (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3),
+    6: ($spacer * 4),
+    7: ($spacer * 5),
+    8: ($spacer * 6),
+    9: ($spacer * 7),
+    10: ($spacer * 8),
+    auto: auto,
+  ),
+  $spacers
+);
+
+//== Color system
+
+//## Gray colors used in clarity scss files.
+$white:                          #ffffff;
+$gray-100:                       #f4f5f5; // #f8f9fa;
+$gray-200:                       #f1f1f1; //#e9ecef;
+$gray-300:                       #dee2e6;
+$gray-400:                       #ced4da;
+$gray-500:                       #9d9d9d; // #adb5bd;
+$gray-600:                       #6c757d;
+$gray-700:                       #4b4b4b; // #495057;
+$gray-800:                       #343a40;
+$gray-900:                       #1e242b; // #212529;
+$black:                          #1a1b1b; // #000;
+
+$grays: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$grays: map-merge(
+  (
+    "100": $gray-100,
+    "200": $gray-200,
+    "300": $gray-300,
+    "400": $gray-400,
+    "500": $gray-500,
+    "600": $gray-600,
+    "700": $gray-700,
+    "800": $gray-800,
+    "900": $gray-900
+  ),
+  $grays
+);
+
+$blue:                           darken(#4ac0e1, 10%); // #007bff;
+$indigo:                         #6610f2;
+$purple:                         #6f42c1;
+$pink:                           #e83e8c;
+$red:                            #dc3545;
+$orange:                         #fd7e14;
+$yellow:                         #ffc107;
+$green:                          #28a745;
+$green-fade:                     lighten($green, 50%);
+$teal:                           #20c997;
+$cyan:                           #17a2b8;
+
+$colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$colors: map-merge(
+  (
+    "blue":       $blue,
+    "indigo":     $indigo,
+    "purple":     $purple,
+    "pink":       $pink,
+    "red":        $red,
+    "orange":     $orange,
+    "yellow":     $yellow,
+    "green":      $green,
+    "green-fade": $green-fade,
+    "teal":       $teal,
+    "cyan":       $cyan,
+    "white":      $white,
+    "gray":       $gray-600,
+    "gray-dark":  $gray-800
+  ),
+  $colors
+);
+
+$primary:                        $blue;
+$secondary:                      $gray-600;
+$success:                        $green;
+$info:                           $cyan;
+$warning:                        $yellow;
+$danger:                         $red;
+$light:                          $gray-100;
+$dark:                           $gray-900;
+
+$theme-colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-colors: map-merge(
+  (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark
+  ),
+  $theme-colors
+);
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+$body-bg:                        $white;
+//** Global textual link color.
+$link-color:                     $primary; // #009fdc;
+//** Link hover color set via `darken()` function.
+$link-hover-color:               darken($link-color, 15%);
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+
+$barlow: "Barlow", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+$barlow-condensed: "Barlow Condensed", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+$catamaran: "Catamaran", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+
+$font-family-serif: Georgia, "Times New Roman", Times, serif !default;
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+
+$font-family-base: $catamaran;
+
+$font-size-base:          1rem;
+$font-size-xxl:           $font-size-base * 2.25; // 2.25rem
+$font-size-xl:            $font-size-base * 1.75; // 1.75rem
+$font-size-lg:            $font-size-base * 1.15; // 1.15rem
+$font-size-md:            $font-size-base;        // 1.00rem
+$font-size-sm:            $font-size-base * 0.75; // 0.75rem
+$font-size-xs:            $font-size-base * 0.65; // 0.65rem
+
+$h1-font-size:            $font-size-base * 2.25 !default;
+$h2-font-size:            $font-size-base * 2.00 !default;
+$h3-font-size:            $font-size-base * 1.75 !default;
+$h4-font-size:            $font-size-base * 1.50 !default;
+$h5-font-size:            $font-size-base * 1.25 !default;
+$h6-font-size:            $font-size-base !default;
+
+//** Unit-less `line-height` for use in components like buttons.
+$line-height-base:          1.5; // 20/14
+$line-height-lg:            1.5; // extra decimals for Win 8.1 Chrome
+$line-height-sm:            1.5;
+
+//** By default, this inherits from the `<body>`.
+$headings-font-family:    $catamaran;
+$headings-line-height:    1.1;
+$headings-color:          inherit;
+$headings-margin-top:     0;
+$headings-margin-bottom:  $spacer;
+
+//== Iconography
+//
+//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
+
+//** Load fonts from this directory.
+
+// [converter] If $bootstrap-sass-asset-helper if used, provide path relative to the assets load path.
+// [converter] This is because some asset helpers, such as Sprockets, do not work with file-relative paths.
+$icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "../fonts/bootstrap/") !default;
+
+//** File name for all font files.
+$icon-font-name:          "glyphicons-halflings-regular" !default;
+//** Element ID within SVG icon file.
+$icon-font-svg-id:        "glyphicons_halflingsregular" !default;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-radius:             0.1875rem;
+$border-radius-lg:          0; // orig 0.3rem
+$border-radius-sm:          0; // orig 0.2rem
+
+$border-color:              $gray-500;
+
+$component-active-bg:       $info;
+
+//** Width of the `border` for generating carets that indicator dropdowns.
+$caret-width:               0.25rem;
+//** Carets increase slightly in size for larger components.
+$caret-width-large:         0.3125rem !default;
+
+
+//== Tables
+//
+//## Customizes the `.table` component with basic values, each used across all table variations.
+
+//** Padding for `<th>`s and `<td>`s.
+$table-cell-padding:            0.5rem;
+//** Padding for cells in `.table-condensed`.
+$table-condensed-cell-padding:  0.3125rem !default;
+
+//** Default background color used for all tables.
+$table-bg:                      transparent;
+//** Background color used for `.table-striped`.
+$table-accent-bg:               #f9f9f9;
+//** Background color used for `.table-hover`.
+$table-hover-bg:                #f5f5f5;
+
+//** Border color for table and cell borders.
+$table-border-color:            #ddd;
+
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+$btn-font-weight:                0.875rem;
+
+
+//== Forms
+//
+//##
+
+//** `<input disabled>` background color
+$input-disabled-bg:              $gray-200;
+
+//** Text color for `<input>`s
+$input-color:                    $gray-700;
+//** `<input>` border color
+$input-border-color:             $gray-400;
+
+//** Border color for inputs on focus
+$input-focus-border-color:       #66afe9;
+
+//** Placeholder text color
+$input-placeholder-color:        $gray-600;
+
+//** `.form-group` margin
+$form-group-margin-bottom:       0.9375rem;
+
+$legend-color:                   $gray-800;
+$legend-border-color:            $gray-800;
+
+//** Background color for textual input addons
+$input-group-addon-bg:           $gray-200;
+
+//** Disabled cursor for form controls and buttons.
+$cursor-disabled:                not-allowed;
+
+
+//== Dropdowns
+//
+//## Dropdown menu container and contents.
+
+//** Divider color for between dropdown items.
+$dropdown-divider-bg:            #e5e5e5;
+
+//** Dropdown padding set to none;
+$dropdown-padding-y:             0;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  tk: 2000px,
+  fk: 3000px
+);
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+/*
+Size | Breakpoint | Container-Max-Width |  % off
+-----+------------+---------------------+-------
+xs   |          0 |                  -  |      -
+sm   |        576 |                540  | 6.250%
+md   |        768 |                720  | 6.250%
+lg   |        992 |                960  | 3.226%
+xl   |       1200 |               1140  | 5.000%
+tk   |       2000 |               1880  | 6.250%
+fk   |       3000 |               2810  | 6.250%
+//xxl  |       1440 |               1350  | 6.250%
+//xxxl |       1600 |               1500  | 6.250%
+*/
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  tk: 1880px,
+  fk: 2810px
+);
+
+$grid-gutter-width:              30px;
+
+//== Navbar
+//
+//##
+$navbar-padding-x:               0;
+
+//== Pagination
+//
+//##
+$pagination-border-color:        $gray-300;
+
+//== Jumbotron
+//
+//##
+$jumbotron-color:                inherit;
+
+//== Alerts
+//
+//## Define alert colors, border radius, and padding.
+
+//== Tooltips
+//
+//##
+
+//** Tooltip arrow width
+$tooltip-arrow-width:            0.3125rem;
+
+//== Popovers
+//
+//##
+
+//== Modals
+//
+//##
+$modal-lg:                       800px;
+$modal-md:                       500px;
+
+//== Progress bars
+//
+//##
+$progress-bg:                    $gray-200;
+
+//== List group
+//
+//##
+
+//** `.list-group-item` border color
+$list-group-border-color:        rgba($black, 0.125);
+
+
+//== Code
+//
+//##
+
+$code-color:                     $pink;
+
+//== Type
+//
+//##
+
+//** Horizontal offset for forms and lists.
+$component-offset-horizontal: 180px !default;

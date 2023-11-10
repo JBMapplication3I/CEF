@@ -1,0 +1,71 @@
+
+// styles for the CEF user dashboard page
+
+
+//.btn-toggle { background: transparent; position: relative; padding-left: 75px;
+//  &:before,&:after { display: block; content: ''; position: absolute; }
+//  &:before { width: 70px; height: 24px; left: 0; background: $gray-lighter; border-radius: 12px; }
+//  &:after { width: 35px; height: 20px; left: 2px; background: #fff; border-radius: 10px; transition: all .2s linear; }
+//
+//  &:hover {
+//    &:after { left: 7px; }
+//  }// end &:hover
+//  &:focus,&:active { outline: none; box-shadow: none; }
+//
+//  &.btn-toggle-active { color: $success;
+//    &:before { background: $success; }
+//    &:after { left: 33px; }
+//
+//    &:hover {
+//      &:after { left: 28px; }
+//    }// end &:hover
+//  }// end &.btn-toggle-active
+//
+//  &[type="button"] {
+//    &:before { top: 4px; }
+//    &:after { top: 6px; }
+//  }// end &.btn-toggle-active
+//
+//  &[type="checkbox"],&[type="radio"] { width: 70px; margin: 0; position: absolute; top: 4px; left: 0;
+//    &:before,&:after {  }
+//    &:before {  }
+//    &:after { top: 2px; }
+//    span { font-weight: normal; }
+//
+//    &:checked {
+//      &:before { background: $success; }
+//      &:after { left: 33px; }
+//
+//      &:hover {
+//        &:after { left: 28px; }
+//      }// end &:hover
+//
+//      & ~ span { color: $success; }
+//    }// end &:checked
+//  }// end &[type="checkbox"]
+//
+//}// end .btn-toggle
+//
+//
+//.btn-toggle-input { display: block; position: relative; height: 33px; padding: 6px 12px 6px 75px; font-weight: normal; }
+
+
+
+
+// example toggles
+// button
+//    <button class="btn btn-toggle" type="button">Toggle</button>
+// checkbox
+//    <label for="default-billing" class="btn-toggle-input">
+//      <input id="default-billing" class="btn btn-toggle" type="checkbox">
+//      <span>Default Billing</span>
+//    </label>
+// radio
+//    <label for="default-shipping-radio" class="btn-toggle-input">
+//      <input id="default-shipping-radio" class="btn btn-toggle" type="radio" name="radio">
+//      <span>Default Shipping</span>
+//    </label>
+//    <label for="default-billing-radio" class="btn-toggle-input">
+//      <input id="default-billing-radio" class="btn btn-toggle" type="radio" name="radio">
+//      <span>Default Billing</span>
+//    </label>

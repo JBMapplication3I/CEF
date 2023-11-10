@@ -1,0 +1,410 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="manufacturerDetailCtrl.record"
+         new-kind-key="ui.admin.common.Manufacturer.New"
+         existing-kind-key="ui.admin.common.Manufacturer">
+    </div>
+    <div class="row details-body">
+        <div class="col-sm-12 vendor-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': manufacturerDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="manufacturerDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                                <div class="form-group" ng-class="{'has-error': manufacturerDetailCtrl.forms.Details.txtName.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtName" name="txtName"
+                                               maxlength="256"
+                                               ng-required="true"
+                                               ng-model="manufacturerDetailCtrl.record.Name" />
+                                    </div>
+                                    <div ng-messages="manufacturerDetailCtrl.forms.Details.txtName.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': manufacturerDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtCustomKey" name="txtCustomKey"
+                                               maxlength="128"
+                                               ng-required="false"
+                                               ng-model="manufacturerDetailCtrl.record.CustomKey" />
+                                    </div>
+                                    <div ng-messages="manufacturerDetailCtrl.forms.Details.txtCustomKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" ng-if="manufacturerDetailCtrl.record">
+                                <div cef-contact-editor-widget
+                                     class="mb-3"
+                                     contact="manufacturerDetailCtrl.record.Contact"
+                                     is-editable="true"
+                                     id-suffix="manf"
+                                     hide-key="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab ng-if="manufacturerDetailCtrl.cefConfig.featureSet.manufacturers.minMax">
+                    <uib-tab-heading><span ng-class="{'text-danger': manufacturerDetailCtrl.forms.MinOrders.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.categoryDetail.MinimumOrders.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="manufacturerDetailCtrl.forms.MinOrders">
+                        <div class="row">
+                            <div cef-order-minimums-editor
+                                 master="manufacturerDetailCtrl.record"
+                                 class="col-sm-12"></div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab ng-if="manufacturerDetailCtrl.cefConfig.featureSet.manufacturers.minMax && categoryDetailCtrl.cefConfig.featureSet.shipping.enabled">
+                    <uib-tab-heading><span ng-class="{'text-danger': manufacturerDetailCtrl.forms.MinFreeShip.$invalid}"><i class="far fa-lg fa-truck"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.categoryDetail.FreeShipping"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="manufacturerDetailCtrl.forms.MinFreeShip">
+                        <div class="row">
+                            <div cef-free-shipping-minimums-editor
+                                 master="manufacturerDetailCtrl.record"
+                                 class="col-sm-12"></div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger':manufacturerDetailCtrl.forms.Images.$invalid}"><i class="far fa-lg fa-picture-o"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Image.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="manufacturerDetailCtrl.forms.Images">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.Image.Plural"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Uploader -->
+                                <div cef-upload-image-widget
+                                     master="manufacturerDetailCtrl.record"
+                                     upload-type="ImageStore"
+                                     type-key="General"
+                                     allow-multiple="true"
+                                     is-primary="false">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Thumbnails -->
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                                    <div class="input-group">
+                                        <div ng-if="!manufacturerDetailCtrl.record.Images.length"
+                                             data-translate="ui.admin.common.NoImagesHaveBeenUploaded"></div>
+                                        <div ng-repeat="image in manufacturerDetailCtrl.record.Images" class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                                            <div class="form-vertical">
+                                                <div class="form-group">
+                                                    <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                                                         ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                                                   | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                                                         onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Admin/framework/store/img/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                                                </div>
+                                                <text-input-form-group
+                                                    key="ImageName{{$index}}"
+                                                    ng-model="image.Name"
+                                                    label-key="ui.admin.common.Name"
+                                                    max-length="128"
+                                                    ng-required="true">
+                                                </text-input-form-group>
+                                                <select-form-group
+                                                    key="ImageTypeID{{$index}}"
+                                                    ng-model="image.TypeID"
+                                                    selections="manufacturerDetailCtrl.imageTypes"
+                                                    label-key="ui.admin.common.Type"
+                                                    tooltip-text="The type of the record."
+                                                    placeholder-key="ui.admin.common.Type"
+                                                    ng-required="true">
+                                                </select-form-group>
+                                                <toggle-form-group
+                                                    key="ImageIsPrimary{{$index}}"
+                                                    ng-change="manufacturerDetailCtrl.clearOtherPrimaryImagesNew($index)"
+                                                    ng-model="image.IsPrimary"
+                                                    label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                                                    tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                                                    tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                                                    ng-required="false">
+                                                </toggle-form-group>
+                                                <button type="button" class="btn btn-danger btn-block"
+                                                        translate-attr="{ title: 'ui.admin.common.Delete',
+                                                                          'aria-label': 'ui.admin.common.Delete' }"
+                                                        ng-click="manufacturerDetailCtrl.removeImageNew($index)"
+                                                        ><i class="far fa-trash-o"></i>&nbsp;<!--
+                                                        --><span data-translate="ui.admin.common.Delete"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger':manufacturerDetailCtrl.forms.Products.$invalid}"><i class="far fa-lg fa-object-group"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Product.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="manufacturerDetailCtrl.forms.Products">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.controls.inventory.vendorDetail.ProductsProducedByThisManufacturer"></h3></div></div>
+                        <div class="row" ng-hide="manufacturerDetailCtrl.display.ShowAddProductsPanel">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary mb-3"
+                                        ng-click="manufacturerDetailCtrl.showAddProductsPanel()"
+                                        data-translate="ui.admin.common.AddProduct"></button>
+                                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                                --><span data-translate="ui.admin.controls.inventory.manufacturerDetail.TheseCanBeManagedFromTheProductEditorAsWell"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" ng-hide="manufacturerDetailCtrl.display.ShowAddProductsPanel">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="min-width:100px;" data-translate="ui.admin.common.ID"></th>
+                                            <th style="min-width:100px;" data-translate="ui.admin.common.CustomKey"></th>
+                                            <th style="min-width:100px;" data-translate="ui.admin.common.Name"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="manufacturerDetailCtrl.record.Products.length <= 0">
+                                            <td colspan="9" data-translate="ui.admin.common.NoProductsHaveBeenAdded"></td>
+                                        </tr>
+                                        <tr ng-repeat="mp in manufacturerDetailCtrl.record.Products">
+                                            <td><label class="form-control-static" ng-bind="mp.SlaveID"></label></td>
+                                            <td><label class="form-control-static" ng-bind="mp.SlaveKey"></label></td>
+                                            <td><label class="form-control-static" ng-bind="mp.SlaveName"></label></td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        ng-click="manufacturerDetailCtrl.removeProduct($index)">
+                                                    <i class="far fa-times"></i><!--
+                                                    --><span class="sr-only" data-translate="ui.admin.common.Detail"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-12" ng-show="manufacturerDetailCtrl.display.ShowAddProductsPanel">
+                                <div class="separator bottom"></div>
+                                <div class="filter-bar">
+                                    <div class="margin-none form-inline">
+                                        <div class="form-group col-sm-3">
+                                            <label data-translate="ui.admin.common.Key"></label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control"
+                                                       ng-model="manufacturerDetailCtrl.productSearchParams.ProductCode" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label data-translate="ui.admin.common.Name"></label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control"
+                                                       ng-model="manufacturerDetailCtrl.productSearchParams.ProductName" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>&nbsp;</label>
+                                            <div class="input-group">
+                                                <button type="button" class="btn btn-info"
+                                                        ng-click="manufacturerDetailCtrl.searchProducts()"
+                                                        ><i class="far fa-fw fa-filter"></i>&nbsp;<!--
+                                                        --><span data-translate="ui.admin.controls.accounts.storeDetail.SearchProduct.Plural"></span></button>
+                                                <button type="button" class="btn btn-primary"
+                                                        ng-click="manufacturerDetailCtrl.addProducts()"
+                                                        ><i class="far fa-fw fa-plus"></i>&nbsp;<!--
+                                                        --><span data-translate="ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plural"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Select"></th>
+                                            <th data-class="expand" data-translate="ui.admin.common.Key"></th>
+                                            <th data-hide="phone,tablet" data-translate="ui.admin.common.Name"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-hide="manufacturerDetailCtrl.products.length > 0">
+                                            <td colspan="4" data-translate="ui.admin.controls.accounts.storeDetail.NoProductsWereFoundWithThisSearchCriteria"></td>
+                                        </tr>
+                                        <tr ng-repeat="product in manufacturerDetailCtrl.products">
+                                            <td><input type="checkbox" ng-model="product.Selected" /></td>
+                                            <td ng-bind="product.CustomKey"></td>
+                                            <td ng-bind="product.Name"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="form-actions m-0">
+                                    <button type="button" class="btn btn-primary"
+                                            ng-click="manufacturerDetailCtrl.addProducts()"
+                                            ><i class="far fa-fw fa-plus"></i>&nbsp;<!--
+                                            --><span data-translate="ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plural"></span></button>
+                                    <button type="button" class="btn btn-info"
+                                            ng-click="manufacturerDetailCtrl.hideAddProductsPanel()"
+                                            ><i class="far fa-fw fa-undo"></i>&nbsp;<!--
+                                            --><span data-translate="ui.admin.common.Cancel"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': manufacturerDetailCtrl.forms.Vendors.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Vendor.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="manufacturerDetailCtrl.forms.Vendors">
+                        <div class="row">
+                            <div class="col-sm-12 mb-3">
+                                <h3 data-translate="ui.admin.controls.inventory.manufacturerDetail.VendorsThatProvideProductsToFromThisManufacturer"></h3>
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="manufacturerDetailCtrl.addVendor()"
+                                        data-translate="ui.admin.common.AddVendor"></button>
+                                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                                --><span data-translate="ui.admin.common.TheseCanBeManagedFromTheManufacturerEditorAsWell"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:50px;">#</th>
+                                                <th data-translate="ui.admin.common.Manufacturer"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="manufacturerDetailCtrl.record.Vendors.length == 0">
+                                                <td colspan="3" data-translate="ui.admin.common.NoVendorsHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="mnfVendor in manufacturerDetailCtrl.record.Vendors">
+                                                <td><label class="form-control-static" ng-bind="mnfVendor.ID">{</label></td>
+                                                <td>
+                                                    <select class="form-control"
+                                                            id="ddlManufacturerID{{$index}}" name="ddlManufacturerID{{$index}}"
+                                                            ng-required="true"
+                                                            ng-options="v.ID as ((v.DisplayName || v.Name) + (v.CustomKey && v.CustomKey != '' ? ' [' + v.CustomKey + ']' : ''))
+                                                                        for v in manufacturerDetailCtrl.vendors
+                                                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                                                            ng-model="mnfVendor.MasterID">
+                                                        <option value="" ng-disabled="true"
+                                                                data-translate="ui.admin.common.SelectAVendor"></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            ng-click="manufacturerDetailCtrl.removeVendor($index)"
+                                                            ><i class="far fa-times"></i><!--
+                                                            --><span class="sr-only" data-translate="ui.admin.common.Delete"></span></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': manufacturerDetailCtrl.forms.Stores.$invalid}"><i class="far fa-lg fa-building"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Store.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="manufacturerDetailCtrl.forms.Stores">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.controls.inventory.manufacturerDetail.StoresThatCarryThisManufacturersProducts"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="manufacturerDetailCtrl.addStore()"
+                                        data-translate="ui.admin.common.AddStore"></button>
+                                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                                --><span data-translate="ui.admin.common.TheseCanBeManagedFromTheStoreEditorAsWell"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:50px;" data-translate="ui.admin.common.ID"></th>
+                                                <th data-translate="ui.admin.common.Store"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="manufacturerDetailCtrl.record.Stores.length == 0">
+                                                <td colspan="3" data-translate="ui.admin.common.NoStoresHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="storeMnf in manufacturerDetailCtrl.record.Stores">
+                                                <td><label class="form-control-static">{{storeMnf.ID}}</label></td>
+                                                <td>
+                                                    <select class="form-control"
+                                                            id="ddlStoreID{{$index}}" name="ddlStoreID{{$index}}"
+                                                            ng-required="true"
+                                                            ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' + s.CustomKey + ']' : ''))
+                                                                        for s in manufacturerDetailCtrl.stores
+                                                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                                                            ng-model="storeMnf.MasterID">
+                                                        <option value="" ng-disabled="true" data-translate="ui.admin.common.SelectAStore"></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            ng-click="manufacturerDetailCtrl.removeStore($index)"
+                                                            ><i class="far fa-times"></i><!--
+                                                            --><span class="sr-only" data-translate="ui.admin.common.Delete"></span></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': manufacturerDetailCtrl.forms.Notes.$invalid}"><i class="far fa-lg fa-sticky-note-o"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Note.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="manufacturerDetailCtrl.forms.Notes">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.PrivacyNote.Plural"></h3></div></div>
+                        <div class="row">
+                            <div cef-notes-editor
+                                 class="col-sm-12"
+                                 notes="manufacturerDetailCtrl.record.Notes"
+                                 note-type-name="'Private'">
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger':manufacturerDetailCtrl.forms.Attributes.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Attribute.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="manufacturerDetailCtrl.forms.Attributes">
+                        <div cef-json-attributes-editor
+                             master="manufacturerDetailCtrl.record"
+                             type="Manufacturer"
+                             ng-if="manufacturerDetailCtrl.record != null"></div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="manufacturerDetailCtrl"
+                return-state="inventory.manufacturers.list"
+                permissions-base="Manufacturers.Manufacturer">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

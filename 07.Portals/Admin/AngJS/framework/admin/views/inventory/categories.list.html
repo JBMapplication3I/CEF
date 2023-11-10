@@ -1,0 +1,45 @@
+﻿<div ng-controller="InventoryCategorySearchController as inventoryCategorySearch" class="full-height">
+    <cv-page caption="Manage Categories" head-icon="fa-tags"
+        ng-if="$root.cvSecurityService.hasPermission('Admin.Inventory.Categories')">
+        <cv-widget>
+            <widget-menu-item caption="Add Category" icon-class="fa-plus-circle"
+                              click="$root.$state.go('inventory.categories.detail',{ID:'New'})"
+                              permission="'Categories.Category.Create'"></widget-menu-item>
+            <widget-menu-item caption="Get Category Site Map" icon-class="fa-download"
+                              click="$parent.$parent.$parent.$parent.inventoryCategorySearch.doGetCategorySiteMapContent()"
+                              permission="'/^Categories\\.Category\\.(?:Create|Update)$/'"></widget-menu-item>
+            <widget-menu-item caption="Regenerate Category Site Map" icon-class="fa-refresh"
+                              click="$parent.$parent.$parent.$parent.inventoryCategorySearch.doRegenerateCategorySiteMap()"
+                              permission="'/^Categories\\.Category\\.(?:Create|Update)$/'"></widget-menu-item>
+            <!--<widget-menu-item toggle="$root.showTree" caption="Tree View" alt-caption="Grid View" icon-class="fa-list" click="$root.showTree = !$root.showTree"></widget-menu-item>-->
+
+            <widget-body ng-controller="SearchController as search">
+                <cv-grid ng-if="!$root.showTree"
+                         show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                         on-search="search.getCategories"
+                         on-deactivate="search.deactivateCategory"
+                         on-reactivate="search.reactivateCategory"
+                         on-delete="search.deleteCategory"
+                         edit-state="inventory.categories.detail,[ID]"
+                         permissions-base="Categories.Category">
+                    <cv-column hidden field="TypeID" title="Type"
+                               filter filter-type="select"
+                               on-option-repeat="$parent.search.searchTypes.getCategoryTypes">
+                        <option value="" selected data-translate="ui.admin.views.inventory.categorieslist.Any"></option>
+                    </cv-column>
+                    <cv-column filter field="ID" title="#" width="50px" />
+                    <cv-column filter field="CustomKey" title="Key" width="100px" />
+                    <cv-column filter field="Name" title="Name" width="100px" />
+                    <cv-column filter field="SeoUrl" title="SEO URL" width="100px" />
+                    <cv-column field="TypeName" title="Type" width="75px" />
+                    <cv-column field="ParentName" width="100px" />
+                    <cv-column field="HasChildren" type="boolean" width="60px" cell-class="text-center" header-class="text-center" />
+                    <cv-column field="IsVisible" type="boolean" width="50px" cell-class="text-center" header-class="text-center" />
+                    <cv-column field="IncludeInMenu" title="In Menu" type="boolean" width="50px" cell-class="text-center" header-class="text-center" />
+                    <cv-column field="SortOrder" title="Sort" width="40px" cell-class="text-right" />
+                </cv-grid>
+                <!--<cv-category-tree ng-if="$root.showTree"></cv-category-tree>-->
+            </widget-body>
+        </cv-widget>
+    </cv-page>
+</div>

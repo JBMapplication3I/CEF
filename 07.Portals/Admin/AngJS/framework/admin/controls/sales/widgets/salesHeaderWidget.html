@@ -1,0 +1,13 @@
+<div class="row details-header" ng-cloak="salesHeaderWidgetCtrl.record">
+    <span class="col-md-12 details-title"><!--
+        --><span ng-if="!salesHeaderWidgetCtrl.record.ID" data-translate="{{salesHeaderWidgetCtrl.newKindKey}}"></span><!--
+        --><span ng-if="salesHeaderWidgetCtrl.record.ID" data-translate="{{salesHeaderWidgetCtrl.existingKindKey}}"></span><!--
+        --><span ng-if="salesHeaderWidgetCtrl.record.ID">&nbsp;<span data-translate="ui.admin.common.Number.Symbol"
+            ></span><span ng-bind="salesHeaderWidgetCtrl.record.ID"></span></span><!--
+        --><span ng-if="salesHeaderWidgetCtrl.record.CustomKey">&nbsp;[<span ng-bind="salesHeaderWidgetCtrl.record.CustomKey"></span>]</span><!--
+        --><span ng-if="salesHeaderWidgetCtrl.record.AccountID">&nbsp;<span data-translate="ui.admin.common.ForAccount"
+            ></span>&nbsp;<span ng-bind="salesHeaderWidgetCtrl.record.AccountKey"></span></span><!--
+        --><span ng-if="salesHeaderWidgetCtrl.record.UserID">&nbsp;<span data-translate="ui.admin.common.User"
+            ></span>&nbsp;<span ng-bind="salesHeaderWidgetCtrl.record.User.UserName"></span></span><!--
+    --></span>
+</div>

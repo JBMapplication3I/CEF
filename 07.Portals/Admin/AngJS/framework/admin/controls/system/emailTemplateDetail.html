@@ -1,0 +1,182 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row details-header">
+        <h2 ng-hide="emailTemplateDetailCtrl.record.ID > 0" class="col-md-12 details-title"><span data-translate="ui.admin.controls.system.emailTemplateDetail.NewEmailTemplate"></span> {{emailTemplateDetailCtrl.record.Name}} [{{emailTemplateDetailCtrl.record.CustomKey}}]</h2>
+        <h2 ng-show="emailTemplateDetailCtrl.record.ID > 0" class="col-md-12 details-title"><span data-translate="ui.admin.controls.system.emailTemplateDetail.EmailTemplate"></span> #{{emailTemplateDetailCtrl.record.ID}}: {{emailTemplateDetailCtrl.record.Name}} [{{emailTemplateDetailCtrl.record.CustomKey}}]</h2>
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 setting-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': emailTemplateDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="emailTemplateDetailCtrl.forms.Details">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.BasicInformation"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.CustomKey"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtCustomKey" name="txtCustomKey"
+                                               ng-required="true"
+                                               ng-model="emailTemplateDetailCtrl.record.CustomKey" />
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.txtCustomKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.txtName.$invalid}">
+                                    <label class="control-label" for="txtName"
+                                           data-translate="ui.admin.common.Name"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtName" name="txtName"
+                                               ng-required="true"
+                                               ng-model="emailTemplateDetailCtrl.record.Name" />
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.txtName.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.txtaDescription.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Description"></label>
+                                    <div class="input-group">
+                                        <textarea id="txtaDescription" name="txtaDescription"
+                                                  kendo-editor k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  k-encoded="false" k-paste="emailTemplateDetailCtrl.sanitizeMarkup"
+                                                  ng-model="emailTemplateDetailCtrl.record.Description"
+                                                  ng-required="true"
+                                                  style="width: 100%; height: 300px;"></textarea>
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.txtaDescription.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.txtSubject.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.emailTemplateDetail.Subject"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtSubject" name="txtSubject"
+                                               ng-required="true"
+                                               ng-model="emailTemplateDetailCtrl.record.Subject" />
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.txtSubject.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.ddlIncludesContentTemplateID.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.emailTemplateDetail.SharedIncludesContent"></label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                id="ddlIncludesContentTemplateID" name="ddlIncludesContentTemplateID"
+                                                ng-options=""
+                                                ng-model="emailTemplateDetailCtrl.record.IncludesContentTemplateID">
+                                            <option value="" data-translate="ui.admin.common.Custom"></option>
+                                        </select>
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.ddlIncludesContentTemplateID.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.txtaIncludesContent.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.emailTemplateDetail.Includes"></label>
+                                    <div class="input-group">
+                                        <textarea id="txtaIncludesContent" name="txtaIncludesContent"
+                                                  kendo-editor k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  k-encoded="false" k-paste="emailTemplateDetailCtrl.sanitizeMarkup"
+                                                  ng-model="emailTemplateDetailCtrl.record.IncludesContent"
+                                                  ng-required="true"
+                                                  style="width: 100%; height: 300px;"></textarea>
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.txtaIncludesContent.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.ddlHeaderContentTemplateID.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.emailTemplateDetail.SharedHeaderContent"></label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                id="ddlHeaderContentTemplateID" name="ddlHeaderContentTemplateID"
+                                                ng-options=""
+                                                ng-model="emailTemplateDetailCtrl.record.HeaderContentTemplateID">
+                                            <option value="" data-translate="ui.admin.common.Custom"></option>
+                                        </select>
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.ddlHeaderContentTemplateID.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.txtaHeaderContent.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.emailTemplateDetail.HeaderContent"></label>
+                                    <div class="input-group">
+                                        <textarea id="txtaHeaderContent" name="txtaHeaderContent"
+                                                  kendo-editor k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  k-encoded="false" k-paste="emailTemplateDetailCtrl.sanitizeMarkup"
+                                                  ng-model="emailTemplateDetailCtrl.record.HeaderContent"
+                                                  ng-required="true"
+                                                  style="width: 100%; height: 300px;"></textarea>
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.txtaHeaderContent.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.ddlFooterContentTemplateID.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.emailTemplateDetail.SharedFooterContent"></label>
+                                    <div class="input-group">
+                                        <select class="form-control"
+                                                id="ddlFooterContentTemplateID" name="ddlFooterContentTemplateID"
+                                                ng-options=""
+                                                ng-model="emailTemplateDetailCtrl.record.FooterContentTemplateID">
+                                            <option value="" data-translate="ui.admin.common.Custom"></option>
+                                        </select>
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.ddlFooterContentTemplateID.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.txtaFooterContent.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.emailTemplateDetail.FooterContent"></label>
+                                    <div class="input-group">
+                                        <textarea id="txtaFooterContent" name="txtaFooterContent"
+                                                  kendo-editor k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  k-encoded="false" k-paste="emailTemplateDetailCtrl.sanitizeMarkup"
+                                                  ng-model="emailTemplateDetailCtrl.record.FooterContent"
+                                                  ng-disabled="emailTemplateDetailCtrl.record.FooterContentTemplateID"
+                                                  ng-required="true"
+                                                  style="width: 100%; height: 300px;"></textarea>
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.txtaFooterContent.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': emailTemplateDetailCtrl.forms.Details.txtaMainContent.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.emailTemplateDetail.MainContent"></label>
+                                    <div class="input-group">
+                                        <textarea id="txtaMainContent" name="txtaMainContent"
+                                                  kendo-editor k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  k-encoded="false" k-paste="emailTemplateDetailCtrl.sanitizeMarkup"
+                                                  ng-model="emailTemplateDetailCtrl.record.MainContent"
+                                                  ng-required="true"
+                                                  style="width: 100%; height: 300px;"></textarea>
+                                    </div>
+                                    <div ng-messages="emailTemplateDetailCtrl.forms.Details.txtaMainContent.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="emailTemplateDetailCtrl"
+                return-state="system.emailTemplates.list"
+                permissions-base="Messaging.EmailTemplate">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

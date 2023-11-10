@@ -1,0 +1,55 @@
+﻿<div class="form-group"
+  ng-switch="scrpfCtrl.pageFormatViewType"
+  ng-cloak="scrpfCtrl.service.activeSearchViewModel">
+  <label class="control-label" for="resultsPageFormatPicker"
+    ng-hide="scrpfCtrl.hideLabel == 'true'"
+    ><span sid="ViewText"
+      data-translate="ui.storefront.common.View"
+    ></span>&nbsp;</label>
+  <div class="input-group">
+    <select ng-switch-when="dropdown"
+      class="form-control text-capitalize d-inline-block" style="width: 90px;"
+      id="resultsPageFormatPicker" name="resultsPageFormatPicker"
+      ng-disabled="scrpfCtrl.service.searchIsRunning"
+      ng-options="choice as choice for choice in scrpfCtrl.choices"
+      ng-model="scrpfCtrl.currentChoice">
+    </select>
+    <button ng-switch-when="buttons"
+      id="btnFormatsView{{choice}}"
+      ng-repeat="choice in scrpfCtrl.choices"
+      type="button" class="btn"
+      ng-class="{
+        'btn-outline-primary': scrpfCtrl.currentChoice == choice,
+        'btn-text-light': scrpfCtrl.currentChoice == choice,
+        'd-none d-sm-inline': choice == 'table'
+      }"
+      ng-disabled="scrpfCtrl.service.searchIsRunning"
+      ng-click="scrpfCtrl.currentChoice = choice;">
+      <i class="{{scrpfCtrl.icons[choice]}} fa-lg"></i><!--
+      --><span class="text-capitalize"
+        ng-hide="scrpfCtrl.hideText === true
+              || scrpfCtrl.hideText === 'true'"
+        >&nbsp;<span ng-bind="choice"></span></span>
+    </button>
+    <div ng-switch-when="split-button">
+      <div class="btn-group" uib-dropdown
+        ng-class="{ 'pull-right': scrpfCtrl.layoutMode == 'hug-right' }">
+        <button type="button" class="btn btn-secondary dropdown-toggle"
+          uib-dropdown-toggle
+          ng-disabled="scrpfCtrl.service.searchIsRunning"
+          data-translate="ui.storefront.common.View">
+        </button>
+        <ul class="dropdown-menu">
+          <li ng-repeat="choice in scrpfCtrl.choices"
+            class="text-capitalize"
+            ng-class="{'active': scrpfCtrl.currentChoice == choice}">
+            <a ng-class="{'disabled':scrpfCtrl.service.searchIsRunning}"
+              ng-click="!scrpfCtrl.service.searchIsRunning
+                && (scrpfCtrl.currentChoice = choice)"
+            ><span ng-bind="choice"></span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

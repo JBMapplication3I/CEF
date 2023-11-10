@@ -1,0 +1,152 @@
+@use "sass:math";
+// styles for the CEF user dashboard page
+$dashboard-color: $gray-700;
+
+// styles for the dashboard sidebar navigation
+.cef-dashboard-nav {
+  // border-right: 1px solid $dashboard-color;
+  .navbar-light {
+    background: transparent;
+    border: 0;
+    color: $dashboard-color;
+    margin: 0 -15px;
+
+    .navbar-header,
+    .navbar-collapse {
+      padding: 0;
+      margin: 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .navbar-brand {
+      font-size: $font-size-sm;
+      text-transform: uppercase;
+      height: auto;
+      margin: 0;
+    }
+
+    .navbar-nav {
+      margin: 0;
+
+      ul.nav.flex-column {
+        & > li {
+          width: 100%;
+
+          // button styles
+          .nav-link {
+            border: 0;
+            color: $dashboard-color;
+            text-align: left;
+            font-weight: bold;
+            font-size: 0.98rem;
+            padding: 9px 12px;
+            box-shadow: none;
+            border-radius: 33px 0 0 33px;
+
+            &:focus {
+              outline: 0;
+            }
+
+            svg {
+              margin-bottom: 2px;
+
+              .path-fill {
+                fill: $dashboard-color;
+              }
+
+              .path-stroke {
+                stroke: $dashboard-color;
+              }
+            }
+
+            // end svg
+
+            &:hover {
+              background: $gray-300;
+              color: $dashboard-color;
+            }
+
+            // end &.btn-default
+            // button styles for the active tab
+            &.active {
+              color: $white;
+              background: $primary;
+              box-shadow: none;
+
+              &:hover {
+                background: $gray-600;
+                //color: $dashboard-color;
+              }
+
+              svg {
+                .path-fill {
+                  fill: $white;
+                }
+
+                .path-stroke {
+                  stroke: $white;
+                }
+              }
+            }
+            // end &.active
+
+            &.disabled {
+              cursor: $cursor-disabled;
+            }
+          }
+
+          // end &>.btn
+          // sub nav styles
+          ul {
+            margin-left: 0;
+            padding: math.div($grid-gutter-width, 2) 0 $grid-gutter-width
+              $grid-gutter-width;
+
+            & > li {
+              margin: 0;
+              display: block;
+
+              // button styles
+              .btn {
+                border-left: 2px solid transparent;
+                font-weight: normal;
+                border-radius: 0;
+
+                // default button styles
+                &.btn-default {
+                  &:hover {
+                  }
+                }
+
+                // end &.btn-default
+                // button styles for the active tab
+                &.active {
+                  background: transparent;
+                  border-left-color: $primary;
+                  color: $primary;
+
+                  &:hover {
+                  }
+                }
+                // end &.active
+              }
+              // end &>.btn
+            }
+            // end &>li
+          }
+          // end ul
+        }
+        // end &>li
+      }
+    }
+    // end .navbar-nav
+    .cef-dashboard-nav-icon {
+      display: inline-block;
+      width: 27px;
+      text-align: center;
+    }
+  }
+
+  // end .navbar-default
+}

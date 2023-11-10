@@ -1,0 +1,63 @@
+<!-- step.confirmation.view Template -->
+<div class="row">
+    <div class="col-12 col-sm">
+        <div cef-reg-step-view-title></div>
+    </div>
+    <div class="col-12 col-sm-auto"
+         ng-if="step.complete">
+        <div cef-reg-step-confirmation-summary>
+        </div>
+    </div>
+    <hr class="w-100 my-2 mx-3" />
+    <div ng-show="step.index === registrationCtrl.cvRegistrationService.activeStep"
+         class="col-12"
+         ng-form="registrationCtrl.forms.confirmation">
+        <div cef-reg-step-confirmation-body
+             id-suffix="Confirmation">
+        </div>
+    </div>
+    <div ng-show="step.index === registrationCtrl.cvRegistrationService.activeStep"
+         class="col-12">
+        <div class="row">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary mb-3"
+                        id="btnSubmit_{{step.name}}" name="btnSubmit_{{step.name}}"
+                        translate-attr="{ title: registrationCtrl.cvRegistrationService.steps[$index + 1].continueTextKey || 'Continue',
+                                          'aria-label': registrationCtrl.cvRegistrationService.steps[$index + 1].continueTextKey || 'Continue' }"
+                        data-translate="{{registrationCtrl.cvRegistrationService.steps[$index + 1].continueTextKey || 'Continue'}}"
+                        ng-disabled="registrationCtrl.viewState.running || registrationCtrl.forms.confirmation.$invalid || step.invalid"
+                        ng-click="registrationCtrl.submit(step)"></button>
+            </div>
+            <div class="col" ng-if="registrationCtrl.cefConfig.debug">
+                <div class="alert alert-dark">
+                    <h4 class="alert-heading">Debug Info for this step</h4>
+                    <table class="table table-borderless table-hover table-sm mb-0">
+                        <tr>
+                            <th>registrationCtrl.viewState.running</th>
+                            <td>{{registrationCtrl.viewState.running}}</td>
+                        </tr>
+                        <tr>
+                            <th>registrationCtrl.forms.confirmation.$invalid</th>
+                            <td>{{registrationCtrl.forms.confirmation.$invalid}}</td>
+                        </tr>
+                        <tr>
+                            <th>step.invalid</th>
+                            <td>{{step.invalid}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr ng-show="step.index === registrationCtrl.cvRegistrationService.activeStep"
+        class="w-100 my-2 mx-3" />
+    <!--
+    <div ng-if="registrationCtrl.viewState.running"
+         cef-loading-widget
+         overlay="true"
+         size="3"
+         pad-in="true"
+         message="registrationCtrl.viewState.waitMessage">
+    </div>
+    -->
+</div>

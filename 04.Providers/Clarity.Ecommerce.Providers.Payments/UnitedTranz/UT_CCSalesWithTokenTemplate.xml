@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<UTA>
+  <USERINFO>
+    <USERNAME>{UserName}</USERNAME>
+    <PASSWORD>{Password}</PASSWORD>
+    <MERCHANTNO>{MerchantNo}</MERCHANTNO>
+  </USERINFO>
+  <CREDITCARDS>
+    <ACTION>SALE</ACTION>
+    <CREDITCARD>
+      <CUSTOMERID>{CustomerID}</CUSTOMERID>
+      <TRANSACTIONDATE>{TransactionDate}</TRANSACTIONDATE>
+      <TOKENID>{Token}</TOKENID>
+      <VERIFY>N</VERIFY>
+      <AMOUNT>{Amount}</AMOUNT>
+      <INVOICENO>{InvoiceNo}</INVOICENO>
+    </CREDITCARD>
+  </CREDITCARDS>
+</UTA>

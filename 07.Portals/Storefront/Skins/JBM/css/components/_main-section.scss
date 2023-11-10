@@ -1,0 +1,33 @@
+.main-section {
+	padding: rem-calc(55 0 45);
+
+	+.main-section:not([class*="bg"]),
+	+.holder-section:not([class*="bg"]) {
+		padding-top: rem-calc(15);
+		z-index: 1;
+	}
+
+	[class^="bg"],
+	[class*="bg"] {
+		overflow: hidden;
+	}
+
+	.image-decor {
+		position: absolute;
+		z-index: -1;
+		width: 103%;
+		left: 50%;
+		transform: translateX(-50%);
+		min-width: rem-calc(1500);
+		bottom: 0;
+		pointer-events: none;
+
+		img {
+			width: 100%;
+		}
+	}
+
+	.btn {
+		min-width: rem-calc(140);
+	}
+}

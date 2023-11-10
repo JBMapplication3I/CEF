@@ -1,0 +1,36 @@
+﻿<div class="row">
+    <div class="col-12">
+        <a ui-sref-plus uisrp-root="/Store/Catalog"
+           uisrp-state="searchCatalog.stores.results.both"
+           uisrp-params="{ 'storeID': sellerDirectoryStoreCtrl.store.ID }">
+            <img class="img-fluid img-thumbnail center-block"
+                 alt="{{sellerDirectoryStoreCtrl.store.Name}}"
+                    ng-src="{{sellerDirectoryStoreCtrl.store.PrimaryImageFileName
+                            | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                 onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+        </a>
+        <p class="text-center"><small ng-bind="sellerDirectoryStoreCtrl.store.TypeName"></small></p>
+        <h3><a ui-sref-plus uisrp-root="/Store/Catalog"
+               uisrp-state="searchCatalog.stores.results.both"
+               uisrp-params="{ 'storeID': sellerDirectoryStoreCtrl.store.ID }"
+               ng-bind="sellerDirectoryStoreCtrl.store.Name"></a></h3>
+        <div class="row">
+            <div class="col-6">
+                <a ui-sref-plus uisrp-root="/Store/Catalog"
+                   uisrp-state="searchCatalog.stores.results.both"
+                   uisrp-params="{ 'storeID': sellerDirectoryStoreCtrl.store.ID }"
+                   class="btn btn-tan-gray btn-block btn-xs"
+                   data-translate="ui.storefront.stores.sellerDirecotryStore.ViewProducts"></a>
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-tan-gray btn-block btn-xs"
+                        ng-click="sellerDirectoryStoreCtrl.doContactSeller()"
+                        data-translate="ui.storefront.stores.sellerDirecotryStore.ContactSeller"></button>
+            </div>
+        </div>
+        <hr />
+        <a class="btn btn-primary btn-block"
+           ui-sref-plus uisrp-is-store="true" uisrp-path="{{sellerDirectoryStoreCtrl.store.SeoUrl}}"
+           ><span data-translate="ui.storefront.stores.sellerDirectoryStore.ViewProfile"></span></a>
+    </div>
+</div>

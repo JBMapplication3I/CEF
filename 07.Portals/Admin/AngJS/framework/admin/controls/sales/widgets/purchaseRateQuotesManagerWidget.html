@@ -1,0 +1,196 @@
+﻿<div class="row" ng-form="cRQMWCtrl.forms.shippingEstimator">
+  <div class="col-sm-4" ng-if="!cRQMWCtrl.hideAddress && cRQMWCtrl.lookupKeyToUse.ID">
+    <h5 class="bold"
+      data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourFullAddress">
+    </h5>
+    <div cef-contact-address-block-widget
+      class="mb-3"
+      contact="cRQMWCtrl.contact"
+      key="cRQMWCtrl.contactKey"
+      hide-icons="true"
+      hide-phones="true"
+      hide-fax="true"
+      hide-email="true"
+      small-text="false"
+      index="rateQuotes">
+    </div>
+    <h5 ng-if="!cRQMWCtrl.selectedRateQuoteID"
+      class="text-danger text-center" sid="PleaseSelectARateText"
+      data-translate="ui.admin.cart.cartShippingEstimator.PleaseSelectARate">
+    </h5>
+    <div ng-if="cRQMWCtrl.selectedRateQuoteID"
+      class="text-success text-center">
+      <h5 sid="YourSelectedShippingRateText_{{$index}}"
+        data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourSelectedShippingRate">
+      </h5>
+      <p ng-repeat-start="rate in cRQMWCtrl.rateQuotes
+        | filter: { 'ID': cRQMWCtrl.selectedRateQuoteID }
+        | limitTo: 1"
+        class="bold"
+        sid="ShippingCompanySelectedText_{{$index}}"
+        id="selectedAddressShippingLabel_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+        name="selectedAddressShippingLabel_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+        ng-bind="rate.ShipCarrierMethodName.replace('Internal ', '')">
+      </p>
+      <p ng-repeat-end class="bold very-big"
+        id="selectedAddressShippingTotal_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+        name="selectedAddressShippingTotal_{{cRQMWCtrl.lookupKeyToUse.ID}}">
+        <span ng-if="rate.Rate <= 0" class="text-success"
+          data-translate="ui.admin.common.Free">
+        </span>
+        <span ng-if="rate.Rate > 0"
+          id="selectedAddressShippingTotal_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+          ng-bind="rate.Rate | globalizedCurrency">
+        </span>
+      </p>
+    </div>
+  </div>
+  <div ng-class="cRQMWCtrl.hideAddress ? 'col-xs-12' : 'col-sm-8'"
+    ng-if="cRQMWCtrl.lookupKeyToUse.ID">
+    <h5 ng-if="cRQMWCtrl.showYourShippingRateQuotesHeader"
+      class="bold"
+      data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourShippingRateQuotes">
+    </h5>
+    <div class="alert alert-warning mb-0"
+      ng-if="!cRQMWCtrl.viewState.running
+        && !cRQMWCtrl.rateQuotes.length
+        && !cRQMWCtrl.viewState.errorMessages.length"
+      data-translate="ui.admin.cart.cartShippingEstimator.noShippingRateInformationWasFoundForTheAddressInformationProvided">
+    </div>
+    <div class="alert alert-danger"
+      ng-if="!cRQMWCtrl.viewState.running
+        && cRQMWCtrl.viewState.hasError
+        && cRQMWCtrl.viewState.errorMessages.length">
+      <div ng-repeat="error in cRQMWCtrl.viewState.errorMessages track by $index"
+        class="block" ng-bind="error">
+      </div>
+    </div>
+    <div ng-show="cRQMWCtrl.rateQuotes.length">
+      <table class="table table-hover table-striped col-sm-12"
+        ng-class="{ 'mb-0': cRQMWCtrl.hideAddress,
+                    'table-condensed': !cRQMWCtrl.hideAddress }">
+        <colgroup>
+          <col class="w-40" />
+          <col class="w-10" />
+          <col class="w-25" />
+          <col class="w-25" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="sortable" colspan="2"
+              sid="RateText"
+              ng-class="{ 'asc':  cRQMWCtrl.isSorted(cRQMWCtrl.sortedByRate, cRQMWCtrl.sortedDirAsc),
+                          'desc': cRQMWCtrl.isSorted(cRQMWCtrl.sortedByRate, cRQMWCtrl.sortedDirDesc),
+                          'un':   cRQMWCtrl.isSorted(cRQMWCtrl.sortedByRate, cRQMWCtrl.sortedDirUn) }"
+              ng-click="cRQMWCtrl.sortBy(cRQMWCtrl.sortedByRate)"
+              data-translate="Rate">
+            </th>
+            <th sid="TargetShipText">Target Ship</th>
+            <th class="sortable"
+              sid="EstDelText"
+              ng-class="{ 'asc':  cRQMWCtrl.isSorted(cRQMWCtrl.sortedByEstDel, cRQMWCtrl.sortedDirAsc),
+                          'desc': cRQMWCtrl.isSorted(cRQMWCtrl.sortedByEstDel, cRQMWCtrl.sortedDirDesc),
+                          'un':   cRQMWCtrl.isSorted(cRQMWCtrl.sortedByEstDel, cRQMWCtrl.sortedDirUn) }"
+              ng-click="cRQMWCtrl.sortBy(cRQMWCtrl.sortedByEstDel)"
+              data-translate="Est. Del.">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="rate in cRQMWCtrl.rateQuotes
+            | orderBy: cRQMWCtrl.getSorter()
+            | limitTo: cRQMWCtrl.quantityRatesShown"
+            ng-class="{ 'table-success': cRQMWCtrl.selectedRateQuoteID === rate.ID }">
+            <td>
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input"
+                  sid="btnSelectShippingRate_{{$index}}"
+                  id="rd_{{cRQMWCtrl.lookupKeyToUse.ID}}_{{rate.ShipCarrierMethodKey}}"
+                  name="selectedRateQuote_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+                  value="{{rate.ID}}"
+                  ng-required="true"
+                  ng-disabled="cRQMWCtrl.viewState.running"
+                  ng-change="cRQMWCtrl.onSelectRateQuote()"
+                  ng-model="cRQMWCtrl.selectedRateQuoteID"
+                  index="{{$index}}"
+                />
+                <label class="custom-control-label mb-0 pointer"
+                  for="rd_{{cRQMWCtrl.lookupKeyToUse.ID}}_{{rate.ShipCarrierMethodKey}}"
+                  id="rdlb_{{cRQMWCtrl.lookupKeyToUse.ID}}_{{rate.ShipCarrierMethodKey}}"
+                  name="rdlb_{{cRQMWCtrl.lookupKeyToUse.ID}}_{{rate.ShipCarrierMethodKey}}"
+                  ng-bind="rate.ShipCarrierMethodName"
+                  index="{{$index}}">
+                </label>
+              </div>
+            </td>
+            <td class="text-right">
+              <label class="custom-control pl-0 mb-0 pointer"
+                for="rd_{{cRQMWCtrl.lookupKeyToUse.ID}}_{{rate.ShipCarrierMethodKey}}"
+                ng-class="{'text-danger strike-through': cRQMWCtrl.isRateDiscounted(rate)}">
+                <span ng-if="rate.original > 0"
+                  ng-bind="rate.original | globalizedCurrency">
+                </span>
+                <span ng-if="rate.original <= 0"
+                  class="text-success"
+                  data-translate="ui.admin.common.Free">
+                </span>
+              </label>
+              <label class="custom-control pl-0 mb-0 pointer"
+                for="rd_{{cRQMWCtrl.lookupKeyToUse.ID}}_{{rate.ShipCarrierMethodKey}}"
+                ng-if="cRQMWCtrl.isRateDiscounted(rate)">
+                <span ng-if="rate.discounted > 0"
+                  ng-bind="rate.discounted | globalizedCurrency">
+                </span>
+                <span ng-if="rate.discounted <= 0"
+                  class="text-success"
+                  data-translate="ui.admin.common.Free">
+                </span>
+              </label>
+            </td>
+            <td>
+              <label class="custom-control pl-0 mb-0 pointer"
+                for="rd_{{cRQMWCtrl.lookupKeyToUse.ID}}_{{rate.ShipCarrierMethodKey}}"
+                ng-bind="rate.TargetShippingDate | date: 'EEE MMM dd \'by\' hh:mm a'">
+              </label>
+            </td>
+            <td>
+              <label class="custom-control pl-0 mb-0 pointer"
+                for="rd_{{cRQMWCtrl.lookupKeyToUse.ID}}_{{rate.ShipCarrierMethodKey}}"
+                ng-bind="rate.EstimatedDeliveryDate | date: 'EEE MMM dd \'by\' hh:mm a'">
+              </label>
+            </td>
+          </tr>
+          <tr ng-if="cRQMWCtrl.showShowMoreButton">
+            <td colspan="4">
+              <button type="button" class="btn btn-info btn-block"
+                id="btnShowMoreShippingRateQuotes_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+                name="btnShowMoreShippingRateQuotes_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+                translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.ShowMore',
+                                  'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.ShowMore' }"
+                data-translate="ui.admin.controls.sales.salesOrderNewWizard.ShowMore"
+                ng-click="cRQMWCtrl.showMore(); apply();">
+              </button>
+            </td>
+          </tr>
+          <tr ng-if="cRQMWCtrl.showShowLessButton">
+            <td colspan="4">
+              <button type="button" class="btn btn-info btn-block"
+                id="btnShowLessShippingRateQuotes_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+                name="btnShowLessShippingRateQuotes_{{cRQMWCtrl.lookupKeyToUse.ID}}"
+                translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.ShowLess',
+                                  'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.ShowLess' }"
+                data-translate="ui.admin.controls.sales.salesOrderNewWizard.ShowLess"
+                ng-click="cRQMWCtrl.showLess(); apply();">
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div ng-if="cRQMWCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true" pad-in="true"
+    message="ui.admin.controls.sales.salesOrderNewWizard.WereSearchingForRatesForTheAddressInformationProvided.Ellipses">
+  </div>
+</div>

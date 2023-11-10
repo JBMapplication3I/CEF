@@ -1,0 +1,66 @@
+<div class="card product-card" ng-if="pccpcwCtrl.product">
+  <!-- Product Image -->
+  <div class="card-img-top bg-white"
+    cef-product-card-thumbnail-widget
+    product-id="pccpcwCtrl.product.ID"
+    product-image="pccpcwCtrl.product.PrimaryImageFileName"
+    width="pccpcwCtrl.thumbWidth || 200"
+    height="pccpcwCtrl.thumbHeight || 200"
+    index="pccpcwCtrl.index">
+  </div>
+  <div class="card-body py-3 px-0">
+    <!-- Product Name -->
+    <div cef-product-card-name-gen-widget
+      product-id="pccpcwCtrl.product.ID"
+      rows="pccpcwCtrl.nameRows"
+      index="pccpcwCtrl.index">
+    </div>
+    <!-- Product SKU Information -->
+    <div class="card-text my-1"
+      ng-if="!(pccpcwCtrl.hideSku == 'true')"
+      cef-product-card-sku-gen-widget
+      product-id="pccpcwCtrl.product.ID"
+      hide-sku="pccpcwCtrl.hideSku == 'true'">
+    </div>
+    <!-- Product Stock Information -->
+    <div class="card-text my-1"
+      ng-if="!(pccpcwCtrl.hideStock == 'true')"
+      cef-product-card-stock-gen-widget
+      product-id="pccpcwCtrl.product.ID"
+      hide-stock="pccpcwCtrl.hideStock == 'true'">
+    </div>
+    <!-- Product Short Description -->
+    <div class="card-text my-1"
+      ng-if="!(pccpcwCtrl.hideShortDesc == 'true')"
+      cef-product-card-short-desc-gen-widget
+      product-id="pccpcwCtrl.product.ID"
+      rows="pccpcwCtrl.shortDescRows">
+    </div>
+    <!-- Product Pricing -->
+    <div class="my-1"
+      cef-product-card-pricing-gen-widget
+      product-id="pccpcwCtrl.product.ID"
+      display-style="pccpcwCtrl.pricingDisplayStyle">
+    </div>
+  </div>
+  <div class="card-footer p-1" ng-if="!(pccpcwCtrl.hideCta == 'true')">
+    <!-- Call to Action Button -->
+    <div cef-product-card-action-button-gen-widget
+      product-id="pccpcwCtrl.product.ID"
+      quick-add="pccpcwCtrl.quickAdd"
+      button-view="pccpcwCtrl.actionButtonView">
+    </div>
+  </div>
+  <!-- Controls -->
+  <div class="card-footer p-1 card-controls"
+    ng-if="pccpcwCtrl.hideIcons == 'false'
+      && !(pccpcwCtrl.hideFL || pccpcwCtrl.hideWL || pccpcwCtrl.hideNM || pccpcwCtrl.hideC)"
+    cef-product-card-controls-gen-widget
+    product-id="pccpcwCtrl.product.ID"
+    hide-favorites-list="pccpcwCtrl.hideFL"
+    hide-wish-list="pccpcwCtrl.pccpcwCtrl"
+    hide-notify-me="pccpcwCtrl.hideNM"
+    hide-compare="pccpcwCtrl.hideC"
+    hide-icons="pccpcwCtrl.hideIcons == 'true'">
+  </div>
+</div>

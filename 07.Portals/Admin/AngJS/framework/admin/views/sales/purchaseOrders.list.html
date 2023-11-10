@@ -1,0 +1,103 @@
+﻿<cv-page caption="Manage Purchase Orders" head-icon="fa-list"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Sales.PurchaseOrders')">
+    <cv-widget>
+        <!--<widget-menu-item caption="Add Purchase Order" icon-class="fa-plus-circle"
+                          click="$root.$state.go('sales.purchaseOrders.new')"
+                          permission="'Purchasing.PurchaseOrder.Create'"></widget-menu-item>-->
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     filter-side="true" force-show-labels="true"
+                     groupable="false"
+                     sortable="false" server-sorting="true"
+                     on-search="search.getPurchaseOrders"
+                     partial-reset="false"
+                     on-deactivate="search.deactivatePurchaseOrder"
+                     on-reactivate="search.reactivatePurchaseOrder"
+                     on-delete="search.deletePurchaseOrder"
+                     edit-state="sales.purchaseOrders.detail,[ID]"
+                     permissions-base="Purchasing.PurchaseOrder"
+                     row-class=""
+                     row-ng-class="{
+                        'row-default': dataItem.StatusKey == 'Pending',
+                        'row-success': dataItem.StatusKey == 'Completed',
+                        'row-info'   : dataItem.StatusKey == 'Confirmed' || dataItem.StatusName == 'Processing' || dataItem.StatusName == 'Full Payment Received' || dataItem.StatusName == 'Partial Payment Received' || dataItem.StatusName == 'Shipped from Vendor' || dataItem.StatusName == 'Shipped',
+                        'row-warning': dataItem.StatusKey == 'Backordered' || dataItem.StatusName == 'Split',
+                        'row-danger' : dataItem.StatusKey == 'Void'
+                     }"
+                     row-group-class=""
+                     row-group-ng-class="{
+                        'row-group-default': dataItem.field == 'StatusKey' && dataItem.StatusKey == 'Pending',
+                        'row-group-success': dataItem.field == 'StatusKey' && dataItem.StatusKey == 'Completed',
+                        'row-group-info'   : dataItem.field == 'StatusKey' && dataItem.StatusKey == 'Confirmed' || dataItem.StatusName == 'Processing' || dataItem.StatusName == 'Full Payment Received' || dataItem.StatusName == 'Partial Payment Received' || dataItem.StatusName == 'Shipped from Vendor' || dataItem.StatusName == 'Shipped',
+                        'row-group-warning': dataItem.field == 'StatusKey' && dataItem.StatusKey == 'Backordered' || dataItem.StatusName == 'Split',
+                        'row-group-danger' : dataItem.field == 'StatusKey' && dataItem.StatusKey == 'Void'
+                     }">
+                <cv-column hidden
+                           field="TypeID" title-key="ui.admin.common.Type"
+                           filter filter-order="0" filter-type="select"
+                           on-option-repeat="$parent.search.searchTypes.getPurchaseOrderTypes">
+                    <option value="" selected data-translate="ui.admin.views.sales.salesorderslist.Any"></option>
+                </cv-column>
+                <cv-column field="ID" title-key="ui.admin.common.Number.Symbol" width="8%"
+                           filter filter-order="3" filter-type="id"
+                           groupable="false" />
+                <cv-column if="$parent.search.cefConfig.featureSet.purchaseOrders.hasIntegratedKeys"
+                           field="CustomKey" title-key="ui.admin.common.Key"
+                           filter filter-order="4"
+                           width="20%"
+                           groupable="false" />
+                <cv-column field="VendorName" title-key="ui.admin.common.Vendor"
+                           filter filter-field="VendorKey" filter-order="5"
+                           filter-type="input"
+                           groupable="false"
+                           sortable="false" sort-field="Vendor.Name">
+                </cv-column>
+                <!--
+                <cv-column field="VendorName" title-key="ui.admin.common.Vendor"
+                           filter filter-field="VendorKey" filter-order="5"
+                           filter-type="autocomplete"
+                           on-autocomplete="$parent.search.getVendors"
+                           on-option-repeat="$parent.search.getVendors"
+                           groupable="false"
+                           sortable="false" sort-field="Vendor.Name">
+                    <autocomplete-parameter listen="true">VendorKey</autocomplete-parameter>
+                </cv-column>
+                -->
+                <cv-column field="CreatedDate" title-key="ui.admin.common.Date" type="date"
+                           width="20%"
+                           filter filter-type="minmaxdate"
+                           format="yyyy MMM dd hh:mm a"
+                           sort-by="3" sort-by-direction="desc" />
+                <cv-column field="EstimatedArrivalDate" title="Est. Arrival" type="date" width="140px">
+                    <cv-group-header-template><script type="x-group-header-template"><span data-translate="ui.admin.views.sales.purchaseorderslist.EstArrival"></span> {{dataItem.value | date: 'yyyy-dd-MM'}}</script></cv-group-header-template>
+                </cv-column>
+                <cv-column field="DateReleased" title="Date Released" type="date" width="140px">
+                    <cv-group-header-template><script type="x-group-header-template"><span data-translate="ui.admin.views.sales.purchaseorderslist.Released"></span> {{dataItem.value | date: 'yyyy-dd-MM'}}</script></cv-group-header-template>
+                </cv-column>
+                <cv-column field="DateReceived" title="Date Received" type="date" width="140px">
+                    <cv-group-header-template><script type="x-group-header-template"><span data-translate="ui.admin.views.sales.purchaseorderslist.Recieved"></span> {{dataItem.value | date: 'yyyy-dd-MM'}}</script></cv-group-header-template>
+                </cv-column>
+                <cv-column hidden field="Status.SortOrder" title-key="ui.admin.common.Status"
+                           filter filter-field="StatusID" filter-order="2" filter-type="select"
+                           on-option-repeat="$parent.search.searchTypes.getPurchaseOrderStatuses"
+                           sort-by="2">
+                    <cv-group-header-template>
+                        <script type="x-group-header-template"><span><span data-translate="ui.admin.common.Status"></span>&nbsp;<span ng-bind="dataItem.items[0].StatusName
+                                || dataItem.items[0].items[0].StatusName || dataItem.items[0].items[0].items[0].StatusName"></span></span>
+                        </script>
+                    </cv-group-header-template>
+                </cv-column>
+                <cv-column hidden field="State.SortOrder" title-key="ui.admin.common.State"
+                           filter filter-field="StateID" filter-order="1" filter-type="select"
+                           on-option-repeat="$parent.search.searchTypes.getPurchaseOrderStates"
+                           sort-by="1">
+                    <cv-group-header-template>
+                        <script type="x-group-header-template"><span><span data-translate="ui.admin.common.State"></span>&nbsp;<span ng-bind="dataItem.items[0].StateName
+                                || dataItem.items[0].items[0].StateName || dataItem.items[0].items[0].items[0].StateName"></span></span>
+                        </script>
+                    </cv-group-header-template>
+                </cv-column>
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

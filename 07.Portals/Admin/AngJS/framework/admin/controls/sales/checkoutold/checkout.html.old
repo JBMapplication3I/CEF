@@ -1,0 +1,68 @@
+﻿<!-- Irrelevant to Admin UI
+<div cef-checkout-cart-empty
+     ng-hide="cefCheckoutCtrl.checkoutSteps"></div>
+-->
+<div class="form-vertical"
+     ng-show="cefCheckoutCtrl.checkoutSteps"
+     translate-cloak>
+    <div class="row"
+         translate-cloak>
+        <div class="form-vertical col-md-8">
+            <div ng-repeat="step in cefCheckoutCtrl.checkoutSteps">
+                <div class="row"
+                     ng-click="cefCheckoutCtrl.goToStep(step)"
+                     style="cursor: pointer">
+                    <hr class="mt-2 mb-0" ng-class="step.active ? 'primary' : 'inactive'" />
+                    <div class="col-md-6">
+                        <h5>
+                            <i ng-show="step.complete"
+                               class="far fa-check text-success"
+                               aria-hidden="true"></i>&nbsp;<!--
+                            --><span ng-class="step.active ? 'primary' : 'inactive'">
+                                <span ng-bind="step.position + 1"></span>
+                                <span data-translate="{{step.title}}"></span>
+                            </span>
+                        </h5>
+                    </div>
+                    <div ng-include="step.headingDetails" class="col-md-6"></div>
+                </div>
+                <div class="row"
+                     ng-show="step.active">
+                    <div ng-show="cefCheckoutCtrl.viewState.running"
+                         class="text-center">
+                        <i class="far fa-cog fa-spin fa-5x fa-fw"></i>
+                    </div>
+                    <div ng-hide="cefCheckoutCtrl.viewState.running">
+                        <div class="col-md-12">
+                            <div ng-include="step.templateURL"></div>
+                        </div>
+                        <div class="col-md-12"
+                             ng-hide="cefCheckoutCtrl.viewState.running"
+                             ng-repeat="child in step.children">
+                            <div ng-include="child.templateURL"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="button" class="ml-3 btn btn-primary"
+                                id="checkout{{step.name}}submit"
+                                name="checkout{{step.name}}submit"
+                                ng-disabled="$parent.$parent.cefCheckoutCtrl.viewState.running
+                                             || $parent.$parent.cefCheckoutCtrl.stepDisableCondition(step)"
+                                ng-show="step.showButton"
+                                ng-click="$parent.$parent.cefCheckoutCtrl.stepAction(step)"
+                                data-translate="{{step.continueText}}"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="checkoutMiniCart" class="col-md-4">
+            <cef-mini-cart
+                ng-hide="cefCheckoutCtrl.checkoutResult
+                         && (cefCheckoutCtrl.checkoutResult.OrderID
+                             || cefCheckoutCtrl.checkoutResult.OrderIDs.length > 0)"
+                type="cefCheckoutCtrl.cartType"
+                quantity-items-iterate="4">
+            </cef-mini-cart>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+﻿<div uib-accordion-group is-open="false" template-url="cat-filters-group-template.html">
+  <div uib-accordion-heading>
+    <i class="far fa-tag fa-fw mr-2 text-body small"></i>
+    <span class="text-body small"
+      sid="AppliedFiltersBrandNamesMenuText"
+      data-translate="Brand Names">
+    </span>
+  </div>
+  <div class="row">
+    <div ng-repeat="(brandName, docCount) in scfbbnCtrl.service.activeSearchViewModel.BrandNames" ng-show="brandName.length > 0" 
+      class="col-12">
+      <a tabindex="0" class="pointer"
+        ng-class="{'active bold': scfbbnCtrl.isActive(brandName)}"
+        ng-keypress="scfbbnCtrl.pushBrandName(brandName)"
+        ng-click="scfbbnCtrl.pushBrandName(brandName)">
+        <span ng-bind="brandName"></span>&nbsp;(<span ng-bind="docCount | number:0"></span>)
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container px-0">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="page-title text-secondary-d1">
+                {{OrderNumber}} - PackingSlip
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center page-title" style="font-size:18px;">
+                SHIPPING RECEIPT
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="my-1 text-right small">
+                Order#:
+            </div>
+            <div class="my-1 text-right small">
+                Date:
+            </div>
+            <div class="my-1 text-right small">
+                Shipping Method:
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="my-1 small">
+                {{OrderNumber}}
+            </div>
+            <div class="my-1 small">
+                {{OrderDate}}
+            </div>
+            <div class="my-1 small">
+                {{ShippingMethod}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+		<div class="col-6 pt-25">
+			<span class="text-600">BILLING ADDRESS</span>
+		</div>
+		<div class="col-6 pt-25">
+			<span class="text-600">SHIPPING ADDRESS</span>
+		</div>
+	</div>
+	<div class="row">
+        <div class="col-1">
+            <div class="my-1 small">
+                Name:
+            </div>
+            <div class="my-1 small">
+                Company:
+            </div>
+            <div class="my-1 small">
+                Address:
+            </div>
+            <div class="my-1 small">&nbsp;</div>
+            <div class="my-1 small">
+                Country:
+            </div>
+            <div class="my-1 small">
+                Phone:
+            </div>
+            <div class="my-1 small">
+                Email:
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="my-1 small">
+                {{BillingFullName}}
+            </div>
+            <div class="my-1 small">
+                {{BillingCompany}}
+            </div>
+            <div class="my-1 small">
+                {{BillingAddress}}<br />
+                {{BillingCityStateZip}}
+            </div>
+            <div class="my-1 small" style="padding-top:3px;">
+                {{BillingCountry}}
+            </div>
+            <div class="my-1 small" style="padding-top:2px;">
+                {{BillingPhone}}
+            </div>
+            <div class="my-1 small" style="padding-top:1px;">
+                {{BillingEmail}}
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="my-1 small">
+                Name:
+            </div>
+            <div class="my-1 small">
+                Company:
+            </div>
+            <div class="my-1 small">
+                Address:
+            </div>
+            <div class="my-1 small">&nbsp;</div>
+            <div class="my-1 small">
+                Country:
+            </div>
+            <div class="my-1 small">
+                Phone:
+            </div>
+            <div class="my-1 small">
+                Email:
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="my-1 small">
+                {{ShippingFullName}}
+            </div>
+            <div class="my-1 small">
+                {{ShippingCompany}}
+            </div>
+            <div class="my-1 small">
+                {{ShippingAddress}}<br />
+                {{ShippingCityStateZip}}
+            </div>
+            <div class="my-1 small" style="padding-top:3px;">
+                {{ShippingCountry}}
+            </div>
+            <div class="my-1 small" style="padding-top:2px;">
+                {{ShippingPhone}}
+            </div>
+            <div class="my-1 small" style="padding-top:1px;">
+                {{ShippingEmail}}
+            </div>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row cell text-white bgc-default-tp1">
+        <div class="col-5 small" style="left:5px;">Item</div>
+        <div class="col-1 small">Quantity</div>
+        <div class="col-3 small">Notes</div>
+        <div class="col-1 small text-right">Price</div>
+        <div class="col-1 small text-right">Total</div>
+    </div>
+    {{ItemDetails}}
+    <div class="row">
+        <div class="col-10 text-right small">
+            Subtotal
+        </div>
+        <div class="col-1 text-right small">
+            {{Subtotal}}
+        </div>
+        <div class="col-10 text-right small">
+            Shipping
+        </div>
+        <div class="col-1 text-right small">
+            {{Shipping}}
+        </div>
+        <div class="col-10 text-right small">
+            Total Amount
+        </div>
+        <div class="col-1 text-right small">
+            {{TotalDue}}
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+body{
+    margin-top:20px;
+    color: #000000;
+}
+.cell {
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.cell-bottom {
+    border-bottom: 1px solid #000000;
+}
+.text-secondary-d1 {
+    color: #5871A5!important;
+}
+.page-header {
+    margin: 0 0 1rem;
+    padding-bottom: 1rem;
+    padding-top: .5rem;
+    border-bottom: 1px dotted #e2e2e2;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.small {
+    font-size: 10px;
+}
+.page-title {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+.pt-25 {
+    padding-top: .75rem !important;
+}
+.brc-default-l1 {
+    border-color: #dce9f0!important;
+}
+.ml-n1, .mx-n1 {
+    margin-left: -.25rem!important;
+}
+.mr-n1, .mx-n1 {
+    margin-right: -.25rem!important;
+}
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem!important;
+}
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+.font-bolder, .text-600 {
+    font-weight: 600!important;
+}
+.text-blue {
+    color: #478fcc!important;
+}
+.pb-25, .py-25 {
+    padding-bottom: .75rem!important;
+}
+.bgc-default-tp1 {
+    background-color: rgba(121,169,197,.92)!important;
+}
+.bgc-default-l4, .bgc-h-default-l4:hover {
+    background-color: #f3f8fa!important;
+}
+.page-header .page-tools {
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+}
+.btn-light {
+    color: #757984;
+    background-color: #f5f6f9;
+    border-color: #dddfe4;
+}
+.w-2 {
+    width: 1rem;
+}
+.align-bottom {
+    vertical-align: bottom!important;
+}
+</style>
+</body>
+</html>

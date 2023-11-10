@@ -1,0 +1,332 @@
+﻿@page "/catalog/categories"
+@inherits MVC.Core.GridViewTemplatedControllerBase<CategoryPagedResults, CategoryModel, MVC.Api.Endpoints.GetCategories>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="categoryCatalogPage">
+    @if (ViewState.loading || CurrentDataCollection is null && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (CurrentDataCollection is not null)
+    {
+      <Div Class="page-content w-100">
+        <Container Fluid="true">
+          <Row>
+            <Column>
+              <Div Class="d-flex justify-content-between align-items-center">
+                <Heading Size="HeadingSize.Is1">
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Tags" Class="mr-2" />
+                  @(PortalRoute?.HeaderText ?? PortalRoute?.Title ?? "Categories")
+                </Heading>
+                <Div>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Primary"
+                    Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, CreatorRouteBase))">
+                    Add Category
+                  </Blazorise.Button>
+                </Div>
+              </Div>
+              <Validations
+                EditContext="EditContext"
+                Mode="ValidationMode.Manual"
+                ValidateOnLoad="true">
+                <DataGrid
+                  TItem="CategoryModel"
+                  Data="@CurrentDataCollection.Results"
+                  Responsive="Responsive"
+                  Narrow="Narrow"
+                  Hoverable="Hoverable"
+                  Striped="Striped"
+                  Bordered="Bordered"
+                  Borderless="Borderless"
+                  Filterable="Filterable"
+                  ShowCaptions="ShowCaptions"
+                  Sortable="Sortable"
+                  Resizable="Resizable"
+                  ShowPageSizes="ShowPageSizes"
+                  ShowPager="ShowPager"
+                  PageSizes="PageSizes"
+                  PageSize="CurrentPageSize"
+                  PageSizeChanged="@(i => { CurrentPageSize = i; StateHasChanged(); })"
+                  CurrentPage="CurrentPage"
+                  PageChanged="e => { CurrentPage = e.Page; StateHasChanged(); }"
+                  MaxPaginationLinks="MaxPaginationLinks"
+                  TotalItems="@CurrentDataCollection.TotalCount"
+                  ReadData="@OnReadData"
+                  SelectedRowChanged="@OnSelectedRowChanged"
+                  CommandMode="DataGridCommandMode.Default"
+                  SelectionMode="DataGridSelectionMode.Single"
+                  SortMode="DataGridSortMode.Multiple"
+                  PagerPosition="DataGridPagerPosition.Bottom"
+                  FixedHeader="true"
+                  FixedHeaderDataGridHeight="100%"
+                  FixedHeaderDataGridMaxHeight="100%"
+                  ResizeMode="TableResizeMode.Header">
+                  <DataGridColumns>
+                    <DataGridNumericColumn
+                      TItem="CategoryModel"
+                      Field="@nameof(BaseModel.ID)"
+                      Caption="#"
+                      Sortable="true"
+                      Filterable="true"
+                      FilterCellClass="text-right"
+                      DisplayFormat="{0:00000}"
+                      Width="5%">
+                      <FilterTemplate>
+                        <NumericEdit
+                          TValue="int"
+                          Value="@(dto.ID ?? 0)"
+                          ValueChanged="@(val => { dto.ID = val; context.TriggerFilterChange(val); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridNumericColumn>
+                    <DataGridColumn
+                      TItem="CategoryModel"
+                      Field="@nameof(BaseModel.CustomKey)"
+                      Caption="Key"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="10%">
+                      <FilterTemplate>
+                        <TextEdit
+                          Text="@dto.CustomKey"
+                          TextChanged="@(val => { dto.CustomKey = val; context.TriggerFilterChange(val); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="CategoryModel"
+                      Field="@nameof(NameableBaseModel.Name)"
+                      Caption="Name"
+                      Sortable="true"
+                      Filterable="true">
+                      <FilterTemplate>
+                        <TextEdit
+                          Text="@dto.Name"
+                          TextChanged="@(val => { dto.Name = val; context.TriggerFilterChange(val); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="CategoryModel"
+                      Field="@nameof(CategoryModel.SeoUrl)"
+                      Caption="SEO URL"
+                      Sortable="true"
+                      Filterable="true">
+                      <FilterTemplate>
+                        <TextEdit
+                          Text="@dto.SeoUrl"
+                          TextChanged="@(val => { dto.SeoUrl = val; context.TriggerFilterChange(val); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridCheckColumn
+                      TItem="CategoryModel"
+                      Field="@nameof(CategoryModel.HasChildren)"
+                      Caption="Has Children"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%">
+                      <DisplayTemplate>
+                        <Check
+                          TValue="bool"
+                          Checked="context.HasChildren"
+                          Disabled="true"
+                        />
+                      </DisplayTemplate>
+                    </DataGridCheckColumn>
+                    <DataGridCheckColumn
+                      TItem="CategoryModel"
+                      Field="@nameof(CategoryModel.IsVisible)"
+                      Caption="Is Visible"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%">
+                      <DisplayTemplate>
+                        <Check
+                          TValue="bool"
+                          Checked="context.IsVisible"
+                          Disabled="true"
+                        />
+                      </DisplayTemplate>
+                      <FilterTemplate>
+                        <div class="float-left">
+                          <Check
+                            TValue="bool"
+                            Checked="@(dto.IsVisible ?? false)"
+                            CheckedChanged="@(val => { dto.IsVisible = val; context.TriggerFilterChange(val); })"
+                          />
+                        </div>
+                        <Blazorise.Button
+                          Class="float-left p-0"
+                          Type="ButtonType.Button"
+                          Color="Color.Link"
+                          Visibility="@(dto.IsVisible == null ? Visibility.Invisible : Visibility.Visible)"
+                          Clicked="@(val => { dto.IsVisible = null; context.TriggerFilterChange(null); })">
+                          Clear
+                        </Blazorise.Button>
+                      </FilterTemplate>
+                    </DataGridCheckColumn>
+                    <DataGridCheckColumn
+                      TItem="CategoryModel"
+                      Field="@nameof(CategoryModel.IncludeInMenu)"
+                      Caption="In Menu"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%">
+                      <DisplayTemplate>
+                        <Check
+                          TValue="bool"
+                          Checked="context.IncludeInMenu"
+                          Disabled="true"
+                        />
+                      </DisplayTemplate>
+                      <FilterTemplate>
+                        <div class="float-left">
+                          <Check
+                            TValue="bool"
+                            Checked="@(dto.IncludeInMenu ?? false)"
+                            CheckedChanged="@(val => { dto.IncludeInMenu = val; context.TriggerFilterChange(val); })"
+                          />
+                        </div>
+                        <Blazorise.Button
+                          Class="float-left p-1"
+                          Type="ButtonType.Button"
+                          Color="Color.Link"
+                          Visibility="@(dto.IncludeInMenu == null ? Visibility.Invisible : Visibility.Visible)"
+                          Clicked="@(val => { dto.IncludeInMenu = null; context.TriggerFilterChange(null); })">
+                          Clear
+                        </Blazorise.Button>
+                      </FilterTemplate>
+                    </DataGridCheckColumn>
+                    <DataGridColumn
+                      TItem="CategoryModel"
+                      Field="@nameof(BaseModel.ID)"
+                      Caption=""
+                      Sortable="false"
+                      Filterable="false"
+                      Width="5%">
+                      <DisplayTemplate>
+                        <Blazorise.Button
+                          Type="ButtonType.Button"
+                          Color="Color.Link"
+                          Clicked="@(() => OnItemViewClicked(context.ID))">
+                          View
+                        </Blazorise.Button>
+                      </DisplayTemplate>
+                    </DataGridColumn>
+                  </DataGridColumns>
+                  <EmptyTemplate><Div Class="box p-3">No records found.</Div></EmptyTemplate>
+                  <LoadingTemplate><Div Class="box p-3"><Progress Size="Size.Small" Color="Color.Primary" Value="35"></Progress></Div></LoadingTemplate>
+                  <FirstPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleLeft" /></Span></FirstPageButtonTemplate>
+                  <PreviousPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleLeft" /></Span></PreviousPageButtonTemplate>
+                  <NextPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleRight" /></Span></NextPageButtonTemplate>
+                  <LastPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleRight" /></Span></LastPageButtonTemplate>
+                </DataGrid>
+              </Validations>
+            </Column>
+          </Row>
+        </Container>
+      </Div>
+    }
+  </Div>
+</CascadingValue>
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridViewRouteBase => "/catalog/categories";
+
+  /// <inheritdoc />
+  protected override string EditorRouteBase => GridViewRouteBase + "/editor/";
+
+  /// <inheritdoc />
+  protected override string CreatorRouteBase => GridViewRouteBase + "/creator/";
+  #endregion
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedInitialDataAsync()
+  {
+    return Task.CompletedTask;
+  }
+
+  /// <inheritdoc />
+  protected override async Task<MVC.Core.IHttpPromiseCallbackArg<CategoryPagedResults?>> FilteredDataLoadCallAsync(
+    DataGridReadDataEventArgs<CategoryModel>? e)
+  {
+    DebugBeginMethod();
+    var dto = new MVC.Api.Endpoints.GetCategories
+    {
+      Active = true,
+      Paging = new() { Size = CurrentPageSize, StartIndex = CurrentPage },
+      // NOTE: Appropriate MasterID check is enforced api-side
+    };
+    dto = await ExtendSearchDTOAsync(e, dto).ConfigureAwait(false);
+    DebugEndMethod();
+    return await cvApi.GetCategories(dto).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  protected override Task<MVC.Core.IHttpPromiseCallbackArg<CategoryPagedResults?>> InitialDataLoadCallAsync()
+  {
+    return FilteredDataLoadCallAsync(null);
+  }
+
+  /// <inheritdoc />
+  protected override bool CustomFilterCheck(CategoryModel model)
+  {
+    return true;
+  }
+
+  /// <summary>Extend search data transfer object.</summary>
+  /// <typeparam name="TDTO">Type of the data transfer object model.</typeparam>
+  /// <param name="e">  The DataGridReadDataEventArgs{CategoryModel}? to process.</param>
+  /// <param name="dto">The data transfer object.</param>
+  /// <returns>A Task.</returns>
+  protected /*override*/ Task<TDTO> ExtendSearchDTOAsync<TDTO>(
+      DataGridReadDataEventArgs<CategoryModel>? e,
+      TDTO dto)
+    where TDTO : CategorySearchModel
+  {
+    DebugBeginMethod();
+    if (e is null)
+    {
+      return Task.FromResult(dto);
+    }
+    var sorts = (
+      from dataGridColumnInfo in e.Columns
+      where dataGridColumnInfo.SortDirection != SortDirection.None
+      select new Sort
+      {
+        Dir = dataGridColumnInfo.SortDirection == SortDirection.Ascending ? "asc" : "desc",
+        Order = dataGridColumnInfo.SortIndex,
+        Field = dataGridColumnInfo.Field,
+      })
+      .ToList();
+    dto.Sorts = Contract.CheckEmpty(sorts) ? null : sorts.ToArray();
+    // NOTE: MasterID, Active, AsListing are enforced on api-side
+    // Copy from AdminGet model to SearchModel
+    dto.ID = dto.ID;
+    dto.CustomKey = dto.CustomKey;
+    dto.Name = dto.Name;
+    dto.SeoUrl = dto.SeoUrl;
+    dto.HasChildren = dto.HasChildren;
+    dto.IsVisible = dto.IsVisible;
+    dto.IncludeInMenu = dto.IncludeInMenu;
+    DebugEndMethod();
+    return Task.FromResult(dto);
+  }
+}

@@ -1,0 +1,454 @@
+/**
+ * @file framework/admin/controls/sales/checkout/splitShipping/splitShipping.ts
+ * @author Copyright (c) 2018-2022 clarity-ventures.com. All rights reserved.
+ * @desc Split shipping class
+ */
+module cef.admin.controls.sales.checkout.splitShipping {
+    export class SplitShippingController extends CartController {
+        // Properties
+        contacts: api.AccountContactModel[];
+        addressOptions: api.ContactModel[];
+        /* TODO: Restore In Store Pickup and Ship to Store options
+        showShipToStoreOption: boolean;
+        shipToStoreOption: api.ContactModel;
+        showInStorePickupOption: boolean;
+        inStorePickupOption: api.ContactModel;
+        */
+        hideAddAddressOption: boolean;
+        usePhonePrefixLookups: boolean;
+        readyToLoadShippingRateQuotes: boolean;
+        unbindCartItemWatch: Function;
+        unbindContactsWatch: Function;
+        get targetedCarts(): api.CartModel[] {
+            return this.cvCartService.accessTargetedCarts();
+        }
+        set targetedCarts(newValue: api.CartModel[]) {
+            this.cvCartService.overrideTargetedCarts(newValue);
+        }
+        initialized: boolean = false;
+        preselectedID: number = null;
+        /** NOTE: Returning a -1 means the value is invalid */
+        get totalShippingRaw(): number {
+            return this.cvCartService.totalTargetedCartsShippingRaw();
+        }
+        get totalShipping(): string {
+            return this.cvCartService.totalTargetedCartsShipping();
+        }
+        get totalTaxes(): string {
+            return this.cvCartService.totalTaxes(this.type);
+        }
+        get grandTotal(): string {
+            return this.cvCartService.grandTotal(this.type);
+        }
+        // Functions
+        setItemAttribute(param, cart): void {
+            this.cartItems.forEach(item => {
+                if (item.ProductID === param.ProductID) {
+                    item.SerializableAttributes = param.SerializableAttributes;
+                }
+                return item;
+            })
+            this.cvCartService.updateCartTargets(this.currentCartId, this.userId, this.accountId, this.type, this.cartItems);
+            this.cvCartService.overrideTargetedCarts(cart);
+            this.cvCartService.updateCartTargets(this.currentCartId, this.userId, this.accountId, cart.TypeKey, cart.SalesItems);
+        }
+
+        preselectValues(): void {
+            if (this.preselectedID === -1) {
+                // User wants to add a new address for preselect, deal with that before assigning
+                this.checkAddressOption(-1, null);
+                // NOTE: No action taken on fail (ignored)
+                // NOTE: That function will change preselectValues value which will trigger another
+                // call in to this function
+                return;
+            }
+            // TODO: Warning modal if any targets already set that they will be overidden?
+            this.cartItems.forEach(item => {
+                if (!item.Targets) {
+                    item.Targets = [];
+                }
+                if (!item.Targets.length) {
+                    // NOTE: This should never happen
+                    this.addShippingTarget(item);
+                }
+                item.Targets.forEach(target => {
+                    target.DestinationContactID = item.ProductNothingToShip
+                        ? this.cvCartService.accessCart(this.type).BillingContact
+                            ? this.cvCartService.accessCart(this.type).BillingContact.ID
+                            : this.preselectedID
+                        : this.preselectedID;
+                    this.checkAddressOption(target.DestinationContactID, target);
+                });
+            });
+        }
+        addShippingTarget(item: api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>): number {
+            this.setRunning(this.$translate("ui.admin.common.Analyzing.Elipses"));
+            const newTarget = this.targetFactory(0); // Allocate method will assign a quantity value
+            if (item.Targets && !item.Targets.length || this.allocateQuantity(item, newTarget, 1)) {
+                const resultA = item.Targets && item.Targets.push(newTarget);
+                this.finishRunning();
+                return resultA;
+            }
+            const resultB = item.Targets && item.Targets.length;
+            this.finishRunning();
+            return resultB;
+        }
+        removeShippingTarget(item: api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>, target: api.SalesItemTargetBaseModel): void {
+            if (!item.Targets || !target) { return; }
+            _.remove(item.Targets, item => item === target)
+                .forEach((removed: any) => item.Targets[0].Quantity = item.Targets[0].Quantity + removed.Quantity);
+        }
+        targetFactory(quantity: number, contactID: number = null): api.SalesItemTargetBaseModel {
+            return <api.SalesItemTargetBaseModel>{
+                Active: true,
+                CreatedDate: new Date(),
+                DestinationContactID: contactID || null,
+                DestinationContact: null,
+                OriginProductInventoryLocationSectionID: null,
+                MasterID: null,
+                OriginStoreProductID: null,
+                OriginVendorProductID: null,
+                SelectedRateQuoteID: null,
+                TypeID: null,
+                TypeKey: this.cvServiceStrings.attributes.shipToHome,
+                Quantity: quantity
+            };
+        }
+        allocateQuantity(item: api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>, target: api.SalesItemTargetBaseModel, quantity = 1): boolean {
+            return quantity <= (item.Quantity - 1)
+                && item.Targets
+                && item.Targets.reduce((allocated: boolean, item) => {
+                    if (!allocated
+                        && item !== target
+                        && (item.Quantity - 1) >= quantity
+                        && (target.Quantity + quantity) < item.Quantity
+                        && item.Quantity - quantity > 0
+                        && (target.Quantity + quantity) > 0)
+                    {
+                        item.Quantity = (item.Quantity - quantity);
+                        target.Quantity = target.Quantity + quantity;
+                        allocated = true;
+                    }
+                    return allocated;
+                }, false);
+        }
+        modifyQuantity(item: api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>, target: api.SalesItemTargetBaseModel, quantity = 1): void {
+            if (!item.Targets || !target) { return; }
+            this.allocateQuantity(item, target, quantity);
+        }
+        initializeSalesItems(items: api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>[]): ng.IPromise<void> {
+            if (!angular.isArray(items) || !items.length) {
+                const cart = this.cvCartService.accessCart(this.type);
+                if (!cart || !cart.SalesItems || !cart.SalesItems.length) {
+                    return this.$q.reject();
+                }
+                items = cart.SalesItems;
+            }
+            // Billing step updates the cart and pulls a fresh copy, that copy may not have
+            // targets in it yet, so have to build them (again)
+            ////if (this.initialized) {
+            ////    return this.$q.resolve();
+            ////}
+            return this.$q((resolve, reject) => {
+                ////this.initialized = true;
+                this.setRunning(this.$translate("ui.admin.common.Analyzing.Elipses"));
+                this.loadCurrentCart(false, false).then(() => {
+                    items.map(item => {
+                        if (!item.Targets || !item.Targets.length) {
+                            item.Targets = [this.targetFactory(item.Quantity + (item.QuantityBackOrdered || 0) + (item.QuantityPreSold || 0), null)];
+                            return item;
+                        }
+                        // Check for and collapse duplicates
+                        var grouped = _.groupBy(item.Targets, x => {
+                            return angular.toJson({
+                                typeKey: x.Type && x.Type.CustomKey || x.TypeKey,
+                                storeID: x.OriginStoreProductID,
+                                vendorID: x.OriginVendorProductID,
+                                ilID: x.OriginProductInventoryLocationSectionID,
+                                destID: x.DestinationContactID,
+                                nothingToShip: x.NothingToShip
+                            });
+                        });
+                        var replacementList = [];
+                        Object.keys(grouped).forEach(x => replacementList.push(grouped[x][0]));
+                        item.Targets = replacementList;
+                        return item;
+                    });
+                    this.finishRunning();
+                    resolve();
+                }, result => { this.finishRunning(true, result); reject(result); })
+                .catch(reason => { this.finishRunning(true, reason); reject(reason); });
+            });
+        }
+        generateAddressOptions(opts: api.AccountContactModel[]): ng.IPromise<void> {
+            if (!angular.isArray(opts)) { return this.$q.resolve(); }
+            this.setRunning(this.$translate("ui.admin.common.Analyzing.Elipses"));
+            return this.$q((resolve, reject) => {
+                /* TODO: Restore In Store Pickup and Ship to Store options
+                var inStorePickup = this.cvContactFactory.new();
+                inStorePickup.CustomKey = this.cvServiceStrings.attributes.inStorePickup;
+                inStorePickup.Address = null;
+                var shipToStore = this.cvContactFactory.new();
+                shipToStore.CustomKey = this.cvServiceStrings.attributes.shipToStore;
+                shipToStore.Address = null;
+                this.$q.all([
+                    this.cvContactFactory.upsert(inStorePickup),
+                    this.cvContactFactory.upsert(shipToStore)
+                ]).then((responseArr: ng.IHttpPromiseCallbackArg<api.ContactModel>[]) => {*/
+                    this.addressOptions = [...opts.map(item => item.Slave)];
+                    /* TODO: Restore In Store Pickup and Ship to Store options
+                    if (Boolean(this.showInStorePickupOption) === true) {
+                        this.inStorePickupOption = responseArr[0].data;
+                        this.addressOptions.unshift(this.inStorePickupOption);
+                    }
+                    if (Boolean(this.showShipToStoreOption) === true) {
+                        this.shipToStoreOption = responseArr[1].data;
+                        this.addressOptions.unshift(this.shipToStoreOption);
+                    }*/
+                    if (Boolean(this.hideAddAddressOption) === false) {
+                        this.$translate("ui.admin.controls.sales.salesOrderNewWizard.AddANewAddress").then(translated => {
+                            if (_.find(this.addressOptions, x => x.CustomKey === translated)) {
+                                // Already added
+                                this.finishRunning();
+                                resolve();
+                                return;
+                            }
+                            this.addressOptions.push(<api.ContactModel>{
+                                ID: -1,
+                                Active: true,
+                                CreatedDate: new Date(),
+                                CustomKey: translated,
+                                SameAsBilling: false
+                            });
+                            this.finishRunning();
+                            resolve();
+                        }, result => { this.finishRunning(true, result); reject(result); })
+                        .catch(reason => { this.finishRunning(true, reason); reject(reason); });
+                        return;
+                    }
+                    this.finishRunning();
+                    resolve();
+                /* TODO: Restore In Store Pickup and Ship to Store options
+                }, result => this.finishRunning(true, result))
+                .catch(reason => this.finishRunning(true, reason));*/
+            });
+        }
+        checkAddressOption(optionID: number, target: api.SalesItemTargetBaseModel): ng.IPromise<void> {
+            if (!optionID) {
+                return this.$q.reject("No option ID supplied");
+            }
+            return this.$q((resolve, reject) => {
+                switch (optionID) {
+                    case -1: {
+                        // Shows new address entry modal when selected
+                        this.$uibModal.open({
+                            templateUrl: this.$filter("corsLink")("/framework/admin/controls/sales/checkout/splitShipping/addressModal.html", "ui"),
+                            controller: SplitShippingAddressModalController,
+                            controllerAs: "addressCtrl",
+                            resolve: {
+                                usePhonePrefixLookups: () => this.usePhonePrefixLookups
+                            }
+                        }).result.then((contact: api.AccountContactModel) => {
+                            this.setRunning(this.$translate("ui.admin.checkout.splitShipping.SavingANewAddress.Ellipses"));
+                            this.cvAuthenticationService.preAuth().finally(() => {
+                                if (!this.cvAuthenticationService.isAuthenticated()) {
+                                    // Can't store in address book, store in local memory only instead
+                                    this.addressOptions.splice(this.addressOptions.length - 1, 0, contact.Slave);
+                                    contact.SlaveID = contact.Slave.ID = Math.min(_.minBy(this.addressOptions, x => x.ID).ID, -3) - 1
+                                    if (this.preselectedID === -1) {
+                                        this.preselectedID = contact.SlaveID;
+                                    }
+                                    if (target) {
+                                        // This will stack negative numbers so we have individual values to select by with the dropdowns
+                                        target.DestinationContactID = contact.SlaveID;
+                                        target.DestinationContact = contact.Slave;
+                                        target.DestinationContactKey = contact.Slave.CustomKey;
+                                        target.TypeID = null;
+                                        target.TypeKey = this.cvServiceStrings.attributes.shipToHome;
+                                        target.TypeName = null;
+                                        target.Type = null;
+                                    }
+                                    this.finishRunning();
+                                    resolve();
+                                    return;
+                                }
+                                // Store in Account's Address Book
+                                this.cvAuthenticationService.getCurrentAccountPromise().then(account => {
+                                    var dto = contact as api.CreateAddressInBookDto;
+                                    dto.MasterID = account.ID;
+                                    this.cvApi.geography.CreateAddressInBook(dto).then(r => {
+                                        this.addressOptions.splice(this.addressOptions.length - 1, 0, r.data.Slave);
+                                        if (this.preselectedID === -1) {
+                                            this.preselectedID = r.data.SlaveID;
+                                        }
+                                        if (target) {
+                                            target.DestinationContactID = r.data.SlaveID;
+                                            target.DestinationContact = r.data.Slave;
+                                            target.DestinationContactKey = r.data.Slave.CustomKey;
+                                            target.TypeID = null;
+                                            target.TypeKey = this.cvServiceStrings.attributes.shipToHome;
+                                            target.TypeName = null;
+                                            target.Type = null;
+                                        }
+                                        this.finishRunning();
+                                        resolve();
+                                    }).catch(reason3 => {
+                                        this.blankDestinationContactInfo(target);
+                                        this.finishRunning(true, reason3);
+                                        reject();
+                                    });
+                                }).catch(reason2 => {
+                                    this.blankDestinationContactInfo(target);
+                                    this.finishRunning(true, reason2);
+                                    reject();
+                                });
+                            });
+                        }, () => this.blankDestinationContactInfo(target))
+                        .catch(() => this.blankDestinationContactInfo(target));
+                        break;
+                    }
+                    /* TODO: Restore In Store Pickup and Ship to Store options
+                    case this.shipToStoreOption.ID: {
+                        // TODO: Use the address of the store
+                        this.selectDestinationAndTypeKey(target, this.shipToStoreOption.ID, this.cvServiceStrings.attributes.shipToStore);
+                        break;
+                    }
+                    case this.inStorePickupOption.ID: {
+                        // TODO: Use the address of the store
+                        this.selectDestinationAndTypeKey(target, this.inStorePickupOption.ID, this.cvServiceStrings.attributes.inStorePickup);
+                        break;
+                    }
+                    */
+                    default: {
+                        this.selectDestinationAndTypeKey(target, optionID, this.cvServiceStrings.attributes.shipToHome);
+                        break;
+                    }
+                }
+            });
+        }
+        private blankDestinationContactInfo(target: api.SalesItemTargetBaseModel): void {
+            if (!target) { return; }
+            target.DestinationContactID = null;
+            target.DestinationContact = null;
+            target.DestinationContactKey = null;
+        }
+        private selectDestinationAndTypeKey(target: api.SalesItemTargetBaseModel, optionID: number, typeKey: string): void {
+            target.DestinationContactID = optionID;
+            target.DestinationContact = angular.fromJson(angular.toJson(_.find(this.addressOptions, x => x.ID == optionID)));
+            target.DestinationContactKey = target.DestinationContact && target.DestinationContact.CustomKey;
+            target.TypeID = null;
+            target.TypeKey = typeKey;
+            target.TypeName = null;
+            target.Type = null;
+        }
+        submit(): void {
+            this.setRunning(this.$translate("ui.admin.common.Analyzing.Elipses"));
+            // Update the items
+            this.cvCartService.updateCartTargets(this.currentCartId, this.userId, this.accountId, this.type, this.cartItems).then(() => {
+                var dto = <api.AnalyzeSpecificCartToTargetCartsDto>{
+                    CartID: this.currentCartId,
+                    UserID: this.userId,
+                    AccountID: this.accountId,
+                    CartTypeName: this.type,
+                    IsSameAsBilling: false,
+                    IsPartialPayment: false,
+                    ResetAnalysis: true, // Clear previous target attempts
+                };
+                // Analyze and make all the separate carts
+                this.targetedCarts = []; // Clear so UI doesn't add carts on re-submit
+                this.cvApi.providers.AnalyzeSpecificCartToTargetCarts(dto).then(r => {
+                    if (!r.data.ActionSucceeded) {
+                        this.finishRunning(true, null, r.data.Messages);
+                        return;
+                    }
+                    this.targetedCarts = r.data.Result;
+                    this.$q.all(this.targetedCarts
+                            .filter(x => x.ID != null)
+                            .map(x => this.cvApi.shopping.GetCartItems({ Active: true, AsListing: true, MasterID: x.ID })))
+                        .then((responseArr: ng.IHttpPromiseCallbackArg<api.CartItemPagedResults>[]) => {
+                            responseArr.forEach(pagedResult => {
+                                if (!pagedResult || !pagedResult.data || !pagedResult.data.Results || !pagedResult.data.TotalCount) {
+                                    console.warn("No results on one of the paged results that should have had children!");
+                                    return;
+                                }
+                                const i = _.findIndex(this.targetedCarts, y => y.ID == pagedResult.data.Results[0].MasterID);
+                                this.targetedCarts[i].SalesItems = pagedResult.data.Results;
+                            });
+                            this.$q.all(this.targetedCarts
+                                    .map(x => this.cvApi.shopping.GetCartShippingContact({
+                                        CartID: x.ID,
+                                        UserID: this.userId,
+                                        AccountID: this.accountId,
+                                        TypeName: x.TypeName
+                                    })))
+                                .then((rArr: ng.IHttpPromiseCallbackArg<api.CEFActionResponseT<api.ContactModel>>[]) => {
+                                    for (let i = 0; i < rArr.length; i++) {
+                                        if (!rArr[i].data.ActionSucceeded) {
+                                            this.targetedCarts[i].ShippingContactID = null;
+                                            this.targetedCarts[i].ShippingContact = null;
+                                            continue;
+                                        }
+                                        this.targetedCarts[i].ShippingContact = rArr[i].data.Result;
+                                        this.targetedCarts[i].ShippingContactID = rArr[i].data.Result.ID;
+                                    }
+                                    this.finishRunning();
+                                    this.readyToLoadShippingRateQuotes = true;
+                                    this.$rootScope.$broadcast(this.cvServiceStrings.events.shipping.ready,
+                                        this.cvCartService.accessCart(this.type),
+                                        false); // Don't reapply the shipping contact info to the cart
+                                });
+                        }, result3 => this.finishRunning(true, result3))
+                        .catch(reason3 => this.finishRunning(true, reason3));
+                }, result2 => {
+                    // Retry if specific error
+                    if (result2 && angular.toJson(result2).indexOf("[4]") !== -1) {
+                        this.submit();
+                    } else {
+                        this.finishRunning(true, result2);
+                    }
+                }).catch(reason2 => {
+                    // Retry if specific error
+                    if (reason2 && angular.toJson(reason2).indexOf("[4]") !== -1) {
+                        this.submit();
+                    } else {
+                        this.finishRunning(true, reason2);
+                    }
+                });
+            }, result => angular.isArray(result) ? this.finishRunning(true, null, result) : this.finishRunning(true, result))
+            .catch(reason => angular.isArray(reason) ? this.finishRunning(true, null, reason) : this.finishRunning(true, reason));
+        }
+        // Constructor
+        constructor(
+                protected readonly $rootScope: ng.IRootScopeService,
+                protected readonly $scope: ng.IScope,
+                protected readonly $q: ng.IQService,
+                protected readonly $window: ng.IWindowService,
+                protected readonly $location: ng.ILocationService,
+                protected readonly $filter: ng.IFilterService,
+                private readonly $uibModal: ng.ui.bootstrap.IModalService,
+                protected readonly $translate: ng.translate.ITranslateService,
+                protected readonly cvApi: api.ICEFAPI,
+                protected readonly cefConfig: core.CefConfig,
+                protected readonly cvServiceStrings: admin.services.IServiceStrings,
+                protected readonly cvCartService: admin.services.ICartService,
+                protected readonly cvMessageModalFactory: admin.modals.IMessageModalFactory,
+                private readonly cvAuthenticationService: admin.services.IAuthenticationService,
+                // protected readonly StoreLocationService: IStoreLocationService,
+                protected readonly cvInventoryService: admin.services.IInventoryService,
+                private readonly cvContactFactory: factories.IContactFactory/*,
+                protected readonly cefFacebookPixelService: IFacebookPixelService,
+                protected readonly cefGoogleTagManagerService: IGoogleTagManagerService*/) {
+            super($rootScope, $scope, $q, $filter, $window, $location, $translate, cvApi,
+                cefConfig, cvServiceStrings, cvCartService, cvMessageModalFactory, // StoreLocationService,
+                cvInventoryService/*, cefFacebookPixelService, cefGoogleTagManagerService*/);
+            this.unbindCartItemWatch = $scope.$watch(() => this.cartItems, newValue => this.initializeSalesItems(newValue));
+            this.unbindContactsWatch = $scope.$watch(() => this.contacts, newValue => this.generateAddressOptions(newValue));
+            this.$scope.$on(this.cvServiceStrings.events.$scope.$destroy, () => {
+                if (angular.isFunction(this.unbindCartItemWatch)) { this.unbindCartItemWatch(); }
+                if (angular.isFunction(this.unbindContactsWatch)) { this.unbindContactsWatch(); }
+            });
+        }
+    }
+
+    adminApp.controller("SplitShippingController", SplitShippingController);
+}

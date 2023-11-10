@@ -1,0 +1,125 @@
+<div ng-class="{ 'card wallet-card-panel': !wevCtrl.nonCard,
+                 'w-100 wallet-panel': wevCtrl.nonCard }">
+  <div ng-if="!wevCtrl.hideHeader"
+    ng-class="{ 'card-header': !wevCtrl.nonCard,
+                'w-100': wevCtrl.nonCard }">
+    <p class="m-0 bold"
+      sid="WalletEntryCardNicknameText"
+      ng-bind="wevCtrl.entry.Name">
+    </p>
+  </div>
+  <div ng-if="wevCtrl.isCard()"
+    ng-class="{ 'card-body px-3 pt-3 pb-1': !wevCtrl.nonCard,
+                'w-100 p-2': wevCtrl.nonCard }">
+    <div class="row align-items-center">
+      <div class="col-xs-10">
+        <p class="h3 mt-0" sid="CardNumberText"
+          ng-bind-html="('&bull;&bull;&bull;&bull;&nbsp;'
+            + '&bull;&bull;&bull;&bull;&nbsp;'
+            + '&bull;&bull;&bull;&bull;&nbsp;'
+            + wevCtrl.entry.CreditCardNumber | limitTo: -4) | trustedHtml">
+        </p>
+      </div>
+      <div class="col-xs-2" aria-hidden="true">
+        <p class="h3 mt-0">
+          <i class="fa-lg" ng-class="{
+            'fab fa-cc-amex': wevCtrl.entry.CardType == 'American Express',
+            'fab fa-cc-discover': wevCtrl.entry.CardType == 'Discover',
+            'fab fa-cc-mastercard': wevCtrl.entry.CardType == 'MasterCard',
+            'fab fa-cc-diners-club': wevCtrl.entry.CardType == 'Diners Club',
+            'fab fa-cc-visa': wevCtrl.entry.CardType == 'Visa' }">
+          </i>
+          <span class="sr-only"
+            ng-bind="wevCtrl.entry.CardType">
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-10">
+        <p class="small mb-1"
+          data-translate="ui.admin.common.CardholderName">
+        </p>
+        <p class="mb-1" sid="WalletEntryCardholderNameText"
+          ng-bind="wevCtrl.entry.CardHolderName">
+        </p>
+      </div>
+      <div class="col-xs-2">
+        <p class="small mb-1"
+          data-translate="ui.admin.common.wallet.walletCard.ValidThrough">
+        </p>
+        <p class="mb-1" sid="WalletEntryExpirationText"
+          ng-bind="(wevCtrl.entry.ExpirationMonth | zeroPadNumber: 2)
+           + '/' + (wevCtrl.entry.ExpirationYear | zeroPadNumber: 4)">
+        </p>
+      </div>
+    </div>
+  </div>
+  <div ng-if="!wevCtrl.isCard()"
+    ng-class="{ 'card-body px-3 pt-3 pb-1': !wevCtrl.nonCard,
+                'w-100 p-2': wevCtrl.nonCard }">
+    <div class="row align-items-center">
+      <div class="col">
+        <p class="h3 mt-0" sid="EntryRoutingNumberText"
+          ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;'
+            + (wevCtrl.entry.RoutingNumber | limitTo: -3)) | trustedHtml">
+        </p>
+      </div>
+      <div class="col-xs-3">
+        <p class="h3 mt-0" sid="EntryAccountNumberText"
+          ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;'
+            + (wevCtrl.entry.AccountNumber | limitTo: -3)) | trustedHtml">
+        </p>
+      </div>
+      <div class="col-xs-9" aria-hidden="true">
+        <p class="h3 mt-0">
+          <i class="fa-lg" ng-class="{
+            'far money-check': wevCtrl.entry.CardType == 'Checking',
+            'far money-check-alt': wevCtrl.entry.CardType == 'Savings' }">
+          </i>
+          <span class="sr-only"
+            ng-bind="wevCtrl.entry.CardType">
+          </span>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-9">
+        <p class="small mb-1"
+          data-translate="ui.admin.common.CardholderName">
+        </p>
+        <p class="mb-1" ng-bind="wevCtrl.entry.CardHolderName"></p>
+      </div>
+      <div class="col-xs-3">
+        <p class="small mb-1"
+          data-translate="ui.admin.common.wallet.walletCard.BankName">
+        </p>
+        <p class="mb-1" ng-bind="wevCtrl.entry.BankName"></p>
+      </div>
+    </div>
+  </div>
+  <div ng-if="!wevCtrl.hideFooter && !wevCtrl.readOnly"
+    class="btn-group p-0"
+    ng-class="{ 'card-footer': !wevCtrl.nonCard,
+                'w-100': wevCtrl.nonCard }">
+    <!--
+    <button type="button" class="btn btn-link big"
+      translate-attr="{ title: 'ui.admin.common.wallet.walletCard.Rename',
+                        'aria-label': 'ui.admin.common.wallet.walletCard.Rename' }"
+      ng-disabled="wevCtrl.viewState.running"
+      ng-click="wevCtrl.edit()">
+      <i class="far fa-pencil" aria-hidden="true"></i>&nbsp;< !--
+      -- ><span data-translate="ui.admin.common.wallet.walletCard.Rename"></span>
+    </button>
+    -->
+    <button type="button" class="btn btn-link big text-danger"
+      id="btnWalletEntryRemove" name="btnWalletEntryRemove"
+      translate-attr="{ title: 'ui.admin.common.Remove',
+                        'aria-label': 'ui.admin.common.Remove' }"
+      ng-disabled="wevCtrl.viewState.running"
+      ng-click="wevCtrl.remove()">
+      <i class="far fa-trash" aria-hidden="true"></i>&nbsp;<!--
+      --><span data-translate="ui.admin.common.Remove"></span>
+    </button>
+  </div>
+</div>

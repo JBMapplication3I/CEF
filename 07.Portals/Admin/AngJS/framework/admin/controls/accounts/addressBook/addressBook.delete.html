@@ -1,0 +1,35 @@
+<div class="container-fluid cv-modal">
+  <div class="modal-header p-0">
+    <h5 class="modal-title mb-3 bold"
+      data-translate="ui.admin.controls.accounts.modals.accountDeleteAddressModal.DoYouReallyWantToRemoveThisAddress">
+    </h5>
+  </div>
+  <div class="modal-body p-0 pt-3">
+    <div class="row">
+      <div class="col-sm-12">
+        <div cef-contact-address-block
+          contact="addressBookDeleteCtrl.accountContact.Slave"
+          class="mb-3">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer p-0 pt-3">
+      <button type="button" class="btn btn-default"
+        id="btnAddressBookRemoveItemModalCancel"
+        name="btnAddressBookRemoveItemModalCancel"
+        translate-attr="{ title: 'ui.admin.common.Cancel',
+                          'aria-label': 'ui.admin.common.Cancel' }"
+        data-translate="ui.admin.common.Cancel"
+        ng-click="addressBookDeleteCtrl.cancel()">
+      </button>
+      <button type="button" class="btn btn-danger"
+        id="btnAddressBookRemoveItemModalOk"
+        name="btnAddressBookRemoveItemModalOk"
+        translate-attr="{ title: 'ui.admin.common.RemoveAddress',
+                          'aria-label': 'ui.admin.common.RemoveAddress' }"
+        data-translate="ui.admin.common.RemoveAddress"
+        ng-click="addressBookDeleteCtrl.ok()">
+      </button>
+    </div>
+  </div>
+</div>

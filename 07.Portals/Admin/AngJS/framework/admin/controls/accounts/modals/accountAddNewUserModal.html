@@ -1,0 +1,152 @@
+﻿<div class="container-fluid cv-modal">
+  <div class="modal-header p-0">
+    <h3 data-translate="ui.admin.common.User.New"></h3>
+  </div>
+  <div class="modal-body form-vertical p-0 pt-3"
+    ng-form="aanumCtrl.forms.newUser">
+    <div class="row">
+      <!--
+      <select-form-group
+        class="col-sm-6"
+        key="ModalTypeID"
+        ng-model="aanumCtrl.user.TypeID"
+        selections="aanumCtrl.types"
+        label-key="ui.admin.common.Type"
+        placeholder-key="ui.admin.common.Type"
+        include-null="true"
+        null-key="ui.admin.common.Type.SelectA"
+        ng-required="true"
+        auto-comp="off">
+      </select-form-group>
+      <select-form-group
+        class="col-sm-6"
+        key="ModalStatusID"
+        ng-model="aanumCtrl.user.StatusID"
+        selections="aanumCtrl.statuses"
+        label-key="ui.admin.common.Status"
+        placeholder-key="ui.admin.common.Status"
+        include-null="true"
+        null-key="ui.admin.common.Status.SelectA"
+        ng-required="true"
+        auto-comp="off">
+      </select-form-group>
+      -->
+      <div class="col-md-6">
+        <div class="row">
+          <text-input-form-group
+            class="col-sm-12"
+            key="ModalEmail"
+            ng-model="aanumCtrl.user.Email"
+            label-key="ui.admin.common.Email"
+            placeholder-key="ui.admin.common.Email"
+            max-length="128"
+            ng-required="true"
+            auto-comp="off"
+            when-changed="aanumCtrl.emailChanged($event, control)"
+            is-email="true">
+          </text-input-form-group>
+          <text-input-form-group
+            class="col-sm-12"
+            key="ModalUserName"
+            ng-model="aanumCtrl.user.UserName"
+            label-key="ui.admin.common.Username"
+            placeholder-key="ui.admin.common.Username"
+            ng-disabled="aanumCtrl.cefConfig.featureSet.registration.usernameIsEmail"
+            max-length="128"
+            ng-required="true"
+            auto-comp="off"
+            when-changed="aanumCtrl.usernameChanged($event, control)"
+            is-username="true">
+          </text-input-form-group>
+          <text-input-form-group
+            class="col-sm-12"
+            key="ModalCustomKey"
+            ng-model="aanumCtrl.user.CustomKey"
+            label-key="ui.admin.common.CustomKey"
+            placeholder-key="ui.admin.common.Key"
+            ng-disabled="aanumCtrl.cefConfig.featureSet.registration.usernameIsEmail"
+            max-length="128"
+            ng-required="true"
+            when-changed="aanumCtrl.customkeyChanged($event, control)"
+            auto-comp="off">
+          </text-input-form-group>
+          <password-input-form-group
+            class="col-sm-12"
+            key="ModalPassword"
+            ng-model="aanumCtrl.user.OverridePassword"
+            label-key="ui.admin.common.Password"
+            placeholder-key="ui.admin.common.Password"
+            max-length="128"
+            ng-required="true"
+            auto-comp="off"
+            is-new="true">
+          </password-input-form-group>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <text-input-form-group
+            class="col-sm-12"
+            key="ModalFirstName"
+            ng-model="aanumCtrl.user.Contact.FirstName"
+            label-key="ui.admin.common.FirstName"
+            placeholder-key="ui.admin.common.FirstName"
+            max-length="128"
+            ng-required="true"
+            auto-comp="off">
+          </text-input-form-group>
+          <text-input-form-group
+            class="col-sm-12"
+            key="ModalLastName"
+            ng-model="aanumCtrl.user.Contact.LastName"
+            label-key="ui.admin.common.LastName"
+            placeholder-key="ui.admin.common.LastName"
+            max-length="128"
+            ng-required="true"
+            auto-comp="off">
+          </text-input-form-group>
+          <text-input-form-group
+            class="col-sm-12"
+            key="ModalDisplayName"
+            ng-model="aanumCtrl.user.DisplayName"
+            label-key="ui.admin.common.DisplayName"
+            placeholder-key="ui.admin.common.DisplayName"
+            max-length="128"
+            ng-required="false"
+            auto-comp="off">
+          </text-input-form-group>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer p-0 pt-3">
+    <table>
+      <tr>
+        <td>
+          <p class="text-left m-0">
+            <b data-translate="ui.admin.controls.shared.jsonAttributesEditor.Note.Colon"></b>&nbsp;<!--
+            --><span data-translate="ui.admin.controls.accounts.modals.accountAddNewUserModal.LimitedUseMessage"></span>
+          </p>
+        </td>
+        <td class="pl-1">
+          <button type="button" class="btn btn-info"
+            translate-attr="{ title: 'ui.admin.common.Cancel',
+                              'aria-label': 'ui.admin.common.Cancel' }"
+            data-translate="ui.admin.common.Cancel"
+            ng-click="aanumCtrl.close()">
+          </button>
+        </td>
+        <td class="pl-1">
+          <button type="button" class="btn btn-primary"
+            translate-attr="{ title: 'ui.admin.common.Save',
+                              'aria-label': 'ui.admin.common.Save' }"
+            data-translate="ui.admin.common.Save"
+            ng-disabled="aanumCtrl.forms.newUser.$invalid
+                      || aanumCtrl.viewState.running"
+            ng-click="aanumCtrl.save()">
+          </button>
+        </td>
+      </tr>
+  </table>
+  </div>
+</div>

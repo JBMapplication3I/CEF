@@ -1,0 +1,251 @@
+@inherits MVC.Core.InputFormGroupControllerBase<string>
+
+<Validation>
+  <Tooltip
+    Inline="false"
+    Text="@Tooltip"
+    Placement="TooltipPlacement.Top"
+    Fade="true"
+    AlwaysActive="TooltipIsOpen">
+    <Field
+      Horizontal="@IsHorizontal"
+      sid="@("field_" + InputName)"
+      Class="@AllFormClasses">
+      @if (!NoLabel)
+      {
+        <FieldLabel
+          For="@InputName"
+          title="@Tooltip"
+          sid="@("fieldLabel_" + InputName)">
+          <Span>
+            @LabelText
+            @if (Required)
+            {
+              <Span TextColor="TextColor.Danger">&nbsp;*</Span>
+            }
+            @if (Contract.CheckValidKey(Tooltip) && Tooltip != LabelText)
+            {
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.QuestionCircle" TextColor="TextColor.Info" Class="ml-1" />
+            }
+          </Span>
+        </FieldLabel>
+      }
+      <style>.ql-editor { min-height: 100px; }</style>
+      <FieldBody
+        sid="@("fieldBody_" + InputName)">
+        <RichTextEdit
+          @ref="richTextEditRef"
+          sid="@("input_" + InputName)"
+          required="@Required"
+          Theme="RichTextEditTheme.Snow"
+          ContentChanged="@OnContentChanged"
+          PlaceHolder="@PlaceholderText"
+          autocomplete="@Autocomplete"
+          ReadOnly="@ReadOnly"
+          SubmitOnEnter="false"
+          ToolbarPosition="Placement.Top"
+          EditorBlur="OnSave">
+          <Editor />
+          <Toolbar>
+            @* Styles *@
+            <RichTextEditToolbarGroup>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Bold"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Italic"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Underline"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Strike"/>
+            </RichTextEditToolbarGroup>
+            @* Super/Sub-Scripts *@
+            <RichTextEditToolbarGroup>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Script" Value="sub"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Script" Value="super"/>
+            </RichTextEditToolbarGroup>
+            @* Colors *@
+            <RichTextEditToolbarGroup>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Color"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Background"/>
+            </RichTextEditToolbarGroup>
+            @* Font Family/Size *@
+            <RichTextEditToolbarGroup>
+              @*<RichTextEditToolbarButton Action="RichTextEditAction.Font" /> TODO: Build as a Select *@
+              <RichTextEditToolbarSelect Action="RichTextEditAction.Size">
+                <RichTextEditToolbarSelectItem Value="small" />
+                <RichTextEditToolbarSelectItem Value="" Selected="true" />
+                <RichTextEditToolbarSelectItem Value="large" />
+                <RichTextEditToolbarSelectItem Value="huge">Very Big</RichTextEditToolbarSelectItem>
+              </RichTextEditToolbarSelect>
+              <RichTextEditToolbarSelect Action="RichTextEditAction.Header">
+                <RichTextEditToolbarSelectItem Selected="true">Normal</RichTextEditToolbarSelectItem>
+                <RichTextEditToolbarSelectItem Value="1">Heading 1</RichTextEditToolbarSelectItem>
+                <RichTextEditToolbarSelectItem Value="2">Heading 2</RichTextEditToolbarSelectItem>
+                <RichTextEditToolbarSelectItem Value="3">Heading 3</RichTextEditToolbarSelectItem>
+                <RichTextEditToolbarSelectItem Value="4">Heading 4</RichTextEditToolbarSelectItem>
+                <RichTextEditToolbarSelectItem Value="5">Heading 5</RichTextEditToolbarSelectItem>
+                <RichTextEditToolbarSelectItem Value="6">Heading 6</RichTextEditToolbarSelectItem>
+              </RichTextEditToolbarSelect>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Blockquote"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.CodeBlock"/>
+            </RichTextEditToolbarGroup>
+            @* Lists *@
+            <RichTextEditToolbarGroup>
+              <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="ordered"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="bullet"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.List" Value="check"/>
+            </RichTextEditToolbarGroup>
+            @* Alignment *@
+            <RichTextEditToolbarGroup>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Align" />
+              <RichTextEditToolbarButton Action="RichTextEditAction.Align" Value="center" />
+              <RichTextEditToolbarButton Action="RichTextEditAction.Align" Value="right" />
+              <RichTextEditToolbarButton Action="RichTextEditAction.Align" Value="justify" />
+            </RichTextEditToolbarGroup>
+            @* Indents *@
+            <RichTextEditToolbarGroup>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Indent" Value="-1"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Indent" Value="+1"/>
+              @*<RichTextEditToolbarButton Action="RichTextEditAction.Direction" />*@
+            </RichTextEditToolbarGroup>
+            @* Media *@
+            <RichTextEditToolbarGroup>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Link"/>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Image"/>
+              @*<RichTextEditToolbarButton Action="RichTextEditAction.Video"/>*@
+              @*<RichTextEditToolbarButton Action="RichTextEditAction.Formula"/>*@
+            </RichTextEditToolbarGroup>
+            @* Clean *@
+            <RichTextEditToolbarGroup>
+              <RichTextEditToolbarButton Action="RichTextEditAction.Clean"/>
+            </RichTextEditToolbarGroup>
+            <RichTextEditToolbarGroup Float="Float.End">
+              <Blazorise.Button Clicked="@OnSave">
+                <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Save"/>
+              </Blazorise.Button>
+            </RichTextEditToolbarGroup>
+          </Toolbar>
+        </RichTextEdit>
+        @if (Debug)
+        {
+          <Strong Display="Display.Block">HTML</Strong>
+          <Div Display="Display.Block">@contentAsHtml</Div>
+          <Strong Display="Display.Block">Delta JSON</Strong>
+          <Div Display="Display.Block">@contentAsDeltaJson</Div>
+          <Strong Display="Display.Block">Text</Strong>
+          <Div Display="Display.Block">@contentAsText</Div>
+        }
+      </FieldBody>
+    </Field>
+  </Tooltip>
+</Validation>
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  /// <summary>Gets or sets a value indicating whether this object is horizontal.</summary>
+  /// <value>True if this object is horizontal, false if not.</value>
+  [Parameter]
+  public bool IsHorizontal { get; set; }
+
+  /// <summary>Gets or sets the placeholder text.</summary>
+  /// <value>The placeholder text.</value>
+  [Parameter]
+  public string? PlaceholderText { get; set; }
+
+  /// <summary>Gets or sets a value indicating whether the debug state is active (will display additional debugging
+  /// info in the control).</summary>
+  /// <value>True if debug, false if not.</value>
+  [Parameter]
+  public bool Debug { get; set; }
+#pragma warning restore CS8618 // Ignored: Parameters set by implementer
+  #endregion
+
+  /// <summary>The rich text edit reference.</summary>
+  private RichTextEdit? richTextEditRef;
+
+  /// <summary>The content as HTML.</summary>
+  private string contentAsHtml = string.Empty;
+
+  /// <summary>The content as delta JSON.</summary>
+  private string contentAsDeltaJson = string.Empty;
+
+  /// <summary>The content as text.</summary>
+  private string contentAsText = string.Empty;
+
+  /// <summary>The saved content.</summary>
+  private string savedContent = string.Empty;
+
+  /// <summary>Gets all input classes.</summary>
+  /// <value>all input classes.</value>
+  private string AllInputClasses => (FieldCssClasses
+    + (Contract.CheckValidKey(InputClasses) ? " " + InputClasses : string.Empty)
+    + (Contract.CheckValidKey(RightIcon) ? string.Empty : " rounded-right"))
+    .Trim();
+
+  /// <summary>Gets all form classes.</summary>
+  /// <value>all form classes.</value>
+  private string AllFormClasses => ("form-group"
+    + (Contract.CheckValidKey(FormClasses) ? " " + FormClasses : string.Empty)
+    + (FormInvalid == true ? " has-error" : string.Empty))
+    .Trim();
+
+  /// <summary>Gets the input prefix.</summary>
+  /// <value>The input prefix.</value>
+  protected override string InputPrefix => "rte";
+
+  /// <inheritdoc />
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    DebugBeginMethod();
+    await base.OnAfterRenderAsync(firstRender);
+    if (richTextEditRef is null)
+    {
+      DebugEndMethod();
+      return;
+    }
+    if (contentAsHtml.IsNullOrEmpty() && !Value.IsNullOrEmpty())
+    {
+      var rawHtmlStringValue = Value;
+      contentAsHtml = savedContent = rawHtmlStringValue;
+      await richTextEditRef.SetHtmlAsync(rawHtmlStringValue).ConfigureAwait(false);
+    }
+    contentAsHtml = await richTextEditRef.GetHtmlAsync().ConfigureAwait(false);
+    contentAsDeltaJson = await richTextEditRef.GetDeltaAsync().ConfigureAwait(false);
+    contentAsText = await richTextEditRef.GetTextAsync().ConfigureAwait(false);
+    DebugEndMethod();
+  }
+
+  /// <summary>Executes the content changed action.</summary>
+  /// <returns>A Task.</returns>
+  private async Task OnContentChanged()
+  {
+    DebugBeginMethod();
+    if (richTextEditRef is null)
+    {
+      DebugEndMethod();
+      return;
+    }
+    contentAsHtml = await richTextEditRef.GetHtmlAsync().ConfigureAwait(false);
+    contentAsDeltaJson = await richTextEditRef.GetDeltaAsync().ConfigureAwait(false);
+    contentAsText = await richTextEditRef.GetTextAsync().ConfigureAwait(false);
+    DebugEndMethod();
+  }
+
+  /// <summary>Executes the save action.</summary>
+  /// <returns>A Task.</returns>
+  private async Task OnSave()
+  {
+    DebugBeginMethod();
+    if (richTextEditRef is null)
+    {
+      DebugEndMethod();
+      return;
+    }
+    savedContent = await richTextEditRef.GetHtmlAsync().ConfigureAwait(false);
+    await richTextEditRef.ClearAsync().ConfigureAwait(false);
+    Value = contentAsHtml = savedContent;
+    if (ValueChanged.HasDelegate)
+    {
+      await ValueChanged.InvokeAsync(Value).ConfigureAwait(false);
+    }
+    DebugEndMethod();
+  }
+}

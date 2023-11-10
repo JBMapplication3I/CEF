@@ -1,0 +1,96 @@
+// --------------------------------------------------
+// Alerts
+// --------------------------------------------------
+//@import "variables";
+//@import "mixins";
+
+.alert {
+    margin: 0 0 @spacing;
+    padding: 5px 10px;
+
+    h4 { margin: 0 0 5px; }
+
+    .close {
+        opacity: 1;
+        filter: alpha(opacity=100);
+        color: #fff;
+    }
+
+    &.alert-default {
+        background: lighten(@cef-btn-default-bg, 25%);
+        color: @cef-btn-default-color;
+        border-color: @cef-btn-default-border;
+        .close { color: @cef-btn-default-color; }
+        h4 { color: @cef-btn-default-color; }
+    }
+
+    &.alert-primary {
+        background: lighten(@cef-btn-primary-bg, 25%);
+        color: @cef-btn-primary-color;
+        border-color: @cef-btn-primary-border;
+        .close { color: @cef-btn-primary-color; }
+        h4 { color: @cef-btn-primary-color; }
+    }
+
+    &.alert-success {
+        background: lighten(@cef-btn-success-bg, 25%);
+        color: @cef-btn-success-color;
+        border-color: @cef-btn-success-border;
+        .close { color: @cef-btn-success-color; }
+        h4 { color: @cef-btn-success-color; }
+    }
+
+    &.alert-warning {
+        background: lighten(@cef-btn-warning-bg, 25%);
+        color: @cef-btn-warning-color;
+        border-color: @cef-btn-warning-border;
+        .close { color: @cef-btn-warning-color; }
+        h4 { color: @cef-btn-warning-color; }
+    }
+
+    &.alert-info {
+        background: lighten(@cef-btn-info-bg, 25%);
+        color: @cef-btn-info-color;
+        border-color: @cef-btn-info-border;
+        .close { color: @cef-btn-info-color; }
+        h4 { color: @cef-btn-info-color; }
+    }
+
+    &.alert-danger {
+        background: lighten(@cef-btn-danger-bg, 25%);
+        color: @cef-btn-danger-color;
+        border-color: @cef-btn-danger-border;
+        .close { color: @cef-btn-danger-color; }
+        h4 { color: @cef-btn-danger-color; }
+    }
+
+    &.alert-inverse {
+        background: lighten(@cef-btn-inverse-bg, 25%);
+        color: @cef-btn-inverse-color;
+        border-color: @cef-btn-inverse-border;
+        .close { color: @cef-btn-inverse-color; }
+        h4 { color: @cef-btn-inverse-color; }
+    }
+}
+
+.form-vertical {
+    // Alert underneath an input in a vertical form
+    .input-group + div  {
+        > .alert {
+            border-top: none;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+}
+
+.form-horizontal {
+    // Alert underneath an input in a horizontal form
+    .input-group + div  {
+        > .alert {
+            border-top: none;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+}

@@ -1,0 +1,152 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="currencyDetailCtrl.record"
+         new-kind-key="ui.admin.common.Currency.New"
+         existing-kind-key="ui.admin.common.Currency">
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 setting-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': currencyDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="currencyDetailCtrl.forms.Details">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.BasicInformation"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <text-input-form-group
+                                    key="CustomKey"
+                                    ng-model="currencyDetailCtrl.record.CustomKey"
+                                    label-key="ui.admin.common.Key"
+                                    placeholder-key="ui.admin.common.Key"
+                                    max-length="128"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <text-input-form-group
+                                    key="Name"
+                                    ng-model="currencyDetailCtrl.record.Name"
+                                    label-key="ui.admin.common.Name"
+                                    placeholder-key="ui.admin.common.Name"
+                                    max-length="128"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <number-input-form-group
+                                    key="UnicodeSymbolValue"
+                                    ng-model="currencyDetailCtrl.record.UnicodeSymbolValue"
+                                    label-key="ui.admin.controls.system.currencyDetail.unicodeSymbolValue"
+                                    placeholder-key="ui.admin.controls.system.currencyDetail.unicodeSymbolValue"
+                                    step="1"
+                                    precision="0"
+                                    min="0"
+                                    ng-required="true">
+                                </number-input-form-group>
+                                <text-input-form-group
+                                    key="HtmlCharacterCode"
+                                    ng-model="currencyDetailCtrl.record.HtmlCharacterCode"
+                                    label-key="ui.admin.common.HtmlCharacterCode"
+                                    placeholder-key="ui.admin.common.HtmlCharacterCode"
+                                    max-length="128"
+                                    ng-required="false">
+                                </text-input-form-group>
+                                <text-input-form-group
+                                    key="RawCharacter"
+                                    ng-model="currencyDetailCtrl.record.RawCharacter"
+                                    label-key="ui.admin.common.RawCharacter"
+                                    placeholder-key="ui.admin.common.RawCharacter"
+                                    max-length="128"
+                                    ng-required="false">
+                                </text-input-form-group>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger':currencyDetailCtrl.forms.Images.$invalid}"><i class="far fa-lg fa-picture-o"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Image.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="currencyDetailCtrl.forms.Images">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 data-translate="ui.admin.common.Image.Plural"></h3>
+                                <!-- Uploader -->
+                                <div cef-upload-image-widget
+                                     master="currencyDetailCtrl.record"
+                                     upload-type="ImageCurrency"
+                                     type-key="General"
+                                     allow-multiple="true"
+                                     is-primary="false">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <!-- Thumbnails -->
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                                    <div class="input-group">
+                                        <div ng-if="!currencyDetailCtrl.record.Images.length"
+                                             data-translate="ui.admin.common.NoImagesHaveBeenUploaded"></div>
+                                        <div ng-repeat="image in currencyDetailCtrl.record.Images" class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                                            <div class="form-vertical">
+                                                <div class="form-group">
+                                                    <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                                                         ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                                                   | corsImageLink : 'languages' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                                                         onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Admin/framework/store/img/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                                                </div>
+                                                <text-input-form-group
+                                                    key="ImageName{{$index}}"
+                                                    ng-model="image.Name"
+                                                    label-key="ui.admin.common.Name"
+                                                    max-length="128"
+                                                    ng-required="true">
+                                                </text-input-form-group>
+                                                <select-form-group
+                                                    key="ImageTypeID{{$index}}"
+                                                    ng-model="image.TypeID"
+                                                    selections="currencyDetailCtrl.imageTypes"
+                                                    label-key="ui.admin.common.Type"
+                                                    tooltip-text="The type of the record."
+                                                    placeholder-key="ui.admin.common.Type"
+                                                    ng-required="true">
+                                                </select-form-group>
+                                                <toggle-form-group
+                                                    key="ImageIsPrimary{{$index}}"
+                                                    ng-change="currencyDetailCtrl.clearOtherPrimaryImagesNew($index)"
+                                                    ng-model="image.IsPrimary"
+                                                    label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                                                    tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                                                    tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                                                    ng-required="false">
+                                                </toggle-form-group>
+                                                <button type="button" class="btn btn-danger btn-block"
+                                                        translate-attr="{ title: 'ui.admin.common.Delete',
+                                                                          'aria-label': 'ui.admin.common.Delete' }"
+                                                        ng-click="currencyDetailCtrl.removeImageNew($index)"
+                                                        ><i class="far fa-trash-o"></i>&nbsp;<!--
+                                                        --><span data-translate="ui.admin.common.Delete"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': currencyDetailCtrl.forms.Attributes.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+                                     --><span data-translate="ui.admin.common.Attribute.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="currencyDetailCtrl.forms.Attributes">
+                        <div cef-json-attributes-editor master="currencyDetailCtrl.record" type="Currency" ng-if="currencyDetailCtrl.record != null"></div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="currencyDetailCtrl"
+                return-state="system.currencies.list"
+                permissions-base="Currencies.Currency">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<li class="h-100 d-flex align-items-center position-relative my-price-list-dropdown"
+    ng-if="cefPriceListMenuBarCtrl.cvAuthenticationService.isAuthenticated() && cefPriceListMenuBarCtrl.menuList.length">
+    <span ng-bind="ui.storefront.common.MyPriceLists"></span>
+    <ul class="nav ml-0 h-100"
+        ng-class="{'dropdown-menu':cefPriceListMenuBarCtrl.isDropdown()}"
+        role="navigation">
+    <li class="nav-item megamenu-li position-static h-100"
+        id="menu-mega-top" name="menu-mega-top"
+        ng-mouseenter="cefPriceListMenuBarCtrl.openMenuIfAllowed()"
+        uib-dropdown is-open="cefPriceListMenuBarCtrl.isOpen">
+        <a uib-dropdown-toggle
+            class="nav-link pointer top-nav h-100 d-flex align-items-center pl-a" ng-cloak translate-cloak
+            id="btnPriceListMenuLinkMega" name="btnPriceListMenuLinkMega"
+            tabindex="0">
+            <span ng-bind="cefPriceListMenuBarCtrl.displayText"></span>
+        </a>
+            <div id="priceListDropdown" uib-dropdown-menu aria-labelledby="btnPriceListMenuLinkMega" role="menu"
+                class="dropdown-menu megamenu m-0 position-absolute" style="min-width: 300px;" ng-cloak translate-cloak>
+                <div ng-repeat="link in cefPriceListMenuBarCtrl.menuList">
+                    <div>
+                        <a
+                        ng-bind="link"
+                        class="dropdown-item price-list-dropdown-item p-20 w-100"
+                        ui-sref-plus uisrp-is-catalog="true"
+                        uisrp-state="searchCatalog.products.results.both"
+                        uisrp-params="{ 'filterByCurrentAccountRoles': '{{link}}', 'term': null, 'categoriesAny': null, 'categoriesAll': null, 'attributesAny': null, 'attributesAll': null, 'pricingRanges': null, 'format': 'table' }">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</li>

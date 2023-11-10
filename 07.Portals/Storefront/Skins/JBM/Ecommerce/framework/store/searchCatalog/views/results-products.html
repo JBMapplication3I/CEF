@@ -1,0 +1,127 @@
+﻿<div class="row">
+  <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-tk-2 col-fk-2">
+    <div class="row clarity-filters">
+      <div class="col-12 col-sm-6 col-md-12"
+        cef-search-catalog-filters-applied
+        categories-mode="single"
+        pricing-ranges-mode="multi-any"
+        attributes-mode="multi-all">
+      </div>
+      <script type="text/ng-template" id="cat-filters-group-template.html">
+        <style>.card-collapse.in { overflow: visible; }</style>
+        <div class="card-header p-2 bg-light text-body">
+          <h5 class="card-title mb-0">
+            <a href tabindex="0" class="accordion-toggle text-decoration-none"
+              ng-click="toggleOpen()"
+              uib-accordion-transclude="heading">
+              <span uib-accordion-header ng-class="{'text-muted': isDisabled}"></span>
+              <i class="float-right text-body toggle-icon far fa-fw"
+                ng-class="{'fa-minus': isOpen, 'fa-plus': !isOpen, 'text-muted': isDisabled }">
+              </i>
+            </a>
+          </h5>
+        </div>
+        <div class="card-collapse collapse" uib-collapse="!isOpen">
+          <div class="card-body p-3 bg-transparent text-body"
+            style="max-height: 50vh; overflow-y: auto;"
+            ng-transclude>
+          </div>
+        </div>
+      </script>
+      <div class="col-12 col-sm-6 col-md-12"
+        uib-accordion close-others="false">
+        <div cef-search-catalog-filter-by-query-term class="filter-parent">
+        </div>
+        <div ng-if="searchCatalogCtrl.cefConfig.featureSet.categories.enabled"
+          cef-search-catalog-filter-by-categories-tree mode="single">
+        </div>
+        <div ng-if="searchCatalogCtrl.service.activeSearchViewModel.BrandNames && !searchCatalogCtrl.cefConfig.featureSet.brands.removeBrandCatalogSearchFilter"
+          cef-search-catalog-filter-by-brand-name>
+        </div>
+        <div ng-if="searchCatalogCtrl.cefConfig.featureSet.pricing.enabled
+          && !searchCatalogCtrl.cefConfig.featureSet.pricing.priceRules.enabled
+          && !searchCatalogCtrl.cefConfig.featureSet.pricing.pricePoints.enabled"
+          cef-search-catalog-filter-by-pricing-ranges mode="multi-any">
+        </div>
+        <div cef-search-catalog-filter-by-type>
+        </div>
+        <div cef-search-catalog-filter-by-attributes mode="multi-all">
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-12" style="min-height: 157px;"
+        ng-if="searchCatalogCtrl.cefConfig.featureSet.carts.compare.enabled">
+        <div uib-accordion>
+          <div cef-search-catalog-compare-cart-monitor
+            use-extended="true">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-8 col-lg-9 col-xl-9 col-tk-10 col-fk-10">
+    <div class="row"
+      ng-if="searchCatalogCtrl.service.activeSearchViewModel.Form.Query">
+      <div class="col-12">
+        <h1 class="light-weight">
+          <span data-translate="ui.storefront.catalog.ShopResultsFor"></span>&nbsp;<!--
+          --><b class="mt-0"
+            ng-bind="searchCatalogCtrl.service.activeSearchViewModel.Form.Query">
+          </b>
+        </h1>
+      </div>
+    </div>
+    <div class="row"
+      ng-if="!searchCatalogCtrl.service.activeSearchViewModel.Form.Query
+        && searchCatalogCtrl.service.activeSearchViewModel.Form.Category">
+      <div class="col-12">
+        <h1 class="light-weight">
+          <span data-translate="ui.storefront.catalog.ShopResultsFor"></span>&nbsp;<!--
+          --><b class="mt-0"
+            sid="CategoryTitleText"
+            ng-class="{ 'text-capitalize': !searchCatalogCtrl.service.selectedCategory.DisplayName }"
+            ng-bind="searchCatalogCtrl.service.selectedCategory.DisplayName
+              || (searchCatalogCtrl.service.selectedCategory.Name | lowercase)">
+          </b>
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12"
+        cef-search-catalog-results-control-bar
+        layout-mode="standard" hr-position="bottom"
+        format-view-type="buttons" format-default-value="grid" format-hide-text="false" format-hide-label="false"
+        per-page-view-type="buttons" per-page-default-value="48" per-page-hide-label="false" per-page-choices="[12,24,48]"
+        sort-view-type="dropdown" sort-default-value="Relevance" sort-hide-label="false"
+        page-view-type="none">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12" cef-search-catalog-alerts-error-bad-search></div>
+      <div class="col-12" cef-search-catalog-alerts-warning-cap></div>
+      <div class="col-12" cef-search-catalog-alerts-info-no-results></div>
+      <div class="col-12" cef-search-catalog-alerts-info-running></div>
+    </div>
+    <div class="row catalog-results-area" id="results-area" style="min-height: 50vh;">
+      <div class="col-12" ui-view="searchCatalogResultsView"></div>
+    </div>
+    <div class="row">
+      <div class="col-12"
+        cef-search-catalog-results-control-bar
+        layout-mode="centered" hr-position="bottom"
+        format-view-type="none"
+        per-page-view-type="none"
+        sort-view-type="none"
+        page-view-type="buttons" page-default-value="1" page-hide-label="false">
+      </div>
+    </div>
+    <div class="row"
+      ng-if="searchCatalogCtrl.service.activeSearchViewModel.ElapsedMilliseconds">
+      <div class="col-12 justify-content-center">
+        <p class="text-center small italic"
+          data-translate="ui.storefront.searchCatalog.views.results.SearchTook.Template"
+          translate-value-elapsed="{{searchCatalogCtrl.service.activeSearchViewModel.ElapsedMilliseconds}}">
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

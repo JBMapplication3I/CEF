@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Utilities</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Utilities</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Utilities</RootNamespace>
+    <ProjectGuid>47B9BBAF-4668-4B6F-953E-CAE1C7AB3935</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="SystemWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="WindowsBase" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.5.0" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="ServiceStack.Interfaces" Version="6.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+  </ItemGroup>
+</Project>

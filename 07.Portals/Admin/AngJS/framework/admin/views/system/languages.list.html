@@ -1,0 +1,24 @@
+﻿<cv-page caption="{{'ui.admin.views.system.languagesList.ManageLanguages' | translate}}" head-icon="fa-gear"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.System.Languages')">
+    <cv-widget>
+        <widget-menu-item caption="{{'ui.admin.views.system.languagesList.AddLanguage' | translate}}"
+            icon-class="fa-plus-circle"
+            click="$root.$state.go('system.languages.detail',{ID:'New'})"
+            permission="'Globalization.Language.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     sortable="false" server-sorting="true"
+                     on-search="search.getLanguages"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateLanguage"
+                     on-reactivate="search.reactivateLanguage"
+                     on-delete="search.deleteLanguage"
+                     edit-state="system.settings.detail,[ID]"
+                     permissions-base="Globalization.Language">
+                <cv-column filter field="ID" title="#" width="50px" />
+                <cv-column filter field="Locale" title="Locale" width="100px" />
+                <cv-column filter field="UnicodeName" title="Unicode Name" width="250px" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

@@ -1,0 +1,54 @@
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-tk-5 row-cols-fk-6">
+  <div class="col-md-4 mb-3">
+    <div class="card h-100 border-success">
+      <div class="card-header alert-success"
+        data-translate="ui.admin.common.wallet.AddEntry">
+      </div>
+      <div class="card-body p-2">
+        <button type="button" class="btn btn-default btn-block cef-add-card-to-wallet cef-dashboard-dash-button p-4 mb-1 h-100"
+          id="btnAddCreditCardWallet" name="btnAddCreditCardWallet"
+          ng-disabled="walletListCtrl.viewstate.isAdding"
+          ng-click="walletListCtrl.newEntry()">
+          <svg width="30px" height="31px" viewBox="0 0 30 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-847.000000, -260.000000)" fill="#B6B6B6"><path d="M862,260.370117 C853.720465,260.370117 847,267.090582 847,275.370117 C847,283.649652 853.720465,290.370117 862,290.370117 C870.279535,290.370117 877,283.649652 877,275.370117 C877,267.090582 870.279535,260.370117 862,260.370117 Z M862,261.067792 C869.903256,261.067792 876.302326,267.466861 876.302326,275.370117 C876.302326,283.273373 869.903256,289.672443 862,289.672443 C854.096744,289.672443 847.697674,283.273373 847.697674,275.370117 C847.697674,267.466861 854.096744,261.067792 862,261.067792 Z M861.956279,267.336164 L861.956279,267.336164 C861.776744,267.357559 861.643721,267.513838 861.651163,267.695699 L861.651163,275.02128 L854.325581,275.02128 C854.303721,275.01942 854.28186,275.01942 854.26,275.02128 C853.794884,275.065001 853.860465,275.762675 854.325581,275.718954 L861.651163,275.718954 L861.651163,283.044536 C861.647442,283.238954 861.805581,283.398954 862,283.398954 C862.194419,283.398954 862.352558,283.238954 862.348837,283.044536 L862.348837,275.718954 L869.674419,275.718954 C869.868837,275.722675 870.028837,275.564536 870.028837,275.370117 C870.028837,275.175699 869.868837,275.017559 869.674419,275.02128 L862.348837,275.02128 L862.348837,267.695699 C862.35814,267.47942 862.170698,267.308722 861.956279,267.336164 Z"></path></g></g>
+          </svg><br />
+          <span data-translate="ui.admin.common.wallet.AddEntry"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 mb-3">
+    <div class="card h-100 border-info">
+      <div class="card-header alert-info"
+        data-translate="ui.admin.common.wallet.DefaultEntry">
+      </div>
+      <div class="card-body p-2">
+        <select class="form-control custom-select"
+          id="ddlDefaultEntry" name="ddlDefaultEntry"
+          ng-required="true"
+          ng-change="walletListCtrl.setEntryAsDefault()"
+          ng-options="w.ID as w.Name for w in walletListCtrl.wallet"
+          ng-model="walletListCtrl.defaultEntryID">
+          <option value="" ng-disabled="true"
+            data-translate="ui.admin.common.wallet.PleaseSelectADefaultEntry">
+          </option>
+        </select>
+      </div>
+      <div class="card-body p-2" ng-if="walletListCtrl.defaultEntry">
+        <div cef-wallet-entry-view
+          entry="walletListCtrl.defaultEntry"
+          hide-header="true"
+          hide-footer="true"
+          non-card="true">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-tk-5 row-cols-fk-6">
+  <div class="col-md-4 mb-3" ng-repeat="entry in walletListCtrl.wallet">
+    <div cef-wallet-entry-view
+      entry="entry"
+      class="h-100">
+    </div>
+  </div>
+</div>

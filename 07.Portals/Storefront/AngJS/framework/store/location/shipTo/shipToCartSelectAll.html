@@ -1,0 +1,21 @@
+﻿<div class="row">
+    <div class="col-12">
+        <p data-translate="ui.storefront.location.shipTo.shipToSelect.DeliveryOption"></p>
+        <label class="radio-inline d-none d-sm-block">
+            <input type="radio"
+                   id="inlineRadio1" name="inlineRadioOptions"
+                   value="ShipToHome"
+                   ng-change="cefShipToSelectAllCtrl.updateAll('ShipToHome')"
+                   ng-model="cefShipToSelectAllCtrl.allSelectedShipping" />
+            <span data-translate="ui.storefront.location.shipTo.shipToSelect.ShipAllToHome"></span>>
+        </label>
+        <label class="radio-inline d-none d-sm-block">
+            <input type="radio" 
+                   id="inlineRadio2" name="inlineRadioOptions"
+                   value="ShipToStore"
+                   ng-change="cefShipToSelectAllCtrl.updateAll('ShipToStore')"
+                   ng-model="cefShipToSelectAllCtrl.allSelectedShipping" />
+            <span data-translate="ui.storefront.location.shipTo.shipToSelect.ShipAllToStore"></span>>
+        </label>
+    </div>
+</div>

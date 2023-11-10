@@ -1,0 +1,15 @@
+<span ng-class="{'bold':cclCtrl.bold}"
+><span ng-if="cclCtrl.isReady"
+><a class="{{cclCtrl.classes}}"
+id="categoriesMenuCategorySeeAllLinkFor{{cclCtrl.index}}"
+name="categoriesMenuCategorySeeAllLinkFor{{cclCtrl.index}}"
+ui-sref-plus uisrp-is-catalog="true"
+uisrp-state="{{cclCtrl.stateName}}"
+uisrp-params="{{cclCtrl.paramsObjAsStr}}"><!--
+--><span ng-if="cclCtrl.showSeeAll"
+data-translate="ui.storefront.menu.menuRenderVerticalTabPane.seeAll"></span><!--
+--><span ng-if="!cclCtrl.hideName"
+ng-class="{'text-capitalize':!cclCtrl.category.DisplayName}"
+ng-bind="cclCtrl.category.DisplayName || (cclCtrl.category.Name | lowercase)"></span><!--
+--><span ng-if="cclCtrl.showAngles">&nbsp;<i class="far fa-angle-double-right"></i></span>
+</a></span></span>

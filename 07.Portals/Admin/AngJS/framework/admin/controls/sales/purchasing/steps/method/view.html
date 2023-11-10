@@ -1,0 +1,21 @@
+<!-- step.method.view Template -->
+<div class="row">
+  <div class="col-sm-6">
+    <div cef-purchase-step-view-title></div>
+  </div>
+  <div ng-show="step.complete"
+     class="col-sm-6">
+    <div cef-purchase-step-method-summary
+      lookup-key="pCtrl.lookupKey">
+    </div>
+  </div>
+  <hr class="w-100 my-2 mx-3" />
+  <div ng-show="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()]"
+    class="col-xs-12"
+    cef-purchase-step-method-body
+    lookup-key="pCtrl.lookupKey">
+  </div>
+  <!-- NOTE: Intentionally, no continue button in this template -->
+  <hr ng-show="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()]"
+    class="w-100 my-2 mx-3" />
+</div>

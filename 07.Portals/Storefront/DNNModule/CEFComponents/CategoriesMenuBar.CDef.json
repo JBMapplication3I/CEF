@@ -1,0 +1,40 @@
+{
+  "Name": "CategoriesMenuBar",
+  "FriendlyName": "Categories Menu Bar",
+  "Description": "CEF Categories Menu Bar",
+  "ComponentType": "UserControl",
+  "Parameters": {
+    "CssClass": {
+      "Name": "CssClass",
+      "FriendlyName": "CSS Class",
+      "Description": "Enter the CSS Class for the Categories Menu Bar control.",
+      "Type": "System.String",
+      "Value": "nav navbar-nav home-mega",
+      "Order": 1
+    },
+    "Render": {
+      "Name": "Render",
+      "FriendlyName": "Render",
+      "Description": "Enter a Render attribute value.",
+      "Type": "System.String",
+      "Value": "mega",
+      "Order": 2
+    },
+    "RenderInner": {
+      "Name": "RenderInner",
+      "FriendlyName": "Render Inner",
+      "Description": "Enter a Render Inner attribute value.",
+      "Type": "System.String",
+      "Value": "mega-tabs",
+      "Order": 3
+    },
+    "Behavior": {
+      "Name": "Behavior",
+      "FriendlyName": "Behavior",
+      "Description": "Enter a Behavior attribute value.",
+      "Type": "System.String",
+      "Value": "['fast-hover','toggle']",
+      "Order": 4
+    }
+  }
+}

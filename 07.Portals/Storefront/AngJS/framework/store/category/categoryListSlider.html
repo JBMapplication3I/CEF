@@ -1,0 +1,31 @@
+<uib-carousel interval="myInterval">
+    <uib-slide ng-repeat="category in categoryListSliderCtrl.Categories.Results" active="slide.active">
+        <img class="img-fluid d-block mx-auto"
+             alt="{{category.DisplayName || category.Name}}"
+             ng-src="{{category.PrimaryImageFileName
+                       | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+             onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+        <div class="carousel-caption">
+            <p ng-bind="category.DisplayName || category.Name"></p>
+        </div>
+    </uib-slide>
+</uib-carousel>
+<div class="row">
+    <div ng-repeat="category in categoryListSliderCtrl.Categories.Results"
+         class="col-sm-2">
+        <p>
+            <a ui-sref-plus uisrp-is-catalog="true"
+               uisrp-state="searchCatalog.products.results.both"
+               uisrp-params="{ 'category': '{{category.Name}}|{{category.CustomKey}}'' }"
+               class="btn btn-link btn-block">
+                <img class="img-fluid d-block mx-auto"
+                     alt="{{category.DisplayName || category.Name}}"
+                     ng-src="{{category.PrimaryImageFileName
+                               | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                     onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                <br />
+                {{category.DisplayName || category.Name}}
+            </a>
+        </p>
+    </div>
+</div>

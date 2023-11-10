@@ -1,0 +1,129 @@
+﻿@inherits MVC.Core.InputFormGroupControllerBase<TValue>
+@typeparam TValue
+
+<Validation>
+  <Tooltip
+    Inline="false"
+    Text="@Tooltip"
+    Placement="TooltipPlacement.Top"
+    Fade="true"
+    AlwaysActive="TooltipIsOpen">
+    <Field
+      Horizontal="@IsHorizontal"
+      sid="@("field_" + InputName)"
+      Class="@AllFormClasses">
+      @if (!NoLabel)
+      {
+        <FieldLabel
+          For="@InputName"
+          title="@Tooltip"
+          sid="@("fieldLabel_" + InputName)">
+          <Span>
+            @LabelText
+            @if (Required)
+            {
+              <Span TextColor="TextColor.Danger">&nbsp;*</Span>
+            }
+            @if (Contract.CheckValidKey(Tooltip) && Tooltip != LabelText)
+            {
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.QuestionCircle" TextColor="TextColor.Info" Class="ml-1" />
+            }
+          </Span>
+        </FieldLabel>
+      }
+      <FieldBody
+        sid="@("fieldBody_" + InputName)">
+        <DatePicker
+          TValue="TValue"
+          sid="@("input_" + InputName)"
+          ElementId="@InputName"
+          Class="@AllInputClasses"
+          Placeholder="@PlaceholderText"
+          DateExpression="ValueExpression"
+          DateChanged="ValueChanged"
+          Date="@Value"
+          InputMode="IncludeTime ? DateInputMode.DateTime : DateInputMode.Date"
+          Disabled="@Disabled"
+          required="@Required"
+          Min="@Min"
+          Max="@Max"
+          autocomplete="@Autocomplete"
+          Autofocus="@Autofocus"
+          FocusOut="@ExtraOnFocusOut"
+          FocusIn="@ExtraOnFocusIn"
+          KeyDown="@ExtraOnKeyDown"
+          KeyPress="@ExtraOnKeyPress"
+          KeyUp="@ExtraOnKeyUp">
+          @*
+          onmousedown="@ExtraOnMouseDown"
+          onmouseup="@ExtraOnMouseUp"
+          onmousemove="@ExtraOnMouseMove"
+          onmouseover="@ExtraOnMouseOver"
+          onmouseout="@ExtraOnMouseOut"
+          onmousein="@ExtraOnMouseIn"
+          *@
+          <Feedback>
+            @if (FormInvalid == true && !HideInvalidTooltip)
+            {
+              <ValidationError />
+            }
+            @if (FormValid == true && ShowValidTooltip)
+            {
+              <ValidationSuccess />
+            }
+          </Feedback>
+        </DatePicker>
+      </FieldBody>
+    </Field>
+  </Tooltip>
+</Validation>
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  /// <summary>Gets or sets a value indicating whether this object is horizontal.</summary>
+  /// <value>True if this object is horizontal, false if not.</value>
+  [Parameter]
+  public bool IsHorizontal { get; set; }
+
+  /// <summary>Gets or sets the placeholder text.</summary>
+  /// <value>The placeholder text.</value>
+  [Parameter]
+  public string? PlaceholderText { get; set; }
+
+  /// <summary>Gets or sets the minimum.</summary>
+  /// <value>The minimum value.</value>
+  [Parameter]
+  public DateTime? Min { get; set; }
+
+  /// <summary>Gets or sets the maximum.</summary>
+  /// <value>The maximum value.</value>
+  [Parameter]
+  public DateTime? Max { get; set; }
+
+  /// <summary>Gets or sets the include time.</summary>
+  /// <value>The include time.</value>
+  [Parameter]
+  public bool IncludeTime { get; set; }
+#pragma warning restore CS8618 // Ignored: Parameters set by implementer
+  #endregion
+
+  /// <summary>Gets the input prefix.</summary>
+  /// <value>The input prefix.</value>
+  protected override string InputPrefix => "date";
+
+  /// <summary>Gets all input classes.</summary>
+  /// <value>all input classes.</value>
+  private string AllInputClasses => (FieldCssClasses
+    + (Contract.CheckValidKey(InputClasses) ? " " + InputClasses : string.Empty)
+    + (Contract.CheckValidKey(RightIcon) ? string.Empty : " rounded-right"))
+    .Trim();
+
+  /// <summary>Gets all form classes.</summary>
+  /// <value>all form classes.</value>
+  private string AllFormClasses => ("form-group"
+    + (Contract.CheckValidKey(FormClasses) ? " " + FormClasses : string.Empty)
+    + (FormInvalid == true ? " has-error" : string.Empty))
+    .Trim();
+}

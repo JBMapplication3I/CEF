@@ -1,0 +1,580 @@
+﻿@page "/sales/dashboard"
+@using LegendPosition = Syncfusion.Blazor.Charts.LegendPosition
+@inherits MVC.Core.TemplatedControllerBase
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="dashboardPage">
+    @if (ViewState.loading || Data is null && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (Data is not null)
+    {
+      <Div Class="page-content-with-footer">
+        <Container Fluid="true">
+          <Row>
+            <Column>
+              <Heading Size="HeadingSize.Is1">Dashboard</Heading>
+            </Column>
+          </Row>
+          <Row>
+            <Column ColumnSize="ColumnSize.IsAuto">
+              <Div Class="form-group">
+                <Label For="dateStart">Reporting Date Range</Label>
+                <Div Class="input-group">
+                  <DateEdit
+                    ElementId="dateStart"
+                    TValue="DateTime?"
+                    Date="@StartDate"
+                    DateChanged="@OnStartDateChanged"
+                    InputMode="DateInputMode.Month"
+                    Min="StartDate ?? DateTime.MinValue"
+                    Max="EndDate ?? DateTime.Today"
+                  />
+                  <Div Class="input-group-text input-group-append input-group-prepend"
+                    Style="border-radius: 0;">
+                    to
+                  </Div>
+                  <DateEdit
+                    ElementId="dateEnd"
+                    TValue="DateTime?"
+                    Date="@EndDate"
+                    DateChanged="@OnEndDateChanged"
+                    InputMode="DateInputMode.Month"
+                    Min="StartDate"
+                    Max="DateTime.Today"
+                  />
+                </Div>
+              </Div>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Blazorise.Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHeaderCell ColumnSpan="2" Class="text-center">
+                      Lots With Reserve
+                    </TableHeaderCell>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableRowCell width="50%">
+                      <Progress Class="mb-1" Style="height: 30px;"
+                        Color="Color.Primary"
+                        @bind-Value="lotsWithReservePercentYou">
+                      </Progress>
+                    </TableRowCell>
+                    <TableRowCell width="50%">
+                      <Progress Class="mb-1" Style="height: 30px;"
+                        Color="Color.Secondary"
+                        @bind-Value="lotsWithReservePercentUs">
+                      </Progress>
+                    </TableRowCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableRowCell>
+                      YOU
+                      <Span Class="fund rounded p-1" Style="background-color: #E1EBFF">
+                        @Data.You.LotsWithReservePercent.ToString("00%")
+                      </Span>
+                    </TableRowCell>
+                    <TableRowCell>
+                      EQUIP-BID @* TODO: Replace with token for client name *@
+                      <Span Class="fund rounded p-1" Style="background-color: #E1EBFF">
+                        @Data.Us.LotsWithReservePercent.ToString("00%")
+                      </Span>
+                    </TableRowCell>
+                  </TableRow>
+                </TableBody>
+              </Blazorise.Table>
+            </Column>
+            <Column>
+              <Blazorise.Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHeaderCell ColumnSpan="2" Class="text-center">
+                      Reserve Not Met
+                    </TableHeaderCell>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableRowCell width="50%">
+                      <Progress
+                        Class="mb-1"
+                        Style="height: 30px;"
+                        Color="Color.Primary"
+                        @bind-Value="reserveNotMetPercentYou">
+                      </Progress>
+                    </TableRowCell>
+                    <TableRowCell width="50%">
+                      <Progress
+                        Class="mb-1"
+                        Style="height: 30px;"
+                        Color="Color.Secondary"
+                        @bind-Value="reserveNotMetPercentUs">
+                      </Progress>
+                    </TableRowCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableRowCell>
+                      YOU
+                      <Span Class="fund rounded p-1" Style="background-color: #E1EBFF">
+                        @Data.You.ReserveNotMetPercent.ToString("00%")
+                      </Span>
+                    </TableRowCell>
+                    <TableRowCell>
+                      EQUIP-BID @* TODO: Replace with token for client name *@
+                      <Span Class="fund rounded p-1" Style="background-color: #E1EBFF">
+                        @Data.Us.ReserveNotMetPercent.ToString("00%")
+                      </Span>
+                    </TableRowCell>
+                  </TableRow>
+                </TableBody>
+              </Blazorise.Table>
+            </Column>
+            <div class="col">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="2" class="text-center">
+                      No Bid Lots
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td width="50%">
+                      <Progress class="mb-1" style="height: 30px;"
+                        Color="Color.Primary"
+                        @bind-Value="noBidLotsPercentYou">
+                      </Progress>
+                    </td>
+                    <td width="50%">
+                      <Progress class="mb-1" style="height: 30px;"
+                        Color="Color.Secondary"
+                        @bind-Value="noBidLotsPercentUs">
+                      </Progress>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      YOU
+                      <span class="fund rounded p-1" style="background-color: #E1EBFF">
+                        @Data.You.NoBidLotsPercent.ToString("00%")
+                      </span>
+                    </td>
+                    <td>
+                      EQUIP-BID @* TODO: Replace with token for client name *@
+                      <span class="fund rounded p-1" style="background-color: #E1EBFF">
+                        @Data.Us.NoBidLotsPercent.ToString("00%")
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="2" class="text-center">
+                      No Shows Under $25
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td width="50%">
+                      <Progress class="mb-1" style="height: 30px;"
+                        Color="Color.Primary"
+                        @bind-Value="noShowsUnderXPercentYou">
+                      </Progress>
+                    </td>
+                    <td width="50%">
+                      <Progress class="mb-1" style="height: 30px;"
+                        Color="Color.Secondary"
+                        @bind-Value="noShowsUnderXPercentUs">
+                      </Progress>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      YOU
+                      <span class="fund rounded p-1" style="background-color: #E1EBFF">
+                        @Data.You.NoShowsUnderXPercent.ToString("00%")
+                      </span>
+                    </td>
+                    <td>
+                      EQUIP-BID @* TODO: Replace with token for client name *@
+                      <span class="fund rounded p-1" style="background-color: #E1EBFF">
+                        @Data.Us.NoShowsUnderXPercent.ToString("00%")
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Row>
+          <div class="row">
+            <div class="col-4">
+              <SfAccumulationChart Width="100%">
+                <AccumulationChartSeriesCollection>
+                  <AccumulationChartAnnotations>
+                    <AccumulationChartAnnotation
+                      X="50%" Y="50%"
+                      CoordinateUnits="Units.Pixel"
+                      Region="Regions.Chart">
+                      <ContentTemplate>
+                        <div class="donut-text text-center">
+                          <span class="title font-weight-bold big">YOU</span><br/>
+                          <span class="sub-title">
+                            <span class="fund rounded p-1" style="background-color: #E1EBFF">
+                              @Data.You.TotalInvoices.ToString("c3")
+                            </span>
+                            TOTAL INVOICES
+                          </span>
+                        </div>
+                      </ContentTemplate>
+                    </AccumulationChartAnnotation>
+                  </AccumulationChartAnnotations>
+                  <AccumulationChartSeries
+                    DataSource="@InvoiceStatusCountsYou"
+                    XName="@nameof(AccumulationChartDataPoint.Title)"
+                    YName="@nameof(AccumulationChartDataPoint.Value)"
+                    Name="@nameof(AccumulationChartDataPoint.Title)"
+                    InnerRadius="80%"
+                    Palettes="@Palletes"
+                  />
+                </AccumulationChartSeriesCollection>
+                <AccumulationChartLegendSettings Visible="false" />
+              </SfAccumulationChart>
+            </div>
+            <div class="col-8">
+              <SfAccumulationChart Width="100%">
+                <AccumulationChartAnnotations>
+                  <AccumulationChartAnnotation
+                    X="58%" Y="50%"
+                    CoordinateUnits="Units.Pixel"
+                    Region="Regions.Chart">
+                    <ContentTemplate>
+                      <div class="donut-text text-center">
+                        <span class="title font-weight-bold big">EQUIP-BID</span><br /> @* TODO: Replace with token for client name *@
+                        <span class="sub-title">
+                          <span class="fund rounded p-1" style="background-color: #E1EBFF">
+                            @Data.Us.TotalInvoices.ToString("c3")
+                          </span>
+                          TOTAL INVOICES
+                        </span>
+                      </div>
+                    </ContentTemplate>
+                  </AccumulationChartAnnotation>
+                </AccumulationChartAnnotations>
+                <AccumulationChartSeriesCollection>
+                  <AccumulationChartSeries
+                    DataSource="@InvoiceStatusCountsUs"
+                    XName="@nameof(AccumulationChartDataPoint.Title)"
+                    YName="@nameof(AccumulationChartDataPoint.Value)"
+                    Name="@nameof(AccumulationChartDataPoint.Title)"
+                    InnerRadius="80%"
+                    Palettes="@Palletes"
+                  />
+                </AccumulationChartSeriesCollection>
+                <AccumulationChartLegendSettings
+                  Visible="true"
+                  Description="Invoices By Status"
+                  Position="LegendPosition.Left"
+                  Padding="5">
+                  <AccumulationChartMargin Top="5" Bottom="5" Left="5" Right="5" />
+                </AccumulationChartLegendSettings>
+              </SfAccumulationChart>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <SfChart>
+                <ChartPrimaryXAxis Title="Processed Lots" ValueType="Syncfusion.Blazor.Charts.ValueType.Category" />
+                <ChartLegendSettings Visible="true" />
+                <ChartTooltipSettings Enable="true" />
+                <ChartZoomSettings EnableMouseWheelZooming="true" EnablePinchZooming="true" EnableSelectionZooming="true" />
+                <ChartSeriesCollection>
+                  <ChartSeries DataSource="@processedLotsYou" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column" />
+                  <ChartSeries DataSource="@processedLotsUs" XName="Month" YName="SalesValue" Type="ChartSeriesType.Column" />
+                </ChartSeriesCollection>
+              </SfChart>
+            </div>
+            <div class="col-6">
+              <SfChart>
+                <ChartPrimaryXAxis Title="Average X Price" ValueType="Syncfusion.Blazor.Charts.ValueType.Category" />
+                <ChartLegendSettings Visible="true" />
+                <ChartTooltipSettings Enable="true" />
+                <ChartZoomSettings EnableMouseWheelZooming="true" EnablePinchZooming="true" EnableSelectionZooming="true" />
+                <ChartSeriesCollection>
+                  @*
+                  <ChartSeries DataSource="@Data.Us.AverageXValue" XName="X" YName="Y" Type="ChartSeriesType.Line" />
+                  <ChartSeries DataSource="@Data.You.AverageXValue" XName="X" YName="Y" Type="ChartSeriesType.Line" />
+                  *@
+                </ChartSeriesCollection>
+              </SfChart>
+            </div>
+          </div>
+          @*
+          <div class="row">
+            <div class="col">
+              <SfCircularGauge Title="Speedometer">
+                <CircularGaugeTitleStyle Color="blue" FontWeight="bold" Size="25" />
+                <CircularGaugeAxes>
+                  <CircularGaugeAxis StartAngle="270" EndAngle="90" HideIntersectingLabel="true">
+                    <CircularGaugeAxisLabelStyle AutoAngle="true" />
+                    <CircularGaugeAxisMajorTicks
+                      Interval="10" Color="red" Height="10" Width="3" Offset="5"
+                      Position="Syncfusion.Blazor.CircularGauge.Position.Inside"
+                    />
+                    <CircularGaugeAxisMinorTicks
+                      Interval="5" Color="green" Height="5" Width="2" Offset="5"
+                      Position="Syncfusion.Blazor.CircularGauge.Position.Inside"
+                    />
+                    <CircularGaugeRanges>
+                      <CircularGaugeRange Start="0" End="180" />
+                    </CircularGaugeRanges>
+                    <CircularGaugePointers>
+                      <CircularGaugePointer Value="35" />
+                    </CircularGaugePointers>
+                  </CircularGaugeAxis>
+                </CircularGaugeAxes>
+              </SfCircularGauge>
+            </div>
+          </div>
+          *@
+        </Container>
+      </Div>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Data
+#pragma warning disable CS0649 // ReSharper disable CollectionNeverUpdated.Local
+  /// <summary>The processed lots us.</summary>
+  private List<SalesInfo>? processedLotsUs;
+
+  /// <summary>The processed lots you.</summary>
+  private List<SalesInfo>? processedLotsYou;
+#pragma warning restore CS0649 // ReSharper restore CollectionNeverUpdated.Local
+
+  /// <summary>The palletes.</summary>
+  private string[] Palletes = { "#D4DCEC", "#104EE3", "#191E2A", "#3AC3FF", "#6F8ED8" };
+
+  /// <summary>Gets or sets the total number of invoices you.</summary>
+  /// <value>The total number of invoices you.</value>
+  private double TotalInvoicesYou { get; set; } = 74d;
+
+  /// <summary>Gets or sets the total number of invoices equip bid.</summary>
+  /// <value>The total number of invoices equip bid.</value>
+  private double TotalInvoicesEquipBid { get; set; } = 2.136d;
+
+  /// <summary>The lots with reserve percent us.</summary>
+  private int? lotsWithReservePercentUs;
+
+  /// <summary>The lots with reserve percent you.</summary>
+  private int? lotsWithReservePercentYou;
+
+  /// <summary>The reserve not met percent us.</summary>
+  private int? reserveNotMetPercentUs;
+
+  /// <summary>The reserve not met percent you.</summary>
+  private int? reserveNotMetPercentYou;
+
+  /// <summary>The no bid lots percent us.</summary>
+  private int? noBidLotsPercentUs;
+
+  /// <summary>The no bid lots percent you.</summary>
+  private int? noBidLotsPercentYou;
+
+  /// <summary>The no shows under x percent us.</summary>
+  private int? noShowsUnderXPercentUs;
+
+  /// <summary>The no shows under x percent you.</summary>
+  private int? noShowsUnderXPercentYou;
+
+  /// <summary>Gets or sets the start date.</summary>
+  /// <value>The start date.</value>
+  private DateTime? StartDate { get; set; }
+
+  /// <summary>Gets or sets the end date.</summary>
+  /// <value>The end date.</value>
+  private DateTime? EndDate { get; set; }
+
+#if STOREADMIN && FALSE
+  private DashboardDataForListerAdminResponse? Data;
+#else
+#pragma warning disable CS0649 // ReSharper disable CollectionNeverUpdated.Local, InconsistentNaming
+  /// <summary>The data.</summary>
+  private dynamic? Data;
+#pragma warning restore CS0649 // ReSharper restore CollectionNeverUpdated.Local, InconsistentNaming
+#endif
+
+  /// <summary>The sales.</summary>
+  private List<SalesInfo> Sales = new()
+  {
+    new("Jan", 35),
+    new("Feb", 28),
+    new("Mar", 34),
+    new("Apr", 32),
+    new("May", 40),
+    new("Jun", 32),
+    new("Jul", 35),
+  };
+
+  /// <summary>The invoice status counts us.</summary>
+  private List<AccumulationChartDataPoint> InvoiceStatusCountsUs = new()
+  {
+    new("Paid", 100),
+    new("Unpaid", 40),
+    new("Partially Paid", 30),
+    new("Void", 5),
+  };
+
+  /// <summary>The invoice status counts you.</summary>
+  private List<AccumulationChartDataPoint> InvoiceStatusCountsYou = new()
+  {
+    new("Paid", 100),
+    new("Unpaid", 40),
+    new("Partially Paid", 30),
+    new("Void", 5),
+  };
+  #endregion
+
+  #region Functions
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await SetRunningAsync().ConfigureAwait(false);
+    await LoadDashboardDataAsync().ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+  }
+
+  /// <summary>Loads dashboard data.</summary>
+  /// <returns>The dashboard data.</returns>
+#pragma warning disable CS1998
+  private async Task LoadDashboardDataAsync()
+#pragma warning restore CS1998
+  {
+    DebugBeginMethod();
+#if STOREADMIN && FALSE
+    var result = await cvApi.GetDashboardDataForListerAdmin(
+        new() { EndDate = EndDate, StartDate = StartDate, })
+      .ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Data = result.data;
+      InvoiceStatusCountsUs = Data.Us.InvoicesByStatus
+        .Select(x => new AccumulationChartDataPoint(x.Key, x.Value))
+        .ToList();
+      InvoiceStatusCountsYou = Data.You.InvoicesByStatus
+        .Select(x => new AccumulationChartDataPoint(x.Key, x.Value))
+        .ToList();
+      ProcessedLotsUs = Data.Us.ProcessedLots
+        .OrderBy(x => x.Key)
+        .Select(x => new SalesInfo(x.Key, x.Value))
+        .ToList();
+      processedLotsYou = Data.You.ProcessedLots
+        .OrderBy(x => x.Key)
+        .Select(x => new SalesInfo(x.Key, x.Value))
+        .ToList();
+      LotsWithReservePercentUs = (int)(Data.Us.LotsWithReservePercent * 100);
+      LotsWithReservePercentYou = (int)(Data.You.LotsWithReservePercent * 100);
+      ReserveNotMetPercentUs = (int)(Data.Us.ReserveNotMetPercent * 100);
+      ReserveNotMetPercentYou = (int)(Data.You.ReserveNotMetPercent * 100);
+      NoBidLotsPercentUs = (int)(Data.Us.NoBidLotsPercent * 100);
+      NoBidLotsPercentYou = (int)(Data.You.NoBidLotsPercent * 100);
+      NoShowsUnderXPercentUs = (int)(Data.Us.NoShowsUnderXPercent * 100);
+      NoShowsUnderXPercentYou = (int)(Data.You.NoShowsUnderXPercent * 100);
+    }
+#endif
+    DebugEndMethod();
+  }
+
+  /// <summary>Executes the start date changed action.</summary>
+  /// <param name="newValue">The new value.</param>
+  /// <returns>A Task.</returns>
+  private Task OnStartDateChanged(DateTime? newValue)
+  {
+    StartDate = newValue;
+    return LoadDashboardDataAsync();
+  }
+
+  /// <summary>Executes the end date changed action.</summary>
+  /// <param name="newValue">The new value.</param>
+  /// <returns>A Task.</returns>
+  private Task OnEndDateChanged(DateTime? newValue)
+  {
+    EndDate = newValue;
+    return LoadDashboardDataAsync();
+  }
+  #endregion
+
+  #region Data Classes
+  /// <summary>Information about the sales.</summary>
+  [PublicAPI]
+  private class SalesInfo
+  {
+    /// <summary>Initializes a new instance of the <see cref="SalesInfo" /> class.</summary>
+    /// <param name="month">     The month.</param>
+    /// <param name="salesValue">The sales value.</param>
+    public SalesInfo(string month, double salesValue)
+    {
+      Month = month;
+      SalesValue = salesValue;
+    }
+
+    /// <summary>Gets or sets the month.</summary>
+    /// <value>The month.</value>
+    public string Month { get; set; }
+
+    /// <summary>Gets or sets the sales value.</summary>
+    /// <value>The sales value.</value>
+    public double SalesValue { get; set; }
+  }
+
+  /// <summary>An accumulation chart data point.</summary>
+  [PublicAPI]
+  private class AccumulationChartDataPoint
+  {
+    /// <summary>Initializes a new instance of the <see cref="AccumulationChartDataPoint" /> class.</summary>
+    /// <param name="title">The title.</param>
+    /// <param name="value">The value.</param>
+    public AccumulationChartDataPoint(string title, double value)
+    {
+      Title = title;
+      Value = value;
+    }
+
+    /// <summary>Gets or sets the title.</summary>
+    /// <value>The title.</value>
+    public string Title { get; set; }
+
+    /// <summary>Gets or sets the value.</summary>
+    /// <value>The value.</value>
+    public double Value { get; set; }
+  }
+  #endregion
+}

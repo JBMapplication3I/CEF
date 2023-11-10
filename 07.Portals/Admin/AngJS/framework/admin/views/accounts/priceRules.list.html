@@ -1,0 +1,81 @@
+﻿<cv-page caption="Manage Price Rules" head-icon="fa-users"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.PriceRules')">
+    <cv-widget>
+        <widget-menu-item caption="Add Price Rule" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.priceRules.detail',{ID:'New'})"
+                          permission="'Pricing.PriceRule.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     filter-side="true" force-show-labels="true"
+                     sortable="false" server-sorting="true"
+                     groupable="false"
+                     on-search="search.getPriceRules"
+                     partial-reset="false"
+                     on-deactivate="search.deactivatePriceRule"
+                     on-reactivate="search.reactivatePriceRule"
+                     on-delete="search.deletePriceRule"
+                     edit-state="accounts.priceRules.detail,[ID]"
+                     permissions-base="Pricing.PriceRule">
+                <cv-column field="ID" title="#"
+                           width="5%" header-class="text-center" cell-class="text-right"
+                           filter filter-type="id"
+                           groupable="false" />
+                <cv-column field="CustomKey" title="Key"
+                           width="15%"
+                           filter
+                           groupable="false" />
+                <cv-column field="Name"
+                           width="15%"
+                           filter
+                           sort-by="4" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="PriceAdjustment" title="Adjustment"
+                           width="10%"
+                           groupable="false" />
+                <cv-column field="IsPercentage" title="$/%" type="boolean"
+                           width="5%" cell-class="text-center" header-class="text-center"
+                           filter filter-type="boolean" filter-value="false" />
+                <cv-column field="Priority" title="Priority" type="number"
+                           width="5%" cell-class="text-right" header-class="text-center"
+                           sort-by="3" sort-by-direction="desc"
+                           groupable="false" />
+                <cv-column filter field="CustomCurrency" title="Cur."
+                           width="5%" cell-class="text-center" header-class="text-center"
+                           groupable="false" />
+                <cv-column field="UsePriceBase" title="Base/Sale" type="boolean"
+                           width="5%" cell-class="text-center" header-class="text-center"
+                           filter filter-type="boolean" filter-value="false" />
+                <cv-column field="MinQuantity" title="Min Qty" type="number"
+                           filter filter-type="minmaxnumber"
+                           width="8%" cell-class="text-right" header-class="text-center"
+                           groupable="false" />
+                <cv-column filter field="MaxQuantity" title="Max Qty" type="number"
+                           filter filter-type="minmaxnumber"
+                           width="8%" cell-class="text-right" header-class="text-center"
+                           groupable="false" />
+                <cv-column field="StartDate" title="Start Date" type="date"
+                           filter filter-type="minmaxdate"
+                           width="10%"
+                           groupable="false" />
+                <cv-column field="EndDate" title="End Date" type="date"
+                           filter filter-type="minmaxdate"
+                           width="10%"
+                           groupable="false" />
+                <cv-column field="IsExclusive" title="Exc." type="boolean"
+                           width="5%" cell-class="text-center" header-class="text-center"
+                           filter filter-type="boolean" filter-value="false"
+                           sort-by="2" sort-by-direction="desc" />
+                <cv-column field="IsMarkup" title="Up/Down" type="boolean"
+                           width="5%" cell-class="text-center" header-class="text-center"
+                           filter filter-type="boolean" filter-value="false" />
+                <cv-column field="IsOnlyForAnonymousUsers" title="For Anon." type="boolean"
+                           width="5%" cell-class="text-center" header-class="text-center"
+                           filter filter-type="boolean" filter-value="false" />
+                <cv-column field="Active" title="Active" type="boolean"
+                           hidden
+                           filter filter-type="boolean" filter-value="true"
+                           sort-by="1" sort-by-direction="desc" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

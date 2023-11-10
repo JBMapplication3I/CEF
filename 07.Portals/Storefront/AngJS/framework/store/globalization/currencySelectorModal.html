@@ -1,0 +1,40 @@
+﻿<div class="modal-header bg-dark text-light">
+    <h5 class="modal-title"
+        data-translate="ui.storefront.common.SelectLanguage"></h5>
+    <button type="button" class="close"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="currencySelectorModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body" ng-form="currencySelectorModalCtrl.forms.edit">
+    <div class="form-group"
+         ng-class="{'has-error': currencySelectorModalCtrl.forms.edit.ddlCurrency.$invalid}">
+        <label class="control-label" for="ddlCurrency"
+               data-translate="ui.storefront.common.SelectCurrency"></label>
+        <select class="form-control"
+                id="ddlCurrency" name="ddlCurrency"
+                ng-required="true"
+                ng-options="c.CustomKey as (c.Name + ' [' + c.CustomKey + ']')
+                            for c in currencySelectorModalCtrl.currencies
+                            | orderBy: 'Name'"
+                ng-model="currencySelectorModalCtrl.selectedCurrency"></select>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary"
+            id="btnCurrencyModalCancel" name="btnCurrencyModalCancel"
+            translate-attr="{ title: 'ui.storefront.common.Cancel',
+                              'aria-label': 'ui.storefront.common.Cancel' }"
+            data-translate="ui.storefront.common.Cancel"
+            ng-click="currencySelectorModalCtrl.cancel()"></button>
+    <button type="button" class="btn btn-primary"
+            id="btnCurrencyModalOk" name="btnCurrencyModalOk"
+            translate-attr="{ title: 'ui.storefront.common.Select',
+                              'aria-label': 'ui.storefront.common.Select' }"
+            data-translate="ui.storefront.common.Select"
+            ng-disabled="currencySelectorModalCtrl.forms.edit.$invalid"
+            ng-click="currencySelectorModalCtrl.ok()"></button>
+</div>

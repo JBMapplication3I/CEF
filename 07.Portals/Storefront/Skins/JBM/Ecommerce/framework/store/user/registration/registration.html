@@ -1,0 +1,62 @@
+﻿<div class="row mb-3 userRegWrapper" ng-form="registrationCtrl.forms.register"
+  ng-class="{ 'dnnRegForm': registrationCtrl.userRegistrationTypeSelectionID == 3, 'hideRegSelector': registrationCtrl.cvRegistrationService.activeStep > 0 }">
+  <!-- ALready logged in -->
+  <div ng-if="registrationCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-12 text-center" role="alert">
+    <div class="alert alert-info">
+      <span data-translate="You have already logged in as:"></span>&nbsp;<!--
+      --><b ng-bind="registrationCtrl.cvAuthenticationService.currentUser.UserName"></b>
+    </div>
+  </div>
+  <!-- Header -->
+  <div class="col-12 text-center">
+    <h1 class="mb-2"><span data-translate="ui.storefront.user.registration.RegisterWith"></span>&nbsp;<!--
+    --><span ng-bind="registrationCtrl.cefConfig.companyName"></span></h1>
+    <p>
+      <span data-translate="ui.storefront.user.registration.YourPrivacyIsImportantToUsPleaseReadOur"></span>&nbsp;<!--
+      --><a ui-sref-plus uisrp-area="privacy" target="_blank"
+      ><span data-translate="ui.storefront.user.registration.PrivacyStatement"></span></a>&nbsp;<!--
+      --><span data-translate="ui.storefront.user.registration.RegardingTheFullTermsOfWhyWeCollectThisDataAndHowYourInformationWillBeUsed"></span>
+    </p>
+  </div>
+  <div class="col-12 d-flex justify-content-center">
+    <div class="col-6">
+      <select-form-group
+        key="newUserRegistrationType"
+        id="newUserRegistrationType"
+        label-text="Registration Type"
+        selections="registrationCtrl.newUserRegistrationType"
+        include-null="true"
+        null-text="Choose one..."
+        ng-model="registrationCtrl.userRegistrationTypeSelectionID"
+        ng-form-classes="select-registration-type"
+        when-changed="registrationCtrl.userRegistrationTypeSelectionIDChanged($event, control)"
+        ng-required="true">
+    </select-form-group>
+    </div>
+  </div>
+  <!-- Steps -->
+  <div class="col-12" ng-if="(registrationCtrl.userRegistrationTypeSelectionID != null) && (registrationCtrl.userRegistrationTypeSelectionID != 3)">
+    <div ng-repeat="step in registrationCtrl.cvRegistrationService.steps
+      | orderBy: ['order']"
+      class="row">
+      <div class="col-12">
+        <div ng-include="step.templateURL | corsLink: 'ui'"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Error messages -->
+  <div class="col-12" ng-if="registrationCtrl.hasError" role="alert">
+    <div class="alert alert-danger">
+      <span data-translate="ui.storefront.user.registration.ThereWasAnIssueRegisteringYourNewUserAccountPleaseCheckYourInputsAndTry"></span>&nbsp;<!--
+      --><a ui-sref-plus uisrp-area="contactUs"><span data-translate="ui.storefront.common.ContactUs"></span></a>
+    </div>
+  </div>
+  <!-- loading overlay -->
+  <div ng-if="registrationCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true"
+    pad-in="true"
+    message="registrationCtrl.viewState.waitMessage">
+  </div>
+</div>

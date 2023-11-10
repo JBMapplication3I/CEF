@@ -1,0 +1,211 @@
+<!-- Statuses -->
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.accountStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.accountStatuses').requiresPermission + '')">
+<a ui-sref="statuses.accountStatuses.list" ng-click="toggleDropdown($event)">
+Account Statuses
+<span ng-if="$root.$state.includes('statuses.accountStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.adStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.adStatuses').requiresPermission + '')">
+<a ui-sref="statuses.adStatuses.list" ng-click="toggleDropdown($event)">
+Ad Statuses
+<span ng-if="$root.$state.includes('statuses.adStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.zoneStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.zoneStatuses').requiresPermission + '')">
+<a ui-sref="statuses.zoneStatuses.list" ng-click="toggleDropdown($event)">
+Zone Statuses
+<span ng-if="$root.$state.includes('statuses.zoneStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.auctionStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.auctionStatuses').requiresPermission + '')">
+<a ui-sref="statuses.auctionStatuses.list" ng-click="toggleDropdown($event)">
+Auction Statuses
+<span ng-if="$root.$state.includes('statuses.auctionStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.bidStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.bidStatuses').requiresPermission + '')">
+<a ui-sref="statuses.bidStatuses.list" ng-click="toggleDropdown($event)">
+Bid Statuses
+<span ng-if="$root.$state.includes('statuses.bidStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.lotStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.lotStatuses').requiresPermission + '')">
+<a ui-sref="statuses.lotStatuses.list" ng-click="toggleDropdown($event)">
+Lot Statuses
+<span ng-if="$root.$state.includes('statuses.lotStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.calendarEventStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.calendarEventStatuses').requiresPermission + '')">
+<a ui-sref="statuses.calendarEventStatuses.list" ng-click="toggleDropdown($event)">
+Calendar Event Statuses
+<span ng-if="$root.$state.includes('statuses.calendarEventStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.referralCodeStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.referralCodeStatuses').requiresPermission + '')">
+<a ui-sref="statuses.referralCodeStatuses.list" ng-click="toggleDropdown($event)">
+Referral Code Statuses
+<span ng-if="$root.$state.includes('statuses.referralCodeStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.userOnlineStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.userOnlineStatuses').requiresPermission + '')">
+<a ui-sref="statuses.userOnlineStatuses.list" ng-click="toggleDropdown($event)">
+User Online Statuses
+<span ng-if="$root.$state.includes('statuses.userOnlineStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.userStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.userStatuses').requiresPermission + '')">
+<a ui-sref="statuses.userStatuses.list" ng-click="toggleDropdown($event)">
+User Statuses
+<span ng-if="$root.$state.includes('statuses.userStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.groupStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.groupStatuses').requiresPermission + '')">
+<a ui-sref="statuses.groupStatuses.list" ng-click="toggleDropdown($event)">
+Group Statuses
+<span ng-if="$root.$state.includes('statuses.groupStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.salesInvoiceStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.salesInvoiceStatuses').requiresPermission + '')">
+<a ui-sref="statuses.salesInvoiceStatuses.list" ng-click="toggleDropdown($event)">
+Invoice Statuses
+<span ng-if="$root.$state.includes('statuses.salesInvoiceStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.emailStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.emailStatuses').requiresPermission + '')">
+<a ui-sref="statuses.emailStatuses.list" ng-click="toggleDropdown($event)">
+Email Statuses
+<span ng-if="$root.$state.includes('statuses.emailStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.salesOrderStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.salesOrderStatuses').requiresPermission + '')">
+<a ui-sref="statuses.salesOrderStatuses.list" ng-click="toggleDropdown($event)">
+Order Statuses
+<span ng-if="$root.$state.includes('statuses.salesOrderStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.paymentStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.paymentStatuses').requiresPermission + '')">
+<a ui-sref="statuses.paymentStatuses.list" ng-click="toggleDropdown($event)">
+Payment Statuses
+<span ng-if="$root.$state.includes('statuses.paymentStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.subscriptionStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.subscriptionStatuses').requiresPermission + '')">
+<a ui-sref="statuses.subscriptionStatuses.list" ng-click="toggleDropdown($event)">
+Subscription Statuses
+<span ng-if="$root.$state.includes('statuses.subscriptionStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.futureImportStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.futureImportStatuses').requiresPermission + '')">
+<a ui-sref="statuses.futureImportStatuses.list" ng-click="toggleDropdown($event)">
+Future Import Statuses
+<span ng-if="$root.$state.includes('statuses.futureImportStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.productStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.productStatuses').requiresPermission + '')">
+<a ui-sref="statuses.productStatuses.list" ng-click="toggleDropdown($event)">
+Product Statuses
+<span ng-if="$root.$state.includes('statuses.productStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.purchaseOrderStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.purchaseOrderStatuses').requiresPermission + '')">
+<a ui-sref="statuses.purchaseOrderStatuses.list" ng-click="toggleDropdown($event)">
+Purchase Order Statuses
+<span ng-if="$root.$state.includes('statuses.purchaseOrderStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.salesQuoteStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.salesQuoteStatuses').requiresPermission + '')">
+<a ui-sref="statuses.salesQuoteStatuses.list" ng-click="toggleDropdown($event)">
+Quote Statuses
+<span ng-if="$root.$state.includes('statuses.salesQuoteStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.salesReturnStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.salesReturnStatuses').requiresPermission + '')">
+<a ui-sref="statuses.salesReturnStatuses.list" ng-click="toggleDropdown($event)">
+Return Statuses
+<span ng-if="$root.$state.includes('statuses.salesReturnStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.sampleRequestStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.sampleRequestStatuses').requiresPermission + '')">
+<a ui-sref="statuses.sampleRequestStatuses.list" ng-click="toggleDropdown($event)">
+Sample Request Statuses
+<span ng-if="$root.$state.includes('statuses.sampleRequestStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.appointmentStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.appointmentStatuses').requiresPermission + '')">
+<a ui-sref="statuses.appointmentStatuses.list" ng-click="toggleDropdown($event)">
+Appointment Statuses
+<span ng-if="$root.$state.includes('statuses.appointmentStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.shipmentStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.shipmentStatuses').requiresPermission + '')">
+<a ui-sref="statuses.shipmentStatuses.list" ng-click="toggleDropdown($event)">
+Shipment Statuses
+<span ng-if="$root.$state.includes('statuses.shipmentStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.cartStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.cartStatuses').requiresPermission + '')">
+<a ui-sref="statuses.cartStatuses.list" ng-click="toggleDropdown($event)">
+Cart Statuses
+<span ng-if="$root.$state.includes('statuses.cartStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.campaignStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.campaignStatuses').requiresPermission + '')">
+<a ui-sref="statuses.campaignStatuses.list" ng-click="toggleDropdown($event)">
+Campaign Statuses
+<span ng-if="$root.$state.includes('statuses.campaignStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.eventStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.eventStatuses').requiresPermission + '')">
+<a ui-sref="statuses.eventStatuses.list" ng-click="toggleDropdown($event)">
+Event Statuses
+<span ng-if="$root.$state.includes('statuses.eventStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.iPOrganizationStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.iPOrganizationStatuses').requiresPermission + '')">
+<a ui-sref="statuses.iPOrganizationStatuses.list" ng-click="toggleDropdown($event)">
+I P Organization Statuses
+<span ng-if="$root.$state.includes('statuses.iPOrganizationStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.pageViewStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.pageViewStatuses').requiresPermission + '')">
+<a ui-sref="statuses.pageViewStatuses.list" ng-click="toggleDropdown($event)">
+Page View Statuses
+<span ng-if="$root.$state.includes('statuses.pageViewStatuses')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.visitStatuses')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.visitStatuses').requiresPermission + '')">
+<a ui-sref="statuses.visitStatuses.list" ng-click="toggleDropdown($event)">
+Visit Statuses
+<span ng-if="$root.$state.includes('statuses.visitStatuses')" class="sr-only">(current)</span>
+</a>
+</div>

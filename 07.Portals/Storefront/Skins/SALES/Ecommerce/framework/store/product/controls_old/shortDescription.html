@@ -1,0 +1,15 @@
+﻿<div class="row cef-quick-description"
+     ng-switch="productShortDescriptionCtrl.product.SerializableAttributes.Template.Value">
+    <div class="col-12 pb-3" ng-switch-when="Clothing">
+        <p id="lblProductShortDescription" name="lblProductShortDescription"
+            ng-bind="productShortDescriptionCtrl.product.ShortDescription
+                 | limitToEllipses : productShortDescriptionCtrl.limit || 255"></p>
+    </div>
+    <div class="col-12" ng-switch-default>
+        <h4 class="bold"
+            data-translate="ui.storefront.product.detail.productDetails.quickDescription"></h4>
+        <p id="lblProductShortDescription" name="lblProductShortDescription"
+           ng-bind="productShortDescriptionCtrl.product.ShortDescription
+                    | limitToEllipses : productShortDescriptionCtrl.limit || 255"></p>
+    </div>
+</div>

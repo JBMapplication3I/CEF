@@ -1,0 +1,263 @@
+﻿<div class="row">
+  <!--
+  <div class="col-12">
+    <h1 sid="MyDashboardText"
+      data-translate="ui.storefront.common.MyDashboard">
+    </h1>
+  </div>
+  -->
+  <my-store ng-if="dashboardCtrl.cefConfig.featureSet.stores.enabled">
+  </my-store>
+  <div ng-if="dashboardCtrl.cefConfig.featureSet.salesOrders.enabled"
+    class="col-12">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4 class="mb-2"
+          sid="MyDashboardRecentOrdersText">
+          <i class="far fa-receipt" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.userDashboard2.views.dashboard.RecentSalesOrders">
+          </span>
+        </h4>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-link"
+          id="userDashboard_salesOrder_viewAll"
+          ui-sref="userDashboard.salesOrders.list">
+          <span data-translate="ui.storefront.common.ViewAll"></span>&nbsp;<!--
+          --><i class="far fa-angle-double-right" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="col-12" ng-controller="StoreSearchController as search">
+        <cv-grid
+          show-pager="false"
+          page-sizes="5"
+          server-paging="true"
+          server-sorting="true"
+          on-search="search.getCurrentAccountSalesOrders"
+          detail-state="userDashboard.salesOrders.detail,[ID]"
+          auto-column-widths="false"
+          button-index="orders">
+          <cv-query-controller-param
+            field="HasSalesGroupAsMaster"
+            value="$root.cefConfig.featureSet.shipping.splitShipping.enabled" />
+          <cv-column
+            field="ID"
+            title-key="ui.storefront.storeDashboard.storeProductEditor.ID"
+            width="13%"
+            cell-class="text-right" />
+          <cv-column
+            if="$root.cefConfig.featureSet.salesOrders.hasIntegratedKeys"
+            field="CustomKey"
+            title-key="ui.storefront.common.Key"
+            width="26%" />
+          <cv-column
+            field="Totals.Total"
+            title-key="ui.storefront.common.Total"
+            width="20%"
+            cell-class="text-right"
+            format="globalizedCurrency : dataItem.SerializableAttributes.SellingCurrencyKey.Value" />
+          <cv-column
+            field="CreatedDate"
+            title-key="ui.storefront.common.Date"
+            width="26%"
+            format="yyyy MMM dd hh:mm a"
+            type="date"
+            sort-by="1"
+            sort-by-direction="desc" />
+          <cv-column
+            field="StatusID"
+            type="statusID"
+            title-key="ui.storefront.userDashboard2.controls.salesDetail.Status"
+            preload-statuses-kind="SalesOrder"
+            width="40%" />
+        </cv-grid>
+      </div>
+    </div>
+  </div>
+  <div ng-if="dashboardCtrl.cefConfig.featureSet.salesInvoices.enabled"
+    class="col-12">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4 class="mb-2"
+          sid="MyDashboardRecentInvoicesText">
+          <i class="far fa-file-invoice-dollar" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.userDashboard2.views.dashboard.RecentSalesInvoices">
+          </span>
+        </h4>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-link"
+          id="userDashboard_salesInvoices_viewAll"
+          ui-sref="userDashboard.salesInvoices.list">
+          <span data-translate="ui.storefront.common.ViewAll"></span>&nbsp;<!--
+          --><i class="far fa-angle-double-right" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="col-12" ng-controller="StoreSearchController as search">
+        <cv-grid
+          show-pager="false"
+          page-sizes="8"
+          server-paging="true"
+          server-sorting="true"
+          on-search="search.getCurrentAccountSalesInvoices"
+          detail-state="userDashboard.salesInvoices.detail,[ID]"
+          button-index="invoices">
+          <cv-column
+            field="ID"
+            title-key="ui.storefront.storeDashboard.storeProductEditor.ID"
+            width="13%"
+            cell-class="text-right" />
+          <cv-column
+            if="$root.cefConfig.featureSet.salesInvoices.hasIntegratedKeys"
+            field="CustomKey"
+            title-key="ui.storefront.common.Key"
+            width="26%" />
+          <cv-column
+            field="Totals.Total"
+            title-key="ui.storefront.common.Total"
+            width="20%"
+            cell-class="text-right"
+            format="globalizedCurrency : dataItem.SerializableAttributes.SellingCurrencyKey.Value" />
+          <cv-column
+            field="CreatedDate"
+            title-key="ui.storefront.common.Date"
+            width="26%"
+            format="yyyy MMM dd hh:mm a"
+            type="date"
+            sort-by="1"
+            sort-by-direction="desc" />
+          <cv-column
+            field="StatusID"
+            type="statusID"
+            title-key="ui.storefront.userDashboard2.controls.salesDetail.Status"
+            preload-statuses-kind="SalesInvoice"
+            width="40%" />
+        </cv-grid>
+      </div>
+    </div>
+  </div>
+  <div ng-if="dashboardCtrl.cefConfig.featureSet.salesQuotes.enabled"
+    class="col-12">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4 class="mb-2"
+          sid="MyDashboardRecentQuotesText">
+          <i class="far fa-quote-right" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.userDashboard2.views.dashboard.RecentSalesQuotes">
+          </span>
+        </h4>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-link"
+          id="userDashboard_salesQuotes_viewAll"
+          ui-sref="userDashboard.salesQuotes.list">
+          <span data-translate="ui.storefront.common.ViewAll"></span>&nbsp;<!--
+          --><i class="far fa-angle-double-right" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="col-12" ng-controller="StoreSearchController as search">
+        <cv-grid
+          show-pager="false"
+          page-sizes="5"
+          server-paging="true"
+          server-sorting="true"
+          on-search="search.getCurrentAccountSalesQuotes"
+          detail-state="userDashboard.salesQuotes.detail,[ID]"
+          button-index="quotes">
+          <cv-column
+            field="ID"
+            title-key="ui.storefront.storeDashboard.storeProductEditor.ID"
+            width="13%"
+            cell-class="text-right" />
+          <cv-column
+            if="$root.cefConfig.featureSet.salesQuotes.hasIntegratedKeys"
+            field="CustomKey"
+            title-key="ui.storefront.common.Key"
+            width="26%" />
+          <cv-column
+            field="Totals.Total"
+            title-key="ui.storefront.common.Total"
+            width="20%"
+            cell-class="text-right"
+            format="globalizedCurrency : dataItem.SerializableAttributes.SellingCurrencyKey.Value" />
+          <cv-column
+            field="CreatedDate"
+            title-key="ui.storefront.common.Date"
+            width="26%"
+            format="yyyy MMM dd hh:mm a"
+            type="date"
+            sort-by="1"
+            sort-by-direction="desc" />
+          <cv-column
+            field="StatusID"
+            type="statusID"
+            title-key="ui.storefront.userDashboard2.controls.salesDetail.Status"
+            preload-statuses-kind="SalesQuote"
+            width="40%" />
+        </cv-grid>
+      </div>
+    </div>
+  </div>
+  <div ng-if="dashboardCtrl.cefConfig.featureSet.salesReturns.enabled"
+    class="col-12">
+    <div class="row align-items-center">
+      <div class="col">
+        <h4 class="mb-2"
+          sid="MyDashboardRecentReturnsText">
+          <i class="far fa-box-fragile" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.userDashboard2.views.dashboard.RecentSalesReturns">
+          </span>
+        </h4>
+      </div>
+      <div class="col-auto">
+        <a class="btn btn-link"
+          id="userDashboard_salesReturns_viewAll"
+          ui-sref="userDashboard.salesReturns.list">
+          <span data-translate="ui.storefront.common.ViewAll"></span>&nbsp;<!--
+          --><i class="far fa-angle-double-right" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="col-12" ng-controller="StoreSearchController as search">
+        <cv-grid
+          show-pager="false"
+          page-sizes="5"
+          server-paging="true"
+          server-sorting="true"
+          on-search="search.getCurrentAccountSalesReturns"
+          detail-state="userDashboard.salesReturns.detail,[ID]"
+          button-index="returns">
+          <cv-column
+            field="ID"
+            title-key="ui.storefront.storeDashboard.storeProductEditor.ID"
+            width="13%"
+            cell-class="text-right" />
+          <cv-column
+            if="$root.cefConfig.featureSet.salesReturns.hasIntegratedKeys"
+            field="CustomKey"
+            title-key="ui.storefront.common.Key"
+            width="26%" />
+          <cv-column
+            field="Totals.Total"
+            title-key="ui.storefront.common.Total"
+            width="20%"
+            cell-class="text-right"
+            format="globalizedCurrency : dataItem.SerializableAttributes.SellingCurrencyKey.Value" />
+          <cv-column
+            field="CreatedDate"
+            title-key="ui.storefront.common.Date"
+            width="26%"
+            format="yyyy MMM dd hh:mm a"
+            type="date"
+            sort-by="1"
+            sort-by-direction="desc" />
+          <cv-column
+            field="StatusID"
+            type="statusID"
+            title-key="ui.storefront.userDashboard2.controls.salesDetail.Status"
+            preload-statuses-kind="SalesReturn"
+            width="40%" />
+        </cv-grid>
+      </div>
+    </div>
+  </div>
+</div>

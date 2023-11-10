@@ -1,0 +1,59 @@
+﻿<div class="row" id="recently-viewed-products-list"
+  ng-if="recentlyViewedProductsListCtrl.products && recentlyViewedProductsListCtrl.products.length">
+  <div ng-repeat="product in recentlyViewedProductsListCtrl.products"
+    class="col-sm-6 col-md-4 col-lg-3 mb-3 product-card">
+     <div class="row">
+      <!-- Product Image -->
+      <div class="col-sm-12 mb-1"
+        cef-product-card-thumbnail-widget
+        product-id="product.ID"
+        product-image="product.PrimaryImageFileName"
+        width="250"
+        height="250"
+        index="$index">
+      </div>
+      <!-- Product Name -->
+      <div class="col-sm-12 mb-1"
+        cef-product-card-name-gen-widget
+        product-id="product.ID"
+        rows="2"
+        index="$index">
+      </div>
+      <!-- Product SKU & Stock Information -->
+      <div class="col-sm-12 mb-1"
+        cef-product-card-sku-gen-widget
+        product-id="product.ID">
+      </div>
+      <div class="col-sm-12 mb-1"
+        cef-product-card-stock-gen-widget
+        product-id="product.ID">
+      </div>
+      <!-- Product Short Description -->
+      <!-- TODO: Add setting to show/hide Short Description block -->
+      <div class="col-sm-12 mb-1"
+        cef-product-card-short-desc-gen-widget
+        product-id="product.ID"
+        rows="2">
+      </div>
+      <!-- Product Pricing -->
+      <div class="col-sm-12 mb-1"
+        cef-product-card-pricing-gen-widget
+        product-id="product.ID"
+        display-style="sideBySide">
+      </div>
+      <!-- Call to Action Button -->
+      <div class="col-sm-12 mb-3"
+        cef-product-card-action-button-gen-widget
+        product-id="product.ID"
+        button-view="addToCart">
+      </div>
+    </div>
+    <!-- Controls -->
+    <div class="row card-controls">
+      <div class="col-sm-12 mb-3"
+        cef-product-card-controls-widget
+        product-id="product.ID">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+﻿<div class="row">
+    <div class="col-sm-12">
+        <h2 sid="ReturnRequestHdr" class="text-center" data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate.ReturnRequestOfPurchasedItems"></h2>
+        <h4 sid="SelectReturnHdr" class="text-center" data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate.PleaseSelectTheItemsYouWouldLikeToReturn"></h4>
+        <div ng-form="salesReturnCreateCtrl.forms.products"
+             class="table-responsive">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr class="first last">
+                        <th class="w-5"></th>
+                        <th class="w-16"
+                            data-translate="ui.storefront.cart.SKU"></th>
+                        <th class="w-40"
+                            data-translate="ui.storefront.common.Name"></th>
+                        <th class="w-8 text-center"
+                            data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate.PurchasedQuantity"></th>
+                        <th class="w-8 text-center"
+                            data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate.ReturnableQuantity"></th>
+                        <th class="w-8 text-center"
+                            data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate.ReturningQuantity"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat-start="item in salesReturnCreateCtrl.salesObject.SalesItems">
+                        <td rowspan="2">
+                            <toggle id="ckSelected{{item.ID}}" name="ckSelected{{item.ID}}" class="btn-block"
+                                    ng-disabled="!salesReturnCreateCtrl.isEligibleForReturn(item.ID)"
+                                    ng-change="salesReturnCreateCtrl.updateSelectedItems(item.ID)"
+                                    ng-model="salesReturnCreateCtrl.itemsModel[item.ID].itemChecked"
+                                    data-on="Return" data-truestyle="btn-danger"
+                                    data-off="Keep" data-offstyle="btn-info"></toggle>
+                        </td>
+                        <td ng-if="item.Product.SeoUrl">
+                            <a ui-sref-plus target="_blank" uisrp-is-product="true" uisrp-path="{{item.Product.SeoUrl}}" target="_blank"
+                               ><label class="form-control-static text-weight-normal" ng-bind="item.Product.CustomKey"></label></a>
+                        </td>
+                        <td ng-if="item.Product.SeoUrl">
+                            <a ui-sref-plus target="_blank" uisrp-is-product="true" uisrp-path="{{item.Product.SeoUrl}}" target="_blank"
+                               ><label class="form-control-static text-weight-normal" ng-bind="item.Product.Name"></label></a>
+                        </td>
+                        <td class="text-center">
+                            <label class="form-control-static text-weight-normal text-right"
+                                   ng-bind="item.Quantity + (item.QuantityBackOrdered || 0) + (item.QuantityPreSold || 0)"></label>
+                        </td>
+                        <td class="text-center">
+                            <label class="form-control-static text-weight-normal text-right"
+                                   ng-bind="salesReturnCreateCtrl.itemsModel[item.ID].QuantityReturnable"></label>
+                        </td>
+                        <td class="text-center">
+                            <input ng-hide="salesReturnCreateCtrl.checkDisableControl(item.ID)"
+                                   type="number" class="form-control text-right"
+                                   ng-required="salesReturnCreateCtrl.itemsModel[item.ID].itemChecked"
+                                   step="1" min="1" max="{{salesReturnCreateCtrl.itemsModel[item.ID].QuantityReturnable}}"
+                                   ng-model="salesReturnCreateCtrl.itemsModel[item.ID].selectedQuantity" />
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end>
+                        <td colspan="5" ng-hide="salesReturnCreateCtrl.checkDisableControl(item.ID)">
+                            <div class="form-group"
+                                 ng-class="{'has-error': salesReturnCreateCtrl.forms.products['ddlReturnReason'+item.ID].$invalid}">
+                                <select class="form-control"
+                                        id="ddlReturnReason{{item.ID}}" name="ddlReturnReason{{item.ID}}"
+                                        ng-required="salesReturnCreateCtrl.itemsModel[item.ID].itemChecked"
+                                        ng-options="reason.ID as reason.Name for reason in salesReturnCreateCtrl.reasons"
+                                        ng-model="salesReturnCreateCtrl.itemsModel[item.ID].selectedReason">
+                                    <option value="" ng-disabled="true"
+                                            data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate.SelectAReasonForReturningThisItem"></option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-0"
+                                 ng-class="{'has-error': salesReturnCreateCtrl.forms.products['txtaDescription'+item.ID].$invalid}">
+                                <textarea class="form-control w-100" style="resize: none;"
+                                          id="txtaDescription{{item.ID}}" name="txtaDescription{{item.ID}}"
+                                          rows="5"
+                                          translate-attr="{ placeholder: 'ui.storefront.userDashboard2.controls.salesReturnCreate.AdditionalInformation' }"
+                                          ng-required="salesReturnCreateCtrl.itemsModel[item.ID].itemChecked"
+                                          ng-model="salesReturnCreateCtrl.itemsModel[item.ID].itemNote"></textarea>
+                            </div>
+                            <p ng-show="salesReturnCreateCtrl.hasRestockFee(item.ID)"
+                               class="mt-1 mb-0"
+                               data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate.ReturningThisItemMightIncurARestockingFee"></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-secondary mb-3"
+                    ng-disabled="!salesReturnCreateCtrl.itemCheckedCount || salesReturnCreateCtrl.forms.products.$invalid"
+                    ng-click="salesReturnCreateCtrl.save()"
+                    data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate"></button>
+        </div>
+    </div>
+</div>

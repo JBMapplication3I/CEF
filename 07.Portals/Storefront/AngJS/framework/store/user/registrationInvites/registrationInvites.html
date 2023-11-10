@@ -1,0 +1,52 @@
+﻿<div class="row"
+     ng-form="cefRegistrationInvitesCtrl.forms.User">
+    <div class="col-12">
+        <div class="form-group"
+             ng-class="{'has-error': cefRegistrationInvitesCtrl.forms.User.InvitationCode.$invalid}">
+            <label class="control-label" for="InvitationCode"
+                   data-translate="ui.storefront.user.registrationInvites.InvitationCode"></label>
+                <input type="text" class="form-control"
+                       id="InvitationCode" name="InvitationCode"
+                       translate-attr="{ placeholder: 'ui.storefront.user.registrationInvites.EnterTheCodeYouRecievedWithYourInvite' }"
+                       ng-required="true"
+                       ng-model="cefRegistrationInvitesCtrl.user.InvitationCode" />
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group"
+             ng-class="{'has-error': cefRegistrationInvitesCtrl.forms.User.Email.$invalid}">
+            <label class="control-label" for="Email"
+                   data-translate="ui.storefront.common.Email"></label>
+            <input name="Email"
+                   id="Email"
+                   type="email"
+                   ng-model="cefRegistrationInvitesCtrl.user.Email"
+                   class="form-control"
+                   ng-required="true"
+                   placeholder="youremail@website.com" />
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group"
+             ng-class="{'has-error': cefRegistrationInvitesCtrl.forms.User.OverridePassword.$invalid}">
+            <label class="control-label" for="OverridePassword"
+                   data-translate="ui.storefront.common.Password"></label>
+                <input type="{{cefRegistrationInvitesCtrl.showCurrentPassword ? 'text' : 'password'}}" class="form-control"
+                       id="OverridePassword" name="OverridePassword"
+                       minlength="7"
+                       ng-required="true"
+                       translate-attr="{ placeholder: 'ui.storefront.user.registrationInvites.MakeItFunAndKeepItHandy' }"
+                       ng-model="cefRegistrationInvitesCtrl.user.OverridePassword " />
+        </div>
+    </div>
+    <hr/>
+    <div class="col-sm-12 text-center">
+        <p ng-if="cefRegistrationInvitesCtrl.error" ng-bind="cefRegistrationInvitesCtrl.errorMessage"></p>
+        <p>
+            <button type="button" class="btn btn-primary btn-lg"
+                    ng-disabled="!cefRegistrationInvitesCtrl.forms.User.$valid"
+                    ng-click="cefRegistrationInvitesCtrl.registerUser(cefRegistrationInvitesCtrl.user)"
+                    data-translate="ui.storefront.user.registrationInvites.CreateMyAccount"></button>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+﻿<div uib-accordion-group is-open="false" template-url="cat-filters-group-template.html">
+    <div uib-accordion-heading>
+        <!-- <i class="fa fa-fw fa-folder-tree mr-2 small"></i> -->
+        <span class="small"
+              data-translate="ui.storefront.common.Category.Plural"></span>
+    </div>
+    <div class="row">
+        <div ng-repeat="cat1 in searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.CategoriesTree.Children
+                        | orderBy: '!DocCount'
+                        | limitTo: (searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.Form.Query.length > 0 ? 50 : 10)"
+             class="col-12">
+            <div ng-show="cat1.Key != 'N/A'" class="d-inline-block category-filter-item"
+                 ng-style="{ 'width': 'calc(100%' + (cat1.HasChildren ? ' - 15px' : '') + ')' }"
+                 ><small><button type="button" class="btn btn-link text-left p-0"
+                                 id="{{'btnFtrCat0'+$index}}"
+                                 ng-class="{'active': (cat1.Key === searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.Form.Category)}"
+                                 ng-disabled="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.searchIsRunning"
+                                 ng-click="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.pushCategory(searchCatalogFilterByCategoriesTreeCtrl.mode, cat1.Key);"
+                                 ><span ng-class="{'text-capitalize':!cat1.DisplayName}" ng-bind="cat1.DisplayName || (cat1.Key.split('|')[0] | lowercase)"></span></button> <span ng-if="!cat1.HasChildren">(<span ng-bind="cat1.DocCount | number:0"></span>)</span></small></div>
+            <span ng-show="cat1.Key != 'N/A' && cat1.HasChildren" class="float-right"><a ng-init="cat1.showChildren = false;" ng-click="cat1.showChildren = !cat1.showChildren;"><i class="fa" ng-class="cat1.showChildren ? 'fa-minus-square-o' : 'fa-plus-square-o'"></i><span class="sr-only" data-translate="ui.storefront.searchCatalog.filters.ToggleShowHideCategoryChildren.Message"></span></a></span>
+            <div ng-repeat="cat2 in cat1.Children | orderBy: '!DocCount' | limitTo: 5" ng-show="cat1.showChildren">
+                <div ng-show="cat2.Key != 'N/A'" class="d-inline-block category-filter-item"
+                     ng-style="{
+                         'margin-left': (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1)) + 'px',
+                         'width': 'calc(100% - ' + (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1)) + 'px' + (cat2.HasChildren ? ' - 15px' : '') + ')'
+                     }"
+                     ><span><button type="button" class="btn btn-link text-left p-0"
+                                     ng-class="{'active': (cat2.Key === searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.Form.Category)}"
+                                     ng-disabled="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.searchIsRunning"
+                                     ng-click="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.pushCategory(searchCatalogFilterByCategoriesTreeCtrl.mode, cat2.Key);"
+                                     ><span ng-class="{'text-capitalize':!cat2.DisplayName}" ng-bind="cat2.DisplayName || (cat2.Key.split('|')[0] | lowercase)"></span></button> <span ng-if="!cat2.HasChildren">(<span ng-bind="cat2.DocCount | number:0"></span>)</span></span></div>
+                <span ng-show="cat2.Key != 'N/A' && cat2.HasChildren" class="float-right"><a ng-init="cat2.showChildren = false;" ng-click="cat2.showChildren = !cat2.showChildren;"><i class="fa" ng-class="cat2.showChildren ? 'fa-minus-square-o' : 'fa-plus-square-o'"></i><span class="sr-only" data-translate="ui.storefront.searchCatalog.filters.ToggleShowHideCategoryChildren.Message"></span></a></span>
+                <div ng-repeat="cat3 in cat2.Children | orderBy: '!DocCount' | limitTo: 5" ng-show="cat2.showChildren">
+                    <div ng-show="cat3.Key != 'N/A'" class="d-inline-block category-filter-item"
+                         ng-style="{
+                             'margin-left': (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2)) + 'px',
+                             'width': 'calc(100% - ' + (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2)) + 'px' + (cat3.HasChildren ? ' - 15px' : '') + ')'
+                         }"
+                         ><small><button type="button" class="btn btn-link text-left p-0"
+                                         ng-class="{'active': (cat3.Key === searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.Form.Category)}"
+                                         ng-disabled="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.searchIsRunning"
+                                         ng-click="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.pushCategory(searchCatalogFilterByCategoriesTreeCtrl.mode, cat3.Key);"
+                                         ><span ng-class="{'text-capitalize':!cat3.DisplayName}" ng-bind="cat3.DisplayName || (cat3.Key.split('|')[0] | lowercase)"></span></button> <span ng-if="!cat3.HasChildren">(<span ng-bind="cat3.DocCount | number:0"></span>)</span></small></div>
+                    <span ng-show="cat3.Key != 'N/A' && cat3.HasChildren" class="float-right"><a ng-init="cat3.showChildren = false;" ng-click="cat3.showChildren = !cat3.showChildren;"><i class="fa" ng-class="cat3.showChildren ? 'fa-minus-square-o' : 'fa-plus-square-o'"></i><span class="sr-only" data-translate="ui.storefront.searchCatalog.filters.ToggleShowHideCategoryChildren.Message"></span></a></span>
+                    <div ng-repeat="cat4 in cat3.Children | orderBy: '!DocCount' | limitTo: 5" ng-show="cat3.showChildren">
+                        <div ng-show="cat4.Key != 'N/A'" class="d-inline-block category-filter-item"
+                             ng-style="{
+                                 'margin-left': (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2,cat3)) + 'px',
+                                 'width': 'calc(100% - ' + (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2,cat3)) + 'px' + (cat4.HasChildren ? ' - 15px' : '') + ')'
+                             }"
+                             ><small><button type="button" class="btn btn-link text-left p-0"
+                                             ng-class="{'active': (cat4.Key === searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.Form.Category)}"
+                                             ng-disabled="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.searchIsRunning"
+                                             ng-click="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.pushCategory(searchCatalogFilterByCategoriesTreeCtrl.mode, cat4.Key);"
+                                             ><span ng-class="{'text-capitalize':!cat4.DisplayName}" ng-bind="cat4.DisplayName || (cat4.Key.split('|')[0] | lowercase)"></span></button> <span ng-if="!cat4.HasChildren">(<span ng-bind="cat4.DocCount | number:0"></span>)</span></small></div>
+                        <span ng-show="cat4.Key != 'N/A' && cat4.HasChildren" class="float-right"><a ng-init="cat4.showChildren = false;" ng-click="cat4.showChildren = !cat4.showChildren;"><i class="fa" ng-class="cat4.showChildren ? 'fa-minus-square-o' : 'fa-plus-square-o'"></i><span class="sr-only" data-translate="ui.storefront.searchCatalog.filters.ToggleShowHideCategoryChildren.Message"></span></a></span>
+                        <div ng-repeat="cat5 in cat4.Children | orderBy: '!DocCount' | limitTo: 5" ng-show="cat4.showChildren">
+                            <div ng-show="cat5.Key != 'N/A'" class="d-inline-block category-filter-item"
+                                 ng-style="{
+                                     'margin-left': (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2,cat3,cat4)) + 'px',
+                                     'width': 'calc(100% - ' + (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2,cat3,cat4)) + 'px' + (cat5.HasChildren ? ' - 15px' : '') + ')'
+                                 }"
+                                 ><small><button type="button" class="btn btn-link text-left p-0"
+                                                 ng-class="{'active': (cat5.Key === searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.Form.Category)}"
+                                                 ng-disabled="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.searchIsRunning"
+                                                 ng-click="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.pushCategory(searchCatalogFilterByCategoriesTreeCtrl.mode, cat5.Key);"
+                                                 ><span ng-class="{'text-capitalize':!cat5.DisplayName}" ng-bind="cat5.DisplayName || (cat5.Key.split('|')[0] | lowercase)"></span></button> <span ng-if="!cat5.HasChildren">(<span ng-bind="cat5.DocCount | number:0"></span>)</span></small></div>
+                            <span ng-show="cat5.Key != 'N/A' && cat5.HasChildren" class="float-right"><a ng-init="cat5.showChildren = false;" ng-click="cat5.showChildren = !cat5.showChildren;"><i class="fa" ng-class="cat5.showChildren ? 'fa-minus-square-o' : 'fa-plus-square-o'"></i><span class="sr-only" data-translate="ui.storefront.searchCatalog.filters.ToggleShowHideCategoryChildren.Message"></span></a></span>
+                            <div ng-repeat="cat6 in cat5.Children | orderBy: '!DocCount' | limitTo: 5" ng-show="cat5.showChildren">
+                                <div ng-show="cat6.Key != 'N/A'" class="d-inline-block category-filter-item"
+                                     ng-style="{
+                                         'margin-left': (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2,cat3,cat4,cat5)) + 'px',
+                                         'width': 'calc(100% - ' + (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2,cat3,cat4,cat5)) + 'px' + (cat6.HasChildren ? ' - 15px' : '') + ')'
+                                     }"
+                                     ><small><button type="button" class="btn btn-link text-left p-0"
+                                                     ng-class="{'active': (cat6.Key === searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.Form.Category)}"
+                                                     ng-disabled="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.searchIsRunning"
+                                                     ng-click="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.pushCategory(searchCatalogFilterByCategoriesTreeCtrl.mode, cat6.Key);"
+                                                     ><span ng-class="{'text-capitalize':!cat6.DisplayName}" ng-bind="cat6.DisplayName || (cat6.Key.split('|')[0] | lowercase)"></span></button> <span ng-if="!cat6.HasChildren">(<span ng-bind="cat6.DocCount | number:0"></span>)</span></small></div>
+                                <span ng-show="cat6.Key != 'N/A' && cat6.HasChildren" class="float-right"><a ng-init="cat6.showChildren = false;" ng-click="cat6.showChildren = !cat6.showChildren;"><i class="fa" ng-class="cat6.showChildren ? 'fa-minus-square-o' : 'fa-plus-square-o'"></i><span class="sr-only" data-translate="ui.storefront.searchCatalog.filters.ToggleShowHideCategoryChildren.Message"></span></a></span>
+                                <div ng-repeat="cat7 in cat6.Children | orderBy: '!DocCount' | limitTo: 5" ng-show="cat6.showChildren">
+                                    <div ng-show="cat7.Key != 'N/A'" class="d-inline-block category-filter-item"
+                                         ng-style="{
+                                             'margin-left': (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2,cat3,cat4,cat5,cat6)) + 'px',
+                                             'width': 'calc(100% - ' + (10 * searchCatalogFilterByCategoriesTreeCtrl.ancestorIsNACount(cat1,cat2,cat3,cat4,cat5,cat6)) + 'px' + (cat7.HasChildren ? ' - 15px' : '') + ')'
+                                         }"
+                                         ><small><button type="button" class="btn btn-link text-left p-0"
+                                                         ng-class="{'active': (cat7.Key === searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.productSearchViewModel.Form.Category)}"
+                                                         ng-disabled="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.searchIsRunning"
+                                                         ng-click="searchCatalogFilterByCategoriesTreeCtrl.cvSearchCatalogService.pushCategory(searchCatalogFilterByCategoriesTreeCtrl.mode, cat7.Key);"
+                                                         ><span ng-class="{'text-capitalize':!cat7.DisplayName}" ng-bind="cat7.DisplayName || (cat7.Key.split('|')[0] | lowercase)"></span></button> (<span ng-bind="cat7.DocCount | number:0"></span>)</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <button type="button" class="btn btn-sm btn-primary"
+                    translate-attr="{ title: 'ui.storefront.searchCatalog.filters.ExpandAll',
+                                      'aria-label': 'ui.storefront.searchCatalog.filters.ExpandAll' }"
+                    ng-disabled="searchCatalogFilterByAttributesCtrl.searchIsRunning"
+                    ng-click="searchCatalogFilterByCategoriesTreeCtrl.expandAll()">
+                <span data-translate="ui.storefront.searchCatalog.filters.ExpandAll"></span>
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary"
+                    id="btnCollapseCategories"
+                    translate-attr="{ title: 'ui.storefront.searchCatalog.filters.CollapseAll',
+                                      'aria-label': 'ui.storefront.searchCatalog.filters.CollapseAll' }"
+                    ng-disabled="searchCatalogFilterByAttributesCtrl.searchIsRunning"
+                    ng-click="searchCatalogFilterByCategoriesTreeCtrl.collapseAll()">
+                <span data-translate="ui.storefront.searchCatalog.filters.CollapseAll"></span>
+            </button>
+        </div>
+    </div>
+</div>

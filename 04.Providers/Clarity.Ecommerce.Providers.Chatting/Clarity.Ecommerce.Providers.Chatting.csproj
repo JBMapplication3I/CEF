@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Providers.Chatting</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Providers.Chatting</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Providers.Chatting</RootNamespace>
+    <ProjectGuid>9AC19354-C9CE-409D-A8A7-6FA176ACE4BC</ProjectGuid>
+    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Plugins\" /Y /C /R /I
+
+xcopy "$(TargetDir)Alan.Log.dll" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)Alan.Utils.dll" "$(SolutionDir)Plugins\" /Y /C /R /I</PostBuildEvent>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Alan.WeChat" Version="1.3.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+    <ProjectReference Include="..\..\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj" />
+    <ProjectReference Include="..\..\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+    <ProjectReference Include="..\..\03.Clarity.Ecommerce.Models.Mapping\03.Clarity.Ecommerce.Models.Mapping.csproj" />
+    <ProjectReference Include="..\..\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj" />
+    <ProjectReference Include="..\..\06.Clarity.Ecommerce.Service.Core\06.Clarity.Ecommerce.Service.Core.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,43 @@
+﻿<div class="row">
+    <div class="col-md-6">
+        <div ng-hide="cefCheckoutCtrl.paypal.error">
+            <h2 class="mt-0"
+                data-translate="ui.admin.checkout.views.orderConfirmation.thankYouForYouPurchase"></h2>
+            <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourPurchaseWasSuccessfulAndIsInTheProcessOfBeing"></p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row" ng-hide="cefCheckoutCtrl.paypal.success || cefCheckoutCtrl.paypal.error">
+            <div class="col-sm-12"
+                 ng-if="!cefCheckoutCtrl.checkoutResult.OrderIDs || cefCheckoutCtrl.checkoutResult.OrderIDs.length <= 0">
+                <h4><span data-translate="ui.admin.checkout.views.orderConfirmation.orderNumber"></span>&nbsp;<!--
+                --><b ng-bind="cefCheckoutCtrl.checkoutResult.OrderID"></b></h4>
+            </div>
+            <div class="col-sm-12"
+                 ng-if="cefCheckoutCtrl.checkoutResult.OrderIDs.length > 0">
+                <h4><span data-translate="ui.admin.checkout.views.orderConfirmation.MasterOrder"></span>&nbsp;<!--
+                --><b ng-bind="cefCheckoutCtrl.checkoutResult.OrderIDs[0]"></b></h4>
+                <p class="small bold" data-translate="ui.admin.controls.sales.salesOrderNewWizard.MasterOrder.Message"></p>
+                <h5><span data-translate="ui.admin.checkout.views.orderConfirmation.SubOrder.OptionalPlural"></span>&nbsp;<!--
+                --><b ng-repeat="orderID in cefCheckoutCtrl.checkoutResult.OrderIDs"
+                      ng-hide="$first"
+                      ng-bind="orderID + (!$last ? ', ' : '')"></b></h5>
+                <p class="small" data-translate="ui.admin.controls.sales.salesOrderNewWizard.SubOrder.Message"></p>
+            </div>
+        </div>
+        <div class="row" ng-show="cefCheckoutCtrl.paypal.success">
+            <div class="col-sm-12">
+                <h4><span data-translate="ui.admin.checkout.views.orderConfirmation.orderNumber.Plural"></span>&nbsp;<!--
+                --><b ng-bind="cefCheckoutCtrl.paypal.confirmationNumber"></b></h4>
+                <p class="alert alert-warning" role="alert"
+                   ng-bind-html="cefCheckoutCtrl.paypal.message"></p>
+            </div>
+        </div>
+        <p class="alert alert-warning" role="alert"
+           ng-if="cefCheckoutCtrl.checkoutResult.WarningMessage"
+           ng-bind="cefCheckoutCtrl.checkoutResult.WarningMessage"></p>
+        <p class="alert alert-danger" role="alert"
+           ng-show="cefCheckoutCtrl.paypal.error"
+           ng-bind-html="cefCheckoutCtrl.paypal.message"></p>
+    </div>
+</div>

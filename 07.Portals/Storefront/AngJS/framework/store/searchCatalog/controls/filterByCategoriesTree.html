@@ -1,0 +1,151 @@
+﻿<div uib-accordion-group is-open="true" template-url="cat-filters-group-template.html">
+  <div uib-accordion-heading>
+    <i class="far fa-folder-tree fa-fw mr-2 text-body small"></i>
+    <span class="text-body small"
+      sid="AppliedFiltersCategoriesMenuText"
+      data-translate="ui.storefront.common.Category.Plural">
+    </span>
+  </div>
+  <div class="row">
+    <div ng-repeat="cat1 in scfbctCtrl.service.activeSearchViewModel.CategoriesTree.Children
+      | orderBy: ['Key', 'SortOrder', '!DocCount']
+      | limitTo: (scfbctCtrl.service.activeSearchViewModel.Form.Query.length > 0 ? 50 : 10)"
+      class="col-12">
+      <div ng-if="cat1.Key != 'N/A'" class="d-block category-filter-item w-100"
+        ng-init="cat1.showChildren = true">
+        <div class="d-inline"
+          cef-cat-filter-name
+          category="cat1"
+          index="$index"
+          level="1"
+          mode="{{scfbctCtrl.mode}}">
+        </div>
+        <div cef-cat-filter-exp-col-btn
+          category="cat1"
+          class="float-right">
+        </div>
+        <div ng-repeat="cat2 in cat1.Children | orderBy: ['Key', 'SortOrder', '!DocCount'] | limitTo: cat1.showChildren ? 12 : 0">
+          <div ng-if="cat2.Key != 'N/A'" class="d-block category-filter-item w-100"
+              ng-init="scfbctCtrl.autoExpandIfAtLevel(cat2)">
+            <div class="d-inline"
+              ng-style="scfbctCtrl.expandableStyle(cat1,cat2)"
+              cef-cat-filter-name
+              category="cat2"
+              index="$index"
+              level="2"
+              mode="{{scfbctCtrl.mode}}">
+            </div>
+            <div cef-cat-filter-exp-col-btn
+              category="cat2"
+              class="float-right">
+            </div>
+          </div>
+          <div ng-repeat="cat3 in cat2.Children | orderBy: ['Key', 'SortOrder', '!DocCount'] | limitTo: 5"
+            ng-show="cat2.showChildren">
+            <div ng-if="cat3.Key != 'N/A'" class="d-block category-filter-item w-100"
+                ng-init="scfbctCtrl.autoExpandIfAtLevel(cat3)">
+              <div class="d-inline"
+                ng-style="scfbctCtrl.expandableStyle(cat1,cat2,cat3)"
+                cef-cat-filter-name
+                category="cat3"
+                index="$index"
+                level="3"
+                mode="{{scfbctCtrl.mode}}">
+              </div>
+              <div cef-cat-filter-exp-col-btn
+                category="cat3"
+                class="float-right">
+              </div>
+            </div>
+            <div ng-repeat="cat4 in cat3.Children | orderBy: ['Key', 'SortOrder', '!DocCount'] | limitTo: 5"
+              ng-show="cat3.showChildren">
+              <div ng-if="cat4.Key != 'N/A'" class="d-block category-filter-item w-100"
+                  ng-init="scfbctCtrl.autoExpandIfAtLevel(cat4)">
+                <div class="d-inline"
+                  ng-style="scfbctCtrl.expandableStyle(cat1,cat2,cat3,cat4)"
+                  cef-cat-filter-name
+                  category="cat4"
+                  index="$index"
+                  level="4"
+                  mode="{{scfbctCtrl.mode}}">
+                </div>
+                <div cef-cat-filter-exp-col-btn
+                  category="cat4"
+                  class="float-right">
+                </div>
+              </div>
+              <div ng-repeat="cat5 in cat4.Children | orderBy: '!DocCount' | limitTo: 5"
+                ng-show="cat4.showChildren">
+                <div ng-if="cat5.Key != 'N/A'" class="d-block category-filter-item w-100"
+                    ng-init="scfbctCtrl.autoExpandIfAtLevel(cat5)">
+                  <div class="d-inline"
+                    ng-style="scfbctCtrl.expandableStyle(cat1,cat2,cat3,cat4,cat5)"
+                    cef-cat-filter-name
+                    category="cat5"
+                    index="$index"
+                    level="5"
+                    mode="{{scfbctCtrl.mode}}">
+                  </div>
+                  <div cef-cat-filter-exp-col-btn
+                    category="cat5"
+                    class="float-right">
+                  </div>
+                </div>
+                <div ng-repeat="cat6 in cat5.Children | orderBy: ['Key', 'SortOrder', '!DocCount'] | limitTo: 5"
+                  ng-show="cat5.showChildren">
+                  <div ng-if="cat6.Key != 'N/A'" class="d-block category-filter-item w-100">
+                    <div class="d-inline"
+                      ng-style="scfbctCtrl.expandableStyle(cat1,cat2,cat3,cat4,cat5,cat6)"
+                      cef-cat-filter-name
+                      category="cat6"
+                      index="$index"
+                      level="6"
+                      mode="{{scfbctCtrl.mode}}">
+                    </div>
+                    <div cef-cat-filter-exp-col-btn
+                      category="cat6"
+                      class="float-right">
+                    </div>
+                  </div>
+                  <div ng-repeat="cat7 in cat6.Children | orderBy: ['Key', 'SortOrder', '!DocCount'] | limitTo: 5"
+                    ng-show="cat6.showChildren">
+                    <div ng-if="cat7.Key != 'N/A'" class="d-block category-filter-item w-100">
+                      <div class="d-inline"
+                        ng-style="scfbctCtrl.expandableStyle(cat1,cat2,cat3,cat4,cat5,cat6,cat7)"
+                        cef-cat-filter-name
+                        category="cat7"
+                        index="$index"
+                        level="7"
+                        mode="{{scfbctCtrl.mode}}">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 text-right">
+      <button type="button" class="btn btn-sm btn-secondary"
+        id="btnCollapseCategories"
+        translate-attr="{ title: 'ui.storefront.searchCatalog.filters.CollapseAll',
+                          'aria-label': 'ui.storefront.searchCatalog.filters.CollapseAll' }"
+        data-translate="ui.storefront.searchCatalog.filters.CollapseAll"
+        ng-disabled="scfbctCtrl.searchIsRunning"
+        ng-click="scfbctCtrl.collapseAll()">
+      </button>
+      <button type="button" class="btn btn-sm btn-primary"
+        id="btnExpandCategories"
+        translate-attr="{ title: 'ui.storefront.searchCatalog.filters.ExpandAll',
+                          'aria-label': 'ui.storefront.searchCatalog.filters.ExpandAll' }"
+        data-translate="ui.storefront.searchCatalog.filters.ExpandAll"
+        ng-disabled="scfbctCtrl.searchIsRunning"
+        ng-click="scfbctCtrl.expandAll()">
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+﻿<div class="panel panel-danger mb-0">
+    <div class="panel-heading"><h3 class="panel-title" data-translate="ui.admin.common.TransactionError"></h3></div>
+    <div class="panel-body">
+        <p ng-bind="message"></p>
+        <p ng-if="result && result.Succeeded">
+            <span data-translate="ui.admin.common.TransactionError.Message.Part1"></span>&nbsp;<!--
+            --><span ng-bind="result.OrderID || result.OrderIDs && result.OrderIDs.join(', ')"></span>&nbsp;<!--
+            --><span data-translate="ui.admin.common.TransactionError.Message.Part2"></span>
+        </p>
+        <p class="text-right mb-0"
+           ><button type="button" class="btn btn-info"
+                    translate-attr="{ title: 'ui.admin.common.Dismiss',
+                                      'aria-label': 'ui.admin.common.Dismiss' }"
+                    data-translate="ui.admin.common.Dismiss"
+                    ng-click="$dismiss()"></button></p>
+    </div>
+</div>

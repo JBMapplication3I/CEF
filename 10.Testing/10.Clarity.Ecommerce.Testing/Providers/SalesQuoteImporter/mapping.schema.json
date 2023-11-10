@@ -1,0 +1,306 @@
+{
+  "$id": "http://api-47.claritydemos.com/mappingConfig.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "required": [
+    "configName",
+    "mapUnmappedTo",
+    "mappings",
+    "recordsAre"
+  ],
+  "properties": {
+    "configName": {
+      "$id": "/properties/configName",
+      "type": "string",
+      "title": "The Config Name Schema",
+      "description": "The name of this mapping config.",
+      "default": "",
+      "examples": [
+        "RFQs for ...",
+        "Import Products"
+      ]
+    },
+    "recordsAre": {
+      "$id": "/properties/recordsAre",
+      "type": [
+        "string"
+      ],
+      "title": "The Records Are Schema",
+      "description": "The rows in this mapping are instances of the specific Type or Property",
+      "default": "",
+      "examples": [
+        "Product",
+        "SalesQuote.SalesItems"
+      ]
+    },
+    "sheetName": {
+      "$id": "/properties/sheetName",
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "The Sheet Name Schema",
+      "description": "The name of the sheet to parse. Optional, when not present or null, will use the 'sheetIndex' property instead.",
+      "default": "",
+      "examples": [
+        null,
+        "MSPV Grouped Item Data",
+        "Sheet1"
+      ]
+    },
+    "sheetIndex": {
+      "$id": "/properties/sheetIndex",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "title": "The Sheet Index Schema",
+      "description": "The zero-based index of the sheet to read. Optional, when not present or null and 'sheetName' is also not present or null, will default to 0.",
+      "default": 0,
+      "examples": [
+        null,
+        0,
+        2
+      ]
+    },
+    "columnSkip": {
+      "$id": "/properties/columnSkip",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "title": "The Column Skip Schema",
+      "description": "How many columns to skip before reading in the Header. Optional, when not present or null, will default to 0.",
+      "default": 0,
+      "examples": [
+        null,
+        1,
+        10
+      ],
+      "minimum": 0,
+      "maximum": 2048
+    },
+    "rowSkip": {
+      "$id": "/properties/rowSkip",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "title": "The Row Skip Schema",
+      "description": "How many rows to skip before reading in the Header. Optional, when not present or null, will default to 0.",
+      "default": 0,
+      "examples": [
+        null,
+        1,
+        10
+      ],
+      "minimum": 0,
+      "maximum": 2048
+    },
+    "headerRowCount": {
+      "$id": "/properties/headerRowCount",
+      "type": [
+        "integer",
+        "null"
+      ],
+      "title": "The Header Row Count Schema",
+      "description": "The number of rows to read in as the Header. Optional, when not present or null, will default to 1.",
+      "default": 1,
+      "examples": [
+        null,
+        1,
+        2
+      ],
+      "minimum": 1,
+      "maximum": 10
+    },
+    "mapUnmappedTo": {
+      "$id": "/properties/mapUnmappedTo",
+      "type": "object",
+      "required": [
+        "entity",
+        "to"
+      ],
+      "properties": {
+        "entity": {
+          "$id": "/properties/mapUnmappedTo/properties/entity",
+          "type": "string",
+          "title": "The Entity Schema",
+          "description": "The instance in a collection when multiple sub-records of a collection are being imported at once (for instance category, sub-category).",
+          "default": "",
+          "examples": [
+            null,
+            0,
+            1,
+            2
+          ],
+          "minimum": 0,
+          "maximum": 10
+        },
+        "instance": {
+          "$id": "/properties/mapUnmappedTo/properties/instance",
+          "type": ["integer","null"],
+          "title": "The Instance Schema",
+          "description": "The Entity to map to. A value of Can use nested object references. If the nested property is an array, it is assumed to be the type that the array contains.",
+          "default": "",
+          "examples": [
+            "SalesQuote.SalesItems",
+            "SalesQuote",
+            "Product"
+          ]
+        },
+        "to": {
+          "$id": "/properties/mapUnmappedTo/properties/to",
+          "type": "array",
+          "maxItems": 10,
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$id": "/properties/mapUnmappedTo/properties/to/items",
+            "type": "string",
+            "title": "The To Array Schema",
+            "description": "The property or properties to map to. Note: Some properties have special handling and require specific formatting to import into.",
+            "default": "",
+            "examples": [
+              "JsonAttributes",
+              "PriceBase",
+              "Description"
+            ]
+          }
+        }
+      }
+    },
+    "mappings": {
+      "$id": "/properties/mappings",
+      "type": "array",
+      "maxItems": 65536,
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$id": "/properties/mappings/items",
+        "type": "object",
+        "required": [
+          "header",
+          "assignments"
+        ],
+        "properties": {
+          "header": {
+            "$id": "/properties/mappings/items/properties/header",
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 1,
+            "uniqueItems": false,
+            "items": {
+              "$id": "/properties/mappings/items/properties/header/items",
+              "type": "string",
+              "title": "The Header Array Schema",
+              "description": "The cell value for each row of the header, in order from top to bottom, for the parser to identify this column.",
+              "default": "",
+              "examples": [
+                "VOA_Tracker_ID"
+              ]
+            }
+          },
+          "headerOccurrence": {
+            "$id": "/properties/mappings/items/properties/headerOccurrence",
+            "type": [
+              "integer",
+              "null"
+            ],
+            "title": "The Header Occurrence Schema",
+            "description": "The zero-based index of occurrence when this header is defined multiple times. Optional, when not present or null, will default to 0.",
+            "default": 0,
+            "examples": [
+              null,
+              0,
+              2
+            ],
+            "minimum": 0,
+            "maximum": 9999999
+          },
+          "ignore": {
+            "$id": "/properties/mappings/items/properties/ignore",
+            "type": "array",
+            "maxItems": 1024,
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$id": "/properties/mappings/items/properties/ignore/items",
+              "type": "string",
+              "title": "The Ignore Array Schema",
+              "description": "When the cell value matches an entry of this array, ignore it (do not attempt to apply the value). Null and Empty String values are automatically ignored and do not need to be added to this list.",
+              "default": "",
+              "examples": [
+                "VOA_Tracker_ID"
+              ]
+            }
+          },
+          "examples": {
+            "$id": "/properties/mappings/items/properties/examples",
+            "type": "array",
+            "items": {
+              "$id": "/properties/mappings/items/properties/examples/items",
+              "type": "string",
+              "title": "The Example Array Schema",
+              "description": "An example record value for this property, for display reference only.",
+              "default": "",
+              "examples": [
+                null,
+                "VA-17-0005048"
+              ]
+            }
+          },
+          "assignments": {
+            "$id": "/properties/mappings/items/properties/assignments",
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$id": "/properties/mappings/items/properties/assignments/items",
+              "type": "object",
+              "required": [
+                "entity",
+                "to"
+              ],
+              "properties": {
+                "entity": {
+                  "$id": "/properties/mappings/items/properties/assignments/items/properties/entity",
+                  "type": "string",
+                  "title": "The Entity Schema",
+                  "description": "The Entity to map to. Can use nested object references.",
+                  "default": "",
+                  "examples": [
+                    "Product",
+                    "SalesQuote",
+                    "SalesQuote.SalesItems"
+                  ]
+                },
+                "to": {
+                  "$id": "/properties/mappings/items/properties/assignments/items/properties/to",
+                  "type": "array",
+                  "maxItems": 10,
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "$id": "/properties/mappings/items/properties/assignments/items/properties/to/items",
+                    "type": "string",
+                    "title": "The To Array Schema",
+                    "description": "The property or properties to map to. Note: Some properties have special handling and require specific formatting to import into.",
+                    "default": "",
+                    "examples": [
+                      "JsonAttributes",
+                      "PriceBase",
+                      "Description"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

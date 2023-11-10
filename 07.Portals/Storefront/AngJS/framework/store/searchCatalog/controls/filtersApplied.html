@@ -1,0 +1,175 @@
+﻿<div class="card applied-filters mb-3">
+  <div class="card-header p-2 bg-light text-body">
+    <i class="far fa-filter fa-fw mr-2"></i>
+    <span sid="AppliedFiltersText"
+      data-translate="ui.storefront.searchCatalog.filers.YourAppliedFilters">
+    </span>
+  </div>
+  <ul class="list-group list-group-flush bg-light"
+    style="max-height: 50vh; overflow-y: auto;">
+    <li class="list-group-item p-2"
+      ng-if="scfaCtrl.showNone"
+      data-translate="ui.storefront.searchCatalog.filters.None">
+    </li>
+    <li class="list-group-item p-2"
+      ng-if="scfaCtrl.form.Query"
+      ng-hide="scfaCtrl.hideQuery">
+      <h5 class="card-title mb-1"
+        sid="AppliedFiltersSearchTermText"
+        data-translate="ui.storefront.searchCatalog.filters.SearchTerm">
+      </h5>
+      <a ng-class="{'disabled':scfaCtrl.service.searchIsRunning}"
+        ng-click="!scfaCtrl.service.searchIsRunning
+          && (scfaCtrl.form.Query = null)"
+        class="mr-1 pointer"
+        sid="AppliedFiltersSearchTermProduct"
+        ><small style="position: relative; top: -1px;"
+        ><i class="far fa-times text-danger"
+        ></i></small>&nbsp;{{scfaCtrl.form.Query}}</a>
+    </li>
+    <li class="list-group-item p-2"
+      ng-if="scfaCtrl.form.Category
+        || scfaCtrl.categoriesAnyHasValues()
+        || scfaCtrl.categoriesAllHasValues()"
+      ng-hide="scfaCtrl.hideCategories">
+      <h5 class="card-title mb-1"
+        sid="AppliedFiltersCategoriesText"
+        data-translate="ui.storefront.common.Category.Plural">
+      </h5>
+      <a sid="AppliedFiltersCategoryType"
+        ng-if="scfaCtrl.form.Category"
+        ng-class="{'disabled':scfaCtrl.service.searchIsRunning}"
+        ng-click="!scfaCtrl.service.searchIsRunning
+          && scfaCtrl.service.popCategory(
+            scfaCtrl.categoriesMode,
+            scfaCtrl.form.Category);"
+        class="mr-1 pointer"
+        ><small style="position: relative; top: -1px;"
+        ><i class="far fa-times text-danger"
+        ></i></small>&nbsp;{{scfaCtrl.service.currentCategoryName}}</a>
+      <a ng-repeat="cat in scfaCtrl.form.CategoriesAny"
+        ng-class="{'disabled':scfaCtrl.service.searchIsRunning,
+                   'text-capitalize':!cat.DisplayName}"
+        ng-click="!scfaCtrl.service.searchIsRunning
+          && scfaCtrl.service.popCategory(
+            scfaCtrl.categoriesMode,
+            cat);"
+        class="mr-1 pointer"
+        ><small style="position: relative; top: -1px;"
+        ><i class="far fa-times text-danger"
+        ></i></small>&nbsp;{{cat | cleanSearchCategoryName}}</a>
+      <a ng-repeat="cat in scfaCtrl.form.CategoriesAll"
+        ng-class="{'disabled':scfaCtrl.service.searchIsRunning,
+                   'text-capitalize':!cat.DisplayName}"
+        ng-click="!scfaCtrl.service.searchIsRunning
+          && scfaCtrl.service.popCategory(
+            scfaCtrl.categoriesMode,
+            cat);"
+        class="mr-1 pointer"
+        ><small style="position: relative; top: -1px;"
+        ><i class="far fa-times text-danger"
+        ></i></small>&nbsp;{{cat | cleanSearchCategoryName}}</a>
+    </li>
+    <li class="list-group-item p-2"
+        ng-if="scfaCtrl.service.form.BrandName"
+        ng-hide="scfaCtrl.hideBrandNames">
+        <a ng-class="{'disabled':scfaCtrl.service.searchIsRunning}"
+          ng-click="!scfaCtrl.service.searchIsRunning
+            && scfaCtrl.service.popBrandName(brandName);"
+          class="pointer">
+          <small style="position: relative; top: -1px;">
+            <i class="fa fa-times text-danger"></i>
+          </small>&nbsp;<span ng-bind="scfaCtrl.service.form.BrandName"></span>
+        </a>
+    </li>
+    <li class="list-group-item p-2"
+      ng-if="scfaCtrl.form.TypeID || scfaCtrl.typeIdsAnyHasValues()"
+      ng-hide="scfaCtrl.hideTypes">
+      <h5 class="card-title mb-1"
+        sid="AppliedFiltersTypeText"
+        data-translate="ui.storefront.stores.storeDirectory.Type">
+      </h5>
+      <a sid="AppliedFiltersType"
+        ng-if="scfaCtrl.form.TypeID"
+        ng-class="{'disabled':scfaCtrl.service.searchIsRunning}"
+        ng-click="!scfaCtrl.service.searchIsRunning && scfaCtrl.service.popType();"
+        class="mr-1 pointer"
+        ><small style="position: relative; top: -1px;"
+        ><i class="far fa-times text-danger"
+        ></i></small>&nbsp;{{scfaCtrl.service.currentTypeName}}</a>
+      <a ng-repeat="typeId in scfaCtrl.form.TypeIDsAny"
+        ng-class="{'disabled':scfaCtrl.service.searchIsRunning}"
+        ng-click="!scfaCtrl.service.searchIsRunning && scfaCtrl.service.popType();"
+        class="mr-1 pointer"
+        ><small style="position: relative; top: -1px;"
+        ><i class="far fa-times text-danger"
+        ></i></small>&nbsp;{{scfa.service.mapTypeIDToTypeName(typeId)}}</a>
+    </li>
+    <li class="list-group-item p-2"
+      ng-if="scfaCtrl.pricingRangesHasValues()"
+      ng-hide="scfaCtrl.hidePricingRanges">
+      <h5 class="card-title mb-1"
+        sid="AppliedFiltersPricingRangesText"
+        data-translate="ui.storefront.searchCatalog.filters.PricingRange.Plural">
+      </h5>
+      <a ng-repeat="range in scfaCtrl.form.PricingRanges"
+        ng-class="{'disabled':scfaCtrl.service.searchIsRunning}"
+        ng-click="!scfaCtrl.service.searchIsRunning
+          && scfaCtrl.service.popRangeKey(
+            scfaCtrl.pricingRangesMode,
+            range);"
+        class="mr-1 pointer"
+        sid="AppliedFiltersPricingRangeSelection"
+        ><small style="position: relative; top: -1px;"
+        ><i class="far fa-times text-danger"
+        ></i></small>&nbsp;{{range}}</a>
+    </li>
+    <li class="list-group-item p-2"
+      ng-if="scfaCtrl.attributesAnyHasValues() || scfaCtrl.attributesAllHasValues()"
+      ng-hide="scfaCtrl.hideAttributes">
+      <h5 class="card-title mb-1"
+        data-translate="ui.storefront.common.Attribute.Plural">
+      </h5>
+      <div ng-repeat="(attr, options) in scfaCtrl.form.AttributesAny">
+        <span ng-bind="attr | camelCaseToHuman : true"></span>
+        <div ng-repeat="option in options track by $index">
+          <a ng-class="{'disabled':scfaCtrl.service.searchIsRunning}"
+            ng-click="!scfaCtrl.service.searchIsRunning
+              && scfaCtrl.service.popAttributeOptionKey(
+                scfaCtrl.attributesMode,
+                attr,
+                option);"
+            class="mr-1 pointer"
+            ><small style="position: relative; top: -1px;"
+            ><i class="far fa-times text-danger"
+            ></i></small>&nbsp;{{option}}</a>
+        </div>
+      </div>
+      <div ng-repeat="(attr, options) in scfaCtrl.form.AttributesAll">
+        <span ng-bind="attr | camelCaseToHuman : true"></span>
+        <div ng-repeat="option in options track by $index">
+          <a ng-class="{'disabled':scfaCtrl.service.searchIsRunning}"
+            ng-click="!scfaCtrl.service.searchIsRunning
+              && scfaCtrl.service.popAttributeOptionKey(
+                scfaCtrl.attributesMode,
+                attr,
+                option);"
+            class="mr-1 pointer"
+            ><small style="position: relative; top: -1px;"
+            ><i class="far fa-times text-danger"
+            ></i></small>&nbsp;{{option}}</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="card-footer p-1">
+    <button type="button" class="btn btn-secondary btn-sm w-100"
+      id="btnClearAllFilters" name="btnClearAllFilters"
+      ng-disabled="scfaCtrl.disableClear"
+      ng-click="scfaCtrl.service.clearAllFilters()">
+      <span sid="ClearAllFiltersText"
+        data-translate="ui.storefront.searchCatalog.filters.ClearAllFilters">
+      </span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+﻿@using MVC.Core
+
+<Div Class="d-flex align-content-center">
+  <Blazorise.Icons.FontAwesome.Icon
+    Name="FontAwesomeIcons.Spinner"
+    IconSize="IconSize.x5"
+    Class="fa-spin align-self-center"
+  />
+  <Span Class="pl-2 very-big align-self-center">
+    @(ViewState.waitMessage ?? "Loading...")
+  </Span>
+</Div>
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // (Ignored: Initialized by Parameter)
+  /// <summary>Gets or sets the state of the view.</summary>
+  /// <value>The view state.</value>
+  [CascadingParameter]
+  public IViewState ViewState { get; set; }
+#pragma warning restore CS8618 // (Ignored: Initialized by Parameter)
+  #endregion
+}

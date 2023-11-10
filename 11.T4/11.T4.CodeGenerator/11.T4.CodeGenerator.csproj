@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>CodeGenerator</AssemblyName>
+    <AssemblyTitle>CodeGenerator</AssemblyTitle>
+    <RootNamespace>CodeGenerator</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="MultipleOutputFilesExample.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="MultipleOutputFilesExample.tt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MultiOutput.old.ttinclude" />
+    <None Include="MultiOutput.ttinclude" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EnvDTE" Version="17.6.36389" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <PackageReference Include="Microsoft.VisualStudio.TextTemplating.15.0" Version="16.10.31320.204" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <PackageReference Include="ServiceStack.Interfaces" Version="5.12.0" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj" />
+  </ItemGroup>
+</Project>

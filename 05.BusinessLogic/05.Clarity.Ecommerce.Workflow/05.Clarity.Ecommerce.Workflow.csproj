@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Workflow</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Workflow</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Workflow</RootNamespace>
+    <ProjectGuid>{FA143352-14D8-4360-AD49-3547203FCFCE}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Stores\SiteDomain\SiteDomainWithSiteDomainSocialProvidersAssociationWorkflow.extended.cs" />
+    <Compile Remove="Stores\SiteDomain\SiteDomainWithSiteDomainSocialProvidersAssociationWorkflow.generated.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AssociationWorkflows.ttinclude" />
+    <None Include="Workflows.ttinclude" />
+    <None Update="AssociationWorkflows.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssociationWorkflows.cs</LastGenOutput>
+    </None>
+    <None Update="Workflows.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Workflows.cs</LastGenOutput>
+    </None>
+    <Content Include="WorkflowRegistry.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>WorkflowRegistry.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="AssociationWorkflows.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AssociationWorkflows.tt</DependentUpon>
+    </Compile>
+    <Compile Update="WorkflowRegistry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkflowRegistry.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Workflows.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Workflows.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="morelinq" Version="3.4.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.5.0" />
+    <PackageReference Include="ExcelDataReader" Version="2.1.2.3" />
+    <PackageReference Include="LinqKit" Version="1.2.4" />
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="PayPalMerchantSDK" Version="2.16.250" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack\bin\Debug\net472\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <Reference Include="ExcelDataReader">
+      <HintPath>..\..\ThirdParty\ExcelDataReader\bin\Debug\net5.0\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.Core\bin\Debug\net5.0\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.EntityFramework\bin\Debug\net5.0\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <PackageReference Include="LinqKit.EntityFramework" Version="1.2.2" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Utilities\00.Clarity.Ecommerce.Utilities.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models.Mapping\03.Clarity.Ecommerce.Models.Mapping.csproj" />
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Emails\Clarity.Ecommerce.Providers.Emails.csproj" />
+  </ItemGroup>
+</Project>

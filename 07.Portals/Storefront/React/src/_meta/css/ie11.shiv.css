@@ -1,0 +1,107 @@
+/*
+/*.col-12 { flex: 1 0 auto; } */
+/*
+@media all and (min-width:1200px) {
+    .col-xl-auto {
+        -webkit-box-flex: 0;
+        /* -ms-flex: 0 0 auto;
+        flex: 0 0 auto; *//*
+        -ms-flex: 1 0 auto;
+        flex: 1 0 auto;
+        width: auto;
+        max-width: 100%;
+    }
+}
+
+@media all and (min-width:992px) {
+    .col-lg-auto {
+        -webkit-box-flex: 0;
+        /* -ms-flex: 0 0 auto;
+        flex: 0 0 auto; *//*
+        -ms-flex: 1 0 auto;
+        flex: 1 0 auto;
+        width: auto;
+        max-width: 100%;
+    }
+}
+@media all and (min-width:768px) {
+    .col-md-auto {
+        -webkit-box-flex: 0;
+        /* -ms-flex: 0 0 auto;
+        flex: 0 0 auto; *//*
+        -ms-flex: 1 0 auto;
+        flex: 1 0 auto;
+        width: auto;
+        max-width: 100%;
+    }
+}
+@media all and (min-width:576px) {
+    .col-sm-12 {
+        -webkit-box-flex: 0;
+        /* -ms-flex: 0 0 auto;
+        flex: 0 0 auto; *//*
+        -ms-flex: 1 0 100%;
+        flex: 1 0 100%;
+        max-width: 100%;
+    }
+}
+
+.col-12 {
+    -webkit-box-flex: 0;
+    /* -ms-flex: 0 0 auto;
+    flex: 0 0 auto; *//*
+    -ms-flex: 1 0 100%;
+    flex: 1 0 100%;
+    max-width: 100%;
+}
+*/
+
+div[cef-search-catalog-external-search-box] div.xl-w-auto {
+    /* width: 100% !important; */
+}
+
+div[cef-search-catalog-external-search-box] div.xl-w-auto div.input-group {
+    /* width: 100%; */
+}
+
+div[cef-search-catalog-external-search-box] div.xl-w-auto div.input-group #txtSearch {
+    min-width: 150px;
+}
+
+footer #companyAddress,
+footer #companyPhone,
+footer #companyEmail {
+    min-width: 150px;
+}
+
+ cv-grid  .input-group input,
+[cv-grid] .input-group input,
+ cv-grid  .input-group select,
+[cv-grid] .input-group select {
+    min-width: 125px !important;
+}
+
+[cv-grid] div[ng-switch-when=minmaxdate].input-group {
+    display: inline-block !important;
+    width: 125px;
+}
+
+#editedShoppingListName {
+    min-width: 150px;
+}
+
+.catalog-result-card .card-title > span.rows-2.small,
+.catalog-result-card .card-text > span.rows-2.small,
+.product-card .card-title > span.rows-2.small,
+.product-card .card-text > span.rows-2.small {
+    height: 240%;
+    -webkit-line-clamp: 2;
+}
+
+div[cef-purchase] div[ng-show="step.complete"].col-sm-auto {
+    flex: 0.25 0 auto !important;
+}
+
+div[cef-purchase] div[ng-show].col-sm-auto {
+    flex: 0.25 0 auto !important;
+}

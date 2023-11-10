@@ -1,0 +1,37 @@
+<div ng-form="fcwCtrl.forms.edit">
+  <div class="form-group">
+    <select-form-group
+      key="industry{{$index}}"
+      label-text="Select Your Industry"
+      selections="fcwCtrl.selections"
+      include-null="true"
+      null-text="Choose one..."
+      ng-form-classes="select-industry"
+      ng-model="fcwCtrl.forms.edit.industry"
+      ng-required="true">
+    </select-form-group>
+    <text-input-form-group
+      key="fullName{{$index}}"
+      label-text="Full Name"
+      placeholder-text="Enter your full name"
+      ng-form-classes="full-name"
+      ng-model="fcwCtrl.forms.edit.fullName"
+      ng-required="true">
+    </text-input-form-group>
+    <text-input-form-group
+      key="email{{$index}}"
+      label-text="Email"
+      placeholder-text="Enter your email"
+      ng-form-classes="email-address"
+      ng-model="fcwCtrl.forms.edit.email"
+      ng-required="true"
+      is-email="true">
+    </text-input-form-group>
+  </div>
+  <button type="submit" class="btn btn-primary"
+    ng-disabled="fcwCtrl.forms.edit.$invalid"
+    ng-click="fcwCtrl.search($event)"
+    download target="_self">
+    Download Catalog
+  </button>
+</div>

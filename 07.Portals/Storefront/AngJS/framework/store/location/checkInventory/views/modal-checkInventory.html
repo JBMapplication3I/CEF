@@ -1,0 +1,179 @@
+﻿<div class="modal-content cef-modal-check-inventory">
+    <button type="button"
+            class="close"
+            ng-click="$close()"
+            aria-label="Close">close <span aria-hidden="true">&times;</span></button>
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-12 col-sm-2">
+                <img class="float-left img-fluid"
+                     style="max-height: 75px"
+                     alt="{{checkInventoryCtrl.product.name || checkInventoryCtrl.product.Name}}"
+                     ng-src="{{'http://images.orgill.com/large/' + (checkInventoryCtrl.product.customKey || checkInventoryCtrl.product.CustomKey).split('-')[0] + '.jpg?w=100&h=100&mode=crop'}}" />
+            </div>
+            <div class="col-12 col-sm-10">
+                <h4 class="h2 bold" ng-bind="checkInventoryCtrl.product.Name"></h4>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <!--mobile view-->
+        <div class="hidden-sm hidden-md hidden-lg">
+            <div class="row">
+                <div class="col-12">
+                    <p>
+                        <a class="btn-plain-link btn nopadding serif h3 bold" ng-bind="checkInventoryCtrl.store.Name"></a><br />
+                        {{checkInventoryCtrl.store.Slave.Address.Street1}}
+                        {{checkInventoryCtrl.store.Slave.Address.RegionName || checkInventoryCtrl.store.Slave.Address.RegionCode || checkInventoryCtrl.store.Slave.Address.Region.Name || checkInventoryCtrl.store.Slave.Address.Region.Name}}
+                        {{checkInventoryCtrl.store.Slave.Address.PostalCode}} | {{checkInventoryCtrl.store.Slave.Phone1}}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p data-translate="ui.storefront.common.AvailableToday"></p>
+                </div>
+                <div class="col-8">
+                    <a ng-bind="checkInventoryModalCtrl.inventoryObject.storeQty"></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p data-translate="ui.storefront.common.Distance"></p>
+                </div>
+                <div class="col-8">
+                    <p><span ng-bind="checkInventoryCtrl.store.Distance | number : 1"></span>&nbsp;<!--
+                    --><span data-translate="ui.storefront.common.Mile.Plural"></span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p data-translate="ui.storefront.common.Quantity"></p>
+                </div>
+                <div class="col-8">
+                    <p>
+                        <label for="nudQuantityXS" class="sr-only" data-translate="ui.storefront.common.Quantity"></label>
+                        <input type="number" class="form-control" id="nudQuantityXS" ng-model="checkInventoryModalCtrl.quantity">
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary btn-block"
+                            ng-disabled="(checkInventoryModalCtrl.inventory < checkInventoryModalCtrl.quantity) || (checkInventoryModalCtrl.quantity == 0)"
+                            ng-click="checkInventoryModalCtrl.buy(checkInventoryModalCtrl.product.id || checkInventoryModalCtrl.product.ID, 'Cart', checkInventoryModalCtrl.quantity, checkInventoryModalCtrl.product)"
+                            data-translate="ui.storefront.cart.addToCart"></button>
+                </div>
+            </div>
+            <hr />
+            <div ng-repeat="store in checkInventoryCtrl.storeList | limitTo: 4">
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            <a class="btn-plain-link btn nopadding serif h3 bold" ng-bind="store.Name"></a><br/>
+                            {{store.Slave.Address.Street1}}
+                            {{store.Slave.Address.RegionName || store.Slave.Address.RegionCode || store.Slave.Address.Region.Name || store.Slave.Address.Region.Name}}
+                            {{store.Slave.Address.PostalCode}} | {{store.Slave.Phone1}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p data-translate="ui.storefront.common.AvailableToday"></p>
+                    </div>
+                    <div class="col-7">
+                        <a ng-bind="store.Inventory"></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                        <p data-translate="ui.storefront.common.Distance"></p>
+                    </div>
+                    <div class="col-7">
+                        <p><span ng-bind="store.Distance | number : 1"></span>&nbsp;<!--
+                        --><span data-translate="ui.storefront.common.Mile.Plural"></span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button"
+                                class="btn btn-link btn-block"
+                                ng-click="store.makeThisMyStore();"
+                                data-translate="ui.storefront.location.checkInventory.modalCheckInventory.SelectThisStore"></button>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+        </div>
+        <!--desktop/tablet view-->
+        <div class="row d-none d-sm-block">
+            <div class="col-12">
+                <table class="table table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th class="available" data-translate="ui.storefront.common.AvailableToday"></th>
+                        <th class="store" data-translate="ui.storefront.location.checkInventory-modal.Store"></th>
+                        <th class="distance" data-translate="ui.storefront.common.Distance"></th>
+                        <th class="quantity" data-translate="ui.storefront.common.Quantity"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="selected-store">
+                        <td class="available">
+                            <a ng-bind="checkInventoryCtrl.product.inventoryObject.storeQty"></a>
+                        </td>
+                        <td class="store">
+                            <a class="btn-plain-link btn nopadding serif h3 bold" ng-bind="checkInventoryCtrl.store.Name"></a><br/>
+                            {{checkInventoryCtrl.store.Slave.Address.Street1}}
+                            {{checkInventoryCtrl.store.Slave.Address.Region.Code}}
+                            {{checkInventoryCtrl.store.Slave.Address.PostalCode}} | {{checkInventoryCtrl.store.Slave.Phone1}}
+                        </td>
+                        <td class="distance">
+                            <b class="serif h3"><span ng-bind="checkInventoryCtrl.store.Distance | number : 1"></span>&nbsp;<!--
+                            --><span data-translate="ui.storefront.common.Mile.Plural"></span></b>
+                        </td>
+                        <td class="quantity">
+                            <label for="nudQuantity" class="sr-only" data-translate="ui.storefront.common.Quantity"></label>
+                            <input type="number" class="form-control"
+                                   id="nudQuantity"
+                                   min="0"
+                                   ng-model="checkInventoryCtrl.quantity">
+                        </td>
+                    </tr>
+                    <tr ng-repeat="store in checkInventoryCtrl.storeList | limitTo: 4">
+                        <td class="available">
+                            <a ng-bind="store.Inventory"></a>
+                        </td>
+                        <td class="store">
+                            <a class="btn-plain-link btn nopadding serif" ng-bind="store.Name"></a><br/>
+                            {{store.Slave.Address.Street1}}
+                            {{store.Slave.Address.Region.Code}}
+                            {{store.Slave.Address.PostalCode}} | {{store.Slave.Phone1}}
+                        </td>
+                        <td class="distance">
+                            <p class="serif"><span ng-bind="store.Distance | number : 1"></span>&nbsp;<!--
+                            --><span data-translate="ui.storefront.common.Mile.Plural"></span></p>
+                        </td>
+                        <td class="make-store">
+                            <button type="button" class="btn btn-link btn-block"
+                                    data-translate="ui.storefront.location.checkInventory.modalCheckInventory.SelectThisStore"
+                                    ng-click="store.makeThisMyStore();"></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer d-none d-sm-block">
+        <div class="row">
+           <div class="col-12">
+               <button type="button"
+                       class="btn btn-primary"
+                       ng-disabled="(checkInventoryModalCtrl.inventory < checkInventoryModalCtrl.quantity) || (checkInventoryModalCtrl.quantity == 0)"
+                       ng-click="checkInventoryModalCtrl.buy(checkInventoryModalCtrl.product.id || checkInventoryModalCtrl.product.ID, 'Cart', checkInventoryModalCtrl.quantity, checkInventoryModalCtrl.product)"
+                       data-translate="ui.storefront.cart.addToCart"></button>
+            </div>
+        </div>
+    </div>
+</div>

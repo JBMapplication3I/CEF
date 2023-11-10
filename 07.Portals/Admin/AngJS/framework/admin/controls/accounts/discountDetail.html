@@ -1,0 +1,554 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-standard-detail-header-widget
+    record="deCtrl.record"
+    new-kind-key="ui.admin.common.Discount.New"
+    existing-kind-key="ui.admin.common.Discount">
+  </div>
+  <div class="row details-body">
+    <div class="col-md-12 discount-editor">
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Details.$invalid}"
+            ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Details">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="mb-3"
+                  data-translate="ui.admin.controls.accounts.discountDetail.DiscountInformation">
+                </h3>
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  <text-input-form-group
+                    class="col-md-8"
+                    key="Name"
+                    ng-model="deCtrl.record.Name"
+                    label-key="ui.admin.common.Name"
+                    tooltip-key="ui.admin.common.Name.Tooltip"
+                    placeholder-key="ui.admin.common.Name"
+                    max-length="128"
+                    ng-required="true">
+                  </text-input-form-group>
+                  <select-form-group
+                    class="col-md-4"
+                    key="DiscountTypeID"
+                    ng-model="deCtrl.record.DiscountTypeID"
+                    selections="deCtrl.scopes"
+                    label-key="ui.admin.controls.accounts.discountDetail.Scope"
+                    include-null="true" null-key="ui.admin.controls.accounts.discountDetail.SelectAScope"
+                    ng-required="true"
+                    when-changed="deCtrl.onScopeSelectUpdated($event, control, newValue)">
+                  </select-form-group>
+                </div>
+                <div class="row">
+                  <date-input-form-group
+                    class="col-md-6"
+                    key="StartDate"
+                    ng-model="deCtrl.record.StartDate"
+                    label-key="ui.admin.common.StartDate"
+                    placeholder-key="ui.admin.common.StartDate"
+                    max="deCtrl.record.EndDate"
+                    include-time="true"
+                    ng-required="false">
+                  </date-input-form-group>
+                  <date-input-form-group
+                    class="col-md-6"
+                    key="EndDate"
+                    ng-model="deCtrl.record.EndDate"
+                    label-key="ui.admin.common.EndDate"
+                    placeholder-key="ui.admin.common.EndDate"
+                    min="deCtrl.record.StartDate"
+                    include-time="true"
+                    ng-required="false">
+                  </date-input-form-group>
+                </div>
+                <div class="row">
+                  <div class="form-group col-sm-6 col-md-3" ng-class="{'has-error': deCtrl.forms.Details.nudLimitPerAccount.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.discounts.LimitPerAccount"></label>
+                    <div class="input-group">
+                      <input type="number" class="form-control text-center"
+                        id="nudLimitPerAccount" name="nudLimitPerAccount"
+                        placeholder="None"
+                        ng-required="false" step="1" min="0"
+                        ng-model="deCtrl.record.UsageLimitPerAccount" />
+                    </div>
+                    <div ng-messages="deCtrl.forms.Details.nudLimitPerAccount.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6 col-md-3" ng-class="{'has-error': deCtrl.forms.Details.nudLimitPerUser.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.discounts.LimitPerUser"></label>
+                    <div class="input-group">
+                      <input type="number" class="form-control text-center"
+                        id="nudLimitPerUser" name="nudLimitPerUser"
+                        placeholder="None"
+                        ng-required="false" step="1" min="0"
+                        ng-model="deCtrl.record.UsageLimitPerUser" />
+                    </div>
+                    <div ng-messages="deCtrl.forms.Details.nudLimitPerUser.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6 col-md-3" ng-class="{'has-error': deCtrl.forms.Details.nudLimitPerCart.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.discounts.LimitPerCart"></label>
+                    <div class="input-group">
+                      <input type="number" class="form-control text-center"
+                        id="nudLimitPerCart" name="nudLimitPerCart"
+                        placeholder="None"
+                        ng-required="false" step="1" min="0"
+                        ng-model="deCtrl.record.UsageLimitPerCart" />
+                    </div>
+                    <div ng-messages="deCtrl.forms.Details.nudLimitPerCart.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6 col-md-3" ng-class="{'has-error': deCtrl.forms.Details.nudLimitGlobally.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.discounts.LimitGlobally"></label>
+                    <div class="input-group">
+                      <input type="number" class="form-control text-center"
+                        id="nudLimitGlobally" name="nudLimitGlobally"
+                        placeholder="None"
+                        ng-required="false" step="1" min="0"
+                        ng-model="deCtrl.record.UsageLimitGlobally" />
+                    </div>
+                    <div ng-messages="deCtrl.forms.Details.nudLimitGlobally.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-4" ng-class="{'has-error': deCtrl.forms.Details.nudValue.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.discounts.ModificationAmount"></label>
+                    <div class="input-group">
+                      <input type="number" class="form-control text-right"
+                        id="nudValue" name="nudValue"
+                        ng-required="true" min="0.1" step="0.01"
+                        ng-model="deCtrl.record.Value" />
+                      <div class="input-group-addon with-control">
+                        <select class="form-control"
+                          id="ddlValueType" name="ddlValueType"
+                          ng-required="true"
+                          ng-options="vt.ID as vt.Name for vt in deCtrl.valueTypes"
+                          ng-model="deCtrl.record.ValueType">
+                        </select>
+                      </div>
+                    </div>
+                    <div ng-messages="deCtrl.forms.Details.nudValue.$error || deCtrl.forms.Details.ddlValueType.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-8" ng-class="{'has-error': deCtrl.forms.Details.thresholdAmount.$invalid}">
+                    <label class="control-label"
+                      data-translate="ui.admin.controls.accounts.discountDetail.ThresholdAmount">
+                    </label>
+                    <div class="input-group">
+                      <div class="input-group-addon with-control pr-1">
+                        <label class="control-label mt-1" ng-if="deCtrl.record.DiscountTypeID == 0"
+                          data-translate="ui.admin.controls.accounts.discountDetail.CompareOrderAmount">
+                        </label>
+                        <label class="control-label mt-1" ng-if="deCtrl.record.DiscountTypeID == 1"
+                          data-translate="ui.admin.controls.accounts.discountDetail.CompareProductAmount">
+                        </label>
+                        <label class="control-label mt-1" ng-if="deCtrl.record.DiscountTypeID == 2"
+                          data-translate="ui.admin.controls.accounts.discountDetail.CompareShippingAmount">
+                        </label>
+                      </div>
+                      <div class="input-group-addon with-control ml-1">
+                        <select class="form-control pl-1 pr-2"
+                          id="ddlDiscountCompareOperator" name="ddlDiscountCompareOperator"
+                          ng-required="true"
+                          ng-model="deCtrl.record.DiscountCompareOperator"
+                          ng-disabled="deCtrl.record.DiscountTypeID == 3"
+                          ng-options="vt.ID as vt.Name for vt in deCtrl.compareOperators">
+                        </select>
+                      </div>
+                      <input type="number" class="form-control text-right"
+                        id="thresholdAmount" name="thresholdAmount"
+                        min="0.00" step="0.01"
+                        ng-required="deCtrl.record.DiscountCompareOperator != 'Undefined'"
+                        ng-disabled="deCtrl.record.DiscountCompareOperator == 'Undefined' || deCtrl.record.DiscountTypeID == 3"
+                        ng-model="deCtrl.record.ThresholdAmount" />
+                    </div>
+                    <div ng-messages="deCtrl.forms.Details.ddlDiscountCompareOperator.$error || deCtrl.forms.Details.thresholdAmount.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <toggle-form-group
+                    class="col-sm-4"
+                    key="IsAutoApplied"
+                    ng-model="deCtrl.record.IsAutoApplied"
+                    label-key="ui.admin.controls.accounts.discountDetail.AutoApplied"
+                    tog-on-key="ui.admin.common.Yes" tog-on-style="btn-success"
+                    tog-off-key="ui.admin.common.No" tog-off-style="btn-danger"
+                    ng-required="false">
+                  </toggle-form-group>
+                  <toggle-form-group
+                    class="col-sm-4"
+                    key="CanCombine"
+                    ng-model="deCtrl.record.CanCombine"
+                    label-key="ui.admin.controls.accounts.discountDetail.CanCombineDiscount.Plural"
+                    tog-on-key="ui.admin.controls.inventory.priceRuleDetail.Combinable" tog-on-style="btn-primary"
+                    tog-off-key="ui.admin.controls.inventory.priceRuleDetail.Exclusive" tog-off-style="btn-info"
+                    ng-required="false">
+                  </toggle-form-group>
+                  <number-input-form-group
+                    class="col-sm-4"
+                    key="Priority"
+                    ng-model="deCtrl.record.Priority"
+                    label-key="ui.admin.common.Priority"
+                    placeholder-key="ui.admin.common.Priority"
+                    step="1"
+                    precision="0"
+                    ng-required="true">
+                  </number-input-form-group>
+                </div>
+                <div class="row" ng-if="deCtrl.record.DiscountTypeID && deCtrl.record.DiscountTypeID === 3">
+                  <number-input-form-group
+                    class="col-sm-6"
+                    key="BuyXValue"
+                    ng-model="deCtrl.record.BuyXValue"
+                    label-key="ui.admin.controls.accounts.discountDetail.BuyX"
+                    step="1"
+                    min="0.0001"
+                    precision="5"
+                    ng-disabled="deCtrl.record.DiscountTypeID !== 3"
+                    ng-required="deCtrl.record.DiscountTypeID === 3">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    class="col-sm-6"
+                    key="GetYValue"
+                    ng-model="deCtrl.record.GetYValue"
+                    label-key="ui.admin.controls.accounts.discountDetail.GetY"
+                    step="1"
+                    min="0.0001"
+                    precision="5"
+                    ng-disabled="deCtrl.record.DiscountTypeID !== 3"
+                    ng-required="deCtrl.record.DiscountTypeID === 3">
+                  </number-input-form-group>
+                </div>
+                <textarea-wysiwyg-form-group
+                  key="Description"
+                  ng-model="deCtrl.record.Description"
+                  label-key="ui.admin.common.Description"
+                  tooltip-key="ui.admin.common.Description.Tooltip"
+                  placeholder-key="ui.admin.common.Description"
+                  ng-required="false">
+                </textarea-wysiwyg-form-group>
+              </div>
+              <div class="col-sm-4">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.DiscountCode.Plural"></h4>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input type="text" class="form-control"
+                          id="txtCodeToAdd" name="txtCodeToAdd"
+                          maxlength ="20"
+                          ng-required="false"
+                          ng-change="deCtrl.checkCodeToAddForDuplicate()"
+                          ng-model-options="{ updateOn: 'default blur', debounce: {'default':500,'blur':0} }"
+                          ng-model="deCtrl.codeToAdd" />
+                        <div class="input-group-addon"
+                          ng-if="deCtrl.codeToAddIsDuplicate"
+                          data-translate="ui.admin.controls.accounts.discountDetail.Duplicate.Exclamation">
+                        </div>
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-primary"
+                            translate-attr="{ title: 'ui.admin.common.AddCode',
+                                              'aria-label': 'ui.admin.common.AddCode' }"
+                            data-translate="ui.admin.common.AddCode"
+                            ng-disabled="!deCtrl.codeToAdd || deCtrl.codeToAddIsDuplicate"
+                            ng-click="deCtrl.addCode(deCtrl.codeToAdd)">
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <table class="table table-condensed table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.Code"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!deCtrl.record.Codes.length">
+                      <td colspan="2"
+                        data-translate="ui.admin.controls.accounts.discountDetail.NoDiscountCodesHaveBeenAdded">
+                      </td>
+                    </tr>
+                    <tr ng-repeat="code in deCtrl.record.Codes">
+                      <td class="px-2">
+                        <label class="font-weight-normal form-control-static"
+                          ng-bind="code.Code">
+                        </label>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                          ng-disabled="deCtrl.record.Codes.length <= 1"
+                          ng-click="deCtrl.removeCode(code)">
+                          <i class="far fa-times"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Products.$invalid}"
+            ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Product.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Products">
+            <div cef-discount-to-products-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Accounts.$invalid}"
+            ><i class="far fa-lg fa-address-card"></i>&nbsp;<span data-translate="ui.admin.common.Account.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Accounts">
+            <div cef-discount-to-accounts-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.AccountTypes.$invalid}"
+            ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.AccountType.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.AccountTypes">
+            <div cef-discount-to-account-types-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.ProductTypes.$invalid}"
+            ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.ProductType.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.ProductTypes">
+            <div cef-discount-to-product-types-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="deCtrl.cefConfig.featureSet.categories.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Categories.$invalid}"
+            ><i class="far fa-lg fa-tags"></i>&nbsp;<span data-translate="ui.admin.common.Category.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Categories">
+            <div cef-discount-to-categories-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="deCtrl.cefConfig.featureSet.brands.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Brands.$invalid}"
+            ><i class="far fa-lg fa-building"></i>&nbsp;<span data-translate="ui.admin.common.Brand.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Brands">
+            <div cef-discount-to-brands-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="deCtrl.cefConfig.featureSet.stores.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Stores.$invalid}"
+            ><i class="far fa-lg fa-building"></i>&nbsp;<span data-translate="ui.admin.common.Store.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Stores">
+            <div cef-discount-to-stores-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="deCtrl.cefConfig.featureSet.vendors.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Vendors.$invalid}"
+            ><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.Vendor.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Vendors">
+            <div cef-discount-to-vendors-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="deCtrl.cefConfig.featureSet.manufacturers.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Manufacturers.$invalid}"
+            ><i class="far fa-lg fa-industry"></i>&nbsp;<span data-translate="ui.admin.common.Manufacturer.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Manufacturers">
+            <div cef-discount-to-manufacturers-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="deCtrl.cefConfig.featureSet.shipping.enabled && !deCtrl.cefConfig.featureSet.shipping.splitShipping.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.ShipCarrierMethods.$invalid}"
+            ><i class="far fa-lg fa-truck"></i>&nbsp;<span data-translate="ui.admin.common.ShipCarrierMethod.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.ShipCarrierMethods">
+            <div cef-discount-to-ship-carrier-methods-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Users.$invalid}"
+            ><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.User.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Users">
+            <div cef-discount-to-users-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.UserRoles.$invalid}"
+            ><i class="far fa-lg fa-user-secret"></i>&nbsp;<span data-translate="ui.admin.common.UserRole.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.UserRoles">
+            <div cef-discount-to-user-roles-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="mb-3"
+                  data-translate="ui.admin.controls.accounts.discountDetail.UserRolesAssociatedWithThisDiscount">
+                </h3>
+              </div>
+              <div class="col-sm-8">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectUserRolesToAdd"></h4>
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover table-condensed mb-3">
+                    <thead>
+                      <tr>
+                        <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="w-95" data-translate="ui.admin.common.Name"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="(name, id) in deCtrl.roles">
+                        <td><label class="font-weight-normal form-control-static" ng-bind="id"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="name"></label></td>
+                        <td>
+                          <button type="button" class="btn btn-success"
+                            translate-attr="{ title: 'ui.admin.common.Add',
+                                              'aria-label': 'ui.admin.common.Add' }"
+                            ng-click="deCtrl.addUserRole(name)">
+                            <i class="far fa-plus"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedUserRoles"></h4>
+                <input type="text" class="form-control"
+                  translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                  ng-model="deCtrl.addedUserRolesQuickFilter" />
+                <table class="table table-striped table-hover table-condensed mb-0">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.UserRole"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!(deCtrl.record.UserRoles | filter: { $: deCtrl.addedUserRolesQuickFilter }).length">
+                      <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                    </tr>
+                    <tr ng-repeat="u in deCtrl.record.UserRoles
+                                   | filter: { $: deCtrl.addedUserRolesQuickFilter }">
+                      <td>
+                        <label class="font-weight-normal form-control-static"
+                          uib-tooltip="{{u.RoleName}}"
+                          ng-bind="u.RoleName">
+                        </label>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                          translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                            'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                          ng-click="deCtrl.removeUserRole(u)">
+                          <i class="far fa-times"></i>
+                          <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="false"><!-- Deprecated point of reference -->
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Countries.$invalid}"
+            ><i class="far fa-lg fa-globe"></i>&nbsp;<span data-translate="ui.admin.common.Country.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="deCtrl.forms.Countries">
+            <div cef-discount-to-countries-associator
+              record="deCtrl.record"
+              ctrl="deCtrl">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': deCtrl.forms.Attributes.$invalid}"
+            ><i class="far fa-lg fa-list"></i>&nbsp;<span data-translate="ui.admin.common.Attribute.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="container-fluid" ng-form="deCtrl.forms.Attributes">
+            <div cef-json-attributes-editor
+              master="deCtrl.record"
+              type="Discount"
+              ng-if="deCtrl.record != null">
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <!-- Form actions -->
+  <div class="row details-footer">
+    <div class="col-sm-12">
+      <cef-standard-detail-footer-buttons
+        master-controller="deCtrl"
+        return-state="accounts.discounts.list"
+        permissions-base="Discounts.Discount">
+      </cef-standard-detail-footer-buttons>
+      <button type="button" class="btn btn-info pull-right"
+        ng-if="deCtrl.cefConfig.debug"
+        title="Export for QA"
+        aria-label="Export for QA"
+        ng-click="deCtrl.exportRecordForQA()">
+        <i class="far fa-flask"></i>&nbsp;<!--
+        --><span>Export for QA</span>
+      </button>
+    </div>
+  </div>
+</div>

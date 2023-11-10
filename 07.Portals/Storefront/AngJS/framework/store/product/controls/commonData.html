@@ -1,0 +1,29 @@
+<table>
+  <colgroup>
+    <col />
+    <col />
+    <col />
+  </colgroup>
+  <tr class="cef-sku-num">
+    <td class="pr-2 bold" sid="ProductDetailsSkuText"
+      data-translate="ui.storefront.product.detail.productDetails.SKU">
+    </td>
+    <td id="lblProductCustomKeySKU"
+      ng-bind="pdcdCtrl.product.CustomKey">
+    </td>
+  </tr>
+  <tr class="cef-uofm">
+    <td class="pr-2 bold" sid="ProductDetailsUnitText"
+      data-translate="ui.storefront.common.Unit">
+    </td>
+    <td id="lblProductUofM"
+      ng-bind="pdcdCtrl.product.UnitOfMeasure">
+    </td>
+  </tr>
+  <tr ng-if="pdcdCtrl.product.ShippingLeadTimeDays"
+    class="cef-shipping-lead-time">
+    <td id="lblProductShippingLeadTime"
+      ng-bind="pdcdCtrl.getShippingLeadTimeText()">
+    </td>
+  </tr>
+</table>

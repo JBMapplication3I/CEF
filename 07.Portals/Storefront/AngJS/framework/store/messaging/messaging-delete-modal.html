@@ -1,0 +1,14 @@
+﻿<div class="p-5">
+    <div class="card bg-danger text-white">
+        <div class="card-heaer"
+             data-translate="ui.storefront.userDashboard2.inbox.DeleteMessage.Question"></div>
+        <div class="card-body bold"
+             ng-bind="stateParams.msg.model.Subject"></div>
+    </div>
+    <button type="button" class="btn btn-primary"
+            ng-click="confirm(true)"
+            data-translate="ui.storefront.common.Delete"></button>
+    <button type="button" class="btn btn-secondary"
+            ng-click="closeThisDialog()"
+            data-translate="ui.storefront.common.Cancel"></button>
+</div>

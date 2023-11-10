@@ -1,0 +1,232 @@
+@inherits MVC.Core.InputFormGroupControllerBase<TValue>
+@typeparam TValue
+
+<Validation>
+  <Tooltip
+    Inline="false"
+    Text="@Tooltip"
+    Placement="TooltipPlacement.Top"
+    Fade="true"
+    AlwaysActive="TooltipIsOpen">
+    <Field
+      Horizontal="@IsHorizontal"
+      sid="@("field_" + InputName)"
+      Class="@AllFormClasses">
+      @if (!NoLabel)
+      {
+        <FieldLabel
+          For="@InputName"
+          title="@Tooltip"
+          sid="@("fieldLabel_" + InputName)">
+          <Span>
+            @LabelText
+            @if (Required)
+            {
+              <Span TextColor="TextColor.Danger">&nbsp;*</Span>
+            }
+            @if (Contract.CheckValidKey(Tooltip) && Tooltip != LabelText)
+            {
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.QuestionCircle" TextColor="TextColor.Info" Class="ml-1" />
+            }
+          </Span>
+        </FieldLabel>
+      }
+      <FieldBody
+        sid="@("fieldBody_" + InputName)">
+        @if (UseAddons)
+        {
+          <Addons>
+            @if (IsCurrency)
+            {
+              <Addon AddonType="AddonType.Start">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.DollarSign" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            else if (Contract.CheckValidKey(LeftIcon))
+            {
+              <Addon AddonType="AddonType.Start">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="@LeftIcon" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            <NumericEdit
+              TValue="TValue"
+              sid="@("input_" + InputName)"
+              ElementId="@InputName"
+              Placeholder="@PlaceholderText"
+              Class="@AllInputClasses"
+              Disabled="@Disabled"
+              required="@Required"
+              ShowStepButtons="@StepButtonsVisible"
+              ValueExpression="ValueExpression"
+              ValueChanged="ValueChanged"
+              Value="@Value"
+              Step="@Step"
+              Min="@Min"
+              Max="@Max"
+              autocomplete="@Autocomplete"
+              Autofocus="@Autofocus"
+              FocusOut="@ExtraOnFocusOut"
+              FocusIn="@ExtraOnFocusIn"
+              KeyDown="@ExtraOnKeyDown"
+              KeyPress="@ExtraOnKeyPress"
+              KeyUp="@ExtraOnKeyUp">
+              @*
+              onmousedown="@ExtraOnMouseDown"
+              onmouseup="@ExtraOnMouseUp"
+              onmousemove="@ExtraOnMouseMove"
+              onmouseover="@ExtraOnMouseOver"
+              onmouseout="@ExtraOnMouseOut"
+              onmousein="@ExtraOnMouseIn"
+              *@
+              <Feedback>
+                @if (FormInvalid == true && !HideInvalidTooltip)
+                {
+                  <ValidationError/>
+                }
+                @if (FormValid == true && ShowValidTooltip)
+                {
+                  <ValidationSuccess/>
+                }
+              </Feedback>
+            </NumericEdit>
+            @if (IsPercent)
+            {
+              <Addon AddonType="AddonType.End" Class="rounded-right">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Percent" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            else if (Contract.CheckValidKey(RightIcon))
+            {
+              <Addon AddonType="AddonType.End" Class="rounded-right">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="@RightIcon" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            </Addons>
+        }
+        else
+        {
+          <NumericEdit
+            TValue="TValue"
+            sid="@("input_" + InputName)"
+            ElementId="@InputName"
+            Placeholder="@PlaceholderText"
+            Class="@AllInputClasses"
+            Disabled="@Disabled"
+            required="@Required"
+            ShowStepButtons="@StepButtonsVisible"
+            ValueExpression="ValueExpression"
+            ValueChanged="ValueChanged"
+            Value="@Value"
+            Step="@Step"
+            Min="@Min"
+            Max="@Max"
+            autocomplete="@Autocomplete"
+            Autofocus="@Autofocus"
+            FocusOut="@ExtraOnFocusOut"
+            FocusIn="@ExtraOnFocusIn"
+            KeyDown="@ExtraOnKeyDown"
+            KeyPress="@ExtraOnKeyPress"
+            KeyUp="@ExtraOnKeyUp">
+            @*
+            onmousedown="@ExtraOnMouseDown"
+            onmouseup="@ExtraOnMouseUp"
+            onmousemove="@ExtraOnMouseMove"
+            onmouseover="@ExtraOnMouseOver"
+            onmouseout="@ExtraOnMouseOut"
+            onmousein="@ExtraOnMouseIn"
+            *@
+            <Feedback>
+              @if (FormInvalid == true && !HideInvalidTooltip)
+              {
+                <ValidationError/>
+              }
+              @if (FormValid == true && ShowValidTooltip)
+              {
+                <ValidationSuccess/>
+              }
+            </Feedback>
+          </NumericEdit>
+        }
+      </FieldBody>
+    </Field>
+  </Tooltip>
+</Validation>
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  /// <summary>Gets or sets a value indicating whether this object is horizontal.</summary>
+  /// <value>True if this object is horizontal, false if not.</value>
+  [Parameter]
+  public bool IsHorizontal { get; set; }
+
+  /// <summary>Gets or sets the placeholder text.</summary>
+  /// <value>The placeholder text.</value>
+  [Parameter]
+  public string? PlaceholderText { get; set; }
+
+  /// <summary>Gets or sets the minimum value.</summary>
+  /// <value>The minimum value.</value>
+  [Parameter]
+  public TValue? Min { get; set; }
+
+  /// <summary>Gets or sets the maximum value.</summary>
+  /// <value>The maximum value.</value>
+  [Parameter]
+  public TValue? Max { get; set; }
+
+  /// <summary>Gets or sets the amount to increment by.</summary>
+  /// <value>The amount to increment by.</value>
+  [Parameter]
+  public decimal? Step { get; set; }
+
+  /// <summary>Gets or sets the is step buttons visible.</summary>
+  /// <value>The is step buttons visible.</value>
+  [Parameter]
+  public bool? StepButtonsVisible { get; set; }
+
+  /// <summary>Gets or sets a value indicating whether this object is currency.</summary>
+  /// <value>True if this object is currency, false if not.</value>
+  [Parameter]
+  public bool IsCurrency { get; set; }
+
+  /// <summary>Gets or sets a value indicating whether this object is percent.</summary>
+  /// <value>True if this object is percent, false if not.</value>
+  [Parameter]
+  public bool IsPercent { get; set; }
+#pragma warning restore CS8618 // Ignored: Parameters set by implementer
+  #endregion
+
+  /// <summary>Gets the input prefix.</summary>
+  /// <value>The input prefix.</value>
+  protected override string InputPrefix => "nud";
+
+  /// <summary>Gets all input classes.</summary>
+  /// <value>all input classes.</value>
+  private string AllInputClasses => (FieldCssClasses
+    + (Contract.CheckValidKey(InputClasses) ? " " + InputClasses : string.Empty)
+    + (Contract.CheckValidKey(RightIcon) ? string.Empty : " rounded-right"))
+    .Trim();
+
+  /// <summary>Gets all form classes.</summary>
+  /// <value>all form classes.</value>
+  private string AllFormClasses => ("form-group"
+    + (Contract.CheckValidKey(FormClasses) ? " " + FormClasses : string.Empty)
+    + (FormInvalid == true ? " has-error" : string.Empty))
+    .Trim();
+
+  private bool UseAddons =>
+    IsCurrency
+    || IsPercent
+    || Contract.CheckValidKey(LeftIcon)
+    || Contract.CheckValidKey(RightIcon);
+}

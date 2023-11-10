@@ -1,0 +1,302 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row">
+        <h2 ng-hide="purchaseOrderDetailCtrl.id > 0" class="heading col-md-12" data-translate="ui.admin.controls.sales.purchaseOrderDetail.NewPurchaseOrder"></h2>
+        <h2 ng-show="purchaseOrderDetailCtrl.id > 0" class="heading col-md-12"><span data-translate="ui.admin.common.PurchaseOrder"></span> #{{purchaseOrderDetailCtrl.purchaseOrder.ID}} [{{purchaseOrderDetailCtrl.purchaseOrder.CustomKey}}]</h2>
+    </div>
+    <!-- Vendor & Shipping, Notes, Attributes and Summary -->
+    <div class="row">
+        <!-- Vendor & Shipping, Notes, Attributes -->
+        <div class="col-md-8 cvBox">
+            <uib-tabset justified="true">
+                <uib-tab heading="Vendor &amp; Shipping">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h3 data-translate="ui.admin.common.VendorInformation"></h3>
+                            <div class="col-md-6">
+                                <div class="container-fluid">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.common.Vendor"></label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control"
+                                                        ng-change="purchaseOrderDetailCtrl.loadVendor()"
+                                                        ng-model="purchaseOrderDetailCtrl.purchaseOrder.VendorID"
+                                                        ng-options="vendor.ID as vendor.Name for vendor in purchaseOrderDetailCtrl.vendors">
+                                                    <option value="" data-translate="ui.admin.common.SelectAVendor"></option>
+                                                </select>
+                                                <div ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.FirstName}}
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.LastName}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.FirstName || purchaseOrderDetailCtrl.purchaseOrder.Vendor.LastName" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Street1}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Street1" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Street2}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Street2" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Street3}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Street3" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.City}},
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Region.Code}}
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.PostalCode}}<br />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Country.Name}}<br />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Phone1}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Phone1" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Phone}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Phone" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Phone2}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Phone2" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Phone2}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Phone2" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Phone3}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Phone3" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Phone3}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Phone3" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Fax1}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Fax1" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Fax}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Fax" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Email1}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.Vendor.Email1" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Address.Email}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.common.Phone"></label>
+                                            <div class="col-sm-8">
+                                                <a class="radio media-middle" ng-href="tel:{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Contact.Phone1}}"
+                                                   >{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Contact.Phone1}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.common.Email"></label>
+                                            <div class="col-sm-8">
+                                                <a class="radio media-middle"
+                                                   ng-href="mailto:{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Contact.Email1}}
+                                                           ?subject={{purchaseOrderDetailCtrl.purchaseOrder.Vendor.EmailSubject}}
+                                                           &body={{purchaseOrderDetailCtrl.purchaseOrder.Vendor.ShipTo}}%0A%0A{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.SignBy}}"
+                                                   >{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Contact.Email1}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.common.SendMethod"></label>
+                                            <div class="col-sm-8">
+                                                <div class="form-control-static">{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.SendMethod}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="container-fluid">
+                                    <div class="form-horizontal">
+                                        <div class="form-group" ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+                                            <label class="col-sm-4 control-label"><span data-translate="ui.admin.common.Account"></span> #</label>
+                                            <div class="col-sm-8">
+                                                <div class="form-control-static">{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.AccountNumber}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.common.ShipVia"></label>
+                                            <div class="col-sm-8">
+                                                <div class="form-control-static">{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.ShipViaNotes}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.common.Terms"></label>
+                                            <div class="col-sm-8">
+                                                <div class="form-control-static">{{purchaseOrderDetailCtrl.purchaseOrder.Vendor.Terms}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.controls.sales.purchaseOrderDetail.AllowsDropShip"></label>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" class="checkbox" disabled ng-model="purchaseOrderDetailCtrl.purchaseOrder.Vendor.AllowDropShip" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h3 data-translate="ui.admin.common.WarehouseInformation"></h3>
+                            <div class="col-md-6">
+                                <div class="container-fluid">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.common.Warehouse"></label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control"
+                                                        ng-change="purchaseOrderDetailCtrl.loadWarehouse()"
+                                                        ng-model="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocationID"
+                                                        ng-options="warehouse.ID as warehouse.Name for warehouse in purchaseOrderDetailCtrl.warehouses">
+                                                    <option value="" data-translate="ui.admin.common.SelectAWarehouse"></option>
+                                                </select>
+                                                <p ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.InventoryLocationID">
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.FirstName}}
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.LastName}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.FirstName || purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.LastName" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Street1}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Street1" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Street2}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Street2" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Street3}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Street3" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.City}},
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Region.Code}}
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.PostalCode}}<br />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Country.Name}}<br />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Phone1}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Phone1" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Phone}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Phone" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Phone2}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Phone2" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Phone2}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Phone2" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Phone3}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Phone3" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Phone3}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Phone3" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Fax1}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Fax1" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Fax}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Fax" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Email1}}<br ng-if="purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Email1" />
+                                                    {{purchaseOrderDetailCtrl.purchaseOrder.InventoryLocation.Address.Email}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="container-fluid">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.controls.sales.purchaseOrderDetail.DueDate"></label>
+                                            <div class="col-sm-8">
+                                                <input type="date" class="form-control" ng-model="purchaseOrderDetailCtrl.purchaseOrder.DueDate" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label" data-translate="ui.admin.controls.sales.purchaseOrderDetail.FreeOnBoard"></label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control"
+                                                        ng-model="purchaseOrderDetailCtrl.purchaseOrder.FreeOnBoardID"
+                                                        ng-options="fob.ID as fob.Name for fob in purchaseOrderDetailCtrl.freeOnBoards"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Notes">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h3 data-translate="ui.admin.common.PrivateNote.Plural"></h3>
+                            <cef-notes-editor
+                                notes="purchaseOrderDetailCtrl.purchaseOrder.Notes"
+                                note-type-name="'Private'">
+                            </cef-notes-editor>
+                        </div>
+                        <div class="row">
+                            <h3 data-translate="ui.admin.controls.sales.purchaseOrderDetail.OrderNote.Plural"></h3>
+                            <cef-notes-editor
+                                notes="purchaseOrderDetailCtrl.purchaseOrder.Notes"
+                                note-type-name="'Order'">
+                            </cef-notes-editor>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Attributes">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h3 data-translate="ui.admin.common.AttributeInformation"></h3>
+                            <div cef-json-attributes-editor
+                                master="purchaseOrderDetailCtrl.record"
+                                type="Purchase Order"
+                                ng-if="purchaseOrderDetailCtrl.record != null">
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <!-- Summary -->
+        <div class="col-md-4 cvBox">
+            <div class="container-fluid">
+                <div class="row cvBoxHead">
+                    <div class="cvInfo left">
+                        <span class="cvTitle" data-translate="ui.admin.common.OrderTotal"></span>
+                        <span class="cvTotal">{{purchaseOrderDetailCtrl.purchaseOrder.Totals.Total | currency}}</span>
+                    </div>
+                    <div class="cvActions right" ng-hide="purchaseOrderDetailCtrl.purchaseOrder.Status.Name == 'Completed'">
+                        <a class="btn btn-lg btn-primary" style="cursor: pointer;"
+                            ng-click="purchaseOrderDetailCtrl.save('sales.purchaseOrders.list')"><i class="far fa-lg fa-save"></i></a>
+                        <a class="btn btn-lg btn-warning" ui-sref="sales.purchaseOrders.list"><i class="far fa-lg fa-undo"></i></a>
+                    </div>
+                    <div class="cvActions right" ng-show="purchaseOrderDetailCtrl.purchaseOrder.Status.Name == 'Completed'">
+                        <a class="btn btn-lg btn-primary" ui-sref="sales.purchaseOrders.list"><i class="far fa-lg fa-undo"></i></a>
+                    </div>
+                </div>
+                <div class="row cvBoxBody">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="input-group col-xs-12">
+                                <label class="control-label" data-translate="ui.admin.controls.sales.purchaseOrderDetail.PurchaseOrderKey"></label>
+                                <input type="text" class="form-control" placeholder="Purchase Order Key..."
+                                        ng-model="purchaseOrderDetailCtrl.purchaseOrder.CustomKey"
+                                        ng-disabled="purchaseOrderDetailCtrl.purchaseOrder.Status.Name == 'Completed'" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label data-translate="ui.admin.common.SalesOrderStatus"></label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" ng-model="purchaseOrderDetailCtrl.purchaseOrder.StatusID"
+                                            ng-disabled="purchaseOrderDetailCtrl.purchaseOrder.Status.Name == 'Completed'"
+                                            ng-options="status.ID as (status.Name + '[' + status.CustomKey + ']') for status in purchaseOrderDetailCtrl.purchaseOrderStatuses"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label data-translate="ui.admin.common.OrderDate"></label>
+                                <span>{{purchaseOrderDetailCtrl.purchaseOrder.CreatedDate | convertJSONDate | date:'yyyy-MM-dd'}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-group col-xs-12">
+                                <label class="control-label" data-translate="ui.admin.controls.sales.purchaseOrderDetail.RelatedCustomerOrder.Plural"></label>
+                                <select class="form-control"
+                                        chosen multiple allow-single-deselect="true"
+                                        data-placeholder="{{purchaseOrderDetailCtrl.selectOrdersTxt}}"
+                                        ng-model="purchaseOrderDetailCtrl.SalesOrderIDs"
+                                        ng-options="order.ID as (order.CustomKey + '/' + order.ID) for order in purchaseOrderDetailCtrl.openSalesOrders"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-hide="!purchaseOrderDetailCtrl.purchaseOrder.VendorID">
+        <div class="col-md-12 cvPanel cvSalesOrderItems">
+            <div class="col-md-12">
+                <h3 data-translate="ui.admin.controls.sales.purchaseOrderDetail.PurchaseOrderItem.Plural"></h3>
+                <cv-purchase-order-item-selector
+                    class="cvAddLineItem"
+                    ng-hide="purchaseOrderDetailCtrl.purchaseOrder.Status.Name == 'Completed'"
+                    vendor-id="purchaseOrderDetailCtrl.purchaseOrder.VendorID"
+                    sales-items="purchaseOrderDetailCtrl.purchaseOrder.SalesItems"
+                    data-translate="ui.admin.common.AddLineItem">
+                </cv-purchase-order-item-selector>
+            </div>
+            <div class="col-md-12">
+                <div kendo-grid
+                     k-data-source="purchaseOrderDetailCtrl.purchaseOrder.SalesItems"
+                     k-rebind="purchaseOrderDetailCtrl.purchaseOrder.SalesItems"
+                     k-options="purchaseOrderDetailCtrl.gridConfiguration"></div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-borderless margin-none table-condensed totals">
+                <tbody>
+                    <tr>
+                        <td class="right" data-translate="ui.admin.common.Subtotal"></td>
+                        <td class="right strong col-md-1">{{purchaseOrderDetailCtrl.purchaseOrder.Totals.SubTotal | currency}}</td>
+                    </tr>
+                    <tr>
+                        <td class="right" data-translate="ui.admin.common.Shipping"></td>
+                        <td class="right strong col-md-1">
+                            <input type="number" min="0" max="9999" step="0.01" class="form-control text-right" style="min-width: 100px"
+                                   format="currency"
+                                   ng-change="purchaseOrderDetailCtrl.updateTotals()"
+                                   ng-disabled="purchaseOrderDetailCtrl.purchaseOrder.Status.Name == 'Completed'"
+                                   ng-model="purchaseOrderDetailCtrl.purchaseOrder.Totals.Shipping" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="right"><b data-translate="ui.admin.common.Total"></b></td>
+                        <td class="right strong col-md-1">{{purchaseOrderDetailCtrl.purchaseOrder.Totals.Total | currency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

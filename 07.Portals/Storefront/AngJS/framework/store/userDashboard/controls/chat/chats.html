@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-6" ng-form="chatsCtrl.forms.Chatting">
+        <!--<h2 class="mb-5" data-translate="ui.storefront.userDashboard2.userProfile.Chatting"></h2>-->
+        <div class="box-area p-7 mb-5">
+            <div class="img mb-3"><img src="/images/wechat-logo.png" alt="WeChat"></div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="control-label" for="ckEnableWeChat"
+                           data-translate="ui.storefront.user.userDashboard2.controls.chatting.Enabled"></label>
+                    <toggle class="btn-block"
+                            id="ckEnableWeChat" name="ckEnableWeChat"
+                            data-on="{{'ui.storefront.common.Yes' | translate}}" data-truestyle="btn-success"
+                            data-off="{{'ui.storefront.common.No' | translate}}" data-offstyle="btn-danger"
+                            ng-change="chatsCtrl.enableWeChatChange()"
+                            ng-model="chatsCtrl.enableWeChat"></toggle>
+                </div>
+                <div class="col-sm-9">
+                    <div class="form-group"
+                         ng-class="{'has-error': chatsCtrl.forms.Chatting.txtWeChatUserID.$invalid}">
+                        <label class="control-label" for="txtWeChatUserID"
+                               data-translate="ui.storefront.userDashboard2.userProfile.Chatting.WeChatUserID"></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control"
+                                   id="txtWeChatUserID" name="txtWeChatUserID"
+                                   ng-required="chatsCtrl.enableWeChat"
+                                   ng-disabled="!chatsCtrl.enableWeChat"
+                                   ng-model="chatsCtrl.weChatUserID" />
+                        </div>
+                        <div ng-messages="chatsCtrl.forms.Chatting.txtWeChatUserID.$error">
+                            <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12"><hr class="w-100" /></div>
+    <div class="col-12">
+        <div class="d-flex">
+            <button type="button" class="btn btn-lg btn-primary mb-3"
+                    id="btnSaveUserProfile" name="btnSaveUserProfile"
+                    ng-disabled="chatsCtrl.forms.Chatting.$invalid || chatsCtrl.viewState.running || chatsCtrl.forms.Chatting.$pristine"
+                    ng-click="chatsCtrl.save()"
+                    data-translate="ui.storefront.common.Save"></button>
+            <div class="alert alert-info" role="alert" ng-if="chatsCtrl.viewState.running">
+                <i class="far fa-question-circle" aria-hidden="true"></i>&nbsp;<!--
+                --><span data-translate="ui.storefront.userDashboard2.controls.userProfile.Saving"></span>
+            </div>
+            <div class="alert alert-success" role="alert" ng-if="!chatsCtrl.viewState.running && chatsCtrl.viewState.success">
+                <i class="far fa-check-circle" aria-hidden="true"></i>&nbsp;<!--
+                --><span data-translate="ui.storefront.userDashboard2.controls.userProfile.SaveSuccessful"></span>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-if="!chatsCtrl.viewState.running && chatsCtrl.viewState.hasError">
+                <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+                --><span data-translate="ui.storefront.userDashboard2.controls.userProfile.AnErrorWasEncounteredPleaseTryAgain"></span><!--
+                --><span ng-bind="chatsCtrl.viewState.errorMessage"></span>
+            </div>
+        </div>
+    </div>
+</div>

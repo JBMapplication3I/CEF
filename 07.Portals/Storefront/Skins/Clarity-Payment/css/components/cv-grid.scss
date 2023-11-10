@@ -1,0 +1,191 @@
+// --------------------------------------------------
+// CV-Grid
+// --------------------------------------------------
+
+//$cef-btn-default-color:     #fff;
+//$cef-btn-default-bg:        #F5F5F5;
+//$cef-btn-default-border:    #ccc;
+//
+//$cef-btn-primary-color:     #fff;
+//$cef-btn-primary-bg:        #53C7E4;
+//$cef-btn-primary-border:    darken($cef-btn-primary-bg, 5%);
+//
+//$cef-btn-success-color:     #fff;
+//$cef-btn-success-bg:        #8bbf61;
+//$cef-btn-success-border:    darken($cef-btn-success-bg, 5%);
+//
+//$cef-btn-warning-color:     #fff;
+//$cef-btn-warning-bg:        #ab7a4b;
+//$cef-btn-warning-border:    darken($cef-btn-warning-bg, 5%);
+//
+//$cef-btn-info-color:        #fff;
+//$cef-btn-info-bg:           #4193d0;
+//$cef-btn-info-border:       darken($cef-btn-info-bg, 5%);
+//
+//$cef-btn-danger-color:      #fff;
+//$cef-btn-danger-bg:         #cc3a3a;
+//$cef-btn-danger-border:     darken($cef-btn-danger-bg, 5%);
+//
+//$cef-btn-inverse-color:     #fff;
+//$cef-btn-inverse-bg:        #424242;
+//$cef-btn-inverse-border:    darken($cef-btn-inverse-bg, 5%);
+
+//$row-text-color: #525252;
+//$row-alt-text-color: #525252;
+//$row-lighten-amount: 35%;
+//$row-hover-darken-amount: 5%;
+//$row-alt-darken-amount: 5%;
+//$row-alt-hover-darken-amount: 5%;
+//
+//@mixin row-colorize($bg, $color, $alt-color: $color) {
+//    background: lighten($bg, $row-lighten-amount);
+//    color: $color;
+//    &:hover {
+//        background: darken(lighten($bg, $row-lighten-amount), $row-alt-darken-amount);
+//    }
+//    &.k-alt {
+//        background: lighten(darken($bg, $row-alt-darken-amount), $row-lighten-amount);
+//        color: $alt-color;
+//        &:hover {
+//            background: darken(lighten(darken($bg, $row-alt-darken-amount), $row-lighten-amount), $row-alt-hover-darken-amount);
+//        }
+//    }
+//}
+
+cv-grid > .cvGrid {
+    // height: 100%;
+    // width: 100%;
+    > .row {
+        // Applies to both Vertical and Top
+        > .grid-area {
+            > .k-grid {
+                height: 100% !important;
+                background-color: #f5f5f5;
+                > .k-grid-header { height: 30px; }
+                > .k-grid-pager.k-pager-wrap {
+                    height: 33px;
+                    padding-right: 5px;
+                    width: 99%;
+                    border-bottom: none;
+                    box-shadow: none;
+                }
+                > .k-grid-content {
+                    min-height: 200px;
+                    background: white;
+                    //> table {
+                    //    > tbody {
+                    //        > tr {
+                    //            &.row-secondary {
+                    //                @include row-colorize($bg-secondary, $row-text-color);
+                    //            }
+                    //            &.row-primary {
+                    //                @include row-colorize($bg-primary, $row-text-color);
+                    //            }
+                    //            &.row-success {
+                    //                @include row-colorize($bg-success, $row-text-color);
+                    //            }
+                    //            &.row-warning {
+                    //                @include row-colorize($bg-warning, $row-text-color);
+                    //            }
+                    //            &.row-info {
+                    //                @include row-colorize($bg-info, $row-text-color);
+                    //            }
+                    //            &.row-danger {
+                    //                @include row-colorize($bg-danger, $row-text-color);
+                    //            }
+                    //            &.row-inverse {
+                    //                @include row-colorize($bg-inverse, $row-text-color);
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                }
+                &.groupable {
+                    > .k-grouping-header {
+                        height: 28px;
+                    }
+                    > .k-grid-content {
+                        height: calc(100% - (28px + 0.22em + 0.28em) - (30px + 1px) - (30px + 1px + 0.333em + 0.333em)) !important;
+                    }
+                }
+                &:not(.groupable) {
+                    > .k-grouping-header {
+                        display: none;
+                    }
+                    > .k-grid-content {
+                        height: calc(100% - (30px + 1px) - (30px + 1px + 0.333em + 0.333em)) !important;
+                    }
+                }
+            }
+            &.loading {
+                // background-color: rgba(200, 200, 100, 0.50);
+                .loading-cover {
+                    background-color: rgba(200, 200, 200, 0.50);
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    > div {
+                        margin: 0;
+                        height: 100%;
+                        width: 100%;
+                        text-align: center;
+                        padding: 15px;
+                    }
+                }
+            }
+        }
+    }
+    &.vertical-filter {
+        > .row  {
+            > .filter-bar {
+                &.vertical {
+                    background: transparent;
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                    height: 100%;
+                }
+            }
+            > .grid-area {
+                height: 100%;
+                > .k-grid {
+                    display: inline-block;
+                    //> .k-grid-content {
+                    //}
+                }
+            }
+        }
+    }
+    &.top-filter {
+        > .row  {
+            > .filter-bar {
+                &.top {
+                    background: transparent;
+                    width: 100%;
+                    //height: (38px + 15px) * 2;
+                    padding: 0;
+                    overflow-x: hidden;
+                    display: block;
+                    > .form-inline {
+                        > .form-group {
+                            > label {
+                                margin-left: 5px;
+                            }
+                            &:first-child {
+                                margin-left: 0;
+                            }
+                            margin-bottom: 15px;
+                        }
+                    }
+                }
+            }
+            > .grid-area {
+                height: calc(100% - ((38px + 15px) * 2)) !important;
+                > .k-grid {
+                    display: block;
+                }
+            }
+        }
+    }
+}

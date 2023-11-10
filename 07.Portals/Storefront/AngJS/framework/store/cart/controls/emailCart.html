@@ -1,0 +1,29 @@
+﻿<div class="row" ng-form="emailCartCtrl.forms.emailTo">
+    <div ng-if="!emailCartCtrl.successMessage && !emailCartCtrl.viewState.errorMessage"
+         class="col-12">
+        <div class="form-group">
+            <label for="emailCartTo"
+                   data-translate="ui.storefront.cart.widgets.emailCart.SendACopyOfYourCartList"></label>
+            <input type="email" class="form-control"
+                   id="emailCartTo" name="emailCartTo"
+                   ng-required="true"
+                   ng-disabled="emailCartCtrl.viewState.running"
+                   ng-model="emailCartCtrl.email" />
+        </div>
+        <button type="button" class="btn btn-secondary"
+                translate-attr="{ title: 'ui.storefront.common.Send',
+                                  'aria-label': 'ui.storefront.common.Send' }"
+                data-translate="ui.storefront.common.Send"
+                ng-disabled="emailCartCtrl.forms.emailTo.$invalid || emailCartCtrl.viewState.running"
+                ng-click="emailCartCtrl.onFormSubmit()"></button>
+        <p data-translate="ui.storefront.cart.widgets.emailCart.SendACopyOfYourCartList.Message"></p>
+    </div>
+    <div class="col-12">
+        <div ng-if="emailCartCtrl.successMessage"
+             class="alert alert-success" role="alert"
+             ng-bind="emailCartCtrl.successMessage"></div>
+        <div ng-if="emailCartCtrl.viewState.errorMessage"
+             class="alert alert-danger" role="alert"
+             ng-bind="emailCartCtrl.viewState.errorMessage"></div>
+    </div>
+</div>

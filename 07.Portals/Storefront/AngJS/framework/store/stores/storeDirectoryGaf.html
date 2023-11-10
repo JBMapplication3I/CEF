@@ -1,0 +1,48 @@
+﻿<div class="box" id="home-find-sellers-by-region">
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="directoryOptionsType">Find <span class="sr-only">Sellers</span></label>
+            <select class="form-control" id="directoryOptionsType" name="directoryOptionsType"
+                    ng-disabled="null == storeDirectoryGaf.sellerTypeId"
+                    ng-change="storeDirectoryGaf.filterStores()"
+                    ng-options="option as option for option in storeDirectoryGaf.findOptions"
+                    ng-model="storeDirectoryGaf.filter.findSelectedOption">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="directoryByOptions">by</label>
+            <select class="form-control" id="directoryByOptions" name="directoryByOptions"
+                    ng-change="storeDirectoryGaf.changeByOption()"
+                    ng-options="option as option for option in storeDirectoryGaf.byOptions"
+                    ng-model="storeDirectoryGaf.filter.bySelectedOption">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="directoryOptionsRegion"><span class="sr-only">{{storeDirectoryGaf.byName}}</span></label>
+            <select class="form-control" id="directoryOptionsRegion" name="directoryOptionsRegion"
+                    ng-disabled="!storeDirectoryGaf.filter.bySelctedOption" 
+                    ng-change="storeDirectoryGaf.filterStores()"
+                    ng-options="r.ID as r.Name for r in storeDirectoryGaf.tertiaryOptions"
+                    ng-model="storeDirectoryGaf.filter.tertiaryOptionSelected">
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary">See All &raquo;</button>
+    </div>
+    <div ng-repeat="previewobject in storeDirectoryGaf.previewArray" ng-if="$index % 3 == 0" class="row" >
+        <div class="col-sm-4">
+            <a ng-href="{{storeDirectoryGaf.previewArray[$index + 0].SeoUrl}}">
+                <p class="mb-0"><img ng-src="{{storeDirectoryGaf.previewArray[$index + 0].LogoUrl}}" alt="{{storeDirectoryGaf.previewArray[$index + 0].Name}}" /> {{storeDirectoryGaf.previewArray[$index + 0].Name}}</p>
+            </a>
+        </div>
+        <div class="col-sm-4" ng-if="$index+1 < storeDirectoryGaf.previewArray.length">
+            <a ng-href="{{storeDirectoryGaf.previewArray[$index + 1].SeoUrl}}">
+                <p class="mb-0"><img ng-src="{{storeDirectoryGaf.previewArray[$index + 1].LogoUrl}}" alt="{{storeDirectoryGaf.previewArray[$index + 1].Name}}" /> {{storeDirectoryGaf.previewArray[$index + 1].Name}}</p>
+            </a>
+        </div>
+        <div class="col-sm-4" ng-if="$index+2 < storeDirectoryGaf.previewArray.length">
+            <a ng-href="{{storeDirectoryGaf.previewArray[$index + 2].SeoUrl}}">
+                <p class="mb-0"><img ng-src="{{storeDirectoryGaf.previewArray[$index + 2].LogoUrl}}" alt="{{storeDirectoryGaf.previewArray[$index + 2].Name}}" /> {{storeDirectoryGaf.previewArray[$index + 2].Name}}</p>
+            </a>
+        </div>
+    </div>
+</div>

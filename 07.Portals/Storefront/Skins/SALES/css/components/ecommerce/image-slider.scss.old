@@ -1,0 +1,115 @@
+
+// styles for the cef carousel
+// also includes styles for the modal used by the cef carousel
+
+// this carousel is primarily used on the product detail page,
+// but can be adapted for use elsewhere
+
+
+// auto calculation sizes to automatically size/space/pad everything consistently
+
+// sets the size of the magnifing glass
+$magnifyer-size: 48px;
+
+// sets the border size around the carousel
+// change to 0 to remove the border
+$carousel-border-size: 1px;
+$carousel-border-color: $gray-lighter;
+
+// this sets the padding around the individual image items
+// change to 0 to remove the padding around images
+$carousel-item-padding: ($grid-gutter-width / 2);
+
+// this sets the space inbetween the carousel thumbnails
+$carousel-grid-padding: ($grid-gutter-width / 4);
+
+// carousel side padding
+// this offsets the arrows to either side
+// to increase or decrease that space, change this number
+// use a negative number if you want the arrows on top of the images
+$carousel-arrow-offset: $grid-gutter-width;
+
+
+
+// begin carousel styles
+.cef-carousel { padding: 0 $carousel-arrow-offset;
+	// styles for the main top carousel
+	.carousel { padding: $carousel-item-padding; border: $carousel-border-size solid $gray-lighter;
+		// the wrapper around an individual image item
+		.item {
+			// magnifier hover styles
+			.cef-carousel-magnify {
+				font-size: $magnifyer-size; line-height: $magnifyer-size; color: #fff;
+				position: absolute; top: 50%; left: 50%; margin-top: -(($magnifyer-size + $carousel-arrow-offset)/2); margin-left: -(($magnifyer-size + $carousel-arrow-offset)/2);
+				background: $gray-light; background: rgba(119,119,119,.7);
+				padding: ($carousel-arrow-offset/2); height: ($magnifyer-size + $carousel-arrow-offset); width: ($magnifyer-size + $carousel-arrow-offset); border-radius: $border-radius-lg;
+			}// end .cef-carousel-magnify
+			&:hover {
+				.cef-carousel-magnify { display: block !important; }
+			}// end &:hover
+		}// end .item
+
+		// controls for the main carousel
+		.carousel-control {
+			&.right,&.left {  }
+
+			// hover styles
+			&.right:hover,&.left:hover {  }
+			&.right:hover {  }
+			&.left:hover {  }
+		}// end .carousel-control
+
+	}// end .carousel
+
+	.item {
+		&:hover { cursor: pointer; }
+	}// end .item
+
+	// styles for the main carousel AND carousel thumbnail controls
+	.carousel-control {
+		&.right,&.left { color: $primary; background-image: none; width: $carousel-arrow-offset;
+			.fa { position: absolute; top: 50%; margin-top: -7px; }
+		}// end &.right,&.left
+
+		&.right { margin-right: -($carousel-arrow-offset);
+			.fa { right: 50%; margin-right: -10px; }
+		}// end &.right
+		&.left { margin-left: -($carousel-arrow-offset);
+			.fa { left: 50%; margin-left: -10px; }
+		}// end &.left
+	}// end .carousel-control
+
+
+	// styles for the thumbnail controls
+	.cef-carousel-thumbnails { position: relative; margin-top: (($carousel-grid-padding * 2) + 7);
+		// sets the thumbnail grid to 5 col and tightens the padding
+		.row { margin: 0 -$carousel-grid-padding;
+			.col-xs-3 { width: 20%; padding: 0 $carousel-grid-padding; }
+		}// end .row
+			.item { padding: ( $carousel-item-padding / 2 ); border: $carousel-border-size solid $gray-lighter;
+				&:hover { border-color: $primary; }
+			}// end .item
+
+		// controls for the carousel thumbnail controls
+		.carousel-control {
+			&.right,&.left {  }
+			&.right {  }
+			&.left {  }
+		}// end .carousel-control
+	}// end .cef-carousel-thumbnails
+
+}// end .cef-carousel
+
+
+// styles for the cef carousel modal
+.cef-carousel-modal.cef-carousel {
+	.carousel { padding: 0; border: 0; }
+
+	.item {
+		// keeps the magnifier from displaying on the modal
+		&:hover { cursor: default;
+			.cef-carousel-magnify { display: none !important; }
+		}// end &:hover
+	}// end .item
+
+}// end .cef-carousel-modal

@@ -1,0 +1,27 @@
+﻿<cv-page caption="Manage Carrier Accounts" head-icon="fa-truck"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Shipments.CarrierAccounts')">
+    <cv-widget>
+        <widget-menu-item caption="Add Carrier Account" icon-class="fa-plus-circle"
+                          click="$root.$state.go('shipments.carrierAccounts.detail',{ID:'New'})"
+                          permission="'Shipping.ShipCarrier.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     on-search="search.getCarriers"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateCarrier"
+                     on-reactivate="search.reactivateCarrier"
+                     on-delete="search.deleteCarrier"
+                     edit-state="shipments.carrierAccounts.detail,[ID]"
+                     permissions-base="Shipping.ShipCarrier">
+                <cv-column filter field="ID" title="#" width="50px" />
+                <cv-column filter field="CustomKey" title="Key" />
+                <cv-column filter field="Name" />
+                <cv-column field="Phone" width="100px" />
+                <cv-column field="Fax" width="100px" />
+                <cv-column field="Email" />
+                <cv-column field="IsInbound" title="Inbound" width="50px" type="boolean" cell-class="text-center" header-class="text-center" />
+                <cv-column field="IsOutbound" title="Outbound" width="50px" type="boolean" cell-class="text-center" header-class="text-center" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="385391ddb454427d9623d31086336e9a" Name="Diagram1">
+        <EntityTypeShape EntityType="DotNetNuke9Model.User" Width="1.5" PointX="5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DotNetNuke9Model.ProfilePropertyDefinition" Width="1.5" PointX="9.75" PointY="0.5" />
+        <EntityTypeShape EntityType="DotNetNuke9Model.UserProfile" Width="1.5" PointX="7.375" PointY="0.5" />
+        <AssociationConnector Association="DotNetNuke9Model.FK_UserProfile_ProfilePropertyDefinition" />
+        <AssociationConnector Association="DotNetNuke9Model.FK_UserProfile_Users" />
+        <EntityTypeShape EntityType="DotNetNuke9Model.Role" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="DotNetNuke9Model.UserRole" Width="1.5" PointX="2.75" PointY="0.5" />
+        <AssociationConnector Association="DotNetNuke9Model.FK_UserRoles_Roles" />
+        <AssociationConnector Association="DotNetNuke9Model.FK_UserRoles_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="fragment" content="!">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="/DesktopModules/ClarityEcommerce/UI-Admin/lib/cef/css/admin-bundle.css" />
+  <title>Clarity Ecommerce Framework Admin</title>
+  <script src="/DesktopModules/ClarityEcommerce/UI-Admin/lib/cef/js/0-jQuery.min.js"></script>
+  <script src="/DesktopModules/ClarityEcommerce/UI-Admin/lib/cef/js/1-angular.min.js"></script>
+  <script src="/DesktopModules/ClarityEcommerce/UI-Admin/lib/cef/js/2-kendo.min.js"></script>
+</head>
+<style>
+  #ControlBar_ControlPanel {
+    display: none;
+  }
+
+  .personalBarContainer {
+    display: none;
+  }
+
+  #Body {
+    margin-left: 0 !important;
+  }
+</style>
+<base href="/" />
+
+<body>
+  <main class="main" style="height:100vh">
+    <div class="standalone full-height" ng-cloak>
+      <div class="container-fluid menu-hidden">
+        <div id="header" cv-admin-site-menu-2></div>
+      </div>
+      <div id="content" ng-controller="AppController" ng-class="{'cvContentNoAuth':!$root.currentUser.isAuthenticated}">
+        <div class="innerLR" cef-admin-body>
+          <div ui-view="page" class="full-height"></div>
+        </div>
+      </div>
+      <!-- <script src="http://www.google.com/jsapi"></script> -->
+      <!-- <script defer src="/DesktopModules/ClarityEcommerce/UI-Admin/Scripts/thirdparty/google/gviz-api.js"></script> -->
+
+    </div>
+    <div ID="ContentPane" runat="server" class="hide"></div>
+  </main>
+
+  <script defer src="https://kit.fontawesome.com/4d87c1b73b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/Portals/_default/Skins/Clarity-Admin/kendo.common-bootstrap.min.css" />
+  <link rel="stylesheet" href="/Portals/_default/Skins/Clarity-Admin/kendo.bootstrap.min.css" />
+  <script defer src="/DesktopModules/ClarityEcommerce/UI-Admin/lib/cef/js/4-cef-admin-main.js"></script>
+  <script defer src="/DesktopModules/ClarityEcommerce/UI-Admin/lib/cef/js/5-cef-admin-templates.min.js"></script>
+  <script defer src="/DesktopModules/ClarityEcommerce/API-Admin/JSConfigs/Admin"></script>
+  <script defer src="/DesktopModules/ClarityEcommerce/UI-Admin/lib/cef/js/6-cef-admin-init.min.js"></script>
+  <noscript>This website requires JavaScript to be enabled to operate.</noscript>
+</body>
+
+</html>

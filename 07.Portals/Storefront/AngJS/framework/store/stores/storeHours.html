@@ -1,0 +1,44 @@
+<dl>
+    <dt>Mon:</dt>
+    <dd ng-if="storeHoursController.storeMilitaryHours.OperatingHoursMondayStart">
+        <span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursMondayStart | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span><!--
+    -->&nbsp;-&nbsp;<span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursMondayEnd | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span>
+    </dd>
+    <dd ng-if="!storeHoursController.storeMilitaryHours.OperatingHoursMondayStart">Unavailable</dd>
+    <dt>Tue:</dt>
+    <dd ng-if="storeHoursController.storeMilitaryHours.OperatingHoursTuesdayStart">
+        <span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursTuesdayStart | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span><!--
+    -->&nbsp;-&nbsp;<span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursTuesdayEnd | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span>
+    </dd>
+    <dd ng-if="!storeHoursController.storeMilitaryHours.OperatingHoursTuesdayStart">Unavailable</dd>
+    <dt>Wed:</dt>
+    <dd ng-if="storeHoursController.storeMilitaryHours.OperatingHoursWednesdayStart">
+        <span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursWednesdayStart | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span><!--
+    -->&nbsp;-&nbsp;<span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursWednesdayEnd | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span>
+    </dd>
+    <dd ng-if="!storeHoursController.storeMilitaryHours.OperatingHoursWednesdayStart">Unavailable</dd>
+    <dt>Thu:</dt>
+    <dd ng-if="storeHoursController.storeMilitaryHours.OperatingHoursThursdayStart">
+        <span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursThursdayStart | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span><!--
+    -->&nbsp;-&nbsp;<span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursThursdayEnd | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span>
+    </dd>
+    <dd ng-if="!storeHoursController.storeMilitaryHours.OperatingHoursThursdayStart">Unavailable</dd>
+    <dt>Fri:</dt>
+    <dd ng-if="storeHoursController.storeMilitaryHours.OperatingHoursFridayStart">
+        <span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursFridayStart | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span><!--
+    -->&nbsp;-&nbsp;<span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursFridayEnd | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span>
+    </dd>
+    <dd ng-if="!storeHoursController.storeMilitaryHours.OperatingHoursFridayStart">Unavailable</dd>
+    <dt>Sat:</dt>
+    <dd ng-if="storeHoursController.storeMilitaryHours.OperatingHoursSaturdayStart">
+        <span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursSaturdayStart | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span><!--
+    -->&nbsp;-&nbsp;<span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursSaturdayEnd | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span>
+    </dd>
+    <dd ng-if="!storeHoursController.storeMilitaryHours.OperatingHoursSaturdayStart">Unavailable</dd>
+    <dt>Sun:</dt>
+    <dd ng-if="storeHoursController.storeMilitaryHours.OperatingHoursSundayStart">
+        <span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursSundayStart | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span><!--
+    -->&nbsp;-&nbsp;<span ng-bind="storeHoursController.storeMilitaryHours.OperatingHoursSundayEnd | zeroPadNumber: 4 | amParse: 'HHmm' | amDateFormat: 'h:mma'"></span>
+    </dd>
+    <dd ng-if="!storeHoursController.storeMilitaryHours.OperatingHoursSundayStart">Unavailable</dd>
+</dl>

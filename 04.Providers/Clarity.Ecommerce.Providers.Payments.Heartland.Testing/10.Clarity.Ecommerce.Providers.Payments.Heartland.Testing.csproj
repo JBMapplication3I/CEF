@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FE68F6E4-46C9-4C2D-B6FA-31080EE7D09E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Clarity.Ecommerce.Providers.Payments.Heartland.Testing</RootNamespace>
+    <AssemblyName>Clarity.Ecommerce.Providers.Payments.Heartland.Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HeartlandPaymentsProviderTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj">
+      <Project>{C7250754-0453-49B4-9C61-408C6DA25DC4}</Project>
+      <Name>00.Clarity.Ecommerce.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj">
+      <Project>{57E8C6EA-ABC2-4775-9352-2DBA1F2F401C}</Project>
+      <Name>00.Clarity.Ecommerce.RegistryLoader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\00.Clarity.Ecommerce.Logger\00.Clarity.Ecommerce.Logger.csproj">
+      <Project>{b3561569-5585-4f08-a747-910f1a1508b9}</Project>
+      <Name>00.Clarity.Ecommerce.Logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj">
+      <Project>{D2DC6CEB-1C99-430C-A124-E7555654F368}</Project>
+      <Name>02.Clarity.Ecommerce.Interfaces.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj">
+      <Project>{EE6D2B76-FB73-4642-A74A-38289C32AA1D}</Project>
+      <Name>03.Clarity.Ecommerce.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Clarity.Ecommerce.Providers.Payments.Heartland\Clarity.Ecommerce.Providers.Payments.Heartland.csproj">
+      <Project>{e93077d3-5712-4a0b-8586-ed002adcce9f}</Project>
+      <Name>Clarity.Ecommerce.Providers.Payments.Heartland</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Clarity.Ecommerce.Providers.Payments\Clarity.Ecommerce.Providers.Payments.csproj">
+      <Project>{D53229C1-97A0-407A-AD86-EF8ABB80B419}</Project>
+      <Name>Clarity.Ecommerce.Providers.Payments</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers.Unstable">
+      <Version>1.2.0.205</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.CSharp.Async.Rules">
+      <Version>6.1.41</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Xml.ReaderWriter">
+      <Version>4.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Xml.XmlDocument">
+      <Version>4.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit">
+      <Version>2.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.analyzers">
+      <Version>0.10.0</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.core">
+      <Version>2.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.console">
+      <Version>2.4.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio">
+      <Version>2.4.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

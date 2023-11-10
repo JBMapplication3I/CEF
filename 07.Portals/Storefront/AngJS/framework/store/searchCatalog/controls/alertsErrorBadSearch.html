@@ -1,0 +1,23 @@
+﻿<div class="row"
+ng-if="!scaebsCtrl.service.searchIsRunning && scaebsCtrl.service.activeSearchViewModel.ServerError">
+<div class="col-12">
+<div class="text-larger alert alert-danger" role="alert">
+<table>
+<tbody>
+<tr>
+<td><i class="far fa-exclamation-triangle fa-3x fa-fw" aria-hidden="true"></i></td>
+<td rowspan="2">
+<p><b data-translate="ui.storefront.searchCatalog.alerts.Oops.Exclamation"></b>*nbsp;<span data-translate="ui.storefront.searchCatalog.alerts.YourSearchHadAnError"></span></p>
+<p ng-repeat="cause in scaebsCtrl.service.activeSearchViewModel.ServerError.Error.RootCause">
+{{ cause.Reason.startsWith('Result window is too large, from + size must be less than or equal to: [10000]') ? 'You are navigating passed your 10,000th search result which is not allowed.' : cause.Reason}}
+</p>
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>

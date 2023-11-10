@@ -1,0 +1,174 @@
+<div class="modal-header">
+    <h3 class="modal-title"
+        data-translate="ui.admin.checkout.splitShipping.addressModal.EnterShippingDestination"></h3>
+</div>
+<div class="modal-body form-vertical" ng-form="addressCtrl.forms.newAddress">
+    <div class="form-group"
+         ng-class="{'has-error': addressCtrl.forms.newAddress.txtShippingTargetCustomKey.$invalid}">
+        <label class="control-label" for="txtShippingTargetCustomKey">
+            <span data-translate="ui.admin.common.AddressKey"></span>&nbsp;<!--
+            --><span class="text-danger">*</span>
+        </label>
+        <input type="text" class="form-control"
+               id="txtShippingTargetCustomKey" name="txtShippingTargetCustomKey"
+               translate-attr="{ placeholder: 'ui.admin.common.addressBook.EnterAReferenceNameEGMyOffice' }"
+               style="text-transform: uppercase;"
+               maxlength="15"
+               ng-required="true"
+               ng-change="addressCtrl.currentContact.Slave.AddressKey = addressCtrl.currentContact.Slave.Address.CustomKey"
+               ng-model="addressCtrl.currentContact.Slave.Address.CustomKey" />
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group"
+                 ng-class="{'has-error': addressCtrl.forms.newAddress.txtShippingTargetFirstName.$invalid}">
+                <label class="control-label" for="txtShippingTargetFirstName">
+                    <span data-translate="ui.admin.common.FirstName"></span>&nbsp;<!--
+                    --><span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control"
+                       id="txtShippingTargetFirstName" name="txtShippingTargetFirstName"
+                       translate-attr="{ placeholder: 'ui.admin.common.FirstName' }"
+                       ng-required="true"
+                       maxlength="128"
+                       ng-model="addressCtrl.currentContact.Slave.FirstName" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group"
+                 ng-class="{'has-error': addressCtrl.forms.newAddress.txtShippingTargetLastName.$invalid}">
+                <label class="control-label" for="txtShippingTargetLastName">
+                    <span data-translate="ui.admin.common.LastName"></span>&nbsp;<!--
+                    --><span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control"
+                       id="txtShippingTargetLastName" name="txtShippingTargetLastName"
+                       translate-attr="{ placeholder: 'ui.admin.common.LastName' }"
+                       ng-required="true"
+                       maxlength="128"
+                       ng-model="addressCtrl.currentContact.Slave.LastName" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-error': addressCtrl.forms.newAddress.txtShippingTargetCompany.$invalid}">
+        <label class="control-label" for="txtShippingTargetCompany"
+               data-translate="ui.admin.common.Company"></label>
+        <input type="text" class="form-control"
+               id="txtShippingTargetCompany" name="txtShippingTargetCompany"
+               translate-attr="{ placeholder: 'ui.admin.common.Company' }"
+               ng-required="false"
+               ng-model="addressCtrl.currentContact.Slave.Address.Company" />
+    </div>
+    <div class="form-group"
+         ng-class="{'has-error': addressCtrl.forms.newAddress.ddlShippingTargetCountry.$invalid}">
+        <label class="control-label" for="ddlShippingTargetCountry">
+            <span data-translate="ui.admin.common.Country"></span>&nbsp;<!--
+            --><span class="text-danger">*</span>
+        </label>
+        <select class="form-control"
+                id="ddlShippingTargetCountry" name="ddlShippingTargetCountry"
+                ng-required="true"
+                ng-change="addressCtrl.propagateCountryChange()"
+                ng-options="country.ID as country.Name for country in addressCtrl.countries"
+                ng-model="addressCtrl.currentContact.Slave.Address.CountryID">
+            <option value="" ng-disabled="true"
+                    data-translate="ui.admin.common.Country"></option>
+        </select>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-error': addressCtrl.forms.newAddress.txtShippingTargetStreet1.$invalid}">
+        <label class="control-label" for="txtShippingTargetStreet1">
+            <span data-translate="ui.admin.checkout.views.accountInformation.Street"></span>&nbsp;<!--
+            --><span class="text-danger">*</span>
+        </label>
+        <input type="text" class="form-control"
+               id="txtShippingTargetStreet1" name="txtShippingTargetStreet1"
+               translate-attr="{ placeholder: 'ui.admin.checkout.views.accountInformation.Street' }"
+               ng-required="true"
+               ng-model="addressCtrl.currentContact.Slave.Address.Street1" />
+        <button type="button" class="btn btn-link pull-right"
+                ng-hide="addressCtrl.showShippingStreet2"
+                data-translate="ui.admin.checkout.shippingAddMore"
+                ng-click="addressCtrl.showShippingStreet2 = true"></button>
+    </div>
+    <div class="form-group" ng-show="addressCtrl.showShippingStreet2">
+        <label class="control-label hidden" for="txtShippingTargetStreet2"
+               data-translate="ui.admin.checkout.views.accountInformation.Street"></label>
+        <input type="text" class="form-control"
+               id="txtShippingTargetStreet2" name="txtShippingTargetStreet2"
+               translate-attr="{ placeholder: 'ui.admin.checkout.views.accountInformation.Street' }"
+               ng-required="false"
+               ng-model="addressCtrl.currentContact.Slave.Address.Street2" />
+        <button type="button" class="btn btn-link pull-right"
+                ng-hide="addressCtrl.showShippingStreet3"
+                data-translate="ui.admin.checkout.shippingAddMore"
+                ng-click="addressCtrl.showShippingStreet3 = true"></button>
+    </div>
+    <div class="form-group" ng-show="addressCtrl.showShippingStreet3">
+        <label class="control-label hidden" for="txtShippingTargetStreet3"
+               data-translate="ui.admin.checkout.views.accountInformation.Street"></label>
+        <input type="text" class="form-control"
+               id="txtShippingTargetStreet3" name="txtShippingTargetStreet3"
+               translate-attr="{ placeholder: 'ui.admin.checkout.views.accountInformation.Street' }"
+               ng-required="false"
+               ng-model="addressCtrl.currentContact.Slave.Address.Street3" />
+    </div>
+    <div class="form-group"
+         ng-class="{'has-error': addressCtrl.forms.newAddress.txtShippingTargetCity.$invalid}">
+        <label class="control-label" for="txtShippingTargetCity">
+            <span data-translate="ui.admin.common.City"></span>&nbsp;<!--
+            --><span class="text-danger">*</span>
+        </label>
+        <input type="text" class="form-control"
+               id="txtShippingTargetCity" name="txtShippingTargetCity"
+               translate-attr="{ placeholder: 'ui.admin.common.City' }"
+               ng-required="true"
+               ng-model="addressCtrl.currentContact.Slave.Address.City" />
+    </div>
+    <div class="row">
+        <!--state-->
+        <div class="col-sm-6" ng-if="addressCtrl.regions.length > 0">
+            <div class="form-group"
+                 ng-class="{'has-error': addressCtrl.forms.newAddress.ddlShippingTargetState.$invalid}">
+                <label class="control-label" for="ddlShippingTargetState">
+                    <span data-translate="ui.admin.common.geography.State.SelectA"></span>&nbsp;<!--
+                    --><span class="text-danger">*</span>
+                </label>
+                <select class="form-control"
+                        id="ddlShippingTargetState" name="ddlShippingTargetState"
+                        ng-required="true"
+                        ng-change="addressCtrl.propagateRegionChange()"
+                        ng-options="state.ID as state.Name for state in addressCtrl.regions"
+                        ng-model="addressCtrl.currentContact.Slave.Address.RegionID">
+                    <option value=""
+                            data-translate="ui.admin.common.geography.State.SelectA"></option>
+                </select>
+            </div>
+        </div>
+        <!--zip-->
+        <div ng-class="addressCtrl.regions.length > 0 ? 'col-sm-6' : 'col-sm-12'">
+            <div class="form-group"
+                 ng-class="{'has-error': addressCtrl.forms.newAddress.txtShippingTargetZip.$invalid}">
+                <label class="control-label" for="txtShippingTargetZip">
+                    <span data-translate="ui.admin.common.Zip"></span>&nbsp;<!--
+                    --><span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control"
+                       id="txtShippingTargetZip" name="txtShippingTargetZip"
+                       translate-attr="{ placeholder: 'ui.admin.common.Zip' }"
+                       ng-required="true"
+                       ng-model="addressCtrl.currentContact.Slave.Address.PostalCode" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-right"
+            ng-disabled="addressCtrl.forms.newAddress.$invalid"
+            ng-click="addressCtrl.ok()"
+            data-translate="ui.admin.checkout.splitShipping.addressModal.AddAddress"></button>
+    <button type="button" class="btn btn-default btn-secondary pull-right"
+            ng-click="addressCtrl.cancel()"
+            data-translate="ui.admin.common.Cancel"></button>
+</div>

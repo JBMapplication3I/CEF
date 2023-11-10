@@ -1,0 +1,185 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+@inject IMapper mapper
+
+<Heading Size="HeadingSize.Is2">Categories</Heading>
+<Row Class="flex-lg-row flex-sm-column-reverse">
+  <Column>
+    <Heading Size="HeadingSize.Is3">Available</Heading>
+    <Blazorise.Table Striped="true" Hoverable="true" Narrow="true">
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell Class="w-0" Style="width:43px"></TableHeaderCell>
+          <TableHeaderCell Class="w-15"></TableHeaderCell>
+          <TableHeaderCell Class="w-65"></TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <Repeater Items="toAssign">
+          <TableRow>
+            <TableRowCell>
+              <Blazorise.Button
+                Type="ButtonType.Button"
+                Color="Color.Primary"
+                Size="Size.Small"
+                Clicked="_ => AddAssociation(context)">
+                <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Plus" />
+                <Span Class="sr-only">Add Assignment</Span>
+              </Blazorise.Button>
+            </TableRowCell>
+            <TableRowCell>@context.ID</TableRowCell>
+            <TableRowCell>@context.Name</TableRowCell>
+          </TableRow>
+        </Repeater>
+      </TableBody>
+    </Blazorise.Table>
+  </Column>
+  <Column>
+    <Heading Size="HeadingSize.Is3">Assigned</Heading>
+    <Blazorise.Table Striped="true" Hoverable="true" Narrow="true">
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell Class="w-10">ID</TableHeaderCell>
+          <TableHeaderCell Class="w-35">Name</TableHeaderCell>
+          <TableHeaderCell Class="w-35">Key</TableHeaderCell>
+          <TableHeaderCell Class="w-0" Style="width:43px"></TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        @if (Contract.CheckEmpty(Record.ProductCategories))
+        {
+          <TableRow>
+            <TableRowCell ColumnSpan="4">None</TableRowCell>
+          </TableRow>
+        }
+        else
+        {
+          <Repeater Items="Record.ProductCategories">
+            <TableRow>
+              <TableRowCell>@context.SlaveID</TableRowCell>
+              <TableRowCell>@context.SlaveName</TableRowCell>
+              <TableRowCell>@(context.SlaveKey ?? context.CustomKey)</TableRowCell>
+              <TableRowCell>
+                <Blazorise.Button
+                  Type="ButtonType.Button"
+                  Color="Color.Danger"
+                  Size="Size.Small"
+                  Clicked="() => RemoveAssociation(context)">
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Trash" />
+                  <Span Class="sr-only">Remove Assignment</Span>
+                </Blazorise.Button>
+              </TableRowCell>
+            </TableRow>
+          </Repeater>
+        }
+      </TableBody>
+    </Blazorise.Table>
+  </Column>
+</Row>
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    DebugBeginMethod();
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await SearchForAssociationsAsync().ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+    DebugEndMethod();
+  }
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    DebugBeginMethod();
+    DebugEndMethod();
+    return Task.CompletedTask;
+  }
+
+  #region IAmFilterableByCategoryBaseModel Handling
+  private List<ProductCategorySelectorModel>? toAssign { get; set; }
+
+  private async Task SearchForAssociationsAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetCategoryTree(
+      new()
+      {
+        Active = true,
+        AsListing = true,
+        IncludeChildrenInResults = false,
+        DisregardParents = false,
+        Sorts = new[]
+        {
+          new Sort { Field = "Name", Order = 0, Dir = "asc" },
+          new Sort { Field = "CustomKey", Order = 1, Dir = "asc" },
+          new Sort { Field = "ID", Order = 2, Dir = "asc" }
+        },
+      })
+      .ConfigureAwait(false);
+    toAssign = result.data;
+    StateHasChanged();
+    DebugEndMethod();
+  }
+  #endregion
+
+  private void AddAssociation(ProductCategorySelectorModel other, bool notify = true)
+  {
+    DebugBeginMethod();
+    // Null Check
+    Record.ProductCategories ??= new();
+    // Prevent Duplicates
+    if (Record.ProductCategories.Any(x => x.SlaveID == other.ID))
+    {
+      return;
+    }
+    // Append
+    var collection = Record.ProductCategories;
+    collection.Add(new()
+    {
+      // Base Properties
+      Active = true,
+      CreatedDate = DateTime.Now,
+      SerializableAttributes = new(),
+      // IAmARelationshipTable Properties
+      MasterID = Record.ID,
+      MasterKey = Record.CustomKey,
+      MasterName = Record.Name,
+      SlaveID = other.ID,
+      SlaveKey = other.CustomKey,
+      SlaveName = other.Name,
+    });
+    Record.ProductCategories = collection;
+    if (notify)
+    {
+      StateHasChanged();
+    }
+    DebugEndMethod();
+  }
+
+  private void RemoveAssociation(ProductCategoryModel assoc, bool notify = true)
+  {
+    DebugBeginMethod();
+    var collection = Record.ProductCategories;
+    collection.Remove(assoc);
+    Record.ProductCategories = collection;
+    if (notify)
+    {
+      StateHasChanged();
+    }
+    DebugEndMethod();
+  }
+}

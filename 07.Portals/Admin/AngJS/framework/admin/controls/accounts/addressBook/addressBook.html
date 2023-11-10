@@ -1,0 +1,156 @@
+<div class="cef-address-book col-sm-12 mb-3"
+  ng-form="addressBookCtrl.forms.Addresses">
+  <div class="row">
+    <div class="col-sm-12 col-md-4 mb-3">
+      <button type="button" class="btn btn-block btn-secondary full-height cef-dashboard-dash-button cef-add-address p-3 h-100"
+        id="btnAddAddress" name="btnAddAddress"
+        ng-click="addressBookCtrl.newContact()">
+        <svg width="30px" height="31px" viewBox="0 0 30 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g transform="translate(-847.000000, -260.000000)" fill="#B6B6B6">
+              <path d="M862,260.370117 C853.720465,260.370117 847,267.090582 847,275.370117 C847,283.649652 853.720465,290.370117 862,290.370117 C870.279535,290.370117 877,283.649652 877,275.370117 C877,267.090582 870.279535,260.370117 862,260.370117 Z M862,261.067792 C869.903256,261.067792 876.302326,267.466861 876.302326,275.370117 C876.302326,283.273373 869.903256,289.672443 862,289.672443 C854.096744,289.672443 847.697674,283.273373 847.697674,275.370117 C847.697674,267.466861 854.096744,261.067792 862,261.067792 Z M861.956279,267.336164 L861.956279,267.336164 C861.776744,267.357559 861.643721,267.513838 861.651163,267.695699 L861.651163,275.02128 L854.325581,275.02128 C854.303721,275.01942 854.28186,275.01942 854.26,275.02128 C853.794884,275.065001 853.860465,275.762675 854.325581,275.718954 L861.651163,275.718954 L861.651163,283.044536 C861.647442,283.238954 861.805581,283.398954 862,283.398954 C862.194419,283.398954 862.352558,283.238954 862.348837,283.044536 L862.348837,275.718954 L869.674419,275.718954 C869.868837,275.722675 870.028837,275.564536 870.028837,275.370117 C870.028837,275.175699 869.868837,275.017559 869.674419,275.02128 L862.348837,275.02128 L862.348837,267.695699 C862.35814,267.47942 862.170698,267.308722 861.956279,267.336164 Z"></path>
+            </g>
+          </g>
+        </svg><br/>
+        <span data-translate="ui.admin.controls.accounts.accountDetail.AddAddress"></span><br /><br />
+        <p class="mb-0"><em><b data-translate="ui.admin.common.Note"></b><br/><!--
+        --><span class="wrap" data-translate="ui.admin.controls.accounts.accountDetail.OnlyOneAddressShouldBeSetAs.Message"></span></em></p>
+      </button>
+    </div>
+    <div class="col-sm-6 col-md-4 cef-address-addresses">
+      <h4 class="mb-2"
+        data-translate="ui.admin.controls.accounts.accountDetail.DefaultShipping">
+      </h4>
+      <div class="row">
+        <div class="col-sm-12">
+          <select class="form-control custom-select text-uppercase"
+            ng-required="false"
+            ng-change="addressBookCtrl.setContactAsIsPrimary()"
+            ng-options="ac.ID as (ac.Slave.Address.CustomKey || ac.CustomKey || ac.Slave.CustomKey || ac.Slave.Address.Street1)
+                        for ac in addressBookCtrl.addressBook"
+            ng-model="addressBookCtrl.defaultShippingID">
+            <option value="" ng-disabled="true"
+              data-translate="ui.admin.controls.accounts.accountDetail.PleaseSelectAShippingAddress">
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-12 p-2" ng-if="addressBookCtrl.defaultShippingID">
+          <div cef-contact-address-block
+            contact="addressBookCtrl.defaultShipping.Slave">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4 cef-address-addresses">
+      <h4 class="mb-2"
+        data-translate="ui.admin.controls.accounts.accountDetail.DefaultBilling"></h4>
+      <div class="row">
+        <div class="col-sm-12">
+          <select class="form-control custom-select mb-3 text-uppercase"
+            ng-required="false"
+            ng-change="addressBookCtrl.setContactAsIsBilling()"
+            ng-options="ac.ID as (ac.Slave.Address.CustomKey || ac.CustomKey || ac.Slave.CustomKey || ac.Slave.Address.Street1)
+                        for ac in addressBookCtrl.addressBook"
+            ng-model="addressBookCtrl.defaultBillingID">
+            <option value="" ng-disabled="true"
+              data-translate="ui.admin.controls.accounts.accountDetail.PleaseSelectABillingAddress">
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-12 p-2" ng-if="addressBookCtrl.defaultBillingID">
+          <div cef-contact-address-block
+            contact="addressBookCtrl.defaultBilling.Slave">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div ng-if="!addressBookCtrl.editorOpen && !addressBookCtrl.viewState.running">
+    <div class="alert alert-danger" role="alert" ng-if="addressBookCtrl.noBillingContactFound">
+      <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+      --><b data-translate="ui.admin.controls.accounts.accountDetail.YouDontHaveABillingAddress"></b>&nbsp;<!--
+      --><span data-translate="ui.admin.controls.accounts.accountDetail.PleaseClickSetAsBilling"></span>&nbsp;<!--
+      --><i class="far fa-usd"></i>&nbsp;<!--
+      --><span data-translate="ui.admin.common.AddressSameInfo.Message"></span>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-if="addressBookCtrl.noPrimaryContactFound">
+      <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+      --><b data-translate="ui.admin.controls.accounts.accountDetail.YouDontHaveADefaultShippingAddress"></b>&nbsp;<!--
+      --><span data-translate="ui.admin.controls.accounts.accountDetail.PleaseClickSetAsDefault"></span>&nbsp;<!--
+      --><i class="far fa-truck"></i>&nbsp;<!--
+      --><span data-translate="ui.admin.common.AddressSameInfo.Message"></span>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-if="addressBookCtrl.primaryAndBillingAreSameContact">
+      <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+      --><b data-translate="ui.admin.controls.accounts.accountDetail.YourBillingAndPrimaryAddressAreTheSameRecord"></b>&nbsp;<!--
+      --><span data-translate="ui.admin.controls.accounts.accountDetail.PleaseClickSetAsDefault"></span>&nbsp;<!--
+      --><i class="far fa-truck"></i>&nbsp;<!--
+      --><span data-translate="ui.admin.controls.accounts.accountDetail.OrBilling"></span>&nbsp;<!--
+      --><i class="far fa-usd"></i>&nbsp;<!--
+      --><span data-translate="ui.admin.common.AddressSameInfo.Message"></span>
+    </div>
+  </div>
+  <div class="row" ng-if="!addressBookCtrl.editorOpen">
+    <div ng-repeat-start="ac in addressBookCtrl.addressBook
+                        | toArray
+                        | filter: addressBookCtrl.typeIdFilter
+                        | orderBy: ['!IsBilling','!IsPrimary','CustomKey']
+                        track by $index"
+      class="col-sm-6 col-md-4 cef-address-block">
+      <div class="panel panel-default cef-dashboard-panel">
+        <div class="panel-heading px-3 py-1">
+          <h4 class="validator bold text-uppercase mb-0"
+            ng-bind="ac.Slave.Address.CustomKey
+                     || ('ui.admin.controls.accounts.accountDetail.NoAddressNicknameSet' | translate)">
+          </h4>
+        </div>
+        <div class="panel-body p-4">
+          <div class="row">
+            <div class="col-sm-12 cef-address-addresses" ng-if="ac.Slave">
+              <div cef-contact-address-block
+                contact="ac.Slave">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer p-0">
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+              <button type="button" class="btn btn-link btn-block btn-edit"
+                translate-attr="{ title: 'ui.admin.common.Edit',
+                                  'aria-label': 'ui.admin.common.Edit' }"
+                ng-click="addressBookCtrl.editContact(ac.ID, $index)">
+                <i class="far fa-lg fa-pencil"></i>&nbsp;<!--
+                --><span data-translate="ui.admin.common.Edit"></span>
+              </button>
+            </div>
+            <div class="btn-group">
+              <div cef-address-book-delete-button
+                account-contact="ac"
+                index="ac.ID">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-if="($index + 1) % 1 === 0" class="visible-xs clearfix"></div>
+    <div ng-if="($index + 1) % 2 === 0" class="visible-sm clearfix"></div>
+    <div ng-if="($index + 1) % 3 === 0" class="visible-md clearfix"></div>
+    <div ng-if="($index + 1) % 3 === 0" class="visible-lg clearfix"></div>
+    <div ng-repeat-end></div>
+  </div>
+  <!--
+  <div class="row" ng-if="addressBookCtrl.editorOpen">
+    <div cef-address-editor
+      restricted-shipping="false"
+      use-phone-prefix-lookups="{{addressBookCtrl.usePhonePrefixLookups}}"
+      account-contact-id="addressBookCtrl.editorAccountContactID"
+      type-id="addressBookCtrl.useTypeId"
+      data-id-suffix="addressBookCtrl.idSuffix"
+      class="col-sm-12">
+    </div>
+  </div>
+  -->
+</div>

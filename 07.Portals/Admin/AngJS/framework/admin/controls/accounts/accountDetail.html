@@ -1,0 +1,912 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-standard-detail-header-widget
+    record="accountDetailCtrl.record"
+    new-kind-key="ui.admin.common.Account.New"
+    existing-kind-key="ui.admin.common.Account">
+  </div>
+  <div class="row details-body">
+    <div class="col-md-12 account-editor">
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Details.$invalid}"
+            ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Details">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                <div class="form-group" ng-class="{'has-error': accountDetailCtrl.forms.Details.txtName.$invalid}">
+                  <label for="txtName" class="control-label" data-translate="ui.admin.common.Name"></label>
+                  <div class="input-group">
+                    <input type="text" class="form-control"
+                      id="txtName" name="txtName"
+                      placeholder="Bob's Auto Shop"
+                      ng-required="true" maxlength="256"
+                      ng-model="accountDetailCtrl.record.Name" />
+                  </div>
+                  <div ng-messages="accountDetailCtrl.forms.Details.txtName.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': accountDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                  <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="txtCustomKey" name="txtCustomKey"
+                      placeholder="ABCD1234"
+                      ng-required="false" maxlength="128"
+                      ng-model="accountDetailCtrl.record.CustomKey" />
+                  </div>
+                  <div ng-messages="accountDetailCtrl.forms.Details.txtCustomKey.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-sm-6" ng-class="{'has-error': accountDetailCtrl.forms.Details.ddlType.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.Type"></label>
+                    <div class="input-group">
+                      <select class="form-control" id="ddlType" name="ddlType"
+                        ng-required="true"
+                        ng-model="accountDetailCtrl.record.TypeID"
+                        ng-options="t.ID as ((t.DisplayName || t.Name) + (t.CustomKey && t.CustomKey != '' ? ' [' + t.CustomKey + ']' : ''))
+                                    for t in accountDetailCtrl.types
+                                    | orderBy: ['SortOrder','DisplayName || Name']">
+                        <option value="" ng-disabled="true" data-translate="ui.admin.common.Type.SelectA"></option>
+                      </select>
+                    </div>
+                    <div ng-messages="accountDetailCtrl.forms.Details.ddlType.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6" ng-class="{'has-error': accountDetailCtrl.forms.Details.ddlStatus.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.Status"></label>
+                    <div class="input-group">
+                      <select class="form-control" id="ddlStatus" name="ddlStatus"
+                        ng-required="true"
+                        ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' + s.CustomKey + ']' : ''))
+                                    for s in accountDetailCtrl.statuses
+                                    | orderBy: ['SortOrder','DisplayName || Name']"
+                        ng-model="accountDetailCtrl.record.StatusID">
+                        <option value="" ng-disabled="true" data-translate="ui.admin.common.Status.SelectA"></option>
+                      </select>
+                    </div>
+                    <div ng-messages="accountDetailCtrl.forms.Details.ddlStatus.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="accountDetailCtrl.cefConfig.featureSet.pricing.pricePoints.enabled"
+                  class="form-group" ng-class="{'has-error': accountDetailCtrl.forms.Details.ddlPricePoint.$invalid}">
+                  <label class="control-label" data-translate="ui.admin.common.PricePoint"></label>
+                  <div class="input-group">
+                    <select class="form-control" id="ddlPricePoint" name="ddlPricePoint"
+                      ng-required="false"
+                      ng-options="pp.ID as ((pp.DisplayName || pp.Name) + (pp.CustomKey && pp.CustomKey != '' ? ' [' + pp.CustomKey + ']' : ''))
+                                  for pp in accountDetailCtrl.pricePoints
+                                  | orderBy: ['SortOrder','DisplayName || Name']"
+                      ng-model="accountDetailCtrl.accountPricePointID">
+                      <option value="" data-translate="ui.admin.controls.accounts.accountDetail.NoAssignedPricePoint"></option>
+                    </select>
+                  </div>
+                  <div ng-messages="accountDetailCtrl.forms.Details.ddlPricePoint.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="row"
+                  ng-if="accountDetailCtrl.cefConfig.featureSet.payments.methods.credit.enabled
+                      || accountDetailCtrl.cefConfig.featureSet.multiCurrency.enabled">
+                  <number-input-form-group
+                    ng-if="accountDetailCtrl.cefConfig.featureSet.payments.methods.credit.enabled"
+                    class="col-sm-6"
+                    key="Credit"
+                    ng-model="accountDetailCtrl.record.Credit"
+                    label-key="ui.admin.controls.accounts.accountDetail.Credit"
+                    placeholder-key="ui.admin.common.Credit"
+                    step="0.01"
+                    precision="4"
+                    is-currency="true"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <select-form-group
+                    ng-if="accountDetailCtrl.cefConfig.featureSet.multiCurrency.enabled"
+                    class="col-sm-6"
+                    key="CreditCurrencyID"
+                    ng-model="accountDetailCtrl.record.CreditCurrencyID"
+                    selections="accountDetailCtrl.currencies"
+                    label-key="ui.admin.controls.accounts.accountDetail.CreditCurrency"
+                    include-null="true" null-key="ui.admin.controls.inventory.productDetail.SelectACurrency"
+                    ng-required="false">
+                  </select-form-group>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6" ng-if="accountDetailCtrl.cefConfig.featureSet.taxes.enabled">
+                    <div class="form-group" ng-class="{'has-error': accountDetailCtrl.forms.Details.ckIsTaxable.$invalid}">
+                      <label class="control-label" data-translate="ui.admin.controls.accounts.accountDetail.IsTaxable"></label>
+                      <div class="input-group">
+                        <toggle id="ckIsTaxable" name="ckIsTaxable" class="btn-block"
+                          ng-model="accountDetailCtrl.record.IsTaxable"
+                          data-on="Taxable" data-truestyle="btn-success"
+                          data-off="Tax Exempt" data-offstyle="btn-danger">
+                        </toggle>
+                      </div>
+                      <div ng-messages="accountDetailCtrl.forms.Details.ckIsTaxable.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                      </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': accountDetailCtrl.forms.Details.txtTaxExemptNumber.$invalid}"
+                      ng-show="!accountDetailCtrl.record.IsTaxable">
+                      <label class="control-label" data-translate="ui.admin.controls.accounts.accountDetail.TaxExemptionNo"></label>
+                      <div class="input-group">
+                        <input type="text" class="form-control"
+                          id="txtTaxExemptNumber" name="txtTaxExemptNumber"
+                          maxlength="512"
+                          ng-required="false"
+                          ng-model="accountDetailCtrl.record.TaxExemptionNo" />
+                      </div>
+                      <div ng-messages="accountDetailCtrl.forms.Details.txtTaxExemptNumber.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                      </div>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': accountDetailCtrl.forms.Details.txtTaxUseCode.$invalid}"
+                      ng-show="!accountDetailCtrl.record.IsTaxable">
+                      <label class="control-label" data-translate="ui.admin.controls.accounts.accountDetail.TaxEntityUseCode"></label>
+                      <div class="input-group">
+                        <input type="text" class="form-control"
+                          id="txtTaxUseCode" name="txtTaxUseCode"
+                          maxlength="512"
+                          ng-required="false"
+                          ng-model="accountDetailCtrl.record.TaxEntityUseCode" />
+                      </div>
+                      <div ng-messages="accountDetailCtrl.forms.Details.txtTaxUseCode.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error': accountDetailCtrl.forms.Details.ckIsOnHold.$invalid}">
+                      <label class="control-label" data-translate="ui.admin.controls.accounts.accountDetail.IsOnHold"></label>
+                      <div class="input-group">
+                        <toggle id="ckIsOnHold" name="ckIsOnHold" class="btn-block"
+                          ng-model="accountDetailCtrl.record.IsOnHold"
+                          data-on="On Hold" data-truestyle="btn-danger"
+                          data-off="No Hold" data-offstyle="btn-success">
+                        </toggle>
+                      </div>
+                      <div ng-messages="accountDetailCtrl.forms.Details.ckIsOnHold.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group" ng-class="{'has-error': accountDetailCtrl.forms.Details.txtaDescription.$invalid}">
+                  <label class="control-label" data-translate="ui.admin.common.Description"></label>
+                  <div class="input-group">
+                    <textarea kendo-editor class="form-control" k-encoded="false" style="width: 100%; height: 300px;"
+                      id="txtaDescription" name="txtaDescription"
+                      k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight',
+                                'justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                      k-paste="accountDetailCtrl.sanitizeMarkup"
+                      translate-attr="{ placeholder: 'ui.admin.controls.shared.jsonAttributesEditor.NoValueWillNotBeSaved' }"
+                      ng-model="accountDetailCtrl.record.Description">
+                    </textarea>
+                  </div>
+                  <div ng-messages="accountDetailCtrl.forms.Details.txtaDescription.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="accountDetailCtrl.cefConfig.featureSet.addressBook.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Addresses.$invalid}"
+            ><i class="far fa-lg fa-map-marker"></i>&nbsp;<span data-translate="ui.admin.controls.accounts.accountDetail.Addresses"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Addresses">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.accounts.accountDetail.AccountAddresses"></h3>
+                <p>WARNING: Manipulating the address book requires new accounts to be saved first to get an ID.</p>
+              </div>
+            </div>
+            <div class="row" ng-if="accountDetailCtrl.record.ID">
+              <div class="col-sm-12">
+                <div cef-address-book account-id="accountDetailCtrl.record.ID" class="row"></div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Users.$invalid}"
+            ><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.User.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Users">
+            <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.User.Plural"></h3></div></div>
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-info"
+                  translate-attr="{ title: 'ui.admin.controls.accounts.accountDetail.AddNewUser',
+                                    'aria-label': 'ui.admin.controls.accounts.accountDetail.AddNewUser' }"
+                  data-translate="ui.admin.controls.accounts.accountDetail.AddNewUser"
+                  ng-click="accountDetailCtrl.openAddNewUserModal()">
+                </button>
+                <button type="button" class="btn btn-info ml-1"
+                  transalte-attr="{ title: 'ui.admin.controls.accounts.accountDetail.AddExistingUser',
+                                    'aria-label': 'ui.admin.controls.accounts.accountDetail.AddExistingUser' }"
+                  data-translate="ui.admin.controls.accounts.accountDetail.AddExistingUser"
+                  ng-click="accountDetailCtrl.openAddExistingUserModal()">
+                </button>
+                <b class="ml-1" data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.controls.accounts.accountDetail.ThisCanBeManagedFromTheUserEditorAsWellToAssignAnAccount"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th style="width:50px;"data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th data-translate="ui.admin.common.Username"></th>
+                        <th data-translate="ui.admin.common.FirstName"></th>
+                        <th data-translate="ui.admin.common.LastName"></th>
+                        <th data-translate="ui.admin.common.Email"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!accountDetailCtrl.users.length">
+                        <td colspan="6"
+                          data-translate="ui.admin.common.NoUsersHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="u in accountDetailCtrl.users">
+                        <td><label class="form-control-static" ng-bind="u.ID"></label></td>
+                        <td><label class="form-control-static" ng-bind="u.UserName"></label></td>
+                        <td><label class="form-control-static" ng-bind="u.ContactFirstName"></label></td>
+                        <td><label class="form-control-static" ng-bind="u.ContactLastName"></label></td>
+                        <td><label class="form-control-static" ng-bind="u.Email"></label></td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="accountDetailCtrl.removeUser($index)">
+                            <i class="far fa-times" aria-hidden="true"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="accountDetailCtrl.cefConfig.featureSet.stores.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Stores.$invalid}"
+            ><i class="far fa-lg fa-building"></i>&nbsp;<span data-translate="ui.admin.common.Store.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Stores">
+            <div class="row">
+              <div class="col-sm-12"><h3 data-translate="ui.admin.common.Store.PluralAssociatedWithThisAccount"></h3></div>
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.controls.accounts.accountDetail.AddStore',
+                                    'aria-label': 'ui.admin.controls.accounts.accountDetail.AddStore' }"
+                  data-translate="ui.admin.controls.accounts.accountDetail.AddStore"
+                  ng-click="accountDetailCtrl.addStore()">
+                </button>
+                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.common.TheseCanBeManagedFromTheStoreEditorAsWell"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th style="width:50px;" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th style="width:125px;" data-translate="ui.admin.controls.accounts.accountDetail.AccessToStore"></th>
+                        <th data-translate="ui.admin.common.Store"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="accountDetailCtrl.record.Stores.length <= 0">
+                        <td colspan="4"
+                          data-translate="ui.admin.common.NoStoresHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="storeAccount in accountDetailCtrl.record.Stores">
+                        <td>
+                          <label class="form-control-static" ng-bind="storeAccount.ID"></label>
+                        </td>
+                        <td>
+                          <toggle class="btn-block"
+                            id="ckHasAccessToStore{{$index}}" name="ckHasAccessToStore{{$index}}"
+                            ng-model="storeAccount.HasAccessToStore"
+                            data-on="Access" data-truestyle="btn-success"
+                            data-off="Restricted" data-offstyle="btn-danger">
+                          </toggle>
+                        </td>
+                        <td>
+                          <select class="form-control"
+                            id="ddlAccountStore{{$index}}" name="ddlAccountStore{{$index}}"
+                            ng-required="true"
+                            ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' + s.CustomKey + ']' : ''))
+                                        for s in accountDetailCtrl.stores
+                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                            ng-model="storeAccount.MasterID">
+                            <option value="" ng-disabled="true" data-translate="ui.admin.common.SelectAStore"></option>
+                          </select>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="accountDetailCtrl.removeStore($index)">
+                            <i class="far fa-times"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="accountDetailCtrl.cefConfig.featureSet.brands.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Brands.$invalid}"
+            ><i class="far fa-lg fa-building"></i>&nbsp;<span data-translate="ui.admin.common.Brand.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Brands">
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <h3 data-translate="ui.admin.common.Brand.PluralAssociatedWithThisAccount"></h3>
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.controls.accounts.accountDetail.AddBrand',
+                                   'aria-label': 'ui.admin.controls.accounts.accountDetail.AddBrand' }"
+                  data-translate="ui.admin.controls.accounts.accountDetail.AddBrand"
+                  ng-click="accountDetailCtrl.addBrand()">
+                </button>
+                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.common.TheseCanBeManagedFromTheBrandEditorAsWell"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th style="width:50px;" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th style="width:125px;" data-translate="ui.admin.controls.accounts.accountDetail.AccessToBrand"></th>
+                        <th data-translate="ui.admin.controls.accounts.accountDetail.Brand"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!accountDetailCtrl.record.Brands.length">
+                        <td colspan="4"
+                          data-translate="ui.admin.common.NoBrandsHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="brandAccount in accountDetailCtrl.record.Brands">
+                        <td>
+                          <label class="form-control-static" ng-bind="brandAccount.ID"></label>
+                        </td>
+                        <td>
+                          <toggle class="btn-block"
+                            id="ckHasAccessToBrand{{$index}}" name="ckHasAccessToBrand{{$index}}"
+                            ng-model="brandAccount.HasAccessToBrand"
+                            data-on="Access" data-truestyle="btn-success"
+                            data-off="Restricted" data-offstyle="btn-danger">
+                          </toggle>
+                        </td>
+                        <td>
+                          <select class="form-control"
+                            id="ddlAccountBrand{{$index}}" name="ddlAccountBrand{{$index}}"
+                            ng-required="true"
+                            ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' + s.CustomKey + ']' : ''))
+                                        for s in accountDetailCtrl.brands
+                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                            ng-model="brandAccount.MasterID">
+                            <option value="" ng-disabled="true" data-translate="ui.admin.common.SelectABrand"></option>
+                          </select>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="accountDetailCtrl.removeBrand($index)">
+                            <i class="far fa-times"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Images.$invalid}"
+            ><i class="far fa-lg fa-picture-o"></i>&nbsp;<span data-translate="ui.admin.common.Image.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Images">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Image.Plural"></h3>
+                <!-- Uploader -->
+                <div cef-upload-image-widget
+                  master="accountDetailCtrl.record"
+                  upload-type="ImageAccount"
+                  type-key="General"
+                  allow-multiple="true"
+                  is-primary="false">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <!-- Thumbnails -->
+                <div class="form-group">
+                  <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                  <div class="input-group">
+                    <div ng-if="!accountDetailCtrl.record.Images.length"
+                      data-translate="ui.admin.common.NoImagesHaveBeenUploaded">
+                    </div>
+                    <div ng-repeat="image in accountDetailCtrl.record.Images"
+                      class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                      <div class="form-vertical">
+                        <div class="form-group">
+                          <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                            ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                      | corsImageLink : 'accounts' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                            onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Admin/framework/store/img/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                        </div>
+                        <text-input-form-group
+                          key="ImageName{{$index}}"
+                          ng-model="image.Name"
+                          label-key="ui.admin.common.Name"
+                          max-length="128"
+                          ng-required="true">
+                        </text-input-form-group>
+                        <select-form-group
+                          key="ImageTypeID{{$index}}"
+                          ng-model="image.TypeID"
+                          selections="accountDetailCtrl.imageTypes"
+                          label-key="ui.admin.common.Type"
+                          tooltip-text="The type of the record."
+                          placeholder-key="ui.admin.common.Type"
+                          ng-required="true">
+                        </select-form-group>
+                        <toggle-form-group
+                          key="ImageIsPrimary{{$index}}"
+                          ng-change="accountDetailCtrl.clearOtherPrimaryImagesNew($index)"
+                          ng-model="image.IsPrimary"
+                          label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                          tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                          tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                          ng-required="false">
+                        </toggle-form-group>
+                        <button type="button" class="btn btn-danger btn-block"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="accountDetailCtrl.removeImageNew($index)">
+                          <i class="far fa-trash-o"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="accountDetailCtrl.cefConfig.featureSet.accounts.storedFiles.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.StoredFiles.$invalid}"
+            ><i class="far fa-lg fa-file"></i>&nbsp;<span data-translate="ui.admin.common.StoredFile.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.StoredFiles">
+            <div class="row">
+              <div class="col-md-12"><h3 data-translate="ui.admin.common.StoredFile.Plural"></h3></div>
+              <div class="col-md-12 mb-3">
+                <!-- Uploader -->
+                <div cef-upload-file-widget
+                  master="accountDetailCtrl.record"
+                  upload-type="StoredFileAccount"
+                  type-key="General"
+                  allow-multiple="true"
+                  form="accountDetailCtrl.forms.StoredFiles">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed table-striped">
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.common.Name"></th>
+                        <th data-translate="ui.admin.common.FileName"></th>
+                        <th style="width: 43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!accountDetailCtrl.record.StoredFiles.length">
+                        <td colspan="3"
+                          data-translate="ui.admin.common.NoStoredFilesHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="storedFile in accountDetailCtrl.record.StoredFiles">
+                        <td>
+                          <input type="text" class="form-control"
+                            id="txtStoredFileName{{$index}}" name="txtStoredFileName{{$index}}"
+                            ng-required="true"
+                            max-length="128"
+                            ng-model="storedFile.Name" />
+                        </td>
+                        <td>
+                          <a class="form-control-static" target="_blank"
+                            ng-href="{{(storedFile.StoredFileName || storedFile.Slave.FileName) | corsStoredFilesLink: 'accounts'}}"
+                            ng-bind="storedFile.StoredFileName">
+                          </a>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="accountDetailCtrl.removeFileNew($index)">
+                            <i class="far fa-trash-o"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="accountDetailCtrl.cefConfig.featureSet.affiliates.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Associations.$invalid}"
+            ><i class="far fa-lg fa-object-group"></i>&nbsp;<span data-translate="ui.admin.controls.inventory.productDetail.Association.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Associations">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.accounts.accountDetail.AssociatedAccount.Plural"></h3>
+              </div>
+            </div>
+            <div class="row" ng-hide="accountDetailCtrl.display.ShowAssociatedAccountPanel">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed" style="max-width: 1000px;">
+                    <colgroup>
+                      <col style="width: 20%; min-width: 100px;" />
+                      <col style="width: 10%;" />
+                      <col style="width: 25%;" />
+                      <col style="width: 25%;" />
+                      <col style="width: 1%;" />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.controls.inventory.productDetail.AssociationType"></th>
+                        <th data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th data-translate="ui.admin.common.Key"></th>
+                        <th data-translate="ui.admin.common.Name"></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!accountDetailCtrl.record.AccountAssociations.length">
+                        <td colspan="5"
+                          data-translate="ui.admin.controls.accounts.accountDetail.NoAssociatedAccountsHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="accountAssociation in accountDetailCtrl.record.AccountAssociations">
+                        <td>
+                          <select class="form-control"
+                            id="ddlAssociationType{{$index}}" name="ddlAssociationType{{$index}}"
+                            ng-required="true" ng-pattern="/^\d*[1-9]?$/"
+                            ng-options="at.ID as ((at.DisplayName || at.Name) + (at.CustomKey && at.CustomKey != '' ? ' [' + at.CustomKey + ']' : ''))
+                                        for at in accountDetailCtrl.associationTypes
+                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                            ng-model="accountAssociation.TypeID">
+                          </select>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="accountAssociation.SlaveID">
+                          </label>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="accountAssociation.SlaveKey || accountAssociation.Slave.CustomKey">
+                          </label>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="accountAssociation.SlaveName || accountAssociation.Slave.Name">
+                          </label>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Remove',
+                                              'aria-label': 'ui.admin.common.Remove' }"
+                            ng-click="accountDetailCtrl.removeAssociatedAccount($index)">
+                            <i class="far fa-times"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.common.AddAccount.Plural',
+                                    'aria-label': 'ui.admin.common.AddAccount.Plural' }"
+                  data-translate="ui.admin.common.AddAccount.Plural"
+                  ng-click="accountDetailCtrl.showAddAssociatedAccountsPanel()">
+                </button>
+              </div>
+            </div>
+            <div class="row full-height" ng-show="accountDetailCtrl.display.ShowAssociatedAccountPanel">
+              <div class="col-md-12">
+                <div class="form-inline mb-3">
+                  <div class="form-group">
+                    <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                    <div class="input-group">
+                      <input type="text" class="form-control"
+                        ng-model="accountDetailCtrl.associationSearchParams.AccountKey" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                    <div class="input-group">
+                      <input type="text" class="form-control"
+                        ng-model="accountDetailCtrl.associationSearchParams.AccountName" />
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-info"
+                    translate-attr="{ title: 'ui.admin.controls.accounts.accountDetail.SearchAccount.Plural',
+                                      'aria-label': 'ui.admin.controls.accounts.accountDetail.SearchAccount.Plural' }"
+                    data-translate="ui.admin.controls.accounts.accountDetail.SearchAccount.Plural"
+                    ng-click="accountDetailCtrl.searchAssociatedAccounts()">
+                  </button>
+                  <label class="control-label"
+                    data-translate="ui.admin.controls.accounts.accountDetail.NoteOnlyTheFirst20AccountsWillBeShown">
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-12 full-height">
+                <table class="table table-striped table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="w-10" data-translate="ui.admin.common.Select"></th>
+                      <th class="w-10" data-translate="ui.admin.common.ID"></th>
+                      <th class="w-40" data-translate="ui.admin.common.Key"></th>
+                      <th class="w-40" data-translate="ui.admin.common.Name"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-hide="accountDetailCtrl.associatedAccounts.length">
+                      <td colspan="4"
+                        data-translate="ui.admin.controls.accounts.accountDetail.NoAccountsWereFoundWithThisSearchCriteria">
+                      </td>
+                    </tr>
+                    <tr ng-repeat="a in accountDetailCtrl.associatedAccounts">
+                      <td class="text-center"><input type="checkbox" ng-model="a.Selected" /></td>
+                      <td ng-bind="a.ID"></td>
+                      <td ng-bind="a.CustomKey"></td>
+                      <td ng-bind="a.Name"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-12 mb-3">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.controls.accounts.accountDetail.AddSelectedAccount.Plural',
+                                    'aria-label': 'ui.admin.controls.accounts.accountDetail.AddSelectedAccount.Plural' }"
+                  data-translate="ui.admin.controls.accounts.accountDetail.AddSelectedAccount.Plural"
+                  ng-click="accountDetailCtrl.addAssociatedAccounts()">
+                </button>
+                <button type="button" class="btn btn-warning"
+                  translate-attr="{ title: 'ui.admin.common.Cancel',
+                                    'aria-label': 'ui.admin.common.Cancel' }"
+                  ng-click="accountDetailCtrl.hideAddAssociatedAccountsPanel()">
+                  <i class="far fa-fw fa-undo"></i>&nbsp;<!--
+                  --><span data-translate="ui.admin.common.Cancel"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Roles.$invalid}"
+            ><i class="far fa-lg fa-th-list"></i>&nbsp;<span data-translate="ui.admin.common.Role.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Roles">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.accounts.accountDetail.RolesAssignedToTheAccount"></h3>
+                <p><b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.controls.accounts.accountDetail.RolesCannotBeAddedDirectlyToANewAccountTheAccountMustBeSavedFirst"></span></p>
+                <p><b data-translate="ui.admin.common.Warning"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.controls.accounts.userDetail.RoleAssignmentsOccurDirectlyWithoutPressing"></span>&nbsp;<!--
+                --><b data-translate="ui.admin.common.SaveChange.Plural"></b></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <!-- TODO: If they already have all the available roles assigned to them, don't allow Add -->
+                <cv-account-account-role-modal
+                  class="mb-3"
+                  account-id="accountDetailCtrl.record.ID"
+                  dg-type="'Add'"
+                  title-key="ui.admin.common.AddRole">
+                  <i class="far fa-plus" aria-hidden="true"></i>&nbsp;<!--
+                  --><span data-translate="ui.admin.common.AddRole"></span>
+                </cv-account-account-role-modal>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.common.Role"></th>
+                        <th data-translate="ui.admin.common.Start"></th>
+                        <th data-translate="ui.admin.common.End"></th>
+                        <th style="width:86px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!accountDetailCtrl.rolesForAccount.length">
+                        <td colspan="4"
+                          data-translate="ui.admin.controls.accounts.userDetail.NoRolesHaveBeenAssignedToThisAccount">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="ar in accountDetailCtrl.rolesForAccount">
+                        <td><label class="form-control-static" ng-bind="ar.Name"></label></td>
+                        <td><label class="form-control-static" ng-bind="(ar.StartDate | convertJSONDate | date: 'yyyy MMM dd hh:mm a') || '-'"></label></td>
+                        <td><label class="form-control-static" ng-bind="(ar.EndDate | convertJSONDate | date: 'yyyy MMM dd hh:mm a') || '-'"></label></td>
+                        <td class="text-nowrap">
+                          <!--
+                          <cv-account-account-role-modal
+                            account-id="ar.AccountId"
+                            role-id="uarr.RoleId"
+                            dg-type="'Update'"
+                            title-key="ui.admin.common.EditRole">
+                            <i class="far fa-pencil" aria-hidden="true"></i><! --
+                            -- ><span class="sr-only" data-translate="ui.admin.common.EditRole"></span>
+                          </cv-account-account-role-modal>
+                          -->
+                          <cv-account-account-role-modal
+                            account-id="ar.AccountId"
+                            role-id="ar.RoleId"
+                            dg-type="'Remove'"
+                            title-key="ui.admin.common.RemoveRole"
+                            class="btn-danger">
+                            <i class="far fa-times" aria-hidden="true"></i><!--
+                            --><span class="sr-only" data-translate="ui.admin.common.RemoveRole"></span>
+                          </cv-account-account-role-modal>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="accountDetailCtrl.cefConfig.featureSet.multiCurrency.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Currencies.$invalid}"
+            ><i class="far fa-lg fa-object-group"></i>&nbsp;<span data-translate="ui.admin.common.Currency.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Currencies">
+            <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.Currency.Plural"></h3></div></div>
+            <div class="row">
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.common.AddCurrency',
+                                    'aria-label': 'ui.admin.common.AddCurrency' }"
+                  data-translate="ui.admin.common.AddCurrency"
+                  ng-click="accountDetailCtrl.addCurrency()">
+                </button>
+              </div>
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed">
+                    <thead>
+                      <tr>
+                        <th class="w-10 text-center" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="w-20 text-center" data-translate="ui.admin.common.Key"></th>
+                        <th class="w-20 text-center" data-translate="ui.admin.common.Name"></th>
+                        <th class="w-20 text-center" data-translate="ui.admin.common.CustomName"></th>
+                        <th style="width: 43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!accountDetailCtrl.record.AccountCurrencies.length">
+                        <td colspan="4"
+                          data-translate="ui.admin.controls.accounts.accountDetail.NoCurrenciesHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="ac in accountDetailCtrl.record.AccountCurrencies">
+                        <td class="text-right">
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="ac.SlaveID">
+                          </label>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="ac.SlaveKey || ac.Slave.CustomKey">
+                          </label>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="ac.SlaveName || ac.Slave.Name">
+                          </label>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control"
+                            translate-attr="{ placeholder: 'ui.admin.common.CustomName' }"
+                            maxlength="128"
+                            ng-required="false"
+                            ng-model="ac.CustomName" />
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="accountDetailCtrl.removeCurrency($index)">
+                            <i class="far fa-times"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': accountDetailCtrl.forms.Attributes.$invalid}"
+            ><i class="far fa-lg fa-list"></i>&nbsp;<span data-translate="ui.admin.common.Attribute.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="accountDetailCtrl.forms.Attributes">
+            <div cef-json-attributes-editor
+              master="accountDetailCtrl.record"
+              type="Account"
+              ng-if="accountDetailCtrl.record">
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <!-- Form actions -->
+  <div class="row details-footer">
+    <div class="col-md-12">
+      <cef-standard-detail-footer-buttons
+        master-controller="accountDetailCtrl"
+        return-state="accounts.accounts.list"
+        permissions-base="Accounts.Account">
+      </cef-standard-detail-footer-buttons>
+    </div>
+  </div>
+</div>

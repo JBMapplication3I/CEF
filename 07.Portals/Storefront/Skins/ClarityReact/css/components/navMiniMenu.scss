@@ -1,0 +1,43 @@
+// Clarity Mini Menu Classes, for CEF-2020.1.x+ w/ BS4
+
+cef-mini-menu,
+[cef-mini-menu] {
+    .dropdown-item {
+        padding: 0.25rem 0.75rem;
+        &.active {
+            a {
+                color: #fff;
+                &:hover {
+                    color: #494f54 !important
+                }
+            }
+        }
+    }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        background-color: transparent !important;
+    }
+
+    li.nav-item.dropdown {
+        a {
+            color: $white !important;
+        }
+
+        &:hover {
+            a {
+                text-decoration: none;
+                color: #494f54 !important
+            }
+        }
+
+        ul.dropdown-menu {
+            li.nav-item {
+                width: max-content;
+            }
+        }
+    }
+
+    .dropdown-menu.show {
+        box-shadow: 0 0 16px 8px #00000080;
+    }
+}

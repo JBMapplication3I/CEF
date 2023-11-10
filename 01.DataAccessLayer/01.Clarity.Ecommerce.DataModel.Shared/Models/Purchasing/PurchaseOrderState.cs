@@ -1,0 +1,21 @@
+﻿// <copyright file="PurchaseOrderState.cs" company="clarity-ventures.com">
+// Copyright (c) 2016-2023 clarity-ventures.com. All rights reserved.
+// </copyright>
+// <summary>Implements the purchase order state class</summary>
+#nullable enable
+namespace Clarity.Ecommerce.Interfaces.DataModel
+{
+    public interface IPurchaseOrderState : IStateableBase
+    {
+    }
+}
+
+namespace Clarity.Ecommerce.DataModel
+{
+    using Interfaces.DataModel;
+
+    [SqlSchema("Purchasing", "PurchaseOrderState")]
+    public class PurchaseOrderState : StateableBase, IPurchaseOrderState
+    {
+    }
+}

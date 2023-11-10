@@ -1,0 +1,126 @@
+﻿<div class="row" ng-form="cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator">
+    <div class="col-sm-6">
+        <h3 data-translate="ui.storefront.cart.cartShippingEstimator.estimateShipping"></h3>
+        <p data-translate="ui.storefront.cart.cartShippingEstimator.EstimateShipping.Message"></p>
+        <div class="form-group"
+             ng-class="{'has-error': cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.$dirty && cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.ddlRQMWCountryID.$invalid}">
+            <select class="form-control"
+                    id="ddlRQMWCountryID" name="ddlRQMWCountryID"
+                    ng-disabled="cefCartRateQuotesManagerWidgetCtrl.viewState.running"
+                    ng-required="true"
+                    ng-change="cefCartRateQuotesManagerWidgetCtrl.onCountryIDChange()"
+                    ng-options="c.ID as c.Name for c in cefCartRateQuotesManagerWidgetCtrl.countries"
+                    ng-model="cefCartRateQuotesManagerWidgetCtrl.cvCartService.carts[cefCartRateQuotesManagerWidgetCtrl.type].ShippingContact.Address.CountryID">
+                <option value="" ng-disabled="true"
+                        data-translate="ui.storefront.common.Country.SelectA"></option>
+            </select>
+            <div ng-messages="cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.ddlRQMWCountryID.$error"
+                 ng-show="cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.$dirty">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.$dirty && cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.ddlRQMWRegionID.$invalid}"
+             ng-if="cefCartRateQuotesManagerWidgetCtrl.regions.length > 0">
+            <select class="form-control"
+                    id="ddlRQMWRegionID" name="ddlRQMWRegionID"
+                    translate-attr="{ title: 'ui.storefront.common.geography.State' }"
+                    ng-disabled="cefCartRateQuotesManagerWidgetCtrl.viewState.running"
+                    ng-required="true"
+                    ng-options="r.ID as r.Name for r in cefCartRateQuotesManagerWidgetCtrl.regions"
+                    ng-model="cefCartRateQuotesManagerWidgetCtrl.cvCartService.carts[cefCartRateQuotesManagerWidgetCtrl.type].ShippingContact.Address.RegionID">
+                <option value="" ng-disabled="true"
+                        data-translate="ui.storefront.common.geography.State.SelectA"></option>
+            </select>
+            <div ng-messages="cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.ddlRQMWRegionID.$error"
+                 ng-show="cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.$dirty">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.$dirty && cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.txtRQMWPostalCode.$invalid}">
+            <input type="text" class="form-control" style="display: block;"
+                   id="txtRQMWPostalCode" name="txtRQMWPostalCode"
+                   translate-attr="{ placeholder: 'ui.storefront.cart.cartShippingEstimator.enterYourZipOrPostalCode' }"
+                   ng-disabled="cefCartRateQuotesManagerWidgetCtrl.viewState.running"
+                   ng-required="true"
+                   ng-model="cefCartRateQuotesManagerWidgetCtrl.cvCartService.carts[cefCartRateQuotesManagerWidgetCtrl.type].ShippingContact.Address.PostalCode" />
+            <div ng-messages="cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.txtRQMWPostalCode.$error"
+                 ng-show="cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.$dirty">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-secondary btn-block mb-3"
+                    id="btnRQMWGetEstimatedShippingRates" name="btnRQMWGetEstimatedShippingRates"
+                    translate-attr="{ title: 'ui.storefront.cart.cartShippingEstimator.estimateShipping' }"
+                    ng-disabled="cefCartRateQuotesManagerWidgetCtrl.forms.shippingEstimator.$invalid
+                                 || cefCartRateQuotesManagerWidgetCtrl.viewState.running"
+                    ng-click="cefCartRateQuotesManagerWidgetCtrl.getRateQuotes(true)"
+                    data-translate="ui.storefront.cart.cartShippingEstimator.getShippingRates"></button>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <h3 ng-show="cefCartRateQuotesManagerWidgetCtrl.showYourShippingRateQuotesHeader"
+            data-translate="ui.storefront.cart.cartShippingEstimator.yourShippingRateQuotes"></h3>
+        <div class="alert alert-info"
+             ng-show="cefCartRateQuotesManagerWidgetCtrl.viewState.running
+                      && cefCartRateQuotesManagerWidgetCtrl.havePostalCode"
+             data-translate="ui.storefront.cart.cartShippingEstimator.wereSearchingForRatesForTheAddressInformationProvided"></div>
+        <div class="alert alert-warning"
+             ng-show="!cefCartRateQuotesManagerWidgetCtrl.viewState.running
+                      && cefCartRateQuotesManagerWidgetCtrl.shippingRates.length <= 0
+                      && cefCartRateQuotesManagerWidgetCtrl.havePostalCode"
+             data-translate="ui.storefront.cart.cartShippingEstimator.noShippingRateInformationWasFoundForTheAddressInformationProvided"></div>
+        <div ng-show="cefCartRateQuotesManagerWidgetCtrl.rateQuotes.length > 0
+                      && cefCartRateQuotesManagerWidgetCtrl.havePostalCode">
+            <table class="table table-sm table-hover table-striped col-sm-12">
+                <tbody>
+                    <tr ng-repeat="rate in cefCartRateQuotesManagerWidgetCtrl.rateQuotes | limitTo: cefCartRateQuotesManagerWidgetCtrl.quantityRatesShown">
+                        <td class="col-sm-1">
+                            <input type="radio" id="rdRQMWRate_{{$index}}" name="selectedRateQuote"
+                                   value="{{rate.ID}}"
+                                   ng-disabled="cefCartRateQuotesManagerWidgetCtrl.viewState.running"
+                                   ng-change="cefCartRateQuotesManagerWidgetCtrl.onSelectRateQuote()"
+                                   ng-model="cefCartRateQuotesManagerWidgetCtrl.selectedRateQuoteID" />
+                        </td>
+                        <td class="col-sm-7"><label class="font-weight-normal" for="rd{{$index}}"
+                            ng-bind="rate.ShipCarrierMethodName"></label></td>
+                        <td class="col-sm-4 text-right"
+                            ng-init="cefCartRateQuotesManagerWidgetCtrl.calcdindex[$index] = { original: rate.Rate, discounted: rate.Rate }">
+                            <label class="font-weight-normal" for="rdRQMWRate_{{$index}}"
+                                   ng-class="{'text-danger strike-through': cefCartRateQuotesManagerWidgetCtrl.isCalcdIndexDiscounted($index)}">
+                                <span ng-if="cefCartRateQuotesManagerWidgetCtrl.calcdindex[$index].original > 0"
+                                      ng-bind="cefCartRateQuotesManagerWidgetCtrl.calcdindex[$index].original | globalizedCurrency"></span>
+                                <span ng-if="cefCartRateQuotesManagerWidgetCtrl.calcdindex[$index].original <= 0"
+                                      class="text-success"
+                                      data-translate="ui.storefront.common.Free"></span>
+                            </label>
+                            <!-- TODO: Shipping Discounts showing Markdown -->
+                            <label class="font-weight-normal" for="rdRQMWRate_{{$index}}"
+                                   ng-if="cefCartRateQuotesManagerWidgetCtrl.isCalcdIndexDiscounted($index)">
+                                <span ng-if="cefCartRateQuotesManagerWidgetCtrl.calcdindex[$index].discounted > 0"
+                                      ng-bind="cefCartRateQuotesManagerWidgetCtrl.calcdindex[$index].discounted | globalizedCurrency"></span>
+                                <span ng-if="cefCartRateQuotesManagerWidgetCtrl.calcdindex[$index].discounted <= 0"
+                                      class="text-success"
+                                      data-translate="ui.storefront.common.Free"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr ng-if="cefCartRateQuotesManagerWidgetCtrl.showShowMoreButton">
+                        <td colspan="3">
+                            <button type="button" class="btn btn-secondary btn-block"
+                                    ng-click="cefCartRateQuotesManagerWidgetCtrl.showMore(); apply();"
+                                    data-translate="ui.storefront.cart.cartShippingEstimator.ShowMore"></button></td>
+                    </tr>
+                    <tr ng-if="cefCartRateQuotesManagerWidgetCtrl.showShowLessButton">
+                        <td colspan="3">
+                            <button type="button" class="btn btn-secondary btn-block"
+                                    ng-click="cefCartRateQuotesManagerWidgetCtrl.showLess(); apply();"
+                                    data-translate="ui.storefront.cart.cartShippingEstimator.ShowLess"></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

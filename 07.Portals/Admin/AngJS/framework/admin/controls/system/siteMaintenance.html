@@ -1,0 +1,166 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div class="row details-header">
+    <h2 class="col-md-12 details-title" data-translate="ui.admin.views.system.SiteMaintenance"></h2>
+  </div>
+  <div class="row details-body">
+    <div class="col-md-12 setting-editor">
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span><i class="far fa-lg fa-info"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.controls.system.siteMaintenance.ClearCaches"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="siteMaintenanceCtrl.forms.ClearCaches">
+            <div clear-cache-buttons-widget></div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': siteMaintenanceCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-cog"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Setting.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="siteMaintenanceCtrl.forms.AppSettings">
+            <div app-settings-widget></div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span><i class="far fa-lg fa-info"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.controls.system.siteMaintenance.OtherTasks"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="siteMaintenanceCtrl.forms.ClearCaches">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Category.Plural"></h3>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-info"
+                  id="btnGetCategorySitemap" name="btnGetCategorySitemap"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.GetCategorySitemap',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.GetCategorySitemap' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.GetCategorySitemap"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doGetCategorySiteMapContent()">
+                </button>
+                <button type="button" class="btn btn-info"
+                  id="btnRegenerateCategorySitemap" name="btnRegenerateCategorySitemap"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.RegenerateCategorySitemap',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.RegenerateCategorySitemap' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.RegenerateCategorySitemap"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doRegenerateCategorySiteMap()">
+                </button>
+              </div>
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Product.Plural"></h3>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-info"
+                  id="btnGetProductSitemap" name="btnGetProductSitemap"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.GetProductSitemap',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.GetProductSitemap' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.GetProductSitemap"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doGetProductSiteMapContent()">
+                </button>
+                <button type="button" class="btn btn-info"
+                  id="btnRegenerateProductSitemap" name="btnRegenerateProductSitemap"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.RegenerateProductSitemap',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.RegenerateProductSitemap' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.RegenerateProductSitemap"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doRegenerateProductSiteMap()">
+                </button>
+                <button type="button" class="btn btn-info"
+                  id="btnIndexProducts" name="btnIndexProducts"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.IndexProducts',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.IndexProducts' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.IndexProducts"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doIndexProducts()">
+                </button>
+                <button type="button" class="btn btn-info"
+                  id="btnIndexAuctions" name="btnIndexAuctions"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.IndexAuctions',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.IndexAuctions' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.IndexAuctions"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doIndexAuctions()">
+                </button>
+                <button type="button" class="btn btn-info"
+                  id="btnIndexLots" name="btnIndexLots"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.IndexLots',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.IndexLots' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.IndexLots"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doIndexLots()">
+                </button>
+                <button type="button" class="btn btn-info"
+                  id="btnPrice" name="btnPrice"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.ClearPriceCache',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.ClearPriceCache' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.ClearPriceCache"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doClearPriceCache()">
+                </button>
+              </div>
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Store.Plural"></h3>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-info"
+                  id="btnIndexStores" name="btnIndexStores"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.IndexStores',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.IndexStores' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.IndexStores"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doIndexStores()">
+                </button>
+              </div>
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Email.Plural"></h3>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-info"
+                  id="btnProcessEmailBatch" name="btnProcessEmailBatch"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.ProcessEmailBatch',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.ProcessEmailBatch' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.ProcessEmailBatch"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doProcessEmailBatch()">
+                </button>
+              </div>
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Cart.Plural"></h3>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-info"
+                  id="btnHardSoftStops" name="btnHardSoftStops"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.ClearHardSoftStopsCache',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.ClearHardSoftStopsCache' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.ClearHardSoftStopsCache"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doClearHardSoftStopsCache()">
+                </button>
+              </div>
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Setting.Plural"></h3>
+              </div>
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-info"
+                  id="btnJSConfigs" name="btnJSConfigs"
+                  translate-attr="{ title: 'ui.admin.controls.system.siteMaintenance.ClearJSConfigsCache',
+                                    'aria-label': 'ui.admin.controls.system.siteMaintenance.ClearJSConfigsCache' }"
+                  data-translate="ui.admin.controls.system.siteMaintenance.ClearJSConfigsCache"
+                  ng-disabled="siteMaintenanceCtrl.viewState.running"
+                  ng-click="siteMaintenanceCtrl.doClearJSConfigsCache()">
+                </button>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <!--
+  <div class="row details-footer">
+    <div class="col-md-12">
+      <p>No additional footer actions at this time</p>
+    </div>
+  </div>
+  -->
+</div>

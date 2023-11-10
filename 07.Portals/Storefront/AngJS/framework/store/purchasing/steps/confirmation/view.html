@@ -1,0 +1,48 @@
+<!-- step.confirmation.view Template -->
+<div class="row">
+  <div class="col-12 col-sm">
+    <div cef-purchase-step-view-title></div>
+  </div>
+  <div class="col-12 col-sm-auto"
+    ng-show="step.complete">
+    <div cef-purchase-step-confirmation-summary
+      cart-type="{{pCtrl.cartType}}">
+    </div>
+  </div>
+  <hr class="w-100 my-2 mx-3" />
+  <div ng-show="step.index === pCtrl.service.activeStep[pCtrl.cartType]"
+    class="col-12"
+    ng-form="pCtrl.forms.confirmation">
+    <div cef-purchase-step-confirmation-body
+      cart-type="{{pCtrl.cartType}}"
+      id-suffix="Confirmation">
+    </div>
+  </div>
+  <div ng-show="step.index === pCtrl.service.activeStep[pCtrl.cartType]"
+    class="col-12">
+    <button type="button" class="btn btn-primary mb-3"
+      id="btnSubmit_{{step.name}}" name="btnSubmit_{{step.name}}"
+      translate-attr="{ title: step.continueTextKey || 'Continue',
+                        'aria-label': step.continueTextKey || 'Continue' }"
+      data-translate="{{step.continueTextKey || 'Continue'}}"
+      ng-disabled="pCtrl.viewState.running || pCtrl.forms.confirmation.$invalid || step.invalid"
+      ng-click="pCtrl.submit(pCtrl.cartType, step)">
+    </button>
+    <!--
+    <span>[Debug: Running: {{pCtrl.viewState.running}}]</span>
+    <span>[Debug: Invalid: {{step.invalid}}]</span>
+    <span>[Debug: $invalid: {{pCtrl.forms.confirmation.$invalid}}]</span><br/>
+    -->
+  </div>
+  <hr ng-show="step.index === pCtrl.service.activeStep[pCtrl.cartType]"
+    class="w-100 my-2 mx-3" />
+  <!--
+  <div ng-if="pCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true"
+    size="3"
+    pad-in="true"
+    message="pCtrl.viewState.waitMessage">
+  </div>
+  -->
+</div>

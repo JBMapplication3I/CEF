@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Providers.Personalization</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Providers.Personalization</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Providers.Personalization</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net5.0'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net472'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I" />
+  </Target>
+</Project>

@@ -1,0 +1,51 @@
+﻿<div class="items-per-page-option"
+  ng-cloak="scrppCtrl.service.activeSearchViewModel">
+  <div class="form-group"
+    ng-class="{'col-12':$parent.scrcbCtrl.layoutMode == 'hug-right'}"
+    ng-switch="scrppCtrl.perPageViewType">
+    <label class="control-label"
+      ng-hide="scrppCtrl.hideLabel == 'true'"
+      for="resultsPerPagePicker"
+    ><span sid="ShowText"
+      data-translate="ui.storefront.product.catalog.controls.itemsPerPage.Show"
+    ></span>&nbsp;</label>
+    <div class="input-group flex-nowrap">
+      <select ng-switch-when="dropdown"
+        class="form-control d-inline-block" style="width: 75px;"
+        id="resultsPerPagePicker" name="resultsPerPagePicker"
+        ng-disabled="scrppCtrl.service.searchIsRunning"
+        ng-options="choice for choice in scrppCtrl.choices"
+        ng-model="scrppCtrl.currentChoice">
+      </select>
+      <button ng-switch-when="buttons"
+        id="btnProductsPerPage{{choice}}"
+        ng-repeat="choice in scrppCtrl.choices"
+        type="button" class="btn"
+        ng-disabled="scrppCtrl.service.searchIsRunning"
+        ng-class="scrppCtrl.currentChoice == choice ? 'btn-outline-primary' : 'btn-text-light'"
+        ng-click="scrppCtrl.currentChoice = choice;"
+        ng-bind="choice">
+      </button>
+      <div ng-switch-when="split-button">
+        <div class="btn-group" uib-dropdown
+          ng-class="{'float-right':$parent.$parent.scrcbCtrl.layoutMode == 'hug-right'}">
+          <button type="button" class="btn btn-secondary dropdown-toggle"
+            uib-dropdown-toggle
+            ng-disabled="scrppCtrl.service.searchIsRunning"
+            data-translate="ui.storefront.product.catalog.controls.itemsPerPage.Show">
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="choice in scrppCtrl.choices"
+              ng-class="{'active':scrppCtrl.currentChoice == choice}">
+              <a ng-class="{'disabled':scrppCtrl.service.searchIsRunning}"
+                ng-click="!scrppCtrl.service.searchIsRunning
+                  && (scrppCtrl.currentChoice = choice)"
+                ng-bind="choice">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

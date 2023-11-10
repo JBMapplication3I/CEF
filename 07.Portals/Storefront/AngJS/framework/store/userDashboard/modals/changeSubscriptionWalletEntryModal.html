@@ -1,0 +1,34 @@
+<div ng-form="changeSubscriptionWalletEntryModalCtrl.forms.edit">
+    <div class="modal-header">
+        <h2 class="mt-0"
+            data-translate="Change the wallet entry to use for this Subscription"></h2>
+    </div>
+    <div class="modal-body form-vertical p-3">
+        <div class="form-group">
+            <label class="control-label" for="ddlAddresses"
+                   data-translate="Default Billing Address"></label>
+            <div class="input-group">
+                <select class="form-control"
+                        id="ddlAddresses" name="ddlAddresses"
+                        ng-required="true"
+                        ng-options="w.ID as ((w.Name || w.CustomKey) + ' ' + w.Last4Digits)
+                                    for w in changeSubscriptionWalletEntryModalCtrl.wallet"
+                        ng-model="changeSubscriptionWalletEntryModalCtrl.selectedID">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer p-3 text-right">
+        <button type="button" class="btn btn-large btn-secondary"
+                translate-attr="{ title: 'ui.storefront.common.Cancel',
+                                  'aria-label': 'ui.storefront.common.Cancel' }"
+                data-translate="ui.storefront.common.Cancel"
+                ng-click="changeSubscriptionWalletEntryModalCtrl.cancel()"></button>
+        <button type="button" class="btn btn-large btn-primary"
+                translate-attr="{ title: 'ui.storefront.common.Save',
+                                  'aria-label': 'ui.storefront.common.Save' }"
+                data-translate="ui.storefront.common.Save"
+                ng-disabled="changeSubscriptionWalletEntryModalCtrl.forms.edit.$invalid"
+                ng-click="changeSubscriptionWalletEntryModalCtrl.ok()"></button>
+    </div>
+</div>

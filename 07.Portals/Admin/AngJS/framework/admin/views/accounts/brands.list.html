@@ -1,0 +1,22 @@
+﻿<cv-page caption="Manage Brands" head-icon="fa-building"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.Brands')">
+    <cv-widget>
+        <widget-menu-item caption="Add Brand" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.brands.detail',{ID:'New'})"
+                          permission="'Brands.Brand.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     on-search="search.getBrands"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateBrand"
+                     on-reactivate="search.reactivateBrand"
+                     on-delete="search.deleteBrand"
+                     edit-state="accounts.brands.detail,[ID]"
+                     permissions-base="Brands.Brand">
+                <cv-column filter field="ID" title="#" width="50px" />
+                <cv-column filter field="CustomKey" title="Key" width="45%" />
+                <cv-column filter field="Name" width="45%" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Providers.Checkouts</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Providers.Checkouts</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Providers.Checkouts</RootNamespace>
+    <ProjectGuid>{10c32a8b-dc84-4291-a6e9-26be49f04259}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="morelinq" Version="3.4.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Security" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="PayPalCoreSDK" Version="1.7.1" />
+    <PackageReference Include="PayPalMerchantSDK" Version="2.16.250" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack\bin\Debug\net472\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Common\bin\Debug\net472\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Text\bin\Debug\net472\ServiceStack.Text.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <PackageReference Include="ServiceStack" Version="5.12.0" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Utilities\00.Clarity.Ecommerce.Utilities.csproj" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj" />
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models.Mapping\03.Clarity.Ecommerce.Models.Mapping.csproj" />
+    <ProjectReference Include="..\..\06.Services\06.Clarity.Ecommerce.Service.Core\06.Clarity.Ecommerce.Service.Core.csproj" />
+    <ProjectReference Include="..\Clarity.Ecommerce.Providers.Emails\Clarity.Ecommerce.Providers.Emails.csproj" />
+    <ProjectReference Include="..\Clarity.Ecommerce.Providers.Payments\Clarity.Ecommerce.Providers.Payments.csproj" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net5.0'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net472'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\PayPalCoreSDK.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\PayPalMerchantSDK.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I" />
+  </Target>
+</Project>

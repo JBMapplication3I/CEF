@@ -1,0 +1,175 @@
+﻿@using Clarity.Ecommerce.MVC.Core
+
+@typeparam TRecordModel where TRecordModel : BaseModel
+@typeparam TOtherModel where TOtherModel : NameableBaseModel
+@typeparam TOtherPagedResults where TOtherPagedResults : PagedResultsBase<TOtherModel>
+@typeparam TOtherSearchEndpoint where TOtherSearchEndpoint : NameableBaseSearchModel, new()
+
+@typeparam TAssocModel where TAssocModel : AmARelationshipTableBaseModel
+@typeparam TAssocPagedResults where TAssocPagedResults : PagedResultsBase<TAssocModel>
+@typeparam TAssocSearchEndpoint where TAssocSearchEndpoint : AmARelationshipTableBaseSearchModel, new()
+@typeparam TAssocCreateEndpoint where TAssocCreateEndpoint : TAssocModel, new()
+@typeparam TAssocDeactivateEndpoint where TAssocDeactivateEndpoint : ImplementsIDBase, new()
+
+@typeparam TModalEditAssoc where TModalEditAssoc : ModalEditAssociationBase<TAssocModel>
+
+@inherits TemplatedControllerBase
+
+<Heading Size="HeadingSize.Is2">@Title</Heading>
+<Row>
+  <Column ColumnSize="ColumnSize.Is8.OnTablet">
+    <Heading Size="HeadingSize.Is3">Available</Heading>
+    @if (available is not null)
+    {
+      <ServerSidePagingHeader
+        TRecord="TOtherModel"
+        TPagedRecord="TOtherPagedResults"
+        TEndpoint="TOtherSearchEndpoint"
+        Paging="available"
+        Disabled="ViewState.InputDisable"
+        Narrow="true"
+        @bind-QuickFilter="quickFilter"
+      />
+    }
+    <Blazorise.Table
+      Striped="true"
+      Narrow="true"
+      Hoverable="true"
+      Responsive="true"
+      Class="mb-3 table-cells-valign-middle">
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell Class="w-5">#</TableHeaderCell>
+          <TableHeaderCell Class="w-35">Key</TableHeaderCell>
+          <TableHeaderCell Class="w-60">Name</TableHeaderCell>
+          <TableHeaderCell Style="width:43px;"></TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        @if (available is not null)
+        {
+          @if (available.FilteredCount <= 0)
+          {
+            <TableRow>
+              <TableRowCell ColumnSpan="4">
+                No results found.
+              </TableRowCell>
+            </TableRow>
+          }
+          else
+          {
+            <Repeater Items="available.FilteredData[available.CurrentPage]">
+              <TableRow>
+                <TableRowCell>@context.ID</TableRowCell>
+                <TableRowCell>@context.CustomKey</TableRowCell>
+                <TableRowCell>@context.Name</TableRowCell>
+                <TableRowCell>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Success"
+                    ElementId="@($"btnAdd_productTo{Title}_{context.ID}")"
+                    Disabled="ViewState.InputDisable"
+                    Clicked="() => AddAssociationAsync(context.ID)">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Plus" />
+                    <Span Class="sr-only">Add</Span>
+                  </Blazorise.Button>
+                </TableRowCell>
+              </TableRow>
+            </Repeater>
+          }
+        }
+      </TableBody>
+    </Blazorise.Table>
+  </Column>
+  <Column ColumnSize="ColumnSize.Is4.OnTablet">
+    <Heading Size="HeadingSize.Is3">Assigned</Heading>
+    @if (assigned is not null)
+    {
+      <ServerSidePagingHeader
+        TRecord="TAssocModel"
+        TPagedRecord="TAssocPagedResults"
+        TEndpoint="TAssocSearchEndpoint"
+        Paging="assigned"
+        Disabled="ViewState.InputDisable"
+        Narrow="true"
+      />
+    }
+    <Blazorise.Table
+      Striped="true"
+      Hoverable="true"
+      Narrow="true"
+      Responsive="true"
+      Class="mb-3 table-cells-valign-middle">
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell>Name</TableHeaderCell>
+          @if (modalEdit is not null)
+          {
+            <TableHeaderCell Class="w-1" />
+          }
+          <TableHeaderCell Class="w-1" />
+        </TableRow>
+      </TableHeader>
+      <TableBody Style="min-height: 200px;">
+        @if (assigned is not null)
+        {
+          @if (assigned.FilteredCount <= 0)
+          {
+            <TableRow>
+              <TableRowCell ColumnSpan="3">
+                No Results Found
+              </TableRowCell>
+            </TableRow>
+          }
+          else
+          {
+            <Repeater Items="assigned.FilteredData[assigned.CurrentPage]">
+              <TableRow>
+                <TableRowCell>
+                  @if (Contract.CheckValidKey(GetAssocRecordTooltipString?.Invoke(context)))
+                  {
+                    <Tooltip Text="@GetAssocRecordTooltipString?.Invoke(context)">
+                      @GetAssocRecordDisplayString?.Invoke(context)
+                    </Tooltip>
+                  }
+                  else
+                  {
+                    @GetAssocRecordDisplayString?.Invoke(context)
+                  }
+                </TableRowCell>
+                @if (modalEdit is not null)
+                {
+                  <TableRowCell>
+                    <Blazorise.Button
+                      Type="ButtonType.Button"
+                      Color="Color.Info"
+                      ElementId="@($"btnEdit_productTo{Title}_{context.ID}")"
+                      Disabled="ViewState.InputDisable"
+                      Clicked="() => EditAssociationAsync(context)">
+                      <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.PencilAlt"/>
+                      <Span Class="sr-only">Edit</Span>
+                    </Blazorise.Button>
+                  </TableRowCell>
+                }
+                <TableRowCell>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Danger"
+                    ElementId="@($"btnRemove_productTo{Title}_{context.ID}")"
+                    Disabled="ViewState.InputDisable"
+                    Clicked="() => RemoveAssociationAsync(context)">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Trash" />
+                    <Span Class="sr-only">Remove</Span>
+                  </Blazorise.Button>
+                </TableRowCell>
+              </TableRow>
+            </Repeater>
+          }
+        }
+      </TableBody>
+    </Blazorise.Table>
+  </Column>
+</Row>
+<MessageModalFactory @ref="messageModalFactory" />
+<ConfirmModalFactory @ref="confirmModalFactory" />
+@* Must implement in inheritor <TModalEditAssoc @ref="modalEdit" /> *@

@@ -1,0 +1,23 @@
+<div ng-form="messageModalCtrl.forms.edit">
+  <div class="modal-header">
+    <h2 class="my-0" data-translate="{{messageModalCtrl.headerKey}}"></h2>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="messageModalLabel"
+          ng-bind-html="messageModalCtrl.displayMessage | trustedHtml">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer p-3">
+    <button type="button" class="btn btn-primary"
+      id="btnMessageModalOk" name="btnMessageModalOk"
+      translate-attr="{ title: messageModalCtrl.okKey,
+                        'aria-label': messageModalCtrl.okKey }"
+      data-translate="{{messageModalCtrl.okKey}}"
+      ng-click="messageModalCtrl.cancel()">
+    </button>
+  </div>
+</div>

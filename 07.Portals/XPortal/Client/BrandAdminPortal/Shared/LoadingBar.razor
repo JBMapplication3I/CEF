@@ -1,0 +1,45 @@
+﻿@implements IDisposable
+
+<Progress
+  Animated="true"
+  Striped="true"
+  Color="Color.Danger"
+  Value="@((int)progressPercent)"
+/>
+
+@code
+{
+  private readonly System.Threading.CancellationTokenSource cancel = new();
+
+  private double progressPercent;
+
+  /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+  /// resources.</summary>
+  public void Dispose()
+  {
+    cancel.Cancel();
+  }
+
+  /// <summary>Executes the initialized action.</summary>
+  protected override void OnInitialized()
+  {
+    progressPercent = 0;
+    base.OnInitialized();
+    _ = ProgressTask();
+  }
+
+  /// <summary>Progress task.</summary>
+  /// <returns>A Task.</returns>
+  private async Task ProgressTask()
+  {
+    var increment = 1.1;
+    while (!cancel.IsCancellationRequested)
+    {
+      progressPercent += increment;
+      increment /= 1.005;
+      StateHasChanged();
+      await Task.Delay(16).ConfigureAwait(false);
+    }
+    progressPercent = 100;
+  }
+}

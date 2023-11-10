@@ -1,0 +1,81 @@
+﻿<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-tk-5 row-cols-fk-6"
+  id="results-grid" name="results-grid" ng-init="kind = 'products'">
+  <div ng-repeat="recordID in scprgCtrl.service.activeSearchViewModel.ResultIDs
+                  | orderBy: scprgCtrl.service.getSorter()"
+    class="col mb-3 catalog-result-card"
+    id="cardCatalogGridProduct_{{recordID}}"
+    name="cardCatalogGridProduct_{{recordID}}"
+    sid="cardCatalogGridProduct_{{product.CustomKey}}">
+    <div ng-if="scprgCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).ID"
+      class="card border-0">
+      <!-- Product Image, with controls in the overlay -->
+      <div class="card-img-top bg-white"
+        cef-product-card-thumbnail-with-overlay-widget
+        product-id="recordID"
+        width="scprgCtrl.thumbW"
+        height="scprgCtrl.thumbH"
+        index="$index"
+        hide-favorites-list="scprgCtrl.hideFL"
+        hide-wish-list="scprgCtrl.hideWL"
+        hide-notify-me="scprgCtrl.hideNM"
+        hide-compare="scprgCtrl.hideC"
+        hide-icons="scprgCtrl.hideI">
+      </div>
+      <div class="card-body py-3 px-0">
+        <!-- Product Name -->
+        <div cef-product-card-name-widget
+          product-id="recordID"
+          rows="scprgCtrl.nameR"
+          index="$index">
+        </div>
+        <!-- Product Short Description -->
+        <div class="card-text my-1"
+          ng-if="!scprgCtrl.hideD"
+          cef-product-card-short-desc-widget
+          product-id="recordID"
+          rows="scprgCtrl.shortDescR">
+        </div>
+        <div class="card-text mt-1">
+          <div class="row no-gutters">
+            <div class="col-auto">
+              <!-- Product SKU Information -->
+              <div class="my-1"
+                ng-if="!scprgCtrl.hideK"
+                cef-product-card-sku-widget
+                product-id="recordID"
+                hide-sku="scprgCtrl.hideK">
+              </div>
+              <!-- Product Stock Information -->
+              <div class="card-text mt-1"
+                ng-if="!scprgCtrl.hideS"
+                cef-product-card-stock-widget
+                product-id="recordID"
+                hide-stock="scprgCtrl.hideS">
+              </div>
+            </div>
+            <div class="col text-right">
+              <!-- Product Pricing -->
+              <div class="mt-1"
+                cef-product-card-pricing-widget
+                product-id="recordID"
+                display-style="scprgCtrl.pds">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body py-1 px-0">
+        <!-- Call to Action Button -->
+        <div cef-product-card-action-button-widget
+          product-id="recordID"
+          quick-add="scprgCtrl.quickA"
+          button-view="scprgCtrl.abv"
+          index="$index">
+        </div>
+      </div>
+    </div>
+    <div ng-if="!scprgCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).ID"
+      cef-loading-widget overlay="false">
+    </div>
+  </div>
+</div>

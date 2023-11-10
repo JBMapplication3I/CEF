@@ -1,0 +1,336 @@
+// styles for the CEF user dashboard page
+$dashboard-color: $gray-light;
+
+$dashboard-nav-background: #fcfcfc;
+$dashboard-nav-border: #f7f7f7;
+
+// styles for desktop and tablet - no hamburger nav styles
+@media (min-width: $screen-sm) {
+    .cef-dashboard-container {
+        /*min-height: 95vh;*/
+    }
+
+    .cef-dashboard-nav {
+        /*padding-bottom: $grid-gutter-width;*/
+    }
+}
+
+// end @media ( min-width: $screen-sm )
+
+// .alert-danger { display: none; } // DO NOT DO THIS
+
+// styles for the dashboard sidebar navigation
+.cef-dashboard-nav {
+    //background: $dashboard-nav-background;
+    //border-right: 1px solid $dashboard-nav-border;
+
+    @media(min-width: 768px) and (max-width: 989px) {
+        .catalog-result-card img.img-responsive {
+            //height: 190px;
+        }
+    }
+
+    @media(min-width: 768px) and (max-width: 989px) {
+        .catalog-result-card img.img-responsive {
+            //height: 190px;
+        }
+    }
+
+    @media(min-width: 990px) and (max-width: 1199px) {
+        .catalog-result-card img.img-responsive {
+            //height: 190px;
+        }
+    }
+
+    @media(min-width: 1200px) {
+        .catalog-result-card img.img-responsive {
+            //height: 260px;
+        }
+    }
+
+    .navbar-default {
+
+        // background: transparent;
+        // border: 0;
+        // color: $dashboard-color;
+        // margin: 0 -15px;
+        .navbar-header,
+        .navbar-collapse {
+            //padding: 0;
+            //margin: 0;
+            //border: 0;
+            //background: transparent;
+        }
+
+        .navbar-brand {
+            //font-size: $font-size-sm;
+            //text-transform: uppercase;
+            //height: auto;
+            //margin: 0;
+        }
+
+        .navbar-nav {
+
+            //margin: 0;
+            &>li {
+
+                //width: 100%;
+                // button styles
+                .btn {
+
+                    //border: 0;
+                    //color: $dashboard-color;
+                    //text-align: left;
+                    //font-weight: bold;
+                    //padding: 9px 12px;
+                    //box-shadow: none;
+                    //border-radius: 33px 0 0 33px;
+                    &:focus {
+                        //outline: 0;
+                    }
+
+                    svg {
+
+                        //margin-bottom: -4px;
+                        .path-fill {
+                            //fill: $dashboard-color;
+                        }
+
+                        .path-stroke {
+                            //stroke: $dashboard-color;
+                        }
+                    }
+
+                    // end svg
+                    // default button styles
+                    &.btn-default {
+
+                        //background: transparent;
+                        &:hover {
+                            //background: $gray-lighter;
+                            //color: $dashboard-color;
+                        }
+                    }
+
+                    // end &.btn-default
+                    // button styles for the active tab
+                    &.active {
+
+                        //color: #fff;
+                        //background: $primary;
+                        //box-shadow: none;
+                        &:hover {}
+
+                        svg {
+                            .path-fill {
+                                //fill: #fff;
+                            }
+
+                            .path-stroke {
+                                //stroke: #fff;
+                            }
+                        }
+                    }
+
+                    // end &.active
+                }
+
+                // end &>.btn
+                // sub nav styles
+                ul {
+
+                    //margin-left: 0;
+                    //padding: ($grid-gutter-width / 2) 0 $grid-gutter-width $grid-gutter-width;
+                    &>li {
+
+                        //margin: 0;
+                        //display: block;
+                        // button styles
+                        .btn {
+
+                            //border-left: 2px solid transparent;
+                            //font-weight: normal;
+                            //border-radius: 0;
+                            // default button styles
+                            &.btn-default {
+                                &:hover {}
+                            }
+
+                            // end &.btn-default
+                            // button styles for the active tab
+                            &.active {
+
+                                //background: transparent;
+                                //border-left-color: $primary;
+                                //color: $primary;
+                                &:hover {}
+                            }
+
+                            // end &.active
+                        }
+
+                        // end &>.btn
+                    }
+
+                    // end &>li
+                }
+
+                // end ul
+            }
+
+            // end &>li
+        }
+
+        // end .navbar-nav
+        .cef-dashboard-nav-icon {
+            //display: inline-block;
+            //width: 27px;
+            //text-align: center;
+        }
+    }
+
+    // end .navbar-default
+}
+
+// end .cef-dashboard-nav
+
+.cef-notification-icon {
+    //display: inline-block;
+    //position: absolute;
+    //top: 50%;
+    //right: 12px;
+    //margin-top: -9px;
+    //background: $danger;
+    //color: #fff;
+    //border-radius: 8px;
+    //font-size: 12px;
+    //line-height: 18px;
+    //padding: 0 7px;
+}
+
+// style for the main dashboard content area
+.cef-dashboard-content {
+    .breadcrumb {
+        //background: transparent;
+        //margin-left: 0;
+        //margin-bottom: 0;
+        //padding-top: 17px;
+        //padding-left: 0;
+        //font-size: $font-size-sm;
+        //text-transform: uppercase;
+
+        a {
+
+            &:link,
+            &:visited {
+                //color: $dashboard-color;
+            }
+
+            &:hover {
+                //color: $primary;
+            }
+        }
+
+        // end a
+    }
+
+    // end .breadcrumb
+    h1,
+    h3,
+    h4,
+    .control-label {
+        //color: $dashboard-color;
+    }
+}
+
+// end .cef-dashboard-content
+
+.cef-required {
+    //color: $gray-light;
+}
+
+// styles for the panels used on the CEF dashboard
+// these are the global styles, panel specific styles can be found on their corrosponding .scss file
+
+$dashboard-panel-border-color: $gray-lighter;
+
+.cef-dashboard-panel {
+    //border: 1px solid $dashboard-panel-border-color;
+    //margin-bottom: $grid-gutter-width;
+
+    .panel-body {}
+
+    .panel-footer {
+        //background: transparent;
+        //border-top-color: $dashboard-panel-border-color;
+        //padding: 0;
+    }
+
+    .row { }
+
+    .col-xs-6 {
+        &:first-of-type {
+            .btn-link {
+                //border-left: 0;
+            }
+        }
+
+        // end &:first-of-type {
+    }
+
+    // end .col-xs-6
+    .btn-link {
+        //border-left: 1px solid $dashboard-panel-border-color;
+        //font-size: $font-size-lg;
+
+        &:hover {
+            //background-color: $gray-lighter;
+        }
+    }
+
+    // end .btn-link
+    .btn-edit {
+        &:hover {}
+    }
+
+    // end .btn-address-edit
+    .btn-delete {
+        //color: $danger;
+
+        &:hover {
+            //color: darken($danger, 15%);
+        }
+    }
+
+    // end .btn-address-delete
+}
+
+// end .cef-dashboard-panel
+
+// add a new card to wallet button
+.cef-dashboard-dash-button {
+    //border: 1px dashed $dashboard-panel-border-color;
+    //padding: $grid-gutter-width;
+    //margin-bottom: ($grid-gutter-width / 2);
+    //color: $gray-light;
+    //white-space: normal;
+
+    &:hover {
+        //background: lighten($success, 42%);
+    }
+
+    &:active {
+        //background: #fff;
+    }
+}
+
+// end .cef-add-card-to-wallet
+
+// css styles for the toggle buttons
+@import 'toggle';
+
+// styles specifically for the address book tab
+@import 'address-book';
+
+// styles specifically for the wallet tab
+@import 'wallet';

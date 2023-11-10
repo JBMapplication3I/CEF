@@ -1,0 +1,29 @@
+﻿<div class="form-vertical">
+    <div class="row" ng-if="confirmEmailCtrl.viewState.running">
+        <div class="col-12">
+            <div class="alert alert-info"
+                 data-translate="ui.storefront.user.confirmEmail.PleaseWaitWereConfirmingYourEmail"></div>
+        </div>
+    </div>
+    <div class="row" ng-if="confirmEmailCtrl.viewState.hasError">
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <p data-translate="ui.storefront.user.confirmEmail.OopsSomethingWentWrongWithValidatingYourEmail.Message"></p>
+                <p ng-bind="confirmEmailCtrl.viewState.errorMessage"></p>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="confirmEmailCtrl.viewState.success">
+        <div class="col-12">
+            <div class="alert alert-success"
+                 data-translate="ui.storefront.user.confirmEmail.SuccessYourEmailIsNowConfirmed.Message"></div>
+        </div>
+    </div>
+    <div class="row" ng-if="confirmEmailCtrl.viewState.success">
+        <div class="col-xs-offset-3 col-6">
+            <a class="btn btn-primary btn-lg btn-block"
+               ui-sref-plus uisrp-area="login"
+               ><span data-translate="ui.storefront.user.login.SignIn"></span></a>
+        </div>
+    </div>
+</div>

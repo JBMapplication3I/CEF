@@ -1,0 +1,216 @@
+<div ng-form="pvsModalCtrl.forms.selector">
+  <div class="modal-header">
+    <span class="h2" data-translate="ui.admin.common.VersionManager"></span>
+  </div>
+  <div class="modal-body form-vertical">
+    <div class="row">
+      <select-form-group
+        ng-if="pvsModalCtrl.versions.length"
+        class="col-sm-12"
+        key="RecordVersion"
+        ng-model="pvsModalCtrl.selectedRecordVersionID"
+        when-changed="pvsModalCtrl.onIDChange($event, control, newValue)"
+        selections="pvsModalCtrl.versions"
+        label-key="ui.admin.common.RecordVersion"
+        include-null="true" null-key="Creating a new version"
+        ng-disabled="pvsModalCtrl.viewState.running"
+        ng-required="false">
+      </select-form-group>
+      <div class="col-sm-12"
+        ng-if="!pvsModalCtrl.versions.length">
+        <p>There are no versions available for this record. Please create one.</p>
+      </div>
+      <div class="col-sm-12">
+        <hr class="my-2" />
+      </div>
+      <div class="col-sm-12">
+        <uib-tabset>
+          <uib-tab heading="Version Info">
+            <div class="tab-body row">
+              <text-input-form-group
+                class="col-sm-12"
+                key="VersionName"
+                ng-model="pvsModalCtrl.selectedRecordVersion.Name"
+                label-key="ui.admin.common.Name"
+                placeholder-key="ui.admin.common.Name"
+                max-length="256"
+                ng-disabled="pvsModalCtrl.selectedRecordVersion.ID > 0 || pvsModalCtrl.viewState.running"
+                ng-required="true">
+              </text-input-form-group>
+              <textarea-form-group
+                class="col-sm-12"
+                key="VersionDescription"
+                ng-model="pvsModalCtrl.selectedRecordVersion.Description"
+                placeholder-key="ui.admin.common.Description"
+                label-key="ui.admin.common.Description"
+                ng-disabled="pvsModalCtrl.selectedRecordVersion.ID > 0 || pvsModalCtrl.viewState.running"
+                ng-required="false">
+              </textarea-form-group>
+              <toggle-form-group
+                class="col-sm-6 col-md-2"
+                key="VersionIsDraft"
+                ng-model="pvsModalCtrl.selectedRecordVersion.IsDraft"
+                label-key="ui.admin.common.IsDraft"
+                tog-on-key="ui.admin.common.Yes" tog-on-style="btn-primary"
+                tog-off-key="ui.admin.common.No" tog-off-style="btn-info"
+                ng-disabled="pvsModalCtrl.selectedRecordVersion.ID > 0 || pvsModalCtrl.viewState.running"
+                ng-required="false">
+              </toggle-form-group>
+              <!--
+              <select-form-group
+                ng-if="pvsModalCtrl.types.length"
+                class="col-sm-6 col-md-4"
+                key="RecordVersionType"
+                ng-model="pvsModalCtrl.selectedRecordVersion.TypeID"
+                selections="pvsModalCtrl.types"
+                label-key="ui.admin.common.RecordVersionType"
+                when-changed="pvsModalCtrl.typeChanged($event, control)"
+                ng-required="true">
+              </select-form-group>
+              -->
+              <div class="col-sm-6 col-md-4">
+                <div class="form-group">
+                  <label class="control-label"
+                    data-translate="ui.admin.common.RecordVersionType">
+                  </label><br/>
+                  <label class="form-control-static"
+                    ng-bind="pvsModalCtrl.selectedRecordVersion.TypeName || '-'">
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="form-group">
+                  <label class="control-label"
+                    data-translate="ui.admin.versioning.OriginalPublishDate">
+                  </label><br/>
+                  <label class="form-control-static"
+                    ng-bind="(pvsModalCtrl.selectedRecordVersion.OriginalPublishDate
+                              | convertJSONDate | date: 'yyyy MMM dd hh:mm a') || '-'">
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="form-group">
+                  <label class="control-label"
+                    data-translate="ui.admin.versioning.MostRecentPublishDate">
+                  </label><br/>
+                  <label class="form-control-static"
+                    ng-bind="(pvsModalCtrl.selectedRecordVersion.MostRecentPublishDate
+                              | convertJSONDate | date: 'yyyy MMM dd hh:mm a') || '-'">
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-2 col-md-2">
+                <div class="form-group">
+                  <label class="control-label"
+                    data-translate="ui.admin.versioning.RecordID">
+                  </label><br/>
+                  <label class="form-control-static"
+                    ng-bind="pvsModalCtrl.selectedRecordVersion.RecordID">
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-4 col-md-4">
+                <div class="form-group">
+                  <label class="control-label"
+                    data-translate="ui.admin.common.PublishedByUser">
+                  </label><br/>
+                  <label class="form-control-static"
+                    ng-bind="pvsModalCtrl.selectedRecordVersion.PublishedByUserKey.Username || '-'">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </uib-tab>
+          <uib-tab heading="Compare with Live">
+            <!--
+            <div hljs source="pvsModalCtrl.selectedRecordVersionID.SerializedRecord">
+            </div>
+            -->
+            <div ng-bind-html="pvsModalCtrl.source | trustedHtml">
+            </div>
+            <div ng-if="pvsModalCtrl.left && pvsModalCtrl.right">
+<style>
+.match { color: gray; }
+.ins { color: black; background: #bbffbb; }
+.del { color: black; background: #ffbbbb; }
+</style>
+              <pre line-diff
+                left-obj="pvsModalCtrl.left"
+                right-obj="pvsModalCtrl.right"
+                options="pvsModalCtrl.diffOptions"
+                style="overflow-wrap: break-word; white-space: pre-wrap; max-height: 350px;">
+              </pre>
+            </div>
+          </uib-tab>
+        </uib-tabset>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer p-3">
+    <button type="button" class="btn btn-default btn-secondary"
+      translate-attr="{ title: 'ui.admin.common.Cancel',
+                        'aria-label': 'ui.admin.common.Cancel' }"
+      data-translate="ui.admin.common.Cancel"
+      ng-disabled="pvsModalCtrl.viewState.running"
+      ng-click="pvsModalCtrl.cancel()">
+    </button>
+    <button type="button" class="btn btn-info"
+      id="btnCreateVersion" name="btnCreateVersion"
+      translate-attr="{ title: 'ui.admin.common.CreateVersion',
+                        'aria-label': 'ui.admin.common.CreateVersion' }"
+      ng-disabled="pvsModalCtrl.forms.selector.$invalid
+                || !pvsModalCtrl.selectedRecordVersion
+                || pvsModalCtrl.selectedRecordVersion.ID > 0
+                || pvsModalCtrl.viewState.running"
+      ng-click="pvsModalCtrl.createVersion()">
+      <i class="far fa-code-branch"></i>&nbsp;<!--
+      --><span data-translate="ui.admin.common.CreateVersion"></span>
+    </button>
+    <button type="button" class="btn btn-primary"
+      id="btnUseVersion" name="btnUseVersion"
+      translate-attr="{ title: 'ui.admin.versioning.UseVersion',
+                        'aria-label': 'ui.admin.versioning.UseVersion' }"
+      ng-disabled="pvsModalCtrl.forms.selector.$invalid
+                || !pvsModalCtrl.selectedRecordVersion
+                || !pvsModalCtrl.selectedRecordVersion.ID
+                || pvsModalCtrl.viewState.running"
+      ng-click="pvsModalCtrl.ok()">
+      <i class="far fa-code-merge"></i>&nbsp;<!--
+      --><span data-translate="ui.admin.versioning.UseVersion"></span>
+    </button>
+    <!--
+    <button type="button" class="btn btn-info"
+      id="btnCreateDraft" name="btnCreateDraft"
+      translate-attr="{ title: 'ui.admin.products.CreateDraft',
+                        'aria-label': 'ui.admin.products.CreateDraft' }"
+      ng-click="pvsModalCtrl.createDraft()">
+      <i class="far fa-pencil-ruler"></i>&nbsp;< !--
+      -- ><span data-translate="ui.admin.products.CreateDraft"></span>
+    </button>
+    -->
+    <!--
+    <button type="button" class="btn btn-info"
+      id="btnCreateDraftAndPreview" name="btnCreateDraftAndPreview"
+      translate-attr="{ title: 'ui.admin.products.CreateDraftAndPreview',
+                        'aria-label': 'ui.admin.products.CreateDraftAndPreview' }"
+      ng-click="pvsModalCtrl.createDraftAndPreview()">
+      <i class="far fa-pencil-ruler"></i>&nbsp;< !--
+      -- ><i class="far fa-external-link"></i>&nbsp;< !--
+      -- ><span data-translate="ui.admin.products.CreateDraftAndPreview"></span>
+    </button>
+    -->
+    <!--
+    <button type="button" class="btn btn-info"
+      id="btnPublishVersion" name="btnPublishVersion"
+      translate-attr="{ title: 'ui.admin.common.PublishVersion',
+                        'aria-label': 'ui.admin.common.PublishVersion' }"
+      ng-disabled="pvsModalCtrl.forms.selector.$invalid
+                || !pvsModalCtrl.selectedRecordVersion.ID"
+      ng-click="pvsModalCtrl.publishVersion()">
+      <i class="far fa-upload"></i>&nbsp;< !--
+      -- ><span data-translate="ui.admin.common.PublishVersion"></span>
+    </button>
+    -->
+  </div>
+</div>

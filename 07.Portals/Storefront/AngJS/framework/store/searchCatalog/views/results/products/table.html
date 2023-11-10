@@ -1,0 +1,84 @@
+﻿<div class="row" id="results-table" ng-init="kind = 'products'">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped table-hover mb-0">
+        <thead>
+          <tr>
+            <th data-translate="ui.storefront.common.Name"></th>
+            <th ng-if="!scprtCtrl.hideK"
+              data-translate="ui.storefront.cart.SKU">
+            </th>
+            <th class="w-auto" ng-if="!scprtCtrl.hideS"
+              data-translate="ui.storefront.searchCatalog.compare.Stock">
+            </th>
+            <th class="w-8" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-auto" data-translate="ui.storefront.cart.addToCart"></th>
+            <th class="w-auto" ng-if="!scprtCtrl.hideI"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="recordID in scprtCtrl.service.activeSearchViewModel.ResultIDs
+                         | orderBy: scprtCtrl.service.getSorter()"
+            class="product catalog-result-card"
+            id="productTableBlock{{recordID}}"
+            name="productTableBlock{{recordID}}">
+            <!-- Name -->
+            <td class="w-20">
+              <div cef-product-card-name-widget
+                product-id="recordID"
+                rows="scprtCtrl.nameR"
+                index="$index">
+              </div>
+            </td>
+            <!-- SKU -->
+            <td class="w-10" ng-if="!scprtCtrl.hideK">
+              <div style="overflow-wrap: break-word;"
+                cef-product-card-sku-widget
+                product-id="recordID"
+                hide-labels="true"
+                hide-sku="scprtCtrl.hideK">
+              </div>
+            </td>
+            <!-- Stock -->
+            <td class="w-auto" ng-if="!scprtCtrl.hideS">
+              <div style="overflow-wrap: break-word;"
+                cef-product-card-stock-widget
+                product-id="recordID"
+                hide-labels="true"
+                left="true"
+                hide-stock="scprtCtrl.hideS">
+              </div>
+            </td>
+            <!-- Price -->
+            <td class="w-8">
+              <div cef-product-card-pricing-widget
+                product-id="recordID"
+                display-style="scprtCtrl.pds">
+              </div>
+            </td>
+            <!-- Action -->
+            <td class="w-10">
+              <div cef-product-card-action-button-widget
+                product-id="recordID"
+                as-icon="true"
+                quick-add="scprtCtrl.quickA"
+                button-view="scprtCtrl.abv">
+              </div>
+            </td>
+            <!-- Controls -->
+            <td class="w-6" ng-if="!scprtCtrl.hideI">
+              <div cef-product-card-controls-widget
+                product-id="recordID"
+                hide-favorites-list="scprtCtrl.hideFL"
+                hide-wish-list="scprtCtrl.hideWL"
+                hide-notify-me="scprtCtrl.hideNM"
+                hide-compare="scprtCtrl.hideC"
+                hide-icons="scprtCtrl.hideI">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+﻿<div class="cef-ship-home-store" ng-if="cefShipToCtrl.viewstate.productIsProcessing">
+    <i class="far fa-spinner fa-spin fa-3x"></i>&nbsp;<!--
+    --><span data-translate="ui.storefront.product.detail.productDetails.Loading.Ellipses"></span>
+</div>
+<div class="cef-ship-home-store" ng-if="!cefShipToCtrl.viewstate.productIsProcessing">
+    <div class="cef-ship-home-store-box" ng-if="cefShipToCtrl.includeAddressBlock">
+        <div class="box-ship-home transition open"
+             ng-show="cefShipToCtrl.isShipToHome"
+             ng-if="!cefShipToCtrl.authenticated">
+            <p class="text-center">
+                <button type="button" class="btn btn-secondary"
+                        login-modal
+                        ng-click="loginModalCtrl.open(null, null, true)"
+                        ><span data-translate="ui.storefront.location.shipTo.shipToDetails.signInToSelectYourShippingAddress"></span></button>
+            </p>
+        </div>
+        <div class="box-ship-home transition open"
+             ng-show="cefShipToCtrl.isShipToHome && cefShipToCtrl.authenticated">
+            <p ng-show="!cefShipToCtrl.address">
+                <span data-translate="ui.storefront.location.shipTo.shipToDetails.addToYour"></span>
+                <a ui-sref-plus uisrp-is-dashboard="true" uisrp-state="userDashboard.addressBook"
+                   ><span data-translate="ui.storefront.common.AddressBook"></span></a>
+                <span data-translate="ui.storefront.location.shipTo.shipToDetails.fromYourUserDashboardToSelectAnAddressToShipTo"></span>
+            </p>
+            <div ng-show="cefShipToCtrl.address">
+                <p data-translate="ui.storefront.common.ShipToHome"></p>
+                <p class="h4 serif mt-0 bold" ng-bind="cefShipToCtrl.address.Company || cefShipToCtrl.address.Slave.CustomKey"></p>
+                <address class="mb-0">
+                    {{cefShipToCtrl.address.Slave.Address.Street1}}<span ng-show="cefShipToCtrl.address.Slave.Address.Street1">, </span>
+                    {{cefShipToCtrl.address.Slave.Address.Street2}}<span ng-show="cefShipToCtrl.address.Slave.Address.Street2">, </span>
+                    {{cefShipToCtrl.address.Slave.Address.Street3}}<span ng-show="cefShipToCtrl.address.Slave.Address.Street3">, </span>
+                    {{cefShipToCtrl.address.Slave.Address.City}},
+                    {{cefShipToCtrl.address.Slave.Address.RegionCode || cefShipToCtrl.address.Slave.Address.Region.Code}}
+                    {{cefShipToCtrl.address.Slave.Address.PostalCode}}
+                </address>
+                <p ng-if="!cefShipToCtrl.phonesAreNotLinks">
+                    <span data-translate="ui.storefront.common.Telephone.Abbreviation"></span>
+                    <a class="btn-plain-link"
+                       ng-href="tel:{{cefShipToCtrl.address.Slave.Phone1}}"
+                       ng-bind="cefShipToCtrl.address.Slave.Phone1 | tel"></a>
+                </p>
+                <p ng-if="cefShipToCtrl.phonesAreNotLinks">
+                    <span data-translate="ui.storefront.common.Phone"></span>&nbsp;<!--
+                    --><span ng-bind="cefShipToCtrl.store.Slave.Phone1 | tel"></span>
+                </p>
+            </div>
+        </div>
+        <div class="box-ship-home transition open"
+             ng-show="!cefShipToCtrl.isShipToHome">
+            <div ng-if="cefShipToCtrl.hasStore">
+                <p ng-if="cefShipToCtrl.isInStorePickup"
+                   data-translate="ui.storefront.location.shipTo.shipToSelect.pickupAt"></p>
+                <p ng-if="cefShipToCtrl.isShipToStore"
+                   data-translate="ui.storefront.location.shipTo.shipToSelect.shipToStore"></p>
+                <p class="h3 serif mt bold" ng-bind="cefShipToCtrl.store.Name || cefShipToCtrl.store.CustomKey"></p>
+                <address class="mb-0">
+                    {{cefShipToCtrl.store.Slave.Address.Street1}}<span ng-show="cefShipToCtrl.store.Slave.Address.Street1">, </span>
+                    {{cefShipToCtrl.store.Slave.Address.Street2}}<span ng-show="cefShipToCtrl.store.Slave.Address.Street2">, </span>
+                    {{cefShipToCtrl.store.Slave.Address.Street3}}<span ng-show="cefShipToCtrl.store.Slave.Address.Street3">, </span>
+                    {{cefShipToCtrl.store.Slave.Address.City}},
+                    {{cefShipToCtrl.store.Slave.Address.Region.Code}}
+                    {{cefShipToCtrl.store.Slave.Address.PostalCode}}
+                </address>
+                <p ng-if="!cefShipToCtrl.phonesAreNotLinks">
+                    <span data-translate="ui.storefront.common.Telephone.Abbreviation"></span>
+                    <a class="btn-plain-link"
+                       ng-href="tel:{{cefShipToCtrl.store.Slave.Phone1}}"
+                       ng-bind="cefShipToCtrl.store.Slave.Phone1 | tel"></a>
+                </p>
+                <p ng-if="cefShipToCtrl.phonesAreNotLinks">
+                    <span data-translate="ui.storefront.common.Phone"></span>&nbsp;<!--
+                    --><span ng-bind="cefShipToCtrl.store.Slave.Phone1 | tel"></span>
+                </p>
+                <location-store-hours
+                    store="cefShipToCtrl.store"
+                    short-format="true"
+                    small-text="true">
+                </location-store-hours>
+            </div>
+            <div ng-if="!cefShipToCtrl.hasStore">
+                <p><a class="btn btn-tertiary btn-sm"
+                      ui-sref-plus uisrp-area="storeLocator"
+                      ><span data-translate="ui.storefront.location.shipTo.shipToDetails.selectAStore"></span></a></p>
+            </div>
+        </div>
+    </div>
+</div>

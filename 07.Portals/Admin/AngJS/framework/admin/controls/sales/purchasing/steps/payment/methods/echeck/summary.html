@@ -1,0 +1,28 @@
+<!-- step.payment.method.eCheck.summary -->
+<div class="row small">
+  <div ng-if="pmesCtrl.cvAuthenticationService.isAuthenticated()
+    && pmesCtrl.cefConfig.featureSet.payments.wallet.enabled
+    && (pmesCtrl.wallet | filter: { 'RoutingNumber': '' }).length"
+    class="col-xs-12 text-left">
+    <span ng-bind="pmesCtrl.selectedEcheck.CardHolderName">
+    </span><br/>
+    <span ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&nbsp;'
+      + (pmesCtrl.selectedEcheck.RoutingNumber | limitTo: -3)) | trustedHtml">
+    </span><br/>
+    <span ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&nbsp;'
+      + (pmesCtrl.selectedEcheck.AccountNumber | limitTo: -3)) | trustedHtml">
+    </span><br/>
+  </div>
+  <div ng-if="!pmesCtrl.cefConfig.featureSet.payments.wallet.enabled
+    || !pmesCtrl.selectedEcheckIsFromWallet"
+    class="col-xs-12 text-left">
+    <span ng-bind="pmesCtrl.paymentData.PayByECheck.AccountHolderName">
+    </span><br/>
+    <span ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&nbsp;'
+      + (pmesCtrl.paymentData.PayByECheck.RoutingNumber | limitTo: -3)) | trustedHtml">
+    </span><br/>
+    <span ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&nbsp;'
+      + (pmesCtrl.paymentData.PayByECheck.AccountNumber | limitTo: -3)) | trustedHtml">
+    </span>
+  </div>
+</div>

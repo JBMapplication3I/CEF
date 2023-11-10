@@ -1,0 +1,1172 @@
+﻿<!-- Loading -->
+<div ng-if="!udsdCtrl.salesObject" class="mb-3">
+  <div cef-loading-widget
+    overlay="false"
+    size="4"
+    message="udsdCtrl.viewState.waitMessage">
+  </div>
+</div>
+<!-- Main Body -->
+<div ng-if="udsdCtrl.salesObject">
+  <!-- Logo for print view only -->
+  <div ng-if="!udsdCtrl.$state.includes('userDashboard.salesGroups.detail')"
+    class="row d-none d-print-block">
+    <div class="col-12 text-right">
+      <div class="brand mb-3">
+        <img alt="{{udsdCtrl.cefConfig.companyName}}"
+          ng-src="{{('' | corsLink: 'companyLogo') || '/Portals/0/clarity-ecommerce-logo.png' }}" />
+      </div>
+    </div>
+  </div>
+  <!-- Header Row, has Title and Action Buttons/Dropdown -->
+  <div class="row align-items-center mb-3">
+    <!-- Title -->
+    <div class="col col-pr-12">
+      <div ng-if="!udsdCtrl.$state.includes('userDashboard.salesGroups')">
+        <h1 class="my-0"><!--
+        --><i sid="UserDashboardTabHeaderIcon"
+            ng-if="!udsdCtrl.$state.is('userDashboard.dashboard')
+              && !udsdCtrl.$state.is('userDashboard.salesOrders.detail')"
+            ng-class="udsdCtrl.$state.current.icon
+              || udsdCtrl.$state.current.parent && udsdCtrl.$state.get(udsdCtrl.$state.current.parent).icon"
+            aria-hidden="true" class="ng-scope far fa-file-invoice-dollar"></i>&nbsp;<!--
+        --><span sid="UserDashboardSalesOrderText" ng-bind="udsdCtrl.salesObjectType"></span>&nbsp;<!--
+        --><span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+        --><span ng-bind="udsdCtrl.salesObject.ID"></span><!--
+        --><span ng-if="udsdCtrl.salesObject.CustomKey">&nbsp;<!--
+        -->[<span ng-bind="udsdCtrl.salesObject.CustomKey"></span>]</span></h1>
+      </div>
+      <div ng-if="udsdCtrl.$state.includes('userDashboard.salesGroups')">
+        <h4 class="my-0"><!--
+        --><span sid="UserDashboardSalesOrderText" ng-bind="udsdCtrl.salesObjectType"></span>&nbsp;<!--
+        --><span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+        --><span ng-bind="udsdCtrl.salesObject.ID"></span><!--
+        --><span ng-if="udsdCtrl.salesObject.CustomKey">&nbsp;<!--
+        -->[<span ng-bind="udsdCtrl.salesObject.CustomKey"></span>]</span></h4>
+      </div>
+    </div>
+    <!-- Actions -->
+    <div class="col-auto d-print-none">
+      <button ng-if="udsdCtrl.type == 'sales-quote' && udsdCtrl.salesObject.StatusKey !== 'Approved'
+        && !udsdCtrl.salesObject.SalesGroupAsRequestMasterID"
+        type="button" class="btn btn-outline-success d-none d-sm-none d-md-inline-block"
+        id="btnQuoteApproveMenuItem" name="btnQuoteApproveMenuItem"
+        translate-attr="{ title: udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitle,
+                          'aria-label': udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitle }"
+        ng-disabled="udsdCtrl.salesObject.StateKey !== 'WORK' || udsdCtrl.salesObject.StatusKey !== 'Processed'"
+        ng-click="udsdCtrl.startQuoteApprove()">
+        <i class="far fa-receipt" aria-hidden="true"></i>&nbsp;<!--
+        --><span data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitle}}"></span>
+      </button>
+      <button ng-if="udsdCtrl.type == 'sales-quote' && udsdCtrl.salesObject.StatusKey !== 'Approved'
+        && !udsdCtrl.salesObject.SalesGroupAsRequestMasterID"
+        type="button" class="btn btn-outline-success d-none d-sm-none d-md-inline-block"
+        id="btnQuoteApproveAndPayMenuItem" name="btnQuoteApproveAndPayMenuItem"
+        translate-attr="{ title: udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitleAlt,
+                          'aria-label': udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitleAlt }"
+        ng-disabled="udsdCtrl.salesObject.StateKey !== 'WORK' || udsdCtrl.salesObject.StatusKey !== 'Processed'"
+        ng-click="udsdCtrl.startQuoteApproveAndPay()">
+        <i class="far fa-credit-card" aria-hidden="true"></i>&nbsp;<!--
+        --><span data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitleAlt}}"></span>
+      </button>
+      <button ng-if="udsdCtrl.type == 'sales-quote' && udsdCtrl.salesObject.StatusKey !== 'Approved'
+        && !udsdCtrl.salesObject.SalesGroupAsRequestMasterID"
+        type="button" class="btn btn-outline-warning d-none d-sm-none d-md-inline-block"
+        id="btnQuoteRejectMenuItem" name="btnQuoteRejectMenuItem"
+        translate-attr="{ title: udsdCtrl.cvServiceStrings.salesQuotes.statuses.rejected.actionTitle,
+                          'aria-label': udsdCtrl.cvServiceStrings.salesQuotes.statuses.rejected.actionTitle }"
+        ng-disabled="udsdCtrl.salesObject.StateKey !== 'WORK' || udsdCtrl.salesObject.StatusKey !== 'Processed'"
+        ng-click="udsdCtrl.startQuoteReject()">
+        <i class="far fa-minus-circle" aria-hidden="true"></i>&nbsp;<!--
+        --><span data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.rejected.actionTitle}}"></span>
+      </button>
+      <button ng-if="udsdCtrl.type == 'sales-quote' && udsdCtrl.salesObject.StatusKey !== 'Approved'
+        && !udsdCtrl.salesObject.SalesGroupAsRequestMasterID"
+        type="button" class="btn btn-outline-danger d-none d-sm-none d-md-inline-block"
+        id="btnQuoteCancelMenuItem" name="btnQuoteCancelMenuItem"
+        translate-attr="{ title: udsdCtrl.cvServiceStrings.salesQuotes.statuses.void.actionTitle,
+                          'aria-label': udsdCtrl.cvServiceStrings.salesQuotes.statuses.void.actionTitle }"
+        ng-disabled="udsdCtrl.salesObject.StateKey !== 'WORK'"
+        ng-click="udsdCtrl.startQuoteVoid()">
+        <i class="fas fa-times" aria-hidden="true"></i>&nbsp;<!--
+        --><span data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.void.actionTitle}}"></span>
+      </button>
+      <button type="button" class="btn btn-outline-secondary d-none d-sm-none d-md-inline-block"
+        id="btnPrint" name="btnPrint"
+        translate-attr="{ title: 'ui.storefront.common.Print',
+                          'aria-label': 'ui.storefront.common.Print' }"
+        ng-click="udsdCtrl.print()">
+        <i class="far fa-print" aria-hidden="true"></i>&nbsp;<!--
+        --><span data-translate="ui.storefront.common.Print"></span>
+      </button>
+      <div class="btn-group d-inline-block d-sm-inline-block d-md-none" uib-dropdown is-open="udsdCtrl.isopen">
+        <button type="button" class="btn btn-outline-primary rounded no-caret"
+          id="btnActions" name="btnActions"
+          uib-dropdown-toggle>
+          <span data-translate="ui.storefront.messaging.messaging-folder.Actions"></span>&nbsp;<!--
+          --><i class="far fa-chevron-down pl-2" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right cef-dropdown"
+          uib-dropdown-menu role="menu" aria-labelledby="btnActions">
+          <li role="menuitem">
+            <button type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnPrintMenuItem" name="btnPrintMenuItem"
+              translate-attr="{ title: 'ui.storefront.common.Print',
+                                'aria-label': 'ui.storefront.common.Print' }"
+              ng-click="udsdCtrl.print()">
+              <i class="far fa-print fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="ui.storefront.common.Print"></span>
+            </button>
+          </li>
+          <!-- ORDER ACTIONS -->
+          <li role="menuitem"
+            ng-if="udsdCtrl.type == 'sales-order' && udsdCtrl.cefConfig.featureSet.salesReturns.enabled">
+            <button type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnRequestReturn" name="btnRequestReturn"
+              ng-disabled="!udsdCtrl.readyForReturn"
+              ng-click="udsdCtrl.requestReturn()">
+              <i class="far fa-truck fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="ui.storefront.userDashboard2.controls.salesDetail.ReturnItems"></span>
+            </button>
+          </li>
+          <!-- INVOICE ACTIONS -->
+          <li role="menuitem" ng-if="udsdCtrl.type == 'sales-invoice'">
+            <button type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnPayInvoice" name="btnPayInvoice"
+              ng-disabled="udsdCtrl.salesObject.BalanceDue <= 0
+                || udsdCtrl.salesObject.StatusKey !== 'Unpaid'
+                || udsdCtrl.salesObject.StateKey !== 'WORK'"
+              ng-click="udsdCtrl.startPayInvoice(null, null, true)">
+              <i class="far fa-credit-card fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="ui.storefront.userDashboard.controls.salesDetail.PayInvoice"></span>
+            </button>
+          </li>
+          <!-- QUOTE ACTIONS -->
+          <li role="menuitem"
+            ng-if="udsdCtrl.type == 'sales-quote' && udsdCtrl.salesObject.StatusKey !== 'Approved'
+              && !udsdCtrl.salesObject.SalesGroupAsRequestMasterID">
+            <button type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnQuoteApproveMenuItem" name="btnQuoteApproveMenuItem"
+              translate-attr="{ title: udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitle,
+                                'aria-label': udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitle }"
+              ng-disabled="udsdCtrl.salesObject.StateKey !== 'WORK' && udsdCtrl.salesObject.StatusKey !== 'Processed'"
+              ng-click="udsdCtrl.startQuoteApprove()">
+              <i class="far fa-receipt fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitle}}"></span>
+            </button>
+          </li>
+          <li role="menuitem"
+            ng-if="udsdCtrl.type == 'sales-quote' && udsdCtrl.salesObject.StatusKey !== 'Approved'
+              && !udsdCtrl.salesObject.SalesGroupAsRequestMasterID">
+            <button type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnQuoteApproveAndPayMenuItem" name="btnQuoteApproveAndPayMenuItem"
+              translate-attr="{ title: udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitleAlt,
+                                'aria-label': udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitleAlt }"
+              ng-disabled="udsdCtrl.salesObject.StateKey !== 'WORK' && udsdCtrl.salesObject.StatusKey !== 'Processed'"
+              ng-click="udsdCtrl.startQuoteApproveAndPay()">
+              <i class="far fa-credit-card fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.actionTitleAlt}}"></span>
+            </button>
+          </li>
+          <li role="menuitem"
+            ng-if="udsdCtrl.type == 'sales-quote' && udsdCtrl.salesObject.StatusKey !== 'Approved' 
+              && !udsdCtrl.salesObject.SalesGroupAsRequestMasterID">
+            <button type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnQuoteRejectMenuItem" name="btnQuoteRejectMenuItem"
+              translate-attr="{ title: udsdCtrl.cvServiceStrings.salesQuotes.statuses.rejected.actionTitle,
+                                'aria-label': udsdCtrl.cvServiceStrings.salesQuotes.statuses.rejected.actionTitle }"
+              ng-disabled="udsdCtrl.salesObject.StateKey !== 'WORK' && udsdCtrl.salesObject.StatusKey !== 'Processed'"
+              ng-click="udsdCtrl.startQuoteReject()">
+              <i class="far fa-minus-circle fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.rejected.actionTitle}}"></span>
+            </button>
+          </li>
+          <li role="menuitem"
+            ng-if="udsdCtrl.type == 'sales-quote' && udsdCtrl.salesObject.StatusKey !== 'Approved' 
+              && !udsdCtrl.salesObject.SalesGroupAsRequestMasterID">
+            <button type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnQuoteCancelMenuItem" name="btnQuoteCancelMenuItem"
+              translate-attr="{ title: udsdCtrl.cvServiceStrings.salesQuotes.statuses.void.actionTitle,
+                                'aria-label': udsdCtrl.cvServiceStrings.salesQuotes.statuses.void.actionTitle }"
+              ng-disabled="udsdCtrl.salesObject.StateKey !== 'WORK'"
+              ng-click="udsdCtrl.startQuoteVoid()">
+              <i class="fas fa-times fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.void.actionTitle}}"></span>
+            </button>
+          </li>
+          <!-- ORDER & QUOTE ACTIONS -->
+          <li role="menuitem"
+            ng-if="udsdCtrl.type == 'order' || udsdCtrl.type == 'quote'">
+            <button type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnPresentPaymentInstructions" name="btnPresentPaymentInstructions"
+              ng-if="udsdCtrl.allowPayoneer
+                && udsdCtrl.salesObject.SerializableAttributes['Preferred Payment Method'].Value === 'Payoneer'"
+              ng-click="udsdCtrl.showPayoneerPaymentInstructions()">
+              <i class="far fa-credit-card fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="ui.storefront.userDashboard.controls.salesDetail.SeePayoneerPaymentInstructions"></span>
+            </button>
+          </li>
+          <!-- OTHER ACTIONS -->
+          <li role="menuitem">
+            <button ng-if="udsdCtrl.allowContactSeller && udsdCtrl.sellerUserID"
+              type="button" class="btn btn-link dropdown-item with-icon w-100 text-left"
+              id="btnPayoneerPaymentInstr" name="btnPayoneerPaymentInstr"
+              translate-attr="{ title: 'ui.storefront.common.ContactSeller' }"
+              cef-start-chat-button
+              target-user-id="udsdCtrl.sellerUserID"
+              target-order-id="udsdCtrl.salesObjectType == 'sales-order' ? udsdCtrl.salesOrder.ID : null"
+              target-return-id="udsdCtrl.salesObjectType == 'sales-return' ? udsdCtrl.salesReturn.ID : null"
+              target-invoice-id="udsdCtrl.salesObjectType == 'sales-invoice' ? udsdCtrl.salesInvoice.ID : null"
+              target-quote-id="udsdCtrl.salesObjectType == 'sales-quote' ? udsdCtrl.salesQuote.ID : null"
+              target-sample-id="udsdCtrl.salesObjectType == 'sample-request' ? udsdCtrl.sampleRequest.ID : null">
+              <i class="far fa-comments fa-fw" aria-hidden="true"></i>&nbsp;<!--
+              --><span data-translate="ui.storefront.common.ContactSeller"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Details Row when in Non-Sales Group View (shown above summary) -->
+  <div class="row" ng-if="!udsdCtrl.$state.includes('userDashboard.salesGroups')">
+    <!-- Details Block -->
+    <div ng-class="udsdCtrl.$state.includes('userDashboard.salesGroups') ? 'col-12' : 'col-sm-6 col-md-4'">
+      <hr class="my-2 border-medium" />
+      <h4 class="bold"
+        sid="SalesOrderDetailsText"
+        data-translate="ui.storefront.common.Detail.Plural">
+      </h4>
+      <hr class="my-2 border-medium" />
+      <div class="row">
+        <div class="col-12">
+          <table class="w-100 mb-3">
+            <tr>
+              <td>
+                <b sid="SalesOrderNumberText"
+                  data-translate="ui.storefront.common.Number.Symbol">
+                </b>
+              </td>
+              <td>
+                <span id="{{udsdCtrl.type}}-ID"
+                  ng-bind="udsdCtrl.salesObject.ID">
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b sid="SalesOrderStatusText"
+                  data-translate="ui.storefront.userDashboard2.controls.salesDetail.Status">
+                </b>
+              </td>
+              <td>
+                <span id="{{udsdCtrl.type}}-statusName"
+                  ng-bind="udsdCtrl.salesObject.StatusName">
+                </span>
+              </td>
+            </tr>
+            <tr ng-if="udsdCtrl.salesObject.CustomKey">
+              <td>
+                <b data-translate="ui.storefront.common.Key"></b>
+              </td>
+              <td>
+                <span class="break-word"
+                  id="{{udsdCtrl.type}}-customKey"
+                  ng-bind="udsdCtrl.salesObject.CustomKey">
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b sid="SalesOrderDateText"
+                  data-translate="ui.storefront.common.Date">
+                </b>
+              </td>
+              <td>
+                <span id="{{udsdCtrl.type}}-salesDate"
+                  ng-bind="udsdCtrl.salesObject.CreatedDate | convertJSONDate | date:'MMM dd, yyyy'">
+                </span>
+              </td>
+            </tr>
+            <tr ng-if="udsdCtrl.type == 'sales-order'">
+              <td>
+                <b sid="SalesOrderBalanceDueText"
+                  data-translate="ui.storefront.userDashboard2.controls.salesDetail.BalanceDue">
+                </b>
+              </td>
+              <td>
+                <span ng-if="udsdCtrl.salesObject.BalanceDue > 0"
+                  id="{{udsdCtrl.type}}-balanceDue"
+                  ng-bind="udsdCtrl.salesObject.BalanceDue | globalizedCurrency">
+                </span>
+                <span ng-if="!udsdCtrl.hasBalanceDue"
+                  id="{{udsdCtrl.type}}-balanceDue"
+                  data-translate="ui.storefront.userDashboard2.controls.salesDetail.Paid">
+                </span>
+              </td>
+            </tr>
+            <tr ng-if="udsdCtrl.type == 'sales-invoice'
+              && !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice')">
+              <td colspan="2">
+                <b sid="SalesInvoiceBalanceDueText"
+                  data-translate="ui.storefront.userDashboard2.controls.salesDetail.BalanceDue">
+                </b>
+              </td>
+            </tr>
+            <tr ng-if="udsdCtrl.type == 'sales-invoice'
+              && !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice')">
+              <td colspan="2" class="alert p-2"
+                ng-class="{ 'alert-success': !udsdCtrl.hasBalanceDue,
+                            'alert-warning': udsdCtrl.hasBalanceDue && !udsdCtrl.balanceIsPassedDue,
+                            'alert-danger': udsdCtrl.balanceIsPassedDue }">
+                <table class="w-100">
+                  <tr>
+                    <td class="w-100"
+                      ng-class="{ 'text-center': !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice') }">
+                      <span ng-if="!udsdCtrl.hasBalanceDue"
+                        id="{{udsdCtrl.type}}-balanceDue"
+                        data-translate="ui.storefront.userDashboard2.controls.salesDetail.Paid">
+                      </span>
+                      <span ng-if="udsdCtrl.hasBalanceDue">
+                        <span id="{{udsdCtrl.type}}-balanceDue"
+                          ng-bind="udsdCtrl.salesObject.BalanceDue + udpimcCtrl.fee | globalizedCurrency">
+                        </span><!--
+                        --><span ng-if="udsdCtrl.hasDueDate"
+                          ng-class="{ 'd-block': !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice') }"
+                          >&nbsp;<span data-translate="ui.storefront.userDashboard.invoices.DueBy"></span>&nbsp;<!--
+                          --><span id="{{udsdCtrl.type}}-dueDate"
+                            ng-class="{ 'd-block': !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice') }"
+                            ng-bind="udsdCtrl.salesObject.DueDate | convertJSONDate | date: 'MMM dd, yyyy'">
+                          </span>
+                        </span>
+                      </span>
+                    </td>
+                    <td class="w-auto d-print-none" ng-if="udsdCtrl.hasBalanceDue">
+                      <button type="button" class="btn" style="white-space: nowrap;"
+                        ng-class="{ 'btn-warning': udsdCtrl.hasBalanceDue && !udsdCtrl.balanceIsPassedDue,
+                                    'btn-danger': udsdCtrl.balanceIsPassedDue }"
+                        id="btnMakeAnInvoicePayment" name="btnMakeAnInvoicePayment"
+                        translate-attr="{ title: 'ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment',
+                                          'aria-label': 'ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment' }"
+                        data-translate="ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment"
+                        ng-click="udsdCtrl.startPayInvoice(null, null, true)">
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div ng-if="udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice')"
+          class="col-12 col-md-6 d-print-4">
+          <table class="w-100 mb-3">
+            <tr>
+              <td>
+                <b sid="SalesInvoiceBalanceDueText"
+                  data-translate="ui.storefront.userDashboard2.controls.salesDetail.BalanceDue">
+                </b>
+              </td>
+            </tr>
+            <tr>
+              <td class="alert p-2"
+                ng-class="{
+                  'alert-success': !udsdCtrl.hasBalanceDue,
+                  'alert-warning': udsdCtrl.hasBalanceDue && !udsdCtrl.balanceIsPassedDue,
+                  'alert-danger': udsdCtrl.balanceIsPassedDue }">
+                <table>
+                  <tr>
+                    <td class="w-100">
+                      <span ng-if="!udsdCtrl.hasBalanceDue"
+                        id="{{udsdCtrl.type}}-balanceDue"
+                        data-translate="ui.storefront.userDashboard2.controls.salesDetail.Paid">
+                      </span>
+                      <span ng-if="udsdCtrl.hasBalanceDue">
+                        <span id="{{udsdCtrl.type}}-balanceDue"
+                          ng-bind="udsdCtrl.salesObject.BalanceDue | globalizedCurrency">
+                        </span><!--
+                        --><span ng-if="udsdCtrl.hasDueDate">&nbsp;<!--
+                          --><span data-translate="ui.storefront.userDashboard.invoices.DueBy"></span>&nbsp;<!--
+                          --><span id="{{udsdCtrl.type}}-dueDate"
+                            ng-bind="udsdCtrl.salesObject.DueDate | convertJSONDate | date: 'MMM dd, yyyy'">
+                          </span>
+                        </span>
+                      </span>
+                    </td>
+                    <td class="w-auto d-print-none" ng-if="udsdCtrl.hasBalanceDue">
+                      <button type="button" class="btn" style="white-space: nowrap;"
+                        ng-class="{ 'btn-warning': udsdCtrl.hasBalanceDue && !udsdCtrl.balanceIsPassedDue,
+                                    'btn-danger': udsdCtrl.balanceIsPassedDue }"
+                        id="btnMakeAnInvoicePayment" name="btnMakeAnInvoicePayment"
+                        translate-attr="{ title: 'ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment',
+                                          'aria-label': 'ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment' }"
+                        data-translate="ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment"
+                        ng-click="udsdCtrl.startPayInvoice(null, null, true)">
+                      </button>
+                    </td>
+                  </tr>
+                  <tr ng-if="udsdCtrl.balanceIsPassedDue">
+                    <td data-translate="ui.storefront.userDashboard.invoices.YourPaymentIsPassedDue">
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Billing Info Block -->
+    <div ng-if="!udsdCtrl.$state.includes('userDashboard.salesGroups') && udsdCtrl.salesObject.BillingContact"
+      class="col-sm-6 col-md-4">
+      <hr class="my-2 border-medium" />
+      <h4 class="bold" data-translate="ui.storefront.userDashboard2.controls.salesDetail.BillingInfo"></h4>
+      <hr class="my-2 border-medium" />
+      <div ng-if="udsdCtrl.salesObject.SalesGroupAsMasterID"
+        class="mb-3"
+        cef-contact-address-block contact="udsdCtrl.salesGroupBillingContact">
+        This order was split into multiple targets, see&nbsp;<!--
+        --><a id="{{udsdCtrl.type}}_billing_salesGroupMasterID"
+          ui-sref="userDashboard.salesGroups.detail({ 'ID': udsdCtrl.salesObject.SalesGroupAsMasterID })"
+          >Sales Group #{{udsdCtrl.salesObject.SalesGroupAsMasterID}}</a>&nbsp;<!--
+        -->for more details.
+      </div>
+      <div ng-if="udsdCtrl.salesObject.SalesGroupID"
+        class="mb-3"
+        cef-contact-address-block contact="udsdCtrl.salesGroupBillingContact">
+        This return is part of an order which was split into multiple targets, see&nbsp;<!--
+        --><a id="{{udsdCtrl.type}}_billing_salesGroupMasterID"
+          ui-sref="userDashboard.salesGroups.detail({ 'ID': udsdCtrl.salesObject.SalesGroupID })"
+          >Sales Group #{{udsdCtrl.salesObject.SalesGroupID}}</a>&nbsp;<!--
+        -->for more details.
+      </div>
+      <div ng-if="udsdCtrl.salesObject.SalesGroupAsMasterID">
+        <small>Note: This information came from the Sales Group.</small>
+      </div>
+      <div ng-if="udsdCtrl.salesObject.SalesGroupID">
+        <small>Note: This information came from the Sales Group.</small>
+      </div>
+      <div class="mb-3" cef-contact-address-block contact="udsdCtrl.salesObject.BillingContact"></div>
+    </div>
+    <!-- Shipping Info Block -->
+    <div class="col-sm-6 col-md-4"
+      ng-if="!udsdCtrl.$state.includes('userDashboard.salesGroups')
+        && (udsdCtrl.salesObject.BillingContact && udsdCtrl.salesObject.ShippingSameAsBilling
+            || udsdCtrl.salesObject.ShippingContact
+            || udsdCtrl.salesObject.SalesGroupAsMasterID
+            || udsdCtrl.salesObject.SalesGroupID)">
+      <hr class="my-2 border-medium" />
+      <h4 class="bold" sid="SalesOrderShippingInfoText"
+        data-translate="ui.storefront.common.ShippingInfo">
+      </h4>
+      <hr class="my-2 border-medium" />
+      <div ng-if="udsdCtrl.salesObject.SalesGroupAsMasterID">
+        This order was split into multiple targets, see&nbsp;<!--
+        --><a id="{{udsdCtrl.type}}_shipping_salesGroupMasterID"
+          ui-sref="userDashboard.salesGroups.detail({ 'ID': udsdCtrl.salesObject.SalesGroupAsMasterID })"
+          >Sales Group #{{udsdCtrl.salesObject.SalesGroupAsMasterID}}</a>&nbsp;<!--
+        -->for more details.
+      </div>
+      <div ng-if="udsdCtrl.salesObject.SalesGroupID">
+        This return is part of an order which was split into multiple targets, see&nbsp;<!--
+        --><a id="{{udsdCtrl.type}}_shipping_salesGroupMasterID"
+          ui-sref="userDashboard.salesGroups.detail({ 'ID': udsdCtrl.salesObject.SalesGroupID })"
+          >Sales Group #{{udsdCtrl.salesObject.SalesGroupID}}</a>&nbsp;<!--
+        -->for more details.
+      </div>
+      <div ng-if="!udsdCtrl.salesObject.SalesGroupAsMasterID && !udsdCtrl.salesObject.SalesGroupID"
+        ng-switch="udsdCtrl.salesObject.ShippingSameAsBilling
+          ? udsdCtrl.salesObject.ShippingSameAsBilling
+          : udsdCtrl.salesObject.ShippingContact.SameAsBilling">
+        <div ng-switch-when="true">
+          <p data-translate="ui.storefront.common.SameAsBilling"></p>
+        </div>
+        <div ng-switch-when="false">
+          <div class="mb-3"
+            cef-contact-address-block
+            contact="udsdCtrl.salesObject.ShippingContact">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Summary Header when in Non-Sales Group View -->
+  <div class="row" ng-if="!udsdCtrl.$state.includes('userDashboard.salesGroups')">
+    <div class="col-12">
+      <hr class="my-2 border-medium" />
+      <h3 class="mt-1 mb-2"
+        sid="SalesOrderSummaryText"
+        data-translate="ui.storefront.userDashboard2.controls.salesDetail.Summary">
+      </h3>
+    </div>
+  </div>
+  <!-- Sales Items Table -->
+  <div class="row">
+    <!-- If there are a lot of line items, show paging controls and limit the UI generated at one time -->
+    <div ng-if="udsdCtrl.salesObject.SalesItems.length > 20"
+      class="col-12 d-print-none">
+      <div cef-paging-header paging="udsdCtrl.itemsPaging"></div>
+    </div>
+    <div class="col-12">
+      <table class="table table-sm table-hover mb-3">
+        <thead>
+          <tr class="first last">
+            <th class="w-auto d-none d-xl-table-cell"
+              data-translate="ui.storefront.cart.SKU">
+            </th>
+            <th class="w-42">
+              <span class="d-none d-xl-block"
+                data-translate="ui.storefront.common.Name">
+              </span>
+              <span class="d-block d-xl-none"
+                data-translate="ui.storefront.common.NameSlashSku">
+              </span>
+            </th>
+            <th class="w-auto text-right"
+              data-translate="ui.storefront.common.Price">
+            </th>
+            <th class="w-auto text-center"
+              data-translate="ui.storefront.common.Quantity">
+            </th>
+            <th class="w-auto text-right"
+              data-translate="ui.storefront.common.Subtotal">
+            </th>
+            <th ng-if="udsdCtrl.type == 'sales-return'"
+              class="w-auto text-center"
+              data-translate="ui.storefront.common.Fee.Plural">
+            </th>
+            <th ng-if="udsdCtrl.type != 'sales-return'"
+              class="w-auto d-print-none">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(itemIndex, item) in (udsdCtrl.salesObject.SalesItems.length > 20
+                           ? (udsdCtrl.itemsPaging.filteredData
+                            | limitTo: udsdCtrl.itemsPaging.pageSize
+                                 : udsdCtrl.itemsPaging.skip())
+                           : udsdCtrl.salesObject.SalesItems)"
+            class="border-top border-bottom border-medium">
+            <!-- Col 1 -->
+            <td ng-if="item.ProductID && item.Product && (item.ProductSeoUrl || item.Product.SeoUrl)"
+              class="align-middle d-none d-xl-table-cell">
+              <!-- <a id="productSummary_sku_{{$index}}"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl || item.Product.SeoUrl}}"
+                target="_blank" class="d-print-none">
+                <label class="form-control-static font-weight-normal mb-0"
+                  ng-bind="item.Sku || item.ProductKey || item.Product.CustomKey">
+                </label>
+              </a> -->
+              <span id="productSummary_sku_{{$index}}"
+                  class="d-print-none">
+                <label class="form-control-static font-weight-normal mb-0"
+                  ng-bind="item.Sku || item.ProductKey || item.Product.CustomKey">
+                </label>
+              </span>
+              <label class="form-control-static font-weight-normal d-none d-print-block"
+                ng-bind="item.Sku || item.ProductKey || item.Product.CustomKey">
+              </label>
+            </td>
+            <td ng-if="item.ProductID && item.Product && !(item.ProductSeoUrl || item.Product.SeoUrl)"
+              class="align-middle">
+              <label class="form-control-static font-weight-normal d-none d-print-block"
+                ng-bind="item.Sku || item.ProductKey || item.Product.CustomKey">
+              </label>
+            </td>
+            <td ng-if="!item.ProductID"
+              class="align-middle">
+              <label class="form-control-static font-weight-normal mb-0"
+                ng-bind="item.Sku || 'Custom Item'">
+              </label>
+            </td>
+            <!-- Col 2 -->
+            <td ng-if="item.ProductID && item.Product && (item.ProductSeoUrl || item.Product.SeoUrl)"
+              class="align-middle">
+              <!-- <a id="productSummary_name_{{$index}}"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl || item.Product.SeoUrl}}"
+                target="_blank" class="d-print-none">
+                <label class="form-control-static font-weight-normal mb-0"
+                  ng-bind="item.Name || item.ProductName || item.Product.Name">
+                </label>
+              </a> -->
+              <span id="productSummary_name_{{$index}}"
+                class="d-print-none">
+                <label class="form-control-static font-weight-normal mb-0"
+                  ng-bind="item.Name || item.ProductName || item.Product.Name">
+                </label>
+              </span>
+              <label class="form-control-static font-weight-normal d-none d-print-block"
+                ng-bind="item.Name || item.ProductName || item.Product.Name">
+              </label>
+              <label ng-if="!item.Product.SeoUrl && !item.ProductSeoUrl"
+                class="form-control-static font-weight-normal d-block d-xl-none"
+                ng-bind="item.Sku || item.ProductKey || item.Product.CustomKey">
+              </label>
+              <!-- <a id="productSummary_sku_{{$index}}"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl || item.Product.SeoUrl}}"
+                target="_blank" class="d-block d-xl-none d-print-none">
+                <label class="form-control-static font-weight-normal mb-0"
+                  ng-bind="item.Sku || item.ProductKey || item.Product.CustomKey">
+                </label>
+              </a> -->
+              <span id="productSummary_sku_{{$index}}"
+                class="d-block d-xl-none d-print-none">
+                <label class="form-control-static font-weight-normal mb-0"
+                  ng-bind="item.Sku || item.ProductKey || item.Product.CustomKey">
+                </label>
+              </span>
+              <div ng-repeat="(discountIndex, discount) in item.Discounts" class="bg-light p-1 rounded w-auto">
+                <span class="small"
+                  id="cartProductDiscountNameXS{{itemIndex + '.' + discountIndex}}"
+                  ng-bind="discount.SlaveName">
+                </span>
+                <span class="text-success small"
+                  id="cartProductDiscountValueXS{{itemIndex + '.' + discountIndex}}"
+                  ng-bind="discount.DiscountValueType == 1
+                    ? (discount.DiscountValue | globalizedCurrency)
+                    : (discount.DiscountValue + '%')">
+                </span>&nbsp;<span class="text-success small"
+                  data-translate="ui.storefront.common.Off">
+                </span>
+              </div>
+            </td>
+            <td ng-if="item.ProductID && item.Product && !(item.ProductSeoUrl || item.Product.SeoUrl)"
+              class="align-middle">
+              <label class="form-control-static font-weight-normal mb-0"
+                ng-bind="item.Name || item.ProductName || item.Product.Name">
+              </label>
+              <div ng-repeat="(discountIndex, discount) in item.Discounts" class="bg-light p-1 rounded w-auto">
+                <span class="small"
+                  id="cartProductDiscountNameXS{{itemIndex + '.' + discountIndex}}"
+                  ng-bind="discount.SlaveName">
+                </span>
+                <span class="text-success small"
+                  id="cartProductDiscountValueXS{{itemIndex + '.' + discountIndex}}"
+                  ng-bind="discount.DiscountValueType == 1
+                    ? (discount.DiscountValue | globalizedCurrency)
+                    : (discount.DiscountValue + '%')">
+                </span>&nbsp;<span class="text-success small"
+                  data-translate="ui.storefront.common.Off">
+                </span>
+              </div>
+            </td>
+            <td ng-if="!item.ProductID"
+              class="align-middle">
+              <label class="form-control-static font-weight-normal mb-0"
+                ng-bind="item.Name || 'Custom Item'">
+              </label>
+              <div ng-repeat="(discountIndex, discount) in item.Discounts" class="bg-light p-1 rounded w-auto">
+                <span class="small"
+                  id="cartProductDiscountNameXS{{itemIndex + '.' + discountIndex}}"
+                  ng-bind="discount.SlaveName">
+                </span>
+                <span class="text-success small"
+                  id="cartProductDiscountValueXS{{itemIndex + '.' + discountIndex}}"
+                  ng-bind="discount.DiscountValueType == 1
+                    ? (discount.DiscountValue | globalizedCurrency)
+                    : (discount.DiscountValue + '%')">
+                </span>&nbsp;<span class="text-success small"
+                  data-translate="ui.storefront.common.Off">
+                </span>
+              </div>
+            </td>
+            <!-- Col 3 -->
+            <td class="text-right align-middle">
+              <div sid="ProductLineItemCorePrice_{{$index}}"
+                class="form-control-static cart-price price text-right text-muted py-0"
+                ng-class="{'strike-through small text-disabled pb-0':
+                  item.UnitCorePrice && item.UnitCorePrice !== item.UnitSoldPrice && item.UnitSoldPrice > 0
+                  || item.DiscountTotal && item.DiscountTotal < 0}"
+                ng-bind="item.UnitCorePrice | globalizedCurrency">
+              </div>
+              <div sid="ProductLineItemSalePrice_{{$index}}"
+                ng-if="item.UnitSoldPrice && item.UnitCorePrice !== item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                class="form-control-static cart-price price text-right text-danger py-0"
+                ng-class="{'strike-through small text-disabled pb-0': item.DiscountTotal && item.DiscountTotal < 0}"
+                ng-bind="item.UnitSoldPrice | globalizedCurrency">
+              </div>
+              <div class="form-control-static cart-price price text-right text-success py-0"
+                ng-if="item.DiscountTotal && item.DiscountTotal < 0"
+                ng-bind="(item.UnitSoldPrice || item.UnitCorePrice || 0) + (item.DiscountTotal / item.TotalQuantity) | globalizedCurrency">
+              </div>
+            </td>
+            <!-- Col 4 -->
+            <td class="text-center align-middle" ng-class="{ 'py-1': item.QuantityBackOrdered > 0 }">
+              <label ng-if="!item.QuantityBackOrdered && !item.QuantityPreSold"
+                class="form-control-static font-weight-normal text-right"
+                ng-bind="item.Quantity">
+              </label>
+              <table ng-if="item.QuantityBackOrdered > 0"
+                class="table table-borderless mb-0 small table-sm">
+                <tr>
+                  <td sid="OrderQuantityAvaliableText_{{$index}}" data-translate="ui.storefront.common.available"></td>
+                  <td sid="OrderQuantityAvailableAmount_{{$index}}" ng-bind="item.Quantity | number"></td>
+                </tr>
+                <tr>
+                  <td sid="OrderQuantityBackorderedText_{{$index}}" data-translate="ui.storefront.common.Backordered"></td>
+                  <td sid="OrderQuantityBackorderedAmount_{{$index}}" ng-bind="item.QuantityBackOrdered | number"></td>
+                </tr>
+              </table>
+              <label ng-if="item.QuantityPreSold > 0"
+                class="form-control-static font-weight-normal text-right"
+                ng-bind="item.QuantityPreSold">
+              </label>
+            </td>
+            <!-- Col 5 -->
+            <td class="text-right align-middle">
+              <div sid="ProductLineItemPriceSubtotal_{{$index}}"
+                class="form-control-static font-weight-normal text-right text-muted py-0"
+                ng-class="{'strike-through small text-disabled pb-0':
+                  item.UnitCorePrice && item.UnitCorePrice !== item.UnitSoldPrice && item.UnitSoldPrice > 0
+                  || item.DiscountTotal && item.DiscountTotal < 0 }"
+                ng-bind="(item.UnitCorePrice * item.TotalQuantity) | globalizedCurrency">
+              </div>
+              <div sid="ProductLineItemSalePriceSubtotal_{{$index}}"
+                ng-if="item.UnitCorePrice !== item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                class="form-control-static font-weight-normal text-right text-danger py-0"
+                ng-class="{'strike-through small text-disabled pb-0': item.DiscountTotal && item.DiscountTotal < 0}"
+                ng-bind="item.ExtendedPrice | globalizedCurrency">
+              </div>
+              <div ng-if="item.DiscountTotal && item.DiscountTotal < 0"
+                id="cartProductSubtotalWithDiscounts{{itemIndex}}"
+                class="form-control-static font-weight-normal text-right text-success py-0"
+                ng-bind="(item.ExtendedPrice + item.DiscountTotal) | globalizedCurrency">
+              </div>
+            </td>
+            <!-- Col 6 -->
+            <!-- <td ng-if="udsdCtrl.type == 'sales-return'"
+              class="text-right align-middle">
+              <div ng-if="item.RestockingFeeAmount > 0"
+                class="d-block form-control-static font-weight-normal text-right text-danger"
+                ng-bind="item.RestockingFeeAmount | globalizedCurrency">
+              </div>
+            </td>
+            <td ng-if="udsdCtrl.type != 'sales-return'"
+              class="text-center align-middle d-print-none"
+              ng-init="item.quantityToAdd = item.Quantity + (item.QuantityBackOrdered || 0) + (item.QuantityPreSold || 0)">
+              <div cef-add-to-cart-button
+                sales-item="item"
+                item-id="item.ProductID"
+                item-name="item.ProductName"
+                item-seo-url="item.ProductSeoUrl"
+                default-value="item.TotalQuantity"
+                current-value="item.quantityToAdd"
+                show-icon="false"
+                show-text="true"
+                ship-option=""
+                out-of-stock-links-to-details="false"
+                debug="false"
+                index="$index">
+              </div>
+            </td> -->
+          </tr>
+          <tr ng-repeat="(discountIndex, discount) in udsdCtrl.salesObject.Discounts">
+            <!-- Col 1 -->
+            <td class="align-middle d-none d-xl-table-cell">
+            </td>
+            <!-- Col 2 -->
+            <td class="align-middle">
+              <div class="form-control-static font-weight-normal small"
+                id="orderDiscountName{{discountIndex}}"
+                ng-bind="discount.SlaveName">
+              </div>
+            </td>
+            <!-- Col 3 -->
+            <td class="d-none d-md-table-cell text-right align-middle">
+              <div class="form-control-static cart-price price text-right text-success"
+                id="orderDiscountValue{{discountIndex}}"
+                ng-bind="discount.DiscountValueType == 1
+                  ? ((discount.DiscountValue * -1) | globalizedCurrency)
+                  : (discount.DiscountValue + '%')">
+              </div>
+            </td>
+            <!-- Col 4 -->
+            <td class="d-none d-md-table-cell align-middle"></td>
+            <!-- Col 5 -->
+            <td class="text-right align-middle">
+              <div class="d-block form-control-static cart-price price text-right text-success"
+                id="orderDiscountTotal{{discountIndex}}"
+                ng-bind="discount.DiscountTotal | globalizedCurrency">
+              </div>
+            </td>
+            <!-- Col 6 -->
+            <td class="align-middle">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Totals Row - Includes Details Row when in Sales Group View -->
+  <div class="row mb-3" ng-cloak="udsdCtrl.salesObject">
+    <!-- Totals Block - Reorders itself depending on screen size -->
+    <div class="col-12 col-sm-6 col-md-4 order-1 order-md-2">
+      <!-- Returns extra info -->
+      <div class="row" ng-if="udsdCtrl.type == 'sales-return'">
+        <div class="col bold"
+          data-translate="ui.storefront.userDashboard.controls.salesDetail.RefundAmount">
+        </div>
+        <div class="col-auto"
+          ng-bind="udsdCtrl.salesObject.RefundAmount | globalizedCurrency">
+        </div>
+      </div>
+      <!-- Totals Table -->
+      <div class="row" ng-if="udsdCtrl.type != 'sales-return'">
+        <div class="col"
+          ng-cloak="udsdCtrl.salesObject.Totals"
+          cef-totals-widget
+          totals="udsdCtrl.salesObject.Totals"
+          original-currency="udsdCtrl.salesObject.SerializableAttributes.OriginalCurrencyKey.Value
+            || udsdCtrl.cefConfig.defaultCurrency || 'USD'"
+          selling-currency="udsdCtrl.salesObject.SerializableAttributes.SellingCurrencyKey.Value"
+          static="true"
+          show-header="false"
+          no-margin-bottom="false">
+        </div>
+      </div>
+      <!-- Reorder All Button -->
+      <!-- Don't display Reorder All Button if any line items are custom products -->
+      <div class="row d-print-none" ng-if="udsdCtrl.reorderAllEnabled && udsdCtrl.type != 'sales-return'">
+        <div class="col" ng-switch="udsdCtrl.reorderAllQuoteMenuEnabled">
+          <button ng-switch-when="false" type="button" class="btn btn-success btn-block btn-lg rounded"
+            id="addToCart_reorderAll" name="addToCart_reorderAll"
+            translate-attr="{ title: 'ui.storefront.userDashboard2.controls.salesDetail.ReorderAll',
+                              'aria-label': 'ui.storefront.userDashboard2.controls.salesDetail.ReorderAll' }"
+            data-translate="ui.storefront.userDashboard2.controls.salesDetail.ReorderAll"
+            ng-click="udsdCtrl.reorderAll()">
+          </button>
+          <div ng-switch-when="true">
+            <!-- dropdown-append-to-body -->
+            <div class="btn-group w-100" uib-dropdown>
+              <button type="button" class="btn btn-success btn-lg"
+                id="addToCart_reorderAll" name="addToCart_reorderAll"
+                translate-attr="{ title: 'ui.storefront.userDashboard2.controls.salesDetail.ReorderAll',
+                                  'aria-label': 'ui.storefront.userDashboard2.controls.salesDetail.ReorderAll' }"
+                data-translate="ui.storefront.userDashboard2.controls.salesDetail.ReorderAll"
+                ng-click="udsdCtrl.reorderAll()">
+              </button>
+              <button uib-dropdown-toggle
+                type="button" class="btn btn-success rounded-right px-1 no-caret">
+                <span class="sr-only">Toggle Dropdown</span>
+                <i class="far fa-chevron-down" aria-hidden="true"></i>
+              </button>
+              <div uib-dropdown-menu
+                class="dropdown-menu dropdown-menu-right" role="menu">
+                <button type="button" class="dropdown-item px-2"
+                  ng-click="udsdCtrl.reorderAll(udsdCtrl.cvServiceStrings.carts.types.quote)">
+                  <i class="far fa-quote-right" aria-hidden="true"></i>&nbsp;<!--
+                  --><span data-translate="ui.storefront.quotes.cart.add"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Associated Objects for Non-Sales Group views -->
+    <div class="col-12 col-sm-6 col-md-8 order-2 order-md-1"
+      ng-if="!udsdCtrl.$state.includes('userDashboard.salesGroups')">
+      <div class="row"
+        ng-if="udsdCtrl.cefConfig.featureSet.salesInvoices.enabled
+          && udsdCtrl.salesObject.AssociatedSalesInvoices.length">
+        <div class="col-auto">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title mb-0">
+                <i class="far fa-file-invoice-dollar"></i>&nbsp;<!--
+                --><span data-translate="Invoices tied to this order"></span>
+              </h4>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li ng-repeat="assocInvoice in udsdCtrl.salesObject.AssociatedSalesInvoices"
+                class="list-group-item">
+                <div class="row no-gutters w-100 align-items-center">
+                  <div class="col">
+                    <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+                    --><span ng-bind="assocInvoice.SlaveID"></span><!--
+                    --><span ng-if="assocInvoice.SlaveKey">&nbsp;[{{assocInvoice.SlaveKey}}]</span>
+                  </div>
+                  <div class="col-auto">
+                    <a class="btn btn-outline-primary"
+                      ui-sref-plus
+                      uisrp-is-dashboard="true"
+                      uisrp-state="userDashboard.salesInvoices.detail"
+                      uisrp-params="{ 'ID': {{assocInvoice.SlaveID}} }"
+                      id="{{udsdCtrl.type}}-associatedSalesInvoices-{{$index}}">
+                      <span data-translate="ui.storefront.common.View"></span>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row"
+        ng-if="udsdCtrl.cefConfig.featureSet.salesOrders.enabled
+          && udsdCtrl.salesObject.AssociatedSalesOrders.length
+          && udsdCtrl.type === 'sales-invoice'">
+        <div class="col">
+          <hr class="mb-2 mt-0 border-medium" />
+          <h4 class="mt-1" data-translate="Orders tied to this Invoice"></h4>
+          <div ng-repeat="assocOrder in udsdCtrl.salesObject.AssociatedSalesOrders">
+            <a id="{{udsdCtrl.type}}-associatedSalesInvoices-{{$index}}"
+              ui-sref-plus uisrp-is-dashboard="true"
+              uisrp-state="userDashboard.salesOrders.detail"
+              uisrp-params="{ 'ID': {{assocOrder.MasterID}} }">
+              <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+              --><span ng-bind="assocOrder.MasterID"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row"
+        ng-if="udsdCtrl.cefConfig.featureSet.salesOrders.enabled
+          && udsdCtrl.salesObject.AssociatedSalesOrders.length
+          && udsdCtrl.type === 'sales-quote'">
+        <div class="col">
+          <hr class="mb-2 mt-0 border-medium" />
+          <h4 class="mt-1" data-translate="Orders tied to this Quote"></h4>
+          <div ng-repeat="assocOrder in udsdCtrl.salesObject.AssociatedSalesOrders">
+            <a id="{{udsdCtrl.type}}-associatedSalesInvoices-{{$index}}"
+              ui-sref-plus
+              uisrp-is-dashboard="true"
+              uisrp-state="userDashboard.salesOrders.detail"
+              uisrp-params="{ 'ID': {{assocOrder.SlaveID}} }">
+              <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+              --><span ng-bind="assocOrder.SlaveID"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Details Block -->
+    <div class="col-sm-6 col-md-4 order-2 order-md-1"
+      ng-if="udsdCtrl.$state.includes('userDashboard.salesGroups')">
+      <hr class="my-2 border-medium" />
+      <h4 class="bold"
+        sid="SalesOrderDetailsText"
+        data-translate="ui.storefront.common.Detail.Plural">
+      </h4>
+      <hr class="my-2 border-medium" />
+      <table class="w-100 mb-3">
+        <tr>
+          <td>
+            <b sid="SalesOrderDateText"
+              data-translate="ui.storefront.common.Date">
+            </b>
+          </td>
+          <td>
+            <span id="{{udsdCtrl.type}}-salesDate"
+              ng-bind="udsdCtrl.salesObject.CreatedDate | convertJSONDate | date:'MMM dd, yyyy'">
+            </span>
+          </td>
+        </tr>
+        <tr ng-if="udsdCtrl.type == 'sales-order'">
+          <td>
+            <b sid="SalesOrderBalanceDueText"
+              data-translate="ui.storefront.userDashboard2.controls.salesDetail.BalanceDue">
+            </b>
+          </td>
+          <td>
+            <span ng-if="udsdCtrl.hasBalanceDue && udsdCtrl.salesInvoice.StatusName !== 'Paid'"
+              ng-hide="udsdCtrl.balanceDueDisabled"
+              id="{{udsdCtrl.type}}-balanceDue"
+              ng-bind="udsdCtrl.salesObject.BalanceDue | globalizedCurrency">
+            </span>
+            <span ng-if="!udsdCtrl.hasBalanceDue || udsdCtrl.salesInvoice.StatusName === 'Paid'"
+              id="{{udsdCtrl.type}}-balanceDue"
+              data-translate="ui.storefront.userDashboard2.controls.salesDetail.Paid">
+            </span>
+          </td>
+        </tr>
+        <tr ng-if="udsdCtrl.type == 'sales-invoice'
+          && !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice')">
+          <td colspan="2">
+            <b sid="SalesInvoiceBalanceDueText"
+              data-translate="ui.storefront.userDashboard2.controls.salesDetail.BalanceDue">
+            </b>
+          </td>
+        </tr>
+        <tr ng-if="udsdCtrl.type == 'sales-invoice'
+          && !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice')">
+          <td colspan="2" class="alert p-2"
+            ng-class="{ 'alert-success': !udsdCtrl.hasBalanceDue,
+                        'alert-warning': udsdCtrl.hasBalanceDue && !udsdCtrl.balanceIsPassedDue,
+                        'alert-danger': udsdCtrl.balanceIsPassedDue }">
+            <table class="w-100">
+              <tr>
+                <td class="w-100"
+                  ng-class="{ 'text-center': !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice') }">
+                  <span ng-if="!udsdCtrl.hasBalanceDue"
+                    id="{{udsdCtrl.type}}-balanceDue"
+                    data-translate="ui.storefront.userDashboard2.controls.salesDetail.Paid">
+                  </span>
+                  <span ng-if="udsdCtrl.hasBalanceDue">
+                    <span id="{{udsdCtrl.type}}-balanceDue"
+                      ng-bind="udsdCtrl.salesObject.BalanceDue | globalizedCurrency">
+                    </span><!--
+                    --><span ng-if="udsdCtrl.hasDueDate"
+                      ng-class="{ 'd-block': !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice') }"
+                      >&nbsp;<span data-translate="ui.storefront.userDashboard.invoices.DueBy"></span>&nbsp;<!--
+                      --><span id="{{udsdCtrl.type}}-dueDate"
+                        ng-class="{ 'd-block': !udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice') }"
+                        ng-bind="udsdCtrl.salesObject.DueDate | convertJSONDate | date: 'MMM dd, yyyy'">
+                      </span>
+                    </span>
+                  </span>
+                </td>
+                <td class="w-auto d-print-none" ng-if="udsdCtrl.hasBalanceDue">
+                  <button type="button" class="btn" style="white-space: nowrap;"
+                    ng-class="{ 'btn-warning': udsdCtrl.hasBalanceDue && !udsdCtrl.balanceIsPassedDue,
+                                'btn-danger': udsdCtrl.balanceIsPassedDue }"
+                    id="btnMakeAnInvoicePayment" name="btnMakeAnInvoicePayment"
+                    translate-attr="{ title: 'ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment',
+                                      'aria-label': 'ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment' }"
+                    data-translate="ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment"
+                    ng-click="udsdCtrl.startPayInvoice(null, null, true)">
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr ng-if="udsdCtrl.type != 'sales-quote'">
+          <td>
+            <b sid="SalesOrderStatusText"
+              data-translate="ui.storefront.userDashboard2.controls.salesDetail.Status">
+            </b>
+          </td>
+          <td>
+            <span id="{{udsdCtrl.type}}-statusName"
+              ng-bind="udsdCtrl.salesObject.StatusName">
+            </span>
+          </td>
+        </tr>
+        <tr ng-if="udsdCtrl.type == 'sales-quote'">
+          <td colspan="2">
+            <div ng-switch="udsdCtrl.salesObject.StatusKey.toString()" class="mt-3">
+              <div ng-switch-when="Submitted" class="alert alert-medium" role="alert">
+                <h5 data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.submitted.name}}"></h5>
+                <p class="mb-0" data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.submitted.description}}"></p>
+              </div>
+              <div ng-switch-when="In Process" class="alert alert-dark" role="alert">
+                <h5 data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.inProcess.name}}"></h5>
+                <p class="mb-0" data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.inProcess.description}}"></p>
+              </div>
+              <div ng-switch-when="Processed" class="alert alert-info" role="alert">
+                <h5 data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.processed.name}}"></h5>
+                <p class="mb-0" data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.processed.description}}"></p>
+              </div>
+              <div ng-switch-when="Approved" class="alert alert-success" role="alert">
+                <h5 data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.name}}"></h5>
+                <p class="mb-0" data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.approved.description}}"></p>
+              </div>
+              <div ng-switch-when="Rejected" class="alert alert-warning" role="alert">
+                <h5 data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.rejected.name}}"></h5>
+                <p class="mb-0" data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.rejected.description}}"></p>
+              </div>
+              <div ng-switch-when="Expired" class="alert alert-danger" role="alert">
+                <h5 data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.expired.name}}"></h5>
+                <p class="mb-0" data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.expired.description}}"></p>
+              </div>
+              <div ng-switch-when="Void" class="alert alert-danger" role="alert">
+                <h5 data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.void.name}}"></h5>
+                <p class="mb-0" data-translate="{{udsdCtrl.cvServiceStrings.salesQuotes.statuses.void.description}}"></p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <table class="w-100 mb-3"
+        ng-if="udsdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice')">
+        <tr>
+          <td>
+            <b sid="SalesInvoiceBalanceDueText"
+              data-translate="ui.storefront.userDashboard2.controls.salesDetail.BalanceDue">
+            </b>
+          </td>
+        </tr>
+        <tr>
+          <td class="alert p-2"
+            ng-class="{
+              'alert-success': !udsdCtrl.hasBalanceDue,
+              'alert-warning': udsdCtrl.hasBalanceDue && !udsdCtrl.balanceIsPassedDue,
+              'alert-danger': udsdCtrl.balanceIsPassedDue }">
+            <table>
+              <tr>
+                <td class="w-100">
+                  <span ng-if="!udsdCtrl.hasBalanceDue"
+                    id="{{udsdCtrl.type}}-balanceDue"
+                    data-translate="ui.storefront.userDashboard2.controls.salesDetail.Paid">
+                  </span>
+                  <span ng-if="udsdCtrl.hasBalanceDue">
+                    <span id="{{udsdCtrl.type}}-balanceDue"
+                      ng-bind="udsdCtrl.salesObject.BalanceDue | globalizedCurrency">
+                    </span><!--
+                    --><span ng-if="udsdCtrl.hasDueDate">&nbsp;<!--
+                      --><span data-translate="ui.storefront.userDashboard.invoices.DueBy"></span>&nbsp;<!--
+                      --><span id="{{udsdCtrl.type}}-dueDate"
+                        ng-bind="udsdCtrl.salesObject.DueDate | convertJSONDate | date: 'MMM dd, yyyy'">
+                      </span>
+                    </span>
+                  </span>
+                </td>
+                <td class="w-auto d-print-none" ng-if="udsdCtrl.hasBalanceDue">
+                  <button type="button" class="btn" style="white-space: nowrap;"
+                    ng-class="{ 'btn-warning': udsdCtrl.hasBalanceDue && !udsdCtrl.balanceIsPassedDue,
+                                'btn-danger': udsdCtrl.balanceIsPassedDue }"
+                    id="btnMakeAnInvoicePayment" name="btnMakeAnInvoicePayment"
+                    translate-attr="{ title: 'ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment',
+                                      'aria-label': 'ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment' }"
+                    data-translate="ui.storefront.userDashboard.controls.salesGroupDetail.MakeAPayment"
+                    ng-click="udsdCtrl.startPayInvoice(null, null, true)">
+                  </button>
+                </td>
+              </tr>
+              <tr ng-if="udsdCtrl.balanceIsPassedDue">
+                <td data-translate="ui.storefront.userDashboard.invoices.YourPaymentIsPassedDue">
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- Shipping Block - Same as Billing -->
+    <div class="col-sm-6 col-md-4 order-2 order-md-1"
+      ng-if="udsdCtrl.$state.includes('userDashboard.salesGroups')
+        && udsdCtrl.salesObject.ShippingSameAsBilling">
+      <hr class="my-2 border-medium" />
+      <h4 class="bold" sid="SalesOrderShippingInfoText"
+        data-translate="ui.storefront.common.ShippingInfo">
+      </h4>
+      <hr class="my-2 border-medium" />
+      <p data-translate="ui.storefront.common.SameAsBilling"></p>
+    </div>
+    <!-- Shipping Block - Shipping Address Present -->
+    <div class="col-sm-6 col-md-4 order-2 order-md-1"
+      ng-if="udsdCtrl.$state.includes('userDashboard.salesGroups')
+        && !udsdCtrl.salesObject.ShippingSameAsBilling
+        && udsdCtrl.salesObject.ShippingContact">
+      <hr class="my-2 border-medium" />
+      <h4 class="bold" sid="SalesOrderShippingInfoText"
+        data-translate="ui.storefront.common.ShippingInfo">
+      </h4>
+      <hr class="my-2 border-medium" />
+      <div class="mb-3"
+        cef-contact-address-block
+        contact="udsdCtrl.salesObject.ShippingContact">
+      </div>
+    </div>
+    <!-- Shipping Block - Empty because no Shipping Address Present -->
+    <div class="col-sm-6 col-md-4 order-2 order-md-1"
+      ng-if="udsdCtrl.$state.includes('userDashboard.salesGroups')
+        && !udsdCtrl.salesObject.ShippingSameAsBilling
+        && !udsdCtrl.salesObject.ShippingContact">
+        <!-- Intentionally Empty -->
+    </div>
+  </div>
+</div>

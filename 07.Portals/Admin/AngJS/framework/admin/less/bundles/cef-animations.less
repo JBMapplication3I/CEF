@@ -1,0 +1,58 @@
+﻿/*
+    Completely hide the element until angular has a chance to do its render pass
+    First used as an attribute and then as a class while state changes are happening that affect the entire document (site transitions)
+*/
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+    opacity: 0;
+}
+
+/*
+    Animations
+*/
+.site-loading,
+.ng-viewport-loading {
+    opacity: 0;
+}
+
+.site-loading-add, .ng-viewport-loading-add,
+.site-loading-remove, .ng-viewport-loading-remove {
+    transition: opacity 2s ease-in-out;
+}
+
+.site-loading-add-active,
+.ui-view-loading-add-active {
+    opacity: 0;
+}
+
+.site-loading-remove-active,
+.ui-view-loading-remove-active {
+    opacity: 1;
+}
+
+
+.page-loading .view-page-content {
+    opacity: 0;
+}
+
+.page-loading-add, .page-loading-remove {
+    transition: opacity 2s ease-in-out;
+}
+
+.page-loading-add-active .view-page-content {
+    opacity: 0;
+}
+
+.page-loading-remove-active .view-page-content {
+    opacity: 1;
+}
+
+/*
+.body-view {
+    transition: opacity 5s ease-in-out;
+    opacity: 1;
+}
+
+.body-view.page-loading {
+    opacity: .5;
+}*/

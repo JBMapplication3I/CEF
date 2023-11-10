@@ -1,0 +1,79 @@
+.desc-section {
+	overflow: hidden;
+	background: $primary;
+	color: $white;
+	line-height: 1.2;
+
+	.image-decor {
+		position: absolute;
+		width: rem-calc(503);
+		bottom: -55%;
+		left: 73%;
+		pointer-events: none;
+
+		@include media-breakpoint-down(sm) {
+			display: none;
+		}
+
+		@include media-breakpoint-up(xl) {
+			bottom: -36%;
+		}
+
+		@media (min-width: 1441px) {
+			width: 35vw;
+		}
+
+		img {
+			width: 100%;
+		}
+	}
+
+	.btn {
+		margin-top: rem-calc(15);
+
+		&.btn-light {
+			border-color: $white;
+			background: $white;
+
+			&:hover {
+				border-color: darken($white, 15%);
+				background: darken($white, 15%);
+			}
+		}
+	}
+}
+
+.desc-image {
+	@include media-breakpoint-up(md) {
+		padding-right: 0;
+	}
+
+	img {
+		@extend %imgcover;
+	}
+}
+
+.desc-text {
+	padding-top: rem-calc(45);
+	padding-bottom: rem-calc(45);
+
+	@include media-breakpoint-up(md) {
+		padding-right: rem-calc(20);
+		align-self: center;
+	}
+
+	@include media-breakpoint-up(lg) {
+		padding-left: rem-calc(20);
+	}
+
+	@include media-breakpoint-up(xl) {
+		padding-left: rem-calc(60);
+	}
+
+	.container {
+		@include media-breakpoint-up(md) {
+			margin: 0 auto 0 0;
+			max-width: 600px;
+		}
+	}
+}

@@ -1,0 +1,28 @@
+<div ng-form="radioFormGroupCtrl.forms.{{radioFormGroupCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="{'has-error': radioFormGroupCtrl.forms[radioFormGroupCtrl.formIdentifier].$invalid}">
+  <div class="input-group d-block">
+    <label ng-repeat="option in radioFormGroupCtrl.radioOptions"
+      class="control-label d-block"
+      for="ck{{radioFormGroupCtrl.formIdentifier}}_{{$index}}"
+      uib-tooltip="{{radioFormGroupCtrl.tooltip}}"
+      tooltip-placement="auto top-left">
+      <input type="radio"
+        id="ck{{radioFormGroupCtrl.formIdentifier}}_{{$index}}"
+        name="ck{{radioFormGroupCtrl.formIdentifier}}"
+        ng-class="radioFormGroupCtrl.inputClass"
+        ng-change="radioFormGroupCtrl.whenChanged()"
+        ng-disabled="radioFormGroupCtrl.disabled"
+        ng-required="radioFormGroupCtrl.required"
+        ng-model="$parent.radioFormGroupCtrl.property"
+        ng-value="option.text"
+      />
+      <span class="ml-5" data-translate="{{option.text}}">{{radioFormGroupCtrl.labelText}}</span><!--
+        --><span ng-if="radioFormGroupCtrl.required" class="text-danger">&nbsp;*</span><!--
+        --><span ng-if="radioFormGroupCtrl.tooltip" class="text-info">&nbsp;<i class="fa fa-question-circle"></i></span>
+    </label>
+  </div>
+  <div ng-messages="radioFormGroupCtrl.formError" role="alert">
+    <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+</div>

@@ -1,0 +1,194 @@
+<div class="row">
+  <div class="col form-inline">
+    <div ng-if="!ordCtrl.viewState.edit">
+      <span class="h2" sid="OrderRequestNameText"
+        ng-bind="ordCtrl.cartName">
+      </span>
+      <button type="button" class="btn btn-link mb-3"
+        id="btnEditOrderRequestName"
+        name="btnEditOrderRequestName"
+        ng-click="ordCtrl.toggleEdit()"
+        translate-attr="{ title: 'ui.storefront.common.Edit',
+                          'aria-label': 'ui.storefront.common.Edit'}">
+        <i class="far fa-pencil"></i>
+        <span sid="OrderRequestEditBtn" class="sr-only"
+          data-translate="ui.storefront.common.Edit">
+        </span>
+      </button>
+    </div>
+    <div ng-if="ordCtrl.viewState.edit"
+      class="form-group mb-3">
+      <div class="input-group">
+        <input type="text" class="form-control"
+          id="editedOrderRequestName" name="editedOrderRequestName"
+          placeholder="{{ordCtrl.cartName}}"
+          ng-keydown="ordCtrl.updateNameEnter($event)"
+          ng-model="ordCtrl.newCartName" />
+        <span sid="EditOrderRequestNameBtn" class="input-group-append input-group-btn">
+          <button type="button" class="btn btn-link"
+            id="btnSaveOrderRequestNameEdit"
+            name="btnSaveOrderRequestNameEdit"
+            translate-attr="{ title: 'ui.storefront.common.Save',
+                              'aria-label': 'ui.storefront.common.Save'}"
+            ng-click="ordCtrl.updateName()">
+            <i class="far fa-save"></i>
+            <span sid="EditOrderRequestNameSaveBtn" class="sr-only"
+              data-translate="ui.storefront.common.Save">
+            </span>
+          </button>
+          <button type="button" class="btn btn-link"
+            id="btnCancelOrderRequestNameEdit"
+            name="btnCancelOrderRequestNameEdit"
+            translate-attr="{ title: 'ui.storefront.common.Cancel',
+                              'aria-label': 'ui.storefront.common.Cancel'}"
+            ng-click="ordCtrl.toggleEdit()">
+            <i class="far fa-undo"></i>
+            <span sid="EditOrderRequestNameCancelBtn" class="sr-only"
+              data-translate="ui.storefront.common.Cancel">
+            </span>
+          </button>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-auto">
+    <button type="button" class="btn btn-primary mb-3"
+      id="btnAddAllToCart"
+      name="btnAddAllToCart"
+      translate-attr="{ title: 'ui.storefront.cart.addAllToCart',
+                        'aria-label': 'ui.storefront.cart.addAllToCart' }"
+      data-translate="ui.storefront.cart.addAllToCart"
+      ng-disabled="!ordCtrl.cartItems.length"
+      ng-click="ordCtrl.addAllToCart()">
+    </button>
+    <button type="button" class="btn btn-secondary mb-3"
+      id="btnClearOrderRequest"
+      name="btnClearOrderRequest"
+      translate-attr="{ title: 'ui.storefront.common.Clear',
+                        'aria-label': 'ui.storefront.common.Clear' }"
+      data-translate="ui.storefront.common.Clear"
+      ng-disabled="!ordCtrl.cartItems.length"
+      ng-click="ordCtrl.clearList()">
+    </button>
+    <button type="button" class="btn btn-secondary mb-3"
+      id="btnDeleteOrderRequest"
+      name="btnDeleteOrderRequest"
+      translate-attr="{ title: 'ui.storefront.common.Delete',
+                        'aria-label': 'ui.storefront.common.Delete' }"
+      data-translate="ui.storefront.common.Delete"
+      ng-click="ordCtrl.deleteList()">
+    </button>
+  </div>
+  <div class="col-12" ng-if="!ordCtrl.cartItems.length">
+    <span sid="NoItemsAddedTxt" class="h4"
+      data-translate="ui.storefront.userDashboard2.controls.orderRequestDetail.NoItemsHaveBeenAddedToThisOrderRequest">
+    </span>
+  </div>
+  <div class="col-12" ng-if="ordCtrl.cartItems.length">
+    <div class="table-responsive">
+      <table class="table table-sm table-hover table-striped table-bordered"
+        id="shopping-list-cart-table">
+        <thead>
+          <tr class="first last">
+            <th class="d-none d-sm-table-cell"></th>
+            <th class="w-16 xs-w-24" data-translate="ui.storefront.cart.SKU"></th>
+            <th class="sm-w-32 md-w-40 lg-w-40" data-translate="ui.storefront.common.Name"></th>
+            <th class="w-8 text-center" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-8 text-center" data-translate="ui.storefront.common.UoM"></th>
+            <th class="w-8 text-center" data-translate="ui.storefront.common.Subtotal"></th>
+            <th class="sm-w-24 md-w-16 lg-w-16 text-center"
+              colspan="2"
+              data-translate="ui.storefront.common.Quantity">
+            </th>
+          </tr>
+        </thead>
+        <tbody ng-form="ordCtrl.forms.SalesItems">
+          <tr ng-repeat="item in ordCtrl.cartItems">
+            <td class="form-control-table-cell d-none d-sm-table-cell p-0">
+              <div cef-product-card-thumbnail-widget
+                product-id="item.ProductID"
+                product-image="item.ProductPrimaryImage"
+                width="100"
+                height="100"
+                index="$index">
+              </div>
+            </td>
+            <td>
+              <a id="product{{$index}}Key"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal"
+                  ng-bind="item.ProductKey">
+                </label>
+              </a>
+            </td>
+            <td>
+              <a id="product{{$index}}Name"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal"
+                  ng-bind="item.ProductName">
+                </label>
+              </a>
+            </td>
+            <td class="text-right">
+              <span class="d-block form-control-static font-weight-normal text-right"
+                sid="OrderRequestLineItemPrice_{{$index}}"
+                ng-class="{'strike-through small text-disabled': item.UnitCorePrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0}"
+                ng-bind="item.UnitCorePrice | globalizedCurrency">
+              </span>
+              <span class="d-block form-control-static font-weight-normal text-right text-danger"
+                sid="OrderRequestLineItemSalePrice_{{$index}}"
+                ng-if="item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                ng-bind="item.UnitSoldPrice | globalizedCurrency">
+              </span>
+            </td>
+            <td class="text-right">
+              <label class="d-block form-control-static font-weight-normal text-right"
+                sid="OrderRequestLineItemPriceSubtotal_{{$index}}"
+                ng-bind="item.SerializableAttributes.SelectedUOM .Value | bracketWrap">
+              </label>
+            </td>
+            <td class="text-right">
+              <label class="d-block form-control-static font-weight-normal text-right"
+                sid="OrderRequestLineItemPriceSubtotal_{{$index}}"
+                ng-bind="item.ExtendedPrice | globalizedCurrency">
+              </label>
+            </td>
+            <td>
+              <div cef-add-to-cart-quantity-selector
+                sales-item="item"
+                item="item.Product"
+                item-id="item.ProductID"
+                item-name="item.ProductName"
+                item-seo-url="item.ProductSeoUrl"
+                default-value="1"
+                current-value="item.Quantity"
+                is-required="false"
+                step="1"
+                index="$index">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--
+  <div class="col">
+    <div class="mb-3"
+      cef-email-cart
+      type="ordCtrl.cartName">
+    </div>
+  </div>
+  -->
+  <div class="col-auto">
+    <a class="btn btn-secondary mb-3"
+      id="orderRequestHref" name="orderRequestHref"
+      ui-sref-plus uisrp-is-dashboard="true"
+      uisrp-state="userDashboard.orderRequests.list">
+      <span sid="OrderRequestBackBtn" data-translate="ui.storefront.userDashboard.orderRequests.BackToOrderRequests">
+      </span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+﻿<div class="row" ng-if="cefShipToCtrl.includeBuyBlock">
+    <div class="col-12">
+        <p>
+            <button ng-hide="cefShipToCtrl.showOutOfStockButton"
+                    type="button" class="btn btn-primary btn-block btn-add-to-cart"
+                    translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                                      'aria-label': 'ui.storefront.cart.addToCart' }"
+                    ng-disabled="cefShipToCtrl.disableAddToCartButton"
+                    ng-click="cefShipToCtrl.addCartItem()"
+                    data-translate="ui.storefront.cart.addToCart"></button>
+            <button ng-show="cefShipToCtrl.showOutOfStockButton"
+                    type="button" class="btn btn-primary btn-block btn-add-to-cart mt-0"
+                    translate-attr="{ title: 'ui.storefront.common.OutOfStock',
+                                      'aria-label': 'ui.storefront.common.OutOfStock' }"
+                    ng-disabled="true"
+                    data-translate="ui.storefront.common.OutOfStock"></button>
+        </p>
+    </div>
+    <div class="col-5 col-sm-5 col-md-5 col-lg-7">
+        <p ng-if="cefShipToCtrl.hasStore && !cefShipToCtrl.packProduct && !cefShipToCtrl.unitProduct">
+            <cef-check-inventory-button text="Availability" product="cefShipToCtrl.product"></cef-check-inventory-button>
+        </p>
+        <p ng-if="cefShipToCtrl.hasStore && cefShipToCtrl.packProduct && !cefShipToCtrl.isPickupInStore">
+            <cef-check-inventory-button text="Availability" product="cefShipToCtrl.packProduct"></cef-check-inventory-button>
+        </p>
+        <p ng-if="cefShipToCtrl.hasStore && cefShipToCtrl.unitProduct && cefShipToCtrl.isPickupInStore">
+            <cef-check-inventory-button text="Availability" product="cefShipToCtrl.unitProduct"></cef-check-inventory-button>
+        </p>
+    </div>
+    <div class="col-7 col-sm-7 col-md-7 col-lg-5 compare-button-container form-control-static text-right">
+        <label class="lbl" for="cbx-{{cefShipToCtrl.product.ID}}{{cefShipToCtrl.unique}}"
+               ng-class="{'lbl-selected': cefShipToCtrl.cvSearchCatalogProductCompareService.isInCompareCart(cefShipToCtrl.product.ID)}"
+               data-translate="ui.storefront.common.Compare"></label>&nbsp;<!--
+        --><input type="checkbox" class="cbx-hidden"
+                  id="cbx-{{cefShipToCtrl.product.ID}}{{cefShipToCtrl.unique}}"
+                  name="cbx-{{cefShipToCtrl.product.ID}}{{cefShipToCtrl.unique}}"
+                  title="Add to Compare"
+                  ng-click="(cefShipToCtrl.cvSearchCatalogProductCompareService.isInCompareCart(cefShipToCtrl.product.ID)
+                                ? cefShipToCtrl.cvSearchCatalogProductCompareService.removeItem(cefShipToCtrl.product.ID)
+                                : cefShipToCtrl.cvSearchCatalogProductCompareService.addItem(cefShipToCtrl.product.ID));"
+                  ng-checked="cefShipToCtrl.cvSearchCatalogProductCompareService.isInCompareCart(cefShipToCtrl.product.ID)" /><!--
+        --><label class="cbx" for="cbx-{{cefShipToCtrl.product.ID}}{{cefShipToCtrl.unique}}"
+                  ng-class="{'cbx-selected': cefShipToCtrl.cvSearchCatalogProductCompareService.isInCompareCart(cefShipToCtrl.product.ID)}"></label>
+    </div>
+</div>

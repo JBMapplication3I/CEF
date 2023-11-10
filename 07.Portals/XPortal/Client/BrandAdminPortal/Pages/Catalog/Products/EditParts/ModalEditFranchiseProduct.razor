@@ -1,0 +1,169 @@
+﻿@using Newtonsoft.Json
+@inherits MVC.Core.ModalEditAssociationBase<FranchiseProductModel>
+@inject CEFConfig cefConfig
+
+<Modal @ref="ModalRef">
+  <ModalContent Centered="true">
+    <ModalHeader Background="Background.Dark" TextColor="TextColor.Light" Padding="Padding.Is2.OnY">
+      <ModalTitle>Edit Franchise Product #@(Association?.ID)</ModalTitle>
+      <CloseButton
+        TextColor="TextColor.Light"
+        Clicked="@(() => HideAsync(false))"
+      />
+    </ModalHeader>
+    <ModalBody Padding="Padding.Is0.FromBottom">
+      @if (Association is not null)
+      {
+        <Row>
+          <Column>
+            <Heading Size="HeadingSize.Is4">Basic Information</Heading>
+            <ToggleFormGroup
+              TValue="bool"
+              FormIdentifier="IsVisibleIn"
+              LabelText="Is Visible to Franchise"
+              @bind-Value="Association.IsVisibleIn"
+              IsOptionToggled="@(_ => Association.IsVisibleIn)"
+              ToggleOnText="Yes"
+              ToggleOffText="No"
+              SwitchColor="Color.Success"
+              Disabled="false"
+              Required="false"
+            />
+            <Heading Size="HeadingSize.Is4">Pricing</Heading>
+            @if (cefConfig.featureSet?.pricing?.msrp?.enabled == true)
+            {
+              <NumericFormGroup
+                TValue="decimal?"
+                FormIdentifier="PriceMsrp"
+                LabelText="Price MSRP"
+                @bind-Value="Association.PriceMsrp"
+                Autocomplete="off"
+                Disabled="false"
+                Min="0"
+                Step="0.01m"
+                PlaceholderText="1.00"
+                Required="false"
+                IsCurrency="true"
+              />
+            }
+            @if (cefConfig.featureSet?.pricing?.reduction?.enabled == true)
+            {
+              <NumericFormGroup
+                TValue="decimal?"
+                FormIdentifier="PriceReduction"
+                LabelText="Price Reduction"
+                @bind-Value="Association.PriceReduction"
+                Autocomplete="off"
+                Disabled="false"
+                Min="0"
+                Step="0.01m"
+                PlaceholderText="1.00"
+                Required="false"
+                IsCurrency="true"
+              />
+            }
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="PriceBase"
+              LabelText="Price Base"
+              @bind-Value="Association.PriceBase"
+              Autocomplete="off"
+              Disabled="false"
+              Min="0"
+              Step="0.01m"
+              PlaceholderText="1.00"
+              Required="false"
+              IsCurrency="true"
+            />
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="PriceSale"
+              LabelText="Price Sale"
+              @bind-Value="Association.PriceSale"
+              Autocomplete="off"
+              Disabled="false"
+              Min="0"
+              Step="0.01m"
+              PlaceholderText="1.00"
+              Required="false"
+              IsCurrency="true"
+            />
+          </Column>
+        </Row>
+      }
+    </ModalBody>
+    <ModalFooter Background="Background.Dark" Padding="Padding.Is2.OnY">
+      <Button
+        Color="Color.Secondary"
+        Clicked="@(() => HideAsync(false))">
+        Cancel
+      </Button>
+      <Button
+        Color="Color.Primary"
+        Clicked="@(() => HideAsync(true))">
+        Save
+      </Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+
+@*
+@code
+{
+  private FranchiseProductModel Association { get; set; } = null!;
+
+  private Action<bool, FranchiseProductModel>? Callback { get; set; }
+
+  private Func<bool, FranchiseProductModel, Task>? CallbackAsync { get; set; }
+
+  private Modal? modalRef;
+
+  /// <summary>Shows.</summary>
+  /// <param name="association">The association.</param>
+  /// <param name="callback">   The callback.</param>
+  /// <returns>A Task.</returns>
+  public Task ShowAsync(
+    FranchiseProductModel association,
+    Action<bool, FranchiseProductModel>? callback = null)
+  {
+    Association = JsonConvert.DeserializeObject<FranchiseProductModel>(
+      JsonConvert.SerializeObject(association))!;
+    Callback = callback;
+    Result = false;
+    return modalRef!.Show();
+  }
+
+  /// <summary>Shows.</summary>
+  /// <param name="association">The association.</param>
+  /// <param name="callback">   The callback.</param>
+  /// <returns>A Task.</returns>
+  public Task ShowAsync(
+    FranchiseProductModel association,
+    Func<bool, FranchiseProductModel, Task>? callback = null)
+  {
+    Association = JsonConvert.DeserializeObject<FranchiseProductModel>(
+      JsonConvert.SerializeObject(association))!;
+    CallbackAsync = callback;
+    Result = false;
+    return modalRef!.Show();
+  }
+
+  /// <summary>Gets a value indicating whether the result was true or false.</summary>
+  /// <value>True if result, false if not.</value>
+  public bool Result { get; private set; }
+
+  private async Task HideModalAsync(bool accept)
+  {
+    Result = accept;
+    await modalRef!.Hide();
+    if (Callback is not null)
+    {
+      Callback(accept, Association);
+    }
+    else if (CallbackAsync is not null)
+    {
+      await CallbackAsync(accept, Association).ConfigureAwait(false);
+    }
+  }
+}
+*@

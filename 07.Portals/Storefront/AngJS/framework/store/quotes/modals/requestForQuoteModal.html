@@ -1,0 +1,207 @@
+﻿<div class="modal-wrapper">
+  <div class="modal-header">
+    <h1 data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.TellOurSuppliersWhatYouNeed">
+    </h1>
+    <p data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.TellOurSuppliersWhatYouNeed.Message">
+    </p>
+  </div>
+  <div class="modal-body" ng-form="requestForQuoteModalCtrl.forms.modalForm">
+    <div class="row mb-3">
+      <div class="col">
+        <h4 data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.WhatAreYouLookingFor.Question">
+        </h4>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group"
+          ng-class="{'has-error':requestForQuoteModalCtrl.forms.modalForm.txtKeywords.$invalid}">
+          <label class="control-label"
+            data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.ProductLookup">
+          </label>
+          <div class="input-group">
+            <input type="text" class="form-control"
+              id="txtKeywords" name="txtKeywords"
+              ng-required="false" maxlength="128"
+              translate-attr="{'placeholder':'ui.storefront.requestsForQuotes.requestForQuoteModal.EnterProductKeywords.Ellipses'}"
+              ng-model="requestForQuoteModalCtrl.keywords" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group"
+          ng-class="{'has-error':requestForQuoteModalCtrl.forms.modalForm.txtKeywords.$invalid}">
+          <label class="control-label"
+            data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.SearchByCategory">
+          </label>
+          <div class="input-group">
+            <select class="form-control"
+              id="ddlCategory" name="ddlCategory"
+              ng-required="false"
+              ng-options="c.value as c.text for c in requestForQuoteModalCtrl.categories | orderBy: 'text'"
+              ng-model="requestForQuoteModalCtrl.category">
+              <option value=""
+                data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.SelectACategory.Ellipses">
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <h4 data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.HowMuchDoYouNeed.Question">
+        </h4>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group"
+          ng-class="{'has-error':requestForQuoteModalCtrl.forms.modalForm['nudItemQuantity0'].$invalid}">
+          <label class="control-label"
+            data-translate="ui.storefront.common.Quantity">
+          </label>
+          <div class="input-group">
+            <div cef-add-to-cart-quantity-selector
+              item="requestForQuoteModalCtrl.salesQuote.SalesItems[0]"
+              default-value="1"
+              current-value="requestForQuoteModalCtrl.salesQuote.SalesItems[0].Quantity"
+              is-required="true"
+              always-allow-input="true"
+              step="1">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <h4 data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.AddAMessageAndAttachments.Message">
+        </h4>
+      </div>
+      <div class="col-12">
+        <div class="form-group"
+          ng-class="{'has-error':requestForQuoteModalCtrl.forms.modalForm.txtaMessage.$invalid}">
+          <label class="control-label"
+            data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.DetailedRequirements.Message">
+          </label>
+          <div class="input-group">
+            <textarea class="form-control"
+              id="txtaMessage" name="txtaMessage"
+              ng-required="false" maxlength="300"
+              translate-attr="{'placeholder':'ui.storefront.requestsForQuotes.requestForQuoteModal.TypeYourMessageHere.Ellipses'}"
+              ng-model="requestForQuoteModalCtrl.message">
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div cef-upload-file-widget
+          master="requestForQuoteModalCtrl.salesQuote"
+          upload-type="StoredFileSalesQuote"
+          type-key="General"
+          allow-multiple="true">
+        </div>
+      </div>
+      <div class="col-12">
+        <h4 data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.OtherRequirements"></h4>
+        <p data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.OtherRequirements.Message"></p>
+      </div>
+      <!--
+      <div class="col-sm-6">
+        <div class="form-group"
+          ng-class="{'has-error': requestForQuoteModalCtrl.forms.modalForm.ddlFOB.$invalid}">
+          <div class="input-group">
+            <select class="form-control"
+              id="ddlFOB" name="ddlFOB"
+              ng-required="false"
+              ng-options="fob.ID as (fob.DisplayName || fob.Name)
+                          for fob in requestForQuoteModalCtrl.fobs"
+              ng-model="requestForQuoteModalCtrl.preferredFOB">
+              <option value=""
+                data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.SelectAPreferredFOB.Ellipses">
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      -->
+      <div class="col-sm-6">
+        <div class="form-group"
+          ng-class="{'has-error': requestForQuoteModalCtrl.forms.modalForm.ddlCurrency.$invalid
+            || requestForQuoteModalCtrl.forms.modalForm.nudUnitPrice.$invalid}">
+          <div class="input-group">
+            <input type="number" class="form-control text-right"
+              id="nudUnitPrice" name="nudUnitPrice"
+              step="0.0001" min="0" max="99999999"
+              ng-required="false"
+              ng-model="requestForQuoteModalCtrl.preferredUnitPrice" />
+            <div class="input-group-append">
+              <select class="form-control"
+                id="ddlCurrency" name="ddlCurrency"
+                ng-required="requestForQuoteModalCtrl.preferredUnitPrice > 0"
+                ng-options="c.ID as (c.DisplayName || c.Name)
+                            for c in requestForQuoteModalCtrl.currencies"
+                ng-model="requestForQuoteModalCtrl.preferredCurrencyID">
+                <option value=""
+                  data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.SelectAPreferredCurrency.Ellipses">
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group"
+          ng-class="{'has-error':requestForQuoteModalCtrl.forms.modalForm.ddlPaymentMethod.$invalid}">
+          <div class="input-group">
+            <select class="form-control"
+              id="ddlPaymentMethod" name="ddlPaymentMethod"
+              ng-options="pm.ID as (pm.DisplayName || pm.Name)
+                          for pm in requestForQuoteModalCtrl.paymentMethods"
+              ng-model="requestForQuoteModalCtrl.preferredPaymentMethodID">
+              <option value=""
+                data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.SelectAPreferredPaymentMethod.Ellipses">
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group"
+          ng-class="{'has-error':requestForQuoteModalCtrl.forms.modalForm.txtDestinationPort.$invalid}">
+          <div class="input-group">
+            <input type="text" class="form-control"
+              id="txtDestinationPort" name="txtDestinationPort"
+              translate-attr="{'placeholder':'ui.storefront.requestsForQuotes.requestForQuoteModal.DestinationPort'}"
+              ng-model="requestForQuoteModalCtrl.preferredDestinationPort" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-12 text-left">
+        <label class="checkbox-row"><input type="checkbox" ng-model="requestForQuoteModalCtrl.doBusinessCard" />&nbsp;<!--
+        --><span data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.IAgreeToShareMyInfo.Message"></span></label>
+        <label class="checkbox-row"><input type="checkbox" ng-model="requestForQuoteModalCtrl.agree" />&nbsp;<!--
+        --><span data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.IAgree.Message.Part1"></span>&nbsp;<!--
+        --><a ui-sref-plus uisrp-area="terms" target="_blank"><span data-translate="ui.storefront.common.TermsAndConditions"></span></a>&nbsp;<!--
+        --><span data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.IAgree.Message.Part2"></span></label>
+      </div>
+      <div class="col-12 text-left">
+        <button type="button" class="btn btn-primary"
+          translate-attr="{ title:'ui.storefront.requestsForQuotes.requestForQuoteModal.DestinationPort',
+                            'aria-label':'ui.storefront.requestsForQuotes.requestForQuoteModal.DestinationPort' }"
+          data-translate="ui.storefront.requestsForQuotes.requestForQuoteModal.SubmitMyRequestForQuote"
+          ng-disabled="!requestForQuoteModalCtrl.agree
+            || !requestForQuoteModalCtrl.forms.modalForm.$valid
+            || requestForQuoteModalCtrl.viewState.isProcessing"
+          ng-click="requestForQuoteModalCtrl.sendInquiry()">
+        </button>
+      </div>
+    </div>
+    <div class="row mt-3" ng-if="requestForQuoteModalCtrl.viewState.hasError">
+      <div class="col">
+        <div class="alert alert-danger">
+          <p><b data-translate="ui.storefront.common.Error"></b>&nbsp;<!--
+          --><span data-translate="ui.storefront.common.ThereWasAnErrorProcessingTheRequest"></span><br/><!--
+          --><span ng-bind="requestForQuoteModalCtrl.viewState.errorMessage"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

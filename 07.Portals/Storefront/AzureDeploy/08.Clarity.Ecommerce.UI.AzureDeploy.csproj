@@ -1,0 +1,207 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2F95CE28-31A9-44E1-BFBA-A03D35E2A126}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CEFAzureUI</RootNamespace>
+    <AssemblyName>CEFAzureUI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+    <LangVersion>latestmajor</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabases>false</PublishDatabases>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="default.html" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Solution Items\appSettings.config">
+      <Link>appSettings.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Solution Items\rewrite.outboundRules.config">
+      <Link>rewrite.outboundRules.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Solution Items\rewrite.rewriteMaps.config">
+      <Link>rewrite.rewriteMaps.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Solution Items\rewrite.rules.config">
+      <Link>rewrite.rules.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="bin\rewrite.outboundRules.config" />
+    <Content Include="bin\rewrite.rewriteMaps.config" />
+    <Content Include="bin\rewrite.rules.config" />
+    <Content Include="bin\appSettings.config" />
+    <None Include="Properties\PublishProfiles\ClarityCEFAzure - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\DevCEFHomeAgain - Web Deploy.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>54728</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54728/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
+  <PropertyGroup>
+    <CopyAllFilesToSingleFolderForMSDeployDependsOn>
+      CEF_UI_Files;
+      $(CopyAllFilesToSingleFolderForMSDeployDependsOn);
+    </CopyAllFilesToSingleFolderForMSDeployDependsOn>
+  </PropertyGroup>
+  <Target Name="CEF_UI_Files">
+    <ItemGroup>
+      <CEF_UI_Files_bin Include="..\..\08.Clarity.Ecommerce.UI\bin\**\*" />
+      <FilesForPackagingFromProject Include="%(CEF_UI_Files_bin.Identity)">
+        <DestinationRelativePath>bin\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+    <ItemGroup>
+      <CEF_UI_Files_Content Include="..\..\08.Clarity.Ecommerce.UI\Content\**\*" />
+      <FilesForPackagingFromProject Include="%(CEF_UI_Files_Content.Identity)">
+        <DestinationRelativePath>Content\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+    <ItemGroup>
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.html" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.js" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.css" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.png" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.gif" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.jpg" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.json" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.map" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.svg" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.ttf" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.woff" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.woff2" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.eot" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.otf" />
+      <CEF_UI_Files_framework Include="..\..\08.Clarity.Ecommerce.UI\framework\**\*.d.ts" />
+      <FilesForPackagingFromProject Include="%(CEF_UI_Files_framework.Identity)">
+        <DestinationRelativePath>framework\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+    <ItemGroup>
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.html" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.js" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.css" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.png" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.gif" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.jpg" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.json" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.map" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.svg" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.ttf" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.woff" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.woff2" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.eot" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.otf" />
+      <CEF_UI_Files_lib Include="..\..\08.Clarity.Ecommerce.UI\lib\**\*.d.ts" />
+      <FilesForPackagingFromProject Include="%(CEF_UI_Files_lib.Identity)">
+        <DestinationRelativePath>lib\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+    <ItemGroup>
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.html" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.js" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.css" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.png" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.gif" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.jpg" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.json" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.map" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.svg" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.ttf" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.woff" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.woff2" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.eot" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.otf" />
+      <CEF_UI_Files_Scripts Include="..\..\08.Clarity.Ecommerce.UI\Scripts\**\*.d.ts" />
+      <FilesForPackagingFromProject Include="%(CEF_UI_Files_Scripts.Identity)">
+        <DestinationRelativePath>Scripts\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+  </Target>
+</Project>

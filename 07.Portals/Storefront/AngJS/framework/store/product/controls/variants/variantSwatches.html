@@ -1,0 +1,22 @@
+﻿<div class="row">
+    <div class="col-12">
+        <label class="mb-1"
+               data-translate="ui.storefront.product.detail.productDetails.Options"></label>
+    </div>
+    <div ng-repeat="variant in productVariantSwatchesCtrl.productVariants
+                    | orderBy: ['SortOrder','Name']"
+         class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <a class="w-100 btn btn-outline-secondary p-1"
+           ng-class="productVariantSwatchesCtrl.productIdForTheCurrentVariant === variant.SlaveID
+                     ? 'btn-outline-success disabled' : 'btn-outline-secondary pointer'"
+           title="{{variant.SlaveName}}"
+           aria-label="{{variant.SlaveName}}"
+           ng-click="productVariantSwatchesCtrl.changeVariant(variant.SlaveID)">
+            <image class="img-fluid"
+                   alt="{{variant.SlaveName}}"
+                   ng-src="{{(variant.Slave.Images | filter: { $: 'PRODUCT-SWATCH' })[0].OriginalFileName | corsImageLink
+                           }}?maxwidth=36&amp;maxheight=36&amp;mode=pad&amp;scale=both"
+                   onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both'" />
+        </a>
+    </div>
+</div>

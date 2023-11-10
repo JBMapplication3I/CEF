@@ -1,0 +1,7 @@
+﻿<div class="row" ng-if="cefShipToCtrl.includeNameLinkBlock">
+    <div class="col-12">
+        <h4><a class="sans-serif-condensed" title="{{cefShipToCtrl.product.Name}}"
+               ui-sref-plus uisrp-is-product="true" uisrp-path="{{cefShipToCtrl.product.SeoUrl}}"
+               ng-bind="cefShipToCtrl.product.Name | limitToEllipses: cefShipToCtrl.displayNameLimit"></a></h4>
+    </div>
+</div>

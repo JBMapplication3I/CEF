@@ -1,0 +1,75 @@
+<div class="btn-group btn-group-justified w-100"
+  ng-if="pccwCtrl.product && (!pccwCtrl.hideFL || !pccwCtrl.hideWL || !pccwCtrl.hideNM || !pccwCtrl.hideC)"
+  role="group">
+  <!--Favorites-->
+  <button type="button" class="btn btn-link wrap"
+    style="text-decoration: none;"
+    id="btnGridAddToFavoritesListProduct{{pccwCtrl.product.ID}}"
+    translate-attr="{ title: 'ui.storefront.common.Favorites.AddTo',
+                      'aria-label': 'ui.storefront.common.Favorites.AddTo' }"
+    ng-if="!pccwCtrl.hideFL && !pccwCtrl.isInFavoritesList"
+    ng-click="pccwCtrl.addToFavoritesList()">
+    <i class="far fa-star fa-lg"></i><br ng-if="!pccwCtrl.hideI" />
+  </button>
+  <button type="button" class="btn btn-link wrap"
+    style="text-decoration: none;"
+    id="btnGridRemoveFromFavoritesListProduct{{pccwCtrl.product.ID}}"
+    translate-attr="{ title: 'ui.storefront.common.Favorites.RemoveFrom',
+                      'aria-label': 'ui.storefront.common.Favorites.RemoveFrom' }"
+    ng-if="!pccwCtrl.hideFL && pccwCtrl.isInFavoritesList"
+    ng-click="pccwCtrl.removeFromFavoritesList()">
+    <i class="fas fa-star fa-lg"></i><br ng-if="!pccwCtrl.hideI" />
+  </button>
+  <!--Wishlist-->
+  <button type="button" class="btn btn-link wrap"
+    id="btnGridAddToWishListProduct{{pccwCtrl.product.ID}}"
+    translate-attr="{ title: 'ui.storefront.common.WishList.AddTo',
+                      'aria-label': 'ui.storefront.common.WishList.AddTo' }"
+    ng-if="!pccwCtrl.hideWL && !pccwCtrl.isInWishList"
+    ng-click="pccwCtrl.addToWishList()">
+    <i class="far fa-heart fa-lg"></i><br ng-if="!pccwCtrl.hideI" />
+  </button>
+  <button type="button" class="btn btn-link wrap"
+    id="btnGridRemoveFromWishListProduct{{pccwCtrl.product.ID}}"
+    translate-attr="{ title: 'ui.storefront.common.WishList.RemoveFrom',
+                      'aria-label': 'ui.storefront.common.WishList.RemoveFrom' }"
+    ng-if="!pccwCtrl.hideWL && pccwCtrl.isInWishList"
+    ng-click="pccwCtrl.removeFromWishList()">
+    <i class="fas fa-heart fa-lg"></i><br ng-if="!pccwCtrl.hideI" />
+  </button>
+  <!--Notify Me-->
+  <button type="button" class="btn btn-link wrap"
+    id="btnGridAddToNotifyMeListProduct{{pccwCtrl.product.ID}}"
+    translate-attr="{ title: 'ui.storefront.common.InStockAlert.Add',
+                      'aria-label': 'ui.storefront.common.InStockAlert.Add' }"
+    ng-disabled="!pccwCtrl.product.readInventory().IsOutOfStock"
+    ng-if="!pccwCtrl.hideNM && !pccwCtrl.isInNotifyMeList"
+    ng-click="pccwCtrl.addToNotifyMeList()">
+    <i class="far fa-bell fa-lg"></i><br ng-if="!pccwCtrl.hideI" />
+  </button>
+  <button type="button" class="btn btn-link wrap"
+    id="btnGridRemoveFromNotifyMeListProduct{{pccwCtrl.product.ID}}"
+    translate-attr="{ title: 'ui.storefront.common.InStockAlert.Remove',
+                      'aria-label': 'ui.storefront.common.InStockAlert.Remove' }"
+    ng-if="!pccwCtrl.hideNM && pccwCtrl.isInNotifyMeList"
+    ng-click="pccwCtrl.removeFromNotifyMeList()">
+    <i class="fas fa-bell fa-lg"></i><br ng-if="!pccwCtrl.hideI" />
+  </button>
+  <!--Compare-->
+  <button type="button" class="btn btn-link wrap"
+    id="btnGridAddToCompareProduct{{pccwCtrl.product.ID}}"
+    translate-attr="{ title: 'ui.storefront.common.Compare.AddTo',
+                      'aria-label': 'ui.storefront.common.Compare.AddTo' }"
+    ng-if="!pccwCtrl.hideC && !pccwCtrl.isInCompareCart"
+    ng-click="pccwCtrl.addToCompare()">
+    <i class="far fa-sliders-h fa-lg"></i><br ng-if="!pccwCtrl.hideI" />
+  </button>
+  <button type="button" class="btn btn-link wrap"
+    id="btnGridRemoveFromCompareProduct{{pccwCtrl.product.ID}}"
+    translate-attr="{ title: 'ui.storefront.common.Compare.RemoveFrom',
+                      'aria-label': 'ui.storefront.common.Compare.RemoveFrom' }"
+    ng-if="!pccwCtrl.hideC && pccwCtrl.isInCompareCart"
+    ng-click="pccwCtrl.removeFromCompare()">
+    <i class="fas fa-sliders-h-square fa-lg"></i><br ng-if="!pccwCtrl.hideI" />
+  </button>
+</div>

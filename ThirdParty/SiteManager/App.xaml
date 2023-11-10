@@ -1,0 +1,14 @@
+﻿<Application x:Class="SiteManager.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SiteManager"
+             xmlns:converters="clr-namespace:SiteManager.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVis" />
+        <converters:InverseBoolToVisibilityConverter x:Key="InvBoolToVis" />
+        <converters:BoolToWordWrapConverter x:Key="BoolToWrap" />
+        <converters:InverseBoolToWordWrapConverter x:Key="InvBoolToWrap" />
+        <converters:InverseBoolConverter x:Key="InvBool" />
+    </Application.Resources>
+</Application>

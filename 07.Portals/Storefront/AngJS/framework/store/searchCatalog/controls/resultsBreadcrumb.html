@@ -1,0 +1,126 @@
+﻿<div class="breadcrumb">
+  <div class=""><span id="lblYouAreHereProducts"
+    data-translate="ui.storefront.product.catalog.productCatalog.youAreHere"></span>&nbsp;<!--
+    --><a ng-if="!scrbCtrl.showCategoriesForLevelsUpTo"
+        ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+        class="breadcrumb-item"
+        id="breadCatalogRootLink" name="breadCatalogRootLink"
+        ui-sref-plus uisrp-is-catalog="true"
+        uisrp-state="{{scrbCtrl.service.activeStateRoot}}.results.both"
+        uisrp-params="{ 'category': '', 'term': null }"
+        ><span data-translate="{{scrbCtrl.service.midTitle
+          || 'ui.storefront.product.catalog.productCatalog.Catalog'}}"></span></a><!--
+    --><a ng-if="scrbCtrl.showCategoriesForLevelsUpTo >= 1"
+        ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+        class="breadcrumb-item"
+        id="breadCatalogRootLink" name="breadCatalogRootLink"
+        ui-sref-plus uisrp-is-catalog="true"
+        uisrp-state="{{scrbCtrl.service.activeStateRoot}}.categories.level1"
+        uisrp-params="{ 'category': '', 'term': null }"
+        ><span data-translate="{{scrbCtrl.service.midTitle
+          || 'ui.storefront.product.catalog.productCatalog.Catalog'}}"></span></a><!--
+    --><span ng-if="scrbCtrl.service.breadcrumb.compare"
+      ><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+    --><span data-translate="ui.storefront.common.Compare"></span></span><!--
+    --><span ng-if="scrbCtrl.service.breadcrumb.search"
+      ><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+    --><span data-translate="ui.storefront.product.catalog.SearchResults"></span></span><!--
+    --><span ng-if="!scrbCtrl.service.breadcrumb.compare"><!--
+      --><span ng-if="scrbCtrl.service.breadcrumb.category1Key"><!--
+        --><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+        --><a ng-if="scrbCtrl.showCategoriesForLevelsUpTo >= 2"
+            class="breadcrumb-item"
+            ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            ui-sref-if="!scrbCtrl.service.searchIsRunning"
+            ui-sref-val="{{scrbCtrl.service.activeStateRoot}}.categories.level2({
+              category: scrbCtrl.service.breadcrumb.category1Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(1)"></a><!--
+        --><a ng-if="!(scrbCtrl.showCategoriesForLevelsUpTo >= 2)"
+            class="breadcrumb-item"
+            sid="btnCategoryBreadcrumb"
+            ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            ui-sref="{{scrbCtrl.service.activeStateRoot}}.results.both({
+              category: scrbCtrl.service.breadcrumb.category1Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(1)"></a><!--
+      --></span><!--
+      --><span ng-if="scrbCtrl.service.breadcrumb.category2Key"><!--
+        --><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+        --><a ng-if="scrbCtrl.showCategoriesForLevelsUpTo >= 3"
+            class="breadcrumb-item"
+            ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            ui-sref-if="!scrbCtrl.service.searchIsRunning"
+            ui-sref-val="{{scrbCtrl.service.activeStateRoot}}.categories.level3({
+              parentCategory: scrbCtrl.service.breadcrumb.category1Key,
+              category: scrbCtrl.service.breadcrumb.category2Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(2)"></a><!--
+        --><a ng-if="!(scrbCtrl.showCategoriesForLevelsUpTo >= 3)"
+            class="breadcrumb-item"
+            ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            ui-sref-if="!scrbCtrl.service.searchIsRunning"
+            ui-sref-val="{{scrbCtrl.service.activeStateRoot}}.results.both({
+              category: scrbCtrl.service.breadcrumb.category2Key,
+              parentCategory: scrbCtrl.service.breadcrumb.category1Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(2)"></a><!--
+      --></span><!--
+      --><span ng-if="scrbCtrl.service.breadcrumb.category3Key"><!--
+        --><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+        --><a ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            class="breadcrumb-item"
+            ui-sref-if="!scrbCtrl.service.searchIsRunning"
+            ui-sref-val="{{scrbCtrl.service.activeStateRoot}}.results.both({
+              category: scrbCtrl.service.breadcrumb.category3Key,
+              parentCategory: scrbCtrl.service.breadcrumb.category2Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(3)"></a><!--
+      --></span><!--
+      --><span ng-if="scrbCtrl.service.breadcrumb.category4Key"><!--
+        --><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+        --><a ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            class="breadcrumb-item"
+            ui-sref-if="!scrbCtrl.service.searchIsRunning"
+            ui-sref-val="{{scrbCtrl.service.activeStateRoot}}.results.both({
+              category: scrbCtrl.service.breadcrumb.category4Key,
+              parentCategory: scrbCtrl.service.breadcrumb.category3Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(4)"></a><!--
+      --></span><!--
+      --><span ng-if="scrbCtrl.service.breadcrumb.category5Key"><!--
+        --><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+        --><a ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            class="breadcrumb-item"
+            ui-sref-if="!scrbCtrl.service.searchIsRunning"
+            ui-sref-val="{{scrbCtrl.service.activeStateRoot}}.results.both({
+              category: scrbCtrl.service.breadcrumb.category5Key,
+              parentCategory: scrbCtrl.service.breadcrumb.category4Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(5)"></a><!--
+      --></span><!--
+      --><span ng-if="scrbCtrl.service.breadcrumb.category6Key"><!--
+        --><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+        --><a ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            class="breadcrumb-item"
+            ui-sref-if="!scrbCtrl.service.searchIsRunning"
+            ui-sref-val="{{scrbCtrl.service.activeStateRoot}}.results.both({
+              category: scrbCtrl.service.breadcrumb.category6Key,
+              parentCategory: scrbCtrl.service.breadcrumb.category5Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(6)"></a><!--
+      --></span><!--
+      --><span ng-if="scrbCtrl.service.breadcrumb.category7Key"><!--
+        --><span class="breadcrumb-divider">&nbsp;/&nbsp;</span><!--
+        --><a ng-class="{'disabled':scrbCtrl.service.searchIsRunning}"
+            class="breadcrumb-item"
+            ui-sref-if="!scrbCtrl.service.searchIsRunning"
+            ui-sref-val="{{scrbCtrl.service.activeStateRoot}}.results.both({
+              category: scrbCtrl.service.breadcrumb.category7Key,
+              parentCategory: scrbCtrl.service.breadcrumb.category6Key
+            })"
+            ng-bind="scrbCtrl.service.getCategoryBreadcrumbName(7)"></a><!--
+      --></span><!--
+    --></span>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+﻿<div uib-accordion-group is-open="true" template-url="cat-filters-group-template.html">
+  <div uib-accordion-heading>
+    <i class="far fa-search fa-fw mr-2 text-body small"></i>
+    <span class="text-body small"
+      sid="AppliedFiltersSearchTermMenuText"
+      data-translate="ui.storefront.searchCatalog.filters.SearchTerm">
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="text" class="form-control"
+      id="txtTerm" name="txtTerm"
+      translate-attr="{ placeholder: 'ui.storefront.searchCatalog.controls.externalSearchBox.Search.Ellipses' }"
+      uib-typeahead="sug.Name as (sug.CustomKey + ' ' + sug.Name + (sug.Score > 0 ? ' (' + sug.Score + ')' : ''))
+                     for sug in scfbqtCtrl.service.getSuggestionsPromise()"
+      typeahead-loading="loadingSuggestions" typeahead-wait-ms="500"
+      typeahead-min-length="1" typeahead-focus-first="false"
+      ng-disabled="scfbqtCtrl.service.searchIsRunning"
+      ng-change="scfbqtCtrl.service.getSuggestionsPromise()"
+      ng-keypress="scfbqtCtrl.inputKeyPress($event)"
+      ng-model="scfbqtCtrl.service.queryTerm" />
+    <!-- typeahead-on-select($item, $model, $label) (Defaults: null) : A callback executed when a match is selected -->
+    <div class="input-group-append input-group-btn">
+      <button type="button" class="btn btn-outline-secondary"
+        ng-disabled="scfbqtCtrl.service.searchIsRunning"
+        ng-click="scfbqtCtrl.service.activeSearchViewModel.Form.Query = scfbqtCtrl.service.queryTerm;">
+        <i class="far"
+          ng-class="scfbqtCtrl.service.searchIsRunning ? 'fa-spinner fa-spin' : 'fa-search'"></i><!--
+        --><span class="sr-only" data-translate="ui.storefront.stores.storeDirectory.Search"></span>
+      </button>
+    </div>
+  </div>
+</div>

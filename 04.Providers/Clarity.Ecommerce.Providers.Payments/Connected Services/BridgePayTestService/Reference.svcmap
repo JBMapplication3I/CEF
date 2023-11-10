@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="08e9a3dc-92c3-4f0f-aeaf-a255381380fb" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://www.bridgepaynetsecuretest.com/PaymentService/RequestHandler.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RequestHandler.wsdl" MetadataType="Wsdl" ID="80395cc8-6a50-4f2e-b75f-ad6e246eb202" SourceId="1" SourceUrl="https://www.bridgepaynetsecuretest.com/PaymentService/RequestHandler.svc?wsdl" />
+    <MetadataFile FileName="RequestHandler1.wsdl" MetadataType="Wsdl" ID="de8ab96d-484b-4342-a250-9418f042a14d" SourceId="1" SourceUrl="https://www.bridgepaynetsecuretest.com/PaymentService/RequestHandler.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="RequestHandler.xsd" MetadataType="Schema" ID="960c5d62-231e-4346-9b06-26acbda8b706" SourceId="1" SourceUrl="https://www.bridgepaynetsecuretest.com/PaymentService/RequestHandler.svc?xsd=xsd1" />
+    <MetadataFile FileName="RequestHandler1.xsd" MetadataType="Schema" ID="264665a6-0090-424a-b0f3-d5ac5bbe8738" SourceId="1" SourceUrl="https://www.bridgepaynetsecuretest.com/PaymentService/RequestHandler.svc?xsd=xsd2" />
+    <MetadataFile FileName="RequestHandler2.xsd" MetadataType="Schema" ID="de0f15e9-169b-4e2f-b1f5-bfccde49332d" SourceId="1" SourceUrl="https://www.bridgepaynetsecuretest.com/PaymentService/RequestHandler.svc?xsd=xsd3" />
+    <MetadataFile FileName="RequestHandler.disco" MetadataType="Disco" ID="4bf627a5-87dd-43ed-b9cd-d1cdbb8fb4b1" SourceId="1" SourceUrl="https://www.bridgepaynetsecuretest.com/PaymentService/RequestHandler.svc?disco" />
+    <MetadataFile FileName="RequestHandler3.xsd" MetadataType="Schema" ID="2cc2e38e-45f4-4e07-ad4d-0223eb04a6c5" SourceId="1" SourceUrl="https://www.bridgepaynetsecuretest.com/PaymentService/RequestHandler.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

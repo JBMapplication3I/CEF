@@ -1,0 +1,284 @@
+﻿@inherits MVC.Core.InputFormGroupControllerBase<string>
+
+<Validation>
+  <Tooltip
+    Inline="false"
+    Text="@Tooltip"
+    Placement="TooltipPlacement.Top"
+    Fade="true"
+    AlwaysActive="TooltipIsOpen">
+    <Field
+      Horizontal="@IsHorizontal"
+      sid="@("field_" + InputName)"
+      Class="@AllFormClasses">
+      @if (!NoLabel)
+      {
+        <FieldLabel
+          For="@InputName"
+          title="@Tooltip"
+          sid="@("fieldLabel_" + InputName)">
+          <Span>
+            @LabelText
+            @if (Required)
+            {
+              <Span TextColor="TextColor.Danger">&nbsp;*</Span>
+            }
+            @if (Contract.CheckValidKey(Tooltip) && Tooltip != LabelText)
+            {
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.QuestionCircle" TextColor="TextColor.Info" Class="ml-1" />
+            }
+          </Span>
+        </FieldLabel>
+      }
+      <FieldBody
+        sid="@("fieldBody_" + InputName)">
+        @if (UseAddons)
+        {
+          <Addons>
+            @if (Role == TextRole.Email)
+            {
+              <Addon AddonType="AddonType.Start">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.At" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            else if (IsPhone)
+            {
+              <Addon AddonType="AddonType.Start">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="@("fa-phone-rotary")" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            else if (IsFax)
+            {
+              <Addon AddonType="AddonType.Start">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Fax" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            else if (Contract.CheckValidKey(LeftIcon))
+            {
+              <Addon AddonType="AddonType.Start">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="@LeftIcon" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            <Addon AddonType="AddonType.Body">
+              <TextEdit
+                sid="@("input_" + InputName)"
+                ElementId="@InputName"
+                Role="@(Role != TextRole.Password ? TextRole.Text : showPassword ? TextRole.Text : TextRole.Password)"
+                Class="@AllInputClasses"
+                Placeholder="@PlaceholderText"
+                MinLength="@MinLength"
+                MaxLength="@MaxLength"
+                Text="@Value"
+                MaskType="@MaskingType"
+                EditMask="@MaskEdit"
+                Disabled="@Disabled"
+                required="@Required"
+                TextExpression="ValueExpression"
+                TextChanged="ValueChanged"
+                autocomplete="@Autocomplete"
+                Autofocus="@Autofocus"
+                FocusOut="@ExtraOnFocusOut"
+                FocusIn="@ExtraOnFocusIn"
+                KeyDown="@ExtraOnKeyDown"
+                KeyPress="@ExtraOnKeyPress"
+                KeyUp="@ExtraOnKeyUp">
+                @*
+                onmousedown="@ExtraOnMouseDown"
+                onmouseup="@ExtraOnMouseUp"
+                onmousemove="@ExtraOnMouseMove"
+                onmouseover="@ExtraOnMouseOver"
+                onmouseout="@ExtraOnMouseOut"
+                onmousein="@ExtraOnMouseIn"
+                *@
+                <Feedback>
+                  @if (FormInvalid == true && !HideInvalidTooltip)
+                  {
+                    <ValidationError />
+                  }
+                  @if (FormValid == true && ShowValidTooltip)
+                  {
+                    <ValidationSuccess />
+                  }
+                </Feedback>
+              </TextEdit>
+            </Addon>
+            @if (Role == TextRole.Password)
+            {
+              <Addon AddonType="AddonType.End" Class="rounded-right">
+                <Blazorise.Button
+                  Type="ButtonType.Button"
+                  Class="btn-outline-secondary rounded-right"
+                  Clicked="@(() => {
+                    showPassword = !showPassword;
+                    StateHasChanged();
+                  })">
+                  <Blazorise.Icons.FontAwesome.Icon
+                    IconStyle="IconStyle.Regular"
+                    Name="@(showPassword ? "fa-eye-slash" : "fa-eye")"
+                  />
+                </Blazorise.Button>
+              </Addon>
+            }
+            else if (Contract.CheckValidKey(RightIcon))
+            {
+              <Addon AddonType="AddonType.End" Class="rounded-right">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon
+                    IconStyle="IconStyle.Regular"
+                    Name="@RightIcon"
+                    Class="fa-fw"
+                    aria-hidden="true"
+                  />
+                </AddonLabel>
+              </Addon>
+            }
+          </Addons>
+        }
+        else
+        {
+          <TextEdit
+            sid="@("input_" + InputName)"
+            Role="@(Role ?? TextRole.Text)"
+            Class="@AllInputClasses"
+            ElementId="@InputName"
+            Placeholder="@PlaceholderText"
+            MinLength="@MinLength"
+            MaxLength="@MaxLength"
+            Disabled="@Disabled"
+            required="@Required"
+            TextExpression="ValueExpression"
+            TextChanged="ValueChanged"
+            Text="@Value"
+            MaskType="@MaskingType"
+            EditMask="@MaskEdit"
+            autocomplete="@Autocomplete"
+            Autofocus="@Autofocus"
+            FocusOut="@ExtraOnFocusOut"
+            FocusIn="@ExtraOnFocusIn"
+            KeyDown="@ExtraOnKeyDown"
+            KeyPress="@ExtraOnKeyPress"
+            KeyUp="@ExtraOnKeyUp">
+            @*
+            onmousedown="@ExtraOnMouseDown"
+            onmouseup="@ExtraOnMouseUp"
+            onmousemove="@ExtraOnMouseMove"
+            onmouseover="@ExtraOnMouseOver"
+            onmouseout="@ExtraOnMouseOut"
+            onmousein="@ExtraOnMouseIn"
+            *@
+            <Feedback>
+              @if (FormInvalid == true && !HideInvalidTooltip)
+              {
+                <ValidationError />
+              }
+              @if (FormValid == true && ShowValidTooltip)
+              {
+                <ValidationSuccess />
+              }
+            </Feedback>
+          </TextEdit>
+        }
+      </FieldBody>
+    </Field>
+  </Tooltip>
+</Validation>
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  /// <summary>Gets or sets a value indicating whether this object is horizontal.</summary>
+  /// <value>True if this object is horizontal, false if not.</value>
+  [Parameter]
+  public bool IsHorizontal { get; set; }
+
+  /// <summary>Gets or sets the placeholder text.</summary>
+  /// <value>The placeholder text.</value>
+  [Parameter]
+  public string? PlaceholderText { get; set; }
+
+  /// <summary>Gets or sets the type of the masking.</summary>
+  /// <value>The type of the masking.</value>
+  [Parameter]
+  public MaskType MaskingType { get; set; }
+
+  /// <summary>Gets or sets the mask edit.</summary>
+  /// <value>The mask edit.</value>
+  [Parameter]
+  public string? MaskEdit { get; set; }
+
+  /// <summary>Gets or sets the length of the minimum.</summary>
+  /// <value>The length of the minimum.</value>
+  [Parameter]
+  public int? MinLength { get; set; }
+
+  /// <summary>Gets or sets the length of the maximum.</summary>
+  /// <value>The length of the maximum.</value>
+  [Parameter]
+  public int? MaxLength { get; set; }
+
+  /// <summary>Gets or sets a value indicating whether this object is phone.</summary>
+  /// <value>True if this object is phone, false if not.</value>
+  [Parameter]
+  public bool IsPhone { get; set; }
+
+  /// <summary>Gets or sets a value indicating whether this object is fax.</summary>
+  /// <value>True if this object is fax, false if not.</value>
+  [Parameter]
+  public bool IsFax { get; set; }
+
+  /// <summary>Gets or sets a value indicating whether this object is username.</summary>
+  /// <value>True if this object is username, false if not.</value>
+  [Parameter]
+  public bool IsUsername { get; set; }
+
+  /// <summary>Gets or sets a value indicating whether this object is password.</summary>
+  /// <value>True if this object is password, false if not.</value>
+  [Parameter]
+  public bool IsPassword { get; set; }
+
+  /// <summary>Gets or sets the role.</summary>
+  /// <value>The role.</value>
+  [Parameter]
+  public TextRole? Role { get; set; }
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  #endregion
+
+  /// <summary>Gets the input prefix.</summary>
+  /// <value>The input prefix.</value>
+  protected override string InputPrefix => Role switch
+  {
+    TextRole.Text => "txt",
+    TextRole.Email => "em",
+    TextRole.Password => "pw",
+    _ => "txt",
+  };
+
+  /// <summary>The show password.</summary>
+  private bool showPassword = false;
+
+  private string AllInputClasses => (FieldCssClasses
+    + (Contract.CheckValidKey(InputClasses) ? " " + InputClasses : string.Empty)
+    + (Contract.CheckValidKey(RightIcon) ? string.Empty : " rounded-right"))
+    .Trim();
+
+  private string AllFormClasses => ("form-group"
+    + (Contract.CheckValidKey(FormClasses) ? " " + FormClasses : string.Empty)
+    + (FormInvalid == true ? " has-error" : string.Empty))
+    .Trim();
+
+  private bool UseAddons =>
+    Role is TextRole.Email or TextRole.Password
+    || IsPhone
+    || IsFax
+    || Contract.CheckValidKey(LeftIcon)
+    || Contract.CheckValidKey(RightIcon);
+}

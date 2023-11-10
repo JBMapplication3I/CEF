@@ -1,0 +1,35 @@
+﻿<div class="cef-carousel">
+    <div ng-mouseenter="pause()" ng-mouseleave="play()" class="carousel ng-isolate-scope" ng-swipe-right="prev()" ng-swipe-left="next()">
+        <div class="carousel-inner" ng-click="carousel.launchModal()"></div>
+        <a role="button" class="left carousel-control" ng-click="prev()" ng-class="{'disabled': isPrevDisabled()}" ng-show="slides.length > 1">
+            <i class="far fa-chevron-left" aria-hidden="true"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a role="button" class="right carousel-control" ng-click="next()" ng-class="{'disabled': isNextDisabled()}" ng-show="slides.length > 1">
+            <i class="far fa-chevron-right" aria-hidden="true"></i>
+            <span class="sr-only">Next</span>
+        </a>
+        <ul class="carousel-indicators" ng-show="showIndicators && slides.length > 1">
+            <li ng-repeat="slide in slides | orderBy: indexOfSlide track by $index" ng-class="{'active': isActive(slide)}" ng-click="select(slide)">
+                <span class="sr-only">Slide {{$index + 1}} of {{slides.length}}<span ng-if="isActive(slide)">, currently active</span></span>
+            </li>
+        </ul>
+    </div>
+    <div class="cef-carousel-thumbnails" ng-if="showThumbnails && slides.length > 1">
+        <div class="row" style="overflow:hidden;">
+            <div class="col-3 text-center" ng-repeat="thumb in carousel.thumbnails | limitTo: carousel.thumbLimit track by $index" ng-click="carousel.select(thumb.slideScope)">
+                <div class="item text-center">
+                    <img ng-if="useNew" alt="" ng-src="{{thumb.fullImageUrl}}" />
+                </div>
+            </div>
+        </div>
+        <a role="button" class="left carousel-control" ng-click="carousel.prevThumb()" ng-class="{'disabled': isPrevDisabled()}" ng-show="carousel.thumbnails.length > carousel.thumbLimit">
+            <i class="far fa-chevron-left" aria-hidden="true"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a role="button" class="right carousel-control" ng-click="carousel.nextThumb()" ng-class="{'disabled': isNextDisabled()}" ng-show="carousel.thumbnails.length > carousel.thumbLimit">
+            <i class="far fa-chevron-right" aria-hidden="true"></i>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>

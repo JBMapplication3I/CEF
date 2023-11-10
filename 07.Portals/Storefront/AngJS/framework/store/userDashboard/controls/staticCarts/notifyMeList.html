@@ -1,0 +1,151 @@
+<div class="row">
+  <div class="col-12 text-right">
+    <button type="button" class="btn btn-secondary mb-3"
+      id="btnClearNotifyMeList" name="btnClearNotifyMeList"
+      translate-attr="{ title: 'ui.storefront.userDashboard2.controls.notifyMeList.ClearNotifyMeList',
+                        'aria-label': 'ui.storefront.userDashboard2.controls.notifyMeList.ClearNotifyMeList' }"
+      data-translate="ui.storefront.userDashboard2.controls.notifyMeList.ClearNotifyMeList"
+      ng-disabled="!udnmlCtrl.cvCartService.accessCart('Notify Me When In Stock').SalesItems.length"
+      ng-click="udnmlCtrl.clearList()">
+    </button>
+  </div>
+  <div class="col-12" ng-if="!udnmlCtrl.cvCartService.accessCart('Notify Me When In Stock').SalesItems.length">
+    <span class="h4" sid="InStockAlertsNoItemsText"
+      data-translate="ui.storefront.userDashboard2.controls.notifyMeList.NoItemsHaveBeenAddedToTheNotifyMeList">
+    </span>
+  </div>
+  <div class="col-12" ng-if="udnmlCtrl.cvCartService.accessCart('Notify Me When In Stock').SalesItems.length > 0">
+    <div class="table-responsive">
+      <table class="table table-sm table-hover table-striped table-bordered">
+        <thead>
+          <tr class="first last">
+            <th class="d-none d-sm-table-cell"></th>
+            <th class="w-16 xs-w-24" data-translate="ui.storefront.cart.SKU"></th>
+            <th class="sm-w-32 md-w-40 lg-w-40" data-translate="ui.storefront.common.Name"></th>
+            <th class="w-8 text-center" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-8 text-center" data-translate="ui.storefront.common.Subtotal"></th>
+            <th class="sm-w-24 md-w-16 lg-w-16 text-center"
+              colspan="2"
+              data-translate="ui.storefront.common.Quantity">
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody ng-form="udnmlCtrl.forms.SalesItems">
+          <tr ng-repeat="item in udnmlCtrl.cvCartService.carts['Notify Me When In Stock'].SalesItems"
+            id="NotifyMeListItem{{$index}}">
+            <td class="form-control-table-cell d-none d-md-table-cell p-0">
+              <div cef-product-card-thumbnail-widget
+                product-id="item.ProductID"
+                product-image="item.ProductPrimaryImage"
+                width="100"
+                height="100"
+                index="$index">
+              </div>
+            </td>
+            <td>
+              <a id="notifyMeList_item_{{$index}}_sku"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal"
+                  ng-bind="item.ProductKey">
+                </label>
+              </a>
+            </td>
+            <td>
+              <a id="notifyMeList_item_{{$index}}_name"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal"
+                  ng-bind="item.ProductName">
+                </label>
+              </a>
+            </td>
+            <td class="text-right">
+              <span class="d-block form-control-static text-right"
+                sid="StockAlertLineItemPrice_{{$index}}"
+                ng-class="{'strike-through small text-disabled': item.UnitCorePrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0}"
+                ng-bind="item.UnitCorePrice | globalizedCurrency">
+              </span>
+              <span class="d-block form-control-static text-right text-danger"
+                sid="StockAlertLineItemSalePrice_{{$index}}"
+                ng-if="item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                ng-bind="item.UnitSoldPrice | globalizedCurrency">
+              </span>
+            </td>
+            <td class="text-right">
+              <span class="d-block form-control-static text-right"
+                sid="StockAlertLineItemSubtotal_{{$index}}"
+                ng-bind="item.Quantity * (item.UnitSoldPrice && item.UnitSoldPrice > 0 && item.UnitCorePrice != item.UnitSoldPrice
+                  ? item.UnitSoldPrice : item.UnitCorePrice) | globalizedCurrency">
+              </span>
+            </td>
+            <td>
+              <div cef-add-to-cart-quantity-selector
+                sales-item="item"
+                item="item.Product"
+                item-id="item.ProductID"
+                item-name="item.ProductName"
+                item-seo-url="item.ProductSeoUrl"
+                default-value="1"
+                current-value="item.Quantity"
+                is-required="false"
+                step="1"
+                index="$index">
+              </div>
+              <p>
+                <div id="productDetailsStock" class="cef-in-out-stock">
+                  <span ng-if="item.ProductIsUnlimitedStock"
+                    class="cef-product-stock text-success"
+                    data-translate="ui.storefront.common.InStock">
+                  </span>
+                  <span ng-if="!item.ProductIsUnlimitedStock && (item.countStock() || 0) > 0
+                    && !(item.ProductTypeName == 'Downloadable' || item.ProductTypeName == 'License')"
+                    class="cef-product-stock text-success bold">
+                    <span ng-bind="(item.countStock() || 0) | number:0"></span>&nbsp;<!--
+                    --><span data-translate="ui.storefront.common.InStock"></span>
+                  </span>
+                  <span ng-if="!item.ProductIsUnlimitedStock && (item.countStock() || 0) <= 0 &&  item.ProductAllowBackOrder"
+                    class="cef-product-stock text-warning"
+                    data-translate="ui.storefront.common.OnBackorder">
+                  </span>
+                  <span ng-if="!item.ProductIsUnlimitedStock && (item.countStock() || 0) <= 0 && !item.ProductAllowBackOrder"
+                    class="cef-product-stock text-danger"
+                    data-translate="ui.storefront.common.OutOfStock">
+                  </span>
+                </div>
+              </p>
+            </td>
+            <td class="text-center">
+              <div cef-add-to-cart-button
+                sales-item="item"
+                item-id="item.ProductID"
+                item-name="item.ProductName"
+                item-seo-url="item.ProductSeoUrl"
+                default-value="1"
+                current-value="item.Quantity"
+                show-icon="true"
+                show-text="false"
+                ship-option=""
+                out-of-stock-links-to-details="false"
+                debug="false"
+                index="$index">
+              </div>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-link text-danger"
+                id="btnRemoveItem{{$index}}FromNotifyMeList"
+                name="btnRemoveItem{{$index}}FromNotifyMeList"
+                translate-attr="{ title: 'ui.storefront.common.RemoveFromNotifyMeWhenInStockList',
+                                  'aria-label': 'ui.storefront.common.RemoveFromNotifyMeWhenInStockList' }"
+                ng-click="udnmlCtrl.removeCartItem(item.ID)">
+                <i class="far fa-trash fa-lg"></i>
+                <span class="sr-only" data-translate="ui.storefront.common.RemoveFromNotifyMeWhenInStockList"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

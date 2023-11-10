@@ -1,0 +1,35 @@
+{
+	"folders": [
+        {
+            "path": "../../Solution Items"
+        },
+        {
+            "path": "AngJS"
+        },
+        {
+            "path": "../Storefront/Skins/Clarity-Admin"
+        },
+        {
+            "path": "../APIReference/APIReference"
+        }
+    ],
+	"settings": {
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/node_modules": true, // this excludes all folders named "node_modules" from the explorer tree
+			// alternative version
+			//"node_modules": true // this excludes the folder only from the root of your workspace
+			"lib/cef": true, // CEF output directory
+			"_Resharper.Caches": true,
+			"**/_Resharper.Caches": true,
+			"**/bin": true,
+			"**/obj": true
+		},
+		"typescript.tsdk": "AngJS\\node_modules\\typescript\\lib",
+		"git.ignoreLimitWarning": true,
+	}
+}

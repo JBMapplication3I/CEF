@@ -1,0 +1,155 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="warehouseDetailCtrl.record"
+         new-kind-key="ui.admin.common.Warehouse.New"
+         existing-kind-key="ui.admin.common.Warehouse">
+    </div>
+    <div class="row details-body">
+        <div class="col-sm-12 warehouse-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': warehouseDetailCtrl.forms.Details.$invalid}">
+                            <i class="far fa-lg fa-info"></i>&nbsp;<!--
+                            --><span data-translate="ui.admin.common.Detail.Plural"></span>
+                        </span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="warehouseDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                                <text-input-form-group
+                                    key="Name"
+                                    ng-model="warehouseDetailCtrl.record.Name"
+                                    label-key="ui.admin.common.Name"
+                                    tooltip-text="The name of the record."
+                                    placeholder-key="ui.admin.common.Name"
+                                    max-length="256"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <text-input-form-group
+                                    key="CustomKey"
+                                    ng-model="warehouseDetailCtrl.record.CustomKey"
+                                    label-key="ui.admin.common.Key"
+                                    tooltip-text="The key of the record. In most cases, this is provided by a third party system. This record specifically requires a unique value even if not integrated with a 3rd party system."
+                                    placeholder-key="ui.admin.common.Key"
+                                    max-length="128"
+                                    ng-required="false">
+                                </text-input-form-group>
+                            </div>
+                            <div class="col-sm-6" ng-if="warehouseDetailCtrl.record">
+                                <div cef-contact-editor-widget
+                                     class="mb-3"
+                                     contact="warehouseDetailCtrl.record.Contact"
+                                     is-editable="true"
+                                     id-suffix="warehouse"
+                                     hide-key="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': warehouseDetailCtrl.forms.Sections.$invalid}">
+                            <i class="far fa-lg fa-object-group"></i>&nbsp;<!--
+                            --><span data-translate="ui.admin.common.Section.Plural"></span>
+                        </span>
+                    </uib-tab-heading>
+                    <div class="container-fluid" ng-form="warehouseDetailCtrl.forms.Sections">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.Section.Plural"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-inline mb-3">
+                                    <div class="form-group">
+                                        <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                                        <input type="text" class="form-control"
+                                               placeholder="Section Name"
+                                               ng-model="warehouseDetailCtrl.sectionName" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                                        <input type="text" class="form-control"
+                                               placeholder="Section Key (Optional)"
+                                               ng-model="warehouseDetailCtrl.sectionKey" />
+                                    </div>
+                                    <button type="button" class="btn btn-info"
+                                            ng-disabled="!warehouseDetailCtrl.sectionName"
+                                            ng-click="warehouseDetailCtrl.addSection()"
+                                            data-translate="ui.admin.common.AddSection"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th data-translate="ui.admin.common.Name"></th>
+                                                <th data-translate="ui.admin.common.Key"></th>
+                                                <th style="width: 43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="warehouseDetailCtrl.record.Sections.length == 0">
+                                                <td colspan="4" data-translate="ui.admin.common.NoSectionsHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="section in warehouseDetailCtrl.record.Sections">
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        id="txtSectionName{{$index}}" name="txtSectionName{{$index}}"
+                                                        placeholder="Section Name"
+                                                        ng-required="true"
+                                                        ng-model="section.Name" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                        id="txtSectionKey{{$index}}" name="txtSectionKey{{$index}}"
+                                                        placeholder="Section Key"
+                                                        ng-required="false"
+                                                        ng-model="section.CustomKey" />
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            ng-click="warehouseDetailCtrl.deleteSection($index)"
+                                                            ><i class="far fa-times"></i><!--
+                                                            --><span class="sr-only" data-translate="ui.admin.common.Delete"></span></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger':warehouseDetailCtrl.forms.Attributes.$invalid}">
+                            <i class="far fa-lg fa-list"></i>&nbsp;<!--
+                            --><span data-translate="ui.admin.common.Attribute.Plural"></span>
+                        </span>
+                    </uib-tab-heading>
+                    <div class="container-fluid" ng-form="warehouseDetailCtrl.forms.Attributes">
+                        <cef-json-attributes-editor
+                            master="warehouseDetailCtrl.record"
+                            type="Warehouse"
+                            ng-if="warehouseDetailCtrl.record != null">
+                        </cef-json-attributes-editor>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="warehouseDetailCtrl"
+                return-state="inventory.warehouses.list"
+                permissions-base="Inventory.InventoryLocation">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

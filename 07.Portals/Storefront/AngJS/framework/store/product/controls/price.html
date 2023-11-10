@@ -1,0 +1,47 @@
+﻿<div ng-if="pdpCtrl.visible || true"
+  id="pnlProductPrice" name="pnlProductPrice"
+  class="row">
+  <!-- Non-Kit setups -->
+  <div class="col-12 h1 mt-0 mb-3">
+    <!--
+    <span ng-if="pdpCtrl.prices.isSale"
+      class="price text-success translate-cloak" translate-cloak>
+      <span data-translate="ui.storefront.product.detail.productDetails.onSale"></span>
+      <br />
+    </span>
+    -->
+    <span ng-if="!pdpCtrl.prices.haveBase && !pdpCtrl.prices.haveSale"
+      class="price text-success translate-cloak"
+      translate-cloak
+      data-translate="ui.storefront.common.Free">
+    </span>
+    <span ng-if="pdpCtrl.lowestUOMPrice"
+      class="price"
+      ng-class="{ 'strike-through very-small text-muted': pdpCtrl.prices.isSale }"
+      sid="ProductDetailsPagePrice"
+      ng-bind="pdpCtrl.lowestUOMPrice | globalizedCurrency">
+    </span>
+    <span ng-if="!pdpCtrl.lowestUOMPrice && pdpCtrl.prices.haveBase"
+      class="price"
+      ng-class="{ 'strike-through very-small text-muted': pdpCtrl.prices.isSale }"
+      sid="ProductDetailsPagePrice"
+      ng-bind="pdpCtrl.prices.base | globalizedCurrency">
+    </span>
+    <span ng-if="pdpCtrl.prices.isSale"
+      class="price text-success">
+      <span sid="ProductDetailsPageSalePrice"
+        ng-bind="pdpCtrl.prices.sale | globalizedCurrency">
+      </span>
+    </span>
+    <span ng-if="pdpCtrl.prices.isSale"
+      class="price-savings text-muted very-small translate-cloak"
+      translate-cloak
+      ng-bind="(pdpCtrl.prices.amountOff | globalizedCurrency)
+        + ' (' + (pdpCtrl.prices.percentOff | number: 0) + '%) '
+        + ('ui.storefront.product.detail.productDetails.Off' | translate)">
+    </span>
+  </div>
+</div>
+<div ng-if="pdpCtrl.showLoginForPricing"
+  cef-login-for-pricing>
+</div>

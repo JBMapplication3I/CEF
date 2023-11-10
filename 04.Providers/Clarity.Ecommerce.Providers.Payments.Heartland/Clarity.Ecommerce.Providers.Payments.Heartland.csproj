@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E93077D3-5712-4A0B-8586-ED002ADCCE9F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Clarity.Ecommerce.Providers.Payments.Heartland</RootNamespace>
+    <AssemblyName>Clarity.Ecommerce.Providers.Payments.Heartland</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Clarity.Ecommerce.Providers.Payments.Heartland.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Clarity.Ecommerce.Providers.Payments.Heartland.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HeartlandPaymentsProvider.Wallet.cs" />
+    <Compile Include="HeartlandPaymentsProvider.Payments.cs" />
+    <Compile Include="HeartlandPaymentsProviderConfig.cs" />
+    <Compile Include="HeartlandPaymentsProviderExtensions.cs" />
+    <Compile Include="HeartlandPaymentsProviderRegistry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj">
+      <Project>{C7250754-0453-49B4-9C61-408C6DA25DC4}</Project>
+      <Name>00.Clarity.Ecommerce.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj">
+      <Project>{57E8C6EA-ABC2-4775-9352-2DBA1F2F401C}</Project>
+      <Name>00.Clarity.Ecommerce.RegistryLoader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj">
+      <Project>{D2DC6CEB-1C99-430C-A124-E7555654F368}</Project>
+      <Name>02.Clarity.Ecommerce.Interfaces.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj">
+      <Project>{6B148AC1-F2F2-4AEB-AA0A-99F9B575CFCB}</Project>
+      <Name>02.Clarity.Ecommerce.Interfaces.Workflows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Clarity.Ecommerce.Providers.Payments\Clarity.Ecommerce.Providers.Payments.csproj">
+      <Project>{d53229c1-97a0-407a-ad86-ef8abb80b419}</Project>
+      <Name>Clarity.Ecommerce.Providers.Payments</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="GlobalPayments.Api">
+      <Version>1.5.6</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers.Unstable">
+      <Version>1.2.0.205</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.CSharp.Async.Rules">
+      <Version>6.1.41</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Diagnostics.DiagnosticSource">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Net.Http">
+      <Version>4.3.4</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.Algorithms">
+      <Version>4.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Security.Cryptography.X509Certificates">
+      <Version>4.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="System.Xml.ReaderWriter">
+      <Version>4.3.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)GlobalPayments.Api.dll" "$(SolutionDir)Plugins\" /Y /C /R /I</PostBuildEvent>
+  </PropertyGroup>
+</Project>

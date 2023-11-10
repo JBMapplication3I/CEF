@@ -1,0 +1,524 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DotNetNuke9Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ProfilePropertyDefinition">
+          <Key>
+            <PropertyRef Name="PropertyDefinitionID" />
+          </Key>
+          <Property Name="PropertyDefinitionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PortalID" Type="int" />
+          <Property Name="ModuleDefID" Type="int" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="DataType" Type="int" Nullable="false" />
+          <Property Name="DefaultValue" Type="ntext" />
+          <Property Name="PropertyCategory" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PropertyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Length" Type="int" Nullable="false" />
+          <Property Name="Required" Type="bit" Nullable="false" />
+          <Property Name="ValidationExpression" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ViewOrder" Type="int" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+          <Property Name="CreatedByUserID" Type="int" />
+          <Property Name="CreatedOnDate" Type="datetime" />
+          <Property Name="LastModifiedByUserID" Type="int" />
+          <Property Name="LastModifiedOnDate" Type="datetime" />
+          <Property Name="DefaultVisibility" Type="int" />
+          <Property Name="ReadOnly" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PortalID" Type="int" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ServiceFee" Type="money" />
+          <Property Name="BillingFrequency" Type="char" MaxLength="1" />
+          <Property Name="TrialPeriod" Type="int" />
+          <Property Name="TrialFrequency" Type="char" MaxLength="1" />
+          <Property Name="BillingPeriod" Type="int" />
+          <Property Name="TrialFee" Type="money" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="AutoAssignment" Type="bit" Nullable="false" />
+          <Property Name="RoleGroupID" Type="int" />
+          <Property Name="RSVPCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="IconFile" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedByUserID" Type="int" />
+          <Property Name="CreatedOnDate" Type="datetime" />
+          <Property Name="LastModifiedByUserID" Type="int" />
+          <Property Name="LastModifiedOnDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="SecurityMode" Type="int" Nullable="false" />
+          <Property Name="IsSystemRole" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="ProfileID" />
+          </Key>
+          <Property Name="ProfileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PropertyDefinitionID" Type="int" Nullable="false" />
+          <Property Name="PropertyValue" Type="nvarchar" MaxLength="3750" />
+          <Property Name="PropertyText" Type="nvarchar(max)" />
+          <Property Name="Visibility" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ExtendedVisibility" Type="varchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="IsTrialUsed" Type="bit" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="CreatedByUserID" Type="int" />
+          <Property Name="CreatedOnDate" Type="datetime" />
+          <Property Name="LastModifiedByUserID" Type="int" />
+          <Property Name="LastModifiedOnDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="IsOwner" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsSuperUser" Type="bit" Nullable="false" />
+          <Property Name="AffiliateId" Type="int" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatePassword" Type="bit" Nullable="false" />
+          <Property Name="LastIPAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedByUserID" Type="int" />
+          <Property Name="CreatedOnDate" Type="datetime" />
+          <Property Name="LastModifiedByUserID" Type="int" />
+          <Property Name="LastModifiedOnDate" Type="datetime" />
+          <Property Name="PasswordResetToken" Type="uniqueidentifier" />
+          <Property Name="PasswordResetExpiration" Type="datetime" />
+          <Property Name="LowerEmail" Type="nvarchar" MaxLength="256" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <Association Name="FK_UserProfile_ProfilePropertyDefinition">
+          <End Role="ProfilePropertyDefinition" Type="Self.ProfilePropertyDefinition" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfilePropertyDefinition">
+              <PropertyRef Name="PropertyDefinitionID" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="PropertyDefinitionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfile_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserProfile" Type="Self.UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserRoles">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DotNetNuke9ModelStoreContainer">
+          <EntitySet Name="ProfilePropertyDefinition" EntityType="Self.ProfilePropertyDefinition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UserProfile_ProfilePropertyDefinition" Association="Self.FK_UserProfile_ProfilePropertyDefinition">
+            <End Role="ProfilePropertyDefinition" EntitySet="ProfilePropertyDefinition" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfile_Users" Association="Self.FK_UserProfile_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserProfile" EntitySet="UserProfile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Roles" Association="Self.FK_UserRoles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Users" Association="Self.FK_UserRoles_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DotNetNuke9Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsSuperUser" Type="Boolean" Nullable="false" />
+          <Property Name="AffiliateId" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UpdatePassword" Type="Boolean" Nullable="false" />
+          <Property Name="LastIPAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedByUserID" Type="Int32" />
+          <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedByUserID" Type="Int32" />
+          <Property Name="LastModifiedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordResetToken" Type="Guid" />
+          <Property Name="PasswordResetExpiration" Type="DateTime" Precision="3" />
+          <Property Name="LowerEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="UserProfiles" Relationship="DotNetNuke9Model.FK_UserProfile_Users" FromRole="User" ToRole="UserProfile" />
+          <NavigationProperty Name="UserRoles" Relationship="DotNetNuke9Model.FK_UserRoles_Users" FromRole="User" ToRole="UserRole" />
+        </EntityType>
+        <EntityContainer Name="DotNetNuke9Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="ProfilePropertyDefinitions" EntityType="DotNetNuke9Model.ProfilePropertyDefinition" />
+          <EntitySet Name="UserProfiles" EntityType="DotNetNuke9Model.UserProfile" />
+          <AssociationSet Name="FK_UserProfile_ProfilePropertyDefinition" Association="DotNetNuke9Model.FK_UserProfile_ProfilePropertyDefinition">
+            <End Role="ProfilePropertyDefinition" EntitySet="ProfilePropertyDefinitions" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfile_Users" Association="DotNetNuke9Model.FK_UserProfile_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <EntitySet Name="Roles" EntityType="DotNetNuke9Model.Role" />
+          <EntitySet Name="UserRoles" EntityType="DotNetNuke9Model.UserRole" />
+          <AssociationSet Name="FK_UserRoles_Roles" Association="DotNetNuke9Model.FK_UserRoles_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Users" Association="DotNetNuke9Model.FK_UserRoles_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ProfilePropertyDefinition">
+          <Key>
+            <PropertyRef Name="PropertyDefinitionID" />
+          </Key>
+          <Property Name="PropertyDefinitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PortalID" Type="Int32" />
+          <Property Name="ModuleDefID" Type="Int32" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="DataType" Type="Int32" Nullable="false" />
+          <Property Name="DefaultValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyCategory" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Length" Type="Int32" Nullable="false" />
+          <Property Name="Required" Type="Boolean" Nullable="false" />
+          <Property Name="ValidationExpression" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ViewOrder" Type="Int32" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedByUserID" Type="Int32" />
+          <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedByUserID" Type="Int32" />
+          <Property Name="LastModifiedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="DefaultVisibility" Type="Int32" />
+          <Property Name="ReadOnly" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserProfiles" Relationship="DotNetNuke9Model.FK_UserProfile_ProfilePropertyDefinition" FromRole="ProfilePropertyDefinition" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="ProfileID" />
+          </Key>
+          <Property Name="ProfileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="PropertyDefinitionID" Type="Int32" Nullable="false" />
+          <Property Name="PropertyValue" Type="String" MaxLength="3750" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Visibility" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExtendedVisibility" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProfilePropertyDefinition" Relationship="DotNetNuke9Model.FK_UserProfile_ProfilePropertyDefinition" FromRole="UserProfile" ToRole="ProfilePropertyDefinition" />
+          <NavigationProperty Name="User" Relationship="DotNetNuke9Model.FK_UserProfile_Users" FromRole="UserProfile" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserProfile_ProfilePropertyDefinition">
+          <End Type="DotNetNuke9Model.ProfilePropertyDefinition" Role="ProfilePropertyDefinition" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DotNetNuke9Model.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfilePropertyDefinition">
+              <PropertyRef Name="PropertyDefinitionID" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="PropertyDefinitionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfile_Users">
+          <End Type="DotNetNuke9Model.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DotNetNuke9Model.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PortalID" Type="Int32" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BillingFrequency" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TrialPeriod" Type="Int32" />
+          <Property Name="TrialFrequency" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BillingPeriod" Type="Int32" />
+          <Property Name="TrialFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="AutoAssignment" Type="Boolean" Nullable="false" />
+          <Property Name="RoleGroupID" Type="Int32" />
+          <Property Name="RSVPCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IconFile" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedByUserID" Type="Int32" />
+          <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedByUserID" Type="Int32" />
+          <Property Name="LastModifiedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="SecurityMode" Type="Int32" Nullable="false" />
+          <Property Name="IsSystemRole" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserRoles" Relationship="DotNetNuke9Model.FK_UserRoles_Roles" FromRole="Role" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="IsTrialUsed" Type="Boolean" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserID" Type="Int32" />
+          <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedByUserID" Type="Int32" />
+          <Property Name="LastModifiedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="IsOwner" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="DotNetNuke9Model.FK_UserRoles_Roles" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="DotNetNuke9Model.FK_UserRoles_Users" FromRole="UserRole" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserRoles_Roles">
+          <End Type="DotNetNuke9Model.Role" Role="Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DotNetNuke9Model.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRoles_Users">
+          <End Type="DotNetNuke9Model.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DotNetNuke9Model.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DotNetNuke9ModelStoreContainer" CdmEntityContainer="DotNetNuke9Entities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DotNetNuke9Model.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="IsSuperUser" ColumnName="IsSuperUser" />
+                <ScalarProperty Name="AffiliateId" ColumnName="AffiliateId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="UpdatePassword" ColumnName="UpdatePassword" />
+                <ScalarProperty Name="LastIPAddress" ColumnName="LastIPAddress" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+                <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+                <ScalarProperty Name="LastModifiedByUserID" ColumnName="LastModifiedByUserID" />
+                <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
+                <ScalarProperty Name="PasswordResetToken" ColumnName="PasswordResetToken" />
+                <ScalarProperty Name="PasswordResetExpiration" ColumnName="PasswordResetExpiration" />
+                <ScalarProperty Name="LowerEmail" ColumnName="LowerEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProfilePropertyDefinitions">
+            <EntityTypeMapping TypeName="DotNetNuke9Model.ProfilePropertyDefinition">
+              <MappingFragment StoreEntitySet="ProfilePropertyDefinition">
+                <ScalarProperty Name="ReadOnly" ColumnName="ReadOnly" />
+                <ScalarProperty Name="DefaultVisibility" ColumnName="DefaultVisibility" />
+                <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
+                <ScalarProperty Name="LastModifiedByUserID" ColumnName="LastModifiedByUserID" />
+                <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="ViewOrder" ColumnName="ViewOrder" />
+                <ScalarProperty Name="ValidationExpression" ColumnName="ValidationExpression" />
+                <ScalarProperty Name="Required" ColumnName="Required" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="PropertyCategory" ColumnName="PropertyCategory" />
+                <ScalarProperty Name="DefaultValue" ColumnName="DefaultValue" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ModuleDefID" ColumnName="ModuleDefID" />
+                <ScalarProperty Name="PortalID" ColumnName="PortalID" />
+                <ScalarProperty Name="PropertyDefinitionID" ColumnName="PropertyDefinitionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="DotNetNuke9Model.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="ExtendedVisibility" ColumnName="ExtendedVisibility" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+                <ScalarProperty Name="PropertyText" ColumnName="PropertyText" />
+                <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
+                <ScalarProperty Name="PropertyDefinitionID" ColumnName="PropertyDefinitionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DotNetNuke9Model.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="IsSystemRole" ColumnName="IsSystemRole" />
+                <ScalarProperty Name="SecurityMode" ColumnName="SecurityMode" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
+                <ScalarProperty Name="LastModifiedByUserID" ColumnName="LastModifiedByUserID" />
+                <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+                <ScalarProperty Name="IconFile" ColumnName="IconFile" />
+                <ScalarProperty Name="RSVPCode" ColumnName="RSVPCode" />
+                <ScalarProperty Name="RoleGroupID" ColumnName="RoleGroupID" />
+                <ScalarProperty Name="AutoAssignment" ColumnName="AutoAssignment" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="TrialFee" ColumnName="TrialFee" />
+                <ScalarProperty Name="BillingPeriod" ColumnName="BillingPeriod" />
+                <ScalarProperty Name="TrialFrequency" ColumnName="TrialFrequency" />
+                <ScalarProperty Name="TrialPeriod" ColumnName="TrialPeriod" />
+                <ScalarProperty Name="BillingFrequency" ColumnName="BillingFrequency" />
+                <ScalarProperty Name="ServiceFee" ColumnName="ServiceFee" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="PortalID" ColumnName="PortalID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="DotNetNuke9Model.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="IsOwner" ColumnName="IsOwner" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
+                <ScalarProperty Name="LastModifiedByUserID" ColumnName="LastModifiedByUserID" />
+                <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+                <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="IsTrialUsed" ColumnName="IsTrialUsed" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,40 @@
+<div class="modal-header bg-dark text-light">
+  <h5 class="modal-title"
+    sid="StockRequestModalHeaderText"
+    data-translate="ui.storefront.product.catalog.requestedQuantityForNotification">
+  </h5>
+  <button type="button" class="close"
+    translate-attr="{ title: 'ui.storefront.common.Close',
+                      'aria-label': 'ui.storefront.common.Close' }"
+    ng-click="quantityInputModalCtrl.cancel()">
+    <i class="far fa-times text-light" aria-hidden="true"></i>
+    <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <label class="control-label ng-scope" for="nudQIMQuantity"
+      sid="StockRequestModalQuantityText"
+      data-translate="ui.storefront.common.Quantity">
+    </label>
+    <input type="number" class="text-center form-control qty"
+      id="nudQIMQuantity" name="nudQIMQuantity"
+      ng-model="quantityInputModalCtrl.qtyInput"; />
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary"
+    id="btnQIMCancel" name="btnQIMCancel"
+    translate-attr="{ title: 'ui.storefront.common.Cancel',
+                      'aria-label': 'ui.storefront.common.Cancel' }"
+    data-translate="ui.storefront.common.Cancel"
+    ng-click="quantityInputModalCtrl.cancel()">
+  </button>
+  <button type="button" class="btn btn-primary"
+    id="btnQIMOk" name="btnQIMOk"
+    translate-attr="{ title: 'ui.storefront.userDashboard2.controls.salesReturnCreate',
+                      'aria-label': 'ui.storefront.userDashboard2.controls.salesReturnCreate' }"
+    data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate"
+    ng-click="quantityInputModalCtrl.submit()">
+  </button>
+</div>

@@ -1,0 +1,25 @@
+﻿<div class="row">
+    <div class="col-sm-12 text-right">
+        <b ng-bind="cefCheckoutCtrl.selectedCard.Name || cefCheckoutCtrl.paymentData.referenceName || cefCheckoutCtrl.paymentData.cardholderName"></b>
+        <span aria-hidden="true">
+            <i class="far fa-2x" ng-class="{
+                'fa-cc-amex': cefCheckoutCtrl.selectedCard.CardType == 'American Express',
+                'fa-cc-discover': cefCheckoutCtrl.selectedCard.CardType == 'Discover',
+                'fa-cc-mastercard': cefCheckoutCtrl.selectedCard.CardType == 'MasterCard' || cefCheckoutCtrl.selectedCard.CardType == 'Diners Club',
+                'fa-cc-visa': cefCheckoutCtrl.selectedCard.CardType == 'Visa'}"></i>
+            <span class="sr-only" ng-bind="cefCheckoutCtrl.selectedCard.CardType"></span>
+        </span>
+        <span aria-hidden="true">
+            <i class="far fa-2x" ng-class="{
+                'fa-cc-amex': cefCheckoutCtrl.paymentData.CardType == 'American Express',
+                'fa-cc-discover': cefCheckoutCtrl.paymentData.CardType == 'Discover',
+                'fa-cc-mastercard': cefCheckoutCtrl.paymentData.CardType == 'MasterCard' || cefCheckoutCtrl.paymentData.CardType == 'Diners Club',
+                'fa-cc-visa': cefCheckoutCtrl.paymentData.CardType == 'Visa'}"></i>
+            <span class="sr-only" ng-bind="cefCheckoutCtrl.paymentData.CardType"></span>
+        </span>
+        <h5>&bull;&bull;&bull;&bull;&nbsp;<!--
+        -->&bull;&bull;&bull;&bull;&nbsp;<!--
+        -->&bull;&bull;&bull;&bull;&nbsp;<!--
+        --><span ng-bind="(cefCheckoutCtrl.selectedCard.CreditCardNumber || cefCheckoutCtrl.paymentData.CardNumber) | limitTo: -4"></span></h5>
+    </div>
+</div>

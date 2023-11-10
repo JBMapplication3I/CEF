@@ -1,0 +1,3122 @@
+<?xml version="1.0"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition">
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+        <ReportItems>
+          <Textbox Name="TextBox2">
+            <Left>25.875pt</Left>
+            <Top>15pt</Top>
+            <Height>27.75pt</Height>
+            <Width>556.5pt</Width>
+            <Style>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=RowNumber("ProductSales")</Value>
+                    <Style>
+                      <FontSize>12.9975pt</FontSize>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value> products sold in </Value>
+                    <Style>
+                      <FontSize>12.9975pt</FontSize>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Parameters!CategoryID.Label</Value>
+                    <Style>
+                      <FontSize>12.9975pt</FontSize>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value> </Value>
+                    <Style>
+                      <Color>Black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Parameters!DateRange.Label</Value>
+                    <Style>
+                      <FontSize>12.9998pt</FontSize>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Tablix Name="Tablix1">
+            <Left>30.75pt</Left>
+            <Top>71.25pt</Top>
+            <Height>36pt</Height>
+            <Width>300.75pt</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>ProductSalesCurrency</DataSetName>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>164.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>81.75pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>54.75pt</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox3">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>164.25pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Name</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox4">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>81.75pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Subtotal</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox9">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>54.75pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Quantity</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox5">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>164.25pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Name.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox8">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>81.75pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Sales.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox11">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>54.75pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Quantity.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
+          <Chart Name="Chart1">
+            <Left>309pt</Left>
+            <Top>53.25pt</Top>
+            <Height>216pt</Height>
+            <Width>297.75pt</Width>
+            <DataElementName />
+            <Style>
+              <BackgroundColor>White</BackgroundColor>
+              <FontFamily>Segoe UI</FontFamily>
+              <FontSize>8pt</FontSize>
+              <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+              <TextAlign>Center</TextAlign>
+              <Color>Gray</Color>
+              <ShadowColor>Transparent</ShadowColor>
+              <Border>
+                <Color>#d3d3d3</Color>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>ProductSales</DataSetName>
+            <ChartSeriesHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label>Sales</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartSeriesHierarchy>
+            <ChartCategoryHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Group Name="Chart1_CategoryGroup1">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Name.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Name.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <Label>=Fields!Name.Value</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartCategoryHierarchy>
+            <ChartData>
+              <ChartSeriesCollection>
+                <ChartSeries Name="Sales1">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=Sum(Fields!Sales.Value)</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style>
+                          <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                          <Color>Black</Color>
+                          <ShadowColor>Transparent</ShadowColor>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>None</Style>
+                          </Border>
+                        </Style>
+                        <UseValueAsLabel>false</UseValueAsLabel>
+                        <Label>#PERCENT</Label>
+                        <Visible>false</Visible>
+                        <Position>Auto</Position>
+                      </ChartDataLabel>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>Transparent</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                      <ChartMarker>
+                        <Size>6pt</Size>
+                        <Style>
+                          <FontFamily>Segoe UI</FontFamily>
+                          <FontSize>8pt</FontSize>
+                          <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                          <ShadowColor>Transparent</ShadowColor>
+                          <Border>
+                            <Color>Transparent</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                        </Style>
+                      </ChartMarker>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Type>Shape</Type>
+                  <Subtype>Doughnut</Subtype>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                    <Color>Gray</Color>
+                    <ShadowColor>Transparent</ShadowColor>
+                    <Border>
+                      <Color>LightGrey</Color>
+                      <Style>Solid</Style>
+                    </Border>
+                  </Style>
+                  <ChartMarker>
+                    <Size>6pt</Size>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>Transparent</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                  </ChartMarker>
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                </ChartSeries>
+              </ChartSeriesCollection>
+            </ChartData>
+            <ChartAreas>
+              <ChartArea Name="Default">
+                <ChartCategoryAxes>
+                  <ChartAxis Name="Primary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Opposite</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartCategoryAxes>
+                <ChartValueAxes>
+                  <ChartAxis Name="Primary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Opposite</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartValueAxes>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>Center</TextAlign>
+                  <Color>Gray</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Color>#d3d3d3</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </ChartArea>
+            </ChartAreas>
+            <ChartLegends>
+              <ChartLegend Name="Default">
+                <Hidden>true</Hidden>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>Center</TextAlign>
+                  <Color>Black</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Color>#d3d3d3</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>BottomCenter</Position>
+                <ChartLegendTitle>
+                  <Caption />
+                  <TitleSeparator>None</TitleSeparator>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                    <TextAlign>Center</TextAlign>
+                    <Color>Gray</Color>
+                    <ShadowColor>Transparent</ShadowColor>
+                    <Border>
+                      <Color>LightGrey</Color>
+                      <Style>None</Style>
+                    </Border>
+                  </Style>
+                </ChartLegendTitle>
+                <HeaderSeparator>None</HeaderSeparator>
+                <HeaderSeparatorColor>Black</HeaderSeparatorColor>
+                <ColumnSeparator>None</ColumnSeparator>
+                <ColumnSeparatorColor>Black</ColumnSeparatorColor>
+                <ColumnSpacing>0</ColumnSpacing>
+                <InterlacedRows>false</InterlacedRows>
+                <InterlacedRowsColor>Transparent</InterlacedRowsColor>
+                <EquallySpacedItems>false</EquallySpacedItems>
+                <Reversed>Auto</Reversed>
+                <TextWrapThreshold>0</TextWrapThreshold>
+              </ChartLegend>
+            </ChartLegends>
+            <ChartTitles>
+              <ChartTitle Name="Default">
+                <Caption>Top 5 Categories</Caption>
+                <Hidden>true</Hidden>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>10.5pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>General</TextAlign>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <Color>Black</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Width>0.75000pt</Width>
+                    <Color>LightGrey</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>TopCenter</Position>
+                <DockOffset>0</DockOffset>
+                <TextOrientation>Auto</TextOrientation>
+              </ChartTitle>
+            </ChartTitles>
+            <Palette>Pastel</Palette>
+            <ChartBorderSkin>
+              <Style>
+                <BackgroundColor>White</BackgroundColor>
+                <FontFamily>Segoe UI</FontFamily>
+                <FontSize>8pt</FontSize>
+                <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                <TextAlign>Center</TextAlign>
+                <Color>White</Color>
+                <ShadowColor>Transparent</ShadowColor>
+                <Border>
+                  <Color>#d3d3d3</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </ChartBorderSkin>
+            <ChartNoDataMessage Name="Default">
+              <Caption />
+              <Hidden>false</Hidden>
+              <Style>
+                <BackgroundColor>White</BackgroundColor>
+                <FontFamily>Segoe UI</FontFamily>
+                <FontSize>8pt</FontSize>
+                <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                <TextAlign>Center</TextAlign>
+                <Color>Gray</Color>
+                <ShadowColor>Transparent</ShadowColor>
+                <Border>
+                  <Color>#d3d3d3</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <Position>TopCenter</Position>
+              <DockOffset>0</DockOffset>
+              <TextOrientation>Auto</TextOrientation>
+            </ChartNoDataMessage>
+          </Chart>
+          <Chart Name="Chart3">
+            <Left>7.5pt</Left>
+            <Top>283.5pt</Top>
+            <Height>216pt</Height>
+            <Width>601.5pt</Width>
+            <Style>
+              <BackgroundColor>White</BackgroundColor>
+              <FontFamily>Segoe UI</FontFamily>
+              <FontSize>8pt</FontSize>
+              <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+              <TextAlign>Center</TextAlign>
+              <Color>Gray</Color>
+              <ShadowColor>Transparent</ShadowColor>
+              <Border>
+                <Color>#d3d3d3</Color>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>ProductSales</DataSetName>
+            <ChartSeriesHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label>Quantity</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartSeriesHierarchy>
+            <ChartCategoryHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Group Name="Chart3_CategoryGroup1">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Name.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Name.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <Label>=Fields!Name.Value</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartCategoryHierarchy>
+            <ChartData>
+              <ChartSeriesCollection>
+                <ChartSeries Name="Quantity1">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=Sum(Fields!Quantity.Value)</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style>
+                          <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                          <Color>Black</Color>
+                          <ShadowColor>Transparent</ShadowColor>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>None</Style>
+                          </Border>
+                        </Style>
+                        <UseValueAsLabel>false</UseValueAsLabel>
+                        <Visible>false</Visible>
+                        <Position>Auto</Position>
+                      </ChartDataLabel>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>Transparent</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                      <ChartMarker>
+                        <Size>6pt</Size>
+                        <Style>
+                          <FontFamily>Segoe UI</FontFamily>
+                          <FontSize>8pt</FontSize>
+                          <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                          <ShadowColor>Transparent</ShadowColor>
+                          <Border>
+                            <Color>Transparent</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                        </Style>
+                      </ChartMarker>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                    <Color>Gray</Color>
+                    <ShadowColor>Transparent</ShadowColor>
+                    <Border>
+                      <Color>LightGrey</Color>
+                      <Style>Solid</Style>
+                    </Border>
+                  </Style>
+                  <ChartMarker>
+                    <Size>6pt</Size>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>Transparent</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                  </ChartMarker>
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                </ChartSeries>
+              </ChartSeriesCollection>
+            </ChartData>
+            <ChartAreas>
+              <ChartArea Name="Default">
+                <ChartCategoryAxes>
+                  <ChartAxis Name="Primary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Opposite</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartCategoryAxes>
+                <ChartValueAxes>
+                  <ChartAxis Name="Primary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Opposite</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartValueAxes>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>Center</TextAlign>
+                  <Color>Gray</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Color>#d3d3d3</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </ChartArea>
+            </ChartAreas>
+            <ChartLegends>
+              <ChartLegend Name="Default">
+                <Hidden>true</Hidden>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>Center</TextAlign>
+                  <Color>Black</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Color>#d3d3d3</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>BottomCenter</Position>
+                <ChartLegendTitle>
+                  <Caption />
+                  <TitleSeparator>None</TitleSeparator>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                    <TextAlign>Center</TextAlign>
+                    <Color>Gray</Color>
+                    <ShadowColor>Transparent</ShadowColor>
+                    <Border>
+                      <Color>LightGrey</Color>
+                      <Style>None</Style>
+                    </Border>
+                  </Style>
+                </ChartLegendTitle>
+                <HeaderSeparator>None</HeaderSeparator>
+                <HeaderSeparatorColor>Black</HeaderSeparatorColor>
+                <ColumnSeparator>None</ColumnSeparator>
+                <ColumnSeparatorColor>Black</ColumnSeparatorColor>
+                <ColumnSpacing>0</ColumnSpacing>
+                <InterlacedRows>false</InterlacedRows>
+                <InterlacedRowsColor>Transparent</InterlacedRowsColor>
+                <EquallySpacedItems>false</EquallySpacedItems>
+                <Reversed>Auto</Reversed>
+                <TextWrapThreshold>0</TextWrapThreshold>
+              </ChartLegend>
+            </ChartLegends>
+            <ChartTitles>
+              <ChartTitle Name="Default">
+                <Caption>Units Sold</Caption>
+                <Hidden>false</Hidden>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>10.5pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>General</TextAlign>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <Color>Black</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Width>0.75000pt</Width>
+                    <Color>LightGrey</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>TopCenter</Position>
+                <DockOffset>0</DockOffset>
+                <TextOrientation>Auto</TextOrientation>
+              </ChartTitle>
+            </ChartTitles>
+            <Palette>BrightPastel</Palette>
+            <ChartBorderSkin>
+              <Style>
+                <BackgroundColor>White</BackgroundColor>
+                <FontFamily>Segoe UI</FontFamily>
+                <FontSize>8pt</FontSize>
+                <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                <TextAlign>Center</TextAlign>
+                <Color>White</Color>
+                <ShadowColor>Transparent</ShadowColor>
+                <Border>
+                  <Color>#d3d3d3</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </ChartBorderSkin>
+            <ChartNoDataMessage Name="Default">
+              <Caption />
+              <Hidden>false</Hidden>
+              <Style>
+                <BackgroundColor>White</BackgroundColor>
+                <FontFamily>Segoe UI</FontFamily>
+                <FontSize>8pt</FontSize>
+                <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                <TextAlign>Center</TextAlign>
+                <Color>Gray</Color>
+                <ShadowColor>Transparent</ShadowColor>
+                <Border>
+                  <Color>#d3d3d3</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <Position>TopCenter</Position>
+              <DockOffset>0</DockOffset>
+              <TextOrientation>Auto</TextOrientation>
+            </ChartNoDataMessage>
+          </Chart>
+        </ReportItems>
+        <Height>505.5pt</Height>
+      </Body>
+      <Width>615pt</Width>
+      <Page>
+        <PageHeader>
+          <Style>
+            <BackgroundColor>#525252</BackgroundColor>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+          <Height>80.25pt</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="TextBox1">
+              <Left>3pt</Left>
+              <Top>3.75pt</Top>
+              <Height>69.75pt</Height>
+              <Width>387.75pt</Width>
+              <Style>
+                <BackgroundColor>#525252</BackgroundColor>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>11.25pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Sales By Product</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>15pt</FontSize>
+                        <FontWeight>Light</FontWeight>
+                        <Color>#ffffff</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>﻿</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>15pt</FontSize>
+                        <FontWeight>Light</FontWeight>
+                        <Color>#ffffff</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+          </ReportItems>
+        </PageHeader>
+        <PageFooter>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+          <Height>80.25pt</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+        </PageFooter>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="CategorySales">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=SQLB.corp.claritymis.com\SQL2016;
+Initial Catalog=CEF_DEMO_2020_3_RON_SINGLESTORE;
+User=SQLLogin;
+Password=p4ssw0rd;</ConnectString>
+        <rd:IsDesignState>true</rd:IsDesignState>
+      </ConnectionProperties>
+      <rd:SecurityType>DataBase</rd:SecurityType>
+      <rd:ImpersonateUser>false</rd:ImpersonateUser>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="Products">
+      <Fields>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="CustomKey">
+          <DataField>CustomKey</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreatedDate">
+          <DataField>CreatedDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="UpdatedDate">
+          <DataField>UpdatedDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Active">
+          <DataField>Active</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JsonAttributes">
+          <DataField>JsonAttributes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoKeywords">
+          <DataField>SeoKeywords</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoUrl">
+          <DataField>SeoUrl</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoPageTitle">
+          <DataField>SeoPageTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoDescription">
+          <DataField>SeoDescription</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoMetaData">
+          <DataField>SeoMetaData</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RequiresRoles">
+          <DataField>RequiresRoles</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Weight">
+          <DataField>Weight</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="WeightUnitOfMeasure">
+          <DataField>WeightUnitOfMeasure</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Width">
+          <DataField>Width</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="WidthUnitOfMeasure">
+          <DataField>WidthUnitOfMeasure</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Depth">
+          <DataField>Depth</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="DepthUnitOfMeasure">
+          <DataField>DepthUnitOfMeasure</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Height">
+          <DataField>Height</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HeightUnitOfMeasure">
+          <DataField>HeightUnitOfMeasure</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ManufacturerPartNumber">
+          <DataField>ManufacturerPartNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ShortDescription">
+          <DataField>ShortDescription</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BrandName">
+          <DataField>BrandName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PriceBase">
+          <DataField>PriceBase</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PriceMsrp">
+          <DataField>PriceMsrp</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PriceReduction">
+          <DataField>PriceReduction</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PriceSale">
+          <DataField>PriceSale</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HandlingCharge">
+          <DataField>HandlingCharge</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="FlatShippingCharge">
+          <DataField>FlatShippingCharge</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="IsVisible">
+          <DataField>IsVisible</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IsTaxable">
+          <DataField>IsTaxable</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="TaxCode">
+          <DataField>TaxCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="IsFreeShipping">
+          <DataField>IsFreeShipping</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="AvailableStartDate">
+          <DataField>AvailableStartDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="AvailableEndDate">
+          <DataField>AvailableEndDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="StockQuantity">
+          <DataField>StockQuantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="StockQuantityAllocated">
+          <DataField>StockQuantityAllocated</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="IsUnlimitedStock">
+          <DataField>IsUnlimitedStock</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="AllowBackOrder">
+          <DataField>AllowBackOrder</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IsDiscontinued">
+          <DataField>IsDiscontinued</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="UnitOfMeasure">
+          <DataField>UnitOfMeasure</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumPurchaseQuantity">
+          <DataField>MinimumPurchaseQuantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumPurchaseQuantityIfPastPurchased">
+          <DataField>MinimumPurchaseQuantityIfPastPurchased</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MaximumPurchaseQuantity">
+          <DataField>MaximumPurchaseQuantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MaximumPurchaseQuantityIfPastPurchased">
+          <DataField>MaximumPurchaseQuantityIfPastPurchased</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="QuantityPerMasterPack">
+          <DataField>QuantityPerMasterPack</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="QuantityMasterPackPerPallet">
+          <DataField>QuantityMasterPackPerPallet</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="QuantityPerPallet">
+          <DataField>QuantityPerPallet</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="KitBaseQuantityPriceMultiplier">
+          <DataField>KitBaseQuantityPriceMultiplier</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="SortOrder">
+          <DataField>SortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="PackageID">
+          <DataField>PackageID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MasterPackID">
+          <DataField>MasterPackID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="PalletID">
+          <DataField>PalletID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TypeID">
+          <DataField>TypeID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="QuantityMasterPackPerLayer">
+          <DataField>QuantityMasterPackPerLayer</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="QuantityMasterPackLayersPerPallet">
+          <DataField>QuantityMasterPackLayersPerPallet</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="QuantityPerLayer">
+          <DataField>QuantityPerLayer</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="QuantityLayersPerPallet">
+          <DataField>QuantityLayersPerPallet</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalPurchasedAmount">
+          <DataField>TotalPurchasedAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalPurchasedAmountCurrencyID">
+          <DataField>TotalPurchasedAmountCurrencyID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalPurchasedQuantity">
+          <DataField>TotalPurchasedQuantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Hash">
+          <DataField>Hash</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeePercent">
+          <DataField>RestockingFeePercent</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeeAmount">
+          <DataField>RestockingFeeAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="IsEligibleForReturn">
+          <DataField>IsEligibleForReturn</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeeAmountCurrencyID">
+          <DataField>RestockingFeeAmountCurrencyID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="NothingToShip">
+          <DataField>NothingToShip</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="ShippingLeadTimeIsCalendarDays">
+          <DataField>ShippingLeadTimeIsCalendarDays</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="ShippingLeadTimeDays">
+          <DataField>ShippingLeadTimeDays</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="StatusID">
+          <DataField>StatusID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="DocumentRequiredForPurchase">
+          <DataField>DocumentRequiredForPurchase</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DocumentRequiredForPurchaseMissingWarningMessage">
+          <DataField>DocumentRequiredForPurchaseMissingWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DocumentRequiredForPurchaseExpiredWarningMessage">
+          <DataField>DocumentRequiredForPurchaseExpiredWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DocumentRequiredForPurchaseOverrideFee">
+          <DataField>DocumentRequiredForPurchaseOverrideFee</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="DocumentRequiredForPurchaseOverrideFeeIsPercent">
+          <DataField>DocumentRequiredForPurchaseOverrideFeeIsPercent</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="DocumentRequiredForPurchaseOverrideFeeWarningMessage">
+          <DataField>DocumentRequiredForPurchaseOverrideFeeWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DocumentRequiredForPurchaseOverrideFeeAcceptedMessage">
+          <DataField>DocumentRequiredForPurchaseOverrideFeeAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MustPurchaseInMultiplesOfAmount">
+          <DataField>MustPurchaseInMultiplesOfAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MustPurchaseInMultiplesOfAmountOverrideFee">
+          <DataField>MustPurchaseInMultiplesOfAmountOverrideFee</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent">
+          <DataField>MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage">
+          <DataField>MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage">
+          <DataField>MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RequiresRolesAlt">
+          <DataField>RequiresRolesAlt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MustPurchaseInMultiplesOfAmountWarningMessage">
+          <DataField>MustPurchaseInMultiplesOfAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AllowPreSale">
+          <DataField>AllowPreSale</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="PreSellEndDate">
+          <DataField>PreSellEndDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="StockQuantityPreSold">
+          <DataField>StockQuantityPreSold</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MaximumBackOrderPurchaseQuantity">
+          <DataField>MaximumBackOrderPurchaseQuantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MaximumBackOrderPurchaseQuantityIfPastPurchased">
+          <DataField>MaximumBackOrderPurchaseQuantityIfPastPurchased</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MaximumBackOrderPurchaseQuantityGlobal">
+          <DataField>MaximumBackOrderPurchaseQuantityGlobal</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MaximumPrePurchaseQuantity">
+          <DataField>MaximumPrePurchaseQuantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MaximumPrePurchaseQuantityIfPastPurchased">
+          <DataField>MaximumPrePurchaseQuantityIfPastPurchased</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MaximumPrePurchaseQuantityGlobal">
+          <DataField>MaximumPrePurchaseQuantityGlobal</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="DropShipOnly">
+          <DataField>DropShipOnly</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IndexSynonyms">
+          <DataField>IndexSynonyms</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>CategorySales</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT [Products].[Product].[ID],
+[Products].[Product].[CustomKey],
+[Products].[Product].[CreatedDate],
+[Products].[Product].[UpdatedDate],
+[Products].[Product].[Active],
+[Products].[Product].[Name],
+[Products].[Product].[Description],
+[Products].[Product].[JsonAttributes],
+[Products].[Product].[SeoKeywords],
+[Products].[Product].[SeoUrl],
+[Products].[Product].[SeoPageTitle],
+[Products].[Product].[SeoDescription],
+[Products].[Product].[SeoMetaData],
+[Products].[Product].[RequiresRoles],
+[Products].[Product].[Weight],
+[Products].[Product].[WeightUnitOfMeasure],
+[Products].[Product].[Width],
+[Products].[Product].[WidthUnitOfMeasure],
+[Products].[Product].[Depth],
+[Products].[Product].[DepthUnitOfMeasure],
+[Products].[Product].[Height],
+[Products].[Product].[HeightUnitOfMeasure],
+[Products].[Product].[ManufacturerPartNumber],
+[Products].[Product].[ShortDescription],
+[Products].[Product].[BrandName],
+[Products].[Product].[PriceBase],
+[Products].[Product].[PriceMsrp],
+[Products].[Product].[PriceReduction],
+[Products].[Product].[PriceSale],
+[Products].[Product].[HandlingCharge],
+[Products].[Product].[FlatShippingCharge],
+[Products].[Product].[IsVisible],
+[Products].[Product].[IsTaxable],
+[Products].[Product].[TaxCode],
+[Products].[Product].[IsFreeShipping],
+[Products].[Product].[AvailableStartDate],
+[Products].[Product].[AvailableEndDate],
+[Products].[Product].[StockQuantity],
+[Products].[Product].[StockQuantityAllocated],
+[Products].[Product].[IsUnlimitedStock],
+[Products].[Product].[AllowBackOrder],
+[Products].[Product].[IsDiscontinued],
+[Products].[Product].[UnitOfMeasure],
+[Products].[Product].[MinimumPurchaseQuantity],
+[Products].[Product].[MinimumPurchaseQuantityIfPastPurchased],
+[Products].[Product].[MaximumPurchaseQuantity],
+[Products].[Product].[MaximumPurchaseQuantityIfPastPurchased],
+[Products].[Product].[QuantityPerMasterPack],
+[Products].[Product].[QuantityMasterPackPerPallet],
+[Products].[Product].[QuantityPerPallet],
+[Products].[Product].[KitBaseQuantityPriceMultiplier],
+[Products].[Product].[SortOrder],
+[Products].[Product].[PackageID],
+[Products].[Product].[MasterPackID],
+[Products].[Product].[PalletID],
+[Products].[Product].[TypeID],
+[Products].[Product].[QuantityMasterPackPerLayer],
+[Products].[Product].[QuantityMasterPackLayersPerPallet],
+[Products].[Product].[QuantityPerLayer],
+[Products].[Product].[QuantityLayersPerPallet],
+[Products].[Product].[TotalPurchasedAmount],
+[Products].[Product].[TotalPurchasedAmountCurrencyID],
+[Products].[Product].[TotalPurchasedQuantity],
+[Products].[Product].[Hash],
+[Products].[Product].[RestockingFeePercent],
+[Products].[Product].[RestockingFeeAmount],
+[Products].[Product].[IsEligibleForReturn],
+[Products].[Product].[RestockingFeeAmountCurrencyID],
+[Products].[Product].[NothingToShip],
+[Products].[Product].[ShippingLeadTimeIsCalendarDays],
+[Products].[Product].[ShippingLeadTimeDays],
+[Products].[Product].[StatusID],
+[Products].[Product].[DocumentRequiredForPurchase],
+[Products].[Product].[DocumentRequiredForPurchaseMissingWarningMessage],
+[Products].[Product].[DocumentRequiredForPurchaseExpiredWarningMessage],
+[Products].[Product].[DocumentRequiredForPurchaseOverrideFee],
+[Products].[Product].[DocumentRequiredForPurchaseOverrideFeeIsPercent],
+[Products].[Product].[DocumentRequiredForPurchaseOverrideFeeWarningMessage],
+[Products].[Product].[DocumentRequiredForPurchaseOverrideFeeAcceptedMessage],
+[Products].[Product].[MustPurchaseInMultiplesOfAmount],
+[Products].[Product].[MustPurchaseInMultiplesOfAmountOverrideFee],
+[Products].[Product].[MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent],
+[Products].[Product].[MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage],
+[Products].[Product].[MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage],
+[Products].[Product].[RequiresRolesAlt],
+[Products].[Product].[MustPurchaseInMultiplesOfAmountWarningMessage],
+[Products].[Product].[AllowPreSale],
+[Products].[Product].[PreSellEndDate],
+[Products].[Product].[StockQuantityPreSold],
+[Products].[Product].[MaximumBackOrderPurchaseQuantity],
+[Products].[Product].[MaximumBackOrderPurchaseQuantityIfPastPurchased],
+[Products].[Product].[MaximumBackOrderPurchaseQuantityGlobal],
+[Products].[Product].[MaximumPrePurchaseQuantity],
+[Products].[Product].[MaximumPrePurchaseQuantityIfPastPurchased],
+[Products].[Product].[MaximumPrePurchaseQuantityGlobal],
+[Products].[Product].[DropShipOnly],
+[Products].[Product].[IndexSynonyms] FROM [Products].[Product]</CommandText>
+        <QueryDesignerState xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+          <Tables>
+            <Table Name="Product" Schema="Products">
+              <Columns>
+                <Column Name="ID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="CustomKey" IsDuplicate="False" IsSelected="True" />
+                <Column Name="CreatedDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="UpdatedDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Active" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Name" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Description" IsDuplicate="False" IsSelected="True" />
+                <Column Name="JsonAttributes" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoKeywords" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoUrl" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoPageTitle" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoDescription" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoMetaData" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RequiresRoles" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Weight" IsDuplicate="False" IsSelected="True" />
+                <Column Name="WeightUnitOfMeasure" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Width" IsDuplicate="False" IsSelected="True" />
+                <Column Name="WidthUnitOfMeasure" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Depth" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DepthUnitOfMeasure" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Height" IsDuplicate="False" IsSelected="True" />
+                <Column Name="HeightUnitOfMeasure" IsDuplicate="False" IsSelected="True" />
+                <Column Name="ManufacturerPartNumber" IsDuplicate="False" IsSelected="True" />
+                <Column Name="ShortDescription" IsDuplicate="False" IsSelected="True" />
+                <Column Name="BrandName" IsDuplicate="False" IsSelected="True" />
+                <Column Name="PriceBase" IsDuplicate="False" IsSelected="True" />
+                <Column Name="PriceMsrp" IsDuplicate="False" IsSelected="True" />
+                <Column Name="PriceReduction" IsDuplicate="False" IsSelected="True" />
+                <Column Name="PriceSale" IsDuplicate="False" IsSelected="True" />
+                <Column Name="HandlingCharge" IsDuplicate="False" IsSelected="True" />
+                <Column Name="FlatShippingCharge" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IsVisible" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IsTaxable" IsDuplicate="False" IsSelected="True" />
+                <Column Name="TaxCode" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IsFreeShipping" IsDuplicate="False" IsSelected="True" />
+                <Column Name="AvailableStartDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="AvailableEndDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="StockQuantity" IsDuplicate="False" IsSelected="True" />
+                <Column Name="StockQuantityAllocated" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IsUnlimitedStock" IsDuplicate="False" IsSelected="True" />
+                <Column Name="AllowBackOrder" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IsDiscontinued" IsDuplicate="False" IsSelected="True" />
+                <Column Name="UnitOfMeasure" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumPurchaseQuantity" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumPurchaseQuantityIfPastPurchased" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MaximumPurchaseQuantity" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MaximumPurchaseQuantityIfPastPurchased" IsDuplicate="False" IsSelected="True" />
+                <Column Name="QuantityPerMasterPack" IsDuplicate="False" IsSelected="True" />
+                <Column Name="QuantityMasterPackPerPallet" IsDuplicate="False" IsSelected="True" />
+                <Column Name="QuantityPerPallet" IsDuplicate="False" IsSelected="True" />
+                <Column Name="KitBaseQuantityPriceMultiplier" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SortOrder" IsDuplicate="False" IsSelected="True" />
+                <Column Name="PackageID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MasterPackID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="PalletID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="TypeID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="QuantityMasterPackPerLayer" IsDuplicate="False" IsSelected="True" />
+                <Column Name="QuantityMasterPackLayersPerPallet" IsDuplicate="False" IsSelected="True" />
+                <Column Name="QuantityPerLayer" IsDuplicate="False" IsSelected="True" />
+                <Column Name="QuantityLayersPerPallet" IsDuplicate="False" IsSelected="True" />
+                <Column Name="TotalPurchasedAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="TotalPurchasedAmountCurrencyID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="TotalPurchasedQuantity" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Hash" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeePercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeeAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IsEligibleForReturn" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeeAmountCurrencyID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="NothingToShip" IsDuplicate="False" IsSelected="True" />
+                <Column Name="ShippingLeadTimeIsCalendarDays" IsDuplicate="False" IsSelected="True" />
+                <Column Name="ShippingLeadTimeDays" IsDuplicate="False" IsSelected="True" />
+                <Column Name="StatusID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DocumentRequiredForPurchase" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DocumentRequiredForPurchaseMissingWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DocumentRequiredForPurchaseExpiredWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DocumentRequiredForPurchaseOverrideFee" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DocumentRequiredForPurchaseOverrideFeeIsPercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DocumentRequiredForPurchaseOverrideFeeWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DocumentRequiredForPurchaseOverrideFeeAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MustPurchaseInMultiplesOfAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MustPurchaseInMultiplesOfAmountOverrideFee" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RequiresRolesAlt" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MustPurchaseInMultiplesOfAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="AllowPreSale" IsDuplicate="False" IsSelected="True" />
+                <Column Name="PreSellEndDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="StockQuantityPreSold" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MaximumBackOrderPurchaseQuantity" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MaximumBackOrderPurchaseQuantityIfPastPurchased" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MaximumBackOrderPurchaseQuantityGlobal" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MaximumPrePurchaseQuantity" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MaximumPrePurchaseQuantityIfPastPurchased" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MaximumPrePurchaseQuantityGlobal" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DropShipOnly" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IndexSynonyms" IsDuplicate="False" IsSelected="True" />
+              </Columns>
+              <SchemaLevels>
+                <SchemaInfo Name="Products" SchemaType="Schema" />
+                <SchemaInfo Name="Tables" SchemaType="Category" />
+                <SchemaInfo Name="Product" SchemaType="Table" />
+              </SchemaLevels>
+            </Table>
+          </Tables>
+        </QueryDesignerState>
+      </Query>
+    </DataSet>
+    <DataSet Name="Categories">
+      <Fields>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="CustomKey">
+          <DataField>CustomKey</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreatedDate">
+          <DataField>CreatedDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="UpdatedDate">
+          <DataField>UpdatedDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Active">
+          <DataField>Active</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ParentID">
+          <DataField>ParentID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="JsonAttributes">
+          <DataField>JsonAttributes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoKeywords">
+          <DataField>SeoKeywords</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoUrl">
+          <DataField>SeoUrl</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoPageTitle">
+          <DataField>SeoPageTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoDescription">
+          <DataField>SeoDescription</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoMetaData">
+          <DataField>SeoMetaData</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TypeID">
+          <DataField>TypeID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RequiresRoles">
+          <DataField>RequiresRoles</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DisplayName">
+          <DataField>DisplayName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SortOrder">
+          <DataField>SortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="IsVisible">
+          <DataField>IsVisible</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IncludeInMenu">
+          <DataField>IncludeInMenu</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="HeaderContent">
+          <DataField>HeaderContent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SidebarContent">
+          <DataField>SidebarContent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FooterContent">
+          <DataField>FooterContent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HandlingCharge">
+          <DataField>HandlingCharge</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Hash">
+          <DataField>Hash</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeePercent">
+          <DataField>RestockingFeePercent</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeeAmount">
+          <DataField>RestockingFeeAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeeAmountCurrencyID">
+          <DataField>RestockingFeeAmountCurrencyID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountWarningMessage">
+          <DataField>MinimumOrderDollarAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountWarningMessage">
+          <DataField>MinimumOrderQuantityAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmount">
+          <DataField>MinimumOrderDollarAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmount">
+          <DataField>MinimumOrderQuantityAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountAfter">
+          <DataField>MinimumOrderDollarAmountAfter</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountAfter">
+          <DataField>MinimumOrderQuantityAmountAfter</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountBufferProductID">
+          <DataField>MinimumOrderDollarAmountBufferProductID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountBufferProductID">
+          <DataField>MinimumOrderQuantityAmountBufferProductID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountBufferCategoryID">
+          <DataField>MinimumOrderDollarAmountBufferCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountBufferCategoryID">
+          <DataField>MinimumOrderQuantityAmountBufferCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountOverrideFee">
+          <DataField>MinimumOrderDollarAmountOverrideFee</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountOverrideFeeIsPercent">
+          <DataField>MinimumOrderDollarAmountOverrideFeeIsPercent</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountOverrideFeeWarningMessage">
+          <DataField>MinimumOrderDollarAmountOverrideFeeWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountOverrideFeeAcceptedMessage">
+          <DataField>MinimumOrderDollarAmountOverrideFeeAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountOverrideFee">
+          <DataField>MinimumOrderQuantityAmountOverrideFee</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountOverrideFeeIsPercent">
+          <DataField>MinimumOrderQuantityAmountOverrideFeeIsPercent</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountOverrideFeeWarningMessage">
+          <DataField>MinimumOrderQuantityAmountOverrideFeeWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountOverrideFeeAcceptedMessage">
+          <DataField>MinimumOrderQuantityAmountOverrideFeeAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmount">
+          <DataField>MinimumForFreeShippingDollarAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountAfter">
+          <DataField>MinimumForFreeShippingDollarAmountAfter</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountWarningMessage">
+          <DataField>MinimumForFreeShippingDollarAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage">
+          <DataField>MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmount">
+          <DataField>MinimumForFreeShippingQuantityAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountAfter">
+          <DataField>MinimumForFreeShippingQuantityAmountAfter</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountWarningMessage">
+          <DataField>MinimumForFreeShippingQuantityAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage">
+          <DataField>MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RequiresRolesAlt">
+          <DataField>RequiresRolesAlt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountBufferProductID">
+          <DataField>MinimumForFreeShippingDollarAmountBufferProductID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountBufferProductID">
+          <DataField>MinimumForFreeShippingQuantityAmountBufferProductID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountBufferCategoryID">
+          <DataField>MinimumForFreeShippingDollarAmountBufferCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountBufferCategoryID">
+          <DataField>MinimumForFreeShippingQuantityAmountBufferCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>CategorySales</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT [Categories].[Category].[ID],
+[Categories].[Category].[CustomKey],
+[Categories].[Category].[CreatedDate],
+[Categories].[Category].[UpdatedDate],
+[Categories].[Category].[Active],
+[Categories].[Category].[Name],
+[Categories].[Category].[Description],
+[Categories].[Category].[ParentID],
+[Categories].[Category].[JsonAttributes],
+[Categories].[Category].[SeoKeywords],
+[Categories].[Category].[SeoUrl],
+[Categories].[Category].[SeoPageTitle],
+[Categories].[Category].[SeoDescription],
+[Categories].[Category].[SeoMetaData],
+[Categories].[Category].[TypeID],
+[Categories].[Category].[RequiresRoles],
+[Categories].[Category].[DisplayName],
+[Categories].[Category].[SortOrder],
+[Categories].[Category].[IsVisible],
+[Categories].[Category].[IncludeInMenu],
+[Categories].[Category].[HeaderContent],
+[Categories].[Category].[SidebarContent],
+[Categories].[Category].[FooterContent],
+[Categories].[Category].[HandlingCharge],
+[Categories].[Category].[Hash],
+[Categories].[Category].[RestockingFeePercent],
+[Categories].[Category].[RestockingFeeAmount],
+[Categories].[Category].[RestockingFeeAmountCurrencyID],
+[Categories].[Category].[MinimumOrderDollarAmountWarningMessage],
+[Categories].[Category].[MinimumOrderQuantityAmountWarningMessage],
+[Categories].[Category].[MinimumOrderDollarAmount],
+[Categories].[Category].[MinimumOrderQuantityAmount],
+[Categories].[Category].[MinimumOrderDollarAmountAfter],
+[Categories].[Category].[MinimumOrderQuantityAmountAfter],
+[Categories].[Category].[MinimumOrderDollarAmountBufferProductID],
+[Categories].[Category].[MinimumOrderQuantityAmountBufferProductID],
+[Categories].[Category].[MinimumOrderDollarAmountBufferCategoryID],
+[Categories].[Category].[MinimumOrderQuantityAmountBufferCategoryID],
+[Categories].[Category].[MinimumOrderDollarAmountOverrideFee],
+[Categories].[Category].[MinimumOrderDollarAmountOverrideFeeIsPercent],
+[Categories].[Category].[MinimumOrderDollarAmountOverrideFeeWarningMessage],
+[Categories].[Category].[MinimumOrderDollarAmountOverrideFeeAcceptedMessage],
+[Categories].[Category].[MinimumOrderQuantityAmountOverrideFee],
+[Categories].[Category].[MinimumOrderQuantityAmountOverrideFeeIsPercent],
+[Categories].[Category].[MinimumOrderQuantityAmountOverrideFeeWarningMessage],
+[Categories].[Category].[MinimumOrderQuantityAmountOverrideFeeAcceptedMessage],
+[Categories].[Category].[MinimumForFreeShippingDollarAmount],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountAfter],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountWarningMessage],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmount],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountAfter],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountWarningMessage],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage],
+[Categories].[Category].[RequiresRolesAlt],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountBufferProductID],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountBufferProductID],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountBufferCategoryID],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountBufferCategoryID] FROM [Categories].[Category]</CommandText>
+        <QueryDesignerState xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+          <Tables>
+            <Table Name="Category" Schema="Categories">
+              <Columns>
+                <Column Name="ID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="CustomKey" IsDuplicate="False" IsSelected="True" />
+                <Column Name="CreatedDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="UpdatedDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Active" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Name" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Description" IsDuplicate="False" IsSelected="True" />
+                <Column Name="ParentID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="JsonAttributes" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoKeywords" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoUrl" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoPageTitle" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoDescription" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoMetaData" IsDuplicate="False" IsSelected="True" />
+                <Column Name="TypeID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RequiresRoles" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DisplayName" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SortOrder" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IsVisible" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IncludeInMenu" IsDuplicate="False" IsSelected="True" />
+                <Column Name="HeaderContent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SidebarContent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="FooterContent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="HandlingCharge" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Hash" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeePercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeeAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeeAmountCurrencyID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountAfter" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountAfter" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountBufferProductID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountBufferProductID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountBufferCategoryID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountBufferCategoryID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountOverrideFee" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountOverrideFeeIsPercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountOverrideFeeWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountOverrideFeeAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountOverrideFee" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountOverrideFeeIsPercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountOverrideFeeWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountOverrideFeeAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountAfter" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountAfter" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RequiresRolesAlt" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountBufferProductID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountBufferProductID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountBufferCategoryID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountBufferCategoryID" IsDuplicate="False" IsSelected="True" />
+              </Columns>
+              <SchemaLevels>
+                <SchemaInfo Name="Categories" SchemaType="Schema" />
+                <SchemaInfo Name="Tables" SchemaType="Category" />
+                <SchemaInfo Name="Category" SchemaType="Table" />
+              </SchemaLevels>
+            </Table>
+          </Tables>
+        </QueryDesignerState>
+      </Query>
+    </DataSet>
+    <DataSet Name="ProductSalesCurrency">
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Sales">
+          <DataField>Sales</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>CategorySales</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>select pp.[Name], format(sum(os.SubtotalItems), 'c') Sales, sum(oi.Quantity) Quantity
+from Products.Product pp
+inner join Products.ProductCategory pc on pp.ID = pc.MasterID
+inner join Categories.Category CC on pc.SlaveID = cc.ID
+inner join Ordering.SalesOrderItem oi on pp.ID = oi.ProductID
+inner join Ordering.SalesOrder os on oi.MasterID = os.ID
+where os.CreatedDate &gt; @DateRange 
+and cc.ID = @CategoryID
+and cc.Active = 1
+and pp.Active = 1
+group by pp.[Name]
+order by sum(os.SubtotalItems) desc</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@DateRange">
+            <Value>=Parameters!DateRange.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@CategoryID">
+            <Value>=Parameters!CategoryID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="ProductSales">
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Sales">
+          <DataField>Sales</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>CategorySales</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>select pp.[Name], sum(os.SubtotalItems) Sales, sum(oi.Quantity) Quantity
+from Products.Product pp
+inner join Products.ProductCategory pc on pp.ID = pc.MasterID
+inner join Categories.Category CC on pc.SlaveID = cc.ID
+inner join Ordering.SalesOrderItem oi on pp.ID = oi.ProductID
+inner join Ordering.SalesOrder os on oi.MasterID = os.ID
+where os.CreatedDate &gt; @DateRange and cc.ID = @CategoryID
+group by pp.[Name]
+order by sum(os.SubtotalItems) desc
+</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@DateRange">
+            <Value>=Parameters!DateRange.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@CategoryID">
+            <Value>=Parameters!CategoryID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="CategoryID">
+      <DataType>String</DataType>
+      <Prompt>Category</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>Categories</DataSetName>
+          <ValueField>ID</ValueField>
+          <LabelField>Name</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="DateRange">
+      <DataType>String</DataType>
+      <Prompt>DateRange</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>=DateAdd("d",-7,Now())</Value>
+            <Label>in the last week</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>=DateAdd("month",-1,Now())</Value>
+            <Label>in the last month</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>=DateAdd("year",-1,Now())</Value>
+            <Label>in the last year</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>=DateAdd("year",-100,Now())</Value>
+            <Label>all time</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>CategoryID</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>DateRange</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="clarity_ecommerce_logo">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAq5JREFUWEftlstrE1EcheNjYcWFKEVERUrURSg2IZMbglKy05lUd0Gwgn+AIrpVsFBwKSKVVhCpG5ciKOJKZ1K1bgqKbnTVTlKftCBCrIglnjucKcnNTZO0eQn54EBz75n8vk5mMgl06fK/E4vFBg3DOM+XnQXkHiMFvuwchBA7IfZXyiHDXO4MIHeNYjIfudx+EolED4R+FskVcO1Z3G4vELlULEa5GW63lY2Q+aTKyUDwCDvtARJnVKmiPGOtPUDggyJUkng8fpjV1oI7NKUTUvKA9daCa+q1RqYs0Wg0yENaAwYe1YlUyCQPaw0Y+EQRWC3L+Gd289Dmgo+zXyMg8wtZVNb83ODhzQWD7iuDVwSQ48qan3w4HN7Ot2gOkUhkPwYtK4O94O4dkB38/VXdY656b9IsIDCmGSrzhhXZuaLZl1kMhULbWGssOGu9GJBXBnqB0GnW5A+BHVhbUjsyhiFGWGssuBFGdAORz+l0ehNrHuhOlHSEWBLCuGsMhAQrjQNfBVsxZKFkIAORy6ytgMfWQW9fiIVYPD4aCwb3cavxYNCFYiE/EPtd6S7E3sn+vr5dfNk05M+iOVVMBtfabXZqwpz5EbQy7k3TcU9waX1AYliV8gO5Q6ytytCrbwnLnp20Mtk/SMFysm+5tT4g8U6VYp6yUpGh6dyelD33whMqzyBrawMClb7x5fWWZK0i5tSXXo0U4z5nbW1A4qUqxbxnpSpmxr2ol0Ps+TBr9YEzIzRSXnCtnWWtKunpXI9lZ/NaOSf7kLX6gMQjVYr5nkwmN7NWExC5XibGHLNzB1irDZw1UyPlBXt1P4JMe36vToyZChQKG1itDiROIfeQcT+Qko+kW/LZyVpdQOKc5bh3Uk523A8+1omU444l7dktrHUg9Zy5Ll0aTiDwD/ySPp0tGT8cAAAAAElFTkSuQmCC</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="clarity_ecommerce_logo1">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAq5JREFUWEftlstrE1EcheNjYcWFKEVERUrURSg2IZMbglKy05lUd0Gwgn+AIrpVsFBwKSKVVhCpG5ciKOJKZ1K1bgqKbnTVTlKftCBCrIglnjucKcnNTZO0eQn54EBz75n8vk5mMgl06fK/E4vFBg3DOM+XnQXkHiMFvuwchBA7IfZXyiHDXO4MIHeNYjIfudx+EolED4R+FskVcO1Z3G4vELlULEa5GW63lY2Q+aTKyUDwCDvtARJnVKmiPGOtPUDggyJUkng8fpjV1oI7NKUTUvKA9daCa+q1RqYs0Wg0yENaAwYe1YlUyCQPaw0Y+EQRWC3L+Gd289Dmgo+zXyMg8wtZVNb83ODhzQWD7iuDVwSQ48qan3w4HN7Ot2gOkUhkPwYtK4O94O4dkB38/VXdY656b9IsIDCmGSrzhhXZuaLZl1kMhULbWGssOGu9GJBXBnqB0GnW5A+BHVhbUjsyhiFGWGssuBFGdAORz+l0ehNrHuhOlHSEWBLCuGsMhAQrjQNfBVsxZKFkIAORy6ytgMfWQW9fiIVYPD4aCwb3cavxYNCFYiE/EPtd6S7E3sn+vr5dfNk05M+iOVVMBtfabXZqwpz5EbQy7k3TcU9waX1AYliV8gO5Q6ytytCrbwnLnp20Mtk/SMFysm+5tT4g8U6VYp6yUpGh6dyelD33whMqzyBrawMClb7x5fWWZK0i5tSXXo0U4z5nbW1A4qUqxbxnpSpmxr2ol0Ps+TBr9YEzIzRSXnCtnWWtKunpXI9lZ/NaOSf7kLX6gMQjVYr5nkwmN7NWExC5XibGHLNzB1irDZw1UyPlBXt1P4JMe36vToyZChQKG1itDiROIfeQcT+Qko+kW/LZyVpdQOKc5bh3Uk523A8+1omU444l7dktrHUg9Zy5Ll0aTiDwD/ySPp0tGT8cAAAAAElFTkSuQmCC</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:PageUnit>Px</rd:PageUnit>
+</Report>

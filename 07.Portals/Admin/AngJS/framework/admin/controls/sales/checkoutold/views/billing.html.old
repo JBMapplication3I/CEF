@@ -1,0 +1,288 @@
+﻿<div class="cef-checkout"
+     ng-form="cefCheckoutCtrl.forms.billing">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 data-translate="ui.admin.checkout.billingInfo.whichAddy"></h4>
+        </div>
+    </div>
+    <div class="row"
+         ng-if="cefCheckoutCtrl.viewstate.isLoggedIn && cefCheckoutCtrl.accountContacts.length">
+        <div class="col-md-6">
+            <div class="form-group">
+                <select class="form-control"
+                        id="ddlBillingSelection" name="ddlBillingSelection"
+                        ng-change="cefCheckoutCtrl.setAddress(cefCheckoutCtrl.selectedAddressBilling, 'Billing')"
+                        ng-options="ac.Slave as (ac.Slave.Address.CustomKey || ac.Slave.CustomKey || ac.CustomKey || ac.Slave.Address.Street1)
+                                    for ac in cefCheckoutCtrl.accountContacts
+                                    | orderBy: ['Slave.Address.CustomKey','Slave.CustomKey','CustomKey']"
+                        ng-model="cefCheckoutCtrl.selectedAddressBilling">
+                    <option value="" data-translate="ui.admin.checkout.views.accountInformation.enterANewBillingAddress"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!--from address book mode -->
+    <div class="row" ng-if="cefCheckoutCtrl.viewstate.isLoggedIn && !cefCheckoutCtrl.editBilling && cefCheckoutCtrl.accountContacts.length">
+        <div class="col-sm-12">
+            <!-- TODO: Replace with contact address block widget -->
+            <p>
+                {{cefCheckoutCtrl.selectedAddressBilling.FirstName}}
+                {{cefCheckoutCtrl.selectedAddressBilling.LastName}}<br ng-if="cefCheckoutCtrl.selectedAddressBilling.FirstName || cefCheckoutCtrl.selectedAddressBilling.LastName" />
+                {{cefCheckoutCtrl.selectedAddressBilling.Address.Street1}}<br ng-if="cefCheckoutCtrl.selectedAddressBilling.Address.Street1" />
+                {{cefCheckoutCtrl.selectedAddressBilling.Address.Street2}}<br ng-if="cefCheckoutCtrl.selectedAddressBilling.Address.Street2" />
+                {{cefCheckoutCtrl.selectedAddressBilling.Address.Street3}}<br ng-if="cefCheckoutCtrl.selectedAddressBilling.Address.Street3" />
+                {{cefCheckoutCtrl.selectedAddressBilling.Address.City}},
+                {{cefCheckoutCtrl.selectedAddressBilling.Address.RegionCode || cefCheckoutCtrl.selectedAddressBilling.Address.Region.Code}}
+                {{cefCheckoutCtrl.selectedAddressBilling.Address.PostalCode}}<br />
+                {{cefCheckoutCtrl.selectedAddressBilling.Address.Country.Name}}
+            </p>
+        </div>
+    </div>
+    <!--edit mode-->
+    <div ng-if="cefCheckoutCtrl.editBilling
+                || !cefCheckoutCtrl.viewstate.isLoggedIn
+                || !cefCheckoutCtrl.accountContacts.length">
+        <div class="row" ng-if="cefCheckoutCtrl.viewstate.isLoggedIn">
+            <div class="col-sm-6">
+                <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingCustomKey.$invalid}">
+                    <label class="control-label" for="txtBillingCustomKey"
+                           ><span data-translate="ui.admin.common.AddressNickname"></span>&nbsp;<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control"
+                           id="txtBillingCustomKey" name="txtBillingCustomKey"
+                           translate-attr="{ placeholder: 'ui.admin.common.addressBook.EnterAReferenceNameEGMyOffice' }"
+                           style="text-transform: uppercase;"
+                           maxlength="15"
+                           ng-required="false"
+                           ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.CustomKey" />
+                </div>
+                <p class="small" data-translate="ui.admin.checkout.modularCheckout.AddressKey.Note"></p>
+            </div>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="col-md-12" ng-if="cefCheckoutCtrl.viewstate.isLoggedIn">
+                <h4 data-translate="ui.admin.common.BillingDetail.Plural"></h4>
+            </div>
+            <div class="col-md-6" ng-if="cefCheckoutCtrl.showBillingPersonalDetails">
+                <div class="row">
+                    <!--first-->
+                    <div class="col-sm-6" ng-if="cefCheckoutCtrl.showBillingFirstName">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingFirstName.$invalid}">
+                            <label class="control-label" for="txtBillingFirstName"
+                                   ><span data-translate="ui.admin.common.FirstName"></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingFirstName" name="txtBillingFirstName"
+                                   translate-attr="{ placeholder: 'ui.admin.common.FirstName' }"
+                                   ng-required="true"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.FirstName" />
+                        </div>
+                    </div>
+                    <!--last-->
+                    <div class="col-sm-6" ng-if="cefCheckoutCtrl.showBillingLastName">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingLastName.$invalid}">
+                            <label class="control-label" for="txtBillingLastName"
+                                   ><span data-translate="ui.admin.common.LastName"></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingLastName" name="txtBillingLastName"
+                                   translate-attr="{ placeholder: 'ui.admin.common.LastName' }"
+                                   ng-required="true"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.LastName" />
+                        </div>
+                    </div>
+                    <!--email-->
+                    <div class="col-sm-12" ng-if="cefCheckoutCtrl.showBillingEmail">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingEmail.$invalid}">
+                            <label class="control-label" for="txtBillingEmail"
+                                   ><span data-translate="ui.admin.common.Email"></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="email" class="form-control"
+                                   id="txtBillingEmail" name="txtBillingEmail"
+                                   translate-attr="{ placeholder: 'ui.admin.common.Email' }"
+                                   ng-required="true"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Email1" />
+                        </div>
+                    </div>
+                    <!--phone 1-->
+                    <div class="col-sm-12" ng-if="cefCheckoutCtrl.showBillingPhone">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingPhone.$invalid}">
+                            <label class="control-label" for="txtBillingPhone"
+                                   ><span data-translate="ui.admin.common.Phone"></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingPhone" name="txtBillingPhone"
+                                   placeholder="+1(555)555-5555x55555"
+                                   ng-required="true"
+                                   ng-change="cefCheckoutCtrl.runPhonePrefixLookups(cefCheckoutCtrl.selectedAddressBilling, true)"
+                                   ng-model-options="{ updateOn: 'default blur', debounce: {'default':500,'blur':0} }"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Phone1" />
+                        </div>
+                        <button type="button" class="btn btn-link pull-right"
+                                ng-hide="cefCheckoutCtrl.showBillingPhone2"
+                                ng-click="cefCheckoutCtrl.showBillingPhone2 = true"
+                                data-translate="ui.admin.checkout.shippingAddMorePhones"></button>
+                    </div>
+                    <!--phone 2-->
+                    <div class="col-sm-12" ng-if="cefCheckoutCtrl.showBillingPhone2">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingPhone2.$invalid}">
+                            <label class="control-label hidden" for="txtBillingPhone2"
+                                   data-translate="ui.admin.common.Phone"></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingPhone2" name="txtBillingPhone2"
+                                   placeholder="+1(555)555-5555x55555"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Phone2" />
+                        </div>
+                        <button type="button" class="btn btn-link pull-right"
+                                ng-hide="cefCheckoutCtrl.showBillingPhone3"
+                                ng-click="cefCheckoutCtrl.showBillingPhone3 = true"
+                                data-translate="ui.admin.checkout.shippingAddMorePhones"></button>
+                    </div>
+                    <!--phone 3-->
+                    <div class="col-sm-12" ng-if="cefCheckoutCtrl.showBillingPhone3">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingPhone3.$invalid}">
+                            <label class="control-label hidden" for="txtBillingPhone3"
+                                   data-translate="ui.admin.common.Phone"></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingPhone3" name="txtBillingPhone3"
+                                   placeholder="+1(555)555-5555x55555"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Phone3" />
+                        </div>
+                    </div>
+                    <!--fax-->
+                    <div class="col-sm-12" ng-if="cefCheckoutCtrl.showBillingFax">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingFax.$invalid}">
+                            <label class="control-label" for="txtBillingFax"
+                                   data-translate="ui.admin.common.Fax"></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingFax" name="txtBillingFax"
+                                   placeholder="+1(555)555-5555"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Fax1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-class="{'col-md-6': cefCheckoutCtrl.showBillingPersonalDetails, 'col-md-12': !cefCheckoutCtrl.showBillingPersonalDetails}">
+                <div class="row">
+                    <!--company-->
+                    <div class="col-sm-12">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingCompany.$invalid}">
+                            <label class="control-label" for="txtBillingCompany"
+                                   data-translate="ui.admin.common.Company"></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingCompany" name="txtBillingCompany"
+                                   translate-attr="{ placeholder: 'ui.admin.common.Company' }"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.Company" />
+                        </div>
+                    </div>
+                    <!--country-->
+                    <div class="col-sm-12">
+                        <div class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.billing.ddlBillingCountry.$invalid || !cefCheckoutCtrl.selectedAddressBilling.Address.CountryID}">
+                            <label class="control-label" for="ddlBillingCountry"
+                                   ><span data-translate="ui.admin.common.Country"></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="text" class="search-input form-control"
+                                   id="ddlBillingCountry" name="ddlBillingCountry"
+                                   translate-attr="{ placeholder: 'ui.admin.searchCatalog.controls.externalSearchBox.Search.Ellipses' }"
+                                   autocomplete="off"
+                                   uib-typeahead="country.Name for country in cefCheckoutCtrl.ddlBillingCountries"
+                                   typeahead-loading="loadingSuggestions"
+                                   typeahead-wait-ms="500"
+                                   typeahead-min-length="1"
+                                   typeahead-focus-first="false"
+                                   typeahead-on-select="cefCheckoutCtrl.selectCountry($item, 'Billing')"
+                                   ng-required="true"
+                                   ng-change="cefCheckoutCtrl.filterCountries('Billing')"
+                                   ng-model="cefCheckoutCtrl.selectedBillingCountryName" />
+                        </div>
+                    </div>
+                    <!--street-->
+                    <div class="col-sm-12">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingStreet1.$invalid}">
+                            <label class="control-label" for="txtBillingStreet1"
+                                   ><span data-translate="ui.admin.checkout.views.accountInformation.Street"></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingStreet1" name="txtBillingStreet1"
+                                   translate-attr="{ placeholder: 'ui.admin.checkout.views.accountInformation.Street' }"
+                                   ng-required="true"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.Street1" />
+                        </div>
+                        <button type="button" class="btn btn-link pull-right"
+                                ng-hide="cefCheckoutCtrl.showBillingStreet2"
+                                ng-click="cefCheckoutCtrl.showBillingStreet2 = true"
+                                data-translate="ui.admin.checkout.shippingAddMore"></button>
+                    </div>
+                    <!--street 2-->
+                    <div class="col-sm-12" ng-show="cefCheckoutCtrl.showBillingStreet2">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingStreet2.$invalid}">
+                            <label class="control-label hidden" for="txtBillingStreet2"
+                                   data-translate="ui.admin.checkout.views.accountInformation.Street"></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingStreet2" name="txtBillingStreet2"
+                                   translate-attr="{ placeholder: 'ui.admin.checkout.views.accountInformation.Street' }"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.Street2" />
+                        </div>
+                        <button type="button" class="btn btn-link pull-right"
+                                ng-hide="cefCheckoutCtrl.showBillingStreet3"
+                                ng-click="cefCheckoutCtrl.showBillingStreet3 = true"
+                                data-translate="ui.admin.checkout.shippingAddMore"></button>
+                    </div>
+                    <!--street 3-->
+                    <div class="col-sm-12" ng-show="cefCheckoutCtrl.showBillingStreet3">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingStreet3.$invalid}">
+                            <label class="control-label hidden" for="txtBillingStreet3"
+                                   data-translate="ui.admin.checkout.views.accountInformation.Street"></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingStreet3" name="txtBillingStreet3"
+                                   translate-attr="{ placeholder: 'ui.admin.checkout.views.accountInformation.Street' }"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.Street3" />
+                        </div>
+                    </div>
+                    <!--city-->
+                    <div class="col-sm-12">
+                        <div class="form-group" ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingCity.$invalid}">
+                            <label class="control-label" for="txtBillingCity"><span data-translate="ui.admin.common.City"></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingCity" name="txtBillingCity"
+                                   translate-attr="{ placeholder: 'ui.admin.common.City' }"
+                                   ng-required="true"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.City" />
+                        </div>
+                    </div>
+                    <!--state-->
+                    <div class="col-sm-6" ng-if="cefCheckoutCtrl.statesBilling.length > 0">
+                        <div class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.billing.ddlBillingState.$invalid}">
+                            <label class="control-label" for="ddlBillingState"><span data-translate="ui.admin.common.geography.State.SelectA"></span>&nbsp;<span class="text-danger">*</span></label>
+                            <select class="form-control"
+                                    id="ddlBillingState" name="ddlBillingState"
+                                    ng-required="true"
+                                    ng-change="cefCheckoutCtrl.propagateRegionChange(cefCheckoutCtrl.selectedAddressBilling, 'Billing')"
+                                    ng-options="state.ID as state.Name for state in cefCheckoutCtrl.statesBilling"
+                                    ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.RegionID">
+                                <option value="" data-translate="ui.admin.common.geography.State.SelectA"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--zip-->
+                    <div ng-class="cefCheckoutCtrl.statesBilling.length > 0 ? 'col-sm-6' : 'col-sm-12'">
+                        <div class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.billing.txtBillingZip.$invalid}">
+                            <label class="control-label" for="txtBillingZip"
+                                   ><span data-translate="ui.admin.common.Zip"
+                                   ></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingZip" name="txtBillingZip"
+                                   translate-attr="{ placeholder: 'ui.admin.common.Zip' }"
+                                   ng-required="true"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.PostalCode" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>

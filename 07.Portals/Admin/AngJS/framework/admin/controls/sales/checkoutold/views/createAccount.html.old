@@ -1,0 +1,141 @@
+﻿<div class="row" ng-form="cefCheckoutCtrl.forms.register">
+    <div class="col-md-12">
+        <div class="form-group">
+            <input type="checkbox"
+                   id="ckCreateUser" name="ckCreateUser"
+                   ng-model="cefCheckoutCtrl.createAccount">
+            <label class="control-label" for="ckCreateUser"
+                   data-translate="ui.admin.checkout.createAccount.saveInfo"></label>
+        </div>
+        <div class="row"
+             ng-show="cefCheckoutCtrl.createAccount">
+            <div class="col-md-10 col-md-offset-1">
+                <h3 class="mt-0" data-translate="ui.admin.checkout.createAccount.createCredentials"></h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.register.$dirty && cefCheckoutCtrl.forms.register.txtBillingUserName.$invalid}">
+                            <label class="control-label" for="txtBillingUserName"
+                                   uib-tooltip="{{'ui.admin.user.registration.YourUsernameCouldByYourEmailAddress' | translate}}"
+                                   tooltip-is-open="tooltipIsOpenUN" tooltip-placement="right-bottom"
+                                   ><span data-translate="ui.admin.common.Username"></span>&nbsp<!--
+                                   --><i class="far fa-question-circle-o"></i></label>
+                            <div class="input-group">
+                                <input type="{{cefCheckoutCtrl.usernameIsEmail ? 'email' : 'text'}}" class="form-control"
+                                       id="txtBillingUserName" name="txtBillingUserName"
+                                       translate-attr="{ placeholder: 'ui.admin.common.Username' }"
+                                       ng-focus="tooltipIsOpenUN = true;"
+                                       ng-blur="tooltipIsOpenUN = false;"
+                                       ng-required="cefCheckoutCtrl.createAccount"
+                                       ng-pattern="/^[A-Za-z0-9_\.@-]+$/"
+                                       ng-change="cefCheckoutCtrl.usernameChanged()"
+                                       ng-model="cefCheckoutCtrl.loginData.Username" />
+                                <div id="emptyUsernameIcon"
+                                     class="input-group-addon input-group-append"
+                                     ng-if="cefCheckoutCtrl.usernameValidityState == 'Empty'">
+                                    <i class="far fa-fw fa-minus" aria-hidden="true"></i>
+                                </div>
+                                <div id="validUsernameIcon"
+                                     class="input-group-addon input-group-append alert-success form-button"
+                                     ng-if="cefCheckoutCtrl.usernameValidityState == 'Valid'">
+                                    <i class="far fa-fw fa-check" aria-hidden="true"></i>
+                                </div>
+                                <div id="invalidUsernameIcon"
+                                     class="input-group-addon input-group-append alert-danger form-button"
+                                     ng-if="cefCheckoutCtrl.usernameValidityState == 'Invalid'">
+                                    <i class="far fa-fw fa-times" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.register.$dirty && cefCheckoutCtrl.forms.register.txtBillingPassword.$invalid}">
+                            <label class="control-label" for="txtBillingPassword"
+                                   uib-tooltip="{{'ui.admin.user.registration.PasswordRequirements.Message' | translate}}"
+                                   tooltip-is-open="tooltipIsOpenPW" tooltip-placement="right-bottom"
+                                   ><span data-translate="ui.admin.common.Password"></span>&nbsp<!--
+                                   --><i class="far fa-question-circle-o"></i></label>
+                            <div class="input-group margin-bottom-sm">
+                                <div class="input-group-btn input-group-prepend">
+                                    <button type="button" class="btn"
+                                            translate-attr="{ title: ('ui.admin.user.login.' + (registrationCtrl.showPassword ? 'HidePassword' : 'ShowPassword')),
+                                                              'aria-label': ('ui.admin.user.login.' + (registrationCtrl.showPassword ? 'HidePassword' : 'ShowPassword')) }"
+                                            title="{{cefCheckoutCtrl.showPassword ? 'Hide Password' : 'Show Password'}}"
+                                            ng-click="cefCheckoutCtrl.showPassword = !cefCheckoutCtrl.showPassword">
+                                        <i class="far fa-fw" ng-class="cefCheckoutCtrl.showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                        <span class="sr-only" ng-bind="cefCheckoutCtrl.showPassword ? 'Hide Password' : 'Show Password'"></span>
+                                    </button>
+                                </div>
+                                <input type="{{cefCheckoutCtrl.showPassword ? 'text' : 'password'}}" class="form-control"
+                                       id="txtBillingPassword" name="txtBillingPassword"
+                                       new-password
+                                       placeholder="********"
+                                       ng-focus="tooltipIsOpenPW = true;"
+                                       ng-blur="tooltipIsOpenPW = false;"
+                                       ng-required="cefCheckoutCtrl.createAccount"
+                                       ng-change="cefCheckoutCtrl.passwordChanged()"
+                                       ng-model="cefCheckoutCtrl.loginData.Password" />
+                                <div id="emptyPasswordIcon"
+                                     class="input-group-addon input-group-append"
+                                     ng-if="cefCheckoutCtrl.passwordValidityState == 'Empty'">
+                                    <i class="far fa-fw fa-minus" aria-hidden="true"></i>
+                                </div>
+                                <div id="validPasswordIcon"
+                                     class="input-group-addon input-group-append alert-success form-button"
+                                     ng-if="cefCheckoutCtrl.passwordValidityState == 'Valid'">
+                                    <i class="far fa-fw fa-check" aria-hidden="true"></i>
+                                </div>
+                                <div id="invalidPasswordIcon"
+                                     class="input-group-addon input-group-append alert-danger form-button"
+                                     ng-if="cefCheckoutCtrl.passwordValidityState == 'Invalid'">
+                                    <i class="far fa-fw fa-times" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.register.txtBillingCustomKey.$invalid}">
+                            <label class="control-label" for="txtBillingCustomKey"
+                                   data-translate="ui.admin.common.AddressNickname.Billing"></label>
+                            <input type="text" class="form-control"
+                                   id="txtBillingCustomKey" name="txtBillingCustomKey"
+                                   style="text-transform: uppercase;"
+                                   maxlength="15"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.selectedAddressBilling.Address.CustomKey" />
+                        </div>
+                        <p class="small" data-translate="ui.admin.checkout.modularCheckout.AddressKey.Note"></p>
+                        <div ng-if="!cefCheckoutCtrl.viewstate.isShippingSameAsBilling"
+                             class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.register.txtShippingCustomKey.$invalid}">
+                            <label class="control-label" for="txtShippingCustomKey"
+                                   data-translate="ui.admin.common.AddressNickname.Shipping"></label>
+                            <input type="text" class="form-control"
+                                   id="txtShippingCustomKey" name="txtShippingCustomKey"
+                                   style="text-transform: uppercase;"
+                                   maxlength="15"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.selectedAddressShipping.Address.CustomKey" />
+                        </div>
+                        <p ng-if="!cefCheckoutCtrl.viewstate.isShippingSameAsBilling"
+                           class="small"
+                           data-translate="ui.admin.checkout.modularCheckout.AddressKey.Note"></p>
+                        <div class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.register.txtReferenceName.$invalid}">
+                            <label class="control-label" for="txtReferenceName"
+                                   data-translate="ui.admin.common.CardNickname"></label>
+                            <input type="text" class="form-control"
+                                   id="txtReferenceName" name="txtReferenceName"
+                                   ng-required="false"
+                                   ng-model="cefCheckoutCtrl.paymentData.ReferenceName" />
+                        </div>
+                        <p class="small" data-translate="ui.admin.checkout.modularCheckout.WalletReferenceName.Note"></p>
+                    </div>
+                </div>
+                <p ng-if="cefCheckoutCtrl.createError"
+                   class="alert alert-danger"
+                   ng-bind="cefCheckoutCtrl.createError"></p>
+            </div>
+        </div>
+    </div>
+</div>

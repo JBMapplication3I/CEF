@@ -1,0 +1,29 @@
+<div class="row" ng-form="emailReceiptCtrl.form">
+  <div ng-if="!emailReceiptCtrl.successMessage && !emailReceiptCtrl.viewState.errorMessage"
+       class="col-sm-12">
+      <div class="form-group">
+          <label for="emailInput"
+                 data-translate="ui.admin.checkout.widgets.emailReceipt.SendACopyOfYourReceipt"></label>
+          <input type="text" class="form-control"
+                 id="emailInput" name="emailInput"
+                 ng-required="true"
+                 ng-disabled="emailReceiptCtrl.viewState.running"
+                 ng-model="emailReceiptCtrl.email" />
+      </div>
+      <button type="button" class="btn btn-default"
+              translate-attr="{ title: 'ui.admin.messaging.messaging-detail.Send',
+                                'aria-label': 'ui.admin.messaging.messaging-detail.Send' }"
+              ng-disabled="emailReceiptCtrl.form.$invalid || emailReceiptCtrl.viewState.running"
+              ng-click="emailReceiptCtrl.onFormSubmit()"
+              data-translate="ui.admin.messaging.messaging-detail.Send"></button>
+      <p data-translate="ui.admin.checkout.widgets.emailReceipt.SendACopyOfYourReceipt.Message"></p>
+  </div>
+  <div class="col-sm-12">
+      <div ng-if="emailReceiptCtrl.successMessage"
+           class="alert alert-success" role="alert"
+           ng-bind="emailReceiptCtrl.successMessage"></div>
+      <div ng-if="emailReceiptCtrl.viewState.errorMessage"
+           class="alert alert-danger" role="alert"
+           ng-bind="emailReceiptCtrl.viewState.errorMessage"></div>
+  </div>
+</div>

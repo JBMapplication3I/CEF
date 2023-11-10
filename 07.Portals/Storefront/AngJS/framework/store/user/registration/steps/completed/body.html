@@ -1,0 +1,50 @@
+<div class="row" id="alertRegistrationConfirmed" name="alertRegistrationConfirmed">
+  <div class="col-12">
+    <div class="p-5 alert-success text-center">
+      <div class="row align-items-center">
+        <div class="col-12">
+          <p>
+            <b data-translate="ui.storefront.common.Success.Exclamation"></b>&nbsp;<!--
+            --><span data-translate="ui.storefront.user.registration.Success.UsernameMessage"></span>&nbsp;<!--
+            --><b ng-bind="rscbCtrl.cvAuthenticationService.currentUser.UserName"></b>.&nbsp;<!--
+            --><span ng-if="!rscbCtrl.cefConfig.featureSet.registration.requireEmailConfirmOnRegistration"
+              data-translate="ui.storefront.user.registration.Success1.Message"></span><!--
+            --><span ng-if="rscbCtrl.cefConfig.featureSet.registration.requireEmailConfirmOnRegistration"
+              data-translate="ui.storefront.user.registration.Success2.Message"></span>
+          </p>
+          <p data-translate="What's next?"></p>
+        </div>
+        <div class="col"
+          ng-if="rscbCtrl.cefConfig.featureSet.payments.wallet.enabled">
+          <span data-translate="Save time at checkout by creating your"></span>&nbsp;<!--
+          -- ><a ui-sref-plus uisrp-is-dashboard="true"
+            uisrp-state="userDashboard.addressBook.list">
+            <span data-translate="ui.storefront.common.AddressBook"></span>
+          </a>&nbsp;<span data-translate="and"></span>&nbsp;< !--
+          --><a ui-sref-plus uisrp-is-dashboard="true"
+              uisrp-state="userDashboard.wallet.list">
+            <span data-translate="ui.storefront.userDashboard2.userDashboard.Wallet"></span>
+          </a>
+        </div>
+        <div class="col-auto"
+          ng-if="rscbCtrl.cefConfig.featureSet.payments.wallet.enabled"
+          >OR</div>
+        <div class="col">
+          <span data-translate="Get right to shopping!"></span><br/>
+          <a ng-if="!rscbCtrl.cefConfig.catalog.showCategoriesForLevelsUpTo"
+            ui-sref-plus uisrp-is-catalog="true"
+            uisrp-state="searchCatalog.products.results.both"
+            uisrp-params="{ 'category': '', 'term': null }">
+            <span data-translate="ui.storefront.cart.continueShopping"></span>
+          </a>
+          <a ng-if="rscbCtrl.cefConfig.catalog.showCategoriesForLevelsUpTo > 0"
+            ui-sref-plus uisrp-is-catalog="true"
+            uisrp-state="searchCatalog.products.categories.level1"
+            uisrp-params="{ 'category': '', 'term': null }">
+            <span data-translate="ui.storefront.cart.continueShopping"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

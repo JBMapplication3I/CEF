@@ -1,0 +1,19 @@
+﻿<div uib-accordion-group is-open="false" template-url="cat-filters-group-template.html">
+  <div uib-accordion-heading>
+    <i class="far fa-tag fa-fw mr-2 text-body small"></i>
+    <span class="text-body small"
+      sid="AppliedFiltersDistrictsMenuText"
+      data-translate="Districts">
+    </span>
+  </div>
+  <div class="row">
+    <div ng-repeat="(name, district) in scfbdCtrl.service.activeSearchViewModel.Districts"
+      class="col-12">
+      <a tabindex="0" class="pointer"
+        ng-keypress="scfbdCtrl.pushDistrict(district)"
+        ng-click="scfbdCtrl.pushDistrict(district)">
+        <span ng-bind="name"></span>
+      </a>
+    </div>
+  </div>
+</div>

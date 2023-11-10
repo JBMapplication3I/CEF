@@ -1,0 +1,16 @@
+﻿<cef-no-auth-redirector></cef-no-auth-redirector>
+<div class="row">
+    <div class="col-sm-3">
+        <h4><span data-translate="ui.storefront.messaging.messaging-layout.Folders"></span> <a ng-click="messagingCtrl.refreshFolders()" class="text-right"><i class="far fa-sync" ></i></a></h4>
+        <ul class="list-unstyled">
+            <li ui-sref-active="active" ng-repeat="(key, folder) in messagingCtrl.folders">
+                <a ui-sref="userDashboard.inbox.folder({folder: key, box:folder.data})"> {{folder.name}} <span ng-if="folder.unread">({{folder.unread}})</span></a>
+            </li>
+        </ul>
+        <a ng-click="messagingCtrl.composeMessage()" class="btn btn-primary btn-block"
+           data-translate="ui.storefront.messaging.messaging-layout.Compose"></a>
+    </div>
+    <div class="col-sm-9">
+        <ui-view></ui-view>
+    </div>
+</div>

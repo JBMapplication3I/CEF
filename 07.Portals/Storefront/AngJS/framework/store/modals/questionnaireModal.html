@@ -1,0 +1,33 @@
+<div class="modal-header bg-dark text-light">
+    <h5 class="modal-title"
+        sid="ModalPleaseQuestionnaireText"
+        data-translate="{{questionnaireModalCtrl.headerKey}}">
+    </h5>
+    <button type="button" class="close"
+            sid="btnHeaderQuestionnaireModalCancel"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="questionnaireModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body">
+    <div cef-questionnaire-widget
+        on-complete="questionnaireModalCtrl.onQuestionnaireComplete"></div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary"
+            id="btnQuestionnaireModalCancel" name="btnQuestionnaireModalCancel"
+            translate-attr="{ title: questionnaireModalCtrl.cancelKey,
+                              'aria-label': questionnaireModalCtrl.cancelKey }"
+            data-translate="{{questionnaireModalCtrl.cancelKey}}"
+            ng-click="questionnaireModalCtrl.cancel()"></button>
+    <!--<button type="button" class="btn btn-primary"
+            id="btnQuestionnaireModalOk" name="btnQuestionnaireModalOk"
+            ng-disabled="questionnaireModalCtrl.forms.edit.$invalid"
+            translate-attr="{ title: questionnaireModalCtrl.yesKey,
+                              'aria-label': questionnaireModalCtrl.yesKey }"
+            data-translate="{{questionnaireModalCtrl.yesKey}}"
+            ng-click="questionnaireModalCtrl.ok()"></button>-->
+</div>

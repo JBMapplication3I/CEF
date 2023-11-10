@@ -1,0 +1,490 @@
+<div ng-if="!sgdCtrl.record" class="mb-3">
+  <div cef-loading-widget
+    overlay="false"
+    size="4"
+    message="sgdCtrl.viewState.waitMessage">
+  </div>
+</div>
+<div ng-if="sgdCtrl.record" class="mb-3">
+  <div class="row align-items-center">
+    <div class="col">
+      <h1 class="mt-0">
+        <i class="far fa-object-group" aria-hidden="true"></i>
+        <span sid="IndividualSalesGroupText"
+          data-translate="ui.storefront.common.SalesGroup"></span>&nbsp;<!--
+        --><span data-translate="ui.storefront.common.Number.Symbol"
+          ></span><span ng-bind="sgdCtrl.record.ID"></span><!--
+        --><span ng-if="sgdCtrl.record.CustomKey"
+          >&nbsp;[<span ng-bind="sgdCtrl.record.CustomKey"></span>]</span>
+      </h1>
+    </div>
+    <div class="col-auto d-none d-print-block">
+      <div class="brand mb-3">
+        <img alt="{{udsdCtrl.cefConfig.companyName}}"
+          ng-src="{{('' | corsLink: 'companyLogo') || '/Portals/0/Clarity-eCommerce-Dark.svg' }}" />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <hr class="my-2 border-medium" />
+      <h4 class="bold px-3"
+        sid="IndividualSalesGroupBillingInformation"
+        data-translate="ui.storefront.storeDashboard.storeOrderDetail.BillingInformation">
+      </h4>
+      <hr class="my-2 border-medium" />
+      <div cef-contact-address-block
+        ng-if="!sgdCtrl.$state.includes('userDashboard.salesGroups.detail.quote')"
+        contact="sgdCtrl.record.BillingContact"
+        small-text="false"
+        little-smaller-text="true"
+        two-col="true"
+        class="d-print-none">
+      </div>
+      <div cef-contact-address-block
+        ng-if="!sgdCtrl.$state.includes('userDashboard.salesGroups.detail.quote')"
+        contact="sgdCtrl.record.BillingContact"
+        small-text="false"
+        little-smaller-text="true"
+        two-col="true"
+        no-links="true"
+        class="d-none d-print-block">
+      </div>
+      <div ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.quote')"
+        sid="NoBillingInformationForQuoteSalesGroupText"
+        class="pb-3"
+        data-translate="ui.storefront.storeDashboard.storeOrderDetail.NoBillingInformationForQuoteSalesGroup">
+      </div>
+    </div>
+    <div ng-if="sgdCtrl.cefConfig.salesGroups.events.enabled"
+      class="col-sm-6">
+      <hr class="my-2 border-medium" />
+      <h4 class="bold px-3"
+        sid="IndividualSalesGroupEvents"
+        data-translate="Events">
+      </h4>
+      <hr class="my-2 border-medium" />
+      <style>
+        table.fixed-height-table {
+          display: flex;
+          flex-flow: column;
+          height: 115px;
+        }
+        table.fixed-height-table > thead {
+            -webkit-flex: 0 0 auto;
+            flex: 0 0 auto;
+        }
+
+        table.fixed-height-table > tbody {
+          -webkit-flex: 1 1 auto;
+          flex: 1 1 auto;
+          display: block;
+          overflow-y: auto;
+          overflow-x: hidden;
+        }
+        table.fixed-height-table > thead > tr,
+        table.fixed-height-table > tbody > tr {
+          width: 100%;
+          display: table;
+          table-layout: fixed;
+        }
+        table.fixed-height-table > thead > tr {
+            width: calc(100% - 17px);
+        }
+      </style>
+      <table class="table table-sm table-striped table-hover fixed-height-table small">
+        <thead>
+          <tr>
+            <th class="border-medium w-35">Date</th>
+            <th class="border-medium">Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="!sgdCtrl.events.aggregate.length">
+            <td colspan="2" class="border-medium">No Events</td>
+          </tr>
+          <!-- | orderBy: ['!CreatedDate | convertJSONDate','Name'] -->
+          <tr ng-repeat="e in sgdCtrl.events.aggregate">
+            <td class="w-35 border-medium"
+              ng-bind="e.CreatedDate | convertJSONDate | date:'MMM dd, yyyy hh:mm:ss a'">
+            </td>
+            <td class="border-medium"
+              ng-bind="e.Name"
+              title="{{e.Description}}">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 d-print-none">
+      <ul class="nav nav-tabs mb-3">
+        <!--
+        <li class="nav-item"
+          ng-if="sgdCtrl.cefConfig.featureSet.salesQuotes.enabled">
+          <a class="nav-link" href=""
+            ng-class="{ 'active pointer': sgdCtrl.$state.includes('userDashboard.salesGroups.detail.quote'),
+                        'disabled': !sgdCtrl.record.SalesQuoteRequestMasters.length
+                                  && !sgdCtrl.record.SalesQuoteResponseMasters.length }"
+            ui-sref="userDashboard.salesGroups.detail.quote({
+              'GroupID': sgdCtrl.record.ID, 'ID': sgdCtrl.record.SalesQuoteRequestMasters[0].ID })">
+            <span sid="QuotePluralText" data-translate="ui.storefront.common.Quote.Plural"></span>
+              <span ng-bind="' (' + ((sgdCtrl.record.SalesQuoteRequestSubs.length || 0) + (sgdCtrl.record.SalesQuoteResponseMasters.length || 0)) + ')'"></span>
+          </a>
+        </li>
+        -->
+        <li class="nav-item"
+          ng-if="sgdCtrl.cefConfig.featureSet.sampleRequests.enabled">
+          <a class="nav-link"
+            ng-class="{ 'active pointer': sgdCtrl.$state.includes('userDashboard.salesGroups.detail.sample'),
+                        'disabled': !sgdCtrl.record.SampleRequests.length }"
+            ui-sref="userDashboard.salesGroups.detail.sample({
+              'GroupID': sgdCtrl.record.ID, 'ID': sgdCtrl.record.SampleRequests[0].ID })">
+            <span sid="SampleRequestPluralText" data-translate="ui.storefront.common.SampleRequest.Plural"></span><!--
+            --><span ng-bind="' (' + (sgdCtrl.record.SampleRequests.length || 0) + ')'"></span>
+          </a>
+        </li>
+        <li class="nav-item"
+          ng-if="sgdCtrl.cefConfig.featureSet.salesOrders.enabled">
+          <a class="nav-link"
+            ng-class="{ 'active pointer': sgdCtrl.$state.includes('userDashboard.salesGroups.detail.order'),
+                        'disabled': !sgdCtrl.record.SalesOrderMasters.length
+                                 && !sgdCtrl.record.SubSalesOrders.length }"
+            ui-sref="userDashboard.salesGroups.detail.order({
+              'GroupID': sgdCtrl.record.ID, 'ID': sgdCtrl.currentQuoteOrderID || sgdCtrl.record.SalesOrderMasters[0].ID })">
+            <span sid="OrderPluralText" data-translate="ui.storefront.common.Order.Plural"></span><!--
+            --><span ng-bind="' (' + ((sgdCtrl.record.SubSalesOrders.length || 0)) + ')'"></span>
+          </a>
+        </li>
+        <li class="nav-item"
+          ng-if="sgdCtrl.cefConfig.featureSet.salesInvoices.enabled">
+          <a class="nav-link"
+            ng-class="{ 'active pointer': sgdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice'),
+                        'disabled': !sgdCtrl.record.SalesInvoices.length }"
+            ui-sref="userDashboard.salesGroups.detail.invoice({
+              'GroupID': sgdCtrl.record.ID, 'ID': sgdCtrl.record.SalesInvoices[0].ID })">
+            <span sid="InvoicePluralText" data-translate="ui.storefront.common.Invoice.Plural"></span><!--
+            --><span ng-bind="' (' + (sgdCtrl.record.SalesInvoices.length || 0) + ')'"></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+            ng-class="{ 'active pointer': sgdCtrl.$state.includes('userDashboard.salesGroups.detail.shipping'),
+                        'disabled': !sgdCtrl.shipments.length }"
+            ui-sref="userDashboard.salesGroups.detail.shipping({
+              'GroupID': sgdCtrl.record.ID, 'ID': sgdCtrl.shipments[0].ID })">
+            <span sid="InvoicePluralText" data-translate="ui.storefront.common.ShipmentsSlashTracking"></span><!--
+            --><span ng-bind="' (' + (sgdCtrl.shipments.length || 0) + ')'"></span>
+          </a>
+        </li>
+        <li class="nav-item"
+          ng-if="sgdCtrl.cefConfig.featureSet.salesReturns.enabled">
+          <a class="nav-link"
+            ng-class="{ 'active pointer': sgdCtrl.$state.includes('userDashboard.salesGroups.detail.return'),
+                        'disabled': !sgdCtrl.record.SalesReturns.length }"
+            ui-sref="userDashboard.salesGroups.detail.return({
+              'GroupID': sgdCtrl.record.ID, 'ID': sgdCtrl.record.SalesReturns[0].ID })">
+            <span sid="ReturnPluralText" data-translate="ui.storefront.common.Return.Plural"></span><!--
+            --><span ng-bind="' (' + (sgdCtrl.record.SalesReturns.length || 0) + ')'"></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-auto d-print-none"
+        ng-if="!sgdCtrl.$state.includes('userDashboard.salesGroups.detail.order')">
+      <h4 class="mt-0 mb-3"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.quote')">
+        <i class="far fa-quote-right fa-fw" aria-hidden="true"></i>&nbsp;<!--
+        --><span sid="btnDashboardQuotes" data-translate="ui.storefront.common.Quote.Plural"></span>
+      </h4>
+      <h4 class="mt-0 mb-3"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.sample')">
+        <i class="far fa-eye-dropper fa-fw" aria-hidden="true"></i>&nbsp;<!--
+        --><span sid="btnDashboardSampleRequests" data-translate="ui.storefront.common.SampleRequest.Plural"></span>
+      </h4>
+      <!--
+      <h4 class="mt-0 mb-3"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.order')">
+        <i class="far fa-receipt fa-fw" aria-hidden="true"></i>&nbsp;
+          <span sid="btnIndividualSalesGroupOrders"
+            data-translate="ui.storefront.common.Order.Plural">
+        </span>
+      </h4>
+      -->
+      <h4 class="mt-0 mb-3"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice')">
+        <i class="far fa-file-invoice-dollar fa-fw" aria-hidden="true"></i>&nbsp;<!--
+        --><span sid="btnInvoices" data-translate="ui.storefront.common.Invoice.Plural"></span>
+      </h4>
+      <h4 class="mt-0 mb-3"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.return')">
+        <i class="far fa-box-fragile fa-fw" aria-hidden="true"></i>&nbsp;<!--
+        --><span sid="btnReturns" data-translate="ui.storefront.common.Return.Plural"></span>
+      </h4>
+      <div class="card border-0"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.quote')">
+        <div class="card-body p-1">
+          <b class="card-subtitle text-muted"
+            sid="btnSalesGroupDetailRequests" data-translate="ui.storefront.userDashboard.controls.salesGroupDetail.Requests">
+          </b>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li ng-if="!sgdCtrl.record.SalesQuoteRequestMasters.length"
+            class="list-group-item p-2">
+            <span sid="btnQuoteRequestsNone" data-translate="ui.storefront.common.None"></span>
+          </li>
+          <li ng-repeat="master in sgdCtrl.record.SalesQuoteRequestMasters"
+            class="list-group-item p-2"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          master.ID === sgdCtrl.$stateParams.ID }">
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.quote({
+              'GroupID': sgdCtrl.record.ID, 'ID': master.ID })">
+              <span sid="btnIndividualSalesGroupQuoteRequestMasterNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+                --><span ng-bind="master.ID"></span>
+              </span>
+              <span class="text-right pl-3"
+                sid="IndividualSalesGroupQuoteRequestMasterPrice_{{$index}}"
+                ng-bind="master.Totals.Total | globalizedCurrency">
+              </span>
+            </a>
+          </li>
+        </ul>
+        <ul class="list-group list-group-flush" ng-if="sgdCtrl.record.SalesQuoteRequestSubs.length">
+          <li ng-repeat="master in sgdCtrl.record.SalesQuoteRequestSubs track by $index"
+            class="list-group-item px-2 py-1 small"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          master.ID === sgdCtrl.$stateParams.ID }"
+            ng-click="sgdCtrl.setCurrentQuoteOrderID($index)">
+            <i class="far fa-level-up fa-rotate-90 mr-2 text-dark" aria-hidden="true"></i>
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.quote({
+              'GroupID': sgdCtrl.record.ID, 'ID': master.ID })">
+              <span sid="btnIndividualSalesGroupQuoteRequestSubNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+                --><span ng-bind="master.ID"></span>
+              </span>
+              <span class="text-right pl-3"
+                sid="IndividualSalesGroupQuoteRequestSubPrice_{{$index}}"
+                ng-bind="master.Totals.Total | globalizedCurrency">
+              </span>
+            </a>
+          </li>
+        </ul>
+        <div class="card-body p-1 pt-2">
+          <b class="card-subtitle text-muted"
+            sid="SalesGroupDetailResponses"
+            data-translate="ui.storefront.userDashboard.controls.salesGroupDetail.Responses">
+          </b>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li ng-if="!sgdCtrl.record.SalesQuoteResponseMasters.length"
+            class="list-group-item p-2">
+            <span sid="SalesQuoteResponseNone" data-translate="ui.storefront.common.None"></span>
+          </li>
+          <li ng-repeat="response in sgdCtrl.record.SalesQuoteResponseMasters"
+            class="list-group-item p-2"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          response.ID === sgdCtrl.$stateParams.ID }">
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.quote({
+              'GroupID': sgdCtrl.record.ID, 'ID': response.ID })">
+              <span sid="btnIndividualSalesGroupQuoteResponseMasterNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+                --><span ng-bind="response.ID"></span>
+              </span>
+              <span class="text-right pl-3"
+                sid="IndividualSalesGroupQuoteResponseMasterPrice_{{$index}}"
+                ng-bind="response.Totals.Total | globalizedCurrency">
+              </span>
+            </a>
+          </li>
+        </ul>
+        <ul class="list-group list-group-flush" ng-if="sgdCtrl.record.SalesQuoteResponseSubs.length">
+          <li ng-repeat="response in sgdCtrl.record.SalesQuoteResponseSubs"
+            class="list-group-item px-2 py-1"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          response.ID === sgdCtrl.$stateParams.ID }">
+            <i class="far fa-level-up fa-rotate-90 mr-2 text-dark" aria-hidden="true"></i>
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.quote({
+              'GroupID': sgdCtrl.record.ID, 'ID': response.ID })">
+              <span sid="btnIndividualSalesGroupQuoteResponseSubNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+                --><span ng-bind="response.ID"></span>
+              </span>
+              <span class="text-right pl-3"
+                sid="IndividualSalesGroupQuoteResponseSubPrice_{{$index}}"
+                ng-bind="response.Totals.Total | globalizedCurrency">
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!--
+      <div class="card border-0"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.order')">
+        <div class="card-body p-1">
+          <b class="card-subtitle text-muted"
+            sid="IndividualSalesGroupOrderMasterText"
+            data-translate="ui.storefront.userDashboard.controls.salesGroupDetail.Master">
+          </b>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li ng-if="!sgdCtrl.record.SalesOrderMasters.length"
+            class="list-group-item p-2">
+            <span data-translate="ui.storefront.common.None"></span>
+          </li>
+          <li ng-repeat="master in sgdCtrl.record.SalesOrderMasters"
+            class="list-group-item p-2"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          master.ID === sgdCtrl.$stateParams.ID }">
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.order({
+                'GroupID': sgdCtrl.record.ID, 'ID': master.ID })">
+              <span sid="btnIndividualSalesGroupOrderMasterNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span>
+                  <span ng-bind="master.ID"></span>
+              </span>
+              <span class="text-right pl-3"
+                sid="IndividualSalesGroupOrderMasterPrice_{{$index}}"
+                ng-bind="master.Totals.Total | globalizedCurrency">
+              </span>
+            </a>
+          </li>
+        </ul>
+        <div class="card-body p-1">
+          <b sid="SalesGroupDetailSubOrders" class="card-subtitle text-muted"
+            data-translate="ui.storefront.userDashboard.controls.salesGroupDetail.SubOrders">
+          </b>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li ng-if="!sgdCtrl.record.SubSalesOrders.length"
+            class="list-group-item p-2">
+            <span sid="SubSalesOrdersNone" data-translate="ui.storefront.common.None"></span>
+          </li>
+          <li ng-repeat="sub in sgdCtrl.record.SubSalesOrders"
+            class="list-group-item p-2"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          sub.ID === sgdCtrl.$stateParams.ID }">
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.order({
+                'GroupID': sgdCtrl.record.ID, 'ID': sub.ID })">
+              <span sid="btnIndividualSalesGroupOrderSubNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span>
+                  <span ng-bind="sub.ID"></span>
+              </span>
+              <span class="text-right pl-3"
+                sid="IndividualSalesGroupOrderSubPrice_{{$index}}"
+                ng-bind="sub.Totals.Total | globalizedCurrency">
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      -->
+      <div class="card border-0"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.invoice')">
+        <div class="card-body p-1">
+          <b class="card-subtitle text-muted"
+            sid="IndividualSalesGroupInvoiceText"
+            data-translate="ui.storefront.common.SalesInvoice.Plural">
+          </b>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li ng-if="!sgdCtrl.record.SalesInvoices.length"
+            class="list-group-item p-2">
+            <span sid="SalesInvoiceNone" data-translate="ui.storefront.common.None"></span>
+          </li>
+          <li ng-repeat="invoice in sgdCtrl.record.SalesInvoices"
+            class="list-group-item p-2"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          invoice.ID === sgdCtrl.$stateParams.ID }">
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.invoice({
+                'GroupID': sgdCtrl.record.ID, 'ID': invoice.ID })">
+              <span sid="btnIndividualSalesGroupInvoiceNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+                --><span ng-bind="invoice.CustomKey"></span>
+              </span>
+              <span class="text-right pl-3"
+                sid="IndividualSalesGroupInvoicePrice_{{$index}}"
+                ng-bind="invoice.Totals.Total | globalizedCurrency">
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="card border-0"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.shipping')">
+        <div class="card-body p-1">
+          <b class="card-subtitle text-muted"
+            sid="IndividualSalesGroupInvoiceText">
+            Shipments
+          </b>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li ng-if="!sgdCtrl.shipments.length"
+            class="list-group-item p-2">
+            <span sid="SalesInvoiceNone" data-translate="ui.storefront.common.None"></span>
+          </li>
+          <li ng-repeat="shipment in sgdCtrl.shipments"
+            class="list-group-item p-2"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          shipment.ID === sgdCtrl.$stateParams.ID }">
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.shipping({
+                'GroupID': sgdCtrl.record.ID, 'ID': shipment.ID })">
+              <span sid="btnIndividualShipmentNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+                --><span ng-bind="shipment.CustomKey"></span>
+              </span>
+              <!-- <span class="text-right pl-3"
+                sid="IndividualSalesGroupInvoicePrice_{{$index}}"
+                ng-bind="invoice.Totals.Total | globalizedCurrency">
+              </span> -->
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="card border-0"
+        ng-if="sgdCtrl.$state.includes('userDashboard.salesGroups.detail.return')">
+        <div class="card-body p-1">
+          <b class="card-subtitle text-muted"
+            sid="IndividualSalesGroupReturnText"
+            data-translate="ui.storefront.common.SalesReturn.Plural">
+          </b>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li ng-if="!sgdCtrl.record.SalesReturns.length"
+            class="list-group-item p-2">
+            <span sid="SalesReturnNone" data-translate="ui.storefront.common.None"></span>
+          </li>
+          <li ng-repeat="return in sgdCtrl.record.SalesReturns"
+            class="list-group-item p-2"
+            ng-class="{ 'active border-primary border-right border-right-6 rounded-right border-bottom-0 bg-light':
+                          return.ID === sgdCtrl.$stateParams.ID }">
+            <a class="w-100"
+              ui-sref="userDashboard.salesGroups.detail.return({
+                'GroupID': sgdCtrl.record.ID, 'ID': return.ID })">
+              <span sid="btnIndividualSalesGroupReturnNumber_{{$index}}">
+                <span data-translate="ui.storefront.common.Number.Symbol"></span><!--
+                --><span ng-bind="return.ID"></span>
+              </span>
+              <span class="text-right pl-3"
+                sid="IndividualSalesGroupReturnPrice_{{$index}}"
+                ng-bind="return.Totals.Total | globalizedCurrency">
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div ui-view="content" class="sales-group-inner-detail">
+      </div>
+    </div>
+  </div>
+</div>

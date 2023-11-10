@@ -1,0 +1,328 @@
+﻿// Clarity Helper Classes, for CEF-2020.1.x+ w/ BS4
+
+// Border classes
+.border-0 { border: none; }
+.border-left-0 { border-left: none;}
+.border-top-0 { border-top: none; }
+.border-bottom-0 { border-bottom: none; }
+.border-right-0 { border-right: none; }
+// Match row heights
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+
+  > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row:after,
+  .row:before {
+    display: flex;
+  }
+  // Content alignment helpers
+  // .set-top { position: absolute; top: 0px }
+  // .set-bottom { position: absolute; bottom: 0px }
+}
+// Enforce Pointer cursor in places where it's getting
+// removed inappropriately
+.pointer {
+  cursor: pointer;
+}
+// Lets static text that is in line with form elements appear aligned.
+// 7/16ths (7 of 16px, 1rem = 16px, totalling 38px when added to the
+// standard font size of 1rem and 1px each for top/bottom)
+.form-control-static {
+  padding-top: 0.4375rem;
+  padding-bottom: 0.4375rem;
+}
+// Compensate for the spin control that shows up on mouseover
+.form-control[inputmode=numeric] {
+  padding-right: 1.75rem;
+}
+// Font manipulations
+.very-small { font-size: 50%; }
+.big { font-size: $font-size-lg; }
+.very-big { font-size: $font-size-xl; }
+.strike-through { text-decoration: line-through !important; }
+.italic { font-style: italic; }
+// Alignments
+.align-bottom { vertical-align: text-bottom; }
+// Hide translations before they load
+// .translate-cloak { display: none !important; }
+// Performs an animated shake left/right. Use on modals when the input
+// fails
+.shake {
+  animation: shake 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(0.16rem, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-0.333rem, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(0.333rem, 0, 0);
+  }
+}
+// Ensure disabled "buttons" show the "No" sign
+.btn {
+  &:disabled,
+  &.disabled {
+    cursor: $cursor-disabled;
+  }
+}
+// Add a sort image to the cell on the right side, react to directions
+th.sortable {
+  background: $white url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
+  padding-right: 1.5rem;
+  cursor: pointer;
+  &.asc {
+    //color: $success;
+    background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='5' height='5' viewBox='0 0 5 5' style='enable-background:new 0 0 5 5;'%3e%3cg%3e%3cg%3e%3cpolygon points='0,3.75 2.5,1.25 5,3.75'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+  }
+  &.desc {
+    //color: $danger;
+    background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='5' height='5' viewBox='0 0 5 5' style='enable-background:new 0 0 5 5;'%3e%3cg%3e%3cg%3e%3cpolygon points='0,1.25 2.5,3.75 5,1.25'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+  }
+  /*
+  &.un {
+    color: $warning;
+  }
+  */
+}
+.table.table-header-cells-valign-top {
+  th {
+    vertical-align: top;
+  }
+}
+.table.table-header-cells-valign-middle {
+  th {
+    vertical-align: middle;
+  }
+}
+.table.table-header-cells-valign-bottom {
+  th {
+    vertical-align: bottom;
+  }
+}
+.table.table-cells-valign-top {
+  td {
+    vertical-align: top;
+  }
+}
+.table.table-cells-valign-middle {
+  td {
+    vertical-align: middle;
+  }
+}
+.table.table-cells-valign-bottom {
+  td {
+    vertical-align: bottom;
+  }
+}
+// Cards
+.card.is-valid {
+  //color: $form-feedback-valid-color !important;
+  border-color: $form-feedback-valid-color !important;
+
+  .card-header {
+    color: $form-feedback-valid-color !important;
+    border-color: $form-feedback-valid-color !important;
+    background-color: $green-fade;
+    padding-right: $input-height-inner;
+    background-image: escape-svg($form-feedback-icon-valid);
+    background-repeat: no-repeat;
+    background-position: right $input-height-inner-half center;
+    background-size: $input-height-inner-half $input-height-inner-half;
+    font-weight: 600;
+  }
+}
+
+$directions: () !default;
+$directions: map-merge(
+  (
+    "x": x,
+    "y": y
+  ),
+  $directions
+);
+
+$overflowsX: () !default;
+$overflowsX: map-merge(
+  (
+    "auto": auto,
+    "hidden": hidden,
+    "scroll": scroll,
+    "visible": visible,
+    "nocontent": no-content,
+    "nodisplay": no-display
+  ),
+  $overflowsX
+);
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @each $overflow, $overflow2 in $overflowsX {
+      .overflow#{$infix}-#{$overflow} {
+        overflow: $overflow2 !important;
+      }
+
+      @each $dir, $dir2 in $directions {
+        .overflow-#{$dir}#{$infix}-#{$overflow} {
+          overflow-#{$dir}: $overflow2 !important;
+        }
+      }
+    }
+  }
+}
+
+/*
+@media(max-width: map-get($grid-breakpoints, "xs")) {
+  .xs-pull-left { float: left !important; }
+  .xs-pull-right { float: right !important; }
+  .xs-text-left { text-align: left !important; }
+  .xs-text-center { text-align: center !important; }
+  .xs-text-right { text-align: right !important; }
+}
+
+@media(min-width: map-get($grid-breakpoints, "sm")) and (max-width: map-get($grid-breakpoints, "md") - 1) {
+  .sm-pull-left { float: left !important; }
+  .sm-pull-right { float: right !important; }
+  .sm-text-left { text-align: left !important; }
+  .sm-text-center { text-align: center !important; }
+  .sm-text-right { text-align: right !important; }
+}
+
+@media(min-width: map-get($grid-breakpoints, "md")) and (max-width: map-get($grid-breakpoints, "lg") - 1) {
+  .md-pull-left { float: left !important; }
+  .md-pull-right { float: right !important; }
+  .md-text-left { text-align: left !important; }
+  .md-text-center { text-align: center !important; }
+  .md-text-right { text-align: right !important; }
+}
+
+@media(min-width: map-get($grid-breakpoints, "lg")) and (max-width: map-get($grid-breakpoints, "xl") - 1) {
+  .lg-pull-left { float: left !important; }
+  .lg-pull-right { float: right !important; }
+  .lg-text-left { text-align: left !important; }
+  .lg-text-center { text-align: center !important; }
+  .lg-text-right { text-align: right !important; }
+}
+
+@media(min-width: map-get($grid-breakpoints, "xl")) and (max-width: map-get($grid-breakpoints, "tk") - 1) {
+  .xl-pull-left { float: left !important; }
+  .xl-pull-right { float: right !important; }
+  .xl-text-left { text-align: left !important; }
+  .xl-text-center { text-align: center !important; }
+  .xl-text-right { text-align: right !important; }
+}
+
+@media(min-width: map-get($grid-breakpoints, "tk")) and (max-width: map-get($grid-breakpoints, "fk") - 1) {
+  .tk-pull-left { float: left !important; }
+  .tk-pull-right { float: right !important; }
+  .tk-text-left { text-align: left !important; }
+  .tk-text-center { text-align: center !important; }
+  .tk-text-right { text-align: right !important; }
+}
+
+@media(min-width: map-get($grid-breakpoints, "fk")) {
+  .fk-pull-left { float: left !important; }
+  .fk-pull-right { float: right !important; }
+  .fk-text-left { text-align: left !important; }
+  .fk-text-center { text-align: center !important; }
+  .fk-text-right { text-align: right !important; }
+}
+
+@media print  {
+  .col-pr-1 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 8.33333%;
+    flex: 0 0 8.33333%;
+    max-width: 8.33333%;
+  }
+  .col-pr-2 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 16.66666%;
+    flex: 0 0 16.66666%;
+    max-width: 16.66666%;
+  }
+  .col-pr-3 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .col-pr-4 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 33.33333%;
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%;
+  }
+  .col-pr-5 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 41.66666%;
+    flex: 0 0 41.66666%;
+    max-width: 41.66666%;
+  }
+  .col-pr-6 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .col-pr-7 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 58.33333%;
+    flex: 0 0 58.33333%;
+    max-width: 58.33333%;
+  }
+  .col-pr-8 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 66.66666%;
+    flex: 0 0 66.66666%;
+    max-width: 66.66666%;
+  }
+  .col-pr-9 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .col-pr-10 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 83.33333%;
+    flex: 0 0 83.33333%;
+    max-width: 83.33333%;
+  }
+  .col-pr-11 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 91.66666%;
+    flex: 0 0 91.66666%;
+    max-width: 91.66666%;
+  }
+  .col-pr-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .pr-pull-left { float: left !important; }
+  .pr-pull-right { float: right !important; }
+  .pr-text-left { text-align: left !important; }
+  .pr-text-center { text-align: center !important; }
+  .pr-text-right { text-align: right !important; }
+}
+*/

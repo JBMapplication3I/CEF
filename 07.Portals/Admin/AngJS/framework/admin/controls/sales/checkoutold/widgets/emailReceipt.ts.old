@@ -1,0 +1,51 @@
+/**
+ * @file framework/admin/controls/sales/checkout/widgets/emailReceipt.ts
+ * @author Copyright (c) 2018-2022 clarity-ventures.com. All rights reserved.
+ * @desc Email receipt class
+ */
+module cef.admin.controls.sales.checkout.widgets {
+    class EmailReceiptController extends core.TemplatedControllerBase {
+        salesOrderId: number;
+        email: string;
+        successMessage: string;
+        // Functions
+        shareEmails(): ng.IPromise<any> {
+            const emails = this.email.split(";");
+            if (!emails.length || !angular.isNumber(this.salesOrderId)) {
+                return this.$q.reject(this.$translate("ui.admin.checkout.widgets.emailReceipt.Errors.InputOrConfiguration"));
+            }
+            return this.$q.all(emails.map(email => this.cvApi.ordering.SendSalesOrderConfirmationEmail({
+                ID: this.salesOrderId,
+                Email: email
+            })));
+        }
+        // Events
+        onFormSubmit(): void {
+            this.setRunning();
+            this.shareEmails().then(r => {
+                this.successMessage = this.$translate.instant("ui.admin.checkout.widgets.emailReceipt.EmailSent");
+                this.finishRunning();
+            }, result => this.finishRunning(true, result.data.ResponseStatus.Message))
+            .catch(reason => this.finishRunning(true, reason.data.ResponseStatus.Message));
+        }
+        // Constructor
+        constructor(
+                private readonly $q: ng.IQService,
+                private readonly $translate: ng.translate.ITranslateService,
+                protected readonly cefConfig: core.CefConfig,
+                private readonly cvApi: api.ICEFAPI) {
+            super(cefConfig);
+        }
+    }
+
+    adminApp.directive("cefEmailReceipt", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        scope: {
+            salesOrderId: "="
+        },
+        templateUrl: $filter("corsLink")("/framework/admin/controls/sales/checkout/widgets/emailReceipt.html", "ui"),
+        controller: EmailReceiptController,
+        controllerAs: "emailReceiptCtrl",
+        bindToController: true
+    }));
+}

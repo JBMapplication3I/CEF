@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Interfaces.Models</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Interfaces.Models</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Interfaces.Models</RootNamespace>
+    <ProjectGuid>D2DC6CEB-1C99-430C-A124-E7555654F368</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Payments\IPaymentSearchModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="IModels.tt" />
+    <None Remove="ISearchModels.tt" />
+    <Content Include="IModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IModels.cstxt</LastGenOutput>
+    </Content>
+    <Content Include="ISearchModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ISearchModels.cstxt</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="IModels.cstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IModels.tt</DependentUpon>
+    </None>
+    <None Update="ISearchModels.cstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ISearchModels.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <PackageReference Include="ServiceStack.Interfaces" Version="6.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+  </ItemGroup>
+</Project>

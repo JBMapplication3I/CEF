@@ -1,0 +1,31 @@
+﻿@page "/catalog/discounts/creator"
+@using Clarity.Ecommerce.MVC.Core
+
+@*
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+*@
+@*<CascadingValue Value="ViewState">*@
+  <Div Class="page h-100" ElementId="addDiscountPage">
+    <Div class="page-content">
+      <Container Fluid="true">
+        <Row>
+          <Column>
+            <Heading Size="HeadingSize.Is1">
+              Add Discount
+            </Heading>
+            <Paragraph>
+              TODO: Add Discount UI
+            </Paragraph>
+          </Column>
+        </Row>
+      </Container>
+    </Div>
+  </Div>
+@*</CascadingValue>*@
+
+@code
+{
+}

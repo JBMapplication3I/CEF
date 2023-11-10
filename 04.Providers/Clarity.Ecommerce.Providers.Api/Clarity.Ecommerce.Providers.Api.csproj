@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Providers.Api</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Providers.Api</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Providers.Api</RootNamespace>
+    <ProjectGuid>362fa967-972f-4be7-b7ef-64a43d708bb7</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack\bin\Debug\net472\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\..\ThirdParty\Microsoft.Owin\bin\Debug\net5.0\Microsoft.Owin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+    <ProjectReference Include="..\..\06.Services\06.Clarity.Ecommerce.Service.Core\06.Clarity.Ecommerce.Service.Core.csproj" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net5.0'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net472'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I" />
+  </Target>
+</Project>

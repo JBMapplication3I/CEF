@@ -1,0 +1,20 @@
+﻿<div class="row"
+  ng-class="loadingWidgetCtrl.classesObj()"
+  ng-style="{ 'z-index': loadingWidgetCtrl.overlay ? '10000' : 'inherit' }">
+  <div class="col-12 text-center o-100"
+    ng-class="{ 'p-5': !loadingWidgetCtrl.overlay }">
+    <i class="far fa-cog fa-spin fa-{{loadingWidgetCtrl.size || 5}}x fa-fw">
+    </i>
+    <p ng-if="loadingWidgetCtrl.messageKey"
+      class="translate-cloak" translate-cloak
+      data-translate="{{loadingWidgetCtrl.messageKey}}">
+    </p>
+    <p ng-if="loadingWidgetCtrl.message"
+      ng-bind="loadingWidgetCtrl.message">
+    </p>
+    <p ng-if="!loadingWidgetCtrl.message && !loadingWidgetCtrl.messageKey"
+      class="translate-cloak" translate-cloak
+      data-translate="ui.storefront.common.Loading.Ellipses">
+    </p>
+  </div>
+</div>

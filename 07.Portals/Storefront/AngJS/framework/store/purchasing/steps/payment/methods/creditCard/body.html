@@ -1,0 +1,218 @@
+<!-- step.payment.method.creditCard.body -->
+<div class="row mb-3" ng-form="pmccbCtrl.forms.card">
+  <div cef-loading-widget pad-in="true" overlay="true"
+      ng-if="pmccbCtrl.viewState.running"></div>
+  <div class="col-12">
+    <div class="form-group"
+      ng-class="{ 'has-error': pmccbCtrl.forms.card.ddlSelectedCard.$invalid }">
+      <label class="control-label" for="ddlSelectedCard"
+        data-translate="ui.storefront.checkout.views.paymentInformation.selectACard">
+      </label>
+      <div class="input-group">
+        <select class="form-control custom-select"
+          ng-class="{ 'is-valid': pmccbCtrl.forms.card.ddlSelectedCard.$valid,
+                      'is-invalid': pmccbCtrl.forms.card.ddlSelectedCard.$invalid }"
+          id="ddlSelectedCard" name="ddlSelectedCard"
+          ng-required="true"
+          ng-change="pmccbCtrl.onChange()"
+          ng-model-options="pmccbCtrl.debounce500"
+          ng-options="entry as (entry.Name + ': ' + entry.CreditCardNumber
+                                + ' (' + (entry.ExpirationMonth | zeroPadNumber: 2)
+                                + '/' + (entry.ExpirationYear | zeroPadNumber: 4) + ')')
+                      for entry in pmccbCtrl.wallet"
+          ng-model="pmccbCtrl.selectedCard">
+          <option ng-disabled="true" value=""
+            data-translate="ui.storefront.checkout.views.paymentInformation.PleaseSelectAnEntry">
+          </option>
+        </select>
+        <!-- | filter: { 'CreditCardNumber': '' } -->
+        <div class="input-group-append input-group-btn">
+          <button type="button" class="btn btn-secondary rounded-right"
+            id="btnAddWalletEntry" name="btnAddWalletEntry"
+            translate-attr="{ title: 'ui.storefront.cart.Add',
+                              'aria-label': 'ui.storefront.cart.Add' }"
+            data-translate="ui.storefront.cart.Add"
+            ng-click="pmccbCtrl.add()">
+          </button>
+        </div>
+        <div ng-messages-multiple ng-messages="pmccbCtrl.forms.card.ddlSelectedCard.$error"
+          role="alert" class="invalid-feedback">
+          <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="pmccbCtrl.selectedCardIsFromWallet"
+    class="col-12 wallet-card-panel">
+    <div class="card mb-3">
+      <div class="card-body pb-1">
+        <div class="row align-items-center">
+          <div class="col">
+            <p class="h3 mt-0"
+              ng-bind-html="'&bull;&bull;&bull;&bull;&nbsp;'
+                + '&bull;&bull;&bull;&bull;&nbsp;'
+                + '&bull;&bull;&bull;&bull;&nbsp;'
+                + pmccbCtrl.selectedCard.CreditCardNumber">
+            </p>
+          </div>
+          <div class="col-auto" aria-hidden="true">
+            <p class="h3 mt-0">
+              <i class="fa-lg" ng-class="{
+                'fab fa-cc-amex': pmccbCtrl.selectedCard.CardType == 'American Express',
+                'fab fa-cc-discover': pmccbCtrl.selectedCard.CardType == 'Discover',
+                'fab fa-cc-mastercard': pmccbCtrl.selectedCard.CardType == 'MasterCard',
+                'fab fa-cc-diners-club': pmccbCtrl.selectedCard.CardType == 'Diners Club',
+                'fab fa-cc-visa': pmccbCtrl.selectedCard.CardType == 'Visa'}">
+              </i>
+              <span class="sr-only"
+                ng-bind="pmccbCtrl.selectedCard.CardType">
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-5">
+            <p class="small"
+              data-translate="ui.storefront.wallet.walletCard.CardHolderName">
+            </p>
+            <p class="bold"
+              ng-bind="pmccbCtrl.selectedCard.CardHolderName">
+            </p>
+          </div>
+          <div class="col-4">
+            <p class="small"
+              data-translate="ui.storefront.checkout.checkoutCard.ValidThrough">
+            </p>
+            <p class="bold"
+              ng-bind="(pmccbCtrl.selectedCard.ExpirationMonth | zeroPadNumber: 2)
+               + '/' + (pmccbCtrl.selectedCard.ExpirationYear | zeroPadNumber: 4)">
+            </p>
+          </div>
+          <div class="col-3">
+            <div class="form-group"
+              ng-class="{'has-error': pmccbCtrl.forms.card.txtWalletCVV.$invalid}">
+              <label class="control-label small" for="txtWalletCVV"
+                ><span data-translate="ui.storefront.checkout.views.paymentInformation.CVV"
+                ></span>&nbsp;<span class="text-danger">*</span></label>
+              <input type="text" class="form-control"
+                ng-class="{ 'is-valid': pmccbCtrl.forms.card.txtWalletCVV.$valid,
+                            'is-invalid': pmccbCtrl.forms.card.txtWalletCVV.$invalid }"
+                id="txtWalletCVV" name="txtWalletCVV"
+                placeholder="123"
+                ng-required="true"
+                ng-change="pmccbCtrl.onChange()"
+                ng-model-options="pmccbCtrl.debounce500"
+                ng-model="pmccbCtrl.selectedCard.CVV"
+                cc-cvc cc-type="pmccbCtrl.selectedCard.CardType"
+                autocomplete="cc-csc" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="pmccbCtrl.forms.card.$valid
+    && pmccbCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0"
+    class="col-12">
+    <p sid="TotalAmountChargedText"
+      data-translate="ui.storefront.checkout.paymentMethods.creditCard.GrandTotalWithSplitTargets.Template"
+      translate-value-total="{{pmccbCtrl.cvCartService.grandTotal()}}">
+    </p>
+  </div>
+  <div class="col-12" ng-if="pmccbCtrl.cefConfig.debug">
+    <div class="alert alert-dark">
+      <h4 class="alert-heading">Debug Info for this step</h4>
+      <table class="table table-borderless table-hover table-striped table-sm mb-0 small">
+        <tbody ng-if="!pmccbCtrl.selectedCardIsFromWallet">
+          <tr>
+            <th>tempPaymentData.PayByCreditCard.CardType</th>
+            <td>{{pmccbCtrl.tempPaymentData.PayByCreditCard.CardType}}</td>
+          </tr>
+          <tr>
+            <th>tempPaymentData.PayByCreditCard.CardReferenceName</th>
+            <td>{{pmccbCtrl.tempPaymentData.PayByCreditCard.CardReferenceName}}</td>
+          </tr>
+          <tr>
+            <th>tempPaymentData.PayByCreditCard.CardHolderName</th>
+            <td>{{pmccbCtrl.tempPaymentData.PayByCreditCard.CardHolderName}}</td>
+          </tr>
+          <tr>
+            <th>tempPaymentData.PayByCreditCard.CardNumber</th>
+            <td>{{pmccbCtrl.tempPaymentData.PayByCreditCard.CardNumber}}</td>
+          </tr>
+          <tr>
+            <th>tempPaymentData.PayByCreditCard.ExpirationMonth</th>
+            <td>{{pmccbCtrl.tempPaymentData.PayByCreditCard.ExpirationMonth}}</td>
+          </tr>
+          <tr>
+            <th>tempPaymentData.PayByCreditCard.ExpirationYear</th>
+            <td>{{pmccbCtrl.tempPaymentData.PayByCreditCard.ExpirationYear}}</td>
+          </tr>
+          <tr>
+            <th>tempPaymentData.PayByCreditCard.CVV</th>
+            <td>{{pmccbCtrl.tempPaymentData.PayByCreditCard.CVV}}</td>
+          </tr>
+          <tr>
+            <th>paymentData.PayByCreditCard.CardType</th>
+            <td>{{pmccbCtrl.paymentData.PayByCreditCard.CardType}}</td>
+          </tr>
+          <tr>
+            <th>paymentData.PayByCreditCard.CardReferenceName</th>
+            <td>{{pmccbCtrl.paymentData.PayByCreditCard.CardReferenceName}}</td>
+          </tr>
+          <tr>
+            <th>paymentData.PayByCreditCard.CardHolderName</th>
+            <td>{{pmccbCtrl.paymentData.PayByCreditCard.CardHolderName}}</td>
+          </tr>
+          <tr>
+            <th>paymentData.PayByCreditCard.CardNumber</th>
+            <td>{{pmccbCtrl.paymentData.PayByCreditCard.CardNumber}}</td>
+          </tr>
+          <tr>
+            <th>paymentData.PayByCreditCard.ExpirationMonth</th>
+            <td>{{pmccbCtrl.paymentData.PayByCreditCard.ExpirationMonth}}</td>
+          </tr>
+          <tr>
+            <th>paymentData.PayByCreditCard.ExpirationYear</th>
+            <td>{{pmccbCtrl.paymentData.PayByCreditCard.ExpirationYear}}</td>
+          </tr>
+          <tr>
+            <th>paymentData.PayByCreditCard.CVV</th>
+            <td>{{pmccbCtrl.paymentData.PayByCreditCard.CVV}}</td>
+          </tr>
+        </tbody>
+        <tbody ng-if="pmccbCtrl.selectedCardIsFromWallet">
+          <tr>
+            <th>selectedCard.Name</th>
+            <td>{{pmccbCtrl.selectedCard.Name}}</td>
+          </tr>
+          <tr>
+            <th>selectedCard.CardType</th>
+            <td>{{pmccbCtrl.selectedCard.CardType}}</td>
+          </tr>
+          <tr>
+            <th>selectedCard.CreditCardNumber</th>
+            <td>{{pmccbCtrl.selectedCard.CreditCardNumber}}</td>
+          </tr>
+          <tr>
+            <th>selectedCard.CardHolderName</th>
+            <td>{{pmccbCtrl.selectedCard.CardHolderName}}</td>
+          </tr>
+          <tr>
+            <th>selectedCard.ExpirationMonth</th>
+            <td>{{pmccbCtrl.selectedCard.ExpirationMonth}}</td>
+          </tr>
+          <tr>
+            <th>selectedCard.ExpirationYear</th>
+            <td>{{pmccbCtrl.selectedCard.ExpirationYear}}</td>
+          </tr>
+          <tr>
+            <th>selectedCard.CVV</th>
+            <td>{{pmccbCtrl.selectedCard.CVV}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

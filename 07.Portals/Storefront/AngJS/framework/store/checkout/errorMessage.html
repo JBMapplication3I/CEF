@@ -1,0 +1,17 @@
+﻿<div class="card text-white bg-danger">
+    <div class="card-header"><h3 class="title" data-translate="ui.storefront.checkout.slimCheckout.TransactionError"></h3></div>
+    <div class="card-body">
+        <p ng-bind="message"></p>
+        <p ng-if="result && result.Succeeded">
+            <span data-translate="ui.storefront.checkout.slimCheckout.TransactionError.Message.Part1"></span>&nbsp;<!--
+            --><span ng-bind="result.OrderID || result.OrderIDs && result.OrderIDs.join(', ')"></span>&nbsp;<!--
+            --><span data-translate="ui.storefront.checkout.slimCheckout.TransactionError.Message.Part2"></span>
+        </p>
+        <p class="text-right"
+           ><button type="button" class="btn btn-secondary"
+                    translate-attr="{ title: 'ui.storefront.checkout.slimCheckout.Dismiss',
+                                      'aria-label': 'ui.storefront.checkout.slimCheckout.Dismiss' }"
+                    data-translate="ui.storefront.checkout.slimCheckout.Dismiss"
+                    ng-click="$dismiss()"></button></p>
+    </div>
+</div>

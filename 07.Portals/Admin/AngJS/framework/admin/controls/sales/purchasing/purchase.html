@@ -1,0 +1,46 @@
+<!-- purchase template -->
+<div class="row mb-3">
+  <div ng-if="pCtrl.viewState.running || pCtrl.service.anyStepIsBuilding(pCtrl.lookupKey)"
+    cef-loading-widget
+    overlay="true"
+    message="pCtrl.viewState.waitMessage">
+  </div>
+  <div class="col-xs-12 py-5"
+    ng-show="pCtrl.service.showEmptyCartMessage">
+    <div cef-purchase-cart-empty></div>
+  </div>
+  <div class="col-xs-12" id="purchase-checkout"
+    ng-hide="pCtrl.service.anyStepIsBuilding(pCtrl.lookupKey)
+      || pCtrl.service.showEmptyCartMessage"
+    translate-cloak>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 order-2 order-md-1">
+        <div ng-repeat="step in pCtrl.service.steps[pCtrl.lookupKey.toString()]
+                        | orderBy: ['order']"
+          class="row">
+          <div class="col-xs-12">
+            <div ng-include="step.templateURL | corsLink: 'ui'"></div>
+          </div>
+        </div>
+        <div class="row" ng-if="pCtrl.viewState.hasError">
+          <div class="col-xs-12">
+            <div uib-alert class="alert-danger"
+              ng-bind="pCtrl.viewState.errorMessage">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 order-1 order-md-2"
+        ng-hide="pCtrl.service.anyStepIsBuilding(pCtrl.lookupKey)
+          || pCtrl.service.isOrderComplete">
+        <div cef-mini-cart
+          lookup-key="pCtrl.lookupKey"
+          quantity-items-iterate="4"
+          no-initial-load="true"
+          hide-shipping="!pCtrl.cefConfig.featureSet.shipping.enabled
+            || !pCtrl.service.showShippingSubtotal">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

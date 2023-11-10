@@ -1,0 +1,36 @@
+<!-- step.payment.method.creditCard.summary -->
+<div class="row small">
+  <div ng-if="pmccsCtrl.cvAuthenticationService.isAuthenticated()
+    && pmccsCtrl.cefConfig.featureSet.payments.wallet.enabled
+    && pmccsCtrl.selectedCard.CreditCardNumber.length"
+    class="col-xs-12 text-left text-success">
+    <span ng-bind="pmccsCtrl.selectedCard.CardHolderName">
+    </span>
+    <br/>
+    <span ng-bind-html="('&bull;&bull;&bull;&bull;&nbsp;'
+      + '&bull;&bull;&bull;&bull;&nbsp;'
+      + '&bull;&bull;&bull;&bull;&nbsp;'
+      + (pmccsCtrl.selectedCard.CreditCardNumber | limitTo: -4)) | trustedHtml">
+    </span>
+    <br/>
+    <span ng-bind="(pmccsCtrl.selectedCard.ExpirationMonth | zeroPadNumber: 2)
+      + ' / ' + (pmccsCtrl.selectedCard.ExpirationYear | zeroPadNumber: 4)">
+    </span>
+  </div>
+  <div ng-if="!pmccsCtrl.cefConfig.featureSet.payments.wallet.enabled
+    || !pmccsCtrl.selectedCardIsFromWallet"
+    class="col-xs-12 text-left">
+    <span ng-bind="pmccsCtrl.paymentData.PayByCreditCard.CardHolderName">
+    </span>
+    <br/>
+    <span ng-bind-html="('&bull;&bull;&bull;&bull;&nbsp;'
+      + '&bull;&bull;&bull;&bull;&nbsp;'
+      + '&bull;&bull;&bull;&bull;&nbsp;'
+      + (pmccsCtrl.paymentData.PayByCreditCard.CardNumber | limitTo: -4)) | trustedHtml">
+    </span>
+    <br/>
+    <span ng-bind="(pmccsCtrl.paymentData.PayByCreditCard.ExpirationMonth | zeroPadNumber: 2)
+      + ' / ' + (pmccsCtrl.paymentData.PayByCreditCard.ExpirationYear | zeroPadNumber: 4)">
+    </span>
+  </div>
+</div>

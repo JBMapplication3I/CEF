@@ -1,0 +1,25 @@
+.fixedHeightTable {
+  display: flex;
+  flex-flow: column;
+  height: 115px;
+  & > thead {
+    flex: 0 0 auto;
+    & > tr {
+      width: calc(100% - 17px);
+      width: 100%;
+      display: table;
+      table-layout: fixed;
+    }
+  }
+  & > tbody {
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    & > tr {
+      width: 100%;
+      display: table;
+      table-layout: fixed;
+    }
+  }
+}

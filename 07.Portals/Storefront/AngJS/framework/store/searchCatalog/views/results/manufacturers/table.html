@@ -1,0 +1,102 @@
+﻿<div class="row" id="results-table" ng-init="kind = 'manufacturers'">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped table-hover mb-0">
+        <thead>
+          <tr>
+            <th class="w-16" data-translate="ui.storefront.common.Name"></th>
+            <th class="w-16" ng-if="!scmatCtrl.hideK"
+              data-translate="ui.storefront.cart.SKU">
+            </th>
+            <th class="w-auto" ng-if="!scmatCtrl.hideS"
+              data-translate="ui.storefront.searchCatalog.compare.Stock">
+            </th>
+            <th class="w-8" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-auto" data-translate="ui.storefront.cart.addToCart"></th>
+            <th class="w-auto" ng-if="!scmatCtrl.hideI"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="recordID in scmatCtrl.service.activeSearchViewModel.ResultIDs
+                         | orderBy: scmatCtrl.service.getSorter()"
+            class="manufacturer catalog-result-card"
+            id="manufacturerTableBlock{{recordID}}"
+            name="manufacturerTableBlock{{recordID}}">
+            <!-- Name -->
+            <td class="w-16">
+              <div cef-manufacturer-card-name-widget
+                manufacturer="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                manufacturer-id="recordID"
+                manufacturer-seo-url="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                manufacturer-name="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                rows="scmatCtrl.nameR"
+                index="$index">
+              </div>
+            </td>
+            <!-- SKU -->
+            <td class="w-16" ng-if="!scmatCtrl.hideK">
+              <div style="overflow-wrap: break-word;"
+                cef-manufacturer-card-sku-widget
+                manufacturer="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                manufacturer-id="recordID"
+                manufacturer-seo-url="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                manufacturer-name="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                hide-sku="scmatCtrl.hideK">
+              </div>
+            </td>
+            <!-- Stock -->
+            <td class="w-auto" ng-if="!scmatCtrl.hideS">
+              <div style="overflow-wrap: break-word;"
+                cef-manufacturer-card-stock-widget
+                manufacturer="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                manufacturer-id="recordID"
+                manufacturer-seo-url="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                manufacturer-name="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                left="true"
+                hide-stock="scmatCtrl.hideS">
+              </div>
+            </td>
+            <!-- Price -->
+            <td class="w-8">
+              <div cef-manufacturer-card-pricing-widget
+                manufacturer="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                manufacturer-id="recordID"
+                manufacturer-seo-url="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                manufacturer-name="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                display-style="scmatCtrl.pds">
+              </div>
+            </td>
+            <!-- Action -->
+            <td class="w-auto">
+              <div cef-manufacturer-card-action-button-widget
+                manufacturer="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                manufacturer-id="recordID"
+                manufacturer-seo-url="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                manufacturer-name="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                as-icon="true"
+                quick-add="scmatCtrl.quickA"
+                button-view="scmatCtrl.abv">
+              </div>
+            </td>
+            <!-- Controls -->
+            <td class="w-auto" ng-if="!scmatCtrl.hideI">
+              <div cef-manufacturer-card-controls-widget
+                manufacturer="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                manufacturer-id="recordID"
+                manufacturer-seo-url="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                manufacturer-name="scmatCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-favorites-list="scmatCtrl.hideFL"
+                hide-wish-list="scmatCtrl.hideWL"
+                hide-notify-me="scmatCtrl.hideNM"
+                hide-compare="scmatCtrl.hideC"
+                hide-icons="scmatCtrl.hideI">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

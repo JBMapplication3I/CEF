@@ -1,0 +1,29 @@
+<div class="row">
+  <div ng-if="sqsmbCtrl.allowLogin"
+    ng-hide="sqsmbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-md-6"
+    ng-class="{ 'mx-auto': !sqsmbCtrl.allowGuest }">
+    <div class="row">
+      <div class="col"
+        cef-submit-quote-login
+        no-return="true"
+        login-callback="sqsmbCtrl.loginCallback(loginSuccessful)">
+      </div>
+    </div>
+  </div>
+  <div ng-if="sqsmbCtrl.allowGuest"
+    ng-hide="sqsmbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-md-6 text-center"
+    ng-class="{ 'mx-auto': !sqsmbCtrl.allowLogin }">
+    <i class="far fa-user fa-5x" aria-hidden="true"></i>
+    <h4 data-translate="ui.storefront.checkout.methodNew"></h4>
+    <p data-translate="ui.storefront.checkout.methodGuest"></p>
+    <button type="button" class="btn btn-primary"
+      id="btnSubmitQuoteAsNewUser" name="btnSubmitQuoteAsNewUser"
+      translate-attr="{ title: 'ui.storefront.checkout.views.checkoutMethod.continueAsNewUser',
+                        'aria-label': 'ui.storefront.checkout.views.checkoutMethod.continueAsNewUser' }"
+      data-translate="ui.storefront.checkout.views.checkoutMethod.continueAsNewUser"
+      ng-click="sqsmbCtrl.nextStep()">
+    </button>
+  </div>
+</div>

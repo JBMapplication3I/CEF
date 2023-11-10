@@ -1,0 +1,10 @@
+﻿<div ng-if="adDisplayCtrl.ad !== null || adDisplayCtrl.ad.length !== 0"
+class="{{adDisplayCtrl.ad.Classname}}">
+<a ui-sref-plus uisrp-root="{{adDisplayCtrl.ad.TargetURL}}"
+target="{{adDisplayCtrl.Target}}"
+ng-class="adDisplayCtrl.Classname">
+<img alt="{{adDisplayCtrl.ad.AltText}}"
+ng-style="adDisplayCtrl.adStyle"
+ng-src="{{adDisplayCtrl.ad.Images[0].OriginalFileName | corsImageLink : 'ads' }}" />
+</a>
+</div>

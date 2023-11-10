@@ -1,0 +1,67 @@
+﻿<!-- TODO: Bootstrap 4 Upgrade -->
+<!-- TODO: Single Root -->
+<div class="featured-section-title">
+    <h4><span data-translate="ui.storefront.product.detail.featuredProducts.Featured"></span>&nbsp;<!--
+    --><span data-translate="ui.storefront.common.Product.Plural"></span></h4>
+</div>
+<div class="cards-holder row justify-content-center">
+    <!--
+    <div class="col-md-3">
+        <div class="btn-group hidden-on-mobile">
+            <button type="button" class="btn btn-secondary dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span data-translate="ui.storefront.product.detail.featuredProducts.filterByCategory"></span>&nbsp;< !--
+                -- ><span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu featured-products-category-list">
+                <li ng-repeat="category in featuredProductsCtrl.categories | orderBy: ['SortOrder','DisplayName || Name']">
+                    < !-- TODO: Apply Category name filter -- >
+                    <a id="linkCategory{{$index}}"
+                       ng-class="{'text-capitalize': !category.DisplayName,
+                                  'active':category.ID === featuredProductsCtrl.categoryId}"
+                       ng-click="featuredProductsCtrl.grabProducts(category.ID)"
+                       ng-bind="category.DisplayName || category.Name"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    -->
+    <div class="w-100">
+        <div class="row">
+            <div class="col-12" ng-show="!featuredProductsCtrl.products.length">
+                <p data-translate="ui.storefront.common.NoResultsFound"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-repeat="product in featuredProductsCtrl.products"
+                 class="col-sm-6 col-md-4 col-lg-3 d-flex">
+                <div class="card flex-grow-1">
+                    <!-- Product Image -->
+                    <div cef-product-card-thumbnail-widget
+                         product-id="product.ID"
+                         product-image="product.PrimaryImageFileName"
+                         width="250"
+                         height="250"
+                         index="$index">
+                    </div>
+                    <div class="card-body">
+                        <!-- Product Name -->
+                        <div class="text-left h6 mb-0"
+                            cef-product-card-name-gen-widget
+                            product-id="product.ID"
+                            rows="2"
+                            index="$index">
+                        </div>
+                    </div>
+                    <!-- Call to Action Button -->
+                    <div class="card-footer"
+                        cef-product-card-action-button-gen-widget
+                        product-id="product.ID"
+                        button-view="'viewDetails'"
+                        hide-quantity-selector="true">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,186 @@
+@page "/login"
+@inherits MVC.Core.TemplatedControllerBase
+@inject ILogger<Login> logger
+@inject IJSRuntime jsRuntime
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+@inject NavigationManager navigationManager
+
+<Blazorise.Form Class="@("mx-auto p-3 " + FormClass)" Style="max-width: 400px;" ElementId="loginForm">
+  <Heading Size="HeadingSize.Is1">Please Sign In</Heading>
+  @if (!ViewState.loading)
+  {
+    <Validations
+      EditContext="EditContext"
+      Mode="ValidationMode.Manual"
+      ValidateOnLoad="false">
+      <EditForm EditContext="EditContext">
+        <DataAnnotationsValidator />
+        <TextFormGroup
+          FormIdentifier="Username"
+          LabelText="Username (email)"
+          PlaceholderText="Enter your username (email)"
+          @bind-Value="@LoginDto.Username"
+          Required="true"
+          Disabled="@ViewState.InputDisable"
+          TooltipText=""
+          ShowValidTooltip="false"
+          StartTouched="false"
+          Role="TextRole.Text"
+          Autocomplete="username"
+          Autofocus="true"
+          IsUsername="true"
+        />
+        <TextFormGroup
+          FormIdentifier="Password"
+          LabelText="Password"
+          PlaceholderText="&bull;&bull;&bull;&bull;"
+          @bind-Value="@LoginDto.Password"
+          Required="true"
+          Disabled="@ViewState.InputDisable"
+          TooltipText=""
+          ShowValidTooltip="false"
+          StartTouched="false"
+          Role="TextRole.Password"
+          Autocomplete="password"
+        />
+        <Blazorise.Button
+          Type="ButtonType.Button"
+          Color="Color.Primary"
+          Class="mb-3"
+          sid="btnLogin"
+          Disabled="@ViewState.running"
+          Clicked="@LoginAsync">
+          Login
+        </Blazorise.Button>
+      </EditForm>
+    </Validations>
+  }
+  @if (ViewState.running)
+  {
+    <Alert Color="Color.Info" role="alert" sid="alertRunning">
+      Running...
+    </Alert>
+  }
+  @*
+  @if (!ViewState.loading && !ViewState.hasError)
+  {
+    <Alert Color="Color.Success" role="alert" sid="alertDone">
+      Done!
+    </Alert>
+  }
+  *@
+  @if (ViewState.hasError || Contract.CheckAnyValidKey(AuthenticationError, EmailError, PasswordError))
+  {
+    <Alert Color="Color.Danger" role="alert" sid="alertAuthError">
+      <Blazorise.Strong>Error!&nbsp;</Blazorise.Strong>
+      @if (Contract.CheckValidKey(AuthenticationError)) { @AuthenticationError }
+      @if (Contract.CheckValidKey(EmailError)) { @EmailError }
+      @if (Contract.CheckValidKey(PasswordError)) { @PasswordError }
+    </Alert>
+  }
+</Blazorise.Form>
+
+@code
+{
+  private MVC.Api.Endpoints.AuthProviderLogin LoginDto { get; } = new() { RememberMe = true };
+  private EditContext EditContext { get; set; } = null!;
+  private string? EmailError { get; set; }
+  private string? PasswordError { get; set; }
+  private string? AuthenticationError { get; set; }
+  private string? FormClass { get; set; }
+
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    DebugBeginMethod();
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await SetRunningAsync().ConfigureAwait(false);
+    if (await cvApi.CEFService.IsAuthenticatedAsync(jsRuntime).ConfigureAwait(false))
+    {
+      Redirect();
+      return;
+    }
+    EditContext = new(LoginDto);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+    DebugEndMethod();
+  }
+
+  private void Redirect()
+  {
+    var returnUrl = navigationManager.QueryString("returnUrl");
+    if (returnUrl is not null)
+    {
+      returnUrl = returnUrl.IsNullOrEmpty() ? "/" : returnUrl.UrlDecode();
+      navigationManager.NavigateTo(returnUrl);
+      return;
+    }
+    navigationManager.NavigateTo("/");
+  }
+
+  private async Task LoginAsync()
+  {
+    AuthenticationError = EmailError = PasswordError = null;
+    await SetRunningAsync().ConfigureAwait(false);
+    try
+    {
+      var emailEmpty = LoginDto.Username.IsNullOrEmpty();
+      var passwordEmpty = LoginDto.Password.IsNullOrEmpty();
+      if (emailEmpty)
+      {
+        EmailError = "Email is required";
+      }
+      if (passwordEmpty)
+      {
+        PasswordError = "Password is required";
+      }
+      FormClass = "was-validated";
+      if (emailEmpty || passwordEmpty)
+      {
+        await FinishRunningAsync(true, "All fields are required.").ConfigureAwait(false);
+        return;
+      }
+      await cvApi.LoginAsync(
+          jsRuntime,
+          cefConfig.authProvider?.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)[0] ?? "identity",
+          LoginDto)
+        .ConfigureAwait(false);
+      Redirect();
+    }
+    catch (HttpRequestException ex)
+    {
+      ConsoleDebug("HttpRequestException!");
+      logger.LogError(ex.ToString());
+      if (ex.StatusCode is not null)
+      {
+        AuthenticationError = ex.StatusCode switch
+        {
+          HttpStatusCode.BadRequest => "400 Bad Request error.",
+          HttpStatusCode.Unauthorized => "401 Not Authorized wrong credentials.",
+          HttpStatusCode.Forbidden => "403 Forbidden error.",
+          HttpStatusCode.NotFound => "404 Not Found error.",
+          HttpStatusCode.MethodNotAllowed => "405 Method Not Allowed error.",
+          HttpStatusCode.BadGateway => "502 Bad Gateway error.",
+          HttpStatusCode.ServiceUnavailable => "503 Service Unavailable error.",
+          _ => $"Unknown error (unrecognized code '{ex.StatusCode}').",
+        };
+      }
+      else
+      {
+        AuthenticationError = "Unknown error (no status code). " + ex.Message;
+      }
+      await FinishRunningAsync(true, AuthenticationError).ConfigureAwait(false);
+    }
+    catch (Exception ex)
+    {
+      ConsoleDebug("Exception!");
+      AuthenticationError = "Service error";
+      ConsoleDebug("Exception Type:", ex.GetType().Name, "Exception Message:", ex.Message);
+      logger.LogDebug(ex, "login");
+      await FinishRunningAsync(true, AuthenticationError).ConfigureAwait(false);
+    }
+    await FinishRunningAsync().ConfigureAwait(false);
+  }
+}

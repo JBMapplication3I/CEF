@@ -1,0 +1,524 @@
+$bootstrap-sass-asset-helper: false !default;
+
+// Variables
+
+//== Color system
+
+//## Gray colors used in clarity scss files.
+$white:    #fff !default;
+$gray-100: #F8F9FA;
+$gray-200: #e9ecef !default;
+$gray-250: #e2e2e2;
+$gray-300: #d7d7d7;
+$gray-400: #ced4da !default;
+$gray-500: #9d9d9d;
+$gray-600: #445259;
+$gray-700: #3d4a50;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+$grays: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$grays: map-merge(
+  (
+    "100": $gray-100,
+    "200": $gray-200,
+    "250": $gray-250,
+    "300": $gray-300,
+    "400": $gray-400,
+    "500": $gray-500,
+    "600": $gray-600,
+    "700": $gray-700,
+    "800": $gray-800,
+    "900": $gray-900
+  ),
+  $grays
+);
+
+$blue:    #006497;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #CD414E;
+$orange:  #fd7e14 !default;
+$yellow:  #F9C10A;
+$green:   #CFD550;
+$green-fade:                     lighten($green, 50%);
+$teal:    #254200;
+$cyan:    #37A2B8;
+$dark-blue:                      #153166;
+
+$colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$colors: map-merge(
+  (
+    "blue":       $blue,
+    "indigo":     $indigo,
+    "purple":     $purple,
+    "pink":       $pink,
+    "red":        $red,
+    "orange":     $orange,
+    "yellow":     $yellow,
+    "green":      $green,
+    "green-fade": $green-fade,
+    "teal":       $teal,
+    "cyan":       $cyan,
+    "white":      $white,
+    "gray":       $gray-600,
+    "gray-dark":  $gray-800
+  ),
+  $colors
+);
+
+$primary:                        $blue;
+$secondary:                      $gray-600;
+$success:                        $green;
+$info:                           $cyan;
+$warning:                        $yellow;
+$danger:                         $red;
+$light:                          $gray-100;
+$medium:                         $gray-400;
+$dark:          $gray-700;
+
+$theme-colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-colors: map-merge(
+  (
+    "primary":    $primary,
+    "secondary":  $secondary,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "medium":     $medium,
+    "dark":       $dark
+  ),
+  $theme-colors
+);
+
+$spacer: 1rem;
+$spacers: () !default;
+$spacers: map-merge((
+0: 0,
+1: ($spacer * .25),
+2: ($spacer * .5),
+3: $spacer,
+4: ($spacer * 1.5),
+5: ($spacer * 3),
+6: ($spacer * 4.5),
+7: ($spacer * 6),
+8: ($spacer * 8),
+9: ($spacer * 9),
+10: ($spacer * 10.5)
+), $spacers);
+
+$base-min-width: 320px;
+
+// This is the default html and body font-size for the base rem value.
+$rem-base: 16px;
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+$body-bg:                        $white;
+
+// Links
+$link-color: $primary;
+$link-decoration: none;
+$link-hover-color: $primary;
+$link-hover-decoration: none;
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+$btn-padding-y:               .525rem;
+$btn-padding-x:               .937rem;
+$btn-border-width:            1px;
+
+$btn-font-size:               1rem;
+$btn-font-weight:             500;
+$btn-box-shadow:              none;
+$btn-focus-width:             $btn-box-shadow;
+$btn-focus-box-shadow:        0 4px 0 rgba(0, 0, 0, 0.3);
+$btn-line-height:             1.2rem;
+
+// Cards
+$card-spacer-y: .75rem;
+$card-spacer-x: .75rem;
+$card-border-width: $btn-border-width;
+$card-border-radius: 0;
+$card-border-color: $light;
+$card-inner-border-radius: 0;
+$card-bg: $light;
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+$font-family-serif: Georgia, "Times New Roman", Times, serif !default;
+$font-family-sans-serif:      'Roboto', 'Helvetica Neue', Arial, sans-serif;
+$font-family-base:            $font-family-sans-serif;
+$font-family-secondary:       'Arial MT', 'Helvetica Neue', sans-serif;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+$body-color:                  $secondary;
+$text-muted:                  #a1a1a1;
+
+$border-width:                1px;
+$border-color:                #dedfe0;
+
+$font-weight-normal: 400;
+$font-size-base:          1rem;
+$font-size-xxl:           $font-size-base * 2.25; // 2.25rem / 36.0px
+$font-size-xl:            $font-size-base * 1.75; // 1.75rem / 28.0px
+$font-size-lg:                $font-size-base * 1.25 !default;
+$font-size-md:            $font-size-base * 1.00; // 1.00rem / 16.0px
+$font-size-ll:            $font-size-base * 0.90; // 0.90rem / 14.4px
+$font-size-sm:                .8125rem;
+$font-size-xs:            $font-size-base * 0.65; // 0.65rem / 10.4px
+
+// Badges
+$badge-font-size: .75rem;
+$badge-font-weight: $font-weight-normal;
+$badge-padding-y: .25rem;
+$badge-padding-x: .25rem;
+$badge-border-radius: 3px;
+
+// Paragraphs
+$paragraph-margin-bottom:   1rem !default;
+
+$h1-font-size:                2.1875rem;
+$h2-font-size:                1.875rem;
+$h3-font-size:                1.75rem;
+$h4-font-size:                1.5rem;
+$h5-font-size:                1.25rem;
+$h6-font-size:                1rem;
+
+//** Unit-less `line-height` for use in components like buttons.
+$line-height-base:            1.3;
+$small-font-size: $font-size-sm;
+$line-height-lg:              1.5 !default;
+$line-height-sm:              1.5 !default;
+
+//** By default, this inherits from the `<body>`.
+$headings-font-family:        null !default;
+$headings-margin-bottom:      $spacer / 2 !default;
+$headings-font-weight:        700;
+$headings-line-height:        1.35;
+$headings-color:              inherit;
+$headings-margin-bottom:      1.1rem;
+
+$animation-speed: 0.3s;
+$base-duration: .75s;
+
+$hr-border-color: $gray-300;
+$hr-border-width: $border-width;
+
+//== Iconography
+//
+//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
+
+//** Load fonts from this directory.
+
+// [converter] If $bootstrap-sass-asset-helper if used, provide path relative to the assets load path.
+// [converter] This is because some asset helpers, such as Sprockets, do not work with file-relative paths.
+$icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "../fonts/bootstrap/") !default;
+
+//** File name for all font files.
+$icon-font-name:          "glyphicons-halflings-regular" !default;
+//** Element ID within SVG icon file.
+$icon-font-svg-id:        "glyphicons_halflingsregular" !default;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-radius:               .437rem;
+$border-radius-lg:            1.55rem;
+$border-radius-sm:            3px;
+
+$border-color:              $gray-500;
+
+$component-active-bg:       $info;
+
+//** Width of the `border` for generating carets that indicator dropdowns.
+$caret-width:               0.25rem;
+//** Carets increase slightly in size for larger components.
+$caret-width-large:         0.3125rem !default;
+
+
+//== Tables
+//
+//## Customizes the `.table` component with basic values, each used across all table variations.
+
+//** Padding for `<th>`s and `<td>`s.
+$table-cell-padding: .875rem;
+$table-cell-padding-sm: .3rem !default;
+$table-color: $body-color;
+$table-head-color: $body-color;
+$table-striped-order: odd !default;
+$table-caption-color: $text-muted  !default;
+$table-border-width: $border-width;
+$table-border-color: $border-color;
+$table-bg-level: -9 !default;
+$table-border-level: -6 !default;
+//** Padding for cells in `.table-condensed`/`.table-sm`.
+$table-condensed-cell-padding:  0.3125rem !default;
+
+//** Default background color used for all tables.
+$table-bg:                      transparent;
+//** Background color used for `.table-striped`.
+$table-accent-bg:               #f9f9f9;
+//** Background color used for `.table-hover`.
+$table-hover-bg:                #f5f5f5;
+
+//** Border color for table and cell borders.
+
+
+
+
+$btn-padding-y-sm: .25rem;
+$btn-padding-x-sm: .75rem;
+$btn-font-size-sm: 0.75rem;
+$btn-line-height-sm: $btn-line-height;
+
+$btn-padding-y-lg: 0.7125rem;
+$btn-padding-x-lg: 1.625rem;
+$btn-font-size-lg: $btn-font-size;
+$btn-line-height-lg: $btn-line-height;
+
+$btn-border-radius:           $border-radius-lg;
+$btn-border-radius-lg:        $btn-border-radius;
+$btn-border-radius-sm:        $btn-border-radius;
+
+// stylelint-disable-next-line scss/dollar-variable-default
+
+
+//** `<input disabled>` background color
+$input-disabled-bg:              $gray-200;
+
+//** Text color for `<input>`s
+$input-color:                    $gray-700;
+//** `<input>` border color
+$input-border-color:             $gray-400;
+
+//** Border color for inputs on focus
+$input-focus-border-color:       #66afe9;
+
+//** Placeholder text color
+$input-placeholder-color:        $gray-600;
+
+//** `.form-group` margin
+$form-group-margin-bottom:       0.9375rem;
+
+$legend-color:                   $gray-800;
+$legend-border-color:            $gray-800;
+
+//** Background color for textual input addons
+$input-group-addon-bg:           $gray-200;
+
+//** Disabled cursor for form controls and buttons.
+$cursor-disabled:                not-allowed;
+
+//== Forms
+$input-border-radius: $border-radius-sm;
+$input-border-radius-lg: $border-radius-sm;
+$input-border-radius-sm: $border-radius-sm;
+$input-border-color: $border-color;
+
+$input-focus-border-color: $input-border-color;
+$input-focus-color: $input-color;
+$input-focus-box-shadow: $btn-box-shadow;
+
+$input-placeholder-color: rgba(68, 82, 89, .5);
+$input-plaintext-color: $body-color;
+$custom-select-indicator-color: $body-color;
+$custom-select-bg-size: 9px 10px;
+
+$custom-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path fill='#{$custom-select-indicator-color}' d='M31.705 6.322l-1.429-1.426c-0.157-0.157-0.373-0.254-0.613-0.254s-0.456 0.097-0.613 0.254v0l-13.051 13.029-13.051-13.029c-0.157-0.157-0.373-0.254-0.613-0.254s-0.456 0.097-0.613 0.254v0l-1.429 1.426c-0.157 0.157-0.254 0.373-0.254 0.613s0.097 0.456 0.254 0.613l15.086 15.086c0.157 0.157 0.373 0.254 0.613 0.254s0.456-0.097 0.613-0.254l15.086-15.086c0.161-0.157 0.261-0.377 0.261-0.619 0-0.236-0.094-0.45-0.247-0.606l0 0z'/></svg>");
+$custom-select-background: escape-svg($custom-select-indicator) no-repeat right .55rem center / $custom-select-bg-size; // Used so we can have
+
+$custom-select-focus-border-color: $input-focus-border-color;
+$custom-select-focus-box-shadow: $input-focus-box-shadow;
+
+$custom-file-focus-border-color: $input-focus-border-color;
+$custom-file-focus-box-shadow: $input-focus-box-shadow;
+
+$label-margin-bottom: 5px;
+//
+//##
+
+// Form validation
+$form-text-margin-top: .25rem;
+$input-height-border: 5px;
+$input-height-inner-half: .85rem;
+$custom-select-feedback-icon-size: $input-height-inner-half $input-height-inner-half;
+$form-feedback-margin-top: $form-text-margin-top;
+$form-feedback-font-size: .75rem;
+$form-feedback-valid-color: #417300;
+$form-feedback-invalid-color: theme-color("danger");
+
+$form-feedback-icon-valid-color: $form-feedback-valid-color;
+$form-feedback-icon-valid: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'><path fill='#{$form-feedback-icon-valid-color}' d='M10.321 4.39c-.131-.132-.321-.133-.479-.001l-3.99 3.957-1.687-1.701c-.165-.133-.346-.134-.48-.002L3 7.28a.464.464 0 0 0 0 .48l2.605 2.582c.132.133.395.134.479.002L11 5.511c.088-.132.09-.346 0-.511zM12.645 7A5.642 5.642 0 0 1 7 12.645 5.642 5.642 0 0 1 1.355 7 5.642 5.642 0 0 1 7 1.355 5.642 5.642 0 0 1 12.645 7zM7 0a7 7 0 1 0 0 14A7 7 0 0 0 7 0z'/></svg>");
+$form-feedback-icon-invalid-color: $form-feedback-invalid-color;
+$form-feedback-icon-invalid: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='5' height='14' fill='none' stroke='#{$form-feedback-icon-invalid-color}' viewBox='0 0 5 14'><path stroke-linejoin='round' d='M.909 0h2.557c.376 0 .674.314.656.689L3.75 8.126a.656.656 0 0 1-.656.624H1.281a.656.656 0 0 1-.656-.624L.253.69A.656.656 0 0 1 .91 0zm3.466 11.813A2.202 2.202 0 0 1 2.187 14C1 14 0 13 0 11.812c0-1.206 1-2.187 2.188-2.187a2.19 2.19 0 0 1 2.187 2.188z' fill='#{$form-feedback-icon-invalid-color}' stroke='none'/></svg>");
+
+$form-validation-states: (
+);
+
+$form-validation-states: map-merge(("valid": ("color": $form-feedback-valid-color,
+"icon": $form-feedback-icon-valid ),
+"invalid": ("color": $form-feedback-invalid-color,
+"icon": $form-feedback-icon-invalid ),
+),
+$form-validation-states
+);
+
+//== Dropdowns
+//
+//## Dropdown menu container and contents.
+
+//** Divider color for between dropdown items.
+$dropdown-divider-bg:            #e5e5e5;
+
+//** Dropdown padding set to none;
+$dropdown-padding-y:             0;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 481px,
+  md: 769px,
+  lg: 1025px,
+  xl: 1200px,
+  tk: 2000px,
+  fk: 3000px
+);
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+/*
+Size | Breakpoint | Container-Max-Width |  % off
+-----+------------+---------------------+-------
+xs   |          0 |                  -  |      -
+sm   |        576 |                540  | 6.250%
+md   |        768 |                720  | 6.250%
+lg   |        992 |                960  | 3.226%
+xl   |       1200 |               1140  | 5.000%
+tk   |       2000 |               1880  | 6.250%
+fk   |       3000 |               1882  | X.XXX%
+*/
+
+$container-max-widths: (
+  sm: 768px,
+  md: 960px,
+  lg: 1024px,
+  xl: 1170px,
+  tk: 1880px,
+  fk: 1882px // there's a rule that it has to be larger than previous
+);
+
+$grid-gutter-width:              40px;
+
+
+//== Navbar
+$nav-tabs-border-color: $border-color;
+$nav-tabs-border-radius: $border-radius-sm;
+$nav-tabs-link-hover-border-color: transparent;
+$nav-tabs-link-active-color: $body-color;
+$nav-tabs-link-active-border-color: $border-color $border-color transparent $border-color;
+//
+//##
+$navbar-padding-x:               0;
+
+// Navlinks
+$btn-background:      $primary;
+$btn-color:           $white;
+
+// Breadcrumbs
+$breadcrumb-font-size: .75rem;
+
+$breadcrumb-padding-y: 1rem;
+$breadcrumb-padding-x: 1rem;
+$breadcrumb-item-padding: .7rem;
+
+$breadcrumb-bg: $light;
+$breadcrumb-divider-color: $body-color;
+$breadcrumb-active-color: $body-color;
+
+$breadcrumb-border-radius: $border-radius-sm;
+
+//== Pagination
+//
+//##
+$pagination-border-color:        $gray-300;
+
+//== Jumbotron
+//
+//##
+$jumbotron-color:                inherit;
+
+//== Alerts
+//
+//## Define alert colors, border radius, and padding.
+
+//== Tooltips
+//
+//##
+
+//** Tooltip arrow width
+$tooltip-arrow-width:            0.3125rem;
+
+//== Popovers
+//
+//##
+
+//== Modals
+//
+//##
+$modal-xl:                      1140px;
+$modal-lg:                       800px;
+$modal-md:                       500px;
+$modal-sm:                       300px;
+
+//== Progress bars
+//
+//##
+$progress-bg:                    $gray-200;
+
+//== List group
+//
+//##
+
+//** `.list-group-item` border color
+$list-group-border-color:        rgba($black, 0.125);
+
+
+//== Code
+//
+//##
+
+$code-color:                     $pink;
+
+//== Type
+//
+//##
+
+//** Horizontal offset for forms and lists.
+$component-offset-horizontal: 180px !default;
+
+// Variables custom
+$vertical-rhythm:     20px;
+$widget-margin:       20px;
+$wp-caption-border:   1px solid $black;
+$min-width-container: 320px;
+$max-width-container: 1200px;

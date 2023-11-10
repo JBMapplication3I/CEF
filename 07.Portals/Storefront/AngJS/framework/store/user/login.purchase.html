@@ -1,0 +1,108 @@
+﻿<div class="row form-vertical"
+     translate-cloak
+     ng-form="loginCtrl.forms.login"
+     ng-keypress="loginCtrl.keySubmit($event)">
+    <script type="text/ng-template" id="checkoutLoginValidationMessages"
+       ><div ng-message="username"><span data-translate="ui.storefront.user.login.ThisIsNotAValidUsername"></span></div>
+        <div ng-message="password"><span data-translate="ui.storefront.user.login.ThisIsNotAValidPassword"></span></div>
+        <div ng-message="pattern" ><span data-translate="ui.storefront.user.forgotPasswordReturn.InvalidPassword"></span></div>
+        <div ng-message="required"><span data-translate="ui.storefront.common.validation.ThisFieldIsRequired"></span></div>
+    </script>
+    <div class="col-12 p-3 rounded"
+         ng-class="{'alert-danger': loginCtrl.hasError
+                      || loginCtrl.viewState.hasError
+                      || loginCtrl.forms.login.txtLoginUserName.$dirty
+                         && loginCtrl.forms.login.pwLoginPassword.$dirty
+                         && loginCtrl.forms.login.$invalid}">
+        <div class="row">
+            <text-input-form-group
+                class="col-12"
+                key="CheckoutLoginUsername"
+                ng-model="loginCtrl.loginData.Username"
+                label-key="ui.storefront.common.Username"
+                placeholder-key="ui.storefront.user.login.EnterYourUsername"
+                tooltip-key="ui.storefront.common.UsernameCouldBeEmail"
+                ng-keydown="loginCtrl.keySubmit($event)"
+                ng-required="true"
+                ng-disabled="loginCtrl.viewState.running"
+                force-tooltip-with-focus="true"
+                is-username="true">
+            </text-input-form-group>
+            <password-input-form-group
+                class="col-12"
+                key="CheckoutLoginPassword"
+                ng-model="loginCtrl.loginData.Password"
+                label-key="ui.storefront.common.Password"
+                placeholder-key="ui.storefront.user.login.EnterYourPassword"
+                tooltip-key="ui.storefront.user.registration.PasswordRequirements.Message"
+                ng-required="true"
+                ng-disabled="loginCtrl.viewState.running"
+                force-tooltip-with-focus="true">
+            </password-input-form-group>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        id="btnCheckoutLoginSubmit" name="btnCheckoutLoginSubmit"
+                        translate-attr="{ title: 'ui.storefront.user.login.SignIn',
+                                          'aria-label': 'ui.storefront.user.login.SignIn' }"
+                        data-translate="ui.storefront.user.login.SignIn"
+                        ng-disabled="loginCtrl.forms.login.$invalid || loginCtrl.viewState.running"
+                        ng-click="loginCtrl.submit()"></button>
+            </div>
+            <div class="col">
+                <small>
+                    <a id="btnCheckoutLoginForgotPassword" name="btnCheckoutLoginForgotPassword"
+                       ui-sref-plus uisrp-area="forgotPassword"
+                       ><span data-translate="ui.storefront.user.login.ForgotYourPassword"></span></a><br />
+                    <!--
+                    <span data-translate="ui.storefront.user.login.DontHaveAnAccount"></span>
+                    <a id="btnCheckoutLoginRegister" name="btnCheckoutLoginRegister"
+                       ui-sref-plus uisrp-area="registration" uisrp-params="{ 'returnUrl': '[ReturnUrl]' }"
+                       ><span data-translate="ui.storefront.common.RegisterForOne"></span></a>
+                    -->
+                </small>
+            </div>
+        </div>
+        <div class="row mt-3" ng-if="loginCtrl.isLoggedIn">
+            <div class="col-12" translate-cloak>
+                <div class="alert alert-warning text-center mb-0" role="alert"
+                     id="alertCheckoutLoginAlreadyLoggedIn" name="alertCheckoutLoginAlreadyLoggedIn">
+                    <span data-translate="ui.storefront.user.login.YouAreCurrentlyLoggedInAs"></span>&nbsp;<!--
+                    --><b ng-bind="loginCtrl.loggedInUser.UserName || loginCtrl.loggedInUser.username"></b>
+                </div>
+            </div>
+        </div>
+        <div class="row no-gutters mt-3 align-items-center" role="alert"
+             ng-if="loginCtrl.hasError
+                    || loginCtrl.viewState.hasError
+                    || (loginCtrl.forms.login.txtLoginUserName.$dirty
+                        && loginCtrl.forms.login.pwLoginPassword.$dirty
+                        && loginCtrl.forms.login.$invalid)">
+            <div class="col-auto">
+                <i class="far fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
+            </div>
+            <div class="col pl-3">
+                <div ng-messages="loginCtrl.forms.login.$error">
+                    <div ng-messages-include="checkoutLoginValidationMessages"></div>
+                </div>
+                <span ng-if="loginCtrl.viewState.errorMessage"
+                      id="alertCheckoutLoginErrorMessage" name="alertCheckoutLoginErrorMessage"
+                      ng-bind="loginCtrl.viewState.errorMessage">
+                </span>
+                <span ng-if="!loginCtrl.viewState.errorMessage
+                             && !(loginCtrl.forms.login.txtLoginUserName.$dirty
+                                  && loginCtrl.forms.login.pwLoginPassword.$dirty
+                                  && loginCtrl.forms.login.$invalid)"
+                      data-translate="ui.storefront.user.checkoutLogin.TheUserNameOrPasswordDoesntMatch.Message">
+                </span>
+            </div>
+        </div>
+        <div ng-if="loginCtrl.viewState.running"
+             cef-loading-widget
+             overlay="true"
+             pad-in="loginCtrl.modal"
+             message="loginCtrl.viewState.waitMessage">
+        </div>
+    </div>
+</div>

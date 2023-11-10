@@ -1,0 +1,102 @@
+﻿<div class="row" id="results-table" ng-init="kind = 'auctions'">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped table-hover mb-0">
+        <thead>
+          <tr>
+            <th class="w-16" data-translate="ui.storefront.common.Name"></th>
+            <th class="w-16" ng-if="!scautCtrl.hideK"
+              data-translate="ui.storefront.cart.SKU">
+            </th>
+            <th class="w-auto" ng-if="!scautCtrl.hideS"
+              data-translate="ui.storefront.searchCatalog.compare.Stock">
+            </th>
+            <th class="w-8" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-auto" data-translate="ui.storefront.cart.addToCart"></th>
+            <th class="w-auto" ng-if="!scautCtrl.hideI"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="recordID in scautCtrl.service.activeSearchViewModel.ResultIDs
+                         | orderBy: scautCtrl.service.getSorter()"
+            class="auction catalog-result-card"
+            id="auctionTableBlock{{recordID}}"
+            name="auctionTableBlock{{recordID}}">
+            <!-- Name -->
+            <td class="w-16">
+              <div cef-auction-card-name-widget
+                auction="searchCatalogCtrl.getServiceForKind('kind').getCached({ id: recordID })"
+                auction-id="recordID"
+                auction-seo-url="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                auction-name="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                rows="scautCtrl.nameR"
+                index="$index">
+              </div>
+            </td>
+            <!-- SKU -->
+            <td class="w-16" ng-if="!scautCtrl.hideK">
+              <div style="overflow-wrap: break-word;"
+                cef-auction-card-sku-widget
+                auction="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID })"
+                auction-id="recordID"
+                auction-seo-url="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                auction-name="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                hide-sku="scautCtrl.hideK">
+              </div>
+            </td>
+            <!-- Stock -->
+            <td class="w-auto" ng-if="!scautCtrl.hideS">
+              <div style="overflow-wrap: break-word;"
+                cef-auction-card-stock-widget
+                auction="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID })"
+                auction-id="recordID"
+                auction-seo-url="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                auction-name="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                left="true"
+                hide-stock="scautCtrl.hideS">
+              </div>
+            </td>
+            <!-- Price -->
+            <td class="w-8">
+              <div cef-auction-card-pricing-widget
+                auction="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID })"
+                auction-id="recordID"
+                auction-seo-url="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                auction-name="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                display-style="scautCtrl.pds">
+              </div>
+            </td>
+            <!-- Action -->
+            <td class="w-auto">
+              <div cef-auction-card-action-button-widget
+                auction="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID })"
+                auction-id="recordID"
+                auction-seo-url="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                auction-name="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                as-icon="true"
+                quick-add="scautCtrl.quickA"
+                button-view="scautCtrl.abv">
+              </div>
+            </td>
+            <!-- Controls -->
+            <td class="w-auto" ng-if="!scautCtrl.hideI">
+              <div cef-auction-card-controls-widget
+                auction="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID })"
+                auction-id="recordID"
+                auction-seo-url="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                auction-name="scautCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-favorites-list="scautCtrl.hideFL"
+                hide-wish-list="scautCtrl.hideWL"
+                hide-notify-me="scautCtrl.hideNM"
+                hide-compare="scautCtrl.hideC"
+                hide-icons="scautCtrl.hideI">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

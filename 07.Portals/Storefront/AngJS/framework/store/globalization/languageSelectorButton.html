@@ -1,0 +1,7 @@
+<button ng-if="languageSelectorButtonCtrl.cefConfig.featureSet.languages.enabled"
+        type="button" class="btn btn-secondary"
+        translate-attr="{ title: 'ui.storefront.common.Language.Select',
+                          'aria-label': 'ui.storefront.common.Language.Select' }"
+        ng-bind="languageSelectorButtonCtrl.selectedLanguageObject.UnicodeName"
+        ng-click="languageSelectorButtonCtrl.open()">
+</button>

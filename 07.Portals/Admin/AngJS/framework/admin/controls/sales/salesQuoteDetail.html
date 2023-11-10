@@ -1,0 +1,652 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-sales-header-widget
+    record="ssqeCtrl.record"
+    new-kind-key="ui.admin.common.Quote.New"
+    existing-kind-key="ui.admin.controls.sales.salesQuoteDetail.salesQuote">
+  </div>
+  <div class="row details-body">
+    <div class="col-sm-12 col-md-10 col-lg-10 order-tabs">
+      <uib-tabset justified="true">
+        <uib-tab heading="{{'ui.admin.common.LineItems' | translate}}">
+          <div ng-if="!ssqeCtrl.holdLineItemEditor"
+            class="container-fluid full-height">
+            <div cef-line-items-widget
+              class="full-height"
+              kind="Sales Quote"
+              record="ssqeCtrl.record"
+              responses="ssqeCtrl.responseSalesQuotes"
+              is-editable="!ssqeCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab heading="{{'ui.admin.common.BillingAndShipping' | translate}}">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.AccountInformation"></h3>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group col-sm-12" ng-if="ssqeCtrl.record.Account">
+                  <b data-translate="ui.admin.common.Account"></b>&nbsp;<!--
+                  --><a ui-sref="accounts.accounts.detail({ 'ID': ssqeCtrl.record.AccountID })"
+                    target="_blank"
+                    ><span data-translate="ui.admin.common.Number.Symbol"
+                    ></span>{{ssqeCtrl.record.AccountID}}&nbsp;<!--
+                  -->[{{ssqeCtrl.record.Account.CustomKey}}]&nbsp;<!--
+                  -->{{ssqeCtrl.record.Account.Name}}</a><br />
+                  <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (ssqeCtrl.record.Account.Active ? "Yes" : "No")) | translate}}
+                  <b data-translate="ui.admin.common.OnHold"></b> {{('ui.admin.common.' + (ssqeCtrl.record.Account.IsOnHold ? "Yes" : "No")) | translate}}
+                  <b data-translate="ui.admin.common.Status"></b> {{ssqeCtrl.record.Account.StatusDisplayName || ssqeCtrl.record.Account.StatusName}}
+                  <b data-translate="ui.admin.common.Type"></b> {{ssqeCtrl.record.Account.TypeDisplayName || ssqeCtrl.record.Account.TypeName}}
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group col-sm-12" ng-if="ssqeCtrl.record.User">
+                  <b data-translate="ui.admin.common.User"></b>&nbsp;<!--
+                  --><a ui-sref="accounts.users.detail({ 'ID': ssqeCtrl.record.UserID })"
+                    target="_blank"
+                    ><span data-translate="ui.admin.common.Number.Symbol"
+                    ></span>{{ssqeCtrl.record.UserID}}&nbsp;<!--
+                  -->[{{ssqeCtrl.record.User.CustomKey}}]&nbsp;<!--
+                  -->{{ssqeCtrl.record.User.Name}}</a><br />
+                  <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (ssqeCtrl.record.User.Active ? "Yes" : "No")) | translate}}
+                  <b data-translate="ui.admin.common.Status"></b> {{ssqeCtrl.record.User.StatusDisplayName || ssqeCtrl.record.User.StatusName}}
+                  <b data-translate="ui.admin.common.Type"></b> {{ssqeCtrl.record.User.TypeDisplayName || ssqeCtrl.record.User.TypeName}}
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssqeCtrl.record">
+              <div class="col-sm-6"
+                ng-if="!ssqeCtrl.record.SalesGroupAsRequestMasterID
+                  && !ssqeCtrl.record.SalesGroupAsRequestSubID
+                  && !ssqeCtrl.record.SalesGroupAsResponseMasterID
+                  && !ssqeCtrl.record.SalesGroupAsResponseSubID">
+                <div cef-contact-editor-widget class="mb-3"
+                  title-key="ui.admin.common.BillingInformation"
+                  contact="ssqeCtrl.record.BillingContact"
+                  is-editable="!ssqeCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+                  account="ssqeCtrl.record.Account"
+                  id-suffix="Billing"
+                  hide-key="true">
+                </div>
+              </div>
+              <div class="col-sm-6"
+                ng-if="ssqeCtrl.record.SalesGroupAsRequestMasterID
+                  || ssqeCtrl.record.SalesGroupAsRequestSubID
+                  || ssqeCtrl.record.SalesGroupAsReponseMasterID
+                  || ssqeCtrl.record.SalesGroupAsReponseSubID">
+                <h3 data-translate="ui.admin.common.BillingInformation"></h3>
+                <p>
+                  This quote belongs to Sales Group&nbsp;<!--
+                  --><a ui-sref="sales.salesGroups.detail({
+                      'ID': ssqeCtrl.record.SalesGroupAsRequestMasterID || ssqeCtrl.record.SalesGroupAsRequestSubID
+                        || ssqeCtrl.record.SalesGroupAsResponseMasterID || ssqeCtrl.record.SalesGroupAsResponseSubID
+                    })"
+                    target="_blank"
+                    ng-bind="ssqeCtrl.record.SalesGroupAsRequestMasterID || ssqeCtrl.record.SalesGroupAsRequestSubID
+                          || ssqeCtrl.record.SalesGroupAsResponseMasterID || ssqeCtrl.record.SalesGroupAsResponseSubID">
+                  </a>.&nbsp;See the Sales Group for the billing details.
+                </p>
+              </div>
+              <div class="col-sm-6"
+                ng-if="ssqeCtrl.cefConfig.checkout.mode == 0
+                  || !ssqeCtrl.record.SalesGroupAsRequestMasterID && !ssqeCtrl.record.SalesGroupAsResponseMasterID">
+                <h3 data-translate="ui.admin.common.ShippingInformation"></h3>
+                <div cef-contact-editor-widget class="mb-3"
+                  title-key="ui.admin.common.ShippingInformation"
+                  contact="ssqeCtrl.record.ShippingContact"
+                  is-editable="!ssqeCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+                  do-mirror="ssqeCtrl.record.ShippingSameAsBilling"
+                  to-mirror="ssqeCtrl.record.BillingContact"
+                  account="ssqeCtrl.record.Account"
+                  id-suffix="Shipping"
+                  hide-key="true">
+                </div>
+              </div>
+              <div class="col-sm-6"
+                ng-if="ssqeCtrl.cefConfig.checkout.mode == 1
+                  && (ssqeCtrl.record.SalesGroupAsRequestMasterID || ssqeCtrl.record.SalesGroupAsResponseMasterID)">
+                <h3 data-translate="ui.admin.common.ShippingInformation"></h3>
+                <p>
+                  This quote belongs to Sales Group&nbsp;<!--
+                  --><a ui-sref="sales.salesGroups.detail({
+                      'ID': ssqeCtrl.record.SalesGroupAsRequestMasterID || ssqeCtrl.record.SalesGroupAsResponseMasterID
+                    })"
+                    target="_blank"
+                    ng-bind="ssqeCtrl.record.SalesGroupAsRequestMasterID || ssqeCtrl.record.SalesGroupAsResponseMasterID">
+                  </a>.&nbsp;See the Sales Group to find the sub-orders which will each have separate shipping details.
+                </p>
+              </div>
+            </div>
+            <div class="row" ng-if="ssqeCtrl.record.RateQuotes.length">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.sales.salesOrderDetail.SelectedShippingMethod"></h3>
+                <div class="table-responsive">
+                  <table class="table table-condensed table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.common.Rate"></th>
+                        <th data-translate="ui.admin.common.RateTimestamp"></th>
+                        <th data-translate="ui.admin.common.ShipCarrierKey"></th>
+                        <th data-translate="ui.admin.common.ShipCarrierName"></th>
+                        <th data-translate="ui.admin.common.ShipCarrierMethodKey"></th>
+                        <th data-translate="ui.admin.common.ShipCarrierMethodName"></th>
+                        <th data-translate="ui.admin.common.TargetShippingDate"></th>
+                        <th data-translate="ui.admin.common.EstimatedDeliveryDate"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="rq in ssqeCtrl.record.RateQuotes">
+                        <td ng-bind="rq.Rate | globalizedCurrency : ssqeCtrl.record.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                        <td ng-bind="rq.RateTimestamp | convertJSONDate | date: 'yyyy-MM-dd hh:mm:ss a'"></td>
+                        <td ng-bind="rq.ShipCarrierMethod.ShipCarrierKey"></td>
+                        <td ng-bind="rq.ShipCarrierMethod.ShipCarrierName"></td>
+                        <td ng-bind="rq.ShipCarrierMethodKey"></td>
+                        <td ng-bind="rq.ShipCarrierMethodName"></td>
+                        <td ng-bind="rq.TargetShippingDate | convertJSONDate | date: 'yyyy-MM-dd'"></td>
+                        <td ng-bind="rq.EstimatedDeliveryDate | convertJSONDate | date: 'yyyy-MM-dd'"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab heading="{{'ui.admin.common.Note.Plural' | translate}}">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.PrivateNote.Plural"></h3>
+                <div cef-notes-editor
+                  notes="ssqeCtrl.record.Notes"
+                  note-type-name="'Private'">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.OrderNote.Plural"></h3>
+                <div cef-notes-editor
+                  notes="ssqeCtrl.record.Notes"
+                  note-type-name="'Quote'">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.CustomerNote.Plural"></h3>
+                <div cef-notes-editor
+                  notes="ssqeCtrl.record.Notes"
+                  note-type-name="'Customer'">
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab heading="{{'ui.admin.common.Attribute.Plural' | translate}}">
+          <div class="container-fluid">
+            <div cef-json-attributes-editor
+              master="ssqeCtrl.record"
+              type="Sales Quote"
+              ng-if="ssqeCtrl.record">
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab heading="{{'ui.admin.controls.inventory.productDetail.Association.Plural' | translate}}">
+          <div class="container-fluid">
+            <!--
+            <div class="row" ng-if="ssqeCtrl.cefConfig.featureSet.shipping.splitShipping.enabled">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.controls.sales.salesQuoteDetail.SubQuote.OptionalPlural">
+                </label>
+                <div ng-hide="ssqeCtrl.record.Children.length > 0"
+                  class="input-group mb-1"
+                  data-translate="ui.admin.controls.sales.salesQuoteDetail.NoSubQuotesForThisQuote">
+                </div>
+                <div ng-repeat="child in ssqeCtrl.record.Children"
+                  class="input-group order mb-1">
+                  <a class="block" ui-sref="sales.salesQuotes.detail({ID: child.ID})"
+                    ><span data-translate="ui.admin.common.Number.Symbol"></span><! --
+                    -- ><span ng-bind="child.ID + ' ' + child.CustomKey"></span></a>
+                  <span class="block"
+                    ><span data-translate="ui.admin.common.Total"></span>&nbsp;< !--
+                    -- ><span ng-bind="child.Totals.Total | globalizedCurrency : child.SerializableAttributes.SellingCurrencyKey.Value"
+                    ></span></span>
+                </div>
+              </div>
+            </div>
+            -->
+            <div class="row" ng-if="ssqeCtrl.record.SalesGroupAsRequestMasterID">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.controls.sales.salesQuoteDetail.SalesGroupAsRequestMaster">
+                </label>
+                <div class="input-group">
+                  <a class="form-control-static"
+                    ui-sref="sales.salesGroups.detail({ 'ID': ssqeCtrl.record.SalesGroupAsRequestMasterID })"
+                    target="_blank"
+                    ng-bind="ssqeCtrl.record.SalesGroupAsRequestMasterID">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssqeCtrl.record.SalesGroupAsRequestSubID">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.controls.sales.salesQuoteDetail.SalesGroupAsRequestSub">
+                </label>
+                <div class="input-group">
+                  <a class="form-control-static"
+                    ui-sref="sales.salesGroups.detail({ 'ID': ssqeCtrl.record.SalesGroupAsRequestSubID })"
+                    target="_blank"
+                    ng-bind="ssqeCtrl.record.SalesGroupAsRequestSubID">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssqeCtrl.record.SalesGroupAsResponseMasterID">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.controls.sales.salesQuoteDetail.SalesGroupAsResponseMaster">
+                </label>
+                <div class="input-group">
+                  <a class="form-control-static"
+                    ui-sref="sales.salesGroups.detail({ 'ID': ssqeCtrl.record.SalesGroupAsResponseMasterID })"
+                    target="_blank"
+                    ng-bind="ssqeCtrl.record.SalesGroupAsResponseMasterID">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssqeCtrl.record.SalesGroupAsResponseSubID">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.controls.sales.salesQuoteDetail.SalesGroupAsResponseSub">
+                </label>
+                <div class="input-group">
+                  <a class="form-control-static"
+                    ui-sref="sales.salesGroups.detail({ 'ID': ssqeCtrl.record.SalesGroupAsResponseSubID })"
+                    target="_blank"
+                    ng-bind="ssqeCtrl.record.SalesGroupAsResponseSubID">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssqeCtrl.masterSalesQuote">
+              <div class="col-sm-12">
+                <label class="control-label" data-translate="ui.admin.controls.sales.salesQuoteDetail.MasterQuote"></label>
+                <div class="input-group">
+                  <a ui-sref="sales.salesQuotes.detail({ 'ID': ssqeCtrl.record.ID })" target="_blank"
+                    >#{{ssqeCtrl.masterSalesQuote.ID}} {{ssqeCtrl.masterSalesQuote.CustomKey}}
+                    ({{ssqeCtrl.masterSalesQuote.StatusDisplayName || ssqeCtrl.masterSalesQuote.Status.DisplayName
+                        || ssqeCtrl.masterSalesQuote.StatusName || ssqeCtrl.masterSalesQuote.Status.Name}})</a>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssqeCtrl.responseSalesQuotes.length > 0">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.controls.sales.salesQuoteDetail.ResponseQuotes">
+                </label>
+                <table class="table table-hover table-condensed table-bordered">
+                  <tbody ng-repeat="q in ssqeCtrl.responseSalesQuotes | orderBy: 'ID'">
+                    <tr class="info">
+                      <td ng-bind="q.ID"></td>
+                      <td ng-bind="q.CustomKey"></td>
+                      <td ng-bind="q.StatusName"></td>
+                      <td>
+                        <a ui-sref="sales.salesQuotes.detail({ 'ID': q.ID })" target="_blank"
+                          data-translate="ui.admin.common.View">
+                        </a>
+                      </td>
+                    </tr>
+                    <tr ng-if="q.SalesItems.length > 0">
+                      <td colspan="4" class="p-0">
+                        <table class="table table-hover table-condensed table-bordered scroll-over-500 mb-0"
+                          ng-if="q.SalesItems.length > 0">
+                          <thead>
+                            <tr>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.Item"></th>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ItemID"></th>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ItemKey"></th>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ProductID"></th>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ProductKey"></th>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ProductName"></th>
+                              <th data-translate="ui.admin.common.CorePrice"></th>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.SellingPrice"></th>
+                              <th data-translate="ui.admin.common.Status"></th>
+                            </tr>
+                          </thead>
+                          <tbody ng-repeat="qi in q.SalesItems">
+                            <tr>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.Original"></th>
+                              <td ng-bind="qi.originalItem().ID"></td>
+                              <td ng-bind="qi.originalItem().CustomKey"></td>
+                              <td><a ui-sref="inventory.products.detail({ 'ID': qi.originalItem().ProductID })" target="_blank" ng-bind="qi.originalItem().ProductID"></a></td>
+                              <td><a ui-sref="inventory.products.detail({ 'ID': qi.originalItem().ProductID })" target="_blank" ng-bind="qi.originalItem().ProductKey"></a></td>
+                              <td><a ui-sref="inventory.products.detail({ 'ID': qi.originalItem().ProductID })" target="_blank" ng-bind="qi.originalItem().ProductName"></a></td>
+                              <td ng-bind="(qi.originalItem().UnitCorePrice | globalizedCurrency) || '-'"></td>
+                              <td ng-bind="((qi.originalItem().UnitSoldPrice || qi.originalItem().UnitCorePrice) | globalizedCurrency) || '-'"></td>
+                              <td ng-bind="qi.originalitem().StatusName || 'Not Awarded'"></td>
+                            </tr>
+                            <tr>
+                              <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.Response"></th>
+                              <td ng-bind="qi.ID"></td>
+                              <td ng-bind="qi.CustomKey"></td>
+                              <td><a ui-sref="inventory.products.detail({ 'ID': qi.ProductID })" target="_blank" ng-bind="qi.ProductID"></a></td>
+                              <td><a ui-sref="inventory.products.detail({ 'ID': qi.ProductID })" target="_blank" ng-bind="qi.ProductKey"></a></td>
+                              <td><a ui-sref="inventory.products.detail({ 'ID': qi.ProductID })" target="_blank" ng-bind="qi.ProductName"></a></td>
+                              <td ng-bind="(qi.UnitCorePrice || qi.UnitSoldPrice) | globalizedCurrency"></td>
+                              <td ng-bind="qi.UnitSoldPrice | globalizedCurrency"></td>
+                              <td>
+                                <a ng-if="qi.originalItem().StatusName !== 'Awarded'"
+                                  class="pointer"
+                                  ng-click="ssqeCtrl.awardItem(qi.originalItem().ID, qi.ID)"
+                                  data-translate="ui.admin.controls.sales.modals.editALineItemModal.Award"></a>
+                                <span ng-if="qi.originalItem().StatusName == 'Awarded'"
+                                  data-translate="ui.admin.controls.sales.modals.editALineItemModal.Awarded">
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab heading="{{'ui.admin.common.StoredFile.Plural' | translate}}">
+          <div class="form-vertical container-fluid" ng-form="ssqeCtrl.forms.StoredFiles">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.StoredFile.Plural"></h3>
+                <!-- Uploader -->
+                <div cef-upload-file-widget
+                  master="ssqeCtrl.record"
+                  upload-type="StoredFileSalesOrder"
+                  type-key="General"
+                  allow-multiple="true">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed table-striped">
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.common.Name"></th>
+                        <th data-translate="ui.admin.common.FileName"></th>
+                        <th style="width: 43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!ssqeCtrl.record.StoredFiles.length">
+                        <td colspan="3"
+                          data-translate="ui.admin.common.NoStoredFilesHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="storedFile in ssqeCtrl.record.StoredFiles">
+                        <td>
+                          <input type="text" class="form-control"
+                            id="txtStoredFileName{{$index}}" name="txtStoredFileName{{$index}}"
+                            ng-required="true"
+                            max-length="128"
+                            ng-model="storedFile.Name" />
+                        </td>
+                        <td>
+                          <a class="form-control-static" target="_blank"
+                            ng-href="{{(storedFile.StoredFileName || storedFile.Slave.FileName) | corsStoredFilesLink : 'salesQuotes'}}"
+                            ng-bind="storedFile.StoredFileName || storedFile.Name">
+                          </a>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="ssqeCtrl.removeFileNew($index)">
+                            <i class="far fa-trash-o"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+    <div class="col-sm-12 col-md-2 col-lg-2 order-summary">
+      <div class="form-vertical">
+        <div class="row" ng-if="ssqeCtrl.record.SalesGroupAsRequestMasterID">
+          <p class="form-control-static col-xs-9 bold"
+            data-translate="ui.admin.controls.sales.salesQuoteDetail.SalesGroupAsRequestMaster">
+          </p>
+          <a class="form-control-static col-xs-3"
+            ui-sref="sales.salesGroups.detail({ 'ID': ssqeCtrl.record.SalesGroupAsRequestMasterID })"
+            target="_blank"
+            ng-bind="ssqeCtrl.record.SalesGroupAsRequestMasterID">
+          </a>
+        </div>
+        <div class="row" ng-if="ssqeCtrl.record.SalesGroupAsRequestSubID">
+          <p class="form-control-static col-xs-9 bold"
+            data-translate="ui.admin.controls.sales.salesQuoteDetail.SalesGroupAsRequestSub">
+          </p>
+          <a class="form-control-static col-xs-3"
+            ui-sref="sales.salesGroups.detail({ 'ID': ssqeCtrl.record.SalesGroupAsRequestSubID })"
+            target="_blank"
+            ng-bind="ssqeCtrl.record.SalesGroupAsRequestSubID">
+          </a>
+        </div>
+        <div class="row" ng-if="ssqeCtrl.record.SalesGroupAsResponseMasterID">
+          <p class="form-control-static col-xs-12 bold"
+            data-translate="ui.admin.controls.sales.salesQuoteDetail.SalesGroupAsResponseMaster">
+          </p>
+          <a class="form-control-static col-xs-12"
+            ui-sref="sales.salesGroups.reviewSupplierResponse({
+              'ResponseMasterSalesQuoteID': ssqeCtrl.record.SalesGroupAsResponseMasterID
+            })"
+            target="_blank"
+            ng-bind="ssqeCtrl.record.SalesGroupAsResponseMasterID">
+          </a>
+        </div>
+        <div class="row" ng-if="ssqeCtrl.record.SalesGroupAsResponseSubID">
+          <p class="form-control-static col-xs-12 bold"
+            data-translate="ui.admin.controls.sales.salesQuoteDetail.SalesGroupAsResponseSub">
+          </p>
+          <a class="form-control-static col-xs-12"
+            ui-sref="sales.salesGroups.reviewSupplierResponse({
+              'ResponseMasterSalesQuoteID': ssqeCtrl.record.SalesGroupAsResponseSubID
+            })"
+            target="_blank"
+            ng-bind="ssqeCtrl.record.SalesGroupAsResponseSubID">
+          </a>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 text-white">
+            <h3 data-translate="ui.admin.common.Total.Plural"></h3>
+            <div ng-cloak="ssqeCtrl.record.Totals"
+              cef-totals-widget
+              totals="ssqeCtrl.record.Totals"
+              original-currency="ssqeCtrl.record.SerializableAttributes.OriginalCurrencyKey.Value || salesDetail.cefConfig.defaultCurrency || 'USD'"
+              selling-currency="ssqeCtrl.record.SerializableAttributes.SellingCurrencyKey.Value"
+              is-editable="!ssqeCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+              record="ssqeCtrl.record"
+              discount-items="ssqeCtrl.discountItems">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label"
+            data-translate="ui.admin.common.Date">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-bind="ssqeCtrl.record.CreatedDate | convertJSONDate | date:'yyyy MMM dd hh:mm a'">
+          </p>
+        </div>
+        <div class="form-group">
+          <label class="control-label"
+            data-translate="ui.admin.common.Status">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-bind="ssqeCtrl.record.StatusDisplayName || ssqeCtrl.record.Status.DisplayName || ssqeCtrl.record.StatusName || ssqeCtrl.record.Status.Name || '-'">
+          </p>
+        </div>
+        <div class="row" ng-if="ssqeCtrl.cefConfig.featureSet.salesQuotes.hasIntegratedKeys.enabled">
+          <label class="control-label"
+            data-translate="ui.admin.common.Key">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-show="ssqeCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+            ng-bind="ssqeCtrl.record.CustomKey || '-'">
+          </p>
+          <input type="text" class="form-control"
+            translate-attr="{ placeholder: 'ui.admin.common.Key' }"
+            ng-hide="ssqeCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+            ng-model="ssqeCtrl.record.CustomKey" />
+        </div>
+        <div class="form-group">
+          <label class="control-label"
+            data-translate="ui.admin.common.CustomersPONumber">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-show="ssqeCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+            ng-bind="ssqeCtrl.record.PurchaseOrderNumber || '-'">
+          </p>
+          <input type="text" class="form-control"
+            id="txtPurchaseOrderNumber" name="txtPurchaseOrderNumber"
+            translate-attr="{ placeholder: 'ui.admin.common.CustomersPONumber' }"
+            ng-hide="ssqeCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+            ng-model="ssqeCtrl.record.PurchaseOrderNumber" />
+        </div>
+        <div class="form-group" ng-if="ssqeCtrl.cefConfig.featureSet.multiCurrency.enabled">
+          <label class="control-label"
+            data-translate="ui.admin.common.Currency">
+          </label>
+           <p class="form-control-static ml-1"
+            ng-bind="ssqeCtrl.record.SerializableAttributes.SellingCurrencyKey.Value || 'USD'">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row details-footer">
+    <div class="col-md-12" ng-cloak="ssqeCtrl.record">
+      <button ng-if="ssqeCtrl.isOneOfTheseStatuses(['Approved','Rejected','Void'])"
+        type="button" class="btn btn-info"
+        translate-attr="{ title: 'ui.admin.common.back',
+                          'aria-label': 'ui.admin.common.back' }"
+        ui-sref="sales.salesQuotes.list">
+        <span data-translate="ui.admin.common.back"></span>
+      </button>
+      <!-- Save/Cancel -->
+      <button ng-if="!ssqeCtrl.recordIsNew() && !ssqeCtrl.isOneOfTheseStatuses(['Approved','Rejected','Void'])"
+        type="button" class="btn btn-primary"
+        uib-tooltip="{{('ui.admin.common.SaveChange.Plural' | translate)
+                   + '\r\n' + ('ui.admin.controls.sales.salesQuoteDetail.SaveSalesQuote.Message' | translate)}}"
+        tooltip-placement="top-left"
+        translate-attr="{ title: 'ui.admin.common.SaveChange.Plural',
+                          'aria-label': 'ui.admin.common.SaveChange.Plural' }"
+        ng-click="ssqeCtrl.saveRecord()">
+        <span data-translate="ui.admin.common.SaveChange.Plural"></span>
+      </button>
+      <button ng-if="!ssqeCtrl.recordIsNew() && !ssqeCtrl.isOneOfTheseStatuses(['Approved','Rejected','Void'])"
+        type="button" class="btn btn-warning"
+        uib-tooltip="{{('ui.admin.common.BackCancel' | translate)
+                   + '\r\n' + ('ui.admin.controls.sales.salesQuoteDetail.BackCancel.Message' | translate)}}"
+        tooltip-placement="top-left"
+        translate-attr="{ title: 'ui.admin.common.BackCancel',
+                          'aria-label': 'ui.admin.common.BackCancel' }"
+        ui-sref="sales.salesQuotes.list">
+        <span data-translate="ui.admin.common.BackCancel"></span>
+      </button>
+      <!-- Actions against a Valid Quote -->
+      <div ng-if="!ssqeCtrl.isOneOfTheseStatuses(['Approved','Rejected','Void'])"
+        class="btn-group dropup inline-block ml-1"
+        uib-dropdown keyboard-nav is-open="actionsMenuStatus.isopen">
+        <button type="button" class="btn btn-info dropdown-toggle"
+          id="btnQuoteActions" name="btnQuoteActions"
+          translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteDetail.QuoteActions',
+                            'aria-label': 'ui.admin.controls.sales.salesQuoteDetail.QuoteActions' }"
+          uib-dropdown-toggle>
+          <span data-translate="ui.admin.controls.sales.salesQuoteDetail.QuoteActions"></span>&nbsp;<!--
+          --><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btnQuoteActions">
+          <li role="menuitem" ng-if="ssqeCtrl.isOneOfTheseStatuses(['Submitted'])">
+            <a ng-click="ssqeCtrl.inProcessTheSalesQuote()"
+              id="btnMarkQuoteAsInProcess" name="btnMarkQuoteAsInProcess"
+              translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsInProcess',
+                                'aria-label': 'ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsInProcess' }"
+              data-translate="ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsInProcess">
+            </a>
+          </li>
+          <li role="menuitem" ng-if="ssqeCtrl.isOneOfTheseStatuses(['In Process'])">
+            <a ng-click="ssqeCtrl.processedTheSalesQuote()"
+              id="btnMarkQuoteAsProcessed" name="btnMarkQuoteAsProcessed"
+              translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsProcessed',
+                                'aria-label': 'ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsProcessed' }"
+              data-translate="ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsProcessed">
+            </a>
+          </li>
+          <!-- NOTE: Hidden until additional work is done
+          <li role="menuitem" ng-if="ssqeCtrl.isOneOfTheseStatuses(['Processed'])">
+            <a ui-sref="sales.salesQuotes.respondAsSupplier({ 'OriginalSalesQuoteID': ssqeCtrl.record.ID })" target="_blank"
+              id="btnRespondToQuoteAsSupplier" name="btnRespondToQuoteAsSupplier"
+              translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteDetail.RespondToSalesQuoteAsASupplier',
+                                'aria-label': 'ui.admin.controls.sales.salesQuoteDetail.RespondToSalesQuoteAsASupplier' }"
+              data-translate="ui.admin.controls.sales.salesQuoteDetail.RespondToSalesQuoteAsASupplier">
+            </a>
+          </li>
+          -->
+          <li role="menuitem" ng-if="ssqeCtrl.isOneOfTheseStatuses(['Processed'])">
+            <a ng-click="ssqeCtrl.approveTheSalesQuote()"
+              id="btnMarkQuoteAsApproved" name="btnMarkQuoteAsApproved"
+              translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsApproved',
+                                'aria-label': 'ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsApproved' }"
+              data-translate="ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsApproved">
+            </a>
+          </li>
+          <li role="menuitem" ng-if="ssqeCtrl.isOneOfTheseStatuses(['Processed'])">
+            <a ng-click="ssqeCtrl.rejectTheSalesQuote()"
+              id="btnMarkQuoteAsRejected" name="btnMarkQuoteAsRejected"
+              translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsRejected',
+                                'aria-label': 'ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsRejected' }"
+              data-translate="ui.admin.controls.sales.salesQuoteDetail.MarkQuoteAsRejected">
+            </a>
+          </li>
+          <li role="separator" class="divider"></li>
+          <li role="menuitem">
+            <a ng-click="ssqeCtrl.voidTheSalesQuote()"
+              id="btnVoidQuote" name="btnVoidQuote"
+              translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteDetail.VoidQuote',
+                                'aria-label': 'ui.admin.controls.sales.salesQuoteDetail.VoidQuote' }"
+              data-translate="ui.admin.controls.sales.salesQuoteDetail.VoidQuote">
+            </a>
+          </li>
+          <!-- NOTE: Hidden until additional work is done
+          <li role="separator" class="divider"></li>
+          <li role="menuitem">
+            <a ng-click="ssqeCtrl.exportTheSalesQuote()"
+              id="btnExportQuote" name="btnExportQuote"
+              translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteDetail.ExportQuote',
+                                'aria-label': 'ui.admin.controls.sales.salesQuoteDetail.ExportQuote' }"
+              data-translate="ui.admin.controls.sales.salesQuoteDetail.ExportQuote">
+            </a>
+          </li>
+          -->
+        </ul>
+      </div>
+      <span class="ml-1 alert alert-info" ng-if="ssqeCtrl.viewState.running" data-translate="ui.admin.common.Running.Ellipses"></span>
+      <span class="ml-1 alert alert-success" ng-if="ssqeCtrl.saveSuccess || ssqeCtrl.viewState.success" data-translate="ui.admin.common.Success.Exclamation"></span>
+      <span class="ml-1 alert alert-danger" ng-if="ssqeCtrl.saveFailed" data-translate="ui.admin.common.Failed.Exclamation"></span>
+      <span class="ml-1 alert alert-danger" ng-if="ssqeCtrl.viewState.hasError" ng-bind="ssqeCtrl.viewState.errorMessage"></span>
+    </div>
+  </div>
+</div>

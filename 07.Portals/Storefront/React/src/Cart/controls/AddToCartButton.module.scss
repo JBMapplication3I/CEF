@@ -1,0 +1,13 @@
+@import "../../_meta/css/bootstrapVariables";
+
+.addToQuoteCartContainer {
+  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  & > button {
+    background-color: $white;
+    border: 1px solid $gray-300;
+  }
+}

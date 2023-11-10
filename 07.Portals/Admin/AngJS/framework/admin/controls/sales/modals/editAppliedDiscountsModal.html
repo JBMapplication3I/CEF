@@ -1,0 +1,21 @@
+<div ng-form="editAppliedDiscountsModalCtrl.forms.edit">
+    <div class="modal-header">
+        <h2>Edit Applied Discounts</h2>
+    </div>
+    <div class="modal-body p-3" style="min-height: 55vh;">
+        <div cef-discounts-widget
+             record="editAppliedDiscountsModalCtrl.record"
+             is-editable="true"
+             hide-header="true"
+             discount-items="editAppliedDiscountsModalCtrl.discountItems"></div>
+    </div>
+    <div class="modal-footer p-3">
+        <button type="button" class="btn btn-large btn-primary"
+                ng-disabled="editAppliedDiscountsModalCtrl.forms.edit.$invalid"
+                ng-click="editAppliedDiscountsModalCtrl.ok()"
+                data-translate="ui.admin.common.Save"></button>
+        <button type="button" class="btn btn-large btn-warning"
+                ng-click="editAppliedDiscountsModalCtrl.cancel()"
+                data-translate="ui.admin.common.Cancel"></button>
+    </div>
+</div>

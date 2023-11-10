@@ -1,0 +1,662 @@
+﻿# https://www.jetbrains.com/help/resharper/EditorConfig_Index.html
+# https://www.jetbrains.com/help/resharper/StyleCop_Styles.html
+# Suppress: EC112
+root = true
+
+[*]
+dotnet_diagnostic.SA0001.severity = none
+dotnet_diagnostic.CS0169.severity = none
+
+[*.cs]
+
+# Default severity for analyzer diagnostics - Requires **VS2019 16.5** or later
+#dotnet_analyzer_diagnostic.severity = warning
+
+resharper_arrange_missing_parentheses_highlighting=do_not_show
+resharper_arrange_this_qualifier_highlighting=do_not_show
+resharper_bad_control_braces_line_breaks_highlighting=do_not_show
+resharper_bad_declaration_braces_line_breaks_highlighting=do_not_show
+resharper_bad_empty_braces_line_breaks_highlighting=do_not_show
+resharper_bad_list_line_breaks_highlighting=do_not_show
+resharper_bad_parens_line_breaks_highlighting=do_not_show
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = false
+csharp_indent_case_contents_when_block = false
+csharp_indent_labels = one_less_than_current
+csharp_indent_switch_labels = true
+csharp_using_directive_placement = inside_namespace:warning
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
+csharp_style_namespace_declarations = block_scoped:error
+dotnet_diagnostic.IDE0161.severity = error
+dotnet_diagnostic.CA1001.severity = warning
+dotnet_diagnostic.CA1009.severity = warning
+dotnet_diagnostic.CA1016.severity = warning
+dotnet_diagnostic.CA1033.severity = none
+dotnet_diagnostic.CA1049.severity = warning
+dotnet_diagnostic.CA1060.severity = warning
+dotnet_diagnostic.CA1061.severity = warning
+dotnet_diagnostic.CA1062.severity = none
+dotnet_diagnostic.CA1063.severity = warning
+dotnet_diagnostic.CA1065.severity = warning
+dotnet_diagnostic.CA1301.severity = warning
+dotnet_diagnostic.CA1400.severity = warning
+dotnet_diagnostic.CA1401.severity = warning
+dotnet_diagnostic.CA1403.severity = warning
+dotnet_diagnostic.CA1404.severity = warning
+dotnet_diagnostic.CA1405.severity = warning
+dotnet_diagnostic.CA1410.severity = warning
+dotnet_diagnostic.CA1415.severity = warning
+dotnet_diagnostic.CA1821.severity = warning
+dotnet_diagnostic.CA1900.severity = warning
+dotnet_diagnostic.CA1901.severity = warning
+dotnet_diagnostic.CA2002.severity = warning
+dotnet_diagnostic.CA2100.severity = warning
+dotnet_diagnostic.CA2101.severity = warning
+dotnet_diagnostic.CA2108.severity = warning
+dotnet_diagnostic.CA2111.severity = warning
+dotnet_diagnostic.CA2112.severity = warning
+dotnet_diagnostic.CA2114.severity = warning
+dotnet_diagnostic.CA2116.severity = warning
+dotnet_diagnostic.CA2117.severity = warning
+dotnet_diagnostic.CA2122.severity = warning
+dotnet_diagnostic.CA2123.severity = warning
+dotnet_diagnostic.CA2124.severity = warning
+dotnet_diagnostic.CA2126.severity = warning
+dotnet_diagnostic.CA2131.severity = warning
+dotnet_diagnostic.CA2132.severity = warning
+dotnet_diagnostic.CA2133.severity = warning
+dotnet_diagnostic.CA2134.severity = warning
+dotnet_diagnostic.CA2137.severity = warning
+dotnet_diagnostic.CA2138.severity = warning
+dotnet_diagnostic.CA2140.severity = warning
+dotnet_diagnostic.CA2141.severity = warning
+dotnet_diagnostic.CA2146.severity = warning
+dotnet_diagnostic.CA2147.severity = warning
+dotnet_diagnostic.CA2149.severity = warning
+dotnet_diagnostic.CA2200.severity = warning
+dotnet_diagnostic.CA2202.severity = warning
+dotnet_diagnostic.CA2207.severity = warning
+dotnet_diagnostic.CA2212.severity = warning
+dotnet_diagnostic.CA2213.severity = warning
+dotnet_diagnostic.CA2214.severity = warning
+dotnet_diagnostic.CA2216.severity = warning
+dotnet_diagnostic.CA2220.severity = warning
+dotnet_diagnostic.CA2229.severity = warning
+dotnet_diagnostic.CA2231.severity = warning
+dotnet_diagnostic.CA2232.severity = warning
+dotnet_diagnostic.CA2235.severity = warning
+dotnet_diagnostic.CA2236.severity = warning
+dotnet_diagnostic.CA2237.severity = warning
+dotnet_diagnostic.CA2238.severity = warning
+dotnet_diagnostic.CA2240.severity = warning
+dotnet_diagnostic.CA2241.severity = warning
+dotnet_diagnostic.CA2242.severity = warning
+dotnet_diagnostic.CS1573.severity = silent
+dotnet_diagnostic.CS1591.severity = silent
+dotnet_diagnostic.CS2008.severity = none
+dotnet_diagnostic.DOC100.severity = warning
+dotnet_diagnostic.DOC101.severity = warning
+dotnet_diagnostic.DOC102.severity = warning
+dotnet_diagnostic.DOC103.severity = warning
+dotnet_diagnostic.DOC104.severity = warning
+dotnet_diagnostic.DOC105.severity = warning
+dotnet_diagnostic.DOC106.severity = warning
+dotnet_diagnostic.DOC107.severity = warning
+dotnet_diagnostic.DOC108.severity = warning
+dotnet_diagnostic.DOC200.severity = warning
+dotnet_diagnostic.DOC201.severity = warning
+dotnet_diagnostic.DOC202.severity = warning
+dotnet_diagnostic.DOC203.severity = warning
+dotnet_diagnostic.DOC204.severity = warning
+dotnet_diagnostic.IDE0003.severity = none
+dotnet_diagnostic.IDE0019.severity = suggestion
+dotnet_diagnostic.IDE0055.severity = warning
+dotnet_diagnostic.IDE0079.severity = silent
+dotnet_diagnostic.RCS1123.severity = none
+dotnet_diagnostic.RS1001.severity = none
+dotnet_diagnostic.RS1004.severity = none
+dotnet_diagnostic.RS1022.severity = none
+dotnet_diagnostic.RS1029.severity = none
+dotnet_diagnostic.RS2008.severity = none
+dotnet_diagnostic.SA1101.severity = none
+dotnet_diagnostic.SA1123.severity = none
+dotnet_diagnostic.SA1124.severity = none
+dotnet_diagnostic.SA1133.severity = none
+dotnet_diagnostic.SA1135.severity = none
+dotnet_diagnostic.SA1305.severity = none
+dotnet_diagnostic.SA1305.severity = warning
+dotnet_diagnostic.SA1316.severity = none
+dotnet_diagnostic.SA1402.severity = none
+dotnet_diagnostic.SA1407.severity = none
+dotnet_diagnostic.SA1408.severity = none
+dotnet_diagnostic.SA1412.severity = warning
+dotnet_diagnostic.SA1513.severity = none
+dotnet_diagnostic.SA1514.severity = none
+dotnet_diagnostic.SA1515.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1601.severity = none
+dotnet_diagnostic.SA1609.severity = warning
+dotnet_diagnostic.SA1636.severity = none
+dotnet_diagnostic.UseConfigureAwait.severity = warning
+dotnet_diagnostic.xUnit1004.severity = none
+dotnet_separate_import_directive_groups = false
+dotnet_sort_system_directives_first = true
+resharper_csharp_instance_members_qualify_members=do_not_show
+
+[*Service.cs]
+resharper_async_converter_async_method_naming_highlighting_highlighting=do_not_show
+resharper_async_apostle_async_method_naming_highlighting_highlighting=do_not_show
+resharper_missing_xml_doc_highlighting=do_not_show
+dotnet_diagnostic.AsyncFixer01.severity = none
+
+[*Tests.cs]
+resharper_inconsistent_naming_highlighting=do_not_show
+dotnet_diagnostic.xUnit1004.severity = none
+dotnet_diagnostic.IDE0060.severity = none
+
+[MockingSetup.*.cs]
+resharper_redundant_using_directive_highlighting=do_not_show
+resharper_inconsistent_naming_highlighting=do_not_show
+
+[OracleDataModelContext.cs]
+resharper_missing_xml_doc_highlighting=do_not_show
+resharper_region_within_type_member_body_highlighting=do_not_show
+
+[CEFErrorCodeLibrary.cs]
+dotnet_diagnostic.SA1001.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+
+[/00.Core/00.Clarity.Ecommerce.RegistryLoader/JSConfigs/*.cs]
+dotnet_diagnostic.SA1623.severity = none
+
+[/01.DataAccessLayer/01.Clarity.Ecommerce.DataModel/**.cs]
+dotnet_diagnostic.SA1403.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1649.severity = none
+resharper_missing_xml_doc_highlighting=do_not_show
+
+[/01.DataAccessLayer/01.Clarity.Ecommerce.DataModel.Net5/**.cs]
+dotnet_diagnostic.SA1403.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1649.severity = none
+resharper_missing_xml_doc_highlighting=do_not_show
+
+[/01.DataAccessLayer/01.Clarity.Ecommerce.DataModel/Migrations/**.cs]
+dotnet_diagnostic.IDE0055.severity = none
+
+[/01.DataAccessLayer/01.Clarity.Ecommerce.DataModel.Net5/Migrations/**.cs]
+dotnet_diagnostic.IDE0055.severity = none
+
+[/01.DataAccessLayer/01.Clarity.Ecommerce.DataModel/DataSets/*.cs]
+dotnet_diagnostic.SA1025.severity = none
+
+[/01.DataAccessLayer/01.Clarity.Ecommerce.DataModel.Net5/DataSets/*.cs]
+dotnet_diagnostic.SA1025.severity = none
+
+[/01.DataAccessLayer/01.Clarity.Ecommerce.DataModel.Oracle/**.cs]
+dotnet_diagnostic.SA1403.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/01.DataAccessLayer/01.Clarity.Ecommerce.DataModel.Shared/Extensions/Twilio/**.cs]
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1623.severity = none
+dotnet_diagnostic.SA1625.severity = none
+dotnet_diagnostic.SA1642.severity = none
+dotnet_diagnostic.IDE0051.severity = none
+
+[/03.ModelsAndMapping/03.Clarity.Ecommerce.Models/_T4/Models.*.cs]
+resharper_Inheritdoc_invalid_usage_highlighting=do_not_show
+
+[/03.ModelsAndMapping/03.Clarity.Ecommerce.Models/**.cs]
+dotnet_diagnostic.SA1117.severity = none
+
+[Mapping.Currencies.Currency.cs]
+dotnet_diagnostic.CS0419.severity = none
+
+[/03.ModelsAndMapping/03.Clarity.Ecommerce.Models.Mapping/Mapping/Mapping.*.cs]
+resharper_missing_xml_doc_highlighting=do_not_show
+resharper_partial_type_with_single_part_highlighting=do_not_show
+resharper_cyclomatic_complexity_highlighting=do_not_show
+resharper_function_complexity_overflow_highlighting=do_not_show
+resharper_invoke_as_extension_method_highlighting=do_not_show
+resharper_merge_cast_with_type_check_highlighting=do_not_show
+resharper_missing_linebreak_highlighting=do_not_show
+resharper_redundant_delegate_invoke_highlighting=do_not_show
+resharper_redundant_using_directive_highlighting=do_not_show
+resharper_missing_annotation_highlighting=do_not_show
+resharper_possible_unintended_queryable_as_enumerable_highlighting=do_not_show
+
+[/05.BusinessLogic/05.Clarity.Ecommerce.Workflow/**.cs]
+dotnet_diagnostic.CS1998.severity = none
+
+[*Service.cs]
+dotnet_diagnostic.IDE1006.severity = none
+
+[/06.Services/06.Clarity.Ecommerce.Service/**.cs]
+dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.CS1584.severity = none
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.CS1658.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1112.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1402.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/06.Services/06.Clarity.Ecommerce.Service.Net5/**.cs]
+dotnet_diagnostic.CS1584.severity = none
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.CS1658.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1112.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1402.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/06.Services/06.Clarity.Ecommerce.Service.Core/**.cs]
+dotnet_diagnostic.SA1117.severity = none
+
+[{09.Overrides,04.Providers}/**.cs]
+dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1009.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1111.severity = none
+dotnet_diagnostic.SA1114.severity = none
+dotnet_diagnostic.SA1116.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1118.severity = none
+dotnet_diagnostic.SA1123.severity = none
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1310.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1623.severity = none
+dotnet_diagnostic.SA1624.severity = none
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1642.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/10.Testing/10.Clarity.Ecommerce.Testing/**.cs]
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.IDE0063.severity = none
+dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1009.severity = none
+dotnet_diagnostic.SA1013.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1028.severity = none
+dotnet_diagnostic.SA1111.severity = none
+dotnet_diagnostic.SA1114.severity = none
+dotnet_diagnostic.SA1116.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1118.severity = none
+dotnet_diagnostic.SA1119.severity = none
+dotnet_diagnostic.SA1120.severity = none
+dotnet_diagnostic.SA1122.severity = none
+dotnet_diagnostic.SA1123.severity = none
+dotnet_diagnostic.SA1128.severity = none
+dotnet_diagnostic.SA1129.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1214.severity = none
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1307.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1310.severity = none
+dotnet_diagnostic.SA1312.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1401.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1414.severity = none
+dotnet_diagnostic.SA1500.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.SA1502.severity = none
+dotnet_diagnostic.SA1508.severity = none
+dotnet_diagnostic.SA1512.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1606.severity = none
+dotnet_diagnostic.SA1608.severity = none
+dotnet_diagnostic.SA1614.severity = none
+dotnet_diagnostic.SA1615.severity = none
+dotnet_diagnostic.SA1623.severity = none
+dotnet_diagnostic.SA1624.severity = none
+dotnet_diagnostic.SA1625.severity = none
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1638.severity = none
+dotnet_diagnostic.SA1642.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/10.Testing/10.Clarity.Ecommerce.UI.Testing/**.cs]
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.IDE0063.severity = none
+dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1009.severity = none
+dotnet_diagnostic.SA1013.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1028.severity = none
+dotnet_diagnostic.SA1111.severity = none
+dotnet_diagnostic.SA1114.severity = none
+dotnet_diagnostic.SA1116.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1118.severity = none
+dotnet_diagnostic.SA1119.severity = none
+dotnet_diagnostic.SA1120.severity = none
+dotnet_diagnostic.SA1122.severity = none
+dotnet_diagnostic.SA1123.severity = none
+dotnet_diagnostic.SA1128.severity = none
+dotnet_diagnostic.SA1129.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1214.severity = none
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1307.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1310.severity = none
+dotnet_diagnostic.SA1312.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1401.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1414.severity = none
+dotnet_diagnostic.SA1500.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.SA1502.severity = none
+dotnet_diagnostic.SA1508.severity = none
+dotnet_diagnostic.SA1512.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1606.severity = none
+dotnet_diagnostic.SA1608.severity = none
+dotnet_diagnostic.SA1614.severity = none
+dotnet_diagnostic.SA1615.severity = none
+dotnet_diagnostic.SA1623.severity = none
+dotnet_diagnostic.SA1624.severity = none
+dotnet_diagnostic.SA1625.severity = none
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1638.severity = none
+dotnet_diagnostic.SA1642.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/10.Testing/10.Clarity.Ecommerce.UI.SeleniumTesting/**.cs]
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.IDE0063.severity = none
+dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1009.severity = none
+dotnet_diagnostic.SA1013.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1028.severity = none
+dotnet_diagnostic.SA1111.severity = none
+dotnet_diagnostic.SA1114.severity = none
+dotnet_diagnostic.SA1116.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1118.severity = none
+dotnet_diagnostic.SA1119.severity = none
+dotnet_diagnostic.SA1120.severity = none
+dotnet_diagnostic.SA1122.severity = none
+dotnet_diagnostic.SA1123.severity = none
+dotnet_diagnostic.SA1128.severity = none
+dotnet_diagnostic.SA1129.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1214.severity = none
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1307.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1310.severity = none
+dotnet_diagnostic.SA1312.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1401.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1414.severity = none
+dotnet_diagnostic.SA1500.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.SA1502.severity = none
+dotnet_diagnostic.SA1508.severity = none
+dotnet_diagnostic.SA1512.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1606.severity = none
+dotnet_diagnostic.SA1608.severity = none
+dotnet_diagnostic.SA1614.severity = none
+dotnet_diagnostic.SA1615.severity = none
+dotnet_diagnostic.SA1623.severity = none
+dotnet_diagnostic.SA1624.severity = none
+dotnet_diagnostic.SA1625.severity = none
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1638.severity = none
+dotnet_diagnostic.SA1642.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/07.Portals/Reporting/**.cs]
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.IDE0063.severity = none
+dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1009.severity = none
+dotnet_diagnostic.SA1013.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1028.severity = none
+dotnet_diagnostic.SA1111.severity = none
+dotnet_diagnostic.SA1114.severity = none
+dotnet_diagnostic.SA1116.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1118.severity = none
+dotnet_diagnostic.SA1119.severity = none
+dotnet_diagnostic.SA1120.severity = none
+dotnet_diagnostic.SA1122.severity = none
+dotnet_diagnostic.SA1123.severity = none
+dotnet_diagnostic.SA1128.severity = none
+dotnet_diagnostic.SA1129.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1214.severity = none
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1307.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1310.severity = none
+dotnet_diagnostic.SA1312.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1401.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1414.severity = none
+dotnet_diagnostic.SA1500.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.SA1502.severity = none
+dotnet_diagnostic.SA1508.severity = none
+dotnet_diagnostic.SA1512.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1606.severity = none
+dotnet_diagnostic.SA1608.severity = none
+dotnet_diagnostic.SA1614.severity = none
+dotnet_diagnostic.SA1615.severity = none
+dotnet_diagnostic.SA1623.severity = none
+dotnet_diagnostic.SA1624.severity = none
+dotnet_diagnostic.SA1625.severity = none
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1638.severity = none
+dotnet_diagnostic.SA1642.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/04.Providers/Clarity.Ecommerce.Providers.Taxes/Avalara/Library/**.cs]
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.IDE0063.severity = none
+dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1009.severity = none
+dotnet_diagnostic.SA1013.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1028.severity = none
+dotnet_diagnostic.SA1111.severity = none
+dotnet_diagnostic.SA1114.severity = none
+dotnet_diagnostic.SA1116.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1118.severity = none
+dotnet_diagnostic.SA1119.severity = none
+dotnet_diagnostic.SA1120.severity = none
+dotnet_diagnostic.SA1122.severity = none
+dotnet_diagnostic.SA1123.severity = none
+dotnet_diagnostic.SA1128.severity = none
+dotnet_diagnostic.SA1129.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1214.severity = none
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1307.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1310.severity = none
+dotnet_diagnostic.SA1312.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1401.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1414.severity = none
+dotnet_diagnostic.SA1500.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.SA1502.severity = none
+dotnet_diagnostic.SA1508.severity = none
+dotnet_diagnostic.SA1512.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1606.severity = none
+dotnet_diagnostic.SA1608.severity = none
+dotnet_diagnostic.SA1614.severity = none
+dotnet_diagnostic.SA1615.severity = none
+dotnet_diagnostic.SA1623.severity = none
+dotnet_diagnostic.SA1624.severity = none
+dotnet_diagnostic.SA1625.severity = none
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1638.severity = none
+dotnet_diagnostic.SA1642.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/**Clarity*.{Testing,Test,Tests}/**.cs]
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.IDE0063.severity = none
+dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1009.severity = none
+dotnet_diagnostic.SA1013.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1028.severity = none
+dotnet_diagnostic.SA1111.severity = none
+dotnet_diagnostic.SA1114.severity = none
+dotnet_diagnostic.SA1116.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1118.severity = none
+dotnet_diagnostic.SA1119.severity = none
+dotnet_diagnostic.SA1120.severity = none
+dotnet_diagnostic.SA1122.severity = none
+dotnet_diagnostic.SA1123.severity = none
+dotnet_diagnostic.SA1128.severity = none
+dotnet_diagnostic.SA1129.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1214.severity = none
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1307.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1310.severity = none
+dotnet_diagnostic.SA1312.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1401.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1414.severity = none
+dotnet_diagnostic.SA1500.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.SA1502.severity = none
+dotnet_diagnostic.SA1508.severity = none
+dotnet_diagnostic.SA1512.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1606.severity = none
+dotnet_diagnostic.SA1608.severity = none
+dotnet_diagnostic.SA1614.severity = none
+dotnet_diagnostic.SA1615.severity = none
+dotnet_diagnostic.SA1623.severity = none
+dotnet_diagnostic.SA1624.severity = none
+dotnet_diagnostic.SA1625.severity = none
+dotnet_diagnostic.SA1629.severity = none
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1638.severity = none
+dotnet_diagnostic.SA1642.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[/04.Providers/Clarity.Ecommerce.Providers.Payments/**.cs]
+dotnet_diagnostic.SA1602.severity = none
+
+[/04.Providers/ServiceStack.Authentication.DotNetNukeSSO/**]
+dotnet_diagnostic.SA1402.severity = none
+dotnet_diagnostic.CS1591.severity = none
+
+[/11.T4/11.T4.ServiceStack.CodeGenerator.TypeScript/**.cs]
+dotnet_diagnostic.SA1121.severity = none
+dotnet_diagnostic.SA1125.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1401.severity = none
+dotnet_diagnostic.SA1600.severity = none
+

@@ -1,0 +1,369 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row details-header">
+        <div class="col-sm-12 details-title">
+            <span class="details-title"
+                  data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.RespondingToSalesQuoteAsASupplier"></span>
+        </div>
+    </div>
+    <div class="row details-body">
+        <div class="col-sm-12 sales-quote-response-wizard no-tab-pad">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab heading="Something">
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger':salesQuoteResponseWizardCtrl.forms.Details.$invalid}">
+                            <i class="far fa-lg fa-info"></i>&nbsp;<!--
+                            --><span data-translate="ui.admin.common.Detail.Plural"></span>
+                        </span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid full-height v-scroll-overflow with-shadow"
+                         ng-form="salesQuoteResponseWizardCtrl.forms.Details">
+                        <div class="row mb-2">
+                            <div class="col-sm-12 form-inline">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.SupplierKind"></label>
+                                    <div class="">
+                                        <label class="checkbox radio-inline"
+                                               ><input type="radio" class="checkbox" value="store"
+                                                       ng-disabled="!salesQuoteResponseWizardCtrl.stores
+                                                                    || salesQuoteResponseWizardCtrl.viewState.running"
+                                                       ng-model="salesQuoteResponseWizardCtrl.supplierKind" /><!--
+                                                    --><span data-translate="ui.admin.common.Store"></span></label>
+                                        <label class="checkbox radio-inline"
+                                               ><input type="radio" class="checkbox" value="vendor"
+                                                       ng-disabled="!salesQuoteResponseWizardCtrl.vendors
+                                                                    || salesQuoteResponseWizardCtrl.viewState.running"
+                                                       ng-model="salesQuoteResponseWizardCtrl.supplierKind" /><!--
+                                                       --><span data-translate="ui.admin.common.Vendor"></span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group ml-2" ng-if="salesQuoteResponseWizardCtrl.supplierKind === 'store'"
+                                     ng-class="{ 'has-error': salesQuoteResponseWizardCtrl.forms.Details.ddlStoreID.$invalid }">
+                                    <!-- <label class="control-label">Store</label> -->
+                                    <select class="form-control" id="ddlStoreID" name="ddlStoreID"
+                                            ng-disabled="salesQuoteResponseWizardCtrl.viewState.running"
+                                            ng-required="true"
+                                            ng-change="salesQuoteResponseWizardCtrl.onStoreIDChange()"
+                                            ng-options="s.ID as '#' + s.ID + ': ' + s.Name for s in salesQuoteResponseWizardCtrl.stores"
+                                            ng-model="salesQuoteResponseWizardCtrl.storeID">
+                                        <option ng-disabled="true" value="" data-translate="ui.admin.common.SelectAStore"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group ml-2" ng-if="salesQuoteResponseWizardCtrl.supplierKind === 'vendor'"
+                                     ng-class="{ 'has-error': salesQuoteResponseWizardCtrl.forms.Details.ddlVendorID.$invalid }">
+                                    <!-- <label class="control-label">Vendor</label> -->
+                                    <select class="form-control" id="ddlVendorID" name="ddlVendorID"
+                                            ng-disabled="salesQuoteResponseWizardCtrl.viewState.running"
+                                            ng-required="true"
+                                            ng-change="salesQuoteResponseWizardCtrl.onVendorIDChange()"
+                                            ng-options="v.ID as '#' + v.ID + ': ' + v.Name for v in salesQuoteResponseWizardCtrl.vendors"
+                                            ng-model="salesQuoteResponseWizardCtrl.vendorID">
+                                        <option ng-disabled="true" value="" data-translate="ui.admin.common.SelectAVendor"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group ml-2"
+                                     ng-if="salesQuoteResponseWizardCtrl.storeID || salesQuoteResponseWizardCtrl.vendorID">
+                                     <label class="checkbox"><input type="checkbox"
+                                        ng-model="salesQuoteResponseWizardCtrl.includeQuantity" /><!--
+                                        --><span data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.IncludeQuantity"></span></label>
+                                </div>
+                                <!-- TODO: pick from existing responses -->
+                            </div>
+                        </div>
+                        <div class="row mb-2"
+                             ng-if="salesQuoteResponseWizardCtrl.storeID || salesQuoteResponseWizardCtrl.vendorID">
+                            <div class="col-md-12">
+                                <h3 class="inline-block" data-translate="ui.admin.common.LineItems"></h3>
+                                <p data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.LineItems.Message.Template"
+                                   translate-value-kind="{{salesQuoteResponseWizardCtrl.supplierKind}}"></p>
+                            </div>
+                        </div>
+                        <!-- Paging Controls -->
+                        <div class="row"
+                             ng-if="salesQuoteResponseWizardCtrl.storeID || salesQuoteResponseWizardCtrl.vendorID">
+                            <div class="col-sm-12 col-md-5 col-lg-6">
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.common.QuickFilter"></label>
+                                    <input type="text" class="form-control"
+                                           translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                           ng-disabled="salesQuoteResponseWizardCtrl.viewState.running"
+                                           ng-model="salesQuoteResponseWizardCtrl.paging.quickFilter" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-md-2 col-lg-2">
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.common.PageSize"></label>
+                                    <select class="form-control text-right"
+                                            ng-disabled="salesQuoteResponseWizardCtrl.viewState.running"
+                                            ng-change="salesQuoteResponseWizardCtrl.paging.resetCachedPagesInSets()"
+                                            ng-options="o for o in [5,10,20,30,50,100,500,1000]"
+                                            ng-model="salesQuoteResponseWizardCtrl.paging.pageSize"></select>
+                                </div>
+                            </div>
+                            <div class="visible-xs col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label text-center"
+                                           ng-bind="salesQuoteResponseWizardCtrl.paging.showingLabelContent"></label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-info"
+                                                    ng-disabled="salesQuoteResponseWizardCtrl.paging.currentPage <= 0 || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.goToFirstPage()"
+                                                    ><i class="far fa-angle-double-left"></i></button>
+                                            <button type="button" class="btn btn-info"
+                                                    ng-disabled="salesQuoteResponseWizardCtrl.paging.currentPage <= 0 || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.goToPreviousPage()"
+                                                    ><i class="far fa-angle-left"></i></button>
+                                        </div>
+                                        <select class="form-control"
+                                                ng-disabled="salesQuoteResponseWizardCtrl.viewState.running"
+                                                ng-options="p as (p+1) for p in salesQuoteResponseWizardCtrl.paging.pagesInSets()[salesQuoteResponseWizardCtrl.paging.pageSetCurrent]"
+                                                ng-model="salesQuoteResponseWizardCtrl.paging.currentPage"></select>
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-info"
+                                                    ng-disabled="salesQuoteResponseWizardCtrl.paging.currentPage >= salesQuoteResponseWizardCtrl.paging.maxPage()-1 || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.goToNextPage()"
+                                                    ><i class="far fa-angle-right"></i></button>
+                                            <button type="button" class="btn btn-info"
+                                                    ng-disabled="salesQuoteResponseWizardCtrl.paging.currentPage >= salesQuoteResponseWizardCtrl.paging.maxPage()-1 || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.goToLastPage()"
+                                                    ><i class="far fa-angle-double-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden-xs col-sm-9 col-md-5 col-lg-4">
+                                <div class="form-group text-right">
+                                    <label class="control-label text-right"
+                                           ng-bind="salesQuoteResponseWizardCtrl.paging.showingLabelContent"></label>
+                                    <div class="btn-group btn-group-justified" role="group" aria-label="Paging">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info"
+                                                    ng-disabled="salesQuoteResponseWizardCtrl.paging.currentPage <= 0 || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.goToFirstPage()"
+                                                    ><i class="far fa-angle-double-left"></i></button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info"
+                                                    ng-disabled="salesQuoteResponseWizardCtrl.paging.currentPage <= 0 || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.goToPreviousPage()"
+                                                    ><i class="far fa-angle-left"></i></button>
+                                        </div>
+                                        <div class="btn-group"
+                                             ng-repeat="p in salesQuoteResponseWizardCtrl.paging.pagesInSets()[salesQuoteResponseWizardCtrl.paging.pageSetCurrent]">
+                                            <button type="button" class="btn hidden-xs"
+                                                    ng-class="salesQuoteResponseWizardCtrl.paging.currentPage == p ? 'btn-primary' : 'btn-info'"
+                                                    ng-disabled="p == salesQuoteResponseWizardCtrl.paging.currentPage || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.currentPage = p;"
+                                                    ng-bind="p+1"></button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info"
+                                                    ng-disabled="salesQuoteResponseWizardCtrl.paging.currentPage >= salesQuoteResponseWizardCtrl.paging.maxPage()-1 || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.goToNextPage()"
+                                                    ><i class="far fa-angle-right"></i></button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-info"
+                                                    ng-disabled="salesQuoteResponseWizardCtrl.paging.currentPage >= salesQuoteResponseWizardCtrl.paging.maxPage()-1 || salesQuoteResponseWizardCtrl.viewState.running"
+                                                    ng-click="salesQuoteResponseWizardCtrl.paging.goToLastPage()"
+                                                    ><i class="far fa-angle-double-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- The Table itself -->
+                        <div class="row"
+                             ng-if="salesQuoteResponseWizardCtrl.storeID || salesQuoteResponseWizardCtrl.vendorID">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover table-bordered">
+                                        <thead class="table-bordered">
+                                            <tr>
+                                                <th colspan="{{salesQuoteResponseWizardCtrl.includeQuantity ? 7 : 5}}" class="text-center info" data-translate="ui.admin.controls.sales.modals.editALineItemModal.Original"></th>
+                                                <th colspan="{{salesQuoteResponseWizardCtrl.includeQuantity ? 8 : 6}}" class="text-center warning" data-translate="ui.admin.controls.sales.modals.editALineItemModal.Response"></th>
+                                            </tr>
+                                            <tr>
+                                                <th class="info w-4" data-translate="ui.admin.controls.sales.modals.editALineItemModal.ItemID"></th>
+                                                <th class="info w-4" data-translate="ui.admin.controls.sales.modals.editALineItemModal.ItemKey"></th>
+                                                <th class="info w-22" data-translate="ui.admin.common.Product"></th>
+                                                <th class="info w-4" ng-if="salesQuoteResponseWizardCtrl.includeQuantity" data-translate="ui.admin.common.Quantity"></th>
+                                                <th class="info w-6" data-translate="ui.admin.common.CorePrice"></th>
+                                                <th class="info w-6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.SellingPrice"></th>
+                                                <th class="info w-6" ng-if="salesQuoteResponseWizardCtrl.includeQuantity" data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.Extended"></th>
+                                                <th class="danger w-2 text-center" data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.Respond"></th>
+                                                <th class="warning w-15" data-translate="ui.admin.common.Product"></th>
+                                                <th class="warning w-7" ng-if="salesQuoteResponseWizardCtrl.includeQuantity" data-translate="ui.admin.common.Quantity"></th>
+                                                <th class="warning w-6" data-translate="ui.admin.common.CorePrice"></th>
+                                                <th class="warning w-7" data-translate="ui.admin.controls.sales.modals.editALineItemModal.SellingPrice"></th>
+                                                <th class="warning w-6" ng-if="salesQuoteResponseWizardCtrl.includeQuantity" data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.Extended"></th>
+                                                <th class="warning w-5" data-translate="ui.admin.common.Action.Plural"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in salesQuoteResponseWizardCtrl.paging.filteredData[salesQuoteResponseWizardCtrl.paging.currentPage]
+                                                        | orderBy: ['ID']
+                                                        | limitTo: salesQuoteResponseWizardCtrl.paging.pageSize
+                                                                    : salesQuoteResponseWizardCtrl.paging.skip()"
+                                                class="dataID dataID{{item.ID}}">
+                                                <td class="info" ng-bind="item.ID"></td>
+                                                <td class="info" ng-bind="item.CustomKey"></td>
+                                                <td class="info text-capitalize" ng-bind="item.ProductName | lowercase"></td>
+                                                <td class="info text-right"
+                                                    ng-if="salesQuoteResponseWizardCtrl.includeQuantity"
+                                                    ng-bind="item.Quantity | number"></td>
+                                                <td class="info text-right"
+                                                    ng-bind="(item.UnitCorePrice || item.Product.PriceSale) | globalizedCurrency"></td>
+                                                <td class="info text-right"
+                                                    ng-bind="(item.UnitSoldPrice || item.UnitCorePrice || item.Product.PriceSale) | globalizedCurrency"></td>
+                                                <td class="info text-right"
+                                                    ng-if="salesQuoteResponseWizardCtrl.includeQuantity"
+                                                    ng-bind="item.ExtendedPrice | globalizedCurrency"></td>
+                                                <td class="danger p-0">
+                                                    <toggle class="btn-block"
+                                                            id="ckHasLineItemResponse{{item.ID}}" name="ckHasLineItemResponse{{item.ID}}"
+                                                            ng-disabled="salesQuoteResponseWizardCtrl.viewState.running"
+                                                            ng-change="salesQuoteResponseWizardCtrl.setHasLineItemResponse(item.ID)"
+                                                            ng-model="salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]"
+                                                            data-on="Yes" data-truestyle="btn-success"
+                                                            data-off="No" data-offstyle="btn-info"></toggle>
+                                                </td>
+                                                <td class="warning p-0"
+                                                    ng-class="{'has-error':salesQuoteResponseWizardCtrl.forms.Details['ddlProductID'+item.ID].$invalid}">
+                                                    <div class="input-group">
+                                                        <select class="form-control" id="ddlProductID{{item.ID}}" name="ddlProductID{{item.ID}}"
+                                                                ng-required="salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]"
+                                                                ng-disabled="!salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]
+                                                                            || salesQuoteResponseWizardCtrl.viewState.running"
+                                                                ng-change="salesQuoteResponseWizardCtrl.onProductIDChange(item.ID)"
+                                                                ng-options="p.ID as '#' + p.ID + ': ' + p.Name for p in salesQuoteResponseWizardCtrl.products"
+                                                                ng-model="salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].ProductID">
+                                                            <option ng-disabled="true" value="" data-translate="ui.admin.common.SelectAProduct"></option>
+                                                        </select>
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-info btn-icon"
+                                                                    ng-if="!salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].newClicked"
+                                                                    ng-click="salesQuoteResponseWizardCtrl.newProductClicked(item.ID)"
+                                                                    ng-disabled="!salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]
+                                                                                || salesQuoteResponseWizardCtrl.viewState.running">
+                                                                <i class="far fa-plus"></i>
+                                                                <span class="sr-only" data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.CreateNewProduct"></span>
+                                                            </button>
+                                                            <button type="button" class="btn btn-info btn-icon"
+                                                                    ng-if="salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].newClicked"
+                                                                    ng-click="salesQuoteResponseWizardCtrl.refreshProducts(item.ID)"
+                                                                    ng-disabled="!salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]
+                                                                                || salesQuoteResponseWizardCtrl.viewState.running">
+                                                                <i class="far fa-refresh"></i>
+                                                                <span class="sr-only" data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.Refresh List"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="warning p-0"
+                                                    ng-if="salesQuoteResponseWizardCtrl.includeQuantity"
+                                                    ng-class="{'has-error':salesQuoteResponseWizardCtrl.forms.Details['nudQuantity'+item.ID].$invalid}">
+                                                    <input type="number" class="form-control text-right"
+                                                        id="nudQuantity{{item.ID}}" name="nudQuantity{{item.ID}}"
+                                                        ng-required="salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]"
+                                                        ng-disabled="!salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]
+                                                                        || !salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].ProductID
+                                                                        || salesQuoteResponseWizardCtrl.viewState.running"
+                                                        ng-change="salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].ExtendedPrice =
+                                                                    salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].UnitSoldPrice *
+                                                                    salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].Quantity;"
+                                                        min="0" max="99999999" step="0.0001"
+                                                        ng-model="salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].Quantity" />
+                                                </td>
+                                                <td class="warning text-right"
+                                                    ng-bind="(salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].UnitSoldPrice
+                                                            || salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].UnitCorePrice) | globalizedCurrency"></td>
+                                                <td class="warning p-0"
+                                                    ng-class="{'has-error':salesQuoteResponseWizardCtrl.forms.Details['nudUnitSoldPrice'+item.ID].$invalid}">
+                                                    <input type="number" class="form-control text-right"
+                                                        id="nudUnitSoldPrice{{item.ID}}" name="nudUnitSoldPrice{{item.ID}}"
+                                                        ng-required="salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]"
+                                                        ng-disabled="!salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]
+                                                                        || !salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].ProductID
+                                                                        || salesQuoteResponseWizardCtrl.viewState.running"
+                                                        ng-change="salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].ExtendedPrice =
+                                                                    salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].UnitSoldPrice *
+                                                                    salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].Quantity;"
+                                                        min="0" max="99999999" step="0.0001"
+                                                        ng-model="salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].UnitSoldPrice" />
+                                                </td>
+                                                <td class="warning text-right"
+                                                    ng-if="salesQuoteResponseWizardCtrl.includeQuantity"
+                                                    ng-bind="salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].ExtendedPrice | globalizedCurrency"></td>
+                                                <td class="warning p-0" id="commandCellLineItem{{item.ID}}"
+                                                    ng-init="salesQuoteResponseWizardCtrl.setCommandCell(item.ID)">
+                                                    <button type="button" class="btn btn-block btn-info"
+                                                            id="btnLineItemActions{{item.ID}}" name="btnLineItemActions{{item.ID}}"
+                                                            ng-disabled="!salesQuoteResponseWizardCtrl.hasLineItemResponse[item.ID]
+                                                                        || !salesQuoteResponseWizardCtrl.lineItemResponses[item.ID].ProductID
+                                                                        || salesQuoteResponseWizardCtrl.viewState.running"
+                                                            ng-click="salesQuoteResponseWizardCtrl.openMenu(item.ID, item)"
+                                                            translate-attr="{ title: 'ui.admin.controls.widgets.lineItemsWidget.LineItemActionsMenu',
+                                                                            'aria-label': 'ui.admin.controls.widgets.lineItemsWidget.LineItemActionsMenu' }"
+                                                            data-translate="ui.admin.common.Action.Plural"></button>
+                                                    <ul id="menuActionsLineItem{{item.ID}}"
+                                                        kendo-context-menu
+                                                        k-filter="'tr.dataID{{item.ID}} > td'"
+                                                        k-anchor="'\\#commandCellLineItem{{item.ID}}'"
+                                                        k-open-on-click="true"
+                                                        k-close-on-click="true"
+                                                        k-on-open="salesQuoteResponseWizardCtrl.onMenuOpen(item.ID, item)"
+                                                        k-on-close="salesQuoteResponseWizardCtrl.closeMenu(item.ID)">
+                                                        <li role="presentation" class="p-0" disabled>#{{item.ID}} - SKU {{item.Sku}}</li>
+                                                        <li role="menuitem" class="p-0">
+                                                            <a class="p-1 text-regular block"
+                                                            translate-attr="{ title: 'ui.admin.common.Edit', 'aria-label': 'ui.admin.common.Edit' }"
+                                                            ng-click="salesQuoteResponseWizardCtrl.editLineItemAtIndex($index, item, salesQuoteResponseWizardCtrl.lineItemResponses[item.ID])"
+                                                            ><i class="far fa-fw fa-pencil"></i>&nbsp;<!--
+                                                            --><span data-translate="ui.admin.common.Edit"></span></a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <div class="row details-footer">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-success"
+                    ng-disabled="salesQuoteResponseWizardCtrl.forms.$invalid"
+                    translate-attr="{ title: 'ui.admin.common.Save', 'aria-label': 'ui.admin.common.Save' }"
+                    ng-click="salesQuoteResponseWizardCtrl.save()"
+                    data-translate="ui.admin.common.Save"></button>
+            <button type="button" class="btn btn-info"
+                    translate-attr="{ title: 'ui.admin.common.back', 'aria-label': 'ui.admin.common.back' }"
+                    ui-sref="sales.salesQuotes.list"
+                    ><span data-translate="ui.admin.common.back"></span></button>
+            <button type="button" class="btn btn-info"
+                    id="btnExportQuoteForVendor" name="btnExportQuoteForVendor"
+                    ng-click="salesQuoteResponseWizardCtrl.exportTheSalesQuoteForVendor()"
+                    translate-attr="{ title: 'ui.admin.controls.sales.salesQuoteResponseWizard.FullExportResponseForm',
+                                      'aria-label': 'ui.admin.controls.sales.salesQuoteResponseWizard.FullExportResponseForm' }"
+                    data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.FullExportResponseForm"></button>
+            <button type="button" class="btn btn-danger"
+                    ng-disabled="salesQuoteResponseWizardCtrl.forms.$invalid"
+                    ng-click="salesQuoteResponseWizardCtrl.quickExportResponseForm()"
+                    data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.QuickExportResponseForm"></button>
+            <button type="button" class="btn btn-danger"
+                    ng-disabled="salesQuoteResponseWizardCtrl.forms.$invalid"
+                    file-browser content="salesQuoteResponseWizardCtrl.fileContent"
+                    ><span data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.QuickImportResponses"></span></button>
+            <button type="button" class="btn btn-warning"
+                    ng-disabled="true"
+                    ><span data-translate="ui.admin.controls.sales.salesQuoteResponseWizard.ImportProducts"></span></button>
+        </div>
+    </div>
+</div>

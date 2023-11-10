@@ -1,0 +1,40 @@
+ <div class="row mb-3">
+     <div class="col-sm-4">
+         <button type="button" class="btn btn-info"
+                 id="btnReestimateShipping" name="btnReestimateShipping"
+                 ng-disabled="cefCheckoutCtrl.forms.shipping.address.$invalid"
+                 translate-attr="{ title: cefCheckoutCtrl.selectedRateQuoteID
+                                        ? 'ui.admin.checkout.views.shippingInformation.reestimateShippingCost'
+                                        : 'ui.admin.checkout.views.shippingInformation.estimateShippingCost',
+                                  'aria-label': cefCheckoutCtrl.selectedRateQuoteID
+                                        ? 'ui.admin.checkout.views.shippingInformation.reestimateShippingCost'
+                                        : 'ui.admin.checkout.views.shippingInformation.estimateShippingCost' }"
+                 data-translate="{{cefCheckoutCtrl.selectedRateQuoteID
+                                   ? 'ui.admin.checkout.views.shippingInformation.reestimateShippingCost'
+                                   : 'ui.admin.checkout.views.shippingInformation.estimateShippingCost'}}"
+                 ng-click="cefCheckoutCtrl.updateShippingAddressSelection()"></button>
+     </div>
+    <div class="col-sm-8" ng-if="cefCheckoutCtrl.viewState.running">
+        <p class="alert alert-info text-center"
+           data-translate="ui.admin.cart.cartShippingEstimator.wereSearchingForRatesForTheAddressInformationProvided"></p>
+    </div>
+    <div class="col-sm-8" ng-if="cefCheckoutCtrl.viewstate.showDeliveryFail">
+        <p class="alert alert-danger text-center"
+           data-translate="ui.admin.checkout.views.shippingInformation.pleaseEnterAValidAddress"></p>
+    </div>
+</div>
+<div class="row"
+     ng-form="cefCheckoutCtrl.forms.delivery"
+     ng-show="cefCheckoutCtrl.viewstate.haveRateQuotes">
+    <div class="col-md-12">
+        <h4 data-translate="ui.admin.checkout.views.shippingInformation.reestimateShippingCost"></h4>
+    </div>
+    <div class="col-sm-12"
+         ng-hide="cefCheckoutCtrl.viewState.running">
+        <div cef-checkout-rate-quotes-manager-widget-2
+             type="'Cart'"
+             contact="cefCheckoutCtrl.selectedAddressShipping"
+             apply="false">
+        </div>
+    </div>
+</div>

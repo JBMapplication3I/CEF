@@ -1,0 +1,195 @@
+/* horisontal tabs styling *//*
+.tabs-horisontal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+    background: $gray-100;
+
+    @include media('<phone') {
+        display: block;
+    }
+    /* bootstrap hack: fix content width inside hidden tabs *//*
+    .tab-content > .tab-pane,
+    .pill-content > .pill-pane {
+        height: 0;
+        overflow: hidden;
+        display: block !important;
+    }
+
+    .tab-content > .active,
+    .pill-content > .active {
+        height: auto !important;
+    }
+    /* bootstrap hack end *//*
+    .tabs-nav {
+        @include clear-list;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-content: flex-start;
+        align-items: stretch;
+        flex: 1 1 auto;
+
+        li {
+            display: flex;
+            flex: 1 1 auto;
+            align-self: auto;
+        }
+    }
+
+    .nav-pills {
+        min-width: 200px;
+        flex-direction: column;
+
+        @include media('<phone') {
+            display: block;
+            width: 100%;
+        }
+
+        .more-holder {
+            flex: 0 1 auto;
+            text-align: center;
+            width: 100%;
+        }
+
+        .nav-link {
+            width: 100%;
+            font-size: 13px;
+            font-weight: 800;
+            color: $gray-600;
+
+            &.active {
+                color: $primary-color;
+            }
+        }
+    }
+
+    .tab-content {
+        order: 0;
+        flex: 1 1 auto;
+        align-self: auto;
+        overflow: hidden;
+    }
+
+    .slick-slide {
+        margin: 0 10px;
+        outline: none;
+
+        > div {
+            & + div {
+                margin-top: 45px;
+
+                @include media('<desktop') {
+                    margin-top: 30px;
+                }
+            }
+        }
+    }
+
+    .slick-rows {
+        padding: 55px 35px 40px;
+        background: $white;
+
+        @include media('<desktop') {
+            padding: 30px 15px 20px;
+        }
+
+        .slick-prev {
+            left: 12px;
+
+            @include media('<phone') {
+                left: 5px;
+            }
+        }
+
+        .slick-next {
+            right: 12px;
+
+            @include media('<phone') {
+                right: 5px;
+            }
+        }
+
+        .slick-list {
+            overflow: hidden;
+
+            @include media('<phone') {
+                margin: 0;
+            }
+        }
+    }
+
+    .tab-footer {
+        overflow: hidden;
+        font-weight: 800;
+        font-size: 13px;
+        background: $gray-300;
+
+        .list-inline-item:not(:last-child) {
+            margin-right: 25px;
+
+            @include media('<tablet') {
+                margin-right: 5px !important;
+            }
+        }
+    }
+}
+
+/* products-tabset styling *//*
+.products-tabset {
+    @include clear-list;
+
+    li {
+        a {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-content: stretch;
+            align-items: center;
+
+            &.active {
+                background: $light-blue;
+                color: $black;
+                box-shadow: -4px 0 0 0 $blue inset;
+
+                i {
+                    font-size: 16px;
+                    color: $light-red;
+                }
+            }
+
+            i {
+                color: $gray-300;
+            }
+
+            .text-holder {
+                order: 0;
+                flex: 1 1 auto;
+                align-self: auto;
+            }
+        }
+    }
+}
+
+.personalized-home .tab-content .slick-rows {
+    min-height: 430px;
+
+    .media-body {
+        min-height: 140px;
+
+        p {
+            display: block !important;
+        }
+
+        .lead {
+            display: block !important;
+            font-size: 1rem;
+        }
+    }
+}
+*/

@@ -1,0 +1,158 @@
+﻿<div class="row form-vertical"
+     translate-cloak
+     ng-form="loginCtrl.forms.login"
+     ng-keypress="loginCtrl.keySubmit($event)">
+    <script type="text/ng-template" id="loginValidationMessages"
+       ><div ng-message="username"><span data-translate="ui.storefront.user.login.ThisIsNotAValidUsername"></span></div>
+        <div ng-message="password"><span data-translate="ui.storefront.user.login.ThisIsNotAValidPassword"></span></div>
+        <div ng-message="pattern" ><span data-translate="ui.storefront.user.forgotPasswordReturn.InvalidPassword"></span></div>
+        <div ng-message="required"><span data-translate="ui.storefront.common.validation.ThisFieldIsRequired"></span></div>
+    </script>
+    <div class="col-12 p-3 rounded"
+         ng-class="{'alert-danger': loginCtrl.hasError
+                      || loginCtrl.viewState.hasError
+                      || loginCtrl.forms.login['tIFGCtrl.forms.LoginUsername'].$dirty
+                         && loginCtrl.forms.login['pwIFGCtrl.forms.LoginPassword'].$dirty
+                         && loginCtrl.forms.login.$invalid}">
+        <div class="row">
+            <text-input-form-group
+                class="col-12"
+                key="LoginUsername"
+                ng-model="loginCtrl.loginData.Username"
+                label-key="ui.storefront.common.Username"
+                placeholder-key="ui.storefront.user.login.EnterYourUsername"
+                tooltip-key="ui.storefront.common.UsernameCouldBeEmail"
+                ng-keydown="loginCtrl.keySubmit($event)"
+                ng-required="true"
+                ng-disabled="loginCtrl.viewState.running"
+                force-tooltip-with-focus="true"
+                is-username="true">
+            </text-input-form-group>
+            <password-input-form-group
+                class="col-12"
+                key="LoginPassword"
+                ng-model="loginCtrl.loginData.Password"
+                label-key="ui.storefront.common.Password"
+                placeholder-key="ui.storefront.user.login.EnterYourPassword"
+                tooltip-key="ui.storefront.user.registration.PasswordRequirements.Message"
+                ng-keydown="loginCtrl.keySubmit($event)"
+                ng-required="true"
+                ng-disabled="loginCtrl.viewState.running"
+                force-tooltip-with-focus="true">
+            </password-input-form-group>
+            <div ng-if="loginCtrl.showMFA"
+                class="form-group col-12"
+                ng-class="{'has-error': loginCtrl.forms.login.$dirty
+                                        && loginCtrl.forms.login.txtMFAPrompt.$invalid}">
+                <label class="control-label" for="txtMFAPrompt"
+                    uib-tooltip="{{'ui.storefront.controls.login.MFAAuthToken.Tooltip' | translate}}"
+                    data-translate="ui.storefront.controls.login.MFARequired">
+                </label>
+                <span class="d-block"
+                data-translate="ui.admin.controls.login.ReceiveCode"></span>
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary"
+                        id="mfaEmail" name="mfaEmail"
+                        ng-click="loginCtrl.requestMFATokenViaEmail()">
+                        Email:&nbsp;<!--
+                        --><span ng-bind-html="loginCtrl.emailFirstAndLastFour"></span>
+                    </button>
+                    <!--
+                        <button type="button" class="btn btn-primary"
+                        id="mfaSMS" name="mfaSMS"
+                        ng-click="loginCtrl.requestMFATokenViaSMS()">
+                        SMS:&nbsp;&bull;&bull;&bull;-&bull;&bull;&bull;-
+                        <span ng-bind="loginCtrl.mfaResult.PhoneLastFour"></span>
+                    </button>
+                     -->
+                </div>
+            </div>
+            <div ng-if="loginCtrl.showMFA"
+                class="form-group col-12"
+                ng-class="{'has-error': loginCtrl.forms.login.$dirty
+                                        && loginCtrl.forms.login.txtMFAPrompt.$invalid}">
+                <label class="control-label" for="txtMFAPrompt"
+                uib-tooltip="{{'ui.storefront.controls.login.MFAAuthToken.Tooltip'}}"
+                data-translate="ui.storefront.controls.login.AuthToken">
+                </label>
+                <div class="input-group">
+                <input type="text" class="form-control"
+                    id="txtMFAPrompt" name="txtMFAPrompt"
+                    autocomplete="off"
+                    translate-attr="{ placeholder: 'ui.storefront.controls.login.EnterYourAuthToken' }"
+                    ng-disabled="loginCtrl.cvViewStateService.isRunning()"
+                    ng-keydown="loginCtrl.keySubmit($event)"
+                    ng-required="true"
+                    ng-model="loginCtrl.loginData.MFAToken" />
+                    <!-- <button type="button" class="btn btn-primary"
+                    id="resend" name="resend"
+                    ng-click="loginCtrl.submit('resend')">Resend</button> -->
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col text-right">
+                <small>
+                    <a id="btnLoginForgotPassword" name="btnLoginForgotPassword"
+                       ui-sref-plus uisrp-area="forgotPassword"
+                       ><span data-translate="ui.storefront.user.login.ForgotYourPassword"></span></a><br />
+                    <!-- 
+                    <span data-translate="ui.storefront.user.login.DontHaveAnAccount"></span>
+                    <a id="btnLoginRegister" name="btnLoginRegister"
+                       ui-sref-plus uisrp-area="registration" uisrp-params="{ 'returnUrl': '[ReturnUrl]' }"
+                       ><span data-translate="ui.storefront.common.RegisterForOne"></span></a>
+                    -->
+                </small>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary"
+                        id="btnLoginSubmit" name="btnLoginSubmit"
+                        translate-attr="{ title: 'ui.storefront.user.login.SignIn',
+                                          'aria-label': 'ui.storefront.user.login.SignIn' }"
+                        data-translate="ui.storefront.user.login.SignIn"
+                        ng-disabled="loginCtrl.forms.login.$invalid || loginCtrl.viewState.running || loginCtrl.hideLogin"
+                        ng-click="loginCtrl.submit()"></button>
+            </div>
+        </div>
+        <div class="row mt-3" ng-if="loginCtrl.isLoggedIn">
+            <div class="col-12" translate-cloak>
+                <div class="alert alert-warning text-center mb-0" role="alert"
+                     id="alertLoginAlreadyLoggedIn" name="alertLoginAlreadyLoggedIn">
+                    <span data-translate="ui.storefront.user.login.YouAreCurrentlyLoggedInAs"></span>&nbsp;<!--
+                    --><b ng-bind="loginCtrl.loggedInUser.UserName || loginCtrl.loggedInUser.username"></b>
+                </div>
+            </div>
+        </div>
+        <div class="row no-gutters mt-3 align-items-center border-top border-danger pt-3" role="alert"
+             ng-if="loginCtrl.hasError
+                    || loginCtrl.viewState.hasError
+                    || (loginCtrl.forms.login['tIFGCtrl.forms.LoginUsername'].$dirty
+                        && loginCtrl.forms.login['pwIFGCtrl.forms.LoginPassword'].$dirty
+                        && loginCtrl.forms.login.$invalid)">
+            <div class="col-auto">
+                <i class="far fa-exclamation-triangle fa-2x" aria-hidden="true"></i>
+            </div>
+            <div class="col pl-3">
+                <div ng-messages="loginCtrl.forms.login.$error">
+                    <div ng-messages-include="loginValidationMessages"></div>
+                </div>
+                <span ng-if="loginCtrl.viewState.errorMessage"
+                      id="alertLoginErrorMessage" name="alertLoginErrorMessage"
+                      ng-bind="loginCtrl.viewState.errorMessage">
+                </span>
+                <span ng-if="!loginCtrl.viewState.errorMessage
+                             && !(loginCtrl.forms.login['tIFGCtrl.forms.LoginUsername'].$dirty
+                                  && loginCtrl.forms.login['pwIFGCtrl.forms.LoginPassword'].$dirty
+                                  && loginCtrl.forms.login.$invalid)"
+                      data-translate="ui.storefront.user.checkoutLogin.TheUserNameOrPasswordDoesntMatch.Message">
+                </span>
+            </div>
+        </div>
+        <div ng-if="loginCtrl.viewState.running"
+             cef-loading-widget
+             overlay="true"
+             pad-in="loginCtrl.modal"
+             message="loginCtrl.viewState.waitMessage">
+        </div>
+    </div>
+</div>

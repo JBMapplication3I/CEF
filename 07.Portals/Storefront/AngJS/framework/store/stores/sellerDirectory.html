@@ -1,0 +1,27 @@
+﻿<div class="row">
+    <div class="col-12">
+        <h1 data-translate="ui.storefront.stores.sellerDirectory.SellerDirectory"></h1>
+    </div>
+    <div class="col-sm-3">
+        <div cef-seller-directory-region-filter></div>
+        <div cef-seller-directory-industry-filter></div>
+        <div cef-seller-directory-capability-filter></div>
+    </div>
+    <div class="col-sm-9">
+        <span data-translate="ui.storefront.stores.sellerDirectory.PageSize"></span>
+        <select class="form-control"
+                ng-options="size for size in sellerDirectoryCtrl.pageSizes"
+                ng-change="sellerDirectoryCtrl.onPagingChange()"
+                ng-model="sellerDirectoryCtrl.paging.Size"></select>
+        <hr />
+        <div cef-seller-directory-store ng-repeat="store in sellerDirectoryCtrl.storeList" store="store"></div>
+        <hr />
+        <uib-pagination
+            total-items="sellerDirectoryCtrl.pagingResults.TotalCount"
+            total-pages="sellerDirectoryCtrl.pagingResults.TotalPages"
+            items-per-page="sellerDirectoryCtrl.paging.Size"
+            ng-change="sellerDirectoryCtrl.onPagingChange()"
+            ng-model="sellerDirectoryCtrl.pagingResults.CurrentPage">
+        </uib-pagination>
+    </div>
+</div>

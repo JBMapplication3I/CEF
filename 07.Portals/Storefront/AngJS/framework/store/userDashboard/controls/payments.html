@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-md-6" ng-form="paymentsCtrl.forms.Payments">
+        <!--<h2 class="mb-5" data-translate="ui.storefront.storeDashboard.storeAccountSettings.Payments"></h2>-->
+        <div class="box-area p-7 mb-5">
+            <div class="img mb-3"><img src="/images/payoneer-logo.png" alt="Payoneer"></div>
+            <div ng-switch="paymentsCtrl.userHasPayoneerData">
+                <div class="row" ng-switch-when="false">
+                    <div class="col-sm-3">
+                        <toggle class="btn-block"
+                                id="ckIAgreePayoneer" name="ckIAgreePayoneer"
+                                data-on="{{'ui.storefront.common.Yes' | translate}}" data-truestyle="btn-success"
+                                data-off="{{'ui.storefront.common.No' | translate}}" data-offstyle="btn-danger"
+                                ng-model="paymentsCtrl.agreeToPayoneer"></toggle>
+                    </div>
+                    <div class="col-sm-9">
+                        I agree to the <a href="https://pay.payoneer.com/terms/170908002131" target="_blank"
+                                          data-translate="ui.storefront.common.TermsAndConditions"></a> of Payoneer Escrow.
+                    </div>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-large btn-block btn-primary"
+                                ng-disabled="!paymentsCtrl.agreeToPayoneer"
+                                ng-click="paymentsCtrl.createPayoneerAccount()">
+                            Create my Payoneer Account so I<br />can submit Payments via Payoneer Escrow
+                        </button>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group"
+                             ng-class="{'has-error': paymentsCtrl.forms.Payments.txtProvidedUserID.$invalid}">
+                            <label class="control-label">I already have a Payoneer account, this is my Account ID</label>
+                            <input type="text" class="form-control"
+                                   id="txtProvidedAccountID" name="txtProvidedAccountID"
+                                   ng-disabled="!paymentsCtrl.agreeToPayoneer"
+                                   ng-pattern="/^\d{4}\d+$/"
+                                   ng-required="true"
+                                   ng-model="paymentsCtrl.providedAccountID" />
+                            <label class="control-label"
+                                   data-translate="ui.storefront.storeDashboard.storeAccountSettings.AndThisIsMyUserID"></label>
+                            <input type="text" class="form-control"
+                                   id="txtProvidedUserID" name="txtProvidedUserID"
+                                   ng-disabled="!paymentsCtrl.agreeToPayoneer"
+                                   ng-pattern="/^\d{4}\d+$/"
+                                   ng-required="true"
+                                   ng-model="paymentsCtrl.providedCustomerID" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-large btn-block btn-primary"
+                                ng-disabled="!paymentsCtrl.agreeToPayoneer || paymentsCtrl.providedAccountID < 1000000 || paymentsCtrl.providedCustomerID < 1000000 || paymentsCtrl.forms.Payments.$invalid"
+                                ng-click="paymentsCtrl.associateExistingPayoneerAccount()">
+                            Associate my existing Payoneer Account and User<br />so I can submit Payments via Payoneer Escrow
+                        </button>
+                    </div>
+                </div>
+                <div class="row" ng-switch-when="true">
+                    <div class="col-12">
+                        <table class="bg-light table">
+                            <tbody>
+                                <tr>
+                                    <td><b data-translate="ui.storefront.storeDashboard.storeAccountSettings.PayoneerAccountID"></b></td>
+                                    <td ng-bind="paymentsCtrl.currentUser.SerializableAttributes['Payoneer-Account-ID'].Value"></td>
+                                </tr>
+                                <tr>
+                                    <td><b data-translate="ui.storefront.storeDashboard.storeAccountSettings.PayoneerUserID"></b></td>
+                                    <td ng-bind="paymentsCtrl.currentUser.SerializableAttributes['Payoneer-User-ID'].Value"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12">
+                        <!-- Sandbox environment? Use this script: -->
+                        <!--<script src="https://sandbox.armorpayments.com/assets/js/modal.js"></script>-->
+                        <!-- Production environment? Use this script: -->
+                        <!-- <script defer src="https://pay.payoneer.com/assets/js/modal.min.js"></script> -->
+                        <button type="button" class="btn btn-large btn-block btn-primary"
+                                ng-click="paymentsCtrl.managePayoneerBankAccounts()"
+                                data-translate="ui.storefront.storeDashboard.storeAccountSettings.ManageMyPayoneerBankAccounts"></button>
+                    </div>
+                    <!-- TODO: Edit my Payoneer data -->
+                    <!-- TODO: Clear my Payoneer data -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

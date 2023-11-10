@@ -1,0 +1,354 @@
+﻿<#@ assembly name="System"
+#><#@ assembly name="System.Collections"
+#><#@ assembly name="System.ComponentModel.Composition"
+#><#@ assembly name="System.ComponentModel.DataAnnotations"
+#><#@ assembly name="System.Configuration"
+#><#@ assembly name="System.Core"
+#><#@ assembly name="System.Data"
+#><#@ assembly name="System.Data.DataSetExtensions"
+#><#@ assembly name="System.Net.Http"
+#><#@ assembly name="System.Xml"
+#><#@ assembly name="System.Xml.Linq"
+#><#@ assembly name="EnvDTE"
+#><#@ assembly name="Microsoft.VisualStudio.OLE.Interop"
+#><#@ assembly name="Microsoft.VisualStudio.Shell.15.0"
+#><#@ assembly name="Microsoft.VisualStudio.Shell.Framework"
+#><#@ assembly name="Microsoft.VisualStudio.Shell.Interop"
+#><#@ import namespace="System"
+#><#@ import namespace="System.CodeDom.Compiler"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.ComponentModel.DataAnnotations"
+#><#@ import namespace="System.Configuration"
+#><#@ import namespace="System.Diagnostics"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Linq.Expressions"
+#><#@ import namespace="System.Reflection"
+#><#@ import namespace="System.Runtime.Serialization"
+#><#@ import namespace="System.Text"
+#><#@ import namespace="System.Text.RegularExpressions"
+#><#@ import namespace="System.Xml"
+#><#@ import namespace="Microsoft.VisualStudio.Shell"
+#><#@ import namespace="Microsoft.VisualStudio.Shell.Framework"
+#><#@ import namespace="Microsoft.VisualStudio.Shell.Interop"
+#><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
+#><#+
+List<string> __savedOutputs = new List<string>();
+Engine __engine = new Engine();
+
+void DeleteOldOutputs()
+{
+    EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
+    foreach (EnvDTE.ProjectItem childProjectItem in templateProjectItem.ProjectItems)
+    {
+        if (!__savedOutputs.Contains(childProjectItem.Name))
+        {
+            try {
+                childProjectItem.Delete();
+            } catch {
+                // Do Nothing
+            }
+        }
+    }
+}
+
+void ProcessTemplate(string templateFileName, string outputFileName, bool skipAddToProject = false)
+{
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+    string template = System.IO.File.ReadAllText(Host.ResolvePath(templateFileName));
+    string output = __engine.ProcessTemplate(template, Host);
+    if (outputFileName.Contains("\\"))
+    {
+        var dirs = outputFileName.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+        var builtPath = string.Empty;
+        for (var i = 0; i < dirs.Length - 1; i++)
+        {
+            builtPath += (builtPath == string.Empty ? string.Empty : "\\") + dirs[i];
+            var tempDirPath = Path.Combine(templateDirectory, builtPath);
+            if (!Directory.Exists(tempDirPath))
+            {
+                Directory.CreateDirectory(tempDirPath);
+            }
+        }
+    }
+    System.IO.File.WriteAllText(outputFilePath, output);
+    if (!skipAddToProject)
+    {
+        EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
+        templateProjectItem.ProjectItems.AddFromFile(outputFilePath);
+    }
+    __savedOutputs.Add(outputFileName.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries).Last());
+}
+
+void SaveOutputNoDot(string typeName, string fileNameModifier, bool skipAddToProject = false)
+{
+    if (!string.IsNullOrWhiteSpace(typeName)) { fileNameModifier = typeName + fileNameModifier; }
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, fileNameModifier);
+    if (fileNameModifier.Contains("\\"))
+    {
+        var dirs = fileNameModifier.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+        var builtPath = string.Empty;
+        for (var i = 0; i < dirs.Length - 1; i++)
+        {
+            builtPath += (builtPath == string.Empty ? string.Empty : "\\") + dirs[i];
+            var tempDirPath = Path.Combine(templateDirectory, builtPath);
+            if (!Directory.Exists(tempDirPath))
+            {
+                Directory.CreateDirectory(tempDirPath);
+            }
+        }
+    }
+    System.IO.File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment = new StringBuilder();
+    if (!skipAddToProject)
+    {
+        EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
+        templateProjectItem.ProjectItems.AddFromFile(outputFilePath);
+    }
+    __savedOutputs.Add(fileNameModifier.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries).Last());
+}
+
+void SaveOutput(string typeName, string fileNameModifier, bool skipAddToProject = false)
+{
+    if (!string.IsNullOrWhiteSpace(typeName)) { fileNameModifier = typeName + "." + fileNameModifier; }
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, fileNameModifier);
+    if (fileNameModifier.Contains("\\"))
+    {
+        var dirs = fileNameModifier.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+        var builtPath = string.Empty;
+        for (var i = 0; i < dirs.Length - 1; i++)
+        {
+            builtPath += (builtPath == string.Empty ? string.Empty : "\\") + dirs[i];
+            var tempDirPath = Path.Combine(templateDirectory, builtPath);
+            if (!Directory.Exists(tempDirPath))
+            {
+                Directory.CreateDirectory(tempDirPath);
+            }
+        }
+    }
+    System.IO.File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment = new StringBuilder();
+    if (!skipAddToProject)
+    {
+        EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
+        templateProjectItem.ProjectItems.AddFromFile(outputFilePath);
+    }
+    __savedOutputs.Add(fileNameModifier.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries).Last());
+}
+
+void SaveOutput(string schemaName, string typeName, string fileNameModifier, bool skipAddToProject = false)
+{
+    if (!string.IsNullOrWhiteSpace(typeName)) { fileNameModifier = schemaName + "." + typeName + "." + fileNameModifier; }
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, fileNameModifier);
+    if (fileNameModifier.Contains("\\"))
+    {
+        var dirs = fileNameModifier.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+        var builtPath = string.Empty;
+        for (var i = 0; i < dirs.Length - 1; i++)
+        {
+            builtPath += (builtPath == string.Empty ? string.Empty : "\\") + dirs[i];
+            var tempDirPath = Path.Combine(templateDirectory, builtPath);
+            if (!Directory.Exists(tempDirPath))
+            {
+                Directory.CreateDirectory(tempDirPath);
+            }
+        }
+    }
+    System.IO.File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment = new StringBuilder();
+    if (!skipAddToProject)
+    {
+        EnvDTE.ProjectItem templateProjectItem = __getTemplateProjectItem();
+        templateProjectItem.ProjectItems.AddFromFile(outputFilePath);
+    }
+    __savedOutputs.Add(fileNameModifier.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries).Last());
+}
+
+EnvDTE.ProjectItem __getTemplateProjectItem()
+{
+    EnvDTE.Project dteProject = __getTemplateProject();
+    IVsProject vsProject = __dteProjectToVsProject(dteProject);
+    int iFound = 0;
+    uint itemId = 0;
+    VSDOCUMENTPRIORITY[] pdwPriority = new VSDOCUMENTPRIORITY[1];
+    int result = vsProject.IsDocumentInProject(Host.TemplateFile, out iFound, pdwPriority, out itemId);
+    if (result != VSConstants.S_OK)
+    {
+        throw new Exception("Unexpected error calling IVsProject.IsDocumentInProject " + Host.TemplateFile);
+    }
+    if (iFound == 0)
+    {
+        throw new Exception("Cannot retrieve ProjectItem for template file (not found) " + Host.TemplateFile);
+    }
+    if (itemId == 0)
+    {
+        throw new Exception("Cannot retrieve ProjectItem for template file (invalid item id) " + Host.TemplateFile);
+    }
+    Microsoft.VisualStudio.OLE.Interop.IServiceProvider itemContext = null;
+    result = vsProject.GetItemContext(itemId, out itemContext);
+    if (result != VSConstants.S_OK)
+    {
+        throw new Exception("Unexpected error calling IVsProject.GetItemContext");
+    }
+    if (itemContext == null)
+    {
+        throw new Exception("IVsProject.GetItemContext returned null");
+    }
+    ServiceProvider itemContextService = new ServiceProvider(itemContext);
+    EnvDTE.ProjectItem templateItem = (EnvDTE.ProjectItem)itemContextService.GetCOMService(typeof(EnvDTE.ProjectItem));
+    Debug.Assert(templateItem != null, "itemContextService.GetService returned null");
+    return templateItem;
+}
+
+EnvDTE.Project __getTemplateProject()
+{
+    IServiceProvider hostServiceProvider = (IServiceProvider)Host;
+    if (hostServiceProvider == null)
+    {
+        throw new Exception("Host property returned unexpected value (null)");
+    }
+    EnvDTE.DTE dte = (EnvDTE.DTE)hostServiceProvider.GetCOMService(typeof(EnvDTE.DTE));
+    if (dte == null)
+    {
+        throw new Exception("Unable to retrieve EnvDTE.DTE");
+    }
+    Array activeSolutionProjects = (Array)dte.ActiveSolutionProjects;
+    if (activeSolutionProjects == null)
+    {
+        throw new Exception("DTE.ActiveSolutionProjects returned null");
+    }
+    EnvDTE.Project dteProject = (EnvDTE.Project)activeSolutionProjects.GetValue(0);
+    if (dteProject == null)
+    {
+        throw new Exception("DTE.ActiveSolutionProjects[0] returned null");
+    }
+    return dteProject;
+}
+
+static IVsProject __dteProjectToVsProject(EnvDTE.Project project)
+{
+    if (project == null)
+    {
+        throw new ArgumentNullException("project");
+    }
+    string projectGuid = null;
+    // DTE does not expose the project GUID that exists at in the msbuild project file.
+    // Cannot use MSBuild object model because it uses a static instance of the Engine,
+    // and using the Project will cause it to be unloaded from the engine when the
+    // GC collects the variable that we declare.
+    using (XmlReader projectReader = XmlReader.Create(project.FileName))
+    {
+        projectReader.MoveToContent();
+        object nodeName = projectReader.NameTable.Add("ProjectGuid");
+        while (projectReader.Read())
+        {
+            if (System.Object.Equals(projectReader.LocalName, nodeName))
+            {
+                projectGuid = (string)projectReader.ReadElementContentAsString();
+                break;
+            }
+        }
+    }
+    if (string.IsNullOrEmpty(projectGuid))
+    {
+        throw new Exception("Unable to find ProjectGuid element in the project file");
+    }
+    Microsoft.VisualStudio.OLE.Interop.IServiceProvider dteServiceProvider
+        = (Microsoft.VisualStudio.OLE.Interop.IServiceProvider)project.DTE;
+    IServiceProvider serviceProvider = new ServiceProvider(dteServiceProvider);
+    IVsHierarchy vsHierarchy = VsShellUtilities.GetHierarchy(serviceProvider, new Guid(projectGuid));
+    IVsProject vsProject = (IVsProject)vsHierarchy;
+    if (vsProject == null)
+    {
+        throw new ArgumentException("Project is not a VS project.");
+    }
+    return vsProject;
+}
+
+bool ImplementsInterface(Type type, Type _interface)
+{
+    return type == _interface || type.GetInterfaces().Any(i => i == _interface)
+        || (type.BaseType != null
+            && ((type.BaseType == _interface || type.BaseType.GetInterfaces().Any(i => i == _interface))
+                || type.BaseType.BaseType != null && (type.BaseType.BaseType == _interface || type.BaseType.BaseType.GetInterfaces().Any(i => i == _interface))));
+}
+
+//*
+
+void ConfigurationAccessor()
+{
+    // Get the instance of Visual Studio that is hosting the calling file
+    IServiceProvider hostServiceProvider = (IServiceProvider)Host;
+    if (hostServiceProvider == null)
+    {
+        throw new Exception("Host property returned unexpected value (null)");
+    }
+    EnvDTE.DTE env = (EnvDTE.DTE)hostServiceProvider.GetCOMService(typeof(EnvDTE.DTE));
+    // Gets an array of currently selected projects. Since you are either in this file saving it or
+    // right-clicking the item in solution explorer to invoke the context menu it stands to reason
+    // that there is 1 ActiveSolutionProject and that it is the parent of this file....
+    _project = (EnvDTE.Project)((Array)env.ActiveSolutionProjects).GetValue(0);
+    string configurationFilename = null;
+    // examine each project item's filename looking for app.config or web.config
+    foreach (EnvDTE.ProjectItem item in _project.ProjectItems)
+    {
+        if (Regex.IsMatch(item.Name, "(app|web).config", RegexOptions.IgnoreCase))
+        {
+            // TODO: try this with linked files. is the filename pointing to the source?
+            configurationFilename = item.get_FileNames(0);
+            break;
+        }
+    }
+    if (!string.IsNullOrEmpty(configurationFilename))
+    {
+        // found it, map it and expose salient members as properties
+        ExeConfigurationFileMap configFile = null;
+        configFile = new ExeConfigurationFileMap();
+        configFile.ExeConfigFilename = configurationFilename;
+        _configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(configFile, ConfigurationUserLevel.None);
+    }
+}
+
+EnvDTE.Project _project;
+Configuration _configuration;
+
+///// <summary>Provides access to the host project.</summary>
+///// <remarks>see http://msdn.microsoft.com/en-us/library/envdte.project.aspx </remarks>
+//EnvDTE.Project Project { get { return _project; } }
+
+///// <summary>
+///// Convenience getter for Project.Properties.
+///// Examples:
+///// <code>string thisAssemblyName = config.Properties.Item("AssemblyName").Value.ToString();</code>
+///// <code>string thisAssemblyName = config.Properties.Item("AssemblyName").Value.ToString();</code>
+///// </summary>
+///// <remarks>see http://msdn.microsoft.com/en-us/library/envdte.project_properties.aspx </remarks>
+//EnvDTE.Properties Properties { get { return _project.Properties; } }
+
+///// <summary>Provides access to the application/web configuration file.</summary>
+///// <remarks>see http://msdn.microsoft.com/en-us/library/system.configuration.configuration.aspx </remarks>
+//Configuration Configuration { get { return _configuration; } }
+
+/// <summary>
+/// Provides access to the appSettings section of the configuration file.
+/// Behavior differs from typical AppSettings usage in that the indexed
+/// item's .Value must be explicitly addressed.
+/// <code>string setting = config.AppSettings["MyAppSetting"].Value;</code>
+/// </summary>
+/// <remarks>see http://msdn.microsoft.com/en-us/library/system.configuration.configuration.appsettings.aspx </remarks>
+KeyValueConfigurationCollection AppSettings { get { return _configuration.AppSettings.Settings; } }
+
+/// <summary>
+/// Provides access to the connectionStrings section of the configuration file.
+/// Behavior is as expected; items are accessed by string key or integer index.
+/// <code>string northwindProvider = config.ConnectionStrings["northwind"].ProviderName;</code>
+/// </summary>
+/// <remarks>see http://msdn.microsoft.com/en-us/library/system.configuration.configuration.connectionstrings.aspx </remarks>
+//ConnectionStringSettingsCollection ConnectionStrings { get { return _configuration.ConnectionStrings.ConnectionStrings; } }
+
+//*/
+#>

@@ -1,0 +1,457 @@
+/**
+ * @file framework/admin/controls/sales/checkout/splitShipping/cartController.ts
+ * @author Copyright (c) 2018-2022 clarity-ventures.com. All rights reserved.
+ * @desc Split shipping class
+ */
+module cef.admin.controls.sales.checkout.splitShipping {
+    export class CartController extends core.TemplatedControllerBase {
+        // Properties
+        type: string;
+        currentCartId: number;
+        userId: number;
+        accountId: number;
+        unbindCartLoaded: Function;
+        /**
+         * @deprecated as of 2019.1.6, This get allows for legacy assignments which should be
+         * refactored out. Use `this.cvCartService.accessCart(this.type)` directly instead
+         * @type {api.CartModel}
+         * @memberof CartController
+         */
+        get currentCart(): api.CartModel { return this.cvCartService.accessCart(this.type); }
+        /**
+         * @deprecated as of 2019.1.6, This set allows for legacy assignments which should be
+         * refactored out. Use `this.cvCartService.overrideCachedCartWithModifications(this.type, newValue)`
+         * directly instead. Also note that any time you would be using this, is
+         * probably something that should be handled directly in the cart service
+         * @param {api.CartModel} newValue - The modified cart to assign
+         * @memberof CartController
+         */
+        set currentCart(newValue: api.CartModel) { this.cvCartService.overrideCachedCartWithModifications(this.type, newValue); }
+        cartItemsPaging: core.Paging<api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>>;
+        cartItems: api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>[] = [];
+        cartPromise: ng.IPromise<api.CEFActionResponseT<api.CartModel>>;
+        states: api.RegionModel[] = [];
+        countries: api.CountryModel[] = [];
+        updatingCart = false;
+        hasShipping = false;
+        gettingRates: boolean = false;
+        /** @deprecated as of 2019.1.6, Use quickAddToCart widget instead */
+        quickOrderDisabled: boolean;
+        /** @deprecated as of 2019.1.6, Use quickAddToCart widget instead */
+        quickOrderProduct: string;
+        /** @deprecated as of 2019.1.6, Use quickAddToCart widget instead */
+        quickOrderQuantity: number;
+        /** @deprecated as of 2019.1.6, Use quickAddToCart widget instead */
+        productList: api.ProductModel[];
+        includeQuickOrder: boolean;
+        includeShipping: boolean;
+        get fullIncludeShippingCheck(): boolean {
+            if (!this.cefConfig) { return false; }
+            return this.includeShipping
+                && (this.cefConfig.featureSet.shipping.enabled
+                    || this.cefConfig.featureSet.shipping.rates.estimator.enabled);
+        }
+        includeDiscounts: boolean;
+        discountCode: string = null;
+        relatedProducts = [];
+        orderDiscounts: api.AppliedCartDiscountModel[] = [];
+        shippingDiscounts: api.AppliedCartDiscountModel[] = [];
+        shippingStrikethrough = false;
+        // Constructor
+        constructor(
+                protected readonly $rootScope: ng.IRootScopeService,
+                protected readonly $scope: ng.IScope,
+                protected readonly $q: ng.IQService,
+                protected readonly $filter: ng.IFilterService,
+                protected readonly $window: ng.IWindowService,
+                protected readonly $location: ng.ILocationService,
+                protected readonly $translate: ng.translate.ITranslateService,
+                protected readonly cvApi: api.ICEFAPI,
+                protected readonly cefConfig: core.CefConfig,
+                protected readonly cvServiceStrings: admin.services.IServiceStrings,
+                protected readonly cvCartService: admin.services.ICartService,
+                protected readonly cvMessageModalFactory: admin.modals.IMessageModalFactory,
+                //protected readonly StoreLocationService: IStoreLocationService,
+                protected readonly cvInventoryService: admin.services.IInventoryService/*,
+                protected readonly cefFacebookPixelService: IFacebookPixelService,
+                protected readonly cefGoogleTagManagerService: IGoogleTagManagerService*/) {
+            super(cefConfig);
+            this.loadCollections();
+        }
+        // Functions
+        loadCollections(): void {
+            this.cvApi.geography.GetCountries({
+                Active: true,
+                AsListing: true,
+                Code: this.cefConfig.countryCode
+            }).then(r => {
+                this.countries = r.data.Results;
+                if (this.countries != null && this.countries.length === 1) {
+                    this.getRegions(this.countries[0].ID);
+                }
+            });
+            this.unbindCartLoaded = this.$scope.$on(this.cvServiceStrings.events.carts.loaded, this.onCartLoaded);
+            if (_.has(this.$location.search(), "type")) {
+                this.type = this.$location.search()["type"] as string;
+            }
+            this.loadCurrentCart(false, true);
+            this.$scope.$on(this.cvServiceStrings.events.$scope.$destroy, () => {
+                if (angular.isFunction(this.unbindCartLoaded)) { this.unbindCartLoaded(); }
+            });
+        }
+
+        getRegions(countryId: number): void {
+            countryId = countryId ? countryId : 1;
+            this.cvApi.geography.GetRegions({ Active: true, AsListing: true, CountryID: countryId })
+                .then(r => this.states = r.data.Results);
+        }
+
+        loadCurrentCart(force: boolean, validate?: boolean): ng.IPromise<api.CEFActionResponseT<api.CartModel>> {
+            this.setRunning();
+            return this.cartPromise = this.cvCartService.loadCart(this.currentCartId, this.userId, this.accountId, this.type, force, validate);
+        }
+
+        // NOTE: This must remain an arrow function to resolve 'this' properly
+        onCartLoaded = ($event: ng.IAngularEvent, cartType: string): void => {
+            console.debug("cartCtrl.onCartLoaded");
+            console.debug($event);
+            console.debug(cartType);
+            if (cartType !== this.type) {
+                return;
+            }
+            const cart = this.cvCartService.accessCart(cartType);
+            if (!cart || angular.toJson(cart) === "{}") {
+                this.setDiscounts(cart);
+                this.currentCart = cart;
+                this.cartItems = [];
+                this.setupCartItemsPaging();
+                return;
+            }
+            // this.StoreLocationService.getUserSelectedStore().then(store => store, () => null).then(store => {
+                this.setDiscounts(cart);
+                if (!cart.SalesItems || cart.SalesItems.length <= 0) {
+                    this.currentCart = cart;
+                    this.cartItems = cart.SalesItems;
+                    this.setupCartItemsPaging();
+                    this.loadCurrentCartInner(cart, null, null/*store*/); // Will call finishRunning
+                    return;
+                }
+                cart.SalesItems.forEach(x => {
+                    if (!x.Discounts || !x.Discounts.length) {
+                        return;
+                    }
+                    x["DiscountTotal"] = _.sum(x.Discounts.map(y => y.DiscountTotal));
+                });
+                const productModels = cart.SalesItems.map(x => {
+                    if (x["Product"]) {
+                        x["Product"]["SalesItemID"] = x.ID;
+                        return x["Product"];
+                    }
+                    return <api.HasInventoryObject>{
+                        ID: x.ProductID,
+                        CustomKey: x.ProductKey,
+                        Name: x.ProductName,
+                        SeoUrl: x.ProductSeoUrl,
+                        SalesItemID: x.ID
+                    };
+                });
+                this.cvInventoryService.getInventoryObject(productModels, null/*store*/).then(result => {
+                    cart.SalesItems.forEach(x => x["Product"] = _.find(result, y => y["SalesItemID"] === x.ID) as any);
+                    this.currentCart = cart;
+                    this.cartItems = cart.SalesItems;
+                    this.setupCartItemsPaging();
+                    this.loadCurrentCartInner(cart, null, null/*store*/); // Will call finishRunning
+                });
+            // });
+        }
+
+        private setupCartItemsPaging(): void {
+            this.cartItemsPaging = new core.Paging<api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>>(this.$filter);
+            this.cartItemsPaging.pageSize = 8;
+            this.cartItemsPaging.pageSetSize = 3;
+            this.cartItemsPaging.data = this.cartItems;
+        }
+
+        private setDiscounts(cart: api.CartModel): void {
+            this.orderDiscounts = [];
+            this.shippingDiscounts = [];
+            if (!cart || angular.toJson(cart) == "{}") {
+                return;
+            }
+            if (cart.Discounts) {
+                cart.Discounts.forEach(discount => {
+                    switch (discount.DiscountTypeID) {
+                        case 0: {
+                            this.orderDiscounts.push(discount);
+                            break;
+                        }
+                        case 2: {
+                            this.shippingDiscounts.push(discount);
+                            break;
+                        }
+                    }
+                });
+            }
+            this.shippingStrikethrough = _.sumBy(this.shippingDiscounts, d => d.DiscountTotal)
+                + (cart.Totals && cart.Totals.Shipping || 0) === 0;
+        }
+
+        loadCurrentCartInner(cart: api.CartModel, callback: (...args) => void|any, store: api.StoreModel): void {
+            if (this.cartItems && this.cartItems.length > 0) {
+                this.cartItems.forEach(salesItem => {
+                    // Check for associated products data, which will need their own copy of this same action
+                    if (!salesItem ||
+                        !salesItem["Product"] ||
+                        !salesItem["Product"].ProductAssociations ||
+                        !salesItem["Product"].ProductAssociations.filter(x => x.Slave).length) {
+                        this.finishRunning();
+                        return;
+                    }
+                    this.cvInventoryService.getInventoryObject(
+                            salesItem["Product"].ProductAssociations.filter(x => x.Slave).map(x => x.Slave),
+                            store)
+                        .then((resultInner: api.ProductModel[]) => {
+                            salesItem["Product"].ProductAssociations
+                                .filter(x => x.Slave)
+                                .forEach(x => x.Slave = (resultInner as any)
+                                    .find(y => y.ID === x.SlaveID));
+                            this.finishRunning();
+                        });
+                });
+                this.relatedProducts = _.flatMap(this.cartItems, (item: api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>) => {
+                    if (!item ||
+                        !item["Product"] ||
+                        !item["Product"].ProductAssociations ||
+                        !item["Product"].ProductAssociations.filter(x => x.Slave).length) {
+                        return [];
+                    }
+                    return item["Product"].ProductAssociations
+                        .filter(x => x.Slave)
+                        .filter(x => x.TypeName === "Related Product" ||
+                            x.Type && x.Type.Name === "Related Product");
+                });
+                this.cartItems.forEach(salesItem => {
+                    if (!salesItem.SerializableAttributes
+                        || !salesItem.SerializableAttributes[this.cvServiceStrings.attributes.selectedStoreID]
+                        || !salesItem.SerializableAttributes[this.cvServiceStrings.attributes.selectedStoreID].Value
+                        || Number(salesItem.SerializableAttributes[this.cvServiceStrings.attributes.selectedStoreID]) <= 0) {
+                        return;
+                    }
+                    // this.StoreLocationService.getStoreByID(
+                    //         Number(salesItem.SerializableAttributes[this.cvServiceStrings.attributes.selectedStoreID].Value))
+                    //     .then(store => angular.extend(salesItem, { usersSelectedStore: store }));
+                });
+                return;
+            }
+            if (angular.isFunction(callback)) {
+                callback();
+            }
+            this.$rootScope.$broadcast(this.cvServiceStrings.events.shipping.ready,
+                this.currentCart,
+                false); // Don't reapply shipping address, we only just loaded it
+            this.finishRunning();
+        }
+
+        proceedToCheckout(): void {
+            // TODO@ME: Different checkout locations for different cart types
+            this.$filter("goToCORSLink")(this.cefConfig.checkout.root);
+        }
+
+        addCartItem(id: number, quantity: number = 1, params: admin.services.IAddCartItemParams = null, item?: any): ng.IPromise<any> {
+            return this.$q((resolve, reject) => {
+                this.cvCartService.addCartItem(id, this.currentCartId, this.userId, this.accountId, this.type, quantity, params, item).then(() => {
+                    this.cvCartService.viewstate.checkoutIsProcessing = true;
+                }).finally(() => resolve());
+            });
+        }
+
+        removeCartItem(id: number): ng.IPromise<any> {
+            return this.cvCartService.removeCartItem(id);
+        }
+
+        removeCartDiscount(id: number): ng.IPromise<any> {
+            return this.cvCartService.removeCartDiscount(id, this.currentCartId, this.userId, this.accountId, this.type);
+        }
+
+        removeCartItemDiscount(id: number): ng.IPromise<any> {
+            return this.cvCartService.removeCartItemDiscount(id, this.currentCartId, this.userId, this.accountId, this.type);
+        }
+
+        moveCartItem(
+                cartItem: api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>,
+                fromCartType: string, toCartType: string)
+                : ng.IPromise<any> {
+            return this.$q((resolve, reject) => {
+                if (!(cartItem && fromCartType && toCartType)) {
+                    reject("Incomplete arguments");
+                    return;
+                }
+                const promise: ng.IPromise<any[]> = this.$q.all([
+                    this.cvCartService.removeCartItem(cartItem.ID),
+                    this.cvCartService.addCartItem(cartItem.ProductID, this.currentCartId, this.userId, this.accountId, toCartType, cartItem.Quantity)
+                ]);
+                promise.finally(() => {
+                    this.$rootScope.$broadcast(this.cvServiceStrings.events.carts.updated, fromCartType);
+                    this.$rootScope.$broadcast(this.cvServiceStrings.events.carts.updated, toCartType);
+                });
+                resolve(promise);
+            });
+        }
+
+        // NOTE: This must remain an arrow function
+        updateCartItemQuantity = (
+            event: ng.IAngularEvent,
+            productID: number,
+            quantity: number
+            ): ng.IPromise<api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>> => {
+            if (!productID) { return this.$q.reject(); }
+            this.updatingCart = true;
+            this.setRunning();
+            return this.$q((resolve, reject) => {
+                const dto = <api.UpdateCartItemQuantityDto>{
+                    CartItemID: _.find(this.cartItems, x => x.ProductID === productID).ID,
+                    Quantity: quantity
+                };
+                this.cvApi.shopping.UpdateCartItemQuantity(dto).then(r => {
+                    this.updatingCart = false;
+                    this.$rootScope.$broadcast(this.cvServiceStrings.events.carts.updated, this.type); // Will call finishRunning
+                    resolve(r.data);
+                }, result2 => { this.finishRunning(true, result2); reject(result2); })
+                .catch(reason2 => { this.finishRunning(true, reason2); reject(reason2); });
+            });
+        }
+
+        updateCartItems(callback?): ng.IPromise<api.SalesItemBaseModel<api.AppliedCartItemDiscountModel>[]> {
+            this.updatingCart = true;
+            this.setRunning();
+            return this.$q((resolve, reject) => {
+                this.cartPromise.then(() => {
+                    this.cvApi.shopping.UpdateCartItems(<api.UpdateCartItemsDto>{
+                        Items: this.cartItems,
+                        TypeName: this.type
+                    }).then(r => {
+                        this.updatingCart = false;
+                        resolve(r.data);
+                        this.loadCurrentCart(true, callback);
+                        return;
+                    }, result2 => { this.finishRunning(true, result2); reject(result2); })
+                    .catch(reason2 => { this.finishRunning(true, reason2); reject(reason2); });
+                }, result => { this.finishRunning(true, result); reject(result); })
+                .catch(reason => { this.finishRunning(true, reason); reject(reason); });
+            });
+        }
+
+        clearCart(): ng.IPromise<any> {
+            return this.cvCartService.clearCart(this.currentCartId, this.userId, this.accountId, this.type);
+        }
+
+        allSelectedShipping: core.ShippingOptions;
+        setAllShippingSelections(): void {
+            switch (this.allSelectedShipping) {
+                case core.ShippingOptions.ShipToHome:
+                case core.ShippingOptions.InStorePickup:
+                case core.ShippingOptions.ShipToStore:
+                default: {
+                    // Do Nothing
+                    break;
+                }
+            }
+        }
+
+        calculateDiscountedShippingRate(rate: number): { original: number, discounted: number } {
+            if (!this.shippingDiscounts || this.shippingDiscounts.length === 0) {
+                return { original: rate, discounted: rate };
+            }
+            var discounted = rate;
+            this.shippingDiscounts.sort((a, b) => { return a.DiscountPriority - b.DiscountPriority; }).forEach(value => {
+                if (value.DiscountValueType === 0) { // Percent
+                    discounted = discounted * (1 - value.DiscountValue);
+                } else if (value.DiscountValueType === 1) { // Dollar
+                    discounted = discounted - value.DiscountValue;
+                }
+            });
+            return { original: rate, discounted: discounted };
+        }
+
+        // Quick Order Form
+        /** @deprecated as of 2019.1.6, Use quickAddToCart widget instead */
+        addFromQuickOrder(customKeyQuickOrder, quantity): void {
+            if (this.quickOrderDisabled) { return; }
+            this.quickOrderDisabled = true;
+            if (this.productList == null) {
+                this.$scope.$evalAsync(() => this.quickOrderDisabled = false);
+                return;
+            }
+            const result = this.productList.filter(p => (p.CustomKey === customKeyQuickOrder));
+            if (!result.length) {
+                this.$scope.$evalAsync(() => this.quickOrderDisabled = false);
+                return;
+            }
+            this.addCartItem(result[0].ID, quantity || 1).then(() => {
+                this.quickOrderProduct = null;
+                this.quickOrderQuantity = null;
+            }).finally(() => this.quickOrderDisabled = false);
+        }
+        /** @deprecated as of 2019.1.6, Use quickAddToCart widget instead */
+        grabProductList(search): ng.IPromise<api.ProductModel[]> {
+            return this.cvApi.products.GetProducts({
+                IDOrCustomKeyOrName: search,
+                Active: true,
+                AsListing: true,
+                IsVisible: true,
+                IsDiscontinued: false,
+                Paging: <api.Paging>{ Size: 100, StartIndex: 1 }
+            }).then(r => this.productList = r.data.Results);
+        }
+        /**
+         * @note Arrow function since it is simple return function
+         * @deprecated as of 2019.1.6, Use quickAddToCart widget instead
+         */
+        isQuickOrderNumberValid = (customKeyQuickOrder): boolean =>
+            this.productList != null &&
+            customKeyQuickOrder != null &&
+            !this.quickOrderDisabled &&
+            this.productList.some(p => p.CustomKey === customKeyQuickOrder);
+
+        // Discounts Form
+        addDiscountEnter(e): void {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                e.stopPropagation();
+                this.addDiscount();
+            }
+        }
+        addDiscount(): ng.IPromise<api.CEFActionResponse> {
+            if (!this.discountCode) {
+                this.cvMessageModalFactory(this.$translate("ui.admin.cart.cart.AddDiscount.NoDiscountCode"));
+                return this.$q.reject();
+            }
+            return this.$q((resolve, reject) => {
+                this.cvApi.shopping.AddCartDiscount({ Code: this.discountCode })
+                    .then(r => {
+                        if (r.data.ActionSucceeded) {
+                            this.discountCode = undefined;
+                            this.loadCurrentCart(true, false);
+                            resolve(r.data);
+                        } else {
+                            this.cvMessageModalFactory(r.data.Messages[0]);
+                            reject(r.data);
+                        }
+                    }, result => reject(result))
+                    .catch(reject);
+            });
+        }
+
+        totalItems(): number {
+            return _.sumBy(this.cartItems, x => x.Quantity + (x.QuantityBackOrdered || 0) + (x.QuantityPreSold || 0));
+        }
+
+        totalPrice(): number {
+            return _.sumBy(this.cartItems, x => x.ExtendedPrice);
+        }
+
+        cartItemCustomKeys(): Array<string> {
+            return this.cartItems.map(cartItem => cartItem.ProductKey);
+        }
+    }
+}

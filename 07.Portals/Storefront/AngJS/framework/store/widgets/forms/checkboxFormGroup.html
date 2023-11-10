@@ -1,0 +1,28 @@
+<div ng-form="cfgCtrl.forms.{{cfgCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="{'has-error': cfgCtrl.forms[cfgCtrl.formIdentifier].$invalid}">
+  <div class="input-group d-block">
+    <label ng-repeat="option in cfgCtrl.checkboxOptions"
+      class="control-label d-block"
+      for="ck{{cfgCtrl.formIdentifier}}_{{$index}}"
+      uib-tooltip="{{cfgCtrl.tooltip}}"
+      tooltip-placement="auto top-left">
+      <input id="ck{{cfgCtrl.formIdentifier}}_{{$index}}"
+        name="ck{{cfgCtrl.formIdentifier}}"
+        ng-class="cfgCtrl.inputClass"
+        type="checkbox"
+        ng-change="cfgCtrl.whenChanged()"
+        ng-disabled="cfgCtrl.disabled"
+        ng-required="cfgCtrl.required"
+        ng-model="$parent.cfgCtrl.property[option.value]"
+        ng-value="option.text"
+      />
+      <span class="ml-5" data-translate="{{option.text}}">{{cfgCtrl.labelText}}</span><!--
+      --><span ng-if="cfgCtrl.required" class="text-danger">&nbsp;*</span><!--
+      --><span ng-if="cfgCtrl.tooltip" class="text-info">&nbsp;<i class="fa fa-question-circle"></i></span>
+    </label>
+  </div>
+  <div ng-messages="cfgCtrl.formError" role="alert">
+    <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+</div>

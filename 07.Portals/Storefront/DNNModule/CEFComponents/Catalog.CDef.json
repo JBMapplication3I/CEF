@@ -1,0 +1,40 @@
+{
+  "Name": "Catalog",
+  "FriendlyName": "Catalog",
+  "Description": "CEF Catalog",
+  "ComponentType": "UserControl",
+  "Parameters": {
+    "IncludeRecentlyViewedProducts": {
+      "Name": "IncludeRecentlyViewedProducts",
+      "FriendlyName": "Include Recently Viewed Products",
+      "Description": "Include the Recently Viewed Products control",
+      "Type": "System.Boolean",
+      "Value": true,
+      "Order": 1
+    },
+    "RecentlyViewedProductsSize": {
+      "Name": "RecentlyViewedProductsSize",
+      "FriendlyName": "Recently Viewed Products Size",
+      "Description": "Enter the number of recently viewed products to show.",
+      "Type": "System.Int32",
+      "Value": 3,
+      "Order": 2
+    },
+    "IncludePersonalizationProducts": {
+      "Name": "IncludePersonalizationProducts",
+      "FriendlyName": "Include Personalization Products",
+      "Description": "Include the Personalization Products control",
+      "Type": "System.Boolean",
+      "Value": true,
+      "Order": 3
+    },
+    "PersonalizationProductsSize": {
+      "Name": "PersonalizationProductsSize",
+      "FriendlyName": "Personalization Products Size",
+      "Description": "Enter the number of personalization products to show.",
+      "Type": "System.Int32",
+      "Value": 3,
+      "Order": 4
+    }
+  }
+}

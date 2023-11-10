@@ -1,0 +1,30 @@
+<form class="header-search-form d-flex rounded"
+  role="search">
+  <label class="sr-only" for="txtSearch"
+    data-translate="ui.storefront.stores.storeDirectory.Search">
+  </label>
+  <div class="input-group header-search-form d-flex rounded">
+    <input type="search"
+      id="txtSearch" name="txtSearch"
+      translate-attr="{ placeholder: 'ui.storefront.searchCatalog.controls.externalSearchBox.Search.Ellipses' }"
+      uib-typeahead="sug.Name as (sug.CustomKey + ' ' + sug.Name)
+                     for sug in scesbCtrl.service.getSuggestionsPromise()"
+      typeahead-loading="loadingSuggestions" typeahead-wait-ms="500"
+      typeahead-min-length="1" typeahead-focus-first="false"
+      ng-disabled="scesbCtrl.service.searchIsRunning"
+      ng-change="scesbCtrl.service.getSuggestionsPromise()"
+      ng-keypress="scesbCtrl.inputKeyPress($event)"
+      ng-model="scesbCtrl.service.queryTerm"
+      typeahead-on-select="scesbCtrl.goToProduct($item)" />
+    <!-- typeahead-on-select($item, $model, $label) (Defaults: null) : A callback executed when a match is selected -->
+    <div class="input-group-append input-group-btn bg-white border-left-0">
+      <button type="button"
+        ng-disabled="scesbCtrl.service.searchIsRunning"
+        ng-click="scesbCtrl.applyQueryTerm()">
+        <i class="far"
+          ng-class="scesbCtrl.service.suggestionsIsRunning ? 'fa-spinner fa-spin' : 'fa-search'"></i><!--
+        --><span class="sr-only" data-translate="ui.storefront.stores.storeDirectory.Search"></span>
+      </button>
+    </div>
+  </div>
+</form>

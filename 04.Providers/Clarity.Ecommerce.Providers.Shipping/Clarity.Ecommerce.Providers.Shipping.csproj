@@ -1,0 +1,171 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Providers.Shipping</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Providers.Shipping</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Providers.Shipping</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Connected Services\LoomisService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Update="Connected Services\UPSPackageRateService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Update="Web References\FedExRateService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.getAvailableServicesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.GetAvailableServicesRs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.getPublicRatesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.GetPublicRatesRs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.getRatesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.GetRatesRs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.getVersionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.GetVersionRs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.isResidentialResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.IsResidentialRs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.rateShipmentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.RateShipmentRs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.submitManifestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\Clarity.Ecommerce.Providers.Shipping.LoomisService.SubmitManifestRs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\LoomisService\USSRatingService.wsdl" />
+    <None Include="Connected Services\UPSPackageRateService\Clarity.Ecommerce.Providers.Shipping.UPSPackageRateService.RateResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UPSPackageRateService\Clarity.Ecommerce.Providers.Shipping.UPSPackageRateService.RateResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UPSPackageRateService\common1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UPSPackageRateService\Error11.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UPSPackageRateService\RateWebServiceSchema1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UPSPackageRateService\RateWS1.wsdl" />
+    <None Include="Connected Services\UPSPackageRateService\UPSSecurity1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\FedExRateService\RateReply.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\FedExRateService\RateServiceDefinitions.wsdl" />
+    <None Include="Web References\FedExRateService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LoomisService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LoomisService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\LoomisService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UPSPackageRateService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UPSPackageRateService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UPSPackageRateService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <None Remove="Connected Services\FedExRateService5\Reference.cs" />
+    <Compile Remove="Connected Services\FedExRateService5\Reference.cs" />
+    <Resource Remove="Connected Services\FedExRateService5\Reference.cs" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <PackageReference Include="DotNetShipping" Version="0.9.5.90" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <None Remove="Web References\**" />
+    <Compile Remove="Web References\**" />
+    <Resource Remove="Web References\**" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.8.1.0" />
+    <Reference Include="DotNetShipping">
+      <HintPath>..\..\ThirdParty\DotNetShipping\bin\Debug\net5.0\DotNetShipping.dll</HintPath>
+    </Reference>
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Utilities\00.Clarity.Ecommerce.Utilities.csproj" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj" />
+    <ProjectReference Include="..\Clarity.Ecommerce.Providers.Packaging\Clarity.Ecommerce.Providers.Packaging.csproj" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net5.0'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)DotNetShipping.dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net472'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)DotNetShipping.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I" />
+  </Target>
+</Project>

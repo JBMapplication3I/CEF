@@ -1,0 +1,18 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build:core:templates" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build:fonts" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build:minify" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build:admin:init" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build:admin:main" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build:admin:less" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build:admin:templates" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build:admin" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "build" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "watch:admin" },
+        { "type": "gulp", "group": "build", "problemMatcher": [], "task": "watch" }
+    ]
+}

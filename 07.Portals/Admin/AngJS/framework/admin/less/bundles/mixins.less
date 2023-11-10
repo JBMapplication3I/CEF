@@ -1,0 +1,27 @@
+.rounded (@a: 0, @b: 0, @c: 0, @d: 0) {
+    -webkit-border-radius: @a @b @c @d;
+    -moz-border-radius: @a @b @c @d;
+    border-radius: @a @b @c @d;
+}
+
+.bevelEmboss(@ol: 0.2, @od: 0.2) {
+    box-shadow: inset 1px 1px 1px rgba(255, 255, 255, @ol), inset -1px -1px 1px rgba(0, 0, 0, @od);
+    -moz-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, @ol), inset -1px -1px 1px rgba(0, 0, 0, @od);
+    -webkit-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, @ol), inset -1px -1px 1px rgba(0, 0, 0, @od);
+}
+
+.transform(@s) {
+    -webkit-transform: @s;
+    -moz-transform: @s;
+    -o-transform: @s;
+    -ms-transform: @s;
+    transform: @s;
+}
+
+#reset {
+    .boxShadow() {
+        box-shadow: none !important;
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+    }
+}

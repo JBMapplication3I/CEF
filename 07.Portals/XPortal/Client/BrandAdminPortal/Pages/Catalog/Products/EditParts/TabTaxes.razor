@@ -1,0 +1,50 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+<Heading Size="HeadingSize.Is2">Taxes</Heading>
+<Row>
+  <Column ColumnSize="CS.Declare(CW.Is6, CW.Is3, CW.Is3, CW.Is3, CW.Is3)">
+    <ToggleFormGroup
+      TValue="bool"
+      FormIdentifier="IsTaxable"
+      @bind-Value="Record.IsTaxable"
+      IsOptionToggled="@(_ => Record.IsTaxable)"
+      ToggleOnText="Is Taxable"
+      ToggleOffText="Tax Exempt"
+      Disabled="@ViewState.InputDisable"
+      SwitchColor="Color.Success"
+      LabelText="Is Taxable"
+      Required="false"
+    />
+  </Column>
+  <Column ColumnSize="CS.Start.XS(CW.Is6).Is3.OnSM().Is3.OnMD().Is3.OnLG().Is3.OnXL()">
+    <TextFormGroup
+      FormIdentifier="TaxCode"
+      @bind-Value="Record.TaxCode"
+      Disabled="@ViewState.InputDisable"
+      LabelText="Tax Code"
+      MaxLength="64"
+      Required="false"
+    />
+  </Column>
+</Row>
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    return Task.CompletedTask;
+  }
+}

@@ -1,0 +1,291 @@
+﻿@*
+* <copyright file="RecordAttributes.razor" company="clarity-ventures.com">
+* Copyright (c) 2022-2023 clarity-ventures.com. All rights reserved.
+* </copyright>
+* <summary>Record attributes class</summary>
+*@
+@inherits Clarity.Ecommerce.MVC.Core.TemplatedControllerBase
+@inject CEFConfig cefConfig
+@inject IJSRuntime jsRuntime
+@inject Microsoft.Extensions.Options.IOptions<ProductEditorOptions> editorOptions
+@inject CEFAPI cvApi
+@inject NavigationManager navigationManager
+@inject RoutingOptions routingOptions
+
+<CascadingValue Value="ViewState">
+  <Div Class="h-100">
+    @if (ViewState.loading || Data is null && !ViewState.hasError)
+    {
+      <Div Class="p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (Data is not null)
+    {
+      <Div Class="page-content w-100">
+        <Container Fluid="true">
+          <Row>
+            <Column>
+              <Heading Size="HeadingSize.Is3">@(PortalRoute?.HeaderText ?? PortalRoute?.Title ?? "Attributes")</Heading>
+              <Paragraph Class="text-disabled">
+                <b>Note:</b> Only one of each attribute can be assigned to the record. All active <b>Attributes</b> of
+                type <b>General</b> and <b>@OtherTypeName</b> will be shown. Any attribute with a <b>Value</b> will be
+                saved. Any without a <b>Value</b> will be removed.
+              </Paragraph>
+              <DataGrid
+                TItem="GeneralAttributeModel"
+                Data="@Data.Results"
+                Responsive="Responsive"
+                Narrow="Narrow"
+                Hoverable="Hoverable"
+                Striped="Striped"
+                Bordered="Bordered"
+                Borderless="Borderless"
+                Filterable="Filterable"
+                ShowCaptions="ShowCaptions"
+                Sortable="Sortable"
+                Resizable="Resizable"
+                ShowPageSizes="ShowPageSizes"
+                ShowPager="ShowPager"
+                PageSizes="PageSizes"
+                PageSize="PageSize"
+                PageSizeChanged="i => { PageSize = i; StateHasChanged(); }"
+                CurrentPage="CurrentPage"
+                PageChanged="e => { CurrentPage = e.Page; StateHasChanged(); }"
+                MaxPaginationLinks="MaxPaginationLinks"
+                TotalItems="@Data.TotalCount"
+                ReadData="@OnReadData"
+                CustomFilter="@OnCustomFilter"
+                SelectedRowChanged="@OnSelectedRowChanged"
+                FilterMethod="DataGridFilterMethod.Contains"
+                CommandMode="DataGridCommandMode.Default"
+                SelectionMode="DataGridSelectionMode.Single"
+                SortMode="DataGridSortMode.Multiple"
+                PagerPosition="DataGridPagerPosition.Bottom" >
+                <DataGridColumns>
+                  <DataGridColumn
+                    TItem="GeneralAttributeModel"
+                    Field="@nameof(GeneralAttributeModel.CustomKey)"
+                    Caption="Key"
+                    Sortable="true" Filterable="true">
+                  </DataGridColumn>
+                  <DataGridColumn
+                    TItem="GeneralAttributeModel"
+                    Context="attrib"
+                    Caption="Value"
+                    Field="@nameof(GeneralAttributeModel.CustomKey)">
+                    <DisplayTemplate>
+                      <input
+                        type="text"
+                        class="form-control"
+                        @onchange="@(e =>
+                        {
+                          Record.SerializableAttributes ??= new();
+                          var value = Record.SerializableAttributes!.GetValueOrDefault(attrib.CustomKey) ?? new()
+                          {
+                            Key = attrib.CustomKey,
+                            SortOrder = attrib.TypeSortOrder,
+                          };
+                          value.Value = e.Value as string;
+                          Record.SerializableAttributes![attrib.CustomKey!] = value;
+                        })"
+                        value="@(Record.SerializableAttributes!.GetValueOrDefault(attrib.CustomKey)?.Value ?? string.Empty)"
+                      />
+                    </DisplayTemplate>
+                  </DataGridColumn>
+                  <DataGridColumn
+                    TItem="GeneralAttributeModel"
+                    Context="attrib"
+                    Caption="Unit of Measure"
+                    Field="@nameof(GeneralAttributeModel.CustomKey)">
+                    <DisplayTemplate>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Each"
+                        @onchange="@(e =>
+                        {
+                          Record.SerializableAttributes ??= new();
+                          var value = Record.SerializableAttributes!.GetValueOrDefault(attrib.CustomKey) ?? new()
+                          {
+                            Value = string.Empty,
+                            Key = attrib.CustomKey,
+                            SortOrder = attrib.TypeSortOrder,
+                          };
+                          value.UofM = e.Value as string;
+                          Record.SerializableAttributes![attrib.CustomKey!] = value;
+                        })"
+                        value="@(Record.SerializableAttributes!.GetValueOrDefault(attrib.CustomKey)?.UofM ?? string.Empty)" />
+                    </DisplayTemplate>
+                  </DataGridColumn>
+                </DataGridColumns>
+                <EmptyTemplate><Div Class="box p-3">No Attributes found.</Div></EmptyTemplate>
+                <LoadingTemplate><Div Class="box p-3"><LoadingBar /></Div></LoadingTemplate>
+                <FirstPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleLeft" /></Span></FirstPageButtonTemplate>
+                <PreviousPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleLeft" /></Span></PreviousPageButtonTemplate>
+                <NextPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleRight" /></Span></NextPageButtonTemplate>
+                <LastPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleRight" /></Span></LastPageButtonTemplate>
+              </DataGrid>
+            </Column>
+          </Row>
+        </Container>
+      </Div>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public IHaveJsonAttributesBaseModel Record { get; set; } = null!;
+
+  /// <summary>Gets or sets the other type key.</summary>
+  /// <value>The other type key.</value>
+  [Parameter, EditorRequired]
+  public string? OtherTypeName { get; set; }
+
+  #region Settable Data for Bindings
+  private GeneralAttributeModel? Selected { get; set; }
+  private GeneralAttributePagedResults? Data { get; set; }
+  private int CurrentPage { get; set; } = 1;
+  private int PageSize { get; set; } = 10;
+  private string? CustomFilterValue { get; set; }
+  #endregion
+
+  #region Static/Unchanging Data for Bindings // TODO@JTG: Tie all of these to an Options object
+  private int MaxPaginationLinks => 5;
+  private static bool ShowPager => true;
+  private static bool Filterable => true;
+  private static bool Responsive => true;
+  private static bool Narrow => true;
+  private static bool Hoverable => false;
+  private static bool Striped => true;
+  private static bool Bordered => true;
+  private static bool Borderless => false;
+  private static bool ShowCaptions => true;
+  private static bool Sortable => true;
+  private static bool Resizable => false;
+  private static bool ShowPageSizes => true;
+  private static int[] PageSizes { get; } = { 10, 20, 30 };
+  #endregion
+  #endregion
+
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    DebugBeginMethod();
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await SetRunningAsync().ConfigureAwait(false);
+    await LoadDataAsync().ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+    DebugEndMethod();
+  }
+
+  private async Task OnReadData(DataGridReadDataEventArgs<GeneralAttributeModel> e)
+  {
+    DebugBeginMethod();
+    var sorts = (
+      from x in e.Columns
+      where x.SortDirection != SortDirection.None
+      select new Sort
+      {
+        Dir = x.SortDirection == SortDirection.Ascending ? "asc" : "desc",
+        Order = x.SortIndex,
+        Field = x.Field,
+      })
+      .ToList();
+    var dto = new MVC.Api.Endpoints.GetGeneralAttributes
+    {
+      Active = true,
+      Paging = new() { Size = PageSize, StartIndex = CurrentPage },
+      Sorts = Contract.CheckEmpty(sorts) ? null : sorts.ToArray(),
+      IDs = editorOptions?.Value?.AllowedEditorAttributeIDs?.ToArray(),
+      IncludeGeneralWithTypeName = true,
+      TypeName = OtherTypeName,
+    };
+    foreach (var column in e.Columns.Where(x => x.SearchValue is not null))
+    {
+      switch (column.Field)
+      {
+        case nameof(SerializableAttributeObject.ID):
+        {
+          dto.ID = column.SearchValue as int?;
+          break;
+        }
+        case nameof(SerializableAttributeObject.Key):
+        {
+          dto.Name = column.SearchValue as string;
+          break;
+        }
+      }
+    }
+    var result = await cvApi.GetGeneralAttributes(dto).ConfigureAwait(false);
+    ////ConsoleDebug(result.data);
+    if (result.data is not null)
+    {
+      Data = result.data;
+    }
+    StateHasChanged();
+    DebugEndMethod();
+  }
+
+  private void OnSelectedRowChanged(GeneralAttributeModel selected)
+  {
+    DebugBeginMethod();
+    if (Selected == selected)
+    {
+      DebugEndMethod();
+      return;
+    }
+    Selected = selected;
+    StateHasChanged();
+    DebugEndMethod();
+  }
+
+  private bool OnCustomFilter(GeneralAttributeModel model)
+  {
+    DebugBeginMethod();
+    // We want to accept empty value as valid or otherwise data grid will not show anything.
+    if (string.IsNullOrEmpty(CustomFilterValue))
+    {
+      DebugEndMethod();
+      return true;
+    }
+    DebugEndMethod();
+    return model.Name?.Contains(CustomFilterValue, StringComparison.OrdinalIgnoreCase ) == true
+      || model.Description?.Contains(CustomFilterValue, StringComparison.OrdinalIgnoreCase ) == true;
+  }
+
+  /// <summary>Loads data.</summary>
+  /// <returns>The data.</returns>
+  private async Task LoadDataAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetGeneralAttributes(
+      new()
+      {
+        Active = true,
+        Paging = new() { Size = PageSize, StartIndex = CurrentPage },
+        IDs = editorOptions?.Value?.AllowedEditorAttributeIDs?.ToArray(),
+        IncludeGeneralWithTypeName = true,
+        TypeName = OtherTypeName,
+      })
+      .ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Data = result.data;
+    }
+    DebugEndMethod();
+  }
+}

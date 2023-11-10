@@ -1,0 +1,95 @@
+﻿<!-- Items in the Bulk Upload Table -->
+<div class="row">
+    <div class="col-12">
+        <button type="button" class="btn btn-primary float-left"
+                ng-click="cefBulkUploadCtrl.clearForm()"
+                data-translate="ui.storefront.bulkUpload.bulkUploadTable.ClearForm"></button>
+        <button type="button" class="btn btn-primary float-right"
+                ng-click="cefBulkUploadCtrl.startOver()"
+                data-translate="ui.storefront.bulkUpload.bulkUploadTable.StartOver"></button>
+    </div>
+    <div class="col-sm-12 table-responsive">
+        <table class="data-table cart-table table table-sm table-striped table-hover"
+               id="tableBulkUploadShoppingCart">
+            <thead>
+                <tr class="first last">
+                    <th class="col-sm-1 d-none d-sm-table-cell"></th>
+                    <th class="col-sm-1" data-translate="ui.storefront.cart.SKU"></th>
+                    <th class="col-sm-2" data-translate="ui.storefront.common.Name"></th>
+                    <th class="col-sm-1" data-translate="ui.storefront.bulkUpload.bulkUploadTable.RequestedQuantity"></th>
+                    <th class="col-sm-6" data-translate="ui.storefront.bulkUpload.bulkUploadTable.RequestedQuantityManipulation"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-if="!cefBulkUploadCtrl.items.length">
+                    <td colspan="11">
+                        <label class="form-control-static font-weight-normal"
+                               data-translate="ui.storefront.bulkUpload.bulkUploadTable.NoItemsHaveBeenAddedForBulkOrder"></label>
+                    </td>
+                </tr>
+                <tr ng-repeat="item in cefBulkUploadCtrl.items">
+                    <td class="form-control-table-cell d-none d-sm-table-cell">
+                        <img alt="{{item.ProductName}}" class="img-fluid"
+                             src="/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg" />
+                    </td>
+                    <td><p ng-bind="item.ProductKey"></p></td>
+                    <td><p ng-bind="item.ProductName"></p></td>
+                    <td><p ng-bind="item.Quantity"></p></td>
+                    <td>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-1"></th>
+                                    <th class="col-sm-1" data-translate="ui.storefront.common.InStock"></th>
+                                    <th class="col-sm-2" data-translate="ui.storefront.common.Price"></th>
+                                    <th class="col-sm-2" data-translate="ui.storefront.bulkUpload.bulkUploadTable.DiscountPrice"></th>
+                                    <th class="col-sm-2" data-translate="ui.storefront.storeDashboard.storeOrderDetail.Order"></th>
+                                    <th class="col-sm-2" data-translate="ui.storefront.storeDashboard.storeQuoteDetail.Quote"></th>
+                                    <th class="col-sm-2" data-translate="ui.storefront.bulkUpload.bulkUploadTable.ItemOrderTotal"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="loc in item.Product.ProductInventoryLocationSections">
+                                    <td ng-bind="loc.InventoryLocationSectionKey"></td>
+                                    <td ng-bind="loc.Quantity"></td>
+                                    <td>
+                                        <a ng-if="loc.InventoryLocationSectionKey == 'UK'"
+                                           data-translate="ui.storefront.bulkUpload.bulkUploadTable.CallForPricing"></a>
+                                        <p ng-if="loc.InventoryLocationSectionKey != 'UK'"
+                                           ng-bind="item.Product.readPrices().base | globalizedCurrency"></p>
+                                    </td>
+                                    <td>
+                                        <p ng-if="loc.InventoryLocationSectionKey != 'UK'"
+                                           ng-bind="item.Product.readPrices().sale | globalizedCurrency"></p>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control"
+                                               min="0" max="{{item.Quantity}}" step="0.0001"
+                                               ng-change="cefBulkUploadCtrl.getTotals(item)"
+                                               ng-model="loc.RequestedQuantity"
+                                               ng-model-options="{updateOn: 'blur'}" />
+                                    </td>
+                                    <td>
+                                        <input ng-if="loc.InventoryLocationSectionKey != 'UK'"
+                                               type="number" class="form-control"
+                                               min="0" step="0.0001"
+                                               ng-model="loc.RequestedQuote"
+                                               ng-model-options="{updateOn: 'blur'}" />
+                                    </td>
+                                    <td>
+                                        <p ng-if="!item.Product.readPrices().isSale && loc.InventoryLocationSectionKey != 'UK'"
+                                           ng-bind="loc.RequestedQuantity * item.Product.readPrices().base | globalizedCurrency"></p>
+                                        <p ng-if="item.Product.readPrices().isSale && loc.InventoryLocationSectionKey != 'UK'"
+                                           ng-bind="loc.RequestedQuantity * item.Product.readPrices().sale | globalizedCurrency"></p>
+                                        <p ng-if="loc.InventoryLocationSectionKey === 'UK'">-</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr/>
+    </div>
+</div>

@@ -1,0 +1,231 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net472</TargetFrameworks>
+    <AssemblyName>Clarity.Ecommerce.UI.StorefrontReact</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.UI.StorefrontReact</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.UI.StorefrontReact</RootNamespace>
+    <ProjectGuid>{E5A4C53E-153F-45C6-A645-5D5DF4797E58}</ProjectGuid>
+    <AnalysisIgnoredDirectories>bower_components;node_moules;lib/bower_components</AnalysisIgnoredDirectories>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>bin\$(AssemblyName).xml</DocumentationFile>
+    <RunCommand>$(MSBuildExtensionsPath64)\..\IIS Express\iisexpress</RunCommand>
+    <RunArguments>/path:"$(MSBuildProjectDirectory)" /port:18084</RunArguments>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="buildsrc\**" />
+    <Compile Remove="build\**" />
+    <Compile Remove="Content\**" />
+    <Compile Remove="framework\**" />
+    <Compile Remove="lib\**" />
+    <Compile Remove="oldCerts\**" />
+    <Compile Remove="public\**" />
+    <Compile Remove="Scripts\**" />
+    <Compile Remove="Skins\**" />
+    <Compile Remove="src\AuctionFinder\**" />
+    <Compile Remove="src\Authentication\**" />
+    <Compile Remove="src\Cart\**" />
+    <Compile Remove="src\Catalog\**" />
+    <Compile Remove="src\Checkout\**" />
+    <Compile Remove="src\Dashboard\**" />
+    <Compile Remove="src\Home\**" />
+    <Compile Remove="src\Legal\**" />
+    <Compile Remove="src\Navigation\**" />
+    <Compile Remove="src\signalR\**" />
+    <Compile Remove="src\StoreLocator\**" />
+    <Compile Remove="src\Tracking\**" />
+    <Compile Remove="src\_meta\**" />
+    <Compile Remove="src\_redux\**" />
+    <Compile Remove="src\_shared\**" />
+    <Content Remove="buildsrc\**" />
+    <Content Remove="build\**" />
+    <Content Remove="Content\**" />
+    <Content Remove="framework\**" />
+    <Content Remove="lib\**" />
+    <Content Remove="oldCerts\**" />
+    <Content Remove="public\**" />
+    <Content Remove="Scripts\**" />
+    <Content Remove="Skins\**" />
+    <Content Remove="src\AuctionFinder\**" />
+    <Content Remove="src\Authentication\**" />
+    <Content Remove="src\Cart\**" />
+    <Content Remove="src\Catalog\**" />
+    <Content Remove="src\Checkout\**" />
+    <Content Remove="src\Dashboard\**" />
+    <Content Remove="src\Home\**" />
+    <Content Remove="src\Legal\**" />
+    <Content Remove="src\Navigation\**" />
+    <Content Remove="src\signalR\**" />
+    <Content Remove="src\StoreLocator\**" />
+    <Content Remove="src\Tracking\**" />
+    <Content Remove="src\_meta\**" />
+    <Content Remove="src\_redux\**" />
+    <Content Remove="src\_shared\**" />
+    <EmbeddedResource Remove="buildsrc\**" />
+    <EmbeddedResource Remove="build\**" />
+    <EmbeddedResource Remove="Content\**" />
+    <EmbeddedResource Remove="framework\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <EmbeddedResource Remove="oldCerts\**" />
+    <EmbeddedResource Remove="public\**" />
+    <EmbeddedResource Remove="Scripts\**" />
+    <EmbeddedResource Remove="Skins\**" />
+    <EmbeddedResource Remove="src\AuctionFinder\**" />
+    <EmbeddedResource Remove="src\Authentication\**" />
+    <EmbeddedResource Remove="src\Cart\**" />
+    <EmbeddedResource Remove="src\Catalog\**" />
+    <EmbeddedResource Remove="src\Checkout\**" />
+    <EmbeddedResource Remove="src\Dashboard\**" />
+    <EmbeddedResource Remove="src\Home\**" />
+    <EmbeddedResource Remove="src\Legal\**" />
+    <EmbeddedResource Remove="src\Navigation\**" />
+    <EmbeddedResource Remove="src\signalR\**" />
+    <EmbeddedResource Remove="src\StoreLocator\**" />
+    <EmbeddedResource Remove="src\Tracking\**" />
+    <EmbeddedResource Remove="src\_meta\**" />
+    <EmbeddedResource Remove="src\_redux\**" />
+    <EmbeddedResource Remove="src\_shared\**" />
+    <None Remove="buildsrc\**" />
+    <None Remove="build\**" />
+    <None Remove="Content\**" />
+    <None Remove="framework\**" />
+    <None Remove="lib\**" />
+    <None Remove="oldCerts\**" />
+    <None Remove="public\**" />
+    <None Remove="Scripts\**" />
+    <None Remove="Skins\**" />
+    <None Remove="src\AuctionFinder\**" />
+    <None Remove="src\Authentication\**" />
+    <None Remove="src\Cart\**" />
+    <None Remove="src\Catalog\**" />
+    <None Remove="src\Checkout\**" />
+    <None Remove="src\Dashboard\**" />
+    <None Remove="src\Home\**" />
+    <None Remove="src\Legal\**" />
+    <None Remove="src\Navigation\**" />
+    <None Remove="src\signalR\**" />
+    <None Remove="src\StoreLocator\**" />
+    <None Remove="src\Tracking\**" />
+    <None Remove="src\_meta\**" />
+    <None Remove="src\_redux\**" />
+    <None Remove="src\_shared\**" />
+    <Content Remove=".eslintrc.json" />
+    <Content Remove="package-lock.json" />
+    <Content Remove="package.json" />
+    <Content Remove="src\_api\.eslintrc.json" />
+    <Content Remove="tsconfig.json" />
+    <Content Remove="tslint.json" />
+    <None Remove=".gitignore" />
+    <None Remove=".npmignore" />
+    <None Remove=".npmrc" />
+    <None Remove=".prettierignore" />
+    <None Remove=".prettierrc" />
+    <None Remove="build.ps1" />
+    <None Remove="buildtool.js" />
+    <None Remove="clarityclient.com-key.pem" />
+    <None Remove="clarityclient.com.pem" />
+    <None Remove="clarityclient.com.pfx" />
+    <None Remove="config-overrides.js" />
+    <None Remove="ConvertPFXtoCert.ps1" />
+    <None Remove="Directory.Build.props" />
+    <None Remove="gulpfile.js" />
+    <None Remove="npm-uber-install.bat" />
+    <None Remove="README.md" />
+    <None Remove="src\App.test.js" />
+    <None Remove="src\App.tsx" />
+    <None Remove="src\axios.ts" />
+    <None Remove="src\index.js" />
+    <None Remove="src\Layout.tsx" />
+    <None Remove="src\react-app-env.d.ts" />
+    <None Remove="src\registerServiceWorker.js" />
+    <None Remove="src\_api\cvApi.Accounts.ts" />
+    <None Remove="src\_api\cvApi.Advertising.ts" />
+    <None Remove="src\_api\cvApi.Attributes.ts" />
+    <None Remove="src\_api\cvApi.Auctions.ts" />
+    <None Remove="src\_api\cvApi.Authentication.ts" />
+    <None Remove="src\_api\cvApi.Brands.ts" />
+    <None Remove="src\_api\cvApi.Categories.ts" />
+    <None Remove="src\_api\cvApi.Contacts.ts" />
+    <None Remove="src\_api\cvApi.Currencies.ts" />
+    <None Remove="src\_api\cvApi.Franchises.ts" />
+    <None Remove="src\_api\cvApi.Geography.ts" />
+    <None Remove="src\_api\cvApi.Globalization.ts" />
+    <None Remove="src\_api\cvApi.Inventory.ts" />
+    <None Remove="src\_api\cvApi.Invoicing.ts" />
+    <None Remove="src\_api\cvApi.JSConfigs.ts" />
+    <None Remove="src\_api\cvApi.Manufacturers.ts" />
+    <None Remove="src\_api\cvApi.Media.ts" />
+    <None Remove="src\_api\cvApi.Messaging.ts" />
+    <None Remove="src\_api\cvApi.Ordering.ts" />
+    <None Remove="src\_api\cvApi.Payments.ts" />
+    <None Remove="src\_api\cvApi.Pricing.ts" />
+    <None Remove="src\_api\cvApi.Products.ts" />
+    <None Remove="src\_api\cvApi.Providers.ts" />
+    <None Remove="src\_api\cvApi.Questionnaire.ts" />
+    <None Remove="src\_api\cvApi.Quoting.ts" />
+    <None Remove="src\_api\cvApi.Returning.ts" />
+    <None Remove="src\_api\cvApi.Reviews.ts" />
+    <None Remove="src\_api\cvApi.Sales.ts" />
+    <None Remove="src\_api\cvApi.Sampling.ts" />
+    <None Remove="src\_api\cvApi.Scheduling.ts" />
+    <None Remove="src\_api\cvApi.shared.ts" />
+    <None Remove="src\_api\cvApi.Shipping.ts" />
+    <None Remove="src\_api\cvApi.Shopping.ts" />
+    <None Remove="src\_api\cvApi.Stores.ts" />
+    <None Remove="src\_api\cvApi.Structure.ts" />
+    <None Remove="src\_api\cvApi.Tracking.ts" />
+    <None Remove="src\_api\cvApi.ts" />
+    <None Remove="src\_api\cvApi.Vendors.ts" />
+    <None Remove="src\_api\cvApi._DtoClasses.ts" />
+    <None Remove="src\_api\cvApi._ServiceClass.ts" />
+    <None Remove="src\_api\index.ts" />
+    <None Remove="start.ps1" />
+    <None Remove="tsc-test.bat" />
+    <None Remove="webpack.config.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\Solution Items\rewrite.outboundRules.config">
+      <Link>rewrite.outboundRules.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Solution Items\rewrite.rewriteMaps.config">
+      <Link>rewrite.rewriteMaps.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Solution Items\rewrite.rules.config">
+      <Link>rewrite.rules.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="web.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="src\_api\cvApi.tstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>cvApi.tt</DependentUpon>
+    </None>
+    <None Update="src\_api\cvApi.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>cvApi.tstxt</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="del &quot;$(ProjectDir)\node_modules\worker-rpc\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\worker-rpc\tsconfig.test.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\@date-io\date-fns\tsconfig.declaration.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\@bcoe\v8-coverage\dist\lib\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\@bcoe\v8-coverage\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\@emotion\hash\types\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\ast-types\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\dotenv\types\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\fastq\test\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\i18next-resources-to-backend\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\uncontrollable\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-background-sync\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-broadcast-update\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-cacheable-response\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-core\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-expiration\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-google-analytics\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-navigation-preload\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-precaching\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-range-requests\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-routing\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-strategies\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-streams\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\workbox-window\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\i18next-browser-languagedetector\tsconfig.nonEsModuleInterop.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\@eslint\eslintrc\node_modules\type-fest\source\tsconfig-json.d.ts&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\ansi-escapes\node_modules\type-fest\source\tsconfig-json.d.ts&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\eslint\node_modules\type-fest\source\tsconfig-json.d.ts&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\tsconfig-paths\src\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\microevent.ts\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)\node_modules\microevent.ts\tsconfig.test.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;exit 0" />
+  </Target>
+</Project>

@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Mapping</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Mapping</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Mapping</RootNamespace>
+    <ProjectGuid>E775460A-62B1-4868-823E-F2E28215E07A</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Mapping.tt" />
+    <None Include="Mapping.ttinclude" />
+    <Content Include="Mapping.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Mapping.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="morelinq" Version="3.4.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="LinqKit" Version="1.2.4" />
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.Core\bin\Debug\net5.0\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.EntityFramework\bin\Debug\net5.0\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <PackageReference Include="LinqKit.EntityFramework" Version="1.2.2" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Encryption\00.Clarity.Ecommerce.Encryption.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+    <ProjectReference Include="..\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Mapping.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Mapping.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

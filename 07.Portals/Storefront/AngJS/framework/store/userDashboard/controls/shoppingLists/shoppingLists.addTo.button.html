@@ -1,0 +1,9 @@
+﻿<button type="button" class="btn btn-secondary {{shoppingListAddToButtonCtrl.classes}}"
+        id="btnShoppingListAddTo{{shoppingListAddToButtonCtrl.index}}"
+        name="btnShoppingListAddTo{{shoppingListAddToButtonCtrl.index}}"
+        translate-cloak
+        translate-attr="{ title: shoppingListAddToButtonCtrl.text,
+                          'aria-label': shoppingListAddToButtonCtrl.text }"
+        ng-bind="shoppingListAddToButtonCtrl.text"
+        ng-click="shoppingListAddToButtonCtrl.onClick()">
+</button>

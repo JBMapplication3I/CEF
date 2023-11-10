@@ -1,0 +1,138 @@
+﻿@using Clarity.Ecommerce.MVC.Api.Models
+@using Clarity.Ecommerce.MVC.Core
+@using Orientation = Blazorise.Orientation
+@inherits TemplatedControllerBase
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+@typeparam TRecord where TRecord : Clarity.Ecommerce.MVC.Api.Models.BaseModel
+@typeparam TPagedRecord where TPagedRecord : Clarity.Ecommerce.MVC.Api.Models.PagedResultsBase<TRecord>
+@typeparam TEndpoint where TEndpoint : Clarity.Ecommerce.MVC.Api.Models.BaseSearchModel, new()
+
+<CascadingValue Value="ViewState">
+  <Row>
+    <Div Class="@("col-sm-12 " + (Narrow ? "col-md-8" : "col-md-5 col-lg-5"))">
+      <Div Class="form-group">
+        <Blazorise.Label For="@(Paging.Name + "_txtQuickFilter")">
+          Quick Filter
+        </Blazorise.Label>
+        <TextEdit
+          ElementId="@(Paging.Name + "_txtQuickFilter")"
+          Disabled="Disabled || ViewState.InputDisable"
+          @bind-Value="Paging.QuickFilter"
+          Placeholder="Quick filter"
+        />
+      </Div>
+    </Div>
+    <Div Class="@(Narrow ? "col-sm-12 col-md-4" : "col-sm-3 col-md-2 col-lg-2")">
+      <Div Class="form-group">
+        <Blazorise.Label For="@(Paging.Name + "_ddlPageSize")">
+          Page Size
+        </Blazorise.Label>
+        <Select
+          TValue="int"
+          ElementId="@(Paging.Name + "_ddlPageSize")"
+          Class="text-right"
+          Disabled="Disabled || ViewState.InputDisable"
+          @bind-SelectedItem="Paging.PageSize">
+          <SelectItem TValue="int" Value="8">8</SelectItem>
+          <SelectItem TValue="int" Value="16">16</SelectItem>
+          <SelectItem TValue="int" Value="32">32</SelectItem>
+          <SelectItem TValue="int" Value="64">64</SelectItem>
+          <SelectItem TValue="int" Value="128">128</SelectItem>
+        </Select>
+      </Div>
+    </Div>
+    <Div Class="@(Narrow ? "col-12" : "col-12 col-sm-9 col-md-5 col-lg-5")">
+      <Div Class="form-group">
+        <Blazorise.Label Class="text-center">
+          @Paging.ShowingLabelContent
+        </Blazorise.Label>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Info"
+              Disabled="Paging.CurrentPage <= 0 || Disabled || ViewState.InputDisable"
+              Clicked="() => Paging.GoToFirstPage()">
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleLeft" Class="fa-fw" />
+            </Blazorise.Button>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Info"
+              Disabled="Paging.CurrentPage <= 0 || Disabled || ViewState.InputDisable"
+              Clicked="() => Paging.GoToPreviousPage()">
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleLeft" Class="fa-fw" />
+            </Blazorise.Button>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+            <Blazorise.Select
+              TValue="int"
+              Style="min-width: 75px;"
+              Disabled="Disabled || ViewState.InputDisable || (Paging.Pages() ?? new int[1]).Length <= 1"
+              @bind-SelectedItem="Paging.CurrentPage">
+              <Repeater Items="Paging.Pages() ?? new int[1]">
+                <SelectItem TValue="int" Value="context">@(context + 1)</SelectItem>
+              </Repeater>
+            </Blazorise.Select>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Info"
+              Disabled="Paging.CurrentPage >= Paging.MaxPage() - 1 || Disabled || ViewState.InputDisable"
+              Clicked="() => Paging.GoToNextPage()">
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleRight" Class="fa-fw" />
+            </Blazorise.Button>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Info"
+              Disabled="Paging.CurrentPage >= Paging.MaxPage() - 1 || Disabled || ViewState.InputDisable"
+              Clicked="() => Paging.GoToLastPage()">
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleRight" Class="fa-fw" />
+            </Blazorise.Button>
+          </Addon>
+        </Addons>
+      </Div>
+    </Div>
+  </Row>
+</CascadingValue>
+
+@code
+{
+  /// <summary>Gets or sets the paging.</summary>
+  /// <value>The paging.</value>
+  [Parameter, EditorRequired]
+  public ServerSidePaging<TRecord, TPagedRecord, TEndpoint> Paging { get; set; } = null!;
+
+  /// <summary>Gets or sets a value indicating whether this object is disabled.</summary>
+  /// <value>True if disabled, false if not.</value>
+  [Parameter]
+  public bool Disabled { get; set; }
+
+  /// <summary>Gets or sets a value indicating whether the UI should be narrow.</summary>
+  /// <value>True if narrow, false if not.</value>
+  [Parameter]
+  public bool Narrow { get; set; }
+
+  /// <summary>Gets or sets the quick filter.</summary>
+  /// <value>The quick filter.</value>
+  [Parameter]
+  public string? QuickFilter { get; set; }
+
+  /// <summary>Gets or sets the quick filter changed.</summary>
+  /// <value>The quick filter changed.</value>
+  [Parameter]
+  public EventCallback<string> QuickFilterChanged { get; set; }
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+  }
+}

@@ -1,0 +1,68 @@
+<div class="row" ng-form="regStepAddressBookBodyCtrl.forms.addressBook">
+    <div class="col-12">
+        <p ng-if="regStepAddressBookBodyCtrl.cefConfig.featureSet.payments.enabled
+                     && regStepAddressBookBodyCtrl.cefConfig.featureSet.shipping.enabled"
+              data-translate="Your account will need both a billing and a shipping address assigned for payments and shipments."></p>
+        <p ng-if="regStepAddressBookBodyCtrl.cefConfig.featureSet.payments.enabled
+                 && !regStepAddressBookBodyCtrl.cefConfig.featureSet.shipping.enabled"
+              data-translate="Your account will need both a billing address assigned for payments"></p>
+        <p ng-if="regStepAddressBookBodyCtrl.cefConfig.featureSet.shipping.enabled
+                 && !regStepAddressBookBodyCtrl.cefConfig.featureSet.payments.enabled"
+              data-translate="Your account will need both a shipping address assigned for shipments"></p>
+    </div>
+    <div class="col-6"
+         ng-if="regStepAddressBookBodyCtrl.cefConfig.featureSet.payments.enabled">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary btn-block mb-3"
+                        id="btnRegAddBilling" name="btnRegAddBilling"
+                        translate-attr="{ title: 'Add a billing address',
+                                          'aria-label': 'Add a billing address' }"
+                        data-translate="Add a billing address"
+                        ng-disabled="regStepAddressBookBodyCtrl.hasBilling"
+                        ng-click="regStepAddressBookBodyCtrl.add(true)">
+                </button>
+            </div>
+            <div class="col-12"
+                 ng-if="regStepAddressBookBodyCtrl.hasBilling">
+                <div cef-contact-address-block
+                     contact="regStepAddressBookBodyCtrl.billing.Slave"
+                     no-links="true"
+                     class="mb-3">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6"
+         ng-if="regStepAddressBookBodyCtrl.cefConfig.featureSet.shipping.enabled">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary btn-block mb-3"
+                        id="btnRegAddShipping" name="btnRegAddShipping"
+                        translate-attr="{ title: 'Add a shipping address',
+                                          'aria-label': 'Add a shipping address' }"
+                        data-translate="Add a shipping address"
+                        ng-disabled="regStepAddressBookBodyCtrl.hasShipping"
+                        ng-click="regStepAddressBookBodyCtrl.add(false)">
+                </button>
+                <button type="button" class="btn btn-secondary btn-block mb-3"
+                        id="btnRegAddShippingByCopyBilling" name="btnRegAddShippingByCopyBilling"
+                        translate-attr="{ title: 'Copy the billing address for shipping',
+                                          'aria-label': 'Copy the billing address for shipping' }"
+                        data-translate="Copy the billing address for shipping"
+                        ng-if="!regStepAddressBookBodyCtrl.hasShipping"
+                        ng-disabled="!regStepAddressBookBodyCtrl.hasBilling"
+                        ng-click="regStepAddressBookBodyCtrl.copyBilling()">
+                </button>
+            </div>
+            <div class="col-12"
+                 ng-if="regStepAddressBookBodyCtrl.hasShipping">
+                <div cef-contact-address-block
+                     contact="regStepAddressBookBodyCtrl.shipping.Slave"
+                     no-links="true"
+                     class="mb-3">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

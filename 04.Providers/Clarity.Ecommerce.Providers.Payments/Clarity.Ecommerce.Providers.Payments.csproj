@@ -1,0 +1,294 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Providers.Payments</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Providers.Payments</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Providers.Payments</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+    <DefineConstants>$(DefineConstants)TRACE;CYBERSOURCE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+    <DefineConstants>$(DefineConstants)TRACE;CYBERSOURCE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+    <NoWarn>$(NoWarn),1573,1591,1712, NU1701</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
+    <NoWarn>$(NoWarn),1573,1591,1712, NU1701</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Connected Services\BridgePayProdService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Update="Connected Services\BridgePayTestService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Update="Connected Services\PaymentechService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BridgePayProdService\Clarity.Ecommerce.Providers.Payments.BridgePayProdService.AuthObjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BridgePayProdService\Clarity.Ecommerce.Providers.Payments.BridgePayProdService.MerchantInfoObjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BridgePayProdService\Clarity.Ecommerce.Providers.Payments.BridgePayProdService.TokenObjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BridgePayProdService\Clarity.Ecommerce.Providers.Payments.BridgePayProdService.VoidRefundObjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BridgePayProdService\RequestHandler.wsdl" />
+    <None Include="Connected Services\BridgePayProdService\RequestHandler.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BridgePayProdService\RequestHandler1.wsdl" />
+    <None Include="Connected Services\BridgePayProdService\RequestHandler1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BridgePayProdService\RequestHandler2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BridgePayProdService\RequestHandler3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BridgePayTestService\Clarity.Ecommerce.Providers.Payments.BridgePayTestService.AuthObjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BridgePayTestService\Clarity.Ecommerce.Providers.Payments.BridgePayTestService.MerchantInfoObjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BridgePayTestService\Clarity.Ecommerce.Providers.Payments.BridgePayTestService.TokenObjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BridgePayTestService\Clarity.Ecommerce.Providers.Payments.BridgePayTestService.VoidRefundObjectResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\BridgePayTestService\RequestHandler.wsdl" />
+    <None Include="Connected Services\BridgePayTestService\RequestHandler.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BridgePayTestService\RequestHandler1.wsdl" />
+    <None Include="Connected Services\BridgePayTestService\RequestHandler1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BridgePayTestService\RequestHandler2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\BridgePayTestService\RequestHandler3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.AccountUpdaterResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.AccountUpdaterResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.EMVHostParametersDownloadResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.EMVParametersResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.EndOfDayResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.EndOfDayResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.FlexCacheResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.FlexCacheResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.InquiryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.InquiryResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.LogMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.LogMessageResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.MarkForCapture2Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.MarkForCaptureResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.MarkForCaptureResponse2Element.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.MarkForCaptureResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.MFCResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.MFCResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.NewOrderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.NewOrderResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.ProfileAddResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.ProfileChangeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.ProfileDeleteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.ProfileFetchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.ProfileResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.ReversalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.ReversalResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.SafetechFraudAnalysisResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.SafetechFraudAnalysisResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.TokenServiceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.TokenServiceResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.UnmarkResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\Clarity.Ecommerce.Providers.Payments.PaymentechService.UnmarkResponseElement.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PaymentechService\PaymentechGateway.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BridgePayTestService\RequestHandler.disco" />
+    <None Include="Connected Services\BridgePayTestService\configuration91.svcinfo" />
+    <None Include="Connected Services\BridgePayTestService\configuration.svcinfo" />
+    <None Include="Connected Services\BridgePayTestService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\BridgePayProdService\RequestHandler.disco" />
+    <None Include="Connected Services\BridgePayProdService\configuration91.svcinfo" />
+    <None Include="Connected Services\BridgePayProdService\configuration.svcinfo" />
+    <None Include="Connected Services\BridgePayProdService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\PaymentechService\configuration91.svcinfo" />
+    <None Include="Connected Services\PaymentechService\configuration.svcinfo" />
+    <None Include="Connected Services\PaymentechService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="UnitedTranz\UT_AddCustomerProfile.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UnitedTranz\UT_CCAuthorizeTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UnitedTranz\UT_CCCaptureTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UnitedTranz\UT_CCSalesWithTokenTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UnitedTranz\UT_CCSaleTemplate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="CyberSource\CyberSourcePaymentsProvider.Refunds.cs" />
+    <Compile Remove="CyberSource\CyberSourcePaymentsProvider.Subscriptions.cs" />
+    <Compile Remove="CyberSource\CyberSourcePaymentsProviderExtensions.cs" />
+    <Compile Remove="Mock\MockPaymentsProvider.Subscriptions.cs" />
+    <Compile Remove="EVO\Request\PayFabricRequest.cs" />
+    <Compile Remove="OrbitalPaymentech\AIR\AccountManager.cs" />
+    <Compile Remove="OrbitalPaymentech\SDK\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Braintree" Version="5.9.0" />
+    <PackageReference Include="CyberSource.Authentication" Version="0.0.0.14" />
+    <PackageReference Include="CyberSource.Rest.Client" Version="0.0.1.23" />
+    <PackageReference Include="log4net" Version="2.0.15" />
+    <PackageReference Include="RestSharp" Version="106.12.0" />
+    <PackageReference Include="SSH.NET" Version="2020.0.1" />
+    <PackageReference Include="Stripe.net" Version="39.59.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.ServiceModel" />
+    <PackageReference Include="AuthorizeNet" Version="1.9.7" />
+    <PackageReference Include="BouncyCastle" Version="1.8.9" />
+    <PackageReference Include="CommonUtils.Cron" Version="1.0.1.25773" />
+    <PackageReference Include="LitleSdkForDotNet" Version="9.3.2" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+    <Reference Include="ServiceStack">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack\bin\Debug\net472\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Client">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Client\bin\Debug\net472\ServiceStack.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Text\bin\Debug\net472\ServiceStack.Text.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <!-- TODO@JTG: RevEng: <PackageReference Include="AuthorizeNet" Version="2.0.2" />-->
+    <!-- TODO@JTG: RevEng: <PackageReference Include="CyberSource" Version="1.4.4" />-->
+    <!-- TODO@JTG: RefTo: <PackageReference Include="Vantiv.LitleSdkForNet.NetStandard" Version="11.4.9" />-->
+    <Reference Include="CommonUtils.Cron">
+      <HintPath>..\..\ThirdParty\CommonUtils.Cron\bin\Debug\net5.0\CommonUtils.Cron.dll</HintPath>
+    </Reference>
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Utilities\00.Clarity.Ecommerce.Utilities.csproj" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+    <ProjectReference Include="..\..\06.Services\06.Clarity.Ecommerce.Service.Core\06.Clarity.Ecommerce.Service.Core.csproj" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net5.0'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net5.0\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;&#xD;&#xA;xcopy &quot;$(TargetDir)AuthorizeNet.dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)Braintree.dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)BouncyCastle.Crypto.dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)CommonUtils.Cron.dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)LitleSdkForDotNet.dll&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_CCSaleTemplate.xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_AddCustomerProfile.xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_CCSalesWithTokenTemplate.xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_CCAuthorizeTemplate.xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_CCCaptureTemplate.xml&quot; &quot;$(SolutionDir)Plugins5\&quot; /Y /C /R /I" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)'=='net472'">
+    <Exec Command="xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).pdb&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(ProjectDir)bin\$(ConfigurationName)\net472\$(TargetName).xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)AuthorizeNet.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)AuthorizeNet.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)BouncyCastle.Crypto.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)CommonUtils.Cron.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)LitleSdkForDotNet.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_CCSaleTemplate.xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_AddCustomerProfile.xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_CCSalesWithTokenTemplate.xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_CCAuthorizeTemplate.xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)UnitedTranz\UT_CCCaptureTemplate.xml&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)cybersource-rest-client-dotnet.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)BrainTree.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)RestSharp.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)NLog.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I&#xD;&#xA;xcopy &quot;$(TargetDir)AuthenticationSdk.dll&quot; &quot;$(SolutionDir)Plugins\&quot; /Y /C /R /I" />
+  </Target>
+</Project>

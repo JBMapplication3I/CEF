@@ -1,0 +1,45 @@
+<!-- step.confirmation.body Template -->
+<div class="row">
+  <div class="col-xs-12">
+    <h3>Please confirm your order information</h3>
+  </div>
+  <div class="col-md-6 mb-3" ng-if="pscbCtrl.currentAccountContact_Bill.Slave">
+    <div class="card">
+      <div class="card-header">
+        <b>Your Billing Information</b>
+      </div>
+      <div class="card-body" style="min-height:300px"
+        ng-if="pscbCtrl.currentAccountContact_Bill.Slave
+          && pscbCtrl.currentAccountContact_Bill.Slave.Address.Street1">
+        <h3 class="bg-decor my-15">Billing To</h3>
+        <div cef-contact-address-block
+          contact="pscbCtrl.currentAccountContact_Bill.Slave"
+          no-links="true">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6" ng-if="pscbCtrl.currentAccountContact_Ship.Slave">
+    <div class="card mb-3">
+      <div class="card-header">
+        <b>Your Shipping Information</b>
+      </div>
+      <div class="card-body" style="min-height:300px"
+        ng-if="pscbCtrl.currentAccountContact_Ship.Slave
+          && pscbCtrl.currentAccountContact_Ship.Slave.Address.Street1">
+          <h3 class="bg-decor my-15">Shipping To</h3>
+        <div cef-contact-address-block
+          contact="pscbCtrl.currentAccountContact_Ship.Slave"
+          no-links="true">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <div cef-mini-cart-confirmation
+      lookup-key="pscbCtrl.lookupKey"
+      quantity-items-iterate="20"
+      class="mb-3">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,466 @@
+﻿@page "/catalog/products"
+@inherits MVC.Core.GridViewTemplatedControllerBase<ProductPagedResults, ProductModel, MVC.Api.Endpoints.AdminGetProductsForPortal>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="catalogProductsPage">
+    @if (ViewState.loading || CurrentDataCollection is null && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (CurrentDataCollection is not null)
+    {
+      <Div Class="page-content-with-footer">
+        <Blazorise.Container Fluid="true">
+          <Row>
+            <Column>
+              <Div Class="d-flex justify-content-between align-items-center">
+                <Heading Size="HeadingSize.Is3">
+                  <Blazorise.Icons.FontAwesome.Icon Name="@("fa-box-full")" Class="mr-2" />
+                  @(PortalRoute?.HeaderText ?? PortalRoute?.Title ?? "Products")
+                </Heading>
+                <Div>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Primary"
+                    Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, CreatorRouteBase))">
+                    Add Product
+                  </Blazorise.Button>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Primary"
+                    Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, "/catalog/products/importer"))">
+                    Import Products
+                  </Blazorise.Button>
+                </Div>
+              </Div>
+              <Validations
+                Mode="ValidationMode.Manual"
+                ValidateOnLoad="false"
+                EditContext="EditContext">
+                <DataGrid
+                  TItem="ProductModel"
+                  @ref="TheDataGrid"
+                  Data="@CurrentDataCollection.Results"
+                  Responsive="Responsive"
+                  Narrow="Narrow"
+                  Hoverable="Hoverable"
+                  Striped="Striped"
+                  Bordered="Bordered"
+                  Borderless="Borderless"
+                  Filterable="Filterable"
+                  ShowCaptions="ShowCaptions"
+                  Sortable="Sortable"
+                  Resizable="Resizable"
+                  ShowPageSizes="ShowPageSizes"
+                  ShowPager="ShowPager"
+                  PageSizes="PageSizes"
+                  PageSize="CurrentPageSize"
+                  PageSizeChanged="@(i => { CurrentPageSize = i; StateHasChanged(); })"
+                  CurrentPage="CurrentPage"
+                  PageChanged="e => { CurrentPage = e.Page; StateHasChanged(); }"
+                  MaxPaginationLinks="MaxPaginationLinks"
+                  TotalItems="@CurrentDataCollection.TotalCount"
+                  ReadData="@OnReadData"
+                  CustomFilter="@OnCustomFilter"
+                  SelectedRowChanged="@OnSelectedRowChanged"
+                  FilterMethod="DataGridFilterMethod.Contains"
+                  CommandMode="DataGridCommandMode.Default"
+                  SelectionMode="DataGridSelectionMode.Single"
+                  SortMode="DataGridSortMode.Multiple"
+                  PagerPosition="DataGridPagerPosition.Bottom"
+                  FixedHeader="true"
+                  FixedHeaderDataGridHeight="100%"
+                  FixedHeaderDataGridMaxHeight="100%"
+                  ResizeMode="TableResizeMode.Header">
+                  <DataGridColumns>
+                    <DataGridNumericColumn
+                      TItem="ProductModel"
+                      Field="@nameof(BaseModel.ID)"
+                      Caption="#"
+                      Sortable="true"
+                      Filterable="true"
+                      FilterCellClass="text-right"
+                      DisplayFormat="{0:00000}"
+                      Width="5%">
+                      <FilterTemplate>
+                        <NumericEdit
+                          Style="min-width: 90px;"
+                          TValue="int?"
+                          Value="@dto.ID"
+                          ValueExpression="@(() => dto.ID)"
+                          ValueChanged="@(val => { dto.ID = val; OnFilter(); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridNumericColumn>
+                    <DataGridColumn
+                      TItem="ProductModel"
+                      Field="@nameof(BaseModel.CustomKey)"
+                      Caption="Key"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="10%">
+                      <FilterTemplate>
+                        <TextEdit
+                          Style="min-width: 200px;"
+                          Text="@dto.CustomKey"
+                          TextExpression="@(() => dto.CustomKey)"
+                          TextChanged="@(val => { dto.CustomKey = val; OnFilter(); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="ProductModel"
+                      Field="@nameof(NameableBaseModel.Name)"
+                      Caption="Name"
+                      Sortable="true"
+                      Filterable="true">
+                      <FilterTemplate>
+                        <TextEdit
+                          Style="min-width: 200px;"
+                          Text="@dto.Name"
+                          TextExpression="@(() => dto.Name)"
+                          TextChanged="@(val => { dto.Name = val; OnFilter(); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="ProductModel"
+                      Field="@nameof(ProductModel.SeoUrl)"
+                      Caption="SEO URL"
+                      Sortable="true"
+                      Filterable="true">
+                      <FilterTemplate>
+                        <TextEdit
+                          Style="min-width: 200px;"
+                          Text="@dto.SeoUrl"
+                          TextExpression="@(() => dto.SeoUrl)"
+                          TextChanged="@(val => { dto.SeoUrl = val; OnFilter(); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="ProductModel"
+                      Field="@nameof(StatusableBaseModel.StatusID)"
+                      Caption="Status"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%">
+                      <FilterTemplate>
+                        <Select
+                          TValue="int?"
+                          Style="min-width: 150px;"
+                          SelectedValue="@dto.StatusID"
+                          SelectedValueExpression="@(() => dto.StatusID)"
+                          SelectedValueChanged="@(val => { dto.StatusID = val; OnFilter(); })">
+                          <SelectItem TValue="int?" Value="@null">Any</SelectItem>
+                          @if (Contract.CheckNotEmpty(Statuses))
+                          {
+                            <Repeater Items="Statuses">
+                              <ChildContent Context="status">
+                                <SelectItem TValue="int?" Value="@status.ID">@StatusIDToDisplayName(status.ID)</SelectItem>
+                              </ChildContent>
+                            </Repeater>
+                          }
+                        </Select>
+                      </FilterTemplate>
+                      <DisplayTemplate>
+                        @StatusIDToDisplayName(context.StatusID)
+                      </DisplayTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="ProductModel"
+                      Field="@nameof(ProductModel.TypeID)"
+                      Caption="Type"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%">
+                      <FilterTemplate>
+                        <Select
+                          TValue="int?"
+                          Style="min-width: 150px;"
+                          SelectedValue="@dto.TypeID"
+                          SelectedValueExpression="@(() => dto.TypeID)"
+                          SelectedValueChanged="@(val => { dto.TypeID = val; OnFilter(); })">
+                          <SelectItem TValue="int?" Value="@null">Any</SelectItem>
+                          @if (Contract.CheckNotEmpty(Types))
+                          {
+                            <Repeater Items="Types">
+                              <ChildContent Context="type">
+                                <SelectItem TValue="int?" Value="@type.ID">@TypeIDToDisplayName(type.ID)</SelectItem>
+                              </ChildContent>
+                            </Repeater>
+                          }
+                        </Select>
+                      </FilterTemplate>
+                      <DisplayTemplate>
+                        @TypeIDToDisplayName(context.TypeID)
+                      </DisplayTemplate>
+                    </DataGridColumn>
+                    <DataGridCheckColumn
+                      TItem="ProductModel"
+                      Field="@nameof(ProductModel.IsVisible)"
+                      Caption="Visible"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%"
+                      CellClass="@(_ => "text-center")">
+                      <FilterTemplate>
+                        <Blazorise.Select
+                          TValue="bool?"
+                          Style="min-width: 75px;"
+                          SelectedValue="dto.IsVisible"
+                          SelectedValueExpression="@(() => dto.IsVisible)"
+                          SelectedValueChanged="@(val => { dto.IsVisible = val; OnFilter(); })">
+                          <SelectItem TValue="bool?" Value="@null">Any</SelectItem>
+                          <SelectItem TValue="bool?" Value="@true">Yes</SelectItem>
+                          <SelectItem TValue="bool?" Value="@false">No</SelectItem>
+                        </Blazorise.Select>
+                      </FilterTemplate>
+                      <DisplayTemplate>
+                        <Check
+                          TValue="bool"
+                          Checked="context.IsVisible"
+                          Disabled="true"
+                        />
+                      </DisplayTemplate>
+                    </DataGridCheckColumn>
+                    <DataGridCheckColumn
+                      TItem="ProductModel"
+                      Field="@nameof(ProductModel.IsDiscontinued)"
+                      Caption="Disc."
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%"
+                      CellClass="@(_ => "text-center")">
+                      <FilterTemplate>
+                        <Blazorise.Select
+                          TValue="bool?"
+                          Style="min-width: 75px;"
+                          SelectedValue="dto.IsDiscontinued"
+                          SelectedValueExpression="@(() => dto.IsDiscontinued)"
+                          SelectedValueChanged="@(val => { dto.IsDiscontinued = val; OnFilter(); })">
+                          <SelectItem TValue="bool?" Value="@null">Any</SelectItem>
+                          <SelectItem TValue="bool?" Value="@true">Yes</SelectItem>
+                          <SelectItem TValue="bool?" Value="@false">No</SelectItem>
+                        </Blazorise.Select>
+                      </FilterTemplate>
+                      <DisplayTemplate>
+                        <Check
+                          TValue="bool"
+                          Checked="context.IsDiscontinued"
+                          Disabled="true"
+                        />
+                      </DisplayTemplate>
+                    </DataGridCheckColumn>
+                    <DataGridCheckColumn
+                      TItem="ProductModel"
+                      Field="@nameof(ProductModel.NothingToShip)"
+                      Caption="No Ship"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%"
+                      CellClass="@(_ => "text-center")">
+                      <FilterTemplate>
+                        <Blazorise.Select
+                          TValue="bool?"
+                          Style="min-width: 75px;"
+                          SelectedValue="dto.NothingToShip"
+                          SelectedValueExpression="@(() => dto.NothingToShip)"
+                          SelectedValueChanged="@(val => { dto.NothingToShip = val; OnFilter(); })">
+                          <SelectItem TValue="bool?" Value="@null">Any</SelectItem>
+                          <SelectItem TValue="bool?" Value="@true">Yes</SelectItem>
+                          <SelectItem TValue="bool?" Value="@false">No</SelectItem>
+                        </Blazorise.Select>
+                      </FilterTemplate>
+                      <DisplayTemplate>
+                        <Check
+                          TValue="bool"
+                          Checked="context.NothingToShip"
+                          Disabled="true"
+                        />
+                      </DisplayTemplate>
+                    </DataGridCheckColumn>
+                    <DataGridColumn
+                      TItem="ProductModel"
+                      Field="@nameof(ProductModel.ID)"
+                      Caption=""
+                      Sortable="false"
+                      Filterable="false"
+                      Width="5%">
+                      <DisplayTemplate>
+                        <Blazorise.Button
+                          Type="ButtonType.Button"
+                          Color="Color.Link"
+                          Clicked="@(() => OnItemViewClicked(context.ID))">
+                          View
+                        </Blazorise.Button>
+                      </DisplayTemplate>
+                    </DataGridColumn>
+                  </DataGridColumns>
+                  <EmptyTemplate><Div Class="box p-3">No records found.</Div></EmptyTemplate>
+                  <LoadingTemplate><Div Class="box p-3"><Progress Size="Size.Small" Color="Color.Primary" Value="35"></Progress></Div></LoadingTemplate>
+                  <FirstPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleLeft" /></Span></FirstPageButtonTemplate>
+                  <PreviousPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleLeft" /></Span></PreviousPageButtonTemplate>
+                  <NextPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleRight" /></Span></NextPageButtonTemplate>
+                  <LastPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleRight" /></Span></LastPageButtonTemplate>
+                </DataGrid>
+              </Validations>
+            </Column>
+          </Row>
+        </Blazorise.Container>
+      </Div>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridViewRouteBase => "/catalog/products";
+
+  /// <inheritdoc />
+  protected override string EditorRouteBase => GridViewRouteBase + "/editor/";
+
+  /// <inheritdoc />
+  protected override string CreatorRouteBase => GridViewRouteBase + "/creator";
+
+  #region Dynamic Properties for UI
+  ////private int? IDFilterValue { get; set; }
+  ////private string? CustomKeyFilterValue { get; set; }
+  ////private string? NameFilterValue { get; set; }
+  ////private string? SeoUrlFilterValue { get; set; }
+  ////private int SelectedStatusFilter { get; set; }
+  private List<StatusModel>? Statuses { get; set; }
+  private DataGrid<ProductModel>? TheDataGrid { get; set; }
+  private List<TypeModel>? Types { get; set; }
+  #endregion
+  #endregion
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedInitialDataAsync()
+  {
+    return Task.WhenAll(LoadStatusesAsync(), LoadTypesAsync());
+  }
+
+  /// <inheritdoc />
+  protected override async Task<MVC.Core.IHttpPromiseCallbackArg<ProductPagedResults?>> FilteredDataLoadCallAsync(
+    DataGridReadDataEventArgs<ProductModel>? e)
+  {
+    DebugBeginMethod();
+    dto.Active = true;
+    dto.Paging ??= new();
+    dto.Paging.Size = CurrentPageSize;
+    dto.Paging.StartIndex = CurrentPage;
+    // NOTE: Appropriate MasterID check is enforced api-side
+    await ExtendSearchDTOAsync(e).ConfigureAwait(false);
+    DebugEndMethod();
+    return await cvApi.AdminGetProductsForPortal(dto).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  protected override Task<MVC.Core.IHttpPromiseCallbackArg<ProductPagedResults?>> InitialDataLoadCallAsync()
+  {
+    return FilteredDataLoadCallAsync(null);
+  }
+
+  /// <inheritdoc />
+  protected override bool CustomFilterCheck(ProductModel model)
+  {
+    return true;
+    @*
+    return model.Name?.Contains(CustomFilterValue, StringComparison.OrdinalIgnoreCase) == true
+      || model.Description?.Contains(CustomFilterValue, StringComparison.OrdinalIgnoreCase) == true
+      || model.SeoKeywords?.Contains(CustomFilterValue, StringComparison.OrdinalIgnoreCase) == true;
+    *@
+  }
+
+  /// <summary>Extend search data transfer object.</summary>
+  /// <param name="e">The DataGridReadDataEventArgs{ProductModel}? to process.</param>
+  /// <returns>A Task.</returns>
+  protected /*override*/ Task ExtendSearchDTOAsync(DataGridReadDataEventArgs<ProductModel>? e)
+  {
+    DebugBeginMethod();
+    List<Sort>? sorts = null;
+    // NOTE: MasterID, Active, AsListing are enforced on api-side
+    if (e is not null)
+    {
+      ConsoleDebug("e is not null");
+      sorts = (
+        from dataGridColumnInfo in e.Columns
+        where dataGridColumnInfo.SortDirection != SortDirection.None
+        select new Sort
+        {
+          Dir = dataGridColumnInfo.SortDirection == SortDirection.Ascending ? "asc" : "desc",
+          Order = dataGridColumnInfo.SortIndex,
+          Field = dataGridColumnInfo.Field,
+        })
+        .ToList();
+    }
+    dto.Sorts = Contract.CheckEmpty(sorts) ? null : sorts!.ToArray();
+    DebugEndMethod();
+    return Task.CompletedTask;
+  }
+
+  private string StatusIDToDisplayName(int id)
+  {
+    if (!Contract.CheckValidID(id) || Contract.CheckEmpty(Statuses))
+    {
+      return "Unknown";
+    }
+    var found = Statuses!.SingleOrDefault(x => x.ID == id);
+    if (found is not null)
+    {
+      return found.DisplayName ?? found.Name ?? "Unknown";
+    }
+    return "Unknown";
+  }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetProductStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+
+  private string TypeIDToDisplayName(int id)
+  {
+    if (!Contract.CheckValidID(id) || Contract.CheckEmpty(Types))
+    {
+      return "Unknown";
+    }
+    var found = Types!.SingleOrDefault(x => x.ID == id);
+    if (found is not null)
+    {
+      return found.DisplayName ?? found.Name ?? "Unknown";
+    }
+    return "Unknown";
+  }
+
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetProductTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+}

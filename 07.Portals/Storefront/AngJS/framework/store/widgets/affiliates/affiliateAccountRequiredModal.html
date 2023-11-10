@@ -1,0 +1,54 @@
+<div class="modal-header bg-dark text-light">
+  <h3 class="modal-title" sid="SelectorModalHeaderText">
+    Please choose an account to manage
+  </h3>
+  <!--
+  <button type="button" class="close"
+    id="btnSelectorModalCancelHeader"
+    translate-attr="{ title: 'ui.storefront.common.Close',
+                      'aria-label': 'ui.storefront.common.Close' }"
+    ng-click="aarmCtrl.cancel()">
+    <i class="far fa-times text-light" aria-hidden="true"></i>
+    <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+  </button>
+  -->
+</div>
+<div class="modal-body form-vertical" ng-form="aarmCtrl.forms.selector">
+  <div class="row">
+    <div class="col-12">
+      <select class="form-control custom-select"
+        id="ddlSelectedAccountKeySoloModal"
+        name="ddlSelectedAccountKeySoloModal"
+        ng-if="aarmCtrl.accessibleAccounts.length"
+        ng-required="true"
+        ng-model-options="{ updateOn: 'default', debounce: 500 }"
+        ng-options="a.value as a.label for a in aarmCtrl.accessibleAccounts"
+        ng-model="aarmCtrl.selectedAccountKey">
+        <option value="" ng-disabled="true">You must select an account</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div ng-if="aarmCtrl.viewState.hasError"
+    class="alert alert-danger mb-0 p-2" role="alert">
+    <p class="text-left small"><span ng-repeat="m in aarmCtrl.viewState.errorMessages"
+      >{{$first ? '' : ' '}}{{m}}</span></p>
+  </div>
+  <!--
+  <button type="button" class="btn btn-outline-secondary"
+    id="btnSelectorCancelFooter" name="btnSelectorCancelFooter"
+    translate-attr="{ title: 'ui.storefront.common.Cancel',
+                      'aria-label': 'ui.storefront.common.Cancel' }"
+    data-translate="ui.storefront.common.Cancel"
+    ng-click="aarmCtrl.cancel()">
+  </button>
+  -->
+  <button type="button" class="btn btn-primary"
+    id="btnSelectorChooseFooter" name="btnSelectorChooseFooter"
+    translate-attr="{ title: 'Choose', 'aria-label': 'Choose' }"
+    ng-disabled="aarmCtrl.forms.selector.$invalid || aarmCtrl.viewState.running"
+    ng-click="aarmCtrl.ok()">
+    Choose
+  </button>
+</div>

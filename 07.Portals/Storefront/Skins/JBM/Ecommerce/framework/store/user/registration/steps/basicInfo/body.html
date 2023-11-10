@@ -1,0 +1,522 @@
+<div class="row" ng-form="regStepBasicInfoBodyCtrl.forms.basicInfo">
+  <div class="col-12">
+    <text-input-form-group
+      key="CompanyName"
+      label-key="ui.storefront.common.Company"
+      ng-required="true"
+      ng-model="regStepBasicInfoBodyCtrl.step.basicInfoCompany">
+    </text-input-form-group>
+  </div>
+  <div class="col-12"
+    cef-contact-widget
+    contact="regStepBasicInfoBodyCtrl.basicInfoContact"
+    hide-key="true"
+    hide-fax="true"
+    hide-address="true"
+    hide-more-phones="true"
+    address-title="regStepBasicInfoBodyCtrl.addressTitle"
+    use-phone-prefix-lookups="regStepBasicInfoBodyCtrl.usePhonePrefixLookups"
+    restricted-shipping="regStepBasicInfoBodyCtrl.restrictedShipping"
+    username="regStepBasicInfoBodyCtrl.username"
+    username-is-email="regStepBasicInfoBodyCtrl.usernameIsEmail"
+    enforce-unique-email="true"
+    on-input-change="regStepBasicInfoBodyCtrl.onChange()"
+    id-suffix="regStepBasicInfoBodyCtrl.idSuffix">
+  </div>
+  <div class="col-12">
+    <!--business type-->
+    <select-form-group
+      key="businessType"
+      label-text="Business Type"
+      selections="regStepBasicInfoBodyCtrl.businessTypeSelections"
+      include-null="true"
+      null-text="Choose one..."
+      ng-form-classes="select-business-type"
+      ng-model="regStepBasicInfoBodyCtrl.step.businessType"
+      ng-required="false">
+    </select-form-group>
+      <!--DB Number-->
+    <text-input-form-group
+      key="dbnumber"
+      label-key="ui.storefront.common.dbNumber"
+      ng-required="false"
+      ng-model="regStepBasicInfoBodyCtrl.step.dunsNumber">
+    </text-input-form-group>
+    <div class="row">
+      <div class="col-6 d-flex align-items-center my-4">
+        <label class="font-weight-bold">Is Your Facility Sales Tax Exempt? <span class="text-danger">*</span></label>
+        <div class="d-flex flex-column ml-3 custom-control custom-radio"
+          ng-init="regStepBasicInfoBodyCtrl.step.taxExempt='false'">
+          <label class="font-weight-bold">Yes</label>
+          <input
+            type="radio"
+            ng-model="regStepBasicInfoBodyCtrl.step.taxExempt"
+            value="true"
+            name="taxExemptGroup"
+            ng-required="true"
+          />
+        </div>
+        <div class="d-flex flex-column ml-3">
+          <label class="font-weight-bold">No</label>
+          <input
+            type="radio"
+            ng-model="regStepBasicInfoBodyCtrl.step.taxExempt"
+            value="false"
+            name="taxExemptGroup"
+            ng-required="true"
+          />
+        </div>
+      </div>
+      <text-input-form-group
+        ng-if="regStepBasicInfoBodyCtrl.step.taxExempt == 'true'"
+        class="col-6"
+        key="TaxExemptNumber"
+        label-key="ui.storefront.common.taxExemptNumber"
+        ng-required="true"
+        ng-model="regStepBasicInfoBodyCtrl.step.taxExemptNumber">
+      </text-input-form-group>
+    </div>
+    <div class="row">
+      <text-input-form-group
+        class="col-md-6"
+        key="EINNumber"
+        label-key="ui.storefront.common.einNumber"
+        ng-required="true"
+        ng-model="regStepBasicInfoBodyCtrl.step.einNumber">
+      </text-input-form-group>
+      <text-input-form-group
+        class="col-md-6"
+        key="DEANumber"
+        label-key="ui.storefront.common.deaNumber"
+        ng-required="false"
+        ng-model="regStepBasicInfoBodyCtrl.step.deaNumber">
+      </text-input-form-group>
+    </div>  
+    <div class="row">
+      <text-input-form-group
+        class="col-md-6"
+        key="MedicalLicenseNumber"
+        label-key="ui.storefront.common.medicalLicenseNumber"
+        ng-required="false"
+        ng-model="regStepBasicInfoBodyCtrl.step.medicalLicenseNumber">
+      </text-input-form-group>
+      <select-form-group
+        ng-if="regStepBasicInfoBodyCtrl.regions.length"
+        class="col-md-6"
+        key="MedicalLicenseState"
+        label-key="Medical License State"
+        selections="regStepBasicInfoBodyCtrl.regions"
+        include-null="true"
+        null-key="ui.storefront.common.geography.State.SelectA"
+        ng-required="false"
+        hide-option-key="true"
+        ng-model="regStepBasicInfoBodyCtrl.step.medicalLicenseState">
+      </select-form-group>
+    </div> 
+    <text-input-form-group
+      key="MedicalLicenseHolderName"
+      label-key="ui.storefront.common.medicalLicenseHolderName"
+      ng-required="false"
+      ng-model="regStepBasicInfoBodyCtrl.step.medicalLicenseHolderName">
+    </text-input-form-group>
+    <select-form-group
+      key="businessMedicalType"
+      label-text="Business Medical Type"
+      selections="regStepBasicInfoBodyCtrl.businessMedicalTypeSelections"
+      include-null="true"
+      null-text="Choose one..."
+      ng-form-classes="select-business-type"
+      ng-required="false",
+      ng-model="regStepBasicInfoBodyCtrl.step.businessMedicalType">
+    </select-form-group>
+    <text-input-form-group
+      ng-if="$parent.$parent.$parent.$parent.registrationCtrl.userRegistrationTypeSelectionID == 2"
+      key="estimatedMonthlyPurchases"
+      label-key="ui.storefront.common.estimatedMonthlyPurchases"
+      ng-required="false"
+      ng-model="regStepBasicInfoBodyCtrl.step.estimatedMonthlyPurchases">
+    </text-input-form-group>
+    <h3>Accounts Payable Contact Info</h3>
+    <div class="row">
+      <text-input-form-group
+        class="col-md-6"
+        key="AccountPayableContactName"
+        label-key="ui.storefront.common.AccountPayableContactName"
+        ng-required="true"
+        ng-model="regStepBasicInfoBodyCtrl.step.accountPayableContactName">
+      </text-input-form-group>
+      <text-input-form-group
+        class="col-md-6"
+        is-phone="true"
+        placeholder-text="+1(555)555-5555 x55555"
+        key="AccountPayableContactPhone"
+        label-key="ui.storefront.common.AccountPayableContactPhone"
+        ng-required="true"
+        ng-model="regStepBasicInfoBodyCtrl.step.accountPayableContactPhone">
+      </text-input-form-group>
+    </div>
+    <text-input-form-group
+      key="AccountPayableContactEmail"
+      is-email="true"
+      placeholder-text="Email"
+      label-key="ui.storefront.common.AccountPayableContactEmail"
+      ng-required="false"
+      ng-model="regStepBasicInfoBodyCtrl.step.accountPayableContactEmail">
+    </text-input-form-group>
+    <text-input-form-group
+      ng-if="regStepBasicInfoBodyCtrl.step.accountPayableInvoiceMethod == 'Email'"
+      key="AccountPayableContactEmailForInvoices"
+      label-key="ui.storefront.common.AccountPayableContactEmailForInvoices"
+      ng-required="true"
+      ng-model="regStepBasicInfoBodyCtrl.step.accountPayableContactEmailForInvoices">
+    </text-input-form-group>
+    <select-form-group
+      key="AccountPayableContactPreferredInvoiceMethod"
+      label-text="Preferred Invoice Delivery Method"
+      selections="regStepBasicInfoBodyCtrl.accountPayableInvoiceMethod"
+      include-null="true"
+      null-text="Choose one..."
+      ng-form-classes="select-business-type"
+      ng-required="true"
+      ng-model="regStepBasicInfoBodyCtrl.step.accountPayableInvoiceMethod">
+    </select-form-group>
+    <hr />
+    <div ng-if="$parent.$parent.$parent.$parent.registrationCtrl.userRegistrationTypeSelectionID !== 2">
+      <h3>Payment and Banking Information</h3>
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingName"
+          label-key="ui.storefront.common.PaymentBankingName"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingName">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingTitle"
+          label-key="ui.storefront.common.PaymentBankingTitle"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingTitle">
+        </text-input-form-group>
+      </div>
+      <h6>Additional Entries (Optional)</h6>
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingOptionalName"
+          label-key="ui.storefront.common.PaymentBankingOptionalName"
+          ng-required="false"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingOptionalName">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingOptionalTitle"
+          label-key="ui.storefront.common.PaymentBankingOptionalTitle"
+          ng-required="false"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingOptionalTitle">
+        </text-input-form-group>
+      </div>
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingResponsiblePerson"
+          label-key="ui.storefront.common.PaymentBankingResponsiblePerson"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingResponsiblePerson">
+        </text-input-form-group>
+      </div>
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingBankName"
+          label-key="ui.storefront.common.PaymentBankingBankName"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingBankName">
+        </text-input-form-group>
+        <select-form-group
+          class="col-md-6"
+          key="PaymentBankingAccountType"
+          label-text="Type of Account"
+          selections="regStepBasicInfoBodyCtrl.paymentBankingAccountTypes"
+          include-null="true"
+          null-text="Choose One..."
+          ng-form-classes="select-account-type"
+          ng-required="false"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingAccountType">
+        </select-form-group>
+      </div>
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingBankContactFirstName"
+          label-key="ui.storefront.common.PaymentBankingBankContactFirstName"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingBankContactFirstName">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingBankContactLastName"
+          label-key="ui.storefront.common.PaymentBankingBankContactLastName"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingBankContactLastName">
+        </text-input-form-group>
+      </div>
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="PaymentBankingPhone"
+          ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingPhone"
+          label-key="ui.storefront.common.Phone"
+          placeholder-text="+1(555)555-5555 x55555"
+          is-phone="true"
+          ng-required="true">
+        </text-input-form-group>
+        <text-input-form-group
+            class="col-md-6"
+            key="PaymentBankingFax"
+            ng-model="regStepBasicInfoBodyCtrl.step.paymentBankingFax"
+            label-key="ui.storefront.common.Fax"
+            placeholder-text="Fax"
+            ng-required="false"
+            is-fax="true">
+        </text-input-form-group>
+      </div>
+      <hr />
+      <h6>Business References</h6>
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="BusinessReferencesName1"
+          label-key="ui.storefront.common.BusinessReferencesName"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesName1">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-6"
+          key="BusinessReferencesContact1"
+          label-key="ui.storefront.common.BusinessReferencesContact"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesContact1">
+        </text-input-form-group>
+      </div>
+      <div class="row">
+        <text-input-form-group
+            class="col-md-4"
+            key="BusinessReferencesEmail1"
+            ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesEmail1"
+            label-key="ui.storefront.common.Email"
+            placeholder-key="ui.storefront.common.Email"
+            ng-required="true"
+            is-email="true">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-4"
+          key="BusinessReferencesPhone1"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesPhone1"
+          label-key="ui.storefront.common.Phone"
+          placeholder-text="+1(555)555-5555 x55555"
+          is-phone="true"
+          ng-required="true">
+        </text-input-form-group>
+        <text-input-form-group
+            class="col-md-4"
+            key="BusinessReferencesFax1"
+            ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesFax1"
+            label-key="ui.storefront.common.Fax"
+            placeholder-text="Fax"
+            ng-required="false"
+            is-fax="true">
+        </text-input-form-group>
+      </div>
+      <hr />
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="BusinessReferencesName2"
+          label-key="ui.storefront.common.BusinessReferencesName"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesName2">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-6"
+          key="BusinessReferencesContact2"
+          label-key="ui.storefront.common.BusinessReferencesContact"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesContact2">
+        </text-input-form-group>
+      </div>
+      <div class="row">
+        <text-input-form-group
+            class="col-md-4"
+            key="BusinessReferencesEmail2"
+            ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesEmail2"
+            label-key="ui.storefront.common.Email"
+            placeholder-key="ui.storefront.common.Email"
+            ng-required="true"
+            is-email="true">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-4"
+          key="BusinessReferencesPhone2"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesPhone2"
+          label-key="ui.storefront.common.Phone"
+          placeholder-text="+1(555)555-5555 x55555"
+          is-phone="true"
+          ng-required="true">
+        </text-input-form-group>
+        <text-input-form-group
+            class="col-md-4"
+            key="BusinessReferencesFax2"
+            ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesFax2"
+            label-key="ui.storefront.common.Fax"
+            placeholder-text="Fax"
+            ng-required="false"
+            is-fax="true">
+        </text-input-form-group>
+      </div>
+      <hr />
+      <div class="row">
+        <text-input-form-group
+          class="col-md-6"
+          key="BusinessReferencesName3"
+          label-key="ui.storefront.common.BusinessReferencesName"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesName3">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-6"
+          key="BusinessReferencesContact3"
+          label-key="ui.storefront.common.BusinessReferencesContact"
+          ng-required="true"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesContact3">
+        </text-input-form-group>
+      </div>
+      <div class="row">
+        <text-input-form-group
+            class="col-md-4"
+            key="BusinessReferencesEmail3"
+            ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesEmail3"
+            label-key="ui.storefront.common.Email"
+            placeholder-key="ui.storefront.common.Email"
+            ng-required="true"
+            is-email="true">
+        </text-input-form-group>
+        <text-input-form-group
+          class="col-md-4"
+          key="BusinessReferencesPhone3"
+          ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesPhone3"
+          label-key="ui.storefront.common.Phone"
+          placeholder-text="+1(555)555-5555 x55555"
+          is-phone="true"
+          ng-required="true">
+        </text-input-form-group>
+        <text-input-form-group
+            class="col-md-4"
+            key="BusinessReferencesFax3"
+            ng-model="regStepBasicInfoBodyCtrl.step.businessReferencesFax3"
+            label-key="ui.storefront.common.Fax"
+            placeholder-text="Fax"
+            ng-required="false"
+            is-fax="true">
+        </text-input-form-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="custom-control custom-checkbox mb-3">
+          <input type="checkbox" class="custom-control-input"
+            ng-class="{
+              'is-invalid': regStepBasicInfoBodyCtrl.forms.basicInfo.ckTerms.$invalid
+                    && (regStepBasicInfoBodyCtrl.forms.basicInfo.ckTerms.$dirty
+                        || regStepBasicInfoBodyCtrl.forms.basicInfo.ckTerms.$touched
+                        || regStepBasicInfoBodyCtrl.forms.basicInfo.$submitted),
+              'is-valid': regStepBasicInfoBodyCtrl.forms.basicInfo.ckTerms.$valid
+                    && (regStepBasicInfoBodyCtrl.forms.basicInfo.ckTerms.$dirty
+                        || regStepBasicInfoBodyCtrl.forms.basicInfo.ckTerms.$touched
+                        || regStepBasicInfoBodyCtrl.forms.basicInfo.$submitted) }"
+            id="ckTerms" name="ckTerms"
+            ng-required="true"
+            ng-change="regStepBasicInfoBodyCtrl.onChange()"
+            ng-model="regStepBasicInfoBodyCtrl.step.termsCheck" />
+          <label class="custom-control-label" for="ckTerms"
+            data-translate="ui.storefront.user.registration.termsAndConditions">
+          </label>
+          <span class="text-danger">*</span>
+        </div>
+      </div>
+      <text-input-form-group
+        class="col-md-4"
+        key="eSignature"
+        ng-model="regStepBasicInfoBodyCtrl.step.eSignature"
+        label-key="ui.storefront.common.eSignature"
+        placeholder-text="Enter signature"
+        ng-required="true">
+      </text-input-form-group>
+      <div class="col-12">
+        <span>This field acts as a legal signature.</span>
+      </div>
+      <div class="col-12">
+      <div class="custom-control custom-checkbox mb-3">
+        <input type="checkbox" class="custom-control-input"
+          ng-class="{
+            'is-invalid': regStepBasicInfoBodyCtrl.forms.basicInfo.ckSignature.$invalid
+                  && (regStepBasicInfoBodyCtrl.forms.basicInfo.ckSignature.$dirty
+                      || regStepBasicInfoBodyCtrl.forms.basicInfo.ckSignature.$touched
+                      || regStepBasicInfoBodyCtrl.forms.basicInfo.$submitted),
+            'is-valid': regStepBasicInfoBodyCtrl.forms.basicInfo.ckSignature.$valid
+                  && (regStepBasicInfoBodyCtrl.forms.basicInfo.ckSignature.$dirty
+                      || regStepBasicInfoBodyCtrl.forms.basicInfo.ckSignature.$touched
+                      || regStepBasicInfoBodyCtrl.forms.basicInfo.$submitted) }"
+          id="ckSignature" name="ckSignature"
+          ng-required="true"
+          ng-change="regStepBasicInfoBodyCtrl.onChange()"
+          ng-model="regStepBasicInfoBodyCtrl.step.signatureCheck" />
+        <label class="custom-control-label" for="ckSignature"
+          data-translate="ui.storefront.user.registration.LegalSignatureCk">
+        </label>
+        <span class="text-danger">*</span>
+      </div>
+    </div>
+    <date-input-form-group
+      class="col-12"
+      key="signedDate"
+      ng-model="regStepBasicInfoBodyCtrl.step.signedDate"
+      label-key="Signed Date"
+      placeholder-text="Date of Signature"
+      ng-required="true">
+    </date-input-form-group>
+  </div>
+  <div class="col-12">
+    <hr />
+    <div class="row">
+      <text-input-form-group
+        class="col-md-6"
+        key="Username"
+        ng-model="regStepBasicInfoBodyCtrl.username"
+        label-key="ui.storefront.common.Username"
+        placeholder-key="ui.storefront.common.Username"
+        tooltip-key="ui.storefront.user.registration.YourUsernameCouldByYourEmailAddress"
+        when-changed="regStepBasicInfoBodyCtrl.usernameChanged()"
+        ng-required="true"
+        force-tooltip-with-focus="true"
+        ng-disabled="regStepBasicInfoBodyCtrl.usernameIsEmail"
+        is-email="regStepBasicInfoBodyCtrl.usernameIsEmail"
+        is-username="true"
+        fails-on="regStepBasicInfoBodyCtrl.usernameValidityState == 'Invalid'">
+      </text-input-form-group>
+      <password-input-form-group
+        class="col-md-6"
+        key="Password"
+        ng-model="regStepBasicInfoBodyCtrl.password"
+        label-key="ui.storefront.common.Password"
+        placeholder-text="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+        tooltip-key="ui.storefront.user.registration.PasswordRequirements.Message"
+        when-changed="regStepBasicInfoBodyCtrl.onChange()"
+        ng-required="true"
+        force-tooltip-with-focus="true"
+        is-new="true"
+        show-valid-tooltip="true">
+      </password-input-form-group>
+    </div>
+  </div>
+</div>

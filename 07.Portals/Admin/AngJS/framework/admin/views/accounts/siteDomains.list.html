@@ -1,0 +1,56 @@
+﻿<cv-page caption="Manage SiteDomains" head-icon="fa-globe"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.SiteDomains')">
+    <cv-widget>
+        <widget-menu-item caption="Add Site Domain" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.siteDomains.detail',{ID:'New'})"
+                          permission="'Stores.SiteDomain.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     force-show-labels="true"
+                     filter-side="true"
+                     partial-reset="false"
+                     on-search="search.getSiteDomains"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateSiteDomain"
+                     on-reactivate="search.reactivateSiteDomain"
+                     on-delete="search.deleteSiteDomain"
+                     edit-state="accounts.siteDomains.detail,[ID]"
+                     permissions-base="Stores.SiteDomain">
+                <cv-column field="ID" title="#"
+                           width="5%" header-class="text-center" cell-class="text-right"
+                           filter filter-type="id"
+                           sort-by="2" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="CustomKey" title="Key"
+                           width="15%"
+                           filter
+                           groupable="false" />
+                <cv-column field="Name" title="Name"
+                           width="15%"
+                           filter
+                           sort-by="1" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="Url" title="URL"
+                           width="35%"
+                           filter
+                           sortable="true"
+                           groupable="false" />
+                <cv-column field="Alternate1" title="Alt. URL 1"
+                           width="10%"
+                           filter
+                           sortable="true"
+                           groupable="false" />
+                <cv-column field="Alternate2" title="Alt. URL 2"
+                           width="10%"
+                           filter
+                           sortable="true"
+                           groupable="false" />
+                <cv-column field="Alternate3" title="Alt. URL 3"
+                           width="10%"
+                           filter
+                           sortable="true"
+                           groupable="false" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

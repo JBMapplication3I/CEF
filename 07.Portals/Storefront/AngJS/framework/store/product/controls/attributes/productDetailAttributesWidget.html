@@ -1,0 +1,12 @@
+<dl ng-if="productDetailAttributesWidgetCtrl.detailsAttrList.length">
+    <dt ng-repeat-start="attr in productDetailAttributesWidgetCtrl.detailsAttrList | orderBy: ['SortOrder', 'Key', 'Value', 'UofM']"
+        ng-bind="attr.DisplayName || attr.Name"></dt>
+    <dd ng-repeat-end>
+        <span ng-if="!attr.IsMarkup">
+            <span ng-bind="productDetailAttributesWidgetCtrl.productAttr(attr.CustomKey).Value"></span>&nbsp;<!--
+            --><span ng-bind="productDetailAttributesWidgetCtrl.productAttr(attr.CustomKey).UofM"></span>
+        </span>
+        <span ng-if="attr.IsMarkup"
+              ng-bind-html="productDetailAttributesWidgetCtrl.productAttr(attr.CustomKey).Value"></span>
+    </dd>
+</dl>

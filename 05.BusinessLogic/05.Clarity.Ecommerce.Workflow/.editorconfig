@@ -1,0 +1,10 @@
+# Suppress: EC112
+
+[*.generated.cs]
+# Ignored for T4s
+resharper_is_expression_always_true_highlighting=do_not_show
+resharper_is_expression_always_false_highlighting=do_not_show
+resharper_condition_is_always_true_or_false_highlighting=do_not_show
+resharper_partial_type_with_single_part_highlighting=do_not_show
+resharper_redundant_using_directive_highlighting=do_not_show
+resharper_empty_namespace_highlighting=do_not_show

@@ -1,0 +1,455 @@
+# 'Allow scripts to access the OAuth token' was selected in pipeline.  Add the following YAML to any steps requiring access:
+#       env:
+#           MY_ACCESS_TOKEN: $(System.AccessToken)
+# Variable 'System.Debug' was defined in the Variables tab
+# Variable Group 'Release Account Data' was defined in the Variables tab
+trigger:
+  tags:
+    include:
+    - feature/jlTestingTag
+  batch: True
+name: $(SourceBranch).CI.R20211.PAYMENT.CEF$(rev:.r)
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: feature/jlTestingTag
+jobs:
+- job: Phase_1
+  displayName: Phase 1
+  timeoutInMinutes: 120
+  cancelTimeoutInMinutes: 1
+  pool:
+    name: $(AgentName)
+  steps:
+  - checkout: self
+    persistCredentials: True
+  - task: CmdLine@2
+    displayName: Make Plugins folder
+    continueOnError: True
+    inputs:
+      script: >-
+        rmdir "$(Build.SourcesDirectory)\Plugins" > nul 2> nul
+
+        dir "$(Build.SourcesDirectory)\Plugins" > nul 2> nul || mkdir "$(Build.SourcesDirectory)\Plugins" > nul 2> nul || mkdir "$(Build.SourcesDirectory)\Plugins"
+
+        rmdir "$(Build.SourcesDirectory)\Plugins5" > nul 2> nul
+
+        dir "$(Build.SourcesDirectory)\Plugins5" > nul 2> nul || mkdir "$(Build.SourcesDirectory)\Plugins5" > nul 2> nul || mkdir "$(Build.SourcesDirectory)\Plugins5"
+  - task: CopyFiles@2
+    displayName: Copy Configs
+    continueOnError: True
+    inputs:
+      SourceFolder: C:\CEF-Configs\2021.1\STD\CEF
+      Contents: '**\*'
+      TargetFolder: $(Build.SourcesDirectory)\
+      OverWrite: true
+  - task: CmdLine@2
+    displayName: Admin NPM Simple Install
+    inputs:
+      script: npm install
+      workingDirectory: 07.Portals\Admin\AngJS
+  - task: CmdLine@2
+    displayName: Storefront NPM Uber Install
+    inputs:
+      script: npm install
+      workingDirectory: 07.Portals\Storefront\AngJS
+  - task: NuGetToolInstaller@0
+    displayName: Use NuGet 5.8.0
+    inputs:
+      versionSpec: 5.8.0
+      checkLatest: true
+  - task: NuGetCommand@2
+    displayName: NuGet restore
+    inputs:
+      solution: Clarity.Ecommerce.All.sln
+      selectOrConfig: config
+      nugetConfigPath: NuGet.config
+  - task: VSBuild@1
+    displayName: Build solution
+    inputs:
+      solution: Clarity.Ecommerce.All.sln
+      vsVersion: 16.0
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      clean: true
+      maximumCpuCount: true
+      msbuildArchitecture: x64
+      createLogFile: true
+      logFileVerbosity: diagnostic
+  - task: CmdLine@2
+    displayName: Prep Skin (Gulp Config)
+    inputs:
+      script: >-
+        @ECHO off
+
+        ECHO Handle Variables
+
+        SET sourceDir=$(Build.SourcesDirectory)\07.Portals\Storefront\Skins
+
+        SET skin=Clarity-Payment
+
+        ECHO Source Dir:	%sourceDir%
+
+        ECHO Skin:		%skin%
+
+        ECHO Handle cef_gulp_config.json to point at %sourceDir%\%skin%
+
+        SET configPath="$(Build.SourcesDirectory)\Solution Items\cef_gulp_config.json"
+
+        ECHO Config Path:	%configPath%
+
+        IF NOT EXIST %configPath% (
+        	ECHO Creating cef_gulp_config.json
+        ) ELSE (
+        	ECHO cef_gulp_config.json already exists, deleting and recreating
+        	ECHO DEL %configPath%
+        	DEL %configPath%
+        )
+
+        ECHO.>%configPath%
+
+        SETLOCAL enableDelayedExpansion
+
+        SET NL=^& ECHO.
+
+
+
+        REM The two empty lines above are required
+
+        (ECHO {%NL%	"debugTemplatesOverriding": false,%NL%	"disableTemplateCache": false,%NL%	"disableStoreBuilds": false,%NL%	"disableAdminBuilds": false,%NL%	"inputFonts": {%NL%		"overridesLocationRoot": "../../Storefront/Skins/%skin%/Ecommerce/",%NL%		"additions": [""]%NL%	},%NL%	"inputCSS": {%NL%		"overridesLocationRoot": "../../Storefront/Skins/%skin%/Ecommerce/",%NL%		"additions": [""]%NL%	},%NL%	"inputJS": {%NL%		"overridesLocationRoot": "../../Storefront/Skins/%skin%/Ecommerce/",%NL%		"additions": {%NL%			"angular": [""],%NL%			"kendo": [""],%NL%			"baseStackStore": [""],%NL%			"baseStackAdmin": [""],%NL%			"store": [""],%NL%			"admin": [""]%NL%		}%NL%	},%NL%	"outputJS": {%NL%		"templatePrefixes": {%NL%		 	"store": "/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/",%NL%		 	"admin": "/DesktopModules/ClarityEcommerce/UI-Admin/framework/admin/"%NL%		}%NL%	}%NL%}) > %configPath%
+
+        ECHO %configPath% written
+  - task: gulp@0
+    displayName: Admin gulp build
+    inputs:
+      gulpFile: 07.Portals/Admin/AngJS/gulpfile.js
+      targets: build
+      cwd: 07.Portals/Admin/AngJS
+  - task: gulp@0
+    displayName: Storefront gulp build
+    inputs:
+      gulpFile: 07.Portals/Storefront/AngJS/gulpfile.js
+      targets: build
+      cwd: 07.Portals/Storefront/AngJS
+  - task: gulp@0
+    displayName: Admin gulp build:minify
+    inputs:
+      gulpFile: 07.Portals/Admin/AngJS/gulpfile.js
+      targets: build:minify
+      cwd: 07.Portals/Admin/AngJS
+  - task: gulp@0
+    displayName: Storefront gulp build:minify
+    inputs:
+      gulpFile: 07.Portals/Storefront/AngJS/gulpfile.js
+      targets: build:minify
+      cwd: 07.Portals/Storefront/AngJS
+  - task: CmdLine@2
+    displayName: Make ToZip folder
+    continueOnError: True
+    inputs:
+      script: dir "$(Build.ArtifactStagingDirectory)\ToZip" > nul 2> nul || mkdir "$(Build.ArtifactStagingDirectory)\ToZip" > nul 2> nul || mkdir "$(Build.ArtifactStagingDirectory)\ToZip"
+  - task: CopyFiles@2
+    displayName: Copy Service
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\06.Services\06.Clarity.Ecommerce.Service
+      Contents: >-
+        web.config
+
+        favicon.ico
+
+        Global.asax
+
+        Global.asax.cs
+
+        bin\**\*
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\06.Services\06.Clarity.Ecommerce.Service
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Service Admin
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\Admin\Service
+      Contents: >-
+        web.config
+
+        favicon.ico
+
+        Global.asax
+
+        Global.asax.cs
+
+        bin\**\*
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\Admin\Service
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Service BrandAdmin
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\BrandAdmin\Service
+      Contents: >-
+        web.config
+
+        favicon.ico
+
+        Global.asax
+
+        Global.asax.cs
+
+        bin\**\*
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\BrandAdmin\Service
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Service StoreAdmin
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\StoreAdmin\Service
+      Contents: >-
+        web.config
+
+        favicon.ico
+
+        Global.asax
+
+        Global.asax.cs
+
+        bin\**\*
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\StoreAdmin\Service
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Service Storefront
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\Storefront\Service
+      Contents: >-
+        web.config
+
+        favicon.ico
+
+        Global.asax
+
+        Global.asax.cs
+
+        bin\**\*
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\Storefront\Service
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Service VendorAdmin
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\VendorAdmin\Service
+      Contents: >-
+        web.config
+
+        favicon.ico
+
+        Global.asax
+
+        Global.asax.cs
+
+        bin\**\*
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\VendorAdmin\Service
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Reporting
+    enabled: False
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\Reporting\DevExpress
+      Contents: >-
+        bin\**\*
+
+        Content\**\*
+
+        Properties\AssemblyInfo.cs
+
+        ClarityReportStorageWebExtension.cs
+
+        Default.aspx
+
+        Default.aspx.cs
+
+        Default.aspx.designer.cs
+
+        Designer.aspx
+
+        Designer.aspx.cs
+
+        Designer.aspx.designer.cs
+
+        Global.asax
+
+        Global.asax.cs
+
+        Light.master
+
+        Light.master.cs
+
+        Light.master.designer.cs
+
+        Main.master
+
+        Main.master.cs
+
+        Main.master.designer.cs
+
+        Reports.aspx
+
+        Reports.aspx.cs
+
+        Reports.aspx.designer.cs
+
+        Root.master
+
+        Root.master.cs
+
+        Root.master.designer.cs
+
+        web.config
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\Reporting\DevExpress
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Scheduler
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\Scheduler\Scheduler
+      Contents: >-
+        web.config
+
+        HangfireStarter.cs
+
+        Startup.cs
+
+        bin\**\*
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\Scheduler\Scheduler
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy UI Admin
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\Admin\AngJS
+      Contents: >-
+        web.config
+
+        Properties\AssemblyInfo.cs
+
+        bin\**\*
+
+        Content\**\*
+
+        lib\**\?(*.html|*.js|*.css|*.png|*.gif|*.jpg|*.json|*.map|*.svg|*.ttf|*.woff|*.woff2|*.eot|*.otf|*.d.ts)
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\Admin\AngJS
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy UI Storefront
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\Storefront\AngJS
+      Contents: >-
+        web.config
+
+        Properties\AssemblyInfo.cs
+
+        bin\**\*
+
+        Content\**\*
+
+        lib\**\?(*.html|*.js|*.css|*.png|*.gif|*.jpg|*.json|*.map|*.svg|*.ttf|*.woff|*.woff2|*.eot|*.otf|*.d.ts)
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\Storefront\AngJS
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Admin Skin
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\Storefront\Skins\Clarity-Admin
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\Storefront\Skins\Clarity-Admin
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Client Skin
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\Storefront\Skins\Clarity-Payment
+      Contents: >-
+        **
+
+        !*.scss
+
+        !*.ts
+
+        !*.csproj
+
+        !*.user
+
+        !/bin
+
+        !/obj
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\Storefront\Skins\Clarity-Payment
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy APIReference
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\07.Portals\APIReference\APIReference
+      Contents: >-
+        **\*
+
+        !*.csproj
+
+        !*.user
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\07.Portals\APIReference\APIReference
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Plugins
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\Plugins\
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\Plugins\
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy Plugins5
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\Plugins5\
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\Plugins5\
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy ClientPlugins
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\ClientPlugins\
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\ClientPlugins\
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: CopyFiles@2
+    displayName: Copy ClientPlugins5
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\ClientPlugins5\
+      TargetFolder: $(Build.ArtifactStagingDirectory)\ToZip\ClientPlugins5\
+      CleanTargetFolder: true
+      OverWrite: true
+  - task: ArchiveFiles@2
+    displayName: Archive ToZip to a single file
+    inputs:
+      rootFolderOrFile: $(Build.ArtifactStagingDirectory)\ToZip\
+      includeRootFolder: false
+      archiveType: 7z
+      sevenZipCompression: fast
+      archiveFile: $(Build.ArtifactStagingDirectory)/CEF.7z
+  - task: DeleteFiles@1
+    displayName: Delete ToZip Folder
+    condition: always()
+    inputs:
+      SourceFolder: $(Build.ArtifactStagingDirectory)
+      Contents: ToZip
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifact
+    inputs:
+      ArtifactName: $(ArtifactName)
+      TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
+  - task: DeleteFiles@1
+    displayName: Delete Archive File
+    condition: always()
+    inputs:
+      SourceFolder: $(Build.ArtifactStagingDirectory)
+      Contents: CEF.7z
+...

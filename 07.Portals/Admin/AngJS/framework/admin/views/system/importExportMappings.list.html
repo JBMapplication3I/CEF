@@ -1,0 +1,23 @@
+﻿<cv-page caption="Manage Import/Export Mappings" head-icon="fa-gear">
+    <cv-widget>
+        <widget-menu-item caption="Add Import/Export Mapping"
+                          icon-class="fa-plus-circle"
+                          permission="'System.ImportExportMapping.Create'"
+                          click="$root.$state.go('system.importExportMappings.detail',{ID:'New'})"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     sortable="false" server-sorting="true"
+                     on-search="search.getImportExportMappings"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateImportExportMappings"
+                     on-reactivate="search.reactivateImportExportMappings"
+                     on-delete="search.deleteImportExportMappings"
+                     edit-state="system.importExportMappings.detail,[ID]"
+                     permissions-base="System.ImportExportMapping">
+                <cv-column filter field="ID" title="#" width="50px" />
+                <cv-column filter field="CustomKey" title="Key" />
+                <cv-column filter field="Name" title="Name" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

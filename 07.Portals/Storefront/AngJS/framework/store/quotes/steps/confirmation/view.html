@@ -1,0 +1,48 @@
+<!-- step.confirmation.view Template -->
+<div class="row">
+  <div class="col-12 col-sm">
+    <div cef-submit-quote-step-view-title></div>
+  </div>
+  <div class="col-12 col-sm-auto"
+    ng-show="step.complete">
+    <div cef-submit-quote-step-confirmation-summary
+      cart-type="{{sqCtrl.cartType}}">
+    </div>
+  </div>
+  <hr class="w-100 my-2 mx-3" />
+  <div ng-show="step.index === sqCtrl.service.activeStep[sqCtrl.cartType]"
+    class="col-12"
+    ng-form="sqCtrl.forms.confirmation">
+    <div cef-submit-quote-step-confirmation-body
+      cart-type="{{sqCtrl.cartType}}"
+      id-suffix="Confirmation">
+    </div>
+  </div>
+  <div ng-show="step.index === sqCtrl.service.activeStep[sqCtrl.cartType]"
+    class="col-12">
+    <button type="button" class="btn btn-primary mb-3"
+      id="btnSubmit_{{step.name}}" name="btnSubmit_{{step.name}}"
+      translate-attr="{ title: step.continueTextKey || 'Continue',
+                        'aria-label': step.continueTextKey || 'Continue' }"
+      data-translate="{{step.continueTextKey || 'Continue'}}"
+      ng-disabled="sqCtrl.viewState.running || sqCtrl.forms.confirmation.$invalid || step.invalid"
+      ng-click="sqCtrl.submit(sqCtrl.cartType, step)">
+    </button>
+    <!--
+    <span>[Debug: Running: {{sqCtrl.viewState.running}}]</span>
+    <span>[Debug: Invalid: {{step.invalid}}]</span>
+    <span>[Debug: $invalid: {{sqCtrl.forms.confirmation.$invalid}}]</span><br/>
+    -->
+  </div>
+  <hr ng-show="step.index === sqCtrl.service.activeStep[sqCtrl.cartType]"
+    class="w-100 my-2 mx-3" />
+  <!--
+  <div ng-if="sqCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true"
+    size="3"
+    pad-in="true"
+    message="sqCtrl.viewState.waitMessage">
+  </div>
+  -->
+</div>

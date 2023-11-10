@@ -1,0 +1,89 @@
+﻿@using Clarity.Ecommerce.MVC.Core
+@inject CEFConfig cefConfig
+
+@if (Orientation == Blazorise.Orientation.Vertical)
+{
+  <Div Class="@("error-block-instance " + (Class ?? string.Empty))">
+    @if (Contract.CheckValidKey(ViewState.errorMessage)
+      || Contract.CheckNotEmpty(ViewState.errorMessages))
+    {
+      <Heading Size="HeadingSize.Is3">Error Messages:</Heading>
+      <UnorderedList>
+        @if (Contract.CheckValidKey(ViewState.errorMessage)
+          && ViewState.errorMessage != ViewState.errorMessages?.FirstOrDefault())
+        {
+          <UnorderedListItem>@ViewState.errorMessage</UnorderedListItem>
+        }
+        @if (Contract.CheckNotEmpty(ViewState.errorMessages))
+        {
+          <Repeater Items="ViewState.errorMessages">
+            <UnorderedListItem>@context</UnorderedListItem>
+          </Repeater>
+        }
+      </UnorderedList>
+    }
+    @if (cefConfig.debug && Contract.CheckNotEmpty(ViewState.logMessages))
+    {
+      <Blazorise.Small>
+        <Paragraph>Log:</Paragraph>
+        <UnorderedList>
+          <Repeater Items="ViewState.logMessages">
+            <UnorderedListItem>@context</UnorderedListItem>
+          </Repeater>
+        </UnorderedList>
+      </Blazorise.Small>
+    }
+  </Div>
+}
+else
+{
+  @if (Contract.CheckValidKey(ViewState.errorMessage)
+    || Contract.CheckNotEmpty(ViewState.errorMessages))
+  {
+    <Div Class="@("error-block-instance " + (Class ?? string.Empty))">
+      <Span>Error Messages:</Span>
+      @if (Contract.CheckValidKey(ViewState.errorMessage)
+        && ViewState.errorMessage != ViewState.errorMessages?.FirstOrDefault())
+      {
+        <Span>@ViewState.errorMessage</Span>
+      }
+      @if (ViewState.errorMessages?.Length > 0)
+      {
+        <Repeater Items="ViewState.errorMessages">
+          <Span>@context</Span>
+        </Repeater>
+      }
+      @if (cefConfig.debug && Contract.CheckNotEmpty(ViewState.logMessages))
+      {
+        <Blazorise.Small>
+          <Span>Log:</Span>
+          <Repeater Items="ViewState.logMessages">
+            <Span>@context</Span>
+          </Repeater>
+        </Blazorise.Small>
+      }
+    </Div>
+  }
+}
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // (Ignored: Initialized by Parameter)
+  /// <summary>Gets or sets the state of the view.</summary>
+  /// <value>The view state.</value>
+  [CascadingParameter]
+  public IViewState ViewState { get; set; }
+
+  /// <summary>Gets or sets the orientation.</summary>
+  /// <value>The orientation.</value>
+  [Parameter]
+  public Blazorise.Orientation Orientation { get; set; }
+
+  /// <summary>Gets or sets the class.</summary>
+  /// <value>The class.</value>
+  [Parameter]
+  public string? Class { get; set; }
+#pragma warning restore CS8618 // (Ignored: Initialized by Parameter)
+  #endregion
+  }

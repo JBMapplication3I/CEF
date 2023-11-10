@@ -1,0 +1,92 @@
+﻿<div class="row"
+     ng-form="cefCheckoutCtrl.forms.payment">
+    <div class="col-sm-12">
+        <h3 class="mt-0"
+            data-translate="ui.admin.checkout.views.paymentInformation.selectAPaymentMethod"></h3>
+    </div>
+    <div class="col-md-4">
+        <div class="row"
+             ng-if="cefCheckoutCtrl.acceptedPayments.creditCard">
+            <div class="col-md-12">
+                <input type="radio" id="rdCreditCard" name="rdPaymentModel"
+                       ng-model="cefCheckoutCtrl.paymentMethod"
+                       value="purchasePaymentMethodCreditCard" />&nbsp;<!--
+                --><label for="rdCreditCard"
+                       data-translate="ui.admin.common.PaymentMethods.CreditCard"></label>
+            </div>
+        </div>
+        <div class="row"
+             ng-if="cefCheckoutCtrl.acceptedPayments.echeck"
+             in-whitelist="USA, CA"
+             whitelist-property="cefCheckoutCtrl.selectedAddressBilling.Address.CountryCode">
+            <div class="col-md-12">
+                <input type="radio" id="rdECheck" name="rdPaymentModel"
+                       ng-model="cefCheckoutCtrl.paymentMethod"
+                       ng-disabled="!isInWhitelist"
+                       value="purchasePaymentMethodEcheck" />&nbsp;<!--
+                --><label for="rdECheck"
+                       data-translate="ui.admin.checkout.paymentECheck"></label>
+            </div>
+        </div>
+        <div class="row"
+             ng-if="cefCheckoutCtrl.acceptedPayments.payPal">
+            <div class="col-md-12">
+                <input type="radio" id="rdPayPal" name="rdPaymentModel"
+                       ng-model="cefCheckoutCtrl.paymentMethod"
+                       value="purchasePaymentMethodPayPal" />&nbsp;<!--
+                --><label for="rdPayPal">PayPal<sup>&trade;</sup></label>
+                <!-- Note: Don't translate "PayPal" -->
+            </div>
+        </div>
+        <div class="row"
+             ng-if="cefCheckoutCtrl.acceptedPayments.invoice && cefCheckoutCtrl.viewstate.isLoggedIn">
+            <div class="col-md-12">
+                <input type="radio" id="rdInvoice" name="rdPaymentModel"
+                       ng-model="cefCheckoutCtrl.paymentMethod"
+                       value="purchasePaymentMethodInvoice" />&nbsp;<!--
+                --><label for="rdInvoice"
+                       data-translate="ui.admin.checkout.paymentInvoice"></label>
+            </div>
+        </div>
+        <cef-checkout-tax-exemptions>
+        </cef-checkout-tax-exemptions>
+    </div>
+    <div class="col-md-8">
+        <div ng-switch="cefCheckoutCtrl.paymentMethod">
+            <div ng-switch-when="purchasePaymentMethodCreditCard">
+                <cef-checkout-new-credit-card ng-form="cefCheckoutCtrl.forms.payment.creditCard">
+                </cef-checkout-new-credit-card>
+            </div>
+            <div ng-switch-when="purchasePaymentMethodEcheck">
+                <cef-checkout-new-echeck ng-form="cefCheckoutCtrl.forms.payment.echeck">
+                </cef-checkout-new-echeck>
+            </div>
+            <div ng-switch-when="purchasePaymentMethodPayPal">
+                <cef-checkout-pay-pal>
+                </cef-checkout-pay-pal>
+            </div>
+            <div ng-switch-when="purchasePaymentMethodInvoice">
+                <cef-checkout-invoice ng-form="cefCheckoutCtrl.forms.payment.invoice">
+                </cef-checkout-invoice>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" ng-if="cefCheckoutCtrl.configs.specialInstructions">
+        <div class="form-group">
+            <label class="control-label"
+                   data-translate="ui.admin.controls.sales.salesOrderNewWizard.SpecialInstructions"></label>
+            <textarea class="form-control"
+                      id="checkoutNotes" name="checkoutNotes"
+                      rows="5"
+                      ng-model="cefCheckoutCtrl.specialInstructions"></textarea>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <cef-checkout-create-account
+            ng-if="!cefCheckoutCtrl.viewstate.isLoggedIn && cefCheckoutCtrl.createAccount">
+        </cef-checkout-create-account>
+        <cef-checkout-terms
+            ng-form="cefCheckoutCtrl.forms.payment.terms">
+        </cef-checkout-terms>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+.cards-gallery {
+	width: 100%;
+	margin-top: rem-calc(20);
+
+	@include media-breakpoint-up(md) {
+		margin-top: rem-calc(40);
+	}
+
+	@include media-breakpoint-up(xl) {
+		width: calc(100% + 60px);
+		margin-left: rem-calc(-30);
+		margin-right: rem-calc(-30);
+	}
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	.gallery-slide {
+		margin: rem-calc(0 10);
+
+		@include media-breakpoint-up(xl) {
+			margin: rem-calc(0 15);
+		}
+	}
+
+	.slick-arrow {
+		@include animate(border background color);
+		position: absolute;
+		display: flex;
+		width: rem-calc(30);
+		height: rem-calc(30);
+		align-items: center;
+		justify-content: center;
+		top: rem-calc(210);
+		z-index: 99;
+		border: none;
+		color: inherit;
+		background: transparent;
+		padding: 0;
+		border: none;
+		font-size: rem-calc(25);
+		border: rem-calc(2) solid transparent;
+		border-radius: 50%;
+
+		&:focus,
+		&:hover {
+			outline: none;
+			color: $primary;
+			outline: none;
+			border-color: $primary;
+		}
+
+		&.slick-prev {
+			left: rem-calc(-24);
+		}
+
+		&.slick-next {
+			right: rem-calc(-24);
+		}
+
+		i {
+			display: inline-block;
+			vertical-align: top;
+		}
+	}
+
+	.card {
+		margin-bottom: 0;
+	}
+}

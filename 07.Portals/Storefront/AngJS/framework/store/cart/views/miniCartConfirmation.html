@@ -1,0 +1,26 @@
+﻿<div class="order-summary"
+  ng-if="cvmcCtrl.cefConfig.featureSet.carts.miniCart.enabled">
+  <div ng-repeat="(itemIndex, item) in cvmcCtrl.cartItems
+                  | limitTo: cvmcCtrl.quantityItemsShown"
+    class="p-0">
+    {{item.ProductName}}
+  </div>
+  <div ng-if="cvmcCtrl.cefConfig.featureSet.carts.miniCart.enabled && cvmcCtrl.showShowMoreButton"
+    class="list-group-item p-1">
+    <button type="button" class="btn btn-secondary w-100"
+      translate-attr="{ title: 'ui.storefront.cart.cartShippingEstimator.ShowMore',
+                        'aria-label': 'ui.storefront.cart.cartShippingEstimator.ShowMore' }"
+      data-translate="ui.storefront.cart.cartShippingEstimator.ShowMore"
+      ng-click="cvmcCtrl.showMore()">
+    </button>
+  </div>
+  <div ng-if="cvmcCtrl.cefConfig.featureSet.carts.miniCart.enabled && cvmcCtrl.showShowLessButton"
+    class="list-group-item p-1">
+    <button type="button" class="btn btn-secondary w-100"
+      translate-attr="{ title: 'ui.storefront.cart.cartShippingEstimator.ShowLess',
+                        'aria-label': 'ui.storefront.cart.cartShippingEstimator.ShowLess' }"
+      data-translate="ui.storefront.cart.cartShippingEstimator.ShowLess"
+      ng-click="cvmcCtrl.showLess()">
+    </button>
+  </div>
+</div>

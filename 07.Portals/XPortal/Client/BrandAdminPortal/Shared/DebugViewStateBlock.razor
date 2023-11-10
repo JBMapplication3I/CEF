@@ -1,0 +1,81 @@
+﻿@using Clarity.Ecommerce.MVC.Core
+@inject CEFConfig cefConfig
+
+@if (cefConfig.debug || true)
+{
+  @if (Orientation == Blazorise.Orientation.Vertical)
+  {
+    <Div Class="@("d-block mb-1 " + (Class ?? string.Empty))">
+      <Span>VS-Debug:</Span>
+      <UnorderedList Class="pl-3">
+        <UnorderedListItem>running: @ViewState.running</UnorderedListItem>
+        <UnorderedListItem>loading: @ViewState.loading</UnorderedListItem>
+        <UnorderedListItem>saving: @ViewState.saving</UnorderedListItem>
+        <UnorderedListItem>success: @ViewState.success</UnorderedListItem>
+        <UnorderedListItem>dirty: @ViewState.dirty</UnorderedListItem>
+        <UnorderedListItem>pristine: @ViewState.pristine</UnorderedListItem>
+        <UnorderedListItem>hasError: @ViewState.hasError</UnorderedListItem>
+      </UnorderedList>
+    </Div>
+  }
+  else
+  {
+    <Blazorise.Small Class="@("alert alert-dark p-1 mb-1 " + (Class ?? string.Empty))">
+      <Span>VS-Debug:</Span>
+      @if (ViewState.running)
+      {
+        <Span Class="ml-1">running</Span>
+      }
+      @if (ViewState.loading)
+      {
+        <Span Class="ml-1">loading</Span>
+      }
+      @if (ViewState.saving)
+      {
+        <Span Class="ml-1">saving</Span>
+      }
+      @if (ViewState.dirty)
+      {
+        <Span Class="ml-1">dirty</Span>
+      }
+      @if (ViewState.pristine)
+      {
+        <Span Class="ml-1">pristine</Span>
+      }
+      @if (ViewState.success)
+      {
+        <Span Class="ml-1">success</Span>
+      }
+      @if (ViewState.hasError)
+      {
+        <Span Class="ml-1">hasError</Span>
+      }
+      @if (ViewState.InputDisable)
+      {
+        <Span Class="ml-1">inputDisable</Span>
+      }
+    </Blazorise.Small>
+  }
+}
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // (Ignored: Initialized by Parameter)
+  /// <summary>Gets or sets the state of the view.</summary>
+  /// <value>The view state.</value>
+  [CascadingParameter]
+  public IViewState ViewState { get; set; }
+
+  /// <summary>Gets or sets the orientation.</summary>
+  /// <value>The orientation.</value>
+  [Parameter]
+  public Blazorise.Orientation Orientation { get; set; }
+
+  /// <summary>Gets or sets the class.</summary>
+  /// <value>The class.</value>
+  [Parameter]
+  public string? Class { get; set; }
+#pragma warning restore CS8618 // (Ignored: Initialized by Parameter)
+  #endregion
+  }

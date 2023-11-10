@@ -1,0 +1,49 @@
+<div class="card" hl-sticky anchor="bottom">
+  <div class="row">
+    <div class="col-3">
+      <span ng-if="!productDetailsCtrl.product.readPrices().haveBase && !productDetailsCtrl.product.readPrices().haveSale"
+        class="h3"
+        data-translate="ui.storefront.common.Free">
+      </span>
+      <span ng-if="productDetailsCtrl.product.readPrices().haveBase && !productDetailsCtrl.product.readPrices().isSale"
+        class="h3"
+        ng-bind="productDetailsCtrl.product.readPrices().base | globalizedCurrency">
+      </span>
+      <span ng-if="productDetailsCtrl.product.readPrices().isSale"
+        class="h3"
+        ng-bind="productDetailsCtrl.product.readPrices().sale | globalizedCurrency">
+      </span>
+    </div>
+    <div class="col-5">
+      <div class="form-group">
+        <label class="control-label sr-only" for="productQtyInput"
+          data-translate="ui.storefront.common.Quantity">
+        </label>
+        <div cef-add-to-cart-quantity-selector
+          always-allow-input="true"
+          item="productDetailsCtrl.product"
+          default-value="1"
+          current-value="productDetailsCtrl.quantity"
+          is-required="true"
+          step="1"
+          index="$index">
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <button type="button" class="btn btn-success btn-block"
+        translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                    'aria-label': 'ui.storefront.cart.addToCart' }"
+        data-translate="ui.storefront.cart.addToCart"
+        ng-disabled="productDetailsCtrl.viewstate.checkoutIsProcessing
+          || productDetailsCtrl.forms.detailActions.$invalid"
+        ng-click="productDetailsCtrl.addCurrentItemToCart(
+          productDetailsCtrl.quantity,
+          null,
+          productDetailsCtrl.productNewVariant != null
+            ? productDetailsCtrl.productNewVariant
+            : productDetailsCtrl.product)">
+      </button>
+    </div>
+  </div>
+</div>

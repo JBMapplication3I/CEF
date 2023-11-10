@@ -1,0 +1,129 @@
+﻿<div class="row">
+  <div class="col-12 text-right">
+    <button type="button" class="btn btn-secondary mb-3"
+      id="btnClearFavorites" name="btnClearFavorites"
+      translate-attr="{ title: 'ui.storefront.userDashboard2.controls.favorites.ClearFavorites',
+                        'aria-label': 'ui.storefront.userDashboard2.controls.favorites.ClearFavorites' }"
+      data-translate="ui.storefront.userDashboard2.controls.favorites.ClearFavorites"
+      ng-disabled="!udflCtrl.cvCartService.accessCart('Favorites List').SalesItems.length"
+      ng-click="udflCtrl.clearList()">
+    </button>
+  </div>
+  <div class="col-12" ng-if="!udflCtrl.cvCartService.accessCart('Favorites List').SalesItems.length">
+    <span class="h4" sid="FavoritesListNoItemsText"
+      data-translate="ui.storefront.userDashboard2.controls.favorites.NoItemsHaveBeenAddedToTheFavorites">
+    </span>
+  </div>
+  <div class="col-12" ng-if="udflCtrl.cvCartService.accessCart('Favorites List').SalesItems.length > 0">
+    <div class="table-responsive">
+      <table class="table table-sm table-hover table-striped table-bordered">
+        <thead>
+          <tr class="first last">
+            <th class="d-none d-sm-table-cell"></th>
+            <th class="w-16 xs-w-24" data-translate="ui.storefront.cart.SKU"></th>
+            <th class="sm-w-32 md-w-40 lg-w-40" data-translate="ui.storefront.common.Name"></th>
+            <th class="w-8 text-center" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-8 text-center" data-translate="ui.storefront.common.Subtotal"></th>
+            <th class="sm-w-24 md-w-16 lg-w-16 text-center"
+              colspan="2"
+              data-translate="ui.storefront.common.Quantity">
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody ng-form="udflCtrl.forms.SalesItems">
+          <tr ng-repeat="item in udflCtrl.cvCartService.carts['Favorites List'].SalesItems"
+            id="FavoriteListItem{{$index}}">
+            <td class="form-control-table-cell d-none d-sm-table-cell p-0">
+              <div cef-product-card-thumbnail-widget
+                product-id="item.ProductID"
+                product-image="item.ProductPrimaryImage"
+                width="100"
+                height="100"
+                index="$index">
+              </div>
+            </td>
+            <td>
+              <a id="favoriteList_item_{{$index}}_sku"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal"
+                  ng-bind="item.ProductKey">
+                </label>
+              </a>
+            </td>
+            <td>
+              <a id="favoriteList_item_{{$index}}_name"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal"
+                  ng-bind="item.ProductName">
+                </label>
+              </a>
+            </td>
+            <td class="text-right">
+              <span class="d-block form-control-static text-right"
+                sid="FavoritesListLineItemPrice_{{$index}}"
+                ng-class="{'strike-through small text-disabled': item.UnitCorePrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0}"
+                ng-bind="item.UnitCorePrice | globalizedCurrency">
+              </span>
+              <span class="d-block form-control-static text-right text-danger"
+                sid="FavoritesListLineItemSalePrice_{{$index}}"
+                ng-if="item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                ng-bind="item.UnitSoldPrice | globalizedCurrency">
+              </span>
+            </td>
+            <td class="text-right">
+              <span class="d-block form-control-static text-right"
+                sid="FavoritesListLineItemPriceSubtotal_{{$index}}"
+                ng-bind="item.Quantity * (item.UnitSoldPrice && item.UnitSoldPrice > 0 && item.UnitCorePrice != item.UnitSoldPrice
+                  ? item.UnitSoldPrice : item.UnitCorePrice) | globalizedCurrency">
+              </span>
+            </td>
+            <td>
+              <div cef-add-to-cart-quantity-selector
+                sales-item="item"
+                item="item.Product"
+                item-id="item.ProductID"
+                item-name="item.ProductName"
+                item-seo-url="item.ProductSeoUrl"
+                default-value="1"
+                current-value="item.Quantity"
+                is-required="false"
+                step="1"
+                index="$index">
+              </div>
+            </td>
+            <td class="text-center">
+              <div cef-add-to-cart-button
+                sales-item="item"
+                item-id="item.ProductID"
+                item-name="item.ProductName"
+                item-seo-url="item.ProductSeoUrl"
+                default-value="1"
+                current-value="item.Quantity"
+                show-icon="true"
+                show-text="false"
+                ship-option=""
+                out-of-stock-links-to-details="false"
+                debug="false"
+                index="$index">
+              </div>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-link text-danger"
+                id="btnRemoveItem{{$index}}FromFavoritesList"
+                name="btnRemoveItem{{$index}}FromFavoritesList"
+                translate-attr="{ title: 'ui.storefront.product.catalog.results.gridFull.removeFromFavoritesList',
+                                  'aria-label': 'ui.storefront.product.catalog.results.gridFull.removeFromFavoritesList' }"
+                ng-click="udflCtrl.removeCartItem(item.ID)">
+                <i class="far fa-trash fa-lg"></i>
+                <span class="sr-only" data-translate="ui.storefront.product.catalog.results.gridFull.removeFromFavoritesList"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

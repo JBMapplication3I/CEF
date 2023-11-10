@@ -1,0 +1,10 @@
+<div class="row details-header" ng-cloak="standardDetailHeaderWidgetCtrl.record">
+    <span class="col-md-12 details-title"><!--
+        --><span ng-if="!standardDetailHeaderWidgetCtrl.record.ID" data-translate="{{standardDetailHeaderWidgetCtrl.newKindKey}}"></span><!--
+        --><span ng-if="standardDetailHeaderWidgetCtrl.record.ID" data-translate="{{standardDetailHeaderWidgetCtrl.existingKindKey}}"></span><!--
+        --><span ng-if="standardDetailHeaderWidgetCtrl.record.ID">&nbsp;<span data-translate="ui.admin.common.Number.Symbol"></span><!--
+        --><span ng-bind="standardDetailHeaderWidgetCtrl.record.ID"></span></span><!--
+        --><span ng-if="standardDetailHeaderWidgetCtrl.record.Name">&nbsp;<span ng-bind="standardDetailHeaderWidgetCtrl.record.Name"></span></span><!--
+        --><span ng-if="standardDetailHeaderWidgetCtrl.record.CustomKey">&nbsp;[<span ng-bind="standardDetailHeaderWidgetCtrl.record.CustomKey"></span>]</span><!--
+    --></span>
+</div>

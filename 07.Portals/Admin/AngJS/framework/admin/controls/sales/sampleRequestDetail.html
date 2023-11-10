@@ -1,0 +1,686 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row details-header">
+        <h2 ng-hide="sampleRequestDetailCtrl.record.ID > 0" class="col-md-12 details-title">New Sample Request [{{sampleRequestDetailCtrl.record.CustomKey}}] for Account: {{sampleRequestDetailCtrl.record.AccountKey}}, User: {{sampleRequestDetailCtrl.record.UserID}}</h2>
+        <h2 ng-show="sampleRequestDetailCtrl.record.ID > 0" class="col-md-12 details-title">Sample Request #{{sampleRequestDetailCtrl.record.ID}} [{{sampleRequestDetailCtrl.record.CustomKey}}] for Account: {{sampleRequestDetailCtrl.record.AccountKey}}, User: {{sampleRequestDetailCtrl.record.UserID}}</h2>
+    </div>
+    <!--Line Items & Discounts, Billing, Shipping, Notes, and Summary-->
+    <div class="row details-body">
+        <!-- Lines Items & Discounts, Billing, Shipping, and Notes -->
+        <div class="col-sm-12 col-md-8 col-lg-9 order-tabs">
+            <uib-tabset justified="true">
+                <uib-tab heading="Line Items">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="inline-block">Sample Request Items</h3>
+                                <cv-sales-order-item-selector class="cvAddLineItem pull-right mb-3"
+                                                              ng-hide="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'"
+                                                              sales-items="sampleRequestDetailCtrl.record.SalesItems">Add Line Item</cv-sales-order-item-selector>
+                            </div>
+                            <div class="col-sm-12">
+                                <div kendo-grid
+                                     k-data-source="sampleRequestDetailCtrl.record.SalesItems"
+                                     k-rebind="sampleRequestDetailCtrl.record.SalesItems"
+                                     k-options="sampleRequestDetailCtrl.gridConfiguration"></div>
+                            </div>
+                            <div class="col-sm-8">
+                                <h3 class="mt-3">Discounts Applied</h3>
+                                <div class="form-group" ng-hide="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="sampleRequestDetailCtrl.NewDiscountCode" id="discountcode" placeholder="Enter a Discount Code..." />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-info" type="button" ng-click="sampleRequestDetailCtrl.applyDiscountCode()">Apply</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" ng-show="sampleRequestDetailCtrl.discountItems.length > 0">
+                                    <kendo-grid k-data-source="sampleRequestDetailCtrl.discountItems"
+                                                k-rebind="sampleRequestDetailCtrl.discountItems"
+                                                k-options="sampleRequestDetailCtrl.discountGridConfiguration"></kendo-grid>
+                                </div>
+                                <div class="col-sm-12" ng-hide="sampleRequestDetailCtrl.discountItems.length > 0">
+                                    <p>No Discounts Applied</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <table class="table table-borderless margin-none table-condensed totals">
+                                    <tbody>
+                                        <tr>
+                                            <td class="right">Subtotal:</td>
+                                            <td class="right strong col-md-1">{{sampleRequestDetailCtrl.record.Totals.SubTotal | currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="right">Shipping:</td>
+                                            <td class="right strong col-md-1">{{sampleRequestDetailCtrl.record.Totals.Shipping | currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="right">Handling:</td>
+                                            <td class="right strong col-md-1">{{sampleRequestDetailCtrl.record.Totals.Handling | currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="right">Fees:</td>
+                                            <td class="right strong col-md-1">{{sampleRequestDetailCtrl.record.Totals.Fees | currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="right">Discounts:</td>
+                                            <td class="right strong col-md-1">{{sampleRequestDetailCtrl.record.Totals.Discounts | currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="right">Tax:</td>
+                                            <td class="right strong col-md-1">{{sampleRequestDetailCtrl.record.Totals.Tax | currency}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="right"><b>Total:</b></td>
+                                            <td class="right strong col-md-1"><b>{{sampleRequestDetailCtrl.record.Totals.Total | currency}}</b></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Billing &amp; Shipping">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-inline">
+                                    <h3>Account Information</h3>
+                                    <div class="form-group">
+                                        <label class="control-label">Account</label>
+                                        <select id="inputAccountId" class="form-control"
+                                                ng-disabled="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'"
+                                                ng-model="sampleRequestDetailCtrl.record.AccountID"
+                                                ng-options="a.ID as (a.Name + (a.CustomKey && a.CustomKey != '' ? ' [' + a.CustomKey + ']' : '')) for a in sampleRequestDetailCtrl.accounts"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">User</label>
+                                        <select id="inputCustomerId" class="form-control"
+                                                ng-disabled="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'"
+                                                ng-model="sampleRequestDetailCtrl.record.UserID"
+                                                ng-options="u.ID as (u.ContactFirstName + ' ' + u.ContactLastName + ' [' + u.UserName + ']') for u in sampleRequestDetailCtrl.users | filter: { $: sampleRequestDetailCtrl.record.AccountID }"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-horizontal">
+                                    <h3 class="inline-block">Billing Information</h3>
+                                    <div class="col-md-11 col-md-offset-1" ng-hide="sampleRequestDetailCtrl.showAddressEditors">
+                                        <p>
+                                            {{sampleRequestDetailCtrl.record.BillingContact.FirstName}}
+                                            {{sampleRequestDetailCtrl.record.BillingContact.LastName}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.FirstName || sampleRequestDetailCtrl.record.BillingContact.LastName" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Street1}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Address.Street1" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Street2}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Address.Street2" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Street3}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Address.Street3" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.City}},
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Region.Name}}
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.PostalCode}}<br />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Country.Name}}<br />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Phone1}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Phone1" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Phone}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Address.Phone" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Phone2}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Phone2" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Phone2}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Address.Phone2" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Phone3}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Phone3" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Phone3}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Address.Phone3" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Fax1}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Fax1" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Fax}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Address.Fax" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Email1}}<br ng-if="sampleRequestDetailCtrl.record.BillingContact.Email1" />
+                                            {{sampleRequestDetailCtrl.record.BillingContact.Address.Email}}
+                                        </p>
+                                        <p ng-hide="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'">
+                                            <a class="btn btn-info" ng-click="sampleRequestDetailCtrl.showAddressEditors = true">Edit</a>
+                                        </p>
+                                    </div>
+                                    <div ng-show="sampleRequestDetailCtrl.showAddressEditors">
+                                        <div class="form-group">
+                                            <label for="inputBillingFirstName" class="col-sm-3 control-label">First Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputBillingFirstName" placeholder="John"
+                                                       ng-model="sampleRequestDetailCtrl.record.BillingContact.FirstName"
+                                                       ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingLastName" class="col-sm-3 control-label">Last Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputBillingLastName" placeholder="Smith"
+                                                       ng-model="sampleRequestDetailCtrl.record.BillingContact.LastName"
+                                                       ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingAddress" class="col-sm-3 control-label">Street 1</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputBillingAddress" placeholder="111 Fake Ln"
+                                                       ng-model="sampleRequestDetailCtrl.record.BillingContact.Address.Street1"
+                                                       ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingAddress" class="col-sm-3 control-label">Street 2</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputBillingAddress2" placeholder="#123"
+                                                       ng-model="sampleRequestDetailCtrl.record.BillingContact.Address.Street2"
+                                                       ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingAddress" class="col-sm-3 control-label">Street 3</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputBillingAddress3"
+                                                       ng-model="sampleRequestDetailCtrl.record.BillingContact.Address.Street3"
+                                                       ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingCity" class="col-sm-3 control-label">City</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputBillingCity" placeholder="Fake City"
+                                                       ng-model="sampleRequestDetailCtrl.record.BillingContact.Address.City"
+                                                       ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingState" class="col-sm-3 control-label">State</label>
+                                            <div class="col-sm-3">
+                                                <select id="inputBillingState" class="form-control"
+                                                        ng-model="sampleRequestDetailCtrl.record.BillingContact.Address.RegionID"
+                                                        ng-options="state.ID as state.Name for state in sampleRequestDetailCtrl.states"
+                                                        ng-change="sampleRequestDetailCtrl.updateShippingAddress()"></select>
+                                            </div>
+                                            <label for="inputBillingPostalCode" class="col-sm-3 control-label">Zip</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="inputBillingPostalCode" placeholder="55555"
+                                                       ng-model="sampleRequestDetailCtrl.record.BillingContact.Address.PostalCode"
+                                                       ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingCountry" class="col-sm-3 control-label">Country</label>
+                                            <div class="col-sm-9">
+                                                <select id="inputBillingCountry" class="form-control"
+                                                        ng-model="sampleRequestDetailCtrl.record.BillingContact.Address.CountryID"
+                                                        ng-options="country.ID as country.Name for country in sampleRequestDetailCtrl.countries"
+                                                        ng-change="sampleRequestDetailCtrl.updateShippingAddress()"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingPhone1" class="col-sm-3 control-label">Phone 1</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">#</span>
+                                                    <input type="text" class="form-control" id="inputBillingPhone1" placeholder="5555555555"
+                                                           ng-model="sampleRequestDetailCtrl.record.BillingContact.Phone1"
+                                                           ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingPhone2" class="col-sm-3 control-label">Phone 2</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">#</span>
+                                                    <input type="text" class="form-control" id="inputBillingPhone2" placeholder="5555555555"
+                                                           ng-model="sampleRequestDetailCtrl.record.BillingContact.Phone2"
+                                                           ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingPhone3" class="col-sm-3 control-label">Phone 3</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">#</span>
+                                                    <input type="text" class="form-control" id="inputBillingPhone3" placeholder="5555555555"
+                                                           ng-model="sampleRequestDetailCtrl.record.BillingContact.Phone3"
+                                                           ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingFax" class="col-sm-3 control-label">Fax</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">#</span>
+                                                    <input type="text" class="form-control" id="inputBillingFax" placeholder="5555555555"
+                                                           ng-model="sampleRequestDetailCtrl.record.BillingContact.Fax1"
+                                                           ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputBillingEmail" class="col-sm-3 control-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">@</span>
+                                                    <input type="text" class="form-control" id="inputBillingEmail" placeholder="john.smith@email.com"
+                                                           ng-model="sampleRequestDetailCtrl.record.BillingContact.Email1"
+                                                           ng-keyup="sampleRequestDetailCtrl.updateShippingAddress()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <a class="btn btn-info" ng-click="sampleRequestDetailCtrl.showAddressEditors = false">Done</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-horizontal cvShippingForm">
+                                    <h3 class="inline-block">Shipping Information</h3>
+                                    <div class="cvSameAsBilling pull-right" ng-show="sampleRequestDetailCtrl.showAddressEditors">
+                                        <label>
+                                            <input type="checkbox"
+                                                   ng-model="sampleRequestDetailCtrl.record.ShippingSameAsBilling"
+                                                   ng-change="sampleRequestDetailCtrl.updateShippingAddress()" />
+                                            Same As Billing?
+                                        </label>
+                                    </div>
+                                    <div class="col-md-11 col-md-offset-1" ng-hide="sampleRequestDetailCtrl.showAddressEditors">
+                                        <p>
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.FirstName}}
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.LastName}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.FirstName || sampleRequestDetailCtrl.record.ShippingContact.LastName" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Street1}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Address.Street1" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Street2}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Address.Street2" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Street3}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Address.Street3" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.City}},
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Region.Name}}
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.PostalCode}}<br />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Country.Name}}<br />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Phone1}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Phone1" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Phone}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Address.Phone" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Phone2}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Phone2" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Phone2}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Address.Phone2" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Phone3}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Phone3" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Phone3}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Address.Phone3" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Fax1}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Fax1" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Fax}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Address.Fax" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Email1}}<br ng-if="sampleRequestDetailCtrl.record.ShippingContact.Email1" />
+                                            {{sampleRequestDetailCtrl.record.ShippingContact.Address.Email}}
+                                        </p>
+                                        <p ng-hide="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'">
+                                            <a class="btn btn-info" ng-click="sampleRequestDetailCtrl.showAddressEditors = true">Edit</a>
+                                        </p>
+                                    </div>
+                                    <div ng-show="sampleRequestDetailCtrl.showAddressEditors">
+                                        <div class="form-group">
+                                            <label for="inputShippingFirstName" class="col-sm-3 control-label">First Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputShippingFirstName" placeholder="John"
+                                                       ng-model="sampleRequestDetailCtrl.record.ShippingContact.FirstName"
+                                                       ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingLastName" class="col-sm-3 control-label">Last Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputShippingLastName" placeholder="Smith"
+                                                       ng-model="sampleRequestDetailCtrl.record.ShippingContact.LastName"
+                                                       ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingAddress" class="col-sm-3 control-label">Street 1</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputShippingAddress" placeholder="111 Fake Ln"
+                                                       ng-model="sampleRequestDetailCtrl.record.ShippingContact.Address.Street1"
+                                                       ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingAddress" class="col-sm-3 control-label">Street 2</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputShippingAddress2" placeholder="#123"
+                                                       ng-model="sampleRequestDetailCtrl.record.ShippingContact.Address.Street2"
+                                                       ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingAddress" class="col-sm-3 control-label">Street 3</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputShippingAddress3"
+                                                       ng-model="sampleRequestDetailCtrl.record.ShippingContact.Address.Street3"
+                                                       ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingCity" class="col-sm-3 control-label">City</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="inputShippingCity" placeholder="Fake City"
+                                                       ng-model="sampleRequestDetailCtrl.record.ShippingContact.Address.City"
+                                                       ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingState" class="col-sm-3 control-label">State</label>
+                                            <div class="col-sm-3">
+                                                <select id="inputShippingState" class="form-control col-xs-12"
+                                                        ng-model="sampleRequestDetailCtrl.record.ShippingContact.Address.RegionID"
+                                                        ng-options="state.ID as state.Name for state in sampleRequestDetailCtrl.states"
+                                                        ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling"></select>
+                                            </div>
+                                            <label for="inputShippingPostalCode" class="col-sm-3 control-label">Zip</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="inputShippingPostalCode" placeholder="55555"
+                                                       ng-model="sampleRequestDetailCtrl.record.ShippingContact.Address.PostalCode"
+                                                       ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingCountry" class="col-sm-3 control-label">Country</label>
+                                            <div class="col-sm-9">
+                                                <select id="inputShippingCountry" class="form-control"
+                                                        ng-model="sampleRequestDetailCtrl.record.ShippingContact.Address.CountryID"
+                                                        ng-options="country.ID as country.Name for country in sampleRequestDetailCtrl.countries"
+                                                        ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingPhone1" class="col-sm-3 control-label">Phone 1</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">#</span>
+                                                    <input type="text" class="form-control" id="inputShippingPhone1" placeholder="5555555555"
+                                                           ng-model="sampleRequestDetailCtrl.record.ShippingContact.Phone1"
+                                                           ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingPhone2" class="col-sm-3 control-label">Phone 2</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">#</span>
+                                                    <input type="text" class="form-control" id="inputShippingPhone2" placeholder="5555555555"
+                                                           ng-model="sampleRequestDetailCtrl.record.ShippingContact.Phone2"
+                                                           ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingPhone3" class="col-sm-3 control-label">Phone 3</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">#</span>
+                                                    <input type="text" class="form-control" id="inputShippingPhone3" placeholder="5555555555"
+                                                           ng-model="sampleRequestDetailCtrl.record.ShippingContact.Phone3"
+                                                           ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingFax" class="col-sm-3 control-label">Fax</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">#</span>
+                                                    <input type="text" class="form-control" id="inputShippingFax" placeholder="5555555555"
+                                                           ng-model="sampleRequestDetailCtrl.record.ShippingContact.Fax1"
+                                                           ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputShippingEmail" class="control-label col-sm-3">Email</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">@</span>
+                                                    <input type="text" class="form-control" id="inputShippingEmail" placeholder="john.smith@email.com"
+                                                           ng-model="sampleRequestDetailCtrl.record.ShippingContact.Email1"
+                                                           ng-disabled="sampleRequestDetailCtrl.record.ShippingSameAsBilling" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <a class="btn btn-info" ng-click="sampleRequestDetailCtrl.showAddressEditors = false">Done</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Notes">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Private Notes</h3>
+                                <cef-notes-editor
+                                    notes="sampleRequestDetailCtrl.record.Notes"
+                                    note-type-name="'Private'">
+                                </cef-notes-editor>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Order Notes</h3>
+                                <cef-notes-editor
+                                    notes="sampleRequestDetailCtrl.record.Notes"
+                                    note-type-name="'Sample'">
+                                </cef-notes-editor>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>Customer Notes</h3>
+                                <cef-notes-editor
+                                    notes="sampleRequestDetailCtrl.record.Notes"
+                                    note-type-name="'Customer'">
+                                </cef-notes-editor>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="Attributes">
+                    <div class="container-fluid">
+                        <div cef-json-attributes-editor master="sampleRequestDetailCtrl.record" type="Sample Request" ng-if="sampleRequestDetailCtrl.record != null"></div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <!-- Summary -->
+        <div class="col-sm-12 col-md-4 col-lg-3 order-summary">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-6">
+                    <div class="form-vertical">
+                        <div class="form-group">
+                            <label class="control-label" data-translate="ui.admin.common.OrderTotal"></label>
+                            <p class="total">{{sampleRequestDetailCtrl.record.Totals.Total | currency}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="ui.admin.common.BalanceDue"></label>
+                            <p class="total">{{sampleRequestDetailCtrl.record.BalanceDue | currency}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="ui.admin.common.OrderDate"></label>
+                            <p class="form-control-static">{{sampleRequestDetailCtrl.record.OriginalDate | convertJSONDate | date:'yyyy-MM-dd'}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="ui.admin.common.SalesOrderStatus"></label>
+                            <p class="form-control-static">{{sampleRequestDetailCtrl.record.Status.Name}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="ui.admin.common.OrderKey">Order Key</label>
+                            <p class="form-control-static"
+                               ng-show="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'">{{sampleRequestDetailCtrl.record.CustomKey}}</p>
+                            <input type="text" class="form-control" data-placeholder="{{sampleRequestDetailCtrl.orderKeyTxt}}"
+                                   ng-hide="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'"
+                                   ng-model="sampleRequestDetailCtrl.record.CustomKey" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" data-translate="ui.admin.common.CustomersPONumber"></label>
+                            <p class="form-control-static"
+                               ng-show="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'">{{sampleRequestDetailCtrl.record.PurchaseOrderNumber}}</p>
+                            <input type="text" class="form-control" data-placeholder="{{sampleRequestDetailCtrl.purchaseOrderNoTxt}}"
+                                   ng-hide="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'"
+                                   ng-model="sampleRequestDetailCtrl.record.PurchaseOrderNumber">
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group order-invoices">
+                                <label class="control-label" data-translate="ui.admin.controls.sales.sampleRequestDetail.SubOrders.OptionalPlural"></label>
+                                <p ng-hide="sampleRequestDetailCtrl.record.Children.length > 0" class="input-group">No Sub-Orders for this Order</p>
+                                <p ng-repeat="child in sampleRequestDetailCtrl.record.Children" class="input-group order">
+                                    <a ui-sref="sales.salesOrders.detail({ID: child.ID})">#{{child.ID}} {{child.CustomKey}}</a><br />
+                                    Total: {{child.Totals.Total | currency}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group order-invoices">
+                                <label class="control-label" data-translate="ui.admin.controls.sales.sampleRequestDetail.Invoices.OptionalPlural"></label>
+                                <p ng-hide="sampleRequestDetailCtrl.record.AssociatedSalesInvoices.length > 0" class="input-group">No Invoices for this Order</p>
+                                <p ng-repeat="invoice in sampleRequestDetailCtrl.record.AssociatedSalesInvoices" class="input-group invoice">
+                                    <a ui-sref="sales.salesInvoices.detail({ID: invoice.SalesInvoice.ID})">#{{invoice.SalesInvoice.ID}} {{invoice.SalesInvoice.CustomKey}}</a><br />
+                                    Total: {{invoice.SalesInvoice.Totals.Total | currency}}<br />
+                                    <span ng-if="invoice.SalesInvoice.BalanceDue <= 0">PAID</span>
+                                    <span ng-if="invoice.SalesInvoice.BalanceDue > 0">Due: {{invoice.SalesInvoice.BalanceDue | currency}}</span>
+                                    <button type="button" class="btn btn-info btn-xs"
+                                            ng-click="sampleRequestDetailCtrl.addPaymentToInvoice($index)"
+                                            ng-if="invoice.SalesInvoice.BalanceDue > 0 && !(sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void')">
+                                        Add Payment
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group order-payments">
+                                <label class="control-label"data-translate="ui.admin.common.Payments.OptionalPlural"></label>
+                                <p ng-hide="sampleRequestDetailCtrl.record.SalesOrderPayments.length > 0" class="input-group">No payments have been received.</p>
+                                <p ng-repeat="payment in sampleRequestDetailCtrl.record.SalesOrderPayments" class="input-group payment">
+                                    {{payment.Payment.CustomKey}}<br />
+                                    {{payment.Payment.TypeName}} {{payment.Payment.Last4CardDigits}}<br />
+                                    {{payment.Payment.Amount | currency}}<br />
+                                    {{payment.Payment.StatusName}}
+                                    <button type="button" class="btn btn-info btn-xs"
+                                            ng-click="sampleRequestDetailCtrl.capturePayment($index)"
+                                            ng-if="payment.Payment.TypeName == 'Credit Card' && payment.Payment.StatusKey != 'Payment Received'">
+                                        Capture
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group order-purchase-orders">
+                                <label class="control-label" data-translate="ui.admin.controls.sales.sampleRequestDetail.PurchaseOrders.OptionalPlural"></label>
+                                <p ng-hide="sampleRequestDetailCtrl.record.AssociatedPurchaseOrders.length > 0" class="input-group">No POs for this Order</p>
+                                <p ng-repeat="purchaseOrder in sampleRequestDetailCtrl.record.AssociatedPurchaseOrders" class="input-group purchase-order">
+                                    <a ui-sref="sales.purchaseOrders.detail({ID: purchaseOrder.PurchaseOrderID})">
+                                        #{{purchaseOrder.PurchaseOrderID}}
+                                        {{purchaseOrder.PurchaseOrder.CustomKey}}
+                                        {{purchaseOrder.PurchaseOrder.StatusKey}}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-6 order-actions">
+                    <div class="row" ng-hide="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'">
+                        <div class="col-sm-6 hidden-xs visible-sm hidden-md hidden-lg">
+                            <div class="form-group mt-3">
+                                <label class="control-label" ng-bind="tooltipHeader"></label>
+                                <label class="text-white font-weight-normal" ng-bind="tooltip"></label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-12 col-xs-12">
+                            <!-- Save/Cancel -->
+                            <a role="button" class="btn btn-primary btn-block" ng-if="sampleRequestDetailCtrl.record.ID > 0" ng-click="sampleRequestDetailCtrl.save()"
+                               ng-mouseenter="$parent.tooltipHeader = 'Save Changes';$parent.tooltip = 'The Order will be saved with any changes.';">Save Changes</a>
+                            <a role="button" class="btn btn-warning btn-block" ng-if="sampleRequestDetailCtrl.record.ID > 0" ui-sref="sales.salesOrders.list"
+                               ng-mouseenter="$parent.tooltipHeader = 'Cancel Changes';$parent.tooltip = 'The Order Details will reverty back to their original state. You will be returned to the order list.';">Back/Cancel</a>
+                            <a role="button" class="btn btn-primary btn-block" ng-if="sampleRequestDetailCtrl.record.ID <= 0" ng-click="sampleRequestDetailCtrl.save()"
+                               ng-mouseenter="$parent.tooltipHeader = 'Create New Order';$parent.tooltip = 'The New Order will be saved which will enable functions like Confirming the Order.';">Create New Order</a>
+                            <a role="button" class="btn btn-warning btn-block" ng-if="sampleRequestDetailCtrl.record.ID <= 0" ui-sref="sales.salesOrders.list"
+                               ng-mouseenter="$parent.tooltipHeader = 'Cancel New Order';$parent.tooltip = 'The New Order will not be saved and cannot be referred back to. You will be returned to the order list.';">Back/Cancel</a>
+                            <!-- Actions against a Valid Order -->
+                            <label class="control-label text-center block form-control-static">Order Actions</label>
+                            <button type="button" class="btn btn-info btn-block"
+                                    ng-click="sampleRequestDetailCtrl.confirmOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Confirmed' || sampleRequestDetailCtrl.record.StatusKey == 'Processing' || sampleRequestDetailCtrl.record.StatusKey == 'Shipped'"
+                                    ng-mouseenter="tooltipHeader = 'Confirm Order';
+                                    tooltip = 'The order items each have sufficient stock and will be allocated against their stock (reducing each). The order status will be set to \'Confirmed\'. An email notification will be sent to the customer.';">
+                                Confirm Order
+                            </button>
+                            <button type="button" class="btn btn-info btn-block"
+                                    ng-click="sampleRequestDetailCtrl.backorderOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Confirmed' || sampleRequestDetailCtrl.record.StatusKey == 'Backordered' || sampleRequestDetailCtrl.record.StatusKey == 'Processing' || sampleRequestDetailCtrl.record.StatusKey == 'Shipped'"
+                                    ng-mouseenter="tooltipHeader = 'Insufficient Stock';
+                                    tooltip = 'The order items do not have sufficient stock. The order status will be set to \'Backordered\'. An email notification will be sent to the customer. A Purchase Order should be created and reference this order by an Inventory Manager to refill stock.';">
+                                Backorder Order
+                            </button>
+                            <button type="button" class="btn btn-info btn-block"
+                                    ng-click="sampleRequestDetailCtrl.splitOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Confirmed' || sampleRequestDetailCtrl.record.StatusKey == 'Processing' || sampleRequestDetailCtrl.record.StatusKey == 'Split' || sampleRequestDetailCtrl.record.StatusKey == 'Shipped'"
+                                    ng-mouseenter="tooltipHeader = 'Split Order';
+                                    tooltip = 'Some items on the order have available stock while others to not. Close this order (the status will be \'Split\') while creating two new orders (the order keys will be Key.1 and Key.2). An email notification will be sent to the customer.';">
+                                Split Order
+                            </button>
+                            <button type="button" class="btn btn-info btn-block"
+                                    ng-click="sampleRequestDetailCtrl.createInvoiceForOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.BalanceDue <= 0"
+                                    ng-mouseenter="tooltipHeader = 'Create Invoice';
+                                    tooltip = 'Generates an Invoice with the same information as this Order with the Balance Due amount. An email notification will be sent to the customer. No status change will occur.';">
+                                Create Invoice
+                            </button>
+                            <button type="button" class="btn btn-info btn-block"
+                                    ng-click="sampleRequestDetailCtrl.addPaymentToOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.BalanceDue <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Full Payment Recieved'"
+                                    ng-mouseenter="tooltipHeader = 'Add Payment';
+                                    tooltip = 'Take payment information from the customer and perform an Authorize and/or Capture from the Payment Provider. If the total of all payments is less than the Balance Due, the status will be set to \'Partial Payment Received\', otherwise \'Full Payment Received\'. An email notification will be sent to the customer.';">
+                                Add Payment
+                            </button>
+                            <button type="button" class="btn btn-info btn-block"
+                                    ng-click="sampleRequestDetailCtrl.createPickTicketForOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Processing' || sampleRequestDetailCtrl.record.StatusKey == 'Shipped from Vendor' || sampleRequestDetailCtrl.record.StatusKey == 'Shipped'"
+                                    ng-mouseenter="tooltipHeader = 'Create Pick Ticket';
+                                    tooltip = 'Creates a printable Pick Ticket for the Warehouse to locate products for the order. The order will be set to the \'Processing\' status.';">
+                                Create Pick Ticket
+                            </button>
+                            <button type="button" class="btn btn-info btn-block"
+                                    ng-click="sampleRequestDetailCtrl.dropShipOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Shipped from Vendor' || sampleRequestDetailCtrl.record.StatusKey == 'Shipped'"
+                                    ng-mouseenter="tooltipHeader = 'Drop Ship Order';
+                                    tooltip = 'A Purchase Order will be created with this order\'s line items where a Vendor can be selected that allows Drop Shipping. The order will be set to \'Shipped from Vendor\' status. An email notification will be sent to the customer.';">
+                                Drop Ship Order
+                            </button>
+                            <button type="button" class="btn btn-info btn-block"
+                                    ng-click="sampleRequestDetailCtrl.shipOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Shipped from Vendor' || sampleRequestDetailCtrl.record.StatusKey == 'Shipped'"
+                                    ng-mouseenter="tooltipHeader = 'Ship Order';
+                                    tooltip = 'The order will be set to \'Shipped\' status. An email notification will be sent to the customer.';">
+                                Ship Order
+                            </button>
+                            <button type="button" class="btn btn-success btn-block"
+                                    ng-click="sampleRequestDetailCtrl.completeOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Complete' || sampleRequestDetailCtrl.record.BalanceDue > 0"
+                                    ng-mouseenter="tooltipHeader = 'Complete Order';
+                                    tooltip = 'The order will be set to \'Completed\' status, no further modifications will be allowed. An email notification will be sent to the customer.';">
+                                Complete Order
+                            </button>
+                            <button type="button" class="btn btn-danger btn-block"
+                                    ng-click="sampleRequestDetailCtrl.voidOrder()"
+                                    ng-disabled="sampleRequestDetailCtrl.record.ID <= 0 || sampleRequestDetailCtrl.record.StatusKey == 'Void'"
+                                    ng-mouseenter="tooltipHeader = 'Void Order';
+                                    tooltip = 'Void the order. It will no longer be processed and will be visible on the Completed Orders view. An email notification will be sent to the customer.';">
+                                Void Order
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="sampleRequestDetailCtrl.record.Status.Name == 'Completed' || sampleRequestDetailCtrl.record.Status.Name == 'Split' || sampleRequestDetailCtrl.record.Status.Name == 'Void'">
+                        <div class="col-sm-12">
+                            <a role="button" class="btn btn-info btn-block" ui-sref="sales.salesOrders.list">Back</a>
+                        </div>
+                    </div>
+                    <div class="row hidden-xs hidden-sm visible-md visible-lg" ng-show="tooltip && tooltip != ''">
+                        <div class="col-md-12">
+                            <div class="form-group mt-3">
+                                <label class="control-label" ng-bind="tooltipHeader"></label>
+                                <label class="text-white font-weight-normal" ng-bind="tooltip"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

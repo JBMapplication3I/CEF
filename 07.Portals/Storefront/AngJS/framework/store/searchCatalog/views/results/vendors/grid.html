@@ -1,0 +1,47 @@
+﻿<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-tk-5 row-cols-fk-6"
+  id="results-grid" ng-init="kind = 'vendors'">
+  <div ng-repeat="recordID in scvegCtrl.service.activeSearchViewModel.ResultIDs
+                  | orderBy: scvegCtrl.service.getSorter()"
+    class="col-sm-4 col-md-6 col-lg-4 mb-3 catalog-result-card"
+    id="vendorGridBlock{{recordID}}">
+    <div ng-if="scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID })"
+      class="row">
+      <div class="col-12">
+        <a ui-sref-plus uisrp-is-vendor="true"
+          uisrp-path="{{scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl}}">
+          <img class="img-fluid d-block mx-auto"
+            alt="{{scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name}}"
+            ng-src="{{scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).PrimaryImageFileName
+              | corsImageLink : kind : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+            onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';"
+          />
+        </a>
+      </div>
+      <div class="col-12">
+        <a class="product-title rows-2"
+          title="{{scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name}}"
+          ui-sref-plus uisrp-is-vendor="true"
+          uisrp-path="{{scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl}}">
+          <p ng-bind="scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"></p>
+        </a>
+      </div>
+      <div class="col-12">
+        <p class="product-short-desc rows-2"
+          ng-bind="scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Description">
+        </p>
+      </div>
+      <div class="col-12">
+        <p>
+          <a class="btn btn-block btn-lg btn-primary"
+            ui-sref-plus uisrp-is-vendor="true"
+            uisrp-path="{{scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl}}">
+            <span data-translate="ui.storefront.common.ViewDetails"></span>
+          </a>
+        </p>
+      </div>
+    </div>
+    <div ng-if="!scvegCtrl.service.getServiceForKind(kind).getCached({ id: recordID })"
+      cef-loading-widget overlay="false">
+    </div>
+  </div>
+</div>

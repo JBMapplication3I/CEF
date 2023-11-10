@@ -1,0 +1,2509 @@
+<?xml version="1.0"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition">
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+        <ReportItems>
+          <Textbox Name="TextBox2">
+            <Left>25.875pt</Left>
+            <Top>15pt</Top>
+            <Height>27.75pt</Height>
+            <Width>556.5pt</Width>
+            <Style>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value> </Value>
+                    <Style>
+                      <FontSize>12.9998pt</FontSize>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Parameters!CategoryID.Label</Value>
+                    <Style>
+                      <FontSize>12.9998pt</FontSize>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value> </Value>
+                    <Style>
+                      <Color>Black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Parameters!DateRange.Label</Value>
+                    <Style>
+                      <FontSize>12.99975pt</FontSize>
+                      <Color>Black</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>﻿</Value>
+                    <Style>
+                      <FontSize>12.9998pt</FontSize>
+                      <Color>black</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Tablix Name="Tablix1">
+            <Left>24pt</Left>
+            <Top>70.5pt</Top>
+            <Height>36pt</Height>
+            <Width>216pt</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>SalesByCategoryCurrency</DataSetName>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>72pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>72pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>72pt</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox3">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>72pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Name</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox4">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>72pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Subtotal</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox9">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>72pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Quantity</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox6">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>72pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Name.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox7">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>72pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Subtotal.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox10">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>72pt</Width>
+                          <Style>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Quantity.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
+          <Chart Name="Chart1">
+            <Left>277.5pt</Left>
+            <Top>61.5pt</Top>
+            <Height>216pt</Height>
+            <Width>288pt</Width>
+            <DataElementName />
+            <Style>
+              <BackgroundColor>White</BackgroundColor>
+              <FontFamily>Segoe UI</FontFamily>
+              <FontSize>8pt</FontSize>
+              <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+              <TextAlign>Center</TextAlign>
+              <Color>Gray</Color>
+              <ShadowColor>Transparent</ShadowColor>
+              <Border>
+                <Color>#d3d3d3</Color>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>SalesByCategory</DataSetName>
+            <ChartSeriesHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label>Subtotal</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartSeriesHierarchy>
+            <ChartCategoryHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Group Name="Chart1_CategoryGroup1">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Name.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Name.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <Label>=Fields!Name.Value</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartCategoryHierarchy>
+            <ChartData>
+              <ChartSeriesCollection>
+                <ChartSeries Name="Subtotal1">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=Sum(Fields!Subtotal.Value)</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style>
+                          <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                          <Color>Black</Color>
+                          <ShadowColor>Transparent</ShadowColor>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>None</Style>
+                          </Border>
+                        </Style>
+                        <UseValueAsLabel>false</UseValueAsLabel>
+                        <Label>#PERCENT</Label>
+                        <Visible>false</Visible>
+                        <Position>Auto</Position>
+                      </ChartDataLabel>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>Transparent</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                      <ChartMarker>
+                        <Size>6pt</Size>
+                        <Style>
+                          <FontFamily>Segoe UI</FontFamily>
+                          <FontSize>8pt</FontSize>
+                          <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                          <ShadowColor>Transparent</ShadowColor>
+                          <Border>
+                            <Color>Transparent</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                        </Style>
+                      </ChartMarker>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Type>Shape</Type>
+                  <Subtype>Doughnut</Subtype>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                    <Color>Gray</Color>
+                    <ShadowColor>Transparent</ShadowColor>
+                    <Border>
+                      <Color>LightGrey</Color>
+                      <Style>Solid</Style>
+                    </Border>
+                  </Style>
+                  <ChartMarker>
+                    <Size>6pt</Size>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>Transparent</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                  </ChartMarker>
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                </ChartSeries>
+              </ChartSeriesCollection>
+            </ChartData>
+            <ChartAreas>
+              <ChartArea Name="Default">
+                <ChartCategoryAxes>
+                  <ChartAxis Name="Primary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Opposite</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartCategoryAxes>
+                <ChartValueAxes>
+                  <ChartAxis Name="Primary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Opposite</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartValueAxes>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>Center</TextAlign>
+                  <Color>Gray</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Color>#d3d3d3</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </ChartArea>
+            </ChartAreas>
+            <ChartLegends>
+              <ChartLegend Name="Default">
+                <Hidden>false</Hidden>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>Center</TextAlign>
+                  <Color>Black</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Color>#d3d3d3</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>BottomCenter</Position>
+                <ChartLegendTitle>
+                  <Caption />
+                  <TitleSeparator>None</TitleSeparator>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                    <TextAlign>Center</TextAlign>
+                    <Color>Gray</Color>
+                    <ShadowColor>Transparent</ShadowColor>
+                    <Border>
+                      <Color>LightGrey</Color>
+                      <Style>None</Style>
+                    </Border>
+                  </Style>
+                </ChartLegendTitle>
+                <HeaderSeparator>None</HeaderSeparator>
+                <HeaderSeparatorColor>Black</HeaderSeparatorColor>
+                <ColumnSeparator>None</ColumnSeparator>
+                <ColumnSeparatorColor>Black</ColumnSeparatorColor>
+                <ColumnSpacing>0</ColumnSpacing>
+                <InterlacedRows>false</InterlacedRows>
+                <InterlacedRowsColor>Transparent</InterlacedRowsColor>
+                <EquallySpacedItems>false</EquallySpacedItems>
+                <Reversed>Auto</Reversed>
+                <TextWrapThreshold>0</TextWrapThreshold>
+              </ChartLegend>
+            </ChartLegends>
+            <ChartTitles>
+              <ChartTitle Name="Default">
+                <Caption>Top 5 Categories</Caption>
+                <Hidden>true</Hidden>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>10.5pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>General</TextAlign>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <Color>Black</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Width>0.75000pt</Width>
+                    <Color>LightGrey</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>TopCenter</Position>
+                <DockOffset>0</DockOffset>
+                <TextOrientation>Auto</TextOrientation>
+              </ChartTitle>
+            </ChartTitles>
+            <Palette>Pastel</Palette>
+            <ChartBorderSkin>
+              <Style>
+                <BackgroundColor>White</BackgroundColor>
+                <FontFamily>Segoe UI</FontFamily>
+                <FontSize>8pt</FontSize>
+                <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                <TextAlign>Center</TextAlign>
+                <Color>White</Color>
+                <ShadowColor>Transparent</ShadowColor>
+                <Border>
+                  <Color>#d3d3d3</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </ChartBorderSkin>
+            <ChartNoDataMessage Name="Default">
+              <Caption />
+              <Hidden>false</Hidden>
+              <Style>
+                <BackgroundColor>White</BackgroundColor>
+                <FontFamily>Segoe UI</FontFamily>
+                <FontSize>8pt</FontSize>
+                <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                <TextAlign>Center</TextAlign>
+                <Color>Gray</Color>
+                <ShadowColor>Transparent</ShadowColor>
+                <Border>
+                  <Color>#d3d3d3</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <Position>TopCenter</Position>
+              <DockOffset>0</DockOffset>
+              <TextOrientation>Auto</TextOrientation>
+            </ChartNoDataMessage>
+          </Chart>
+          <Chart Name="Chart3">
+            <Left>7.5pt</Left>
+            <Top>283.5pt</Top>
+            <Height>216pt</Height>
+            <Width>601.5pt</Width>
+            <Style>
+              <BackgroundColor>White</BackgroundColor>
+              <FontFamily>Segoe UI</FontFamily>
+              <FontSize>8pt</FontSize>
+              <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+              <TextAlign>Center</TextAlign>
+              <Color>Gray</Color>
+              <ShadowColor>Transparent</ShadowColor>
+              <Border>
+                <Color>#d3d3d3</Color>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>SalesByCategory</DataSetName>
+            <ChartSeriesHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Label>Quantity</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartSeriesHierarchy>
+            <ChartCategoryHierarchy>
+              <ChartMembers>
+                <ChartMember>
+                  <Group Name="Chart3_CategoryGroup1">
+                    <GroupExpressions>
+                      <GroupExpression>=Fields!Name.Value</GroupExpression>
+                    </GroupExpressions>
+                  </Group>
+                  <SortExpressions>
+                    <SortExpression>
+                      <Value>=Fields!Name.Value</Value>
+                    </SortExpression>
+                  </SortExpressions>
+                  <Label>=Fields!Name.Value</Label>
+                </ChartMember>
+              </ChartMembers>
+            </ChartCategoryHierarchy>
+            <ChartData>
+              <ChartSeriesCollection>
+                <ChartSeries Name="Quantity1">
+                  <ChartDataPoints>
+                    <ChartDataPoint>
+                      <ChartDataPointValues>
+                        <Y>=Sum(Fields!Quantity.Value)</Y>
+                      </ChartDataPointValues>
+                      <ChartDataLabel>
+                        <Style>
+                          <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                          <Color>Black</Color>
+                          <ShadowColor>Transparent</ShadowColor>
+                          <Border>
+                            <Color>LightGrey</Color>
+                            <Style>None</Style>
+                          </Border>
+                        </Style>
+                        <UseValueAsLabel>false</UseValueAsLabel>
+                        <Visible>false</Visible>
+                        <Position>Auto</Position>
+                      </ChartDataLabel>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>Transparent</Color>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                      <ChartMarker>
+                        <Size>6pt</Size>
+                        <Style>
+                          <FontFamily>Segoe UI</FontFamily>
+                          <FontSize>8pt</FontSize>
+                          <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                          <ShadowColor>Transparent</ShadowColor>
+                          <Border>
+                            <Color>Transparent</Color>
+                            <Style>Solid</Style>
+                          </Border>
+                        </Style>
+                      </ChartMarker>
+                    </ChartDataPoint>
+                  </ChartDataPoints>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                    <Color>Gray</Color>
+                    <ShadowColor>Transparent</ShadowColor>
+                    <Border>
+                      <Color>LightGrey</Color>
+                      <Style>Solid</Style>
+                    </Border>
+                  </Style>
+                  <ChartMarker>
+                    <Size>6pt</Size>
+                    <Style>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>Transparent</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                  </ChartMarker>
+                  <ValueAxisName>Primary</ValueAxisName>
+                  <CategoryAxisName>Primary</CategoryAxisName>
+                </ChartSeries>
+              </ChartSeriesCollection>
+            </ChartData>
+            <ChartAreas>
+              <ChartArea Name="Default">
+                <ChartCategoryAxes>
+                  <ChartAxis Name="Primary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Opposite</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartCategoryAxes>
+                <ChartValueAxes>
+                  <ChartAxis Name="Primary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Default</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                  <ChartAxis Name="Secondary">
+                    <Visible>Auto</Visible>
+                    <Style>
+                      <BackgroundColor>White</BackgroundColor>
+                      <FontFamily>Segoe UI</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                      <TextAlign>Center</TextAlign>
+                      <Color>Black</Color>
+                      <ShadowColor>Transparent</ShadowColor>
+                      <Border>
+                        <Color>#808080</Color>
+                        <Style>Solid</Style>
+                      </Border>
+                    </Style>
+                    <ChartAxisTitle>
+                      <Caption />
+                      <Position>Center</Position>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Black</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisTitle>
+                    <Interval>0</Interval>
+                    <ChartMajorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorGridLines>
+                    <ChartMinorGridLines>
+                      <Enabled>Auto</Enabled>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#dcdcdc</Color>
+                          <Style>Dotted</Style>
+                        </Border>
+                      </Style>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorGridLines>
+                    <ChartMajorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1.5</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMajorTickMarks>
+                    <ChartMinorTickMarks>
+                      <Enabled>False</Enabled>
+                      <Type>Outside</Type>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Width>0.75000pt</Width>
+                          <Color>Gray</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                      <Length>1</Length>
+                      <IntervalType>Default</IntervalType>
+                      <IntervalOffsetType>Default</IntervalOffsetType>
+                    </ChartMinorTickMarks>
+                    <Location>Opposite</Location>
+                    <InterlacedColor>Transparent</InterlacedColor>
+                    <LabelsAutoFitDisabled>True</LabelsAutoFitDisabled>
+                    <ChartAxisScaleBreak>
+                      <Enabled>false</Enabled>
+                      <BreakLineType>Ragged</BreakLineType>
+                      <CollapsibleSpaceThreshold>25</CollapsibleSpaceThreshold>
+                      <MaxNumberOfBreaks>2</MaxNumberOfBreaks>
+                      <Spacing>0</Spacing>
+                      <IncludeZero>Auto</IncludeZero>
+                      <Style>
+                        <BackgroundColor>White</BackgroundColor>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                        <TextAlign>Center</TextAlign>
+                        <Color>Gray</Color>
+                        <ShadowColor>Transparent</ShadowColor>
+                        <Border>
+                          <Color>#d3d3d3</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </ChartAxisScaleBreak>
+                  </ChartAxis>
+                </ChartValueAxes>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>Center</TextAlign>
+                  <Color>Gray</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Color>#d3d3d3</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </ChartArea>
+            </ChartAreas>
+            <ChartLegends>
+              <ChartLegend Name="Default">
+                <Hidden>true</Hidden>
+                <Style>
+                  <BackgroundColor>White</BackgroundColor>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>8pt</FontSize>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>Center</TextAlign>
+                  <Color>Black</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Color>#d3d3d3</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>BottomCenter</Position>
+                <ChartLegendTitle>
+                  <Caption />
+                  <TitleSeparator>None</TitleSeparator>
+                  <Style>
+                    <FontFamily>Segoe UI</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                    <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                    <TextAlign>Center</TextAlign>
+                    <Color>Gray</Color>
+                    <ShadowColor>Transparent</ShadowColor>
+                    <Border>
+                      <Color>LightGrey</Color>
+                      <Style>None</Style>
+                    </Border>
+                  </Style>
+                </ChartLegendTitle>
+                <HeaderSeparator>None</HeaderSeparator>
+                <HeaderSeparatorColor>Black</HeaderSeparatorColor>
+                <ColumnSeparator>None</ColumnSeparator>
+                <ColumnSeparatorColor>Black</ColumnSeparatorColor>
+                <ColumnSpacing>0</ColumnSpacing>
+                <InterlacedRows>false</InterlacedRows>
+                <InterlacedRowsColor>Transparent</InterlacedRowsColor>
+                <EquallySpacedItems>false</EquallySpacedItems>
+                <Reversed>Auto</Reversed>
+                <TextWrapThreshold>0</TextWrapThreshold>
+              </ChartLegend>
+            </ChartLegends>
+            <ChartTitles>
+              <ChartTitle Name="Default">
+                <Caption>Units Sold</Caption>
+                <Hidden>false</Hidden>
+                <Style>
+                  <FontFamily>Segoe UI</FontFamily>
+                  <FontSize>10.5pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                  <TextAlign>General</TextAlign>
+                  <VerticalAlign>Top</VerticalAlign>
+                  <Color>Black</Color>
+                  <ShadowColor>Transparent</ShadowColor>
+                  <Border>
+                    <Width>0.75000pt</Width>
+                    <Color>LightGrey</Color>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+                <Position>TopCenter</Position>
+                <DockOffset>0</DockOffset>
+                <TextOrientation>Auto</TextOrientation>
+              </ChartTitle>
+            </ChartTitles>
+            <Palette>BrightPastel</Palette>
+            <ChartBorderSkin>
+              <Style>
+                <BackgroundColor>White</BackgroundColor>
+                <FontFamily>Segoe UI</FontFamily>
+                <FontSize>8pt</FontSize>
+                <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                <TextAlign>Center</TextAlign>
+                <Color>White</Color>
+                <ShadowColor>Transparent</ShadowColor>
+                <Border>
+                  <Color>#d3d3d3</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </ChartBorderSkin>
+            <ChartNoDataMessage Name="Default">
+              <Caption />
+              <Hidden>false</Hidden>
+              <Style>
+                <BackgroundColor>White</BackgroundColor>
+                <FontFamily>Segoe UI</FontFamily>
+                <FontSize>8pt</FontSize>
+                <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
+                <TextAlign>Center</TextAlign>
+                <Color>Gray</Color>
+                <ShadowColor>Transparent</ShadowColor>
+                <Border>
+                  <Color>#d3d3d3</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <Position>TopCenter</Position>
+              <DockOffset>0</DockOffset>
+              <TextOrientation>Auto</TextOrientation>
+            </ChartNoDataMessage>
+          </Chart>
+        </ReportItems>
+        <Height>549pt</Height>
+      </Body>
+      <Width>611.25pt</Width>
+      <Page>
+        <PageHeader>
+          <Style>
+            <BackgroundColor>#525252</BackgroundColor>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+          <Height>80.25pt</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="TextBox1">
+              <Left>3pt</Left>
+              <Top>3.75pt</Top>
+              <Height>69.75pt</Height>
+              <Width>387.75pt</Width>
+              <Style>
+                <BackgroundColor>#525252</BackgroundColor>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>11.25pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Sales By Category</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>15pt</FontSize>
+                        <FontWeight>Light</FontWeight>
+                        <Color>#ffffff</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>﻿</Value>
+                      <Style>
+                        <FontFamily>Calibri</FontFamily>
+                        <FontSize>15pt</FontSize>
+                        <FontWeight>Light</FontWeight>
+                        <Color>#ffffff</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+          </ReportItems>
+        </PageHeader>
+        <PageFooter>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+          <Height>83.25pt</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+        </PageFooter>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="CategorySales">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=SQLB.corp.claritymis.com\SQL2016;
+Initial Catalog=CEF_DEMO_2020_3_RON_SINGLESTORE;
+User=SQLLogin;
+Password=p4ssw0rd;</ConnectString>
+        <rd:IsDesignState>true</rd:IsDesignState>
+      </ConnectionProperties>
+      <rd:SecurityType>DataBase</rd:SecurityType>
+      <rd:ImpersonateUser>false</rd:ImpersonateUser>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="Categories">
+      <Fields>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="CustomKey">
+          <DataField>CustomKey</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreatedDate">
+          <DataField>CreatedDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="UpdatedDate">
+          <DataField>UpdatedDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Active">
+          <DataField>Active</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ParentID">
+          <DataField>ParentID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="JsonAttributes">
+          <DataField>JsonAttributes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoKeywords">
+          <DataField>SeoKeywords</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoUrl">
+          <DataField>SeoUrl</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoPageTitle">
+          <DataField>SeoPageTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoDescription">
+          <DataField>SeoDescription</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SeoMetaData">
+          <DataField>SeoMetaData</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TypeID">
+          <DataField>TypeID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RequiresRoles">
+          <DataField>RequiresRoles</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DisplayName">
+          <DataField>DisplayName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SortOrder">
+          <DataField>SortOrder</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="IsVisible">
+          <DataField>IsVisible</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="IncludeInMenu">
+          <DataField>IncludeInMenu</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="HeaderContent">
+          <DataField>HeaderContent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SidebarContent">
+          <DataField>SidebarContent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FooterContent">
+          <DataField>FooterContent</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HandlingCharge">
+          <DataField>HandlingCharge</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Hash">
+          <DataField>Hash</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeePercent">
+          <DataField>RestockingFeePercent</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeeAmount">
+          <DataField>RestockingFeeAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="RestockingFeeAmountCurrencyID">
+          <DataField>RestockingFeeAmountCurrencyID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountWarningMessage">
+          <DataField>MinimumOrderDollarAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountWarningMessage">
+          <DataField>MinimumOrderQuantityAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmount">
+          <DataField>MinimumOrderDollarAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmount">
+          <DataField>MinimumOrderQuantityAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountAfter">
+          <DataField>MinimumOrderDollarAmountAfter</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountAfter">
+          <DataField>MinimumOrderQuantityAmountAfter</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountBufferProductID">
+          <DataField>MinimumOrderDollarAmountBufferProductID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountBufferProductID">
+          <DataField>MinimumOrderQuantityAmountBufferProductID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountBufferCategoryID">
+          <DataField>MinimumOrderDollarAmountBufferCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountBufferCategoryID">
+          <DataField>MinimumOrderQuantityAmountBufferCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountOverrideFee">
+          <DataField>MinimumOrderDollarAmountOverrideFee</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountOverrideFeeIsPercent">
+          <DataField>MinimumOrderDollarAmountOverrideFeeIsPercent</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountOverrideFeeWarningMessage">
+          <DataField>MinimumOrderDollarAmountOverrideFeeWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderDollarAmountOverrideFeeAcceptedMessage">
+          <DataField>MinimumOrderDollarAmountOverrideFeeAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountOverrideFee">
+          <DataField>MinimumOrderQuantityAmountOverrideFee</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountOverrideFeeIsPercent">
+          <DataField>MinimumOrderQuantityAmountOverrideFeeIsPercent</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountOverrideFeeWarningMessage">
+          <DataField>MinimumOrderQuantityAmountOverrideFeeWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumOrderQuantityAmountOverrideFeeAcceptedMessage">
+          <DataField>MinimumOrderQuantityAmountOverrideFeeAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmount">
+          <DataField>MinimumForFreeShippingDollarAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountAfter">
+          <DataField>MinimumForFreeShippingDollarAmountAfter</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountWarningMessage">
+          <DataField>MinimumForFreeShippingDollarAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage">
+          <DataField>MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmount">
+          <DataField>MinimumForFreeShippingQuantityAmount</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountAfter">
+          <DataField>MinimumForFreeShippingQuantityAmountAfter</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountWarningMessage">
+          <DataField>MinimumForFreeShippingQuantityAmountWarningMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage">
+          <DataField>MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RequiresRolesAlt">
+          <DataField>RequiresRolesAlt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountBufferProductID">
+          <DataField>MinimumForFreeShippingDollarAmountBufferProductID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountBufferProductID">
+          <DataField>MinimumForFreeShippingQuantityAmountBufferProductID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingDollarAmountBufferCategoryID">
+          <DataField>MinimumForFreeShippingDollarAmountBufferCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="MinimumForFreeShippingQuantityAmountBufferCategoryID">
+          <DataField>MinimumForFreeShippingQuantityAmountBufferCategoryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>CategorySales</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT [Categories].[Category].[ID],
+[Categories].[Category].[CustomKey],
+[Categories].[Category].[CreatedDate],
+[Categories].[Category].[UpdatedDate],
+[Categories].[Category].[Active],
+[Categories].[Category].[Name],
+[Categories].[Category].[Description],
+[Categories].[Category].[ParentID],
+[Categories].[Category].[JsonAttributes],
+[Categories].[Category].[SeoKeywords],
+[Categories].[Category].[SeoUrl],
+[Categories].[Category].[SeoPageTitle],
+[Categories].[Category].[SeoDescription],
+[Categories].[Category].[SeoMetaData],
+[Categories].[Category].[TypeID],
+[Categories].[Category].[RequiresRoles],
+[Categories].[Category].[DisplayName],
+[Categories].[Category].[SortOrder],
+[Categories].[Category].[IsVisible],
+[Categories].[Category].[IncludeInMenu],
+[Categories].[Category].[HeaderContent],
+[Categories].[Category].[SidebarContent],
+[Categories].[Category].[FooterContent],
+[Categories].[Category].[HandlingCharge],
+[Categories].[Category].[Hash],
+[Categories].[Category].[RestockingFeePercent],
+[Categories].[Category].[RestockingFeeAmount],
+[Categories].[Category].[RestockingFeeAmountCurrencyID],
+[Categories].[Category].[MinimumOrderDollarAmountWarningMessage],
+[Categories].[Category].[MinimumOrderQuantityAmountWarningMessage],
+[Categories].[Category].[MinimumOrderDollarAmount],
+[Categories].[Category].[MinimumOrderQuantityAmount],
+[Categories].[Category].[MinimumOrderDollarAmountAfter],
+[Categories].[Category].[MinimumOrderQuantityAmountAfter],
+[Categories].[Category].[MinimumOrderDollarAmountBufferProductID],
+[Categories].[Category].[MinimumOrderQuantityAmountBufferProductID],
+[Categories].[Category].[MinimumOrderDollarAmountBufferCategoryID],
+[Categories].[Category].[MinimumOrderQuantityAmountBufferCategoryID],
+[Categories].[Category].[MinimumOrderDollarAmountOverrideFee],
+[Categories].[Category].[MinimumOrderDollarAmountOverrideFeeIsPercent],
+[Categories].[Category].[MinimumOrderDollarAmountOverrideFeeWarningMessage],
+[Categories].[Category].[MinimumOrderDollarAmountOverrideFeeAcceptedMessage],
+[Categories].[Category].[MinimumOrderQuantityAmountOverrideFee],
+[Categories].[Category].[MinimumOrderQuantityAmountOverrideFeeIsPercent],
+[Categories].[Category].[MinimumOrderQuantityAmountOverrideFeeWarningMessage],
+[Categories].[Category].[MinimumOrderQuantityAmountOverrideFeeAcceptedMessage],
+[Categories].[Category].[MinimumForFreeShippingDollarAmount],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountAfter],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountWarningMessage],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmount],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountAfter],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountWarningMessage],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage],
+[Categories].[Category].[RequiresRolesAlt],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountBufferProductID],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountBufferProductID],
+[Categories].[Category].[MinimumForFreeShippingDollarAmountBufferCategoryID],
+[Categories].[Category].[MinimumForFreeShippingQuantityAmountBufferCategoryID] FROM [Categories].[Category]</CommandText>
+        <QueryDesignerState xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+          <Tables>
+            <Table Name="Category" Schema="Categories">
+              <Columns>
+                <Column Name="ID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="CustomKey" IsDuplicate="False" IsSelected="True" />
+                <Column Name="CreatedDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="UpdatedDate" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Active" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Name" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Description" IsDuplicate="False" IsSelected="True" />
+                <Column Name="ParentID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="JsonAttributes" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoKeywords" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoUrl" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoPageTitle" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoDescription" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SeoMetaData" IsDuplicate="False" IsSelected="True" />
+                <Column Name="TypeID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RequiresRoles" IsDuplicate="False" IsSelected="True" />
+                <Column Name="DisplayName" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SortOrder" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IsVisible" IsDuplicate="False" IsSelected="True" />
+                <Column Name="IncludeInMenu" IsDuplicate="False" IsSelected="True" />
+                <Column Name="HeaderContent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="SidebarContent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="FooterContent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="HandlingCharge" IsDuplicate="False" IsSelected="True" />
+                <Column Name="Hash" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeePercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeeAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RestockingFeeAmountCurrencyID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountAfter" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountAfter" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountBufferProductID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountBufferProductID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountBufferCategoryID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountBufferCategoryID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountOverrideFee" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountOverrideFeeIsPercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountOverrideFeeWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderDollarAmountOverrideFeeAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountOverrideFee" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountOverrideFeeIsPercent" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountOverrideFeeWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumOrderQuantityAmountOverrideFeeAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountAfter" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmount" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountAfter" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountWarningMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage" IsDuplicate="False" IsSelected="True" />
+                <Column Name="RequiresRolesAlt" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountBufferProductID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountBufferProductID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingDollarAmountBufferCategoryID" IsDuplicate="False" IsSelected="True" />
+                <Column Name="MinimumForFreeShippingQuantityAmountBufferCategoryID" IsDuplicate="False" IsSelected="True" />
+              </Columns>
+              <SchemaLevels>
+                <SchemaInfo Name="Categories" SchemaType="Schema" />
+                <SchemaInfo Name="Tables" SchemaType="Category" />
+                <SchemaInfo Name="Category" SchemaType="Table" />
+              </SchemaLevels>
+            </Table>
+          </Tables>
+        </QueryDesignerState>
+      </Query>
+    </DataSet>
+    <DataSet Name="SalesByCategoryCurrency">
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Subtotal">
+          <DataField>Subtotal</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>CategorySales</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>select cc.[Name], format(sum(os.SubtotalItems), 'c') Subtotal, sum(oi.Quantity) Quantity
+from Categories.Category cc
+inner join Products.ProductCategory pc on cc.ID = pc.SlaveID
+inner join Products.Product pp on pc.MasterID = pp.ID
+inner join Ordering.SalesOrderItem oi on oi.ProductID = pp.ID
+inner join Ordering.SalesOrder os on oi.MasterID = os.ID
+where cc.ParentID = @CategoryID and cc.Active = 1 and os.CreatedDate &gt; @DateRange
+group by cc.[Name]
+order by sum(os.SubtotalItems) desc</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@CategoryID">
+            <Value>=Parameters!CategoryID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@DateRange">
+            <Value>=Parameters!DateRange.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="SalesByCategory">
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Subtotal">
+          <DataField>Subtotal</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Quantity">
+          <DataField>Quantity</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>CategorySales</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>select cc.[Name], sum(os.SubtotalItems) Subtotal, sum(oi.Quantity) Quantity
+from Categories.Category cc
+inner join Products.ProductCategory pc on cc.ID = pc.SlaveID
+inner join Products.Product pp on pc.MasterID = pp.ID
+inner join Ordering.SalesOrderItem oi on oi.ProductID = pp.ID
+inner join Ordering.SalesOrder os on oi.MasterID = os.ID
+where cc.ParentID = @CategoryID and cc.Active = 1 and os.CreatedDate &gt; @DateRange
+group by cc.[Name]
+order by sum(os.SubtotalItems) desc</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@CategoryID">
+            <Value>=Parameters!CategoryID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@DateRange">
+            <Value>=Parameters!DateRange.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="CategoryID">
+      <DataType>String</DataType>
+      <Prompt>Category</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>Categories</DataSetName>
+          <ValueField>ID</ValueField>
+          <LabelField>Name</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="DateRange">
+      <DataType>String</DataType>
+      <Prompt>DateRange</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>=DateAdd("d",-7,Now())</Value>
+            <Label>in the last week</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>=DateAdd("month",-1,Now())</Value>
+            <Label>in the last month</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>=DateAdd("year",-1,Now())</Value>
+            <Label>in the last year</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>=DateAdd("year",-100,Now())</Value>
+            <Label>all time</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>CategoryID</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>DateRange</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <EmbeddedImages>
+    <EmbeddedImage Name="Clarity_2017_logo_dark_on_white">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAERAAAAIQCAYAAADnFPVDAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAuIwAALiMBeKU/dgAAv3VJREFUeF7s3c1VHUm2NuAyAQfuWkx62GthwjUBEzABE64JmMC0ZpggEzABE+TB972hltRUaEsc4PzEzzN41KrsKonIExl758nMN//6f//v/wFH9D//+vd1/O93t/F/rzzEl85z/L8T6//Op3j9c93Fj5/5phoXAAAAAAAAAAAAAAAAAAAAMKZyI/Cr//nXv6++B2y8DgVpQRznCgG5hJf4ETryY8xt/G0/XFX7CQAAAAAAAAAAAAAAAAAAADivciPs6n/+9e+b7+EYLSjjIVYOBzmWtn/afmr7q+23tv9uqv0LAAAAAAAAAAAAAAAAAAAAHF+5EVb3PeTi7nvgRQu/eIkqHIPP+REu0vZz29//W30eAAAAAAAAAAAAAAAAAAAAwMeVG2EV//Ovf1/H7fcAC0Eh42jBIk/RPpcW5nJdfX4AAAAAAAAAAAAAAAAAAADA28qNMKMWQhGvw0K+RhVewZja59U+tx+hIlfV5wwAAAAAAAAAAAAAAAAAAAD8U7kRZvA9ZOI+nuIlqlAK5tY+18don/NNNQ8AAAAAAAAAAAAAAAAAAABgd+VGGNH//Ccw5P/iS1RhE+yhff5tHvxvNU8AAAAAAAAAAAAAAAAAAABgN+VGGMH//OvfN9+DIgSG8CcCRQAAAAAAAAAAAAAAAAAAANhauREu4X/+9e/ruIun+BpVWAT8SZs3bf7cx3U1zwAAAAAAAAAAAAAAAAAAAGA15UY4l//5179v4iGeowqEgM94iTa/bqv5BwAAAAAAAAAAAAAAAAAAACsoN8IptTCHeIyvUYU+wKk8xV1cV3MTAAAAAAAAAAAAAAAAAAAAZlRuhGP6n3/9++p7aEMLb6hCHeASnuM+hIkAAAAAAKX/+c/32lfV/wcA8Fq77hj/C5zdTXVMAgAAAAAAAMCOyo3wWf8jNIS5CBMBYEqtdsX/LeB/q/EBAABcUs5V2nfc7fvDx+r/BwB47ft3nf11SGAML/Gl0F+vuA3BJABwZqm7rS5XNXwq/bgAVlGteQAwGfcpw8baGhD99YCV3Vf7AeDcsh7ddOvT6u6q/XAp5Ub4qEzwdjPFY3yN6qQLRidMBIBppF61L7Oqejab/6vGBwAAcEk5V2kPGf44b/F9IQDwR+17zle9A7CeH6Ej7UU6P24C+xE4ImwEAD4htVSACMDAqjUPACYjQAQ2ljWgvSh/t2ddb6t9AXBOWYte33+5g6GejSs3wntkUrcUoIcQGsJqWphIe8voVTX3AeDSUqMEiAAAAJxAzlPa94Kvz1seq38PAOCH9AsCRIB238zrkJH28pJ2LUcgIQD8QWqlABGAgVVrHgBMRoAIbC7rQAsEr9aHVbXrFZ6HBC4ma9Bu9088V/vhksqN8JZM5pa81m50aAEL1WSH1bQbfKTvATCU1CYBIgAAACeQ85Qq/d5DfwDAb6VXECACvKXdY/MjXKTdrHxTrScAsJvURAEiAAOr1jwAmIwAEWCZ7x/e4aHaDwCnlvXnuluPdjDcdd9yI/xOJnF7SPXx1aSG3bQEvodwIw8AF5d6JEAEAADgyHKOcteds/zwWP37AABNegUBIsBHtWCRdi9Oe5GPhxkA2E7qnwARgIFVax4ATMZ3bkDra9sD7e25wGqdWJX1Dzi7rD27BTYN+UxcuRFey+S9inaTQvXGRdhZu4mnPUxwVR07AHBqqUECRAAAAI4o5yft+/A/3SzgwjoAUEqfIEAEOKbXoSJecALA0lLrBIgADKxa8wBgMq7zA99kPWjfuVfrxKqeq/0AcCpZd3738rZVtdyFIZ8vLzdCk0nbUtXazQi7JavBe7VjpB0r19WxBACnktojQAQAAOCI2vlJd77S+1L9dwAA6RMEiACn1O5LaA9Xt7XGAw8ALOV7javq31T6cQGsolrzAGAyvk8DfsqasMT3EO/gWQ3gLLLevPXythUN22eWG9lbJuxt7NYIwbG0Y+euOrYA4NhScwSIAAAAHEnOTQ69gOXmIgDgF+kRBIgA5/YU7W2JN9W6BACzSC0TIAIwsGrNA4DJuMYP/JQ14aZbI1bX7oXy0nTg5LLWPL5ae3bwWO2HUZQb2U8marsx+i5evk9c4HPasdRuEryqjjkAOIbUGQEiAAAAR9LOTbpzld/5Uv33AMDe0iMIEAEuqd2j0G7Kay8Ncp8CAFNJ7RIgAjCwas0DgMkIEAH+IevCbtf13OsEnFTWmVWebztUC2ca+ppsuZF9tAkareE55K2KwPu1Y6vdpCOpD4CjS30RIAIAAHAEOS9p35W/53tyNxgBAP+Q/kCACDCSp2gvEhImAsDwUq8EiAAMrFrzAGAyru8Dv8jasNuL+G+r/QBwDFljrKmDKTeyvkzO63gIwSFwPu0GHV88AHA0ra68qjMzEyACAABcVM5L2vfl1fnK77xUfw4AsK/0BwJEgFEJEwFgaKlRAkQABlateQAwGc/xAL9oa0O3VqyuPUfsOgFwdFlbdrtX4qnaD6MpN7KuTMwWHPL4aqIC59cuePoCAoBPa/XkVX2ZmQARAADgYnJO0r43r85V3nJX/XkAwJ7SGwgQAWbQwkS8ZRCAoaQ2CRABGFi15gHAZDy/A5SyPrz3hUOze6z2A8BHZV356L2Xs2phTNfVvhhNuZH1tAkZgkNgLC/hIQMAPix1RIAIAADAJ+Wc5KPfnb9Ufx4AsKf0BgJEgJm0m9vajdFT3OAGwNpSjwSIAAysWvMAYDICRIBS1oeraM/3VWvHqqyJwNFkTVniu913uK/2w4jKjawjk1FwCIxPkAgAH5L6IUAEAADgE3I+8tkEfN/rAQDfpC8QIALMqt3Y59wGgIv5XouqGjWVflwAq6jWPACYjIflgd/KGnHbrRmr88Ik4Ciyntx168vqvlT7YVTlRuaXidjSz9ygBHMRJALAu6RuCBABAAD4hJyPfDaAu32nd1X92QDAXtITuD4PzO5rtLXMOQ4AZ5XaI0AEYGDVmgcAkxEgAvxR1omnbt1Ynec3gE/JOtIyDNq1xWqNWdV1tS9GVW5kXpmAP4JDdjvwYCXtoYPb6hgHgNdSLwSIAAAAfFDORY51TuWcBgBovYUAEWAlLWxxqpvgAJhXao4AEYCBVWseAExGgAjwR1knPAgP8A5ZQz774rbZTHePaLmROWUC3kULHqgmJzCfdmHUFxUA/FarE6/qxsw8bAcAAJxdzkWO9WBCu4HAG7oBYHPpBwSIACtqN/+5bwGAk0qtESACMLBqzQOAyfh+C3hT1or2bG61hqzqS7UfAN6S9WOVZ9kO9Vzth9GVG5lLJl872J5fTUZgLe0C6U11/AOwt9QHASIAAAAfkPOQY59POa8BgM21fqDrDwBW4gUoAJzM9zpT1Z+p9OMCWEW15gHAZHyvBRwk68US31G8w121HwD+JGvHS7eWrG7KXrLcyBwy6a7j6dUkBNbW3uxzXa0HAOwpdUGACAAAwAfkPOTYF/y/xlX1dwEAe0gvIEAE2EG7T8l9CwAcVWqLABGAgVVrHgBMRoAIcJCsF+153XYPULWWrMj9TsC7ZM3Y7b6Ih2o/zKDcyNgy4a7CzUewp9aYt+Nfcw5A6wsFiAAAALxTzkFOdS417cUiAODz0gu4hg/sxAtQADia1BQBIgADq9Y8AJiMABHgYFkz7rs1ZHWP1X4A6GW9aCFL1TqyqpeY9jnuciPjymS7/T7pqskI7KOtA3fVOgHAPlILBIgAAAC8U85BnrtzkmPyAB0AbCp9gAARYDdegALAUaSWCBABGFi15gHAZASIAO+SdeOU9xaNyDoJvClrxRLf477D1GtjuZHxZKK1ZJ7dDi7gbW1duKnWDQDWlxogQAQAAOAdcv5x152PHJu3cgDAptIHCBABdtVegHJbrY0AcIjUEQEiAAOr1jwAmIwH44F3ybpx060jq3up9gPAD1knbrt1Y3VP1X6YSbmRsWSiudEIeMtDeKsPwGay9gsQAQAAeIecf7QH26rzkmO6rv5uAGBt6QFc1wd29xTOhwB4t9QPASIAA6vWPACYjAAR4N2ydux27c8zHUAp68NVfH21XqyujXX6Z7XLjYwhE6w9EHqOm5mBNbTC5K0+ABvJui9ABAAA4EA597jrzkVO5bH6+wGAtaUHECAC8J/7Fu6rdRIAfie1Q4AIwMCqNQ8AJiNABPiQrB+7PdsrJBz4RdaGh26tWN0Sz2iXG7msTK6WxrPbAQUcT7ugqmEH2EDWewEiAAAAB8q5xzkv6rsBCQA2k/ovQATgv9y3AMDBvteNqp5MpR8XwCqqNQ8AJuP6PfAhbf3o1pPVfan2A7CvrAvWwUmVG7mcTK52MO2WTAYcn7f6AGwga70AEQAAgAO0847uPOTUXFAHgM2k/gsQAfgn9y0AcJDUCwEiAAOr1jwAmIwAEeDDsoY8dGvK6u6q/QDsKWvCc7dGrKxd21zmBQnlRs4vk+oqdmsmgNNrBfqmWncAmF/WeAEiAAAAb8g5R/v+vV3cqc5HTslNSACwkdR+ASIAtfZQ+FW1dgJA871WVDVkKv24AFZRrXkAMBnX7oEPyxrS7jt6ebWmrK7dY+U7fWDHeyCWejFCuZHzyqRqD37u1EQA5+fBbIAFZX0XIAIAAPCGds7RnYOcy5fq5wEA1pTaL0AE4PfaDcce1ACglBohQARgYNWaBwCT8b0U8ClZR267dWV1j9V+APaRdeA6LvHStkt5rvbDzMqNnE8m1UM3yQBO5TluqrUIgDllXRcgAgAA8Ac532hvAbnkhSw3IgHAJlL3BYgAvM01IQB+kfogQARgYNWaBwCTcd0e+LSsJU/d2rI6aydsLGvAEt/ZvsNyz12XGzm9NpmiPcxfTTSAU2kPS9xX6xIA88maLkAEAADgD9r5Rnf+cW4v1c8FAKwndV+ACMBh2g2HV9VaCsCevteGqmZMpR8XwCqqNQ8AJuMheODTspZc+iVG5+aeJ9hUjv/bbj1Y3ZLPtJUbOa1MpvvYqVmg1i56vdZS6NpNZcfU/x3mHT+0+eCGHIDJZS0XIAIAAPAbOde4jhG+E72rfj4AYC2p+e36bNULAPCrl1juTV4AfExqQruXraoXU+nHBbCKas0DgMkIEAGOIuvJXbe+rM5zHrCZHPfCkhZRbuQ0MpHagdNCIqpJxvzaovgjqOMh2g1iLSymPdjbXFfz4lLy87T5+ONna81r+3nbz/1jDNUYWUubs7fV/ABgDlnHBYgAAAD8Rs41Hrtzj0vxRg4A2EBqvgARgPdxzwIA36QeCBABGFi15gHAZASIAEeTNWW35y6HeiYWOK0c8+0Z82otWNWyfWK5kePLJLqJ9vaMaoIxj+doTd7rcJCl34jyfYzN64ARc3ktD9VnD8D4soYLEAEAACjkPOO6O++4tLvq5wQA1pF6L0AE4GOcLwFsLrVAgAjAwKo1DwAmI0AEOJqsKe2epBaQXa03K/pS7QdgPTneV3lG7VBLP1ddbuS4Mola0EQ1uRhXCwp5inaT120sHRLyUdkvrSDcfd9P7SLeTs3vatqcN88BJpO1W4AIAABAIecZj915x6W1UOar6mcFANaQWi9ABODjHqu1FYA9pA4IEAEYWLXmAcBkBIgAR5V1ZbfnhQWBwwZyrLdnjKs1YEXL389ZbuQ42uSJFkJRTS7G0S4+PUQLwnBS+EnZh23et4eZ2w1ybf63hbTa74ynBcBo6AEmknVbgAgAAEAn5xjtTR/VucelOfcBgIW1Wt/VfgDeR4gIwKZSAwSIAAysWvMAYDKeFQOOLmvLTg/at2cOvTgJFpZjfLf7HW6r/bCSciOfl8lzEzs1AbNoYRbtzZMt5e2m+uw4vuzrFipyG62ILHGxb3HtGNHUA0wg67UAEQAAgE7OMUb9DtLFdABYWOq8ABGAz2vnc86bADbzff2v6sJU+nEBrKJa8wBgMgJEgKPL2tKeH67WnFUJAYdF5fhuL2xr9zZWx/6Knqr9sJpyI5+TyXMXOx0sI2shLg/Rwiuuq8+Ly8jn0ZrkFuTyFI6X8bRjR8gOwOCyVgsQAQAAeCXnF6OfJzn/AYBFtTrf1X0APqbdryBEBGAjWfcFiAAMrFrzAGAyAkSAk8j6stv1QespLCjH9hLfzx5om5fAlRv5uEycFlZRTSrO4yUeo4W4CAyZSD6v14Ei1WfL+bVieFd9XgCMIeu0ABEAAIBXcn4x+sWsbS5AAcBuUuMFiAAcjxARgI1kzRcgAjCwas0DgMl44B04iawvV9GeZ63WnhW9VPsBmFeO69vuOF/dfbUfVlRu5P0yaVqxF3xwGe3iUQueuKk+G+aUz7MVnhbI024KqT53zqetbW7MARhQ1mcBIgAAAN/l3GKWcyTnQACwoFbju5oPwOcIEQHYRNZ7ASIAA6vWPACYjAAR4GTaGtOtOatz3xMsIsfzbiFIX6r9sKpyI++TSXMTQg7Op72h8TFawIQbBTaQz/k6WkiMkJ7L8FZUgEFlfRYgAgAA8F3OLWZ60OC6GgMAMK/UdwEiAMcnRARgA1nrBYgADKxa8wBgMgJEgJPKOtNeol6tP6ty3xMsIMfyTmtXe0Z6q7Wr3MjhMmFaeEibONWE4nh+hoZUnwP7yBxoqVZ30cJEHHvn4bgDGFTWaAEiAAAAkfOKFjhdnW+M6rEaBwAwr9R3ASIAp/FUrbsArCNrvQARgIFVax4ATEaACHBSWWfa8447Pef4pdoPwDxyHLdshOr4XtV2z62VGzlMJkwLMagmEschNIQ3tfnxfZ4IEzmNh2q/AzCGrNMCRAAAACLnFS/decYMvI0DABaS2i5ABOB0hDACLCzrvAARgIFVax4ATEaACHByWWtme/nRZ91V+wGYQ47h5+6YXtlztQ9WV27kbZkwbv45nacQGsK7ZM60pL4W6tPmTzWveL/WBFxV+xuAMWSdFiACAABsL+cUs4Z9ewAOABaS2u4eAoDTcg4FsKis8QJEAAZWrXkAMBkBIsBZZL3Z6bnG9jJ4zx3ChHLs3r86lndwU+2H1ZUb+bNMlsdu8vB5Laig3eStaeDT2jz6Pp92SsE6hS0LI8BMslYLEAEAALaXc4qX7hxjJr6DA4BFpK4LEAE4PW80BFhQ1ncBIgADq9Y8AJiMABHgLLLetGcaW7BGtRatSPA3TCbH7XXstE5t+7xauZFaJkor4EtcqBhEW2RaGIsbpDmZzK9W0B6+z7dqHlK7r/YnAGPJei1ABAAA2FrOJ1qQcHWeMYsv1bgAgPmkrgsQATiP22odBmBeWdsFiAAMrFrzAGAyAkSAs8mac9+tQauzxsJEcsw+dcfwytqL6a6q/bCDciO/apMknr9PGj6n7cd2U/e2Bx6XkTl3GzsVuI/y0ALAJLJmCxABAAC2lXOJVd7a4UI6ACwgNV2ACMB5tPNALysCWEjWdQEiAAOr1jwAmIxr8sBZZd1Z4ruOA71U+wAYT47X9nx1dRyvausesNzIP2WS3ITwkM97DCddXFzm4XU8xAoPFxxb2yfCfQAmkTVbgAgAALCtdi7RnVvMSqAvACwgNX2J3qQfF4wq87Xdy9Ouk7zWjsMf2j0B7Qbdpr1dqpzzTGvrN4YBrCZrugARgIFVax4ATMazbMBZZd1pzy7u9Nyi50FgcDlO28vadrpm+ljth52UG/mvTJJ2w4GQgY9r+67dlHFd7V+4tMzNuxAQ9F+31X4CYExZtwWIAAAAW8p5RLugtdJ3925YAoDJpZ4LEIEJZJ7/CBu5j3bcPkV7aNm9QfN5rj5jAOaTNV2ACMDAssa9DmuE3SzRp0R7GXA1PtiFZ9qAs/u+/lR1eVXWWhhYjtH2nH917K6oXffd/kUE5Ub+IxNEeMjHtSSi1uR42wdTyFxtNwi1G4Oq+byLh2rfADCurN0CRAAAgC2184juvGJ2HnwDgMmlni/Rn/Tjgt3kOGjXXtqLSNox3R4S2ulNXDPa/u1hACvIei5ABAAYUmr8KtckvcwAAC4gNXinl55/qfYBcHk5PltWQnXcruq22g+7KTfy84AQHvJ+7caJu2qfwgwyf6+jJexW83tl7YRE4A/AZLJ2CxABAAC2k3OIq1jx+3vfrQPAxFLLBYjAwnJ8tGsy99HuJ9jpht8ZOJcCmFzWcgEiAMCQUuMFiAAAH5YavNtD+76vhwHl2Nzp2uZTtQ92VG7cXSaI8JD3ExzCUjKf20MI7Qu/XdaCm2o/ADC2rN8CRAAAgO3kHOKhO6dYxUs1XgBgDqnlAkRgMzlm2nWaduwv8dDzxNp9He55AJhY1nEBIgDAkFLjBYgAAJ+SOrxKP3GI9n29F5zDQHJMthckVMfritoadF3thx2VG3eWyXH3fZJUk4dfCQ5haZnfOwSJ3FdjB2B8WcMFiAAAAFvJ+cN1dz6xGt+3A8CkUscFiMDmcgy1FxYJFLmM9uY0NyUDTCpruAARAGBIqfECRACAT0kdbs8mtmdwqxq9osdqPwDnl+Ox3Wu5U16C56RfKTfuKpOjhYdUk4ZfCQ5hK5nvqwaJfKnGC8Acso4LEAEAALaS84fH7nxiNS/VuAGA8aWOCxAB/iHH1G08xE43Bl+Sm5IBJpU1XIAIADCk1HgBIgDAp7Va3NXm1ek9YAA5Fp+6Y3NlnpPulBt3lMkhPOQwLTyhfQnirR1sqc3978fACkEibQyOZYCJZR0XIAIAAGwj5w4tEb86p1iNcyQAmFCr4V1Nn1I/LuA4cnzdRFsnnn8cb5zEbbX/ARhb1m8BIgDAkFLjBYgAAEeRetwCx6s6vSIvUIILy3HYXnRQHZ+ruq72w87KjbvJxNgtweujWpMibACiHQsx+xeCbpwBmFzWcgEiAADANnLu8NidS6xK8C8ATCj1W4AIcJAcay0csa0ZLz+OPY6mnU+5QRBgMlm7BYgAAENKjRcgAgAcRepxexZxhReaH8ozInAhOf7aerPTdUjrTaHcuJNMjPaGj50K70c8hYvrUGjHRsz44MJjNR4A5pL1XIAIAACwhZw3tO/yq/OJVTlPAoDJtPrd1fMp9eMCTivHXTvXafccuHfpeL5U+xqAcbW1u1vLp9SPCwCYX2q8ABEA4GhSk2+7Gr06zyTDBeTYW+U85hDP1T5g8wCRTAzhIX/WEoZ8UQAHyLHS1pNZLmS2Y9sbTAEWkPVcgAgAALCFnDcs8RDBO7RrF77DA4CJpHYLEAE+JcfgXex27nMq99U+BmBMWbcFiAAAQ0qNFyACABxV6nJ72X9Vr1ck8BvOLMfdbi9qc67zG+XGHWRSCA/5vbZfPMQJH5Bjpz3I3QI6qmNrFDfVzw7AfLKmCxABAACWl3OGVc593su5EgBMpNXurpZPqR8XcH45Fq/jMdzX9HFt33mzIcAksmYLEAEAhpQaL0AEADiq1OWr2On7/7tqPwCnkWNup5cVPFT7gP8oN64uk0J4yO+1BDMX0OGTchy1LwtHXGc8dACwkKzrAkQAAIDl5Zxh5zdw+74eACaRui1ABDiqHJPtJuJR7z2YgTcbAkyirdndGj6lflwAwPxS4wWIAABHl9p839XqlbVrHFfVfgCOK8faTmvLS1hb/qDcuLI2Ib5PjGrC7Kztk9tqnwEfk2OqrTftrUDVMXcJbo4BWEzWdgEiAADA0nK+sMp5z0c9VvsFABhP6rYAEeBkcnzehfud3u++2p8AjCXrtQARAGBIqfECRACAk0h93umFSu5/ghPLcdaeZd7ppQTOcd5QblxVJkQ7AJ5fTRD+4yEk7cCJ5PhqDzlc+kaeVvy9rRRgMVnbBYgAAABLy/mC7/R9rwcAU0jNFiACnFyOU0Ei7+PNhgATyFotQAQAGFJqvAARAOAkUp+vu3q9Ov0InFCOsafumFvZU7UP+Kdy44oyIYSH/KrdUKDwwpnkeLvkF4i31c8EwNyyvgsQAQAAlpVzhfZgXHUOsRtv4QCACaRmCxABzibH633s9Baxz3BOBTC4rNUCRACAIaXGCxABAE4mNXqVXuMQL9U+AD4vx9cqz5YdwssDDlRuXFEmxOOrCcK//v0QDhI4sxx3LR3w3Bc83QwDsKis8QJEAACAZeVcwVu1/+um2kcAwDhSrwWIAGeVY7a9TGmnm4s/w4NSAAPLOi1ABAAYUmq8ABEA4KRSp5+7ur0yz43AkeW4atcLd7rP8rbaD/yq3LiaTAjhIf/VFgIn/3BhOQ7P9TagdswLCwJYVNZ4ASIAAMCScp5w15037O5LtZ8AgHGkXgsQAS4ix257kcnT62OZXzxX+w6AMWSdFiACAAwpNV6ACABwUqnTN13dXt11tR+Aj8kxtdPLBtxD+Q7lxpVkQrjJ+L/azQKCBGAQOR7bTTynvvjpzaQAC8s6L0AEAABYUs4TdkrFP5Qb+wBgYKnVAkSAi8ox3K4bOZf6vftqvwFweVmjBYgAAENKjRcgAgCcXGr1Q1e7VyYAAI4kx9NOAURfQwDRO5QbV5HJcPtqcuysHRh31T4CLi/H5/2r4/WYPIwNsLis9QJEAACA5eQc4VTfl83OBXQAGFhqtQAR4OJyHF/FTm8ae492/5QXLwEMKOuzABEAYEip8QJEAICTS61u3+3vFBDuWWc4ghxLS3yveiAvCnincuMKMhlack678FtNlJ08x021j4BxtOP0+/FaHccf4WECgA1kvRcgAgAALCXnB+2CuO/2f8/NfQAwqNRpASLAMHI8H/sehFU8VPsLgMvK+ixABAAYUmq8ABEA4Cxave7q98oEfsMn5Rja6SVtz9U+4M/KjbPLZHCD8X88hkIKE8kx+/DqGP6otv5dV38+AGvJei9ABAAAWEo7P+jOF/gnwcEAMKjUaQEiwFByTLf7p45xD8Jq3E8BMJiszQJEAIAhpcYLEAEAziY1uz0PXNXyFT1W+wB4W46f3TIUbqr9wJ+VG2eXybD7GzTagX9X7RtgfDl+b78fx9XxfYjb6s8FYD1Z8wWIAAAAy8i5gXDww/j+HwAGlBotQAQYUo7tdj3JudZ/uSkZYDBZmwWIAABDSo0XIAIAnE1q9m73TulR4ANy7Dx1x9LKPG/2QeXGmWUy7JSyVXkJaTowuRzH1/GRMCQ3ugBsJOu+ABEAAGAZ7dygO1eg9lLtPwDgslKjBYgAw8rx3W46XuLh7CNxbxXAQLIuCxABAIaUGi9ABAA4q9Tt9mLyqp6vyD1Q8E45blZ5juwQ1ohPKDfOKpPhvpscu2mpQVfVvgHmlGP64dUx/pYWIGQNANhI1n0BIgAAwBJyXtACdb0R+3B31X4EAC4n9VmACDC8HOfvuQdhZV+q/QPAZbR1uVunp9SPCwCYX2q8ABEA4OxSu9tzwlVNX5FnSeBAOV7aCwPaM8TVsbQi5zGfUG6cUZsI3cTYzUO1X4D55fhuyYGHPDyhIAJspq39XS2YlS99AABgczkveOzOE/gz6foAMJjUZwEiwBRyrN+FAEf3WAAMI2uyABEAYEip8QJEAICzS+3e7UVM19V+AP4px8oq5yeHkJnwSeXG2WQitNScnS9se9MgLC7HeWv8n18d9z0PXgNsKOu/ABEAAGB6OSdo331V5wr82X21PwGAy0htFiACTCPH+03sHiLypdo3AJxfW5O7NXpK/bgAgPmlxgsQAQAuIvX7vqvnK/N9Pbwhx0m7tlcdPyt6iatqP3C4cuNsMhH+9FD9ytqF/JtqnwBryjH/8GoN+OG5+ncBWF9qgAARAABgejkneOzOEThMu0bgQhkADCJ1WYAIMJUc8+2FTbvec/WDB6gABpD1WIAIADCk1HgBIgDAxaSGL/GdyYHuqn0A/EeOkZ3Wg9tqH/A+5caZZCJUD9PvoF3Av672CbC2HPu38eNNQO1/rQUAm0oNECACAABMLecD1935Ae/jfAoABtHqclenp9SPC1hbjvvdQ0S81RBgAG097tbnKfXjAgDmlxovQAQAuJjU8J3uq/IiJfiNHBt3r46V1T1V+4D3KzfOIhOhPURfTZDVtQv3iiFsLGtAOwFoa4F0PYCNpQ4IEAEAAKaW84Gn7vyA93HxHAAGkZosQASYUo79FiLy+Hot2IyXtgBcWNZiASIAwJBS4wWIAAAXlTq+Sj9yiMdqH8DOcly063jtHsHqmFmNeyGPqNw4g0yC9vD8LpP+NUUQAIBv0hsKEAEAAKaVc4FVzmkuzTkVAAyg1eSuRk+pHxewj6wBu4aIuBcL4MKyFgsQAQCGlBovQAQAuLjU8vYS8qrGr0jfAq/kmNjp+t19tQ/4mHLjDDIRdip6P7hgDQDAT+kPBYgAAADTyrnAEg8GDKCFrXtjNgBcWOqxABFgelkHdg0RcU4FcEFZhwWIAABDSo0XIAIAXFxq+U1X21f2Uu0D2FGOh51e0Pal2gd8XLlxdJkID93E2IGHKgEA+If0iAJEAACAKeU8YKeLW+cggBwALiz1WIAIsISsBTuGiLhWBXBBWYcFiAAAQ0qNFyACAAwh9XynZ6p9Zw+RY+GlOzZW5QVqJ1BuHFkmwY43Fd9V+wIAgL2lTxQgAgAATCnnAUs8FDAYF9EA4IJSiwWIAMvIevDcrw+LazcmXlX7AoDTyxosQAQAGFJqvAARAGAIqedXsUuYQOM+KLaWY2CVc5FDeKbsBMqNo8okaEWuXbCtJsiqhIcAAFBKryhABAAAmE7OAW67cwKO47Ha3wDAeaQWCxABlpH1oN2jtVuIiHu0AC4ka7AAEQBgSKnxAkQAgGG0mt7V+JV9qfYB7CDz/7o7Hlb2XO0DPq/cOKpMhKduYqzOhWkAAH4r/aIAEQAAYDo5B9jpbRjn5u0bAHAhqcMCRIClZE3Y7W2GblAEuJCswQJEAIAhpcYLEAEAhpK6/tjV+ZV5vpotZe4v8X3pgW6qfcDnlRtHlElw302K1SluAAD8UXpGASIAAMBU0v/fdecDHJe3bwDAhaQOCxABlpN14Sa+vl4nFueBKoALyPorQAQAGFJqvAARAGAoqest/HuX7+3bOK+q/QCrypzf6f7Kh2ofcBzlxtFkElzHThejhYcAAPCm9I0CRAAAgKmk/9/p7dWX4gZAALiA1GABIsCSsjbc9mvFwh6rfQDAaWX9FSACAAwpNV6ACAAwnNR239vDgjLfdwoIaveRCgg6oXLjaDIJlrg4cCDhIQAAHCS9owARAABgGun9d0rHv6Qv1f4HAE4rNViACLCsrA/3/XqxMDcrApxZ1l4BIgDAkFLjBYgAAENKfd/pmWu9DFvIXH/s5v7KHNcnVm4cSSbBTheghYcAAHCw9I8CRAAAgCmk72/p+C01vjon4PhcYAOAM0v9FSACLC1rxFO/ZizK/VsAZ5a1V4AIADCk1HgBIgDAkFLfr+Prq3q/spdqH8BKMs9XeT7sEI/VPuC4yo2jyCTYqYi5+AwAwLukhxQgAgAATKH1/d15AKf1pfocAIDTSf0VIAIsLWvELsGQz9X4ATidrL0CRACAIaXGCxABAIaVGn/f1fyVeeaEpWWO7/JytpYZcVXtA46r3DiKTIIlLgoc4L4aPwAA/En6SAEiAADA8NLzt4fMdgkLH4ngcgA4o9ReASLA8rJO3PTrxqKuq/EDcBpZdwWIAABDSo0XIAIADC11fpdnsBvf3bOkzO2dXs52W+0Djq/cOIJMgl3Srx6r8QMAwFvSSwoQAQAAhtd6/u4cgPN4qT4PAOA0UnsFiABbyFqxwzneQzV2AE4j664AEQBgSKnxAkQAgKGlzu8S/N18qfYBzCzz+rqb5yt7qvYBp1FuvLRMgjbhd3gbofAQAAA+LP2kABEAAGBo6fevYofv+0d1V30uAMDxpe4KEAG2kfXiuV8/FiOQEeCMsu4KEAEAhpQaL0AEABheav0Owd8/uBeKpWROL/Hd6AHaPaTX1T7gNMqNl5ZJsMOEf67GDgAAh0pPKUAEAAAYWuv3u/6f8/LQGwCcSequABFgG1kvdnij4U01dgCOL2uuABEAYEip8QJEAIAppN6vHvz9QwshuKr2Acwmc/nu1dxe3X21DzidcuMlZRLcdpNiRa0YK1IAAHxKekoBIgAAwLDS6193vT+X4eIbAJxBaq4AEWArWTNWD4x8qMYNwPFlzRUgAgAMKTVegAgAMIVW77v6v7LHah/ATDKPr6IF4lRzfDVfqn3AaZUbLyWTYIcJ38Z3XY0fAADeI32lABEAAGBY6fUfu96fy/DmDQA4g9RbASLAdrJurPxGw5dqzAAcX9ZcASIAwJBS4wWIAADTSM1/6HqAlelvmFrm8E7H6021DzitcuOlZBKsPuHbTbomOgAAR5HeUoAIAAAwpPT5113fz2U57wKAE2v1tqu/U+rHBfAnWTdWf6Oh+7wAziDrrQARAGBIqfECRACAaaTmX8XLqx5gZULAmVbm7+rX115z3+KFlBsvIZPgppsUK7qrxg4AAB+R/lKACAAAMKT0+Y9d389ltYDzq+qzAgCOI7VWgAiwpawdK5//PVRjBuC4st4KEAEAhpQaL0AEAJhKq/tdH7Ayz6Ewpczd524ur+q5Gj/nUW68hEyEJS4A/IFiBADAUaXHFCACAAAMJz3+DoHhM3LuBQAn1GptV3un1I8L4C1ZO66jhRaW68rkvMEQ4Ayy3goQAQCGlBovQAQAmE5q/1PXC6zsutoHMKrM2VXOMQ7hPOSCyo3nlklw102K1TxV4wYAgM9InylABAAAGE56/NUDw2fVHui7qj4zAODzUmcFiADbyvqx8s2Obj4GOLGstQJEAIAhpcYLEAEAppPafxWrBn/3vlT7AEaU+bpyKH/vodoHnE+58ZwyCVYvRs/hhlwAAI4ufaYAEQAAYCjp71c5T1nVY/W5AQCflzorQATYVtaPle//uq/GDMDxZK0VIAIADCk1XoAIADCl1P/brh9Y2V21D2A0mau7vJjtJeQqXFi58ZwyCVZ+A0W7MH5TjRsAAD4rvaYAEQAAYCjp73e5yDUzb88GgBNIjRUgAmwta8iq94A9VeMF4Hiy1goQAQCGlBovQAQAmFZ6gF3u42rPcQsrYGiZozuF+jj/GEC58VwyCa67SbGa22rcAABwDOk3BYgAAADDSG+/yjnK6h6rzw8A+JzUWAEiwNayhlxFu0m3XF9m1o8VgOPKWitABAAYUmq8ABEAYFrpAdrz20t+b19wPxTDyvxc9hpaQTD/IMqN55KJ8NhNjJU8VGMGAIBjSc8pQAQAABhGevtd3lqxguvqMwQAPi71VYAIsL2sI6s8WNXzEimAE8o6K0AEABhSarwAEQBgaukD7ru+YGV6HoaUufnQzdVVtZCUq2ofcH7lxnPIJFj5TYTP1ZgBAOCY0ncKEAEAAIaQvv6u6/MZm6R/ADiy1FcBIsD2so6s+gY1L5ICOKGsswJEAIAhpcYLEAEAppdeYJeXQr1U44dLyrxcOUuhd1ftAy6j3HgOmQirFp12Edyb+wAAOLn0nQJEAACAIaSvf+n6fMbnRkEAOKLUVgEiAJG1ZJWHq17zMimAE8o6K0AEABhSarwAEQBgeukFbrreYGWeTWEomZPP3Rxd1Zdq/FxOufHUMhFuu4mxkttqzAAAcGzpPQWIAAAAF5ee/q7r8ZmDi3YAcESprQJEACJryXW/tiziqhovAJ+XNVaACAAwpNR4ASIAwBLSD6wY/v0719U+gHPLXNzluPsajrvBlBtPLRNh1TcRPlTjBQCAU0j/KUAEAAC4uPT0q37nvwM3CwLAkaSuChAB+C7ryWO/vizAS6UATiRrrAARAGBIqfECRACAZaQneO56hFV5qRIXl3nYAvdbsEY1R1dzX+0DLqvceEqZCKu+ibDdIO1NEwAAnE36TwEiAADARaWfv+/6e+bigjkAHEnqqgARgO+ynqxyDes1L5YCOJGssQJEAIAhpcYLEAEAltF6gq5HWNldtQ/gXDIHl/jO8wDP1fi5vHLjKWUyrPomwptqvAAAcCrpQQWIAAAAF5Ne/ip2SclfmbdoA8ARpKYKEAF4JWvKaveICWAEOJG2xnZr7pT6cQEA80uNFyACACwlfcFD1yesqt3TdlXtAzi1zL3bV3NxdbIVBlVuPJVMhLtuYqzCA48AAJxd+lABIgAAwMW0Xr7r7ZnTS/X5AgDvk5oqQATglawp9/0aM7t+jAAcR9ZYASIAwJBS4wWIAABLSV/QXhi1WgD47zxW+wBOKfNup5eyeRZsYOXGU8hEWHXSP1fjBQCAU0svKkAEAAC4iPTxO13o2sFd9TkDAIdLPRUgAvBK1pR23liuNRPzwBXACWR9FSACAAwpNV6ACACwnNYbdL3CyvRBnFXm3EM3B1flpWWDKzeeQibDqm8ivKnGCwAAp5ZeVIAIAABwEa2P7/p65uaCHgB8UuqpABGATtaVp36dmdx9NU4APifrqwARAGBIqfECRACAJaU/WO37+99xTxRnk/kmnIdhlBuPLRNh1TcRetARAICLST8qQAQAADi79PCrfue/u7vq8wYADpNaKkAEoJN15a5fZyb3WI0TgM/J+ipABAAYUmq8ABEAYEnpD3a6/8vzKpxF5tpzN/dW9VCNn7GUG48tk+G+mxwreK7GCgAA55KeVIAIAABwdunhH7uenjW0mwKuqs8cAHhb6qgAEYBO1pV2A3K53kzK/WIAJ5D1VYAIADCk1HgBIgDAstIjrBYC/ifX1T6AY8kcWzFHoeIew0mUG48tk+Hl1eRYxU01VgAAOJf0pAJEAACAs0r/ft3186zF+RkAfFCro11dnVI/LoDPytry1K81M+vHB8DnZX0VIAIADCk1XoAIALC09AlLfC9zgC/V+OEYMr/aPZUtWKOae6u5rfYB4yk3HlMmw4opVA/VWAEA4JzSlwoQAQAAzir9+2PXz7MWbwgAgA9KDRUgAlDI2rLavWMeugI4sqytAkQAgCGlxgsQAQCWlj5hp+CDu2ofwGdlbi0Vpv8HT9X4GVO58ZgyIV66CTK7Nh43zwIAcHHpSwWIAAAAZ5PevV0wrnp61uIcDQA+oNXQrqZOqR8XwGdlbbnq15rJ3VfjBODjsrYKEAEAhpQaL0AEAFheeoX7rndYlRcrcXSZU7ev5tjKHD+TKTceSybDam+QaG6rsQIAwLmlNxUgAgAAnE16912S8nfnYh8AfEDqpwARgN/I+vLcrzcTe6jGCMDHZW0VIAIADCk1XoAIALCF9AsrfY//J4/V+OEjMp9aiP7Lq/m1MgH7kyk3HksmxGoT/0s1TgAAuIT0pwJEAACAs0jfvsr5B4dxsRwA3in1U4AIwG9kfVnlgavG/WMAR9bW1m6tnVI/LgBgfqnxAkQAgC2kX7jp+oeV6Y04isylh25urcq1sQmVG48hE2LFm4mvq7ECAMAlpD8VIAIAAJxF+vYlbuLnXVwTAYB3SO0UIALwG1lfVrrx+Gs1RgA+LmurABEAYEip8QJEAIBtpGdYKQz8T16q8cN7ZB7tErrzNdxHOKFy4zFkQqx2M7GHGgEAGEp6VAEiAADAyaVnXzEwnLc9VvMBAKildgoQAfiDrDHtBsNy7ZnQVTVGAD4m66oAEQBgSKnxAkQAgK2kb3jp+ohVeYaFT8kceu7m1KocK5MqN35WJsR1N0Fm1y5gu/ALAMBQ0qMKEAEAAE4uPftqgeEcztsDAOBAqZsCRAD+IGvMU7/mTMyDVwBHlHVVgAgAMKTUeAEiAMBWWt/Q9RErc18UH5K5c9/NpVU9V+NnDuXGz8qkeOwmyezuqnECAMAlpU8VIAIAAJxU+vWdLgrzq6dqXgAAv0rdFCAC8AdZY1Z56KpxLxnAEWVdFSACAAwpNV6ACACwnfQOD10vsaov1fjhTzJvruPrq3m0sptqHzCHcuNnZEJcdRNkdhJyAAAYUnpVASIAAMBJpV9/6fp39uOGQgA4QGqmABGAP8gas1JApWtbAEeUdVWACAAwpNR4ASIAwHbSO7RnxHe5Z0xgOO+SOfPUzaFVPVTjZx7lxs/IpFjpbRGNE2UAAIbUetWud52VmywBAGBA6dXvut6dPXnbBgAcIDVTgAjAG6p1Z1JP1fgA+JisqwJEAIAhpcYLEAEAtpT+4bbrJ1b1Na6qfQC9zJVdjosWIOS4mFy58TO+T4xqwszITbEAAAwr/aoAEQAA4GTSq+/yJgne5qZCAHhD6qUAEYA3ZJ157tedSbmnDOCI2rrarbNT6scFAMwvNV6ACACwrfQQT11PsarHavzwWubJVexyP6XzhwWUGz8qk2K1txHeVOMEAIARpF8VIAIAAJxE+vTVvu/nczwcBwBvSL0UIALwhqwzj/26M6mv1fgA+JisqwJEAIAhpcYLEAEAtpUeogUmfH3VU6xMv8QfZY48dHNmVQJ1FlFu/KhMjCW+xP/OJAcAYGjpWQWIAAAAR5cefae0fA7nQjkA/EFqpQARgDdknbnv151Z9WMD4OOyrgoQAQCGlBovQAQA2Fr6iF1eQvVSjR+azI+bbr6sqgUGXVX7gPmUGz8ik+L61SRZwXU1TgAAGEV6VgEiAADA0bUevevZoXGhHAD+ILVSgAjAG7LOrHJtq3FvGcCRZE0VIAIADCk1XoAIALC99BJLfHdzAM+1UMrceO7myqpuq/Ezp3LjR2RiPHQTZWaP1RgBAGAk6VsFiAAAAEeV/vwqWpJ81bvDXTVvAIBvfZQAEYA3ZJ1p55zl+jMhD18BHEnWVAEiAMCQUuMFiAAA20svcR273E8mPJx/yJy47+bIqp6q8TOvcuNHZHKsVAAs8gAADC99qwARAADgqFp/3vXr8NpLNW8AgHX6qH5cAMeWtWaVe8w8fAVwJFlTBYgAAENKjRcgAgAQ6Sd2CVH4Uo2fPWU+7PIytjZGuQqLKTe+VybG3auJMrvHaowAADCa9K4CRAAAgKNJb77LBS8+566aPwCwu9RIASIAB8has8RD4uH6FsCRZE0VIAIADCk1XoAIAMB36Smeux5jVe6N4pvMhadubqzqvho/cys3vlcmx0oHgZQcAACmkN5VgAgAAHA0rTfvenWovMRVNYcAYGepjwJEAA6QteaxX3sm5foWwJFkTRUgAgAMKTVegAgAwHfpKW66HmNV7QVc7o3aXObAKs9rveVLNX7mV258j0yO626yzOyxGiMAAIwo/asAEQAA4CjSl6/0XT+n5zwOADqtPnb1ckr9uACOLWvNKg9fOS8COJKsqQJEAIAhpcYLEAEAeCV9xSr90Vs8a76xfP5X0V6yVc2N1dxU+4D5lRvfI5NjpQX/uhojAACMKP2rABEAAOAo0pev8gZozsObNgCgk9ooQATgAFlr7vq1Z1LeyAZwJG1N7dbYKfXjAgDmlxovQAQAoJPeYpdgBT3UpvLZ7xKU41muhZUb3yMTZJXFXiIUAABTSQ8rQAQAAPi09OTXXY8Oh3AuBwCvtNrY1cop9eMCOLasNatc3xIgAnAkbU3t1tgp9eMCAOaXGi9ABACg03qLrtdY1Us1ftaWz/2mmwereq7GzzrKjYfKBFnpQHBCDADAVFoP2/W0s/LQGQAAXFB68seuR4dDfI2rak4BwI5SFwWIABwga80q95sJEAE4kramdmvslPpxAQDzS40XIAIAUEh/8dD1G6vyrMtm8pkv8V3lAZwjLK7ceKhMkFVuKnZBFwCA6aSPFSACAAB8Svrx664/h/d4qOYVAOwodVGACMCBqvVnQt7MBnAkWVMFiAAAQ0qNFyACAFBIf3EV7eVDVe+xmutqH7CefNb33We/Kvf8baDceKhMklUW+NtqfAAAMLL0sQJEAACAT0k/vktiPqfjIjkARGqiABGAA1Xrz4z6cQHwMVlTBYgAAENKjRcgAgDwG+kxbrueY1VfqvGzlnzOu4TivMRVtQ9YS7nxEJkgqyzuL9X4AABgdOllBYgAAAAfll58lXMKLuuxml8AsJvURAEiAAfKetNuTizXoZn04wLgY7KmChABAIaUGi9ABADgD9JnPHV9x6ruqvGzjnzGu8xl5wabKDceIpPksZs0s7JwAwAwpfSyAkQAAIAPSy++xI35DOG6mmMAsJPUQwEiAAfKeuNBcQB+ypqqLgAAQ0qNFyACAPAH6TOu4uurvmNVbYxX1T5gfvlsd3kR21M1ftZUbjxEJsoKi7pFGwCAaaWXFSACAAB8SPrwXS56cR6P1TwDgJ2kHgoQAThQ1hsPigPwU9ZUdQEAGFJqvAARAIA3pNe473qPVbk/akH5XFsIzsurz3lV8hQ2U258SybJ7atJM7OHanwAADCD9LMCRAAAgA9JH77ETfkMxY2HAGwttVCACMCBst54UByAn7KmqgsAwJBS4wWIAAAcIP3GLvei6asWk890lZ7/LXfV+FlXufEtmSiP3cSZ1XU1PgAAmEH6WQEiAADAu6UHv+t6cjiGL9V8A4BdpBYKEAE4UNYbD4oD8FPWVHUBABhSarwAEQCAA6TfuI6vr/qPVb1U42dO+Txvus93Ve7r21C58S2ZLCss5CY8AABTS08rQAQAAHi39OAvXU8Ox+LmQwC2lTooQATgQFlvHvr1Z1JX1fgAeJ+spwJEAIAhpcYLEAEAOFB6jlV6p7d4/mUR+SyX+F7yDS0P4roaP2srN/5JJsrtq4kzs7tqfAAAMIv0tAJEAACAd0n/fdf143BMwtsB2FbqoAARgANlvfEAFgA/ZT0VIAIADCk13vkrAMA7pO947vqQVQlkmFw+w/vuM13VfTV+1ldu/JNMlsdu8szoazU2AACYSfpaASIAAMC7pP9+6fpxODY3IAKwpdRAASIAB8p64wEsAH7KeipABAAYUmq881cAgHdI33HT9SGr8pKlieXzu4qvrz7PVT1X42cP5cY/yYRZ4aB4qMYGAAAzSV8rQAQAADhYeu+7rheHU3ip5h8ArC41UIAIwIGy3ngAC4Cfsp4KEAEAhpQa7/wVAOCd0nus0kO95a4aP+PLZ/fUfZaruqnGzx7Kjb+TybLKA4rX1fgAAGAm6WsFiAAAAAdJ371Laj5jcIEcgO2k/gkQAThQ1hsPYAHwU9ZTASIAwJBS452/AgC8U3qPdp/ay6teZFXtXryrah8wrnxmqzyH9RbPaW2u3Pg7mTAP3QSa0XM1NgAAmE16WwEiAADAQVrf3fXhcEov1TwEgJWl/gkQAThQ1hsPYAHwU9ZTASIAwJBS452/AgB8QOs/un5kVY/V+BlXPrMdwm3cu8e7A0RWODC89Q4AgCWktxUgAgAAvCk9d3urQ3vjQdWPw6m4HgPAVlL7BIgAHCjrzSoPYN1U4wPgfbKeChABAIaUGi9ABADgg9KDPHQ9yar0WpPIZ7VKf/8Wc5LDA0QyYa67CTSrq2p8AAAwm/S2AkQAAIA3tZ6768HhHFoovWsyAGwjdU+ACMCBst489uvPjPpxAfAxWVMFiAAAQ0qNFyACAPBB6UF2eenVSzV+xpLPaZWMhLc8VONnP+XGSibNfTeJZvRUjQ0AAGaU/laACAAA8Efpt3e5EMuYnO8BsI1W97o6OKV+XACnkPXGg+IA/JQ1VV0AAIaUGi9ABADgE9KH3HZ9yarcIzW4fEZLfAf5hnafqBd+8U25sZJJ8/RqEs3qthobAADMKP2tABEAAOCP0m8v8VZnpuWiJADbSM0TIAJwoKw3HhQH4KesqeoCADCk1HgBIgAAn5ReZIVn0w9xXY2fy8tnc9d9VquSocBP5cZKMZFm87UaFwAAzCo9rgARAADgt9JrX3e9N1yCcz4AttBqXlcDp9SPC+AUst54UByAn7KmqgsAwJBS4wWIAAB8UnqRq2gvIar6lJV8qcbPZeVz2WX+PVXjZ1/lxl4mzm03kWb0WI0NAABmlR5XgAgAAPBb6bUfu94bLqFdgL2q5igArCT1ToAIwIGy3nhQHICfsqaqCwDAkFLjBYgAABxB+pH7rj9Z1V01fi4nn8kO91C6P49flBt7mTgPrybSrG6rsQEAwKzS4woQAQAASumzr7u+Gy7poZqnALCS1DsBIgAHqtafCX2txgbA+2VNFSACAAwpNV6ACADAkaQnWeI7oDcIchhIPotVnrl6y301fvZWbuxl8jx3k2k2LtgCALCc9LkCRAAAgFL67B2S85nLdTVXAWAVqXUCRAAOVK0/E/pSjQ2A92trarfGTqkfFwAwv9R4ASIAAEeSnqS9EKsFbFT9ykoeq/FzfvksXrrPZkWuV1EqN76WyXPVTaYZWXABAFhO+lwBIgAAwC/SY++SnM9cXKsBYGmpdQJEAA6QtWaFe9EaN2QCHElbU7s1dkr9uACA+aXGCxABADii9CWr9Fdv0X9dWD6DHeZaC+TxUi9K5cbXMnnuXk2mWd1WYwMAgJmlzxUgAgAA/CI99hI33LMkFywBWFbqnAARgANkrVnl+pYAEYAjaWtqt8ZOqR8XADC/1HgBIgAAR5be5LnrVVb0Uo2d88j+v+4+j1V5FovfKje+lgn02E2o2XytxgUAALNLrytABAAA+If016ucJ7Cmx2reAsAKUucEiAAcIGvNKuetD9X4AHi/rKkCRACAIaXGCxABADiy9CY3Xa+yKs/JXEj2/Q4vYHuuxg4/lBtfyyR66SbVbJ6qcQEAwOzS6woQAQAA/iH99Q4Xv5jbTTV3AWB2qXECRAAOkLVmlYevXN8COJKsqQJEAIAhpcYLEAEAOIH0J6v0WW+5rsbP6WSf33Wfwarcg8cflRt/yAS67ibUjO6qsQEAwOzS6woQAQAAfkpvvco5Amv7Us1fAJhdapwAEYADZK156NeeSd1X4wPg/bKmChABAIaUGi9ABADgBNKfXMXLq35lVe6TOqPs7zavvr7a/6t6qMYPr5Ubf8gkuu0m1YyuqrEBAMDs0usKEAEAAH5Kb73DRVXW4CZFAJaT+iZABOAAWWuWeEg8nNcAHEnWVAEiAMCQUuMFiAAAnEjrUbqeZVV31fg5vuzrx27fr6jdIyo3gTeVG3/IJJr9jQ/P1bgAAGAF6XcFiAAAAN+kr77r+mwYmbdrALCc1DcBIgAHyFqzSvilh68AjiRrqgARAGBIqfECRAAATih9yg6BD19D4MOJZR/vEkijt+cg5cYfMpGeu4k1Gw8iAgCwrPS7AkQAAIBv0lev8gAW+3AxE4ClpLYJEAE4QLX2zKgfFwAfl3VVgAgAMKTUeAEiAAAnlD7lKlrARtXDrOSxGj/Hk328w/2T5hEHKzc2mUht4a0m2ExuqrEBAMAK0u8KEAEAANq5wV3XY8MMnqv5DACzSm0TIALwhqwzy7z9rR8bAB+XdVWACAAwpNR4ASIAACeWXuW2611WpSc7kezbVfr2P2lBO1fV+KFSbmwykWa/YPu1GhcAAKwiPa8AEQAAoJ0b7JCez5ruqjkNADNKXRMgAvCGrDOrBGB+qcYHwMe0dbVbZ6fUjwsAmF9qvAARAIAzSL/y1PUvK3qpxs7nZL9eRwvXqPb5Sm6r8cPvlBubTKbZT3SfqnEBAMAq0vMKEAEAgM21frrrr2EmLowDsIzUNQEiAG/IOvPQrzuTEiACcERtXe3W2Sn14wIA5pcaL0AEAOAM0q/sEgLh2Zkjyz5d4rvFN8hL4N3KjU0m1OwHjbfWAQCwtPS8AkQAAGBj6aWvYocLp6zN9RwAlpCaJkAE4A1ZZ1a5idO1LYAjyroqQAQAGFJqvAARAIAzSc9y3/Uwq7quxs/7ZV/edvt2Re3+UHOGdys3Nt8nVTXZZuGAAABgael5BYgAAMDGWi/d9dYwo5dqfgPAbFLTBIgAvKFadyYlCBHgiLKuChABAIaUGi9ABADgjNK3rBJE/idfqrHzPtmPu7x87b4aP7yl3JgJdd1NsNm42RQAgOWl7xUgAgAAm0ofvcsFMPbgvBCA6bV61tW3KfXjAjiWrDE3/ZozMQ9eARxR1lUBIgDAkFLjBYgAAJxR+pbZn20/lKDyT8o+fOj26YqEzfBh5cZMqttuks3msRoXAACsJH2vABEAANhU66O7vhpm1sJwrqq5DgCzSC0TIALwB1lj7vs1Z2LOXwCOKOuqABEAYEip8QJEAADOLL3LDvfFuVfqE7LvVnmW6i031fjhEOXGTKrZF1jpSwAALC99rwARAADYUHroXd60wF6cGwIwtVbLuto2pX5cAMeSNeaxX3Mm9VKND4CPy9oqQAQAGFJqvAARAIALSP/y3PUzK3qsxs7bsu92mB/upeNTyo2ZWLN/GX9djQsAAFaSvleACAAAbCg99CoPXcFr3qwBwNRSxwSIAPxB1piXfs2Z1JdqfAB8XFtbu7V2Sv24AID5pcYLEAEAuID0LzddP7Mqfdo7ZZ+t0qP/yXM1dniPcmMmV7tJs5p0M/CWBwAAtpDeV4AIAABsJv3zdddPw0qcHwIwrVbHuro2pX5cAMeQ9WWlc1nnLQBHlrVVgAgAMKTUeAEiAAAXkh7moetpVuR5+HfI/mrXm2bOPziU/p1P+2VDJtbsF2yf+jEBAMCK0vsKEAEAgM2kf37s+mlYzXU19wFgdKlhAkQAfiPry32/3kzsthojAB+XtVWACAAwpNR4ASIAABeSHuYqXl71NKvyPM2Bsq+W+B7xDQ/V2OG9ftmQyXXbTbbZ3PdjAgCAFaX3FSACAAAbSe+80hub4Xceq/kPAKNLDRMgAvAbWV+e+vVmYkIPAY4sa6sAEQBgSKnxAkQAAC6o9TFdX7Mq1x7ekH00e/bBIVpgzlU1fnivXzZkcs1+guvEFgCALbTet+uFZyVABAAADpDeeYcEfWhcFAdgOqlfAkQAfqNabyb1tRofAJ+T9VWACAAwpNR4ASIAABeWXuax621W9KUaO/+R/XMVX1/tr1Xp2zmaXzZkgk39xod+PAAAsKr0vwJEAABgE+mbd3mbAjSP1XEAACNL/RIgAlDI2rLSG+HcwAtwAm197dbbKfXjAgDmlxovQAQA4MLSy+wSHnFXjZ9vc+Ch21creqrGDh/1y4ZMspdu0s3ERVoAALaR/leACAAAbCJ98xI30cM73FTHAgCMKrVLgAhAIWvLSm8GdE0L4ASyvgoQAQCGlBovQAQAYADpZ1YKK/+dFpJyVY1/Z9knO7x4zWfP0f2yoZt0s3noxwMAAKtK/ytABAAANpCeeYeLYNATGg/AVFK7BIgAFLK2rPRWQA9cAZxA1lcBIgDAkFLjBYgAAAwiPc1T1+Os6LEa+86yT567fbSiu2rs8Bn/+IdMstlvQnaQAACwjfS/AkQAAGAD6ZmXuIEePsDNjABMI3VLgAhAJ+vKam8E9PY3gBPI+ipABAAYUmq8ABEAgEGkp7mOlULLf0fv9l32xSr9+J94yRYn8Y9/yES76ybebG5ejwcAAFaW/leACAAALC798moPW8F7uEAKwDRStwSIAHSyrjz268zEnqsxAvB5WWMFiAAAQ0qNFyACADCQ9DX3XZ+zopdq7LvJftghMKaN77oaP3zWP/4hE23qk9vXYwEAgNWlBxYgAgAAi0u//NL1z7AbNzQCMIXULAEiAJ2sKyvd2PlQjRGAz8saK0AEABhSarwAEQCAwaS3WeK7pDds/4xN9sFTt09WdF+NHY7hH/+QyTbzAeUtdAAAbCU9sAARAABYWHrlu653hh15yzcAU0jNEiAC8ErWlNXOaW+rcQLweVljBYgAAENKjRcgAgAwmPQ2112vs6rravw7yNhvu32xIvfEcVL/+Ic24boJOJPH12MBAIDVpQcWIAIAAAtLr/zS9c6wq7vqGAGAkaReCRABeCVrympvhruqxgnA52WNFSACAAwpNV6ACADAgNLfrNKn/cmXauyry7ivYof7Jm+q8cOx/OMfigk4k/vXYwEAgNWlBxYgAgAAi0qfvNqbmuEzXqrjBABGknolQATgu6wnq739z1vgAE4o66wAEQBgSKnxAkQAAAaVHue563lWtN1LlzLmh24frMgzVJzcz99kws1+4dYJLQAAW2k9cNcTz8rJLwAAvJIeuaXof33VMwMbXhAHYC6pVQJEAL7LerLam/9cywI4oayzAkQAgCGlxgsQAQAYVOtxup5nRe0ewqtq/CvKWG9ejX1VXqTFWfz8TSbd7IvlNosgAAA06YEFiAAAwIJaj9z1zICLpwAMLrVKgAjAd1lPVgvFvKnGCcBxZJ0VIAIADCk1XoAIAMDA0uc8dH3Pih6rsa8oY33uxr4ivTln8fM3mXT33SScydfXgwIAgB2kDxYgAgAAi0l/fBWrPWgFx3JfHTcAMILUKQEiAJG15K5fWybnvjSAE8taK0AEABhSarwAEQCAgaXPaffavbzqe1a1fD+XMc6ccXCoh2rscAo/f5OJN/OJ7ZfXgwIAgB2kDxYgAgAAi2n9cdcvA//VwnWuqmMHAC4tNUqACEBkLVntRt1t3uwHcClZawWIAABDSo0XIAIAMLjW63S9z4peqrGvIuO7jtVfuua+N87q528y8Z5eTcTZSN0BAGA76YMFiAAAwELSG7c3Iqx+IQw+yzkkAENqNaqrWVPqxwXwHllHVrxJ964aKwDHk7VWgAgAMKTUeAEiAAATSL8z8/Pxh1r2nqmMbYfP77YaO5zKz99k8s38Bfz960EBAMAO0gcLEAEAgIWkN37oemXgV97GAMCQUp8EiADbyzqyxAPgHecfACeWtVaACAAwpNR4ASIAABNIv7PLi7uuq/HPLGO67ca4oqdq7HBKP3+TCTjz4uhkFgCA7bQ+uOuLZyVABACA7aUvvu76ZOD3nEcCMJxWn7p6NaV+XACHyhqyynWr19zQCXAGWW8FiAAAQ0qNFyACADCJ9Dw7BFF8qcY+q4ynBb+8vBrfirwsi4v4+ZtuQs5mudQkAAB4S/pgASIAALCI9MWPXZ8M/F67sOraEABDSW0SIAJsLWvIEg9/d+6qsQJwXFlvBYgAAENKjRcgAgAwkfQ9K16r6C1z7SJjeejGtqL7auxwat9+yQS86SbkVF4PCAAAdpFeWIAIAAAsID3xddcjA297rI4nALiU1CYBIsC2sn6scs2q541wAGeQ9VaACAAwpNR4ASIAABNJ39Puw2svJqp6olW08U1//SJjmDrX4EBfqrHDOXz7JZNw5ou4L/2gAABgB+mFBYgAAMAC0hM/dj0ycJjr6pgCgEtIXRIgAmwr68dLv54s4KkaKwDHlzVXgAgAMKTUeAEiAACTSe9z3/VCK5r+xUsZw3M3ptW0oBf3tnEx337JJLx7NSlnI4EHAIAtpRcWIAIAAJNLP7zqW5rhHKa/GA7AOlKXBIgAW8raMfN9Z39yV40XgOPLmitABAAYUmq8ABEAgAml/1ni+6Y3TNvj5WffIeTFc1Jc1Ldf2kTsJuZMHvpBAQDADtILCxABAIDJpR/e4WIlnJI3NQAwhNQkASLAdrJuXEV7g1q5pkzsazVeAE4j664AEQBgSKnxAkQAACaU/uem64dW9FKNfXT5ua9jxWtLrz1XY4dz+vZLJuPMJ7UeNgQAYEvphQWIAADAxNILr9LTwyV9qY4vADi31CQBIsB2sm6s8iBV77EaLwCnkXVXgAgAMKTUeAEiAACTSg+06jWM16Z7Fic/81M3hhXdVGOHc/r2SybjzF++3/aDAgCAHaQXFiACAAATSy+8xI3xMAA3PQJwcalHAkSArWTNWPntfc4xAM4o664AEQBgSKnxAkQAACaWPui564tWdF2NfUT5WW+7n31FD9XY4dy+/ZIJOfOX705kAQDYUuuFu954VgJEAADYTvrgVfp5GMGX6jgDgHNKPRIgAmwla8aqoZgv1XgBOJ2svQJEAIAhpcYLEAEAmFjrg7q+aEVT3DeVn/MqXl793Ctq47uqxg/n9u2X75OymqwzmCYdCQAAjim9sAARAACYVPrgHd5uAOfkxkcALiq1SIAIsI2sF/f9+rGQ+2rMAJxO1l4BIgDAkFLjBYgAAEwuvdBD1xut6K4a+0jyM67SW/+JvpthfPulmKTTeD0YAADYSfphASIAADCh9MB3XU8MfN4Ub9MAYF2pRQJEgC1krbiOr6/XjsV4MxzAmWXtFSACAAwpNV6ACADA5NILXcXLq95oRe26zbDXN/Kz3bz6WVf1WI0dLuXbL8VEncbrwQAAwE7SDwsQAQCACaUHXv2CJFzK8G/TAGBdqUMCRIAtZK1Y4iHv33BzJ8AFZP0VIAIADCk1XoAIAMACWj/U9UcrGvYaR362la8tNUMHuLCnduC1t0JUE3YG3iYHAMC20g8LEAEAgMmk/73r+mHgeF6q4w4AziF1SIAIsLysE/f9urGYm2rcAJxW1l8BIgDAkFLjBYgAACwiPdFT1yOtaLi+Lz/T6teWmttq7HBJ7eCb+aFDASIAAGwr/bAAEQAAmEz635euHwaO66469gDg1FKDBIgAS8sacdOvGYtxHxrAhbQ1uFuTp9SPCwCYX2q8ABEAgEWkJ7qKr696pBUN9fKl/Dw77POnauxwae0AnPmhw8dqUAAAsIP0wwJEAABgIq337Xph4PiGuhAOwD5SgwSIAMvK+tBu8Fw9EFMYIcCFZA0WIAIADCk1XoAIAMBC0hfddn3SioZ5Pic/y1P3s62mhaNcV2OHS5t9wfOgIQAA20o/LEAEAAAmkb53hzR9GMV9dRwCwCml/ggQAZaV9WH1GzwFEQJcUNZhASIAwJBS4wWIAAAsJr3REt9FveHioRb5GVZ53ulP3KPGsGY/ofWgIQAA20o/LEAEAAAm0frerg8GTqeF9VxVxyIAnEpqjwARYElZG3Y4n72rxg7AeWQdFiACAAwpNV6ACADAYtIbXcfqLwL7Uo39XPL3t5etvbz6eVZ00X0Mb5n9hNbFWwAAtpV+WIAIAABMID1vuyC2+kVHGI1zTQDOqtWerhZNqR8XsLesC7f9OrEgAYQAF5Z1WIAIADCk1HgBIgAAC0p/dN/1Syu62PP3+bt3CKe/qcYOo5j9QHQSCwDAtlo/3PXHs/JQFwAAS2s9b9cDA6fnIUAAzip1R4AIsJSsCTexQxim61QAF5a1WIAIADCk1HgBIgAAi0qPtMR3Un9wkXun8ne260vVz7MS15YYXjsYH7qJOxMnsQAAbKv1w11/PCsnzwAALCv97nXs8MAVjMj5JgBn0+pOV4em1I8L2FPWg6vY4VxW8CDAALIWCxABAIaUGi9ABABgUemRdgi6eKzGfkr5O1cPZnmuxg2jmf1gdBILAMC2Wj/c9cez8kAXAADLSr/72PW/wPm0hwGvq2MTAI4tNUeACLCErAUtPOT59dqwMNeoAAaQ9ViACAAwpNR4ASIAAAtLn7RKv/cnZ+sF83fdd3/3ivTWTGH2L969AQIAgG2lHxYgAgAAA0uve931vsD5nf1NGgDsKTVHgAgwvawDO4WHtMBB954BDCDrsQARAGBIqfECRAAAFpde6aXrnVbzUo372PL3tGtM7dpL9TOs4qEaO4xo6i/e+8EAAMBO0hMLEAEAgIGl133sel/gMq6rYxQAjin1RoAIMLWsATuFhzSuTwEMImuyABEAYEip8QJEAAAW13qlrnda0cmvieTveOr+ztW0oBnB9Exj6i/e+8EAAMBO0hMLEAEAgEGlz73u+l7gch6r4xQAjin1RoAIMLWsATuFYLrJE2AgWZMFiAAAQ0qNFyACALCB9EsPXf+0opO9gCl/9g4hLHpqpjL1F+/9YAAAYCfpiQWIAADAoNLnLnHTOyzkZBfBAaBJrREgAkwpx/5V7HYOe1ftCwAuI+uyABEAYEip8QJEAAA2kH6pXStp4eNVL7WKL9XYPyt/7g777qkaO4ysHZzVZJ5CPxgAANhJemIBIgAAMKD0uDsk6u+iPbzwtdvGnFzIBeCkUmsEiADTyXHfbup8fr0ObOC52hcAXE7WZgEiAMCQUuMFiAAAbCI9023XQ63o6AHr+TNX6Zl/p907eFWNHUbWDs5qQs/gJGlHAAAwi/TEAkQAAGBA6XF3e3Pzytp51+oXOXfhuhIAJ5VaI0AEmEqO+R3DQxoPTQEMJmuzABEAYEip8QJEAAA2kr7pqeujVnPUMIz8Wdev/uxVHT10Bc6hHaDVhJ6BGz0BANhaemIBIgAAMJj0t6v06fzr30/fP9P2UF27eFr9O8zDjZEAnFRqjQARYBo53m9ix/CQb+d5AIwl67MAEQBgSKnxAkQAADaSvmmH+8Qeq7F/RP6s1V+0JseAabUDtJrUM3DgAQCwtfTEAkQAAGAw6W9Xvyi2k+tXn+t99/8xF9eUADi51BsBIsAUcqy38JBdQxJ/nucBMI6szwJEAIAhpcYLEAEA2Ex6p7uul1rRp/vD/Bmr76d2Lc11JabVDtJqYs/AzZ4AAGwtPbEAEQAAGEh629uu12Vev7xpIdteun+Hedz0nycAHFvqjQARYHg5zne46fV3XI8CGFTWaAEiAMCQUuMFiAAAbCj90+ovEXupxn2o/PdXsXpY/X01dphFO1CriT0DASIAAGwtPbEAEQAAGEh6WwET6/jl7QHZtvODdjP7JQwGAE4hNUeACDC0HOOP/TG/kU/dCAvAaWWdFiACAAwpNV6ACADAhtI/XcfqARkffo4n/+3q15yeq3HDTNqBWk3uGQgQAQBga+mJBYgAAMAg0tcKl1jHbwMn8v8JiZnPL2EwAHAKqTkCRIAh5dhuN7k+vz7WN+RBKYCBZZ0WIAIADCk1XoAIAMCm0kPddz3Vit59X1X+m1WeY/qTm2rsMJN2sFaTewYCRAAA2Fp6YgEiAAAwiPS1giXW0N4c8dsLo/n/BMXM5bdhMABwbKk7AkSA4eS4vo3V35D3FucFAIPLWi1ABAAYUmq8ABEAgI2lj1o9oP3dz+nnv1n9PknPN7GEdrBWE3wGAkQAANhaemIBIgAAMID0tEIl1vHm+Un+nSUeaNjEu9+SAQAflbojQAQYRo7nq3h4fXxvqoWnXFX7CIBxZK0WIAIADCk1XoAIAMDG0kfddH3Viu6qsVfy767SH//OSzVumFE7YKtJPgMBIgAAbC09sQARAAC4sPSz7aGs1VP1d3HQg2X5d1Y5F1udc00AzqrVnq4WTakfFzCfHMvtZtbV34h3qNtqHwEwlqzXAkQAgCGlxgsQAQDYXHqp1UMzDr1n7vrVf7MqfTPLaAdtNcln4MZPAAC2lp5YgAgAAFxY62e7/pZ5HXxukn93iYcaFuYt4wCcXWqPABHgonIMt4BL56j/9VTtJwDGkzVbgAgAMKTUeAEiAAC0vnD1F4w9VuN+Lf/O6vfLPVTjhlm1g7aa6DPwkCEAAFtLTyxABAAALii9bHs4qwUVVH0uc3lX4ET+3VXOx1blPBOAs2v1p6tHU+rHBcwhx287R1n95tX3aPtCqCDAJLJmCxABAIaUGi9ABACAXe4V+23PmP/vrvt3V+NlVSynHbjVZJ+Bmz8BANhaemIBIgAAcEGtl+16W+Z1X33Gf5L/ZvW3KszKBV0ALiL1R4AIcHY5bq/j6fVxzDcejAKYSNZtASIAwJBS4wWIAADwTXqqh67HWs3Lb8a9w0vWbquxw8zawVtN9hl4yBAAgK2lJxYgAgAAF5I+docLY7soL36+Jf/dTffnMAbnmABcRKtBXU2aUj8uYEw5Xts5aVt3nJf+6qHaZwCMK2u3ABEAYEip8QJEAAD4Jj1Vuzbz8qrHWtEv911l22P376zmqR8zrKAdvNWEn4EbQAEA2Fp6YgEiAABwIeljV3+jwE7uqs/4EPlvV79AOpt2kf6q+qwA4NRSgwSIAGeRY/UuVr9B9aOeq30GwNiyfgsQAQCGlBovQAQAgJ/SV912fdaKrl+Nd5Vnln6nBfW714wltQO4mvQz8JAhAABbS08sQAQAAC4gPex119Myr5fqMz5U/ntzYSwfDoMBgM9KHRIgApxUjtF2XUhwyO+1mzx/3tQKwDyyfgsQAQCGlBovQAQAgH9Ib/XU9Vqr+fJqrKtfl7p//dnCStoBXE36GfxchAAAYEfpiQWIAADABaSHfex6Wub16cCJ/Bnmwxg+FQYDAJ+VWiRABDiJHJvtbXZLPFh9YrfV/gNgfFnDBYgAAENKjRcgAgDAP6S3uooWal71Xau4i1V64d+RUcDS2mJVTfwZODgBANhaemIBIgAAcGbpX6+7fpZ5HeU6Q/4cc2IMnw6DAYDPSC0SIAIcVY7JdnPm6m92OxbXmgAmlnVcgAgAMKTUeAEiAAD8Iv1Vu4ZT9V2rWD0gpY3vuvpsYRVtoaom/wwEiAAAsLX0xAJEAADgzNK/Pnb9LPM62o1y+bNWf+PC6F6qzwUAzin1SIAI8Gk5Dttb6+5DcMjh3EMGMLm2lndr+5T6cQEA80uNFyACAEApPdYS32ltyjNMLK8tUtXkn4GLvwAAbC09sQARAAA4o/SuN10vy7yOeo0hf157yG/1Ny+MzE2PAFxc6pEAEeDDcvy1880WWOm84n2e46rapwDMI2u5ABEAYEip8QJEAAAopce6Dtd15vNcfZ6wmrZIVQfADASIAACwtfTEAkQAAOCM0rt6a8A6jn6TXP7MVW4gnI3rRQAMITVJgAjwLjnmWhDhXbQQjPKY5I/aTbk31b4FYC5ZzwWIAABDSo0XIAIAwG+lz3K/2HxcW2ILbYGqDoAZuCEUAICtpScWIAIAAGeSvnWV/psTXV/In9se/vNWifNzwyMAQ0hNEiACHCTH2m08hvOHz3EuALCIrOkCRACAIaXGCxABAOCP0msJip/HQ/UZwora4lQdBDMQIAIAwNbSEwsQAQCAM0nfusRN7HxzsrcI5M/2Vonzcq0IgGGkLgkQAX4rx5fQkOO6q/YzAHPKui5ABAAYUmq8ABEAAP4ovdZN13sxppe4qj5DWFFbnKoDYQZuCgUAYGvpiQWIAADAGaRnXaX35l//fqw+42PJn38V7WJj9XdzfG52BGAYqUsCRICfcjy1cwOhIafhuhLAYrK2CxABAIaUGi9ABACAN6Xf8tKp8emJ2UpbmKoDYQYCRAAA2Fp6YgEiAABwBulZn7selnldV5/xMeXvuOv+Tk7jpGEwAPBeqU0CRGBzOYbaG+buY4mHoAflPABgQVnfBYgAAENKjRcgAgDAm9JveenU2FxfYjttYaoOhhk8VwMCAIBdpCcWIAIAACeWflUYxDrOdiEwf5cLwqd38jAYAHiP1CYBIrCZHDM/AkOe4ms7hjgpN3cCLCprvAARAGBIqfECRAAAOEjruboejDG0a3hX1WcGK2uL0rRvTuwHAwAAO0lPLEAEAABOLP2qIIh1nC1wIn+X4JnT8uAgAMNJfRIgAgvL8dHeHNeuy7RjXWDI+XnRFMDCss4LEAEAhpQaL0AEAICDpe966PowLu+2+qxgdVN/8d4PBgAAdpKeWIAIAACcUHpVIRDrOPt5R/5O4TOnc7YwGAA4VOqTABFYRI6F63gdFqK3v6z2cixvhgNYWNZ5ASIAwJBS4wWIAABwsPRdLZBeCP04nqrPCXYw9Rfv/WAAAGAn6YkFiAAAwAmlV/WQ2BraRdmzP2yWv3OVc7bRPFb7GwAuLTVKgAhMJPO93cDZevYWHPkjKGSJh5cXIzwEYANZ6wWIAABDSo0XIAIAwLuk97rtejEuo90z6CVVbGvqL977wQAAwE7SEwsQAQCAE0mfet/1rczrYucc+bs9gHhcFwmDAYBDpEYJEIFBZC7fRLuG0rRzu3Z8Pkbrz1sgRTn/GY7wEIBNZL0XIAIADCk1XoAIAADvlv6rBddXfRnnc199NrCL2b94d5EYAIBtpR8WIAIAACeQHrW9iboFFVT9K3O5aOBE/u5VzttG4fwRgGG1OtXVrVm1ccDo2r1OrwkFWY/wEICNZM2f+T7mn/pxAQDzS41v30OUtX8yAkQAAM4o/Zf7Dy/rS/W5wE7aQjRzkpGTWAAAttX64a4/npUHwAAAGErrUbuelXld/HwjP8MSD0AM4KJhMADwltQpPSTAcQgPAdhM1n0BIgDAkFLjBYgAAPAh6cHuu56M87mpPhPYyewntE5iAQDYVuuHu/54VgJEAAAYRvpT6f/reKk+43PLz7HKudulOXcEYGitVnW1C4D3e6zWWADWlvVfgAgAMKTUeAEiAAB8WPowL546P/eYQcx+QuskFgCAbbV+uOuPZ+UEHQCAYbT+tOtXmddd9RlfQn6Wx+5n431aqI83kAMwtNQqfSTA5wgPAdhUaoAAEQBgSKnxAkQAAPiw9GHX4WVm5/NcfQ6wo9lPaG+rQQEAwA7SDwsQAQCAI0pv6oLdOl6qz/hS8vO0uVX9nBxmmDAYAPid1CsBIgAf91CtrQDsIXVAgAgAMKTUeAEiAAB8Snox15HPR98L382++HjQEACAbaUfFiACAABHlN70setVmddwgRP5mcyvjxkqDAYAfic1y41fAB8jMBBgc6kFAkQAgCGlxgsQAQDg09KPPXf9GccnrB5eaQvPzA8detAQAIBtpR8WIAIAAEeSvvS661OZ15CBE/m5zLGP8TAhAFNIzRIgAvA+X8MDTAC0XlqACAAwpNR4ASIAAHxa+rGbrj/juF7iqtr3sKu28AgQAQCACaUfFiACAABHkr70setTmdewN8DlZzPP3mfIMBgAqKRuCRABOFx7095NtZ4CsJ/UBAEiAMCQUuMFiAAAcBTpyVxPPh39LnTaojPzQ4dfqkEBAMAO0g8LEAEAgCNIT3rd9ajMa+jrBvn5rqK9Zbv62fnVbbUfAWBEqVtu+AI4THtI3FvgAPjpe22oasZU+nEBAPNLjRcgAgDAUaQna/eNvbzq0TiOp2p/w+7aojPzjdECRAAA2Fb6YQEiAABwBOlJn7oelXkNf/NbfkYPFx/GNSAAppLapcYDvO2hWkMB2FvqgwARAGBIqfECRAAAOJrWl3V9Gp/TXuQltB4K337pDpiZuHkUAIBtpR8WIAIAAJ+UftRFuXVMcc0gP2d7m0S7eFmNgf9yIyMAU0ntEiAC8HvtHOi2Wj8BIDVCgAgAMKTUeAEiAAAcVXqzh65X4+Puqn0MzB8gkh+/HhgAAKwu/bAAEQAA+KT0o0vcnM4309z4lp/VA8Z/JkAegOmkfqnvALXnuKnWTgBoUicEiAAAQ0qNFyACAMBRpTfz8qnjcH8Z/MG3X3KgvHQHzjReDwYAAHaSfliACAAAfEJ60VV6av7178fqMx5Vfl4Xgv/MTYwATCf1S4AIwK/aW/SuqnUTAH5IrRAgAgAMKTVegAgAAEeX/uy269d4n3bf3XW1b4H/+PZLDpSZv3x3kAMAsKX0wgJEAADgE9KLLnFjOt9Md60gP/NdNwb+w9shAJhSapgAEYD/ajdu3lbrJQD0UjMEiAAAQ0qNFyACAMBJpEd76no2Dndf7VPgv779koNl5i/fncgCALCl1gt3vfGsBIgAAHB26UOl+K/jsfqMZ5Cf/aUbC4LjAZhUapgAEYD/aPehXVVrJQBUvteOqqZMpR8XADC/1HgBIgAAnER6tOtogexV/8bvPVf7E/inb7/kgHnsDqCZOJEFAGBLrRfueuNZCRABAODs0ocKbljHtIET+dnvurHsbtowGABIHRMgAuyu3eTqjW8AvFvqhwARAGBIqfECRAAAOJn0afdd38bbbqp9CfzTt19ywMx8UuthQwAAtpReWIAIAAB8QHpQoQ3reKg+45lkDMJs/mvaMBgASB0TIALsrD34rZ8H4EO+15GqvkylHxcAML/UeAEiAACcVHq1Jb4bOxPPHsGBvv3SDpruIJqJAx4AgC2lFxYgAgAAH5AeVGDDGtrbra+qz3gmGcPtqzHt7LHaPwAwi9QyASLAjtp52X21LgLAoVJLBIgAAENKjRcgAgDASaVXu+56N2ov1f4Dat9+yYEz84OHX/pBAQDADtILCxABAIB3Sv951/WjzGuZc4mMZfc3SbSHDr2tHICppZYJEAF28xTThzoCcHmpJwJEAIAhpcYLEAEA4OTSr7nW/DY9LbzDt1/agdMdSDMRIAIAwJbSCwsQAQCAd0jveRUvr3pR5tUCJ5Z5UC1jWeX87qOcFwIwvVbPuvoGsKp2Xu0mTQCOJnVFgAgAMKTUeAEiAACcRXq2566H478eqn0G/N63X3LwtJumq4NqBl/7QQEAwA7SCwsQAQCAd2i9Z9eLMq/lziMypiUelPiApcJgANhX6pleE1hd691d0wHg6FJfBIgAAENKjRcgAgDAWaRnu+l6OP7DvWXwAT9/0x1QU/kxBgAA2El6YQEiAABwoPSdLUi7XUyqelLmsuRFwYxplXO893JOCMASWk3rahzASh7julr/AOCzUmMEiAAAQ0qNFyACAMDZpG976Po4/vXv22pfAX/28zc5iF66g2omTmYBANhO64O7vnhWHhYDAODkWt/Z9aHM6676jFeQsS3xsMQ7eEMEAMtITdNvAitq5yjuywLgpL7Xm6oOTaUfFwAwv9R4ASIAAJxN+rb2krSZn/U/tqdqPwFv+/mbHEgzfwHvZBYAgO20Prjri2clQAQAgJNKz9kurLWggqofZS4v1We8iozvuhvv6pwPArCMVte6Ogcws3Zzqje6AXAWqTkCRACAIaXGCxABAOCsWu/W9XK78mIq+ISfv8mB9PjqwJqNG0wBANhO+mABIgAAcIDWc3Y9KPO6qz7jlWSMM1+veY+lw2AA2E9qm54TWEELDln+vAuAsaT2CBABAIaUGi9ABACAs0v/tsv9Y39yX+0b4DA/f5ODaeYT24fXgwIAgB2kDxYgAgAAb0i/ed31n8xri8CJjHOXOeuhRACWktomQASYmeAQAC4mNUiACAAwpNR4ASIAAJxd+rer+Pqqn9vNl2q/AIf7+ZscUHfdATYTiwEAANtJHyxABAAA3pB+Uxr/Om6rz3hFGevq83aLMBgA9pL6JkAEmJHgEAAuLrVIgAgAMKTUeAEiAABcRHq4266n20ULTrmu9glwuJ+/yQE188OHbjQFAGA76YMFiAAAwB+k17zuek/mtVWQeMbb5u7Kb5HwgCIAy0l9EyACzERwCADDSE0SIAIADCk1XoAIAAAXkz7uqevrduD5IjiCn7/JQTX1jdQ/xgEAALtIHyxABAAA/iC95mPXezKv7W5qy5hXfQj5uRovAMwuNU6ACDCD9oC2h4YAGMr3+lTVran04wIA5pcaL0AEAICLSR+3+kuoeu4rgyP5xz8UB9tMnNACALCV1gN3PfGsBIgAAHB06TNvur6TeX2pPuPVZdxXseIFYNdzAFhSapwAEWBkLWDzulq/AODSUqMEiAAAQ0qNFyACAMBFpZe773q7ld1U+wB4v3/8Qw6u5+5gm8nd67EAAMDq0gMLEAEAgN9In7nETed8s+0NbRn7ag8ibxkGA8AeUucEiACjeYl2U+lVtW4BwChSqwSIAABDSo0XIAIAwMWln9vhXsiHauzAx/zjH3KAzbyIeOgQAICtpAcWIAIAAIX0mKv0ymweOJHxX8XXV/tjdm5OBGBZqXMCRIBRPIXeG4BppG4JEAEAhpQaL0AEAICLSz933fV3q2mh+ALx4Yj+8Q85wGY+ufXWOgAAtpIeWIAIAAAU0mPukLi/i+vqM95J9kF7Y3i1b2bjOg4AS0utEyACXFK7sbKdO7i5EoDppH4JEAEAhpQaL0AEAIAhpKdb+Xq0fhWO7B//kINs5ptQX16PBQAAVpceWIAIAAB00l+u0ifzr38/Vp/xjrIv2sOA1T6ayU01NgBYRWqdABHg3L7GQ+i1AZhaapkAEQBgSKnxAkQAABhG+rrnrs9bgXsE4QT+8Q850Ka+sfr1WAAAYHXpgQWIAABAJ/3lEjeb88119RnvKPvirts3s3GhF4Dlpd4JEAHOoYWGPMZttRYBwIxS1wSIAABDSo0XIAIAwDDS1910fd7s2nWvq2qswOf84x/agfbqwJuRk1oAALbR+t+uH56VABEAAI4iveXsIQv8l8CJTvbJS7ePZiIMBoDlpd4JEAFORWgIAEtLjRMgAgAMKTVegAgAAENJb/fQ9Xozc+0LTuSXDTng2kXn6kCcwX0/HgAAWFX6XwEiAADwSnrLmQMW+K92nULgRCf7ZNaAHGEwAGwhNU+ACHBM7fy23QDqxkkAlpd6J0AEABhSarwAEQAAhtJ6u67Xm1Y/NuB4ftmQg27mL+LdhAoAwDbS/woQAQCA79JXzhquwK+cI/xG9s1zt69mIAwGgC2k5gkQAT6r9fv3cVOtMwCwqtQ+ASIAwJBS4wWIAAAwlNbbdb3etPqxAcfzy4YcdO3tFeXBOIHnfjwAALCq9L8CRAAA4Lv0le3tzFW/yVy+xlX1GTPleeBDNQ4AWFHqngAR4L3aeexj3IbzIAC2lTooQAQAGFJqvAARAACG0nq7rtebVj824Hh+2ZCDrr3JojwYZ9CPBwAAVpX+V4AIAABEesqpv9fmH5wfvCH7aJYHKoTBALCV1D0BIsB73VXrCQDsJjVRgAgAMKTUeAEiAAAMpfV2Xa83rX5swPH8siEH3eyLhxNbAAC20HrfrheelQcEAQD4sPSTV9GCCqpek7kInDhA9tEs54LO9QDYSqt9XS0EeItzIACI1EMBIgDAkFLjBYgAADCU1tt1vd60+rEBx/PLhhx07Wbr8mCcxH0/JgAAWFF6XwEiAABsr/WTXX/JvHy/f6Dsq9EfqvAgJADbSe3TlwIf4RoJANtLPRQgAgAMKTVegAgAAENpvV3X602rHxtwPOXGHHgv/YE4kcdqTAAAsJr0vgJEAADYWnrJFojdggqqPpO5vFSfMbXsr5tu/43GeR4A22n1r6uHAIcQvgfA9lILBYgAAENKjRcgAgDAUFpv1/V60+rHBhxPuTEH3sxfxj9XYwIAgNWk9xUgAgDA1lov2fWWzOuu+oz5veyzx24fjqKF1HsAEoDtpP7pTYGPcp0EgK2lFgoQAQCGlBovQAQAgKG03q7r9abVjw04nnJjDrzZT3LdmAoAwPLS9woQAQBgW+kjr6K9qbnqMZnLS/UZ82fZb9fdfhyFMBgAtpQaKEAE+Kh2buteJwC2lTooQAQAGFJqvAARAACG0nq7rtebVj824HjKjTnwbvsDcTJObgEAWF7re7s+eFYCRAAAeLf0kY9dX8m8BE58UPbdaMeBMBgAtpU6KEAE+IyHam0BgB2kDgoQAQCGlBovQAQAgKG03q7r9abVjw04nnJjDrxR31p3KA8gAgCwvPS9AkQAANhSesjZv8Pmv56rz5jDZP+NdiwIgwFgW6mDSzxM0I8LRpN5etfP24VcV2MGgNWlBgoQAQCGlBovQAQAgKG03q7r9abVjw04nnJjk4Pva38wTuRLNSYAAFhJ+l4BIgAAbCk95GPXUzIvN6t9UvbhKDcuvlQ/HwDsIrVQgAicSebqSz93F/FYjRcAVpcaKEAEABhSarwAEQAAhtJ6u67Xm1Y/NuB4yo1NDr6pv5DvxwMAAKtJ3ytABACA7aR/vO76SeYlDPwIsh+vYoRQeDceArC11EIBInAmmat3/dxdyHU1ZgBYWeqfABEAYEip8QJEAAAYSuvtul5vWv3YgOMpNzY5+GY/0XWCCwDA0lrP2/XAsxIgAgDAwdI/PnX9JPPyPf6RZF9e+pqOMBgAtpd6KEAEzijz9aWfv4t4rMYLACtL/RMgAgAMKTVegAgAAENpvV3X602rHxtwPOXGJgffbX8wTua+GhcAAKwiPa8AEQAAtpLecZmLXwicOKbsz6v4+mr/npubDgHYXuqhABE4o8zXu37+LkR/DcBWUvsEiAAAQ0qNFyACAMBQWm/X9XrT6scGHE+5scnBd90fjJN5qsYFAACrSM8rQAQAgK2kd1ziRnK+uak+Yz4u+/RSNzAKgwGASE0UIAJnljn70s/hReixAdhKq31dLZxSPy4AYH6p8QJEAAAYSuvtul5vWv3YgOMpN/6QA3DqC+39eAAAYCXpeQWIAACwjfSNy1z44t+P1WfM52S/XsUlruu44RAAIjVRgAicWebsXT+HF6LPBmAbqXsCRACAIaXGCxABAGAorbfrer1p9WMDjqfc+EMOwKf+gJyMk1wAAJbV+t2u/52VABEAAN6UvnGJm8j55rr6jPm87NtzP0D5VP0cALCj1EUBInABmbdTvxzpD75U4wWAFbW619XBKfXjAgDmlxovQAQAgKG03q7r9abVjw04nnLjDzkA7/sDcjIeRAQAYFnpdwWIAACwhfSMy1z04t+P1WfM8WQfn/MBSmEwAPBd6qIAEbiAzNtzh+idk4d7ANhCap4AEQBgSKnxAkQAABhK6+26Xm9a/diA4yk3/pADcPaFxNs4AABYVvpdASIAAGwhPeOqb5TekcCJE8s+PtcDlMJgTuyvv19uqu0AjCm1UYAIXEjm7nM/lxfxUo0XAFaTmidABAAYUmq8ABEAAIbSeruu15tWPzbgeMqNr1UH5WSuqnEBAMDs0usKEAEAYHnpF1d+m/Ru9P5nkn19jtAdYTAn9NffL/8bHhgFmEhqowARuJDM3WVulCzcVWMGgJWk3gkQAQCGlBovQAQAgKG03q7r9abVjw04nnLjazkIZ/9i/rYaFwAAzC69rgARAACWl37xHEEInN7XEPh9JtnXpz5ffKz+Xo7nr79fvsT/C+fMAJNIfRQgAheU+bvEg8cFoXIALC/1ToAIADCk1HgBIgAADKX1dl2vN61+bMDxlBtfy0E4+wmvm1gBAFhSel0BIgAALC294l3XOzIvff+ZZZ+f6sELYTAn9tffL3ffw0Oar2F/A0wg9VGACFxQ5u8yN0sW7qoxA8AqUusEiAAAQ0qNFyACAMBQWm/X9XrT6scGHE+58bUchLMvJt7EAQDAktLrChABAGBZ6ROv4uVV38i8BE5cQPb5qc4ZncOd2F9/v7y8ChBp7HOACbQa2dXMKfXjgplkDi/x8HHBvU8ALC21ToAIADCk1HgBIgAADKX1dl2vN61+bMDxlBt71YE5mZtqXAAAMLP0uQJEAABYVusTu76Reen5LyT7/tgPXwiDObG//n6568JDmq9hvwMMLjVSgAhcWObwMjdMFpxXAbCs1DkBIgDAkFLjBYgAADCU1tt1vd60+rEBx1Nu7OVAnP3L+ftqXAAAMLP0uQJEAABYUnrEq2hBBVX/yFxeQvDBhWTfH/u80fnbif3198vLq+CQ1+x7gMG1OtnVzSn144LZZB4v8QByQZgfAMtKjRMgAgAMKTVegAgAAENpvV3X602rHxtwPOXGXg7E2U96n6txAQDAzNLnChABAGBJrUfsekbmdVd9xpxPPoPH7jP5KA8snthff7/cdaEhr32N6+q/A2AMqZMCRGAAmcfL3DRZcD0FgCWlxgkQAQCGlBovQAQAgKG03q7r9abVjw04nnJjLwfiCguKmyoBAFhKelwBIgAALCf94VW0oIKqd2QuL9VnzHnlc7juPpePEgZzQn/9/XL1PSSkCg/54bH6bwEYQ2qlABEYRObyEg8hF4T6AbCk1DcBIgDAkFLjBYgAADCU1tt1vd60+rEBx1NurFQH52Tc2AoAwFLS4woQAQBgOa0/7PpF5uV7+UHks3jsPpv3EgZzYn/9/fJ/XVjI7wjMBxhU6qUAERhE5vIyN04WXFMBYDmpbwJEAIAhpcYLEAEAYCitt+t6vWn1YwOOp9xYycH41B+ck3mqxgUAALNKjytABACApaQ3vO56ReYlcGIg+Tw+e2wJgzmhv/5+uYqvr0JC/uSx+jMAuLzUSwEiMJDM5yUeRP4NoXIALCW1TYAIADCk1HgBIgAADKX1dl2vN61+bMDxlBsrORjv+4NzQlfV2AAAYEbpbwWIAACwlPSGj12vyLzchDaYfCYfPb6EwZzYX3+//F8XEvIWD4wCDCg1U4AIDCTzeeWASqFyACwltU2ACAAwpNR4ASIAAAyl9XZdrzetfmzA8ZQbKzkYb/qDc0LekAcAwDLS3woQAQBgGekLV364azdfqs+Yy8rnchVfX31Oh3Jt5YT++vvlKr6+Cgc5hGMMYECpmQJEYDCZ0yuHVAqVA2AZqWsCRACAIaXGCxABAGAorbfrer1p9WMDjqfc+Ds5IF/6A3QyT9W4AABgRulvBYgAALCM9IUrP9i1GzegDSqfzXtvchRUcWJ//f3y2IWDHMpxBjCY1E0BIjCYzOmVgyofqzEDwIxS1wSIAABDSo0XIAIAwFBab9f1etPqxwYcT7nxd3JArnAD91U1NgAAmE16WwEiAAAsIT3hyg917UbgxMDy+VzF11ef11vcTHhCf/39ct2FgryHYw1gMKmbAkRgQJnXK4dV3lRjBoDZpKYJEAEAhpQaL0AEAIChtN6u6/Wm1Y8NOJ5y4+/kgLztD9AJ3VVjAwCA2aS3FSACAMAS0hMucYM437j5bHD5jA690VFAxYn99ffLYxcK8l6ON4CBpHYKEIEBZV6vHFipZwdgCa2mdTVuSv24AID5pcYLEAEAYCitt+t6vWn1YwOOp9z4Ozkg25vpygN1Ik/V2AAAYDbpbQWIAAAwvfSDy1zQ4t+P1WfMWPI5tWs9X199br/jRsIT+uvvl+suDOQjPDAKMJDUTgEiMKjM7cd+ri9E3w7A9FLPBIgAAENKjRcgAgDAUFpv1/V60+rHBhxPufFPclCu8EX9dTU2AACYSfpaASIAAEwv/eASN4fzje/eJ5HP6q777HqCKU7sr79fnrowkI+6q/58AM4v9VOACAwqc/u6n+sL0bsDML1Wz7r6NqV+XADA/FLjBYgAADCU1tt1vd60+rEBx1Nu/JMclPf9QTqh+2psAAAwk/S1AkQAAJhaesFlLmbx78fqM2Zc+cxeus/wNWEwJ/TX3y//24WAfMZL9XcAcH6pnwJEYGCZ34/9fF+Ih4AAmFpqmQARAGBIqfECRAAAGErr7bpeb1r92IDjKTf+SQ7KFd7K8VyNDQAAZpK+VoAIAABTSy+4xI3hfCNwYjL5zO66z/AHYTAn9tffL1+6EJDPuqv+HgDOKzVUgAgMLPN7hfudfsd9UABMLbVMgAgAMKTUeAEiAAAMpfV2Xa83rX5swPGUG9+SA/O5P1AndFONDQAAZpGeVoAIAADTSh/4u/AC5iNwYlL57F66z7IRBnNCf/398r9d+McxvFR/FwDnlRoqQAQGlzn+2M/5hQiVA2BaqWMCRACAIaXGCxABAGAorbfrer1p9WMDjqfc+JYcmA/9gTqhh2psAAAwi/S0AkQAAJhW+sAquID5fI2r6jNmfPnsbl99lo0wmBP76++XL134x7HcV38fAOeTOipABAaXOX4d7RymnP+TEyoHwLRSxwSIAABDSo0XIAIAwFBab9f1etPqxwYcT7nxLTkwb/oDdUJfq7EBAMAs0tMKEAEAYErpAe+6npB56ecnl8/wxwMa7UHK6+rf4Tj++vvlf7vQj2P6GsJ8AC6o9UXfa+rU+nHBajLPV3nwp3JXjRkARpcaJkAEABhSarwAEQAAhtJ6u67Xm1Y/NuB4yo2HyMG5wtshXTgHAGBa6WcFiAAAMKX0gCt8v8x/AicEFkwun+GPc0vnZif2198vL68CP07BZwhwQa2Wfq+pU+vHBavJPL+Kdi5THgOTe6nGDACjSw0TIAIADCk1XoAIAABDab1d1+tNqx8bcDzlxkPk4HzoD9YJPVVjAwCAGaSfFSACAMB00v/ddf0g89LLLyKf5VMIgzmhv/5+uevCPk7ha/gcAS6k9Ubfe6Sp9eOCFWWur/LwT+W+GjMAjCz1S4AIADCk1HgBIgAADKX1dl2vN61+bMDxlBsPkYPzpj9YJ3VdjQ8AAEaXXlaACAAAU0nvt/KbnnfTPkdBBXCgv/5+eXkV9HFKzrEBLiS9kQARmETm+srnps7VAJhOapcAEQBgSKnxAkQAABhK6+26Xm9a/diA4yk3HioH6Et/wE7ooRobAACMLr2sABEAAKbSer+uF2Red9VnDPzqr79f7rqQj1P6GsLzAS4g/ZEAEZhI5vvK56euuwAwldQuASIAwJBS4wWIAAAwlNbbdb3etPqxAcdTbjxUDtCH/oCd0NdqbAAAMLr0sgJEAACYRvq+ld/wvJuX6jMGfvXX3y9X8fI93ONcHqufBYDTSo8kQAQmkvm+8jlqG9dVNW4AGFHqlgARAP5/e3dw3cbNtg2YJbCBnMNNljlHJbgElcASXIJLcAnacucSXIJLmBLUwf/fSJz3YyDIpqQhCWCuxbXBIjE4woOHQ8w90KXs8QJEAADoSuntql5vWPXcgPU0By+VBfpQL9hBeVMiAADDSR8rQAQAgGGUvq/qAxmXe+pwod1p+VKFe9zKofXvAeB60iMJEIHB5G9+5u+pfnsBYBjZtwSIAABdyh4vQAQAgK6U3q7q9YZVzw1YT3PwLbJIl3rRDuh7a24AANCz9LECRAAAGEJ6vpnf7Lw1S+saAy/tTss+ns9CPW7pqfVvAuB60icJEIHB5G9+5u+qZV5C5QAYQvYsASIAQJeyxwsQAQCgK6W3q3q9YdVzA9bTHHyLLNKv9aIdlC/EAAAMpfSwVU87KgEiAACTS8/3VPWAjOvYusbAS7vT8qUK9bg1D4wC3FD6JAEiMKD83c/yIFCLUDkAhpA9S4AIANCl7PECRAAA6Erp7apeb1j13ID1NAffIov0UC/aQfnRHACAoaSHFSACAED30u/Ncg+ZP//63rrGwEu707KP57Mwj3v41vq3AXAd6ZUEiMCA8ne/j+fzdTAZoXIAdC/7lQARAKBL2eMFiAAA0JXS21W93rDquQHraQ6+VRbqj3rhDsqP5gAADCP9qwARAAC6l37vqer/GJeDZXCh3Wn5WoV53It1C3Aj6ZUEiMCg8rf/uV4LE/FCJQC6l/1KgAgA0KXs8QJEAADoSuntql5vWPXcgPU0B98qC3WWH9I9uAgAwDDSvwoQAQCga+n1DlXvx7i+t64x8NLutByqEI97snYBbiT9kgARGFj+/pd6PUzEC5UA6Fr2KgEiAECXsscLEAEAoCult6t6vWHVcwPW0xx8qyzUfb1wB/Uc+9YcAQCgN+ldBYgAANC19HpPVe/HuBwqgwvtTstTFeJxb9YvwA2kXxIgAgPL3/+xXg8TESoHQNfKXlXtXUOq5wUAjC97vAARAAC6Unq7qtcbVj03YD3NwffIYv1WL95BeXgRAIAhpHcVIAIAQLfS503zQxUeNoNL7U7LoQrv6IE1DHAD6ZkEiMDgsgaWek1MxINCAHQr+5QAEQCgS9njBYgAANCV0ttVvd6w6rkB62kOvkcW62O9eAe1tOYHAAC9Se8qQAQAgG6lz5vi0Dd/O7SuMfDS7rQ8VeEdvXhs/XsBWE96JgEiMLisgWO9JiYiVA6AbpV9qtq3hlTPCwAYX/Z4ASIAAHSl9HZVrzesem7AepqD75UF+1wv4EEdW/MDAICepG8VIAIAQJfS403zIxV/PbWuMfDS7rQ8VKEdPRGgD3Bl6ZsEiMAEsg6Wel1MxMNCAHQpe5QAEQCgS9njBYgAANCV0ttVvd6w6rkB62kOvlcW7Nd6AQ/KIUoAALqXvlWACAAAXUqPN8WBb/52aF1j4KXdaflehXb0RoA+wBWlbxIgAhPIOjjW62Ii31tzBoB7K3tUtWcNqZ4XADC+7PECRAAA6Erp7apeb1j13ID1NAffKwv2UC/ggTlECQBA19KzChABAKA76e+m+YGKv55a1xh4aXdaPlVhHT0SoA9wRemdBIjAJLIWlnptTOSxNWcAuKfsTwJEAIAuZY8XIAIAQFdKb1f1esOq5waspzn4EVm0s7xZ0iFKAAC6lp5VgAgAAN1Jfzfzg1Zb8hyH1jUGXtqdlu9VWEevBOgDXEl6JwEiMImshWO9NibiPBQA3cn+JEAEAOhS9ngBIgAAdKX0dlWvN6x6bsB6moMfkUU704/oDlECANCt9KsCRAAA6Ep6u5kfstoafTpcaHdaPlUhHT17jn1rHgB8TOmfqn5qSPW8YKuyHmYOx3QeCoCuZG8SIAIAdCl7vAARAAC6Unq7qtcbVj03YD3NwY/Kwi1vJmwu6MF46wYAAN1KvypABACArqS3m/kBqy0p9/gFDMCFdqflx1lAxwh8Dwe4gvRPAkRgIlkPMwdkOg8FQFeyNwkQAQC6lD1egAgAAF0pvV3V6w2rnhuwnubgR2Xhfq0X8sC8dQMAgC6lVxUgAgBAN9LXzfxw1dbo0eFCu9NyrMI5RvAcQoIAVlZ6qKqnGlI9L9iyrIkpHmZ+hfNQAHQj+5IAEQCgS9njBYgAANCV0ttVvd6w6rkB62kOflQW7qFeyAMrb8x0iBIAgO6kTxUgAgBAN9LXlXuprX6PsTyHe+Jwod1pWc6COUbiuzjAytJDCRCByWRNTHMAs8F3PwC6kT1JgAgA0KXs8QJEAADoSuntql5vWPXcgPU0B9eQxfutXswDc4gSAIDupE8VIAIAQBdKT1f1eIxLfw4X2p2WYxXKMZLn8MAowIpKH1X1VUOq5wVbl3UxxQPNr/D9D4AuZE8SIAIAdCl7vAARAAC6Unq7qtcbVj03YD3NwTVk8c70Fg5v3QAAoDvpUQWIAABwd+nn9lHuobZ6PcaytK4x0LY7LctZIMeInlrzAuB90ksJEIEJZV3MdP6p5jwUAF3IfiRABADoUvZ4ASIAAHSl9HZVrzesem7AepqDa8kCXuoFPTAPNQIA0JX0qAJEAAC4u9LPVf0d4zq2rjHw0u60fKnCOEZ1aM0PgLdLLyVABCaVtTHFQ82v8BsNAHeX/UiACADQpezxAkQAAOhK6e2qXm9Y9dyA9TQH15IFfKwX9OAcogQAoBvpTwWIAABwV+nl9lHeWNzq8xjL0rrGwEu707KP57MQjpE9teYIwNulnxIgApPK2pjmIGZD+U6/b80bAG4le5EAEQCgS9njBYgAANCV0ttVvd6w6rkB62kOrimLeKbD499acwQAgHtIfypABACAuyq9XNXbMa5j6xoDL+1Oy5cqhGN0AvQBVpB+SoAITCzrY4oHm18hVA6Au8peJEAEAOhS9ngBIgAAdKX0dlWvN6x6bsB6moNryiKe7QC5L84AAHSh9KZVrzoqASIAAANKH3eImQKkt+xH6xoDL+1Oyz6ez8I3ZiBAH2AF6akEiMDEsj6mOYz5CqFyANxN9iEBIgBAl7LHCxABAKArpberer1h1XMD1tMcXFMW8b5e1INzkBoAgC6kNxUgAgDA3aSPe6r6OsblwBhcaHdavlThG7NQBwA+KD2VABGYXNbIFA83v+KpNWcAuIXsQwJEAIAuZY8XIAIAQFdKb1f1esOq5waspzm4tizk2Q6SH1vzBACAW0pfKkAEAIC7SA93qHo6xvW9dY2Bl3an5RDPZ6EbM1ELAD4ofZUAEZhc1sg0BzJfcWjNGwCuLXuQABEAoEvZ4wWIAADQldLbVb3esOq5AetpDq4tC3m2w+TPsW/NFQAAbiU9qQARAADuIj3cbKHRW+awGFxod1qeqtCN2agHAB+QvkqACGxA1skUDzi/4qk1ZwC4tuxBAkQAgC5ljxcgAgBAV0pvV/V6w6rnBqynOXgNWcyzHSj/2ponAADcSnpSASIAANxc+rfZAqO37HvrGgMv7U7LoQrbmJGaAPAB6a0EiMAGZJ3M/p3YA0UA3Fz2HwEiAECXsscLEAEAoCult6t6vWHVcwPW0xy8hizmGX9A9yUaAIC7Kf1o1Z+OSoAIAMBA0r/N/LblrXloXWPgpd1pearCNmb12Jo/AL+X3kqACGxE1spsL1E6J1QOgJsr+0+1Hw2pnhcAML7s8QJEAADoSuntql5vWPXcgPU0B68lC3q2g+U/WvMEAIBbSD8qQAQAgJtK7zbNj0/89dS6xsBLu9NyqEI2Zra0PgMAfi/9lQAR2IislRlfonTOQ0UA3FT2HgEiAECXsscLEAEAoCult6t6vWHVcwPW0xy8lizoGQ+Xe9gRAIC7SC8qQAQAgJtK7zZbSPSWHVrXGHhpd1q+VyEbszu2PgcAfi39lQAR2JCsl6d6/Uzke2vOAHAtZe+p9qIh1fMCAMaXPV6ACAAAXSm9XdXrDaueG7Ce5uA1ZVHPdsD8ORy0BgDg5tKHChABAOBm0rfNGBC9VU+tawy8tDstn6pwjS1YWp8FAL+WHkuACGxI1suhXj+T8WARADeTfUeACADQpezxAkQAAOhK6e2qXm9Y9dyA9TQHrymLesZD5t68AQDAzaUPFSACAMDNpG+bLRx6y4Riw4V2p+V7Fa6xFcfW5wHA69JjCRCBjcmaearX0ESEygFwM9l3BIgAAF3KHi9ABACArpTerur1hlXPDVhPc/DasrBnPGj+uTVXAAC4lvSgAkQAALiJ9GyPVQ/HuL62rjHw0u60fKpCNbZkiX3rcwGgLX2WABHYmKyZQ72GJiNUDoCbyJ4jQAQA6FL2eAEiAAB0pfR2Va83rHpuwHqag9eWhT1NgTrzHN7aCADAzaT/FCACAMBNpGdbqh6OMZX72AIB4EK70/L9LFBji3xfB3iD9FkCRGCDsm6e6nU0kaU1ZwBYW/YcASIAQJeyxwsQAQCgK6W3q3q9YdVzA9bTHLyFLO5v9WKfwPfWXAEA4BrSfwoQAQDg6tKvHav+jXHpveFCu9PyWIVpbNFzCB0CuFDptarea0j1vIBfy7o51OtoMsfWvAFgTdlvBIgAAF3KHi9ABACArpTerur1hlXPDVhPc/AWsrhn/QH9c2u+AACwtvSeAkQAALi69GtL1b8xpucQBAAX2p2W5SxIY8t8Zwe4UHotASKwUVk7T/Vamki5J+C7JABXlb1GgAgA0KXs8QJEAADoSuntql5vWPXcgPU0B28lC3zWH9AfWvMFAIA1pe8UIAIAwFWlVztWvRvj0nfDhXan5ViFaGzZc3hgFOACpd+q+q8h1fMCfi9rp7xEqYQ2NtfVBHyfBOCqstcIEAEAupQ9XoAIAABdKb1d1esNq54bsJ7m4K1kgZcf0JsLf3A/WvMFAIA1pe8UIAIAwNWkT9vHzA9AbYk3RsMb7E7LchagwWn52vqcAPiv9FsCRGDDsn5meaCopdwb8J0SgKvJPiNABADoUvZ4ASIAAHSl9HZVrzesem7AepqDt5RF/rVe9JNwmBIAgKtKzylABACAqyl9WtW3Ma5j6xoDL+1Oy7EKz+Afh9bnBcD/Sc8lQAQ2LOtn9hBOv+UAcDXZZwSIAABdyh4vQAQAgK6U3q7q9YZVzw1YT3PwlrLIZ/4B/bE1ZwAAWEP6TQEiAABcRXq02R982pKldY2Bl3anZR/PZ6EZ/J+n1mcGwP9J3yVABDYua2jmIM5yj2DfmjcAfFT2GAEiAECXsscLEAEAoCult6t6vWHVcwPW0xy8tSz0WX9A9+M5AABXk15TgAgAAFdRerSqZ2Ncx9Y1Bl7anZYvVWgG/3VofW4A/CN9lwAR2LisodnDOL+25g0AH5U9RoAIANCl7PECRAAA6Erp7apeb1j13ID1NAfvIYt9qRf/JL635gsAAB+VXlOACAAAq0t/NvsDT1uytK4x8NLutOzj+Swsg5eeWp8dAP9I7yVABJimFvyCUDkAVpf9RYAIANCl7PECRAAA6Erp7apeb1j13ID1NAfvIYv9sV78E/EGDgAAVpc+U4AIAACrS3/2terXGJeDYHCh3Wn5UoVl0KauALwivZcAEaDUgtlDOYXKAbC67C8CRACALmWPFyACAEBXSm9X9XrDqucGrKc5eC9Z8FP8CPCKx9acAQDgvdJjChABAGBV6c0OVa/GuL63rjHw0u607OP5LCSD16ktAK9I/yVABPhb1tIsDxe95tCaNwC8V/YWASIAQJeyxwsQAQCgK6W3q3q9YdVzA9bTHLyXLPiHugBMpLxd5KE1bwAAeI/0lwJEAABYVXqzp6pXY1wOgcGFdqflqQrJ4NfUF4CG9F8CRIC/ZS3to5wTaq6zCTy15g0A75W9RYAIANCl7PECRAAA6Erp7apeb1j13ID1NAfvKYt+5gPqP2LfmjcAALxVeksBIgAArCZ92aHq0xjX99Y1Bl7anZZDFY7B76kxAA3pwQSIAP+T9TTLA0av8RIlAFaTfUWACADQpezxAkQAAOhK6e2qXm9Y9dyA9TQH7ymLfva3cHxrzRsAAN4qvaUAEQAAVpO+bOZw561xAAwutDstT1U4BpdRZwAq6cEEiAD/k/U0+/knoXIArKbsK9U+M6R6XgDA+LLHCxABAKArpberer1h1XMD1tMcvLcs/M91IZiMByQBAPiw9JUCRAAAWEV6sml+VEKINVxqd1oOVSgGl1tanynAlqUPEyAC/EfW1Oznnzx8BMAqsqcIEAEAupQ9XoAIAABdKb1d1esNq54bsJ7mYA+y+H/UxWAyx9a8AQDgUukpBYgAALCK9GRTHNDmb4fWNQZe2p2WpyoUg7fxWxfAmfRhAkSAF7KulnqdTeR7a84A8FZlT6n2mCHV8wIAxpc9XoAIAABdKb1d1esNq54bsJ7mYA+y+B/qYjCZ53hozR0AAC6RflKACAAAH5Z+bJoflPjrqXWNgZd2p+VTFYbB2y2tzxZgq9KLCRABXsi6OtbrbDIeQALgw7KfCBABALqUPV6ACAAAXSm9XdXrDaueG7Ce5mAvUgC+1gVhMiVExNsgAQB4l/SSAkQAAPiw9GNTHM7mb+43w4V2p+V7FYbB+xxbny/AFqUXEyACNGVtLfVam8iP1pwB4C2ynwgQAQC6lD1egAgAAF0pvV3V6w2rnhuwnuZgL1IA9jHzj+jFj9i35g8AAL+SPlKACAAAH5JebJofk/jrqXWNgZd2p+VTFYLB+y3hdy6ASD8mQARoyto61mttMkLlAPiQ7CUCRACALmWPFyACAEBXSm9X9XrDqucGrKc52JMUgce6KExIiAgAAG+WHlKACAAAH5JerNybbPVojOU53GOGC+1Oy/ezAAw+zvd6gEg/JkAEeFXW18wvUFpacwaAS2UvESACAHQpe7wAEQAAulJ6u6rXG1Y9N2A9zcHepBB8qwvDhLwdEgCAN0kPKUAEAIB3Sx82+xuQt0RPDRfanZZPVfgFH/ccQoyAzSs9WdWjDameF7COrK/Zv4MfW/MGgEtkHxEgAgB0KXu8ABEAALpSeruq1xtWPTdgPc3B3qQQ7KO8QbFZJCYiRAQAgIulfxQgAgDAu6UPm/ntx1tS7p17cB8utDsty1nwBevx3R7YvPRkAkSAX8oam/l7+NKaMwBcIvuIABEAoEvZ4wWIAADQldLbVb3esOq5AetpDvYoxeCxLg6TEiICAMBF0jsKEAEA4F3Sg83+5uMt0U/DhXan5ViFXrCe5xBmBGxa6cuqPm1I9byA9WSNzf5d3PdTAN4le4gAEQCgS9njBYgAANCV0ttVvd6w6rkB62kO9ioF4VtdICZ1bM0fAADOpW8UIAIAwLukB5v5rcdb8hwe2IcL7U7LchZ4wfp8vwc2LX2ZABHgt7LOZv4+7jsqAO+S/UOACADQpezxAkQAAOhK6e2qXm9Y9dyA9TQHe5WCsI/yY3OzWExGiAjwbqkhh3AwB2ByqfUCRAAAeLPSf1X9GOP63LrGwEu703Kswi64jkPr8wfYgvRmAkSA38o6e6zX3WT85gPAm2X/ECACAHQpe7wAEQAAulJ6u6rXG1Y9N2A9zcGepSjM/kP6OSEiwJuldjxECVv6EUJEACaWOi9ABACAN0nvtaWQ5tktrWsMvLQ7LftYzkIuuJ6n1jUA2IL0ZwJEgItkrU3xkPQryj0H5xQAeJPsHQJEAIAuZY8XIAIAQFdKb1f1esOq5waspznYuxSGb3WhmJgQEeBiqRmlATx/CMhhbYCJ/az7573jqASIAADcSOm9ql6Mcbl3DBfanZYvVcgF13VoXQeA2aU/EyACXCRrbZqDna/wuw8Ab5K9Q4AIANCl7PECRAAA6Erp7apeb1j13ID1NAd7l8KwtbdkOggO/FapFVXt+JcQEYBJpcYLEAEA4GLpu7Z2X3VmS+saAy/tTss+ns/CLbg+96SBTUqPJkAEuFjW2xQPSr+i3HsQKgfAxbJvCBABALqUPV6ACAAAXSm9XdXrDaueG7Ce5uAIUhxmfxtHTYgI8KpSI6qaUXNgG2BCqe8CRAAAuFjpu6o+jHG5XwwX2p2WL1W4Bbfx0LoeADNLjyZABLhY1tvs556cUQDgYtk3BIgAAF3KHi9ABACArpTerur1hlXPDVhPc3AUKRBf64IxOYfCgRdSGz5XteI1Hs4GmExquwARAAAukp7rEOUNwK1+jLF8b11j4KXdadnH81moBbejVgGbkz5NgAjwJllzUzws/QuH1rwBoJY9Q4AIANCl7PECRAAA6Erp7apeb1j13ID1NAdHkiLxoy4ak/va+hyAbUpNeKpqxO8IIgKYSOq6ABEAAC6Snuut9xDol8NdcKHdaflShVpwW+oVsCnp0wSIAG+SNTfNAc9XPLXmDQC17BkCRACALmWPFyACAEBXSm9X9XrDqucGrKc5OJIUiS2+OdMP7ECpf+998EeICMAkUtMFiAAA8Fvpt8o91FYfxni+t64x8NLutByqMAtuT80CNiW9mgAR4M2y7qZ4YPoXDq15A8C57BcCRACALmWPFyACAEBXSm9X9XrDqucGrKc5OJoUimNdODZAiAhsVNb/Pr6d1YP3ECICMIHUcwEiAAD8Vvqt94aQ0h8Hu+BCu9PyVIVZcB/qFrAZ6dUEiABvlnU3zSHPVwiVA+C3yn5R7R9DqucFAIwve7wAEQAAulJ6u6rXG1Y9N2A9zcERpVhs8RD8j9i3Pg9gTmXN/1z7rZrwFs/x0Pp/ADCO1HIBIgAA/FJ6rUPVezEuD13BhXan5VCFWHA/P1rXCGBG6dcEiADvkrU3xUPTv+AhJQB+KXuFABEAoEvZ4wWIAADQldLbVb3esOq5AetpDo4oxWKth+pHI0QENiJr/SGWn2t/DUJEAAaXOi5ABACAX0qv9a3qvRjXoXWNgZd2p+WpCrHgvo6t6wQwm/RrAkSAd8nam+ag5ysEYgLwS2WvqPaOIdXzAgDGlz1egAgAAF0pvV3V6w2rnhuwnubgqFIwysP15YH4ZjGZmBAAmFzWeGnsrlHf1A+AgaWGCxABAOBV6bNmfwBpS55a1xh4aXdaHqrwCu5vaV0rgNmkZxMgArxb1t/sAaAeVALgVdknBIgAAF3KHi9ABACArpTerur1hlXPDVhPc3BkKRqPdRHZiBIC8Nj6TICxZW0fz9b6NZT6sW/9vwHoW+q3ABEAAF6VPmuKQ9f87dC6xsBLu9PyvQqvoA/H1vUCmEl6NgEiwLtl/R3q9TiZ7615A0BR9olq3xhSPS8AYHzZ4wWIAADQldLbVb3esOq5AetpDo4uheNrXUg2xMOXMJGs6adqjV/LjxAiAjCY1G4BIgAANKXHmuZHIv56al1j4KXdaflUhVbQj6V1zQBmkr5NgAjwIVmDtzofcC9C5QBoyh4hQAQA6FL2eAEiAAB0pfR2Va83rHpuwHqagzNI8djy2zXLgQJBADCwsoajhHq01vi1CBEBGEzqtgARAACa0mNt+f7obA6tawy8tDst36vQCvri+z8wtfRtAkSAD8kaPNRrcjJC5QBoyh4hQAQA6FL2eAEiAAB0pfR2Va83rHpuwHqagzNI8SgP3y/nxWRjShCAg+UwoKzd0sQ9/1zLtyZEBGAgqdkCRAAAeCH91WPVbzEuvTJcaHdaPlVhFfTnOdx/BqZVereqlxtSPS/gtrIOy0uDmutzEsfWvAHYtuwPAkQAgC5ljxcgAgBAV0pvV/V6w6rnBqynOTiLFJCHuNdD+D0oc39sfTZAn7JmP5+t4Xv51vq3AdCf1GwBIgAAvJD+asvByjMp93c9aA8X2p2WH2dBFfTLPQBgWundBIgAH5Z1eKjX5WSW1rwB2LbsDwJEAIAuZY8XIAIAQFdKb1f1esOq5waspzk4kxSRY11UNshhTOhc1uk+evoh9Kn17wSgL6nXAkQAAPiP9Fbuh85DnwwX2p2WYxVSQb+eQzgSMKXSv1X93JDqeQG3l7X4VK/NyRxb8wZgu7I3CBABALqUPV6ACAAAXSm9XdXrDaueG7Ce5uBsUkhm+dL+EeUHFgcyoUNZm6VpK2+Uba3dexIiAtC51GoBIgAA/Ed6q6XqtRhTuVfkfi5caHdalrOACvrnPgAwpfRvAkSAVWQtHuq1ORnfeQH4j+wLAkQAgC5ljxcgAgBAV0pvV/V6w6rnBqynOTijFJPZ385xifIDvC/+0JGsya9na7RHX1v/bgD6kDotQAQAgP9JX3Ws+izGpUeGC+1Oy7EKp2AMh9b1BBhZ6eGqnm5I9byA+8h6nP2ck++9APxP9gUBIgBAl7LHCxABAKArpberer1h1XMD1tMcnFUKyo+6wGyUQAC4s6zDhxilJh1bcwDg/lKjBYgAAPC39FT7WM56LMa1tK4x0LY7LUsVTMEYnlrXE2Bk6eMEiACryXo81OtzMuUlSPvW3AHYnuwJAkQAgC5ljxcgAgBAV0pvV/V6w6rnBqynOTirFJRyiF6IyD/K5/DQ+pyA68raG/FGohARgA6lPgsQAQDgb6WnqnosxuU+DFxod1o+V6EUjOXQuq4Ao0ofJ0AEWFXW5FO9Rifj9yEA/pY9QYAIANCl7PECRAAA6Erp7apeb1j13ID1NAdnlqLyEOUtFs2Cs0GfW58TsL6st1J/Rg4x8vAKQGdSmwWIAABQ+sISnOye5xyW1jUGXtqdln08n4VRMJ6n1rUFGFV6OQEiwKqyJmf/vl/mtm/NHYBtyX4gQAQA6FL2eAEiAAB0pfR2Va83rHpuwHqag7NLYREi8l/lxxdveYMryhqb5ebhQ2t+ANxH6rIAEQAAZrrvgABXuNjutHypwigYk3vOwDTSywkQAVaXdTn7d36hcgCU/U6ACADQpezxAkQAAOhK6e2qXm9Y9dyA9TQHtyDF5VgXm40rgSqfW58V8H5ZV6UhW36usxmUWuFAN0AnUpMFiAAAbFx6qdnfRrwlP1rXGGjbnZbnKoiCMX1vXV+AEaWfEyACrC7rcgvf+730CGDjshcIEAEAupQ9XoAIAABdKb1d1esNq54bsJ7m4FakwAgReelHCAeAD8o6Kod4nn6uq9kIEQHoROqxABEAgI1LL/W16q0Yl0Nb8Aa70/K1CqJgXOofMIX0cwJEgKvI2pzlYaXXPLXmDcB2ZC8QIAIAdCl7vAARAAC6Unq7qtcbVj03YD3NwS1JkflcFx3+Vm507FufGfBrWTulrsz+BiAhIgAdSC0WIAIAsGHpow5VX8W4vreuMfC63WnZx/NZCAXjUgOBKaSnEyACXEXWZnmByexnEA6tuQOwDdkHBIgAAF3KHi9ABACArpTerur1hlXPDVhPc3BrUmie6sLD35Z4bH1mwEtZL6X5+vFz/WxBmaugIYA7Sh0WIAIAsGHpo9zXnIcDW/AOu9PypQqiYFzqIDC89HQCRICryfqc5YGl13xrzRuAbcg+IEAEAOhS9ngBIgAAdKX0dlWvN6x6bsB6moNblGLjsP3ryo8z3vQBryjrI779XC9bI0QE4I5SgwWIAABsVHqocj+i1Vsxnu+tawz83u607OP5LISCcamFwPDS1wkQAa4m63Mfz+frdUIeZgLYqOwBAkQAgC5ljxcgAgBAV0pvV/V6w6rnBqynObhVKThCRH6t3PwQFAA/lfXwc1201suWCBEBuJPUXwEiAAAblR7Kvcx5OKwFH7A7LV+qIArGdWxdY4BRpK8TIAJcVdbo7OcThMoBbFTZA6o9YUj1vACA8WWPFyACAEBXSm9X9XrDqucGrKc5uGUpOg7e/1p5m4kDnGxa1sC/wSGzv93nLRzkAbiD1F8BIgAAG5T+6aHqpxjXU+saA5fbnZZ9LGchFIxraV1jgFGktxMgAlxV1mg5qzD7OQUPNAFsUOq/ABEAoEvZ4wWIAADQldLbVb3esOq5AetpDm5dCo8Qkd9bwk0ENid/98cQHNLmgReAG0vtFSACALBB6Z+mOEzN3w6tawy8ze60HKsgCsYlxB4YVno7ASLA1WWdzvLg0mu8vARgg0r9r/aDIdXzAgDGlz1egAgAAF0pvV3V6w2rnhuwnuYgfxdRISKXKT/cuJnA9PJ3XoJDSnBOax3wf4SIANxQ6q4AEQCAjUnvNM2PP7iPAmvanZalCqJgTEvr+gKMIP2dABHg6rJO9zH7S08eW3MHYF6p/QJEAIAuZY8XIAIAQFdKb1f1esOq5waspznIP1KAhIhcTpAIU8rfteCQtykHlbw5F+BGUnMFiAAAbEx6pykOUvM391BgRbvTcqyCKBjX59Y1Buhd+jsBIsBNZK2WcwzNNTwJoXIAG5PaL0AEAOhS9ngBIgAAdKX0dlWvN6x6bsB6moP8nxQhISJvI0iE4eVvuLyxp9zsExzyNiU85KH1mQJwHam7AkQAADYkfdM0P/zw19fWNQY+ZndaliqIgjE9x751jQF6lh5PgAhwM1mvs59nOLbmDcCcUvcFiAAAXcoeL0AEAICulN6u6vWGVc8NWE9zkP9KIRIi8naCRBhO/mb/DQ4pQRitv2te9yO8NRfgxlJ7BYgAAGxI+qby/bvVTzGWcu/Jg/FwBbvT8ukshIKxuVcADCc9ngAR4GayXo/1+p3M0po3AHNK3RcgAgB0KXu8ABEAALpSeruq1xtWPTdgPc1BXkoxEiLyPuWHncfWZwq9yN/oIazx9ysPL3noBeAOUn8FiAAAbER6ptkfDNoS/S9c0e60fK+CKBjTc7jvDAyl9HlV3zekel5Av7Jml3oNT+bYmjcA80nNFyACAHQpe7wAEQAAulJ6u6rXG1Y9N2A9zUHaUpAEDLxfObRQHnJw2JNu5O/xMab48fGOyudnXQPcSWrwLF/8y35SfmgDGIWD68DNpfbM/lDQVjyHeylwRbvT8ukshIKxCVwChpI+r9wzaPWAQ6nnBfQra3b2sNFyL8R3aIANSL0XIAIAdCl7/BT3/EKACADAJEpvV/V6w6rnBqynOcjrUpRmuQFwL+WAfPkMD63PF64tf3v7n3+DHrr5uKfWZwzA7aQWT/PFH2Aw31t1GeBaUndmfyBoSzwMDzewOy3fqyAKxvQcfk8ChlF6var3G1I9L6BvWbezn33wPRpgA1LvBYgAAF3KHi9ABACArpTerur1hlXPDVhPc5BfS2FyYH8d38KNCG6i/K3F08+/PT5OeAhAB1KPBYgA3IcAEeCmUncEoc7Bm5PhRnan5dNZCAVjcy8aGEZ6PQEiwM1l3c5+hqm8qMh3aYDJpdYLEAEAupQ9XoAIAABdKb1d1esNq54bsJ7mIL+X4iREZD3l4Pzn8IM/q8rf1CHKTTsP2azLG34AOpGaLEAE4D4EiAA3k5pT7pu1ahHjObauMXAdu9PyrQqiYFyH1jUG6E36PQEiwF1k7c5+JsIZBYDJpdYLEAEAupQ9XoAIAABdKb1d1esNq54bsJ7mIJdJgXqI8qaLZvHiXb7FY+vzhkvk72cfJeBnih8VO+RBF4COpC4LEAG4DwEiwE2k3pT7HO4/zmFpXWPgekroRBVCwbieWtcYoDfp+QSIAHeRtTv7S5DKvREvJQKYWOq8ABEAoEvZ4wWIAADQldLbVb3esOq5AetpDnK5FKkSIjL7mzzuofz4/zUeWp871PK38hglgKb198THlTUp3AegM6nNAkQA7kOACHATqTezHEZCKCvcRQmeqIIoGNehdY0BepKeT4AIcDdZv7OfXframjcAc0idFyACAHQpe7wAEQAAulJ6u6rXG1Y9N2A9zUHeJoWqvAn0x3nhYlXlkIMwEV7I30QJDXkKb+K9rvL5Wn8AHUp9FiACcB8CRICrS60p9xzd85jD0rrGwPWV0IkqhIJx6cGB7qXvEyAC3E3Wbzk/0VzXExEqBzCp1HgBIgBAl7LHCxABAKArpberer1h1XMD1tMc5O1SrMqB/m/nxYurECayYbnuZZ0dw1q7nRKO5BAOQKdSowWIANyHhxeBq0utmeUgEn/+9di6xsBt7E7LUxVEwbgcbgW6lr5PgAhwV1nDUzx8/QtPrXkDML7UeAEiAECXsscLEAEAoCult6t6vWHVcwPW0xzk/VK0SrhFs5ixun/DRBzAn1iu70N8jtkPuvSofOb71nUBoA+p0wJEAO5DgAhwVakzh3g+qzuMy54Bd7Y7Lft4PguhYFxqKtC19H4CRIC7yhrewu9GXoACMKHUdwEiAECXsscLEAEAoCult6t6vWHVcwPW0xzkY1K4jnUh4ya+RQmacFhgYLl++3iMpyghMa1rzfV5cw/AAFKvBYgA3IcHF4GrSp0p90Va9YfxOIgFHdidli9VEAXjUleBbqX3EyAC3F3W8ewvZ3GWAWBCqe8CRACALmWPFyACAEBXSm9X9XrDqucGrKc5yMeleD2Et4TeTwmeKA9alCCKfesa0YdyfX5ep6/xI1rXk9s6tq4VAP1JzRYgAnAfAkSAq0mNOVQ1h3HZL6ATu9Oyj+ezEArGpbYC3Ur/J0AEuLus4y38duShJ4DJpLYLEAEAupQ9XoAIAABdKb1d1esNq54bsJ7mIOtIASvBCAIR+lCuQwkUOcahdb24jXz+AkP6VUKPHlrXDYA+pW4LEAG4Dw8tAleTGlPuYbVqD+NxCAs6sjstX6ogCsYlBBvoUvo/ASJAF7KWp3gI+xfcnwWYTKntVa0fUj0vAGB82eMFiAAA0JXS21W93rDquQHraQ6yrhQyh/77s8S3KDd0yoa5b107Pu7n5/s5yjoon3vrenB/JczFOgAYTGq3ABGA+3BAHbiK1JdDVW8Y17fWNQbuZ3da9vF8FkLBuJbWNQa4t/SAAkSALmQtb+H3Iw8+AUwkdV2ACADQpezxAkQAAOhK6e2qXm9Y9dyA9TQHWV+K2TGez4sb3SkBCuehIofWtaQtn9f+5+dWPr8SFlI+z9bnTH++tq4pAP1LDRcgAnAfAkSAq0h9KfemWnWH8bi3CB3anZZjFUTBuI6tawxwT+kBBYgA3ch6nuJB7F9wjxZgIqWuV3V+SPW8AIDxZY8XIAIAQFdKb1f1esOq5waspznIdaSgPYRQhbGU0Jfy49TXECwSZf4/P4fPUT6X8vkIxxlTuW6PresMwBhSxwWIANyHw+nA6lJb9HbzeGpdY6APu9OyVEEUjGlpXV+Ae0ofKEAE6EbW8xbuM3j4CWASqekCRACALmWPFyACAEBXSm9X9XrDqucGrKc5yPWkqO3Dm0TnUMJgzsNFHqNsvkMHjOTfX/5GyzyKMq+izFP4zVzK9Xxo/Q0AMI7U8i0c/gTokQARYHWltlS1hnFtOoAYerc7LccqiIJxHVvXGOBe0gcKEAG6kjU9+72GH615AzCe1HQBIgBAl7LHCxABAKArpberer1h1XMD1tMc5PpS3I7xfF7smFL5YasooTH/hnF8jn8DOv7W+htZS/7754EgRQk6+fffUsJP/v03LtGaA/P52vpbAWA8qellb2/VegCuS4AIsKrUFX3dPJ5a1xjoy+60LFUQBWN6jn3rGgPcQ3rBKR4mqOcFjCtregv3G4TKAUwg9VyACADQpezxU9zzCwEiAACTKL1d1esNq54bsJ7mILeRAvcQP84LHlRKqMe/AR+/IwCE3ymhRY+tegTAmFLXPWgKcB8CRIBVlbpS1RnGVO69HFrXGOjL7rQcz0IoGNuX1jUGuIf0ggJEgO5kXZcX3jTX+ySW1rwBGEvq+RT3yOt5AQDjyx4vQAQAgK6U3q7q9YZVzw1YT3OQ20mR28fX86IHcAXlR1ZvYgSYTGq7ABGA+xAgAqwmNUVPNw8PscNAdqflexVEwZiew71voAulH6z6wyHV8wLGlnV9qNf5hI6tuQMwjtRyASIAQJeyxwsQAQCgK6W3q3q9YdVzA9bTHOT2UuxK0S5vqGwWQoB3KnXlc6vuADC+1HgPmwLchwARYDWpKUtVYxhTuQfjAXYYyO60fDoLoWBsApyALqQfFCACdClr+6le65NZWvMGYByp5QJEAIAuZY8XIAIAQFdKb1f1esOq5waspznIfaTg7ePbeQEE+IAf8dCqNwDMIXVegAjAfQgQAVaRenKs6gvj8vA6DGh3Wr5XQRSM6TmEOAF3V3rCqkccUj0vYHxZ24d6rU/I93KAgaWOCxABALqUPV6ACAAAXSm9XdXrDaueG7Ce5iD3lcL3GOWNlc2iCHABh2MANiD1XoAIwH0IEAFWkXqyVPWFMZV7uR5chwHtTsunsxAKxvbUusYAt5SeUIAI0K2s76d6vU/Gd3OAgaWGCxABALqUPV6ACAAAXSm9XdXrDaueG7Ce5iD3l+K3j2/nxRDgAj/ioVVXAJhPar4AEYD7ECACfFhqybGqLYzrc+saA2PYnZbvVRAF4zq0rjHAraQvFCACdCvr+1Cv9wl50QrAoFLDBYgAAF3KHi9ABACArpTerur1hlXPDVhPc5B+pAg+RnlLRrNAAvxU6oTDMAAbk9ovQATgPgSIAB+SOlLCg5ezusK4ltY1BsZRQieqEArG9dS6xgC3kt5QgAjQtazxp3rNT6acm9i35g5A31K/BYgAAF3KHi9ABACArpTerur1hlXPDVhPc5C+pBCWBwq+nRdGgDPlB1RvVgTYoNR/ASIA9yFABPiQ1JFZDhnx51/H1jUGxlKCJ6ogCsblXjlwN+kNBYgAXcsaP9RrfkJevAIwoNRvASIAQJeyxwsQAQCgK6W3q3q9YdVzA9bTHKRPKYilsHszKfCv8vYcD6kAbFj2AQEiAPchQAR4t9SQEhZcvtO36gtjWVrXGBhPCZ2oQigY17fWNQa4hfSHAkSA7mWdP9XrfkJC5QAGk9otQAQA6FL2eAEiAAB0pfR2Va83rHpuwHqag/QrRbE8YOANpcDX2LfqBADbkb1AgAjAfQgQAd4tNcS9vXkIdoWJ7E7LUxVEwbgcggXuIv2hABGge1nnh3rdT+ipNXcA+pXaLUAEAOhS9ngBIgAAdKX0dlWvN6x6bsB6moP0L8Wx/KA/xY8mwJuUdf/QqgsAbE/2BAEiAPchQAR4l9SPEg78fFZPGJe9ACazOy2HeD4LoWBcajRwF+kRBYgAQ8haf6rX/oQOrbkD0KfUbQEiAECXsscLEAEAoCult6t6vWHVcwPW0xxkHCmSj7GcF01gSuXhIm+1BeA/sjcIEAG4Dw8kAu+S+jHL4SIcsIIp7U7LlyqIgnGp08DNpUcUIAIMIWt9CwGnT625A9Cn1G0BIgBAl7LHCxABAKArpberer1h1XMD1tMcZCwplOWH/XJjwttLYU5lfe9b6x+Abcv+IEAE4D4EiABvltpxqGoJ47IPwKR2p2Ufz2chFIxLrQZuLn2iABFgGFnvszwA9SuH1twB6E9qtgARAKBL2eMFiAAA0JXS21W93rDquQHraQ4yphTM8hDC03kBBYZW1rMDLQC8KvuEABGA+/AwIvBmqR3u283D4SqY2O60fKmCKBjXY+saA1xL+kQBIsAwst7Ly4pmf1GR+7gAgyg1u6rhQ6rnBQCML3u8ABEAALpSeruq1xtWPTdgPc1BxpbCWTaAKX5QgY0q69dNOgB+q+wXZ/sHALfj4DnwJqkbJfi3VU8Yjz0AJrc7Lft4PguhYFxL6xoDXEt6RQEiwFCy5md5COpXnL0AGEDqtQARAKBL2eMFiAAA0JXS21W93rDquQHraQ4yhxTQx1jOCyrQtR/h5hwAFyv7xtk+AsDteHgceJPUjaeqjjCuh9Y1BuayOy1fqiAKxnVsXWOAa0ivKEAEGErW/D6ez2vAhNzLBRhAqddV/R5SPS8AYHzZ4wWIAADQldLbVb3esOq5AetpDjKXFNJjCBKBfpX16RAzAG+W/UOACMB9OHQOXCw146GqIYzrqXWNgTntTstSBVEwpqV1fQGuIf2iABFgOFn3szwI9SsekgLoXGq1ABEAoEvZ4wWIAADQldLbVb3esOq5AetpDjKnFNQSJDL7m0NgJIJDAPiQ7CMCRADuQ4AIcLFSM6oawrgOrWsMzGl3Wo5VEAXjch8euIn0iwJEgOFk3e9j9rNE7ucCdK7U6qp2D6meFwAwvuzxAkQAAOhK6e2qXm9Y9dyA9TQHmVeKavnhv9zEECQC9yM4BIBVZD8RIAJwHw6cAxdJvdCvzeOpdY2Bue1Oy1IFUTCm59i3rjHAmtIzChABhpS1P8vDUL/ijAZAx1KnBYgAAF3KHi9ABACArpTerur1hlXPDVhPc5D5pbiWIJHPUYIMmsUXWJ3gEABWlX3FA6kA9yFABLhIqRdV/WBch9Y1Bua2Oy3HsxAKxvaldY0B1pSeUYAIMKSs/XKGaPYXES2tuQPQh9RpASIAQJeyxwsQAQCgK6W3q3q9YdVzA9bTHGRbUmiPIUgErqf8wOmmGwCrK/vL2X4DwO0IEAF+K7VCrzYPD53Dhu1Oy48qiIIxPce+dY0B1lL6xqqPHFI9L2Absv5neSDqV7zwBaBTqdECRACALmWPFyACAEBXSm9X9XrDqucGrKc5yDal4JYgkR/nBRj4kG/hZhsAV1P2mbN9B4DbESAC/FapFVXtYEzlDcweOIcN252WT2chFIxNIBRwVekbBYgAw8r630f5DtysDZNYWnMH4P5SowWIAABdyh4vQAQAgK6U3q7q9YZVzw1YT3OQbUvhLRuIBxzgfcqBmqc4tNYXAKwp+40AEYD7ECAC/FLqRAnqbdUPxuNhc6CEiHyvgigY03MIhQKupvSOVS85pHpewHakBmzhfsbn1twBuK/UZwEiAECXsscLEAEAoCult6t6vWHVcwPW0xyEIgX4ECUIoVmcgf9Y4nM4fAzAzWTfESACcB8CRIBfSp0o9wla9YOxlKBY93qAEiDy6SyEgrF9bV1jgDWkdxQgAgwvdWD2exq+6wN0KLVZgAgA0KXs8QJEAADoSuntql5vWPXcgPU0B+FcCvE+yo0PDz7AS9/isbV2AODasgcJEAG4DwEiwKtSI7bwtt6t+NK6xsA27U7L9yqIgnEdWtcY4KNK/1j1k0Oq5wVsS+rAFu5r+L4P0JnUZgEiAECXsscLEAEAoCult6t6vWHVcwPW0xyE16QoP0YJTGgWbNiIEqZTbgY6ZAzAXWUvEiACcB8CRIBXpUYI4Z3D0rq+wHbtTstDFULBuJ5a1xjgo9JDChABppBaMPu9jefYt+YOwH2kLgsQAQC6lD1egAgAAF0pvV3V6w2rnhuwnuYg/E6K8yHKzRAPRLAlJTznsbUmAOAesi8JEAG4DwEiQFPqw+eqXjCuY+saA9tWgieqIArGJSAcWF16SAEiwBRSC451bZjQl9bcAbiP1GUBIgBAl7LHCxABAKArpberer1h1XMD1tMchLdIoX6MEqzQLOIwuBKSUx7+cZgYgO5kfxIgAnAfAkSAF1Ib9lHeYNuqG4xlaV1jgBI6UYVQMK6n1jUG+Ij0kQJEgGmkHsz+QqFyD8c5EIBOpCYLEAEAupQ9XoAIAABdKb1d1esNq54bsJ7mILxHCnZ5SKIELfz4t4DDoMpBmK/x0PpbB4BeZK8SIAJwHwJEgBdSG2Y5OMSffx1b1xigKMETVRAF43JYFlhV+kgBIsA0Ug+OdX2YkFA5gE6kJgsQAQC6lD1egAgAAF0pvV3V6w2rnhuwnuYgfFSK9yFKAMPsbyRhHuXtMk/x2PqbBoAeZd8SIAJwHwJEgP9IXSjBuuXeQqtmMJaldY0B/rU7LYcqhIJx6euBVaWXFCACTCU1YQtnfg6tuQNwW6nH5axpCREZWmtuAMDYsscLEAEAoCvp7R6ieX9qNK35AetoDsKaUsjLhiRMhB4JDQFgaNnDSmhb+YEKgNs6tuoysF0/a0Pr3gPjcXAK+K3daflaBVEwLnUfWE16yXK/toQ+D601N2CbUhOmqGu/sW/NHQAAAIqf3x3rc0MjEqAJAACwIc1BuJY/hIlwf+VvT2gIAAAAsJo//vzrc7QO4TCWz63rC1DbnZZ9fGEKfisAAAAAAAAAAABgGs1BuIU//gkTKQ9X/IhW0AOspfyNleCah9bfIgAAAAAAAAAAAAAAAAAAAIysOQi39seffx3iGN/iOVohEHCp8jdU/pbK39Sh9TcHAAAAAAAAAAAAAAAAAAAAs2gOwr398edfn+Jr/IhWQATUvseX+NT6mwIAAAAAAAAAAAAAAAAAAIBZNQehJ3/8+dc+HqMEiizRCo9ge0q4TPmbKH8b+9bfDgAAAAAAAAAAAAAAAAAAAGxBcxB6VsIifoZGlPCIEiLRCpdgPt/jS3wKgSEAAAAAAAAAAAAAAAAAAADwU3MQRlLCJH6GSpRwiRIy8RytAArGscRTfI6H1nUHAAAAAAAAAAAAAAAAAAAA/tEchNH98edfh3gMoSL9+xHfolyrEgSzb11TAAAAAAAAAAAAAAAAAAAAoK05CDP6459QkRJQUYIqSmBFCa5oBVpwHSXEpYS5fI1jfGpdJwAAAAAAAAAAAAAAAAAAAOBtmoOwJX/8+ddDPEYJFnmKEnJRwi5aIRj8XglmKZ9h+Tz/DgqJfeuzBwAAAAAAAAAAAAAAAAAAAD6uOQj842f4xb/hIl+jBGMUreCMrfg3IKSErQgJAQAAAAAAAAAAAAAAAAAAgDtrDgKX+ePPvx5+hmf8GzJSB42UsI1WCEdv/g0FOQ8GKcq8yvw+teYPAAAAAAAAAAAAAAAAAAAA3F9zELiOP/78a/9vIMeZ8/CRa/hfCMiZfevfBwAAAAAAAAAAAAAAAAAAAIynOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIyhOQgAAAAAAAAAAAAAAAAAAAAAjKE5CAAAAAAAAAAAAAAAAAAAAACMoTkIAAAAAAAAAAAAAAAAAAAAAIzg/+3+Pxclk5yBxZ6mAAAAAElFTkSuQmCC</ImageData>
+    </EmbeddedImage>
+    <EmbeddedImage Name="Clarity_logo">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAAlkAAAJYCAYAAABRpPPiAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAALEgAACxIB0t1+/AAAKY5JREFUeF7t3b1uZNt5JmBfAm/AABOFAs4l8AIcdO6EsaITTOKMcKSwQ0UCEwUDOGgocuRhoESJ0YECBQOIEKCBAkMj2IDl8fyc+dYp7u7d63zdTXLt37We4EGf83Zx/xTZtV5+tavqr7777jsAABaWhgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAgDQJg0BAGiThgAAtElDAADapCEAAG3SEACANmkIAECbNAQAoE0aAhzFX//oxzfhKvs7gCNLQ4CjiIL1GO6yvwM4sjQEOIIoV7fhu/DnYJoFnEoaAhxBFKsyxSolqzDNAk4lDQH2FqVqmmJNyjTrOrstwBGlIcCeokxdPZWqeckq7rPbAxxRGgLsKcrUXVWu5kyzgFNIQ4C9RIn63BRrYpoFnEIaAuwlStSXplgT0yzg8NIQYA9Rnr42xZq8y74e4EjSEGAPUZ7eVmXqS26ybQAcRRoCbC1K03VVor7mIdsOwFGkIcDWojTdVyXqOUyzgMNKQ4AtRVl66RRrYpoF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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:PageUnit>Px</rd:PageUnit>
+</Report>

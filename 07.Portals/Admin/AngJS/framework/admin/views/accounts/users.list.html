@@ -1,0 +1,87 @@
+﻿<cv-page caption="Manage Users" head-icon="fa-users"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.Users')">
+    <cv-widget>
+        <widget-menu-item caption="Add User" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.users.detail',{ID:'New'})"
+                          permission="'Contacts.User.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     force-show-labels="true"
+                     sortable="false" server-sorting="true"
+                     filter-side="true"
+                     on-search="search.getUsers"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateUser"
+                     on-reactivate="search.reactivateUser"
+                     on-delete="search.deleteUser"
+                     edit-state="accounts.users.detail,[ID]"
+                     permissions-base="Contacts.User">
+                <cv-column field="ID" title="#"
+                           width="5%" header-class="text-center" cell-class="text-right"
+                           filter filter-type="id"
+                           sort-by="5" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="CustomKey" title="Key"
+                           width="15%"
+                           filter
+                           sort-by="1" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="UserName" title="Username"
+                           width="15%"
+                           filter
+                           sort-by="2" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column hidden field="ContactFirstName" title="First Name"
+                           filter filter-field="FirstName"
+                           groupable="false" />
+                <cv-column hidden field="ContactLastName" title="Last Name"
+                           filter filter-field="LastName"
+                           groupable="false" />
+                <cv-column field="ContactFirstNameLastName" title="Name"
+                           width="15%"
+                           groupable="false">
+                    <cv-column-template><script type="x-column-template"
+                        ><span ng-bind="dataItem.ContactFirstName + ' ' + dataItem.ContactLastName"></span></script></cv-column-template>
+                </cv-column>
+                <cv-column field="Email" title="Email"
+                           width="20%"
+                           filter
+                           groupable="false" />
+                <cv-column field="AccountKey" title="Account"
+                           width="10%"
+                           filter>
+                    <cv-column-template><script type="x-column-template"
+                        ><span ng-bind="dataItem.AccountName || dataItem.AccountKey"></span></script></cv-column-template>
+                </cv-column>
+                <cv-column field="TypeName" title-key="ui.admin.common.Type" type="typeID"
+                           hidden
+                           filter filter-field="TypeID" filter-order="0" filter-type="select" on-option-repeat="$parent.search.searchTypes.getUserTypes"
+                           preload-types-kind="User"
+                           sort-by="3" sort-by-direction="asc" sort-by-field="Type.SortOrder">
+                    <cv-group-header-template>
+                        <script type="x-group-header-template"><span><span data-translate="ui.admin.common.Type"></span>&nbsp;<span ng-bind="(dataItem.items[0].TypeID
+                                || dataItem.items[0].items[0].TypeID || dataItem.items[0].items[0].items[0].TypeID)
+                                | typeIDToText : 'User' : ['Translated','DisplayName','Name','CustomKey']"></span></span>
+                        </script>
+                    </cv-group-header-template>
+                    <cv-column-template><script type="x-column-template"><span ng-bind="dataItem.TypeName"></span></script></cv-column-template>
+                </cv-column>
+                <cv-column field="StatusSortOrder" title-key="ui.admin.common.Status" type="statusID"
+                           hidden
+                           filter filter-field="StatusID" filter-order="1" filter-type="select" on-option-repeat="$parent.search.searchTypes.getUserStatuses"
+                           preload-statuses-kind="User"
+                           sort-by="4" sort-by-field="Status.SortOrder">
+                    <cv-group-header-template><script type="x-group-header-template"
+                        ><span><span data-translate="ui.admin.common.Status"></span>&nbsp;<span ng-bind="(dataItem.items[0].StatusID
+                                || dataItem.items[0].items[0].StatusID || dataItem.items[0].items[0].items[0].StatusID)
+                                | statusIDToText : 'User' : ['Translated','DisplayName','Name','CustomKey']"></span></span>
+                    </script></cv-group-header-template>
+                    <cv-column-template><script type="x-column-template"><span ng-bind="dataItem.StatusID | statusIDToText : 'User' : ['Translated','DisplayName','Name','CustomKey']"></span></script></cv-column-template>
+                </cv-column>
+                <cv-column field="CreatedDate" title="Created" type="date"
+                           width="10%"
+                           groupable="false" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

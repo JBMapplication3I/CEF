@@ -1,0 +1,28 @@
+.social-list {
+	@extend %listreset;
+	display: flex;
+	flex-wrap: wrap;
+	margin: rem-calc(0 -5);
+	font-size: rem-calc(17);
+
+	&:last-child {
+		margin-bottom: rem-calc(-5);
+	}
+
+	li {
+		margin: rem-calc(0 5 5);
+	}
+
+	a {
+		display: inline-block;
+		vertical-align: top;
+		text-decoration: none;
+		color: $gray-500;
+
+		&:hover,
+		&:focus {
+			color: $primary;
+			outline: none;
+		}
+	}
+}

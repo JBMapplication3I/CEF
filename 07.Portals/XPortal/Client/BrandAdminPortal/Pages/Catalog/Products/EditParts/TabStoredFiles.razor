@@ -1,0 +1,27 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+<Heading Size="HeadingSize.Is3">Stored Files</Heading>
+<Paragraph>
+  TODO: This component is only stubbed at this time
+</Paragraph>
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    return Task.CompletedTask;
+  }
+}

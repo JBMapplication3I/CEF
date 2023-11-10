@@ -1,0 +1,140 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="languageDetailCtrl.record"
+         new-kind-key="ui.admin.common.Language.New"
+         existing-kind-key="ui.admin.common.Language">
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 setting-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': languageDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="languageDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-12"><h3 data-translate="ui.admin.common.BasicInformation"></h3></div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': languageDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.CustomKey"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtCustomKey" name="txtCustomKey"
+                                               ng-required="true"
+                                               ng-model="languageDetailCtrl.record.CustomKey" />
+                                    </div>
+                                    <div ng-messages="languageDetailCtrl.forms.Details.txtCustomKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': languageDetailCtrl.forms.Details.txtUnicodeName.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.UnicodeName"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtUnicodeName" name="txtUnicodeName"
+                                               ng-required="false"
+                                               ng-model="languageDetailCtrl.record.UnicodeName" />
+                                    </div>
+                                    <div ng-messages="languageDetailCtrl.forms.Details.txtUnicodeName.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': languageDetailCtrl.forms.Details.txtLocale.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Locale"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtLocale" name="txtLocale"
+                                               ng-required="true"
+                                               ng-model="languageDetailCtrl.record.Locale" />
+                                    </div>
+                                    <div ng-messages="languageDetailCtrl.forms.Details.txtLocale.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger':languageDetailCtrl.forms.Images.$invalid}"><i class="far fa-lg fa-picture-o"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Image.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="languageDetailCtrl.forms.Images">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 data-translate="ui.admin.common.Image.Plural"></h3>
+                                <!-- Uploader -->
+                                <div cef-upload-image-widget
+                                     master="languageDetailCtrl.record"
+                                     upload-type="ImageLanguage"
+                                     type-key="General"
+                                     allow-multiple="true"
+                                     is-primary="false">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <!-- Thumbnails -->
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                                    <div class="input-group">
+                                        <div ng-if="!languageDetailCtrl.record.Images.length"
+                                             data-translate="ui.admin.common.NoImagesHaveBeenUploaded"></div>
+                                        <div ng-repeat="image in languageDetailCtrl.record.Images" class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                                            <div class="form-vertical">
+                                                <div class="form-group">
+                                                    <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                                                         ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                                                   | corsImageLink : 'languages' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                                                         onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Admin/framework/store/img/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                                                </div>
+                                                <text-input-form-group
+                                                    key="ImageName{{$index}}"
+                                                    ng-model="image.Name"
+                                                    label-key="ui.admin.common.Name"
+                                                    max-length="128"
+                                                    ng-required="true">
+                                                </text-input-form-group>
+                                                <select-form-group
+                                                    key="ImageTypeID{{$index}}"
+                                                    ng-model="image.TypeID"
+                                                    selections="languageDetailCtrl.imageTypes"
+                                                    label-key="ui.admin.common.Type"
+                                                    tooltip-text="The type of the record."
+                                                    placeholder-key="ui.admin.common.Type"
+                                                    ng-required="true">
+                                                </select-form-group>
+                                                <toggle-form-group
+                                                    key="ImageIsPrimary{{$index}}"
+                                                    ng-change="languageDetailCtrl.clearOtherPrimaryImagesNew($index)"
+                                                    ng-model="image.IsPrimary"
+                                                    label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                                                    tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                                                    tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                                                    ng-required="false">
+                                                </toggle-form-group>
+                                                <button type="button" class="btn btn-danger btn-block"
+                                                        translate-attr="{ title: 'ui.admin.common.Delete',
+                                                                          'aria-label': 'ui.admin.common.Delete' }"
+                                                        ng-click="languageDetailCtrl.removeImageNew($index)"
+                                                        ><i class="far fa-trash-o"></i>&nbsp;<!--
+                                                        --><span data-translate="ui.admin.common.Delete"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="languageDetailCtrl"
+                return-state="system.languages.list"
+                permissions-base="Globalization.Language">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

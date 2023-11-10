@@ -1,0 +1,66 @@
+<!-- step.shipping.view Template -->
+<div class="row">
+  <div class="col-12 col-sm">
+    <div cef-submit-quote-step-view-title></div>
+  </div>
+  <div class="col-12 col-sm-auto"
+     ng-show="step.complete">
+    <div cef-submit-quote-step-shipping-summary
+      cart-type="{{sqCtrl.cartType}}">
+    </div>
+  </div>
+  <hr class="w-100 my-2 mx-3" />
+  <div ng-show="step.index === sqCtrl.service.activeStep[sqCtrl.cartType]"
+    class="col-12"
+    ng-form="sqCtrl.forms.shipping">
+    <div cef-submit-quote-step-shipping-body
+      cart-type="{{sqCtrl.cartType}}"
+      id-suffix="Shipping">
+    </div>
+  </div>
+  <div ng-show="step.index === sqCtrl.service.activeStep[sqCtrl.cartType]"
+    class="col-12">
+    <div class="row">
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary mb-3"
+          id="btnSubmit_{{step.name}}" name="btnSubmit_{{step.name}}"
+          translate-attr="{ title: sqCtrl.service.steps[sqCtrl.cartType][$index + 1].continueTextKey || 'Continue',
+                            'aria-label': sqCtrl.service.steps[sqCtrl.cartType][$index + 1].continueTextKey || 'Continue' }"
+          data-translate="{{sqCtrl.service.steps[sqCtrl.cartType][$index + 1].continueTextKey || 'Continue'}}"
+          ng-disabled="sqCtrl.viewState.running || sqCtrl.forms.shipping.$invalid || step.invalid"
+          ng-click="sqCtrl.submit(sqCtrl.cartType, step)">
+        </button>
+      </div>
+      <div class="col" ng-if="sqCtrl.cefConfig.debug">
+        <div class="alert alert-dark">
+          <h4 class="alert-heading">Debug Info for this step</h4>
+          <table class="table table-borderless table-hover table-sm mb-0">
+            <tr>
+              <th>sqCtrl.viewState.running</th>
+              <td>{{sqCtrl.viewState.running}}</td>
+            </tr>
+            <tr>
+              <th>sqCtrl.forms.shipping.$invalid</th>
+              <td>{{sqCtrl.forms.shipping.$invalid}}</td>
+            </tr>
+            <tr>
+              <th>step.invalid</th>
+              <td>{{step.invalid}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr ng-show="step.index === sqCtrl.service.activeStep[sqCtrl.cartType]"
+    class="w-100 my-2 mx-3" />
+  <!--
+  <div ng-if="sqCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true"
+    size="3"
+    pad-in="true"
+    message="sqCtrl.viewState.waitMessage">
+  </div>
+  -->
+</div>

@@ -1,0 +1,82 @@
+<li translate-cloak="ui.storefront.common.Product.Plural"
+    ng-if="!cefCategoriesMenuBarCtrl.cefConfig.paymentHubEnabled.enabled
+        && !cefCategoriesMenuBarCtrl.cefConfig.headerProductsDisabled.enabled">
+    <a ng-if="!cefCategoriesMenuBarCtrl.cefConfig.featureSet.categories.enabled"
+       class="nav-link top-nav"
+       id="catalogMenuLink" name="catalogMenuLink"
+       ui-sref-plus uisrp-is-catalog="true" uisrp-state="searchCatalog.products.results.both">
+       <!-- TODO: Smart link from GFS -->
+        <span ng-bind="cefCategoriesMenuBarCtrl.displayText"></span>
+    </a><!--
+    --><ul ng-if="cefCategoriesMenuBarCtrl.cefConfig.featureSet.categories.enabled"
+          class="nav ml-0"
+          ng-class="{'dropdown-menu':cefCategoriesMenuBarCtrl.isDropdown()}"
+          role="navigation"
+          ng-switch="cefCategoriesMenuBarCtrl.render">
+        <li ng-switch-when="across"
+            ng-repeat="cat in cefCategoriesMenuBarCtrl.menuTree | orderBy: ['SortOrder','DisplayName || Name','Name','CustomKey']"
+            id="menu-across-top-{{$index}}-{{cat.ID}}"
+            name="menu-across-top-{{$index}}-{{cat.ID}}"
+            class="nav-item">
+            <a id="categoriesMenuLinkAcross"
+               ng-if="cat.HasChildren"
+               class="nav-link dropdown-toggle"
+               data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+               ng-class="{'text-capitalize':!cat.DisplayName}"
+               ng-bind="cat.DisplayName || (cat.Name | lowercase)"></a>
+            <a ng-if="!cat.HasChildren"
+               cef-catalog-category-link
+               category-id="cat.ID"
+               index="$index"
+               class="nav-link">
+            </a>
+            <div ng-if="cat.HasChildren"
+                 class="dropdown-menu py-0"
+                 cef-categories-menu-inner
+                 render="dropdown"
+                 behavior="dropdown"
+                 limit-children="cefCategoriesMenuBarCtrl.limitChildren"
+                 limit-grand-children="cefCategoriesMenuBarCtrl.limitGrandChildren"
+                 menu-data="cat.Children"></div>
+        </li>
+        <li ng-switch-when="down"
+            id="menu-down-top" name="menu-down-top"
+            class="nav-item dropdown">
+            <a id="categoriesMenuLinkDown"
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+              ng-bind="cefCategoriesMenuBarCtrl.displayText"></a>
+            <div class="dropdown-menu"
+                cef-categories-menu-inner
+                render="dropdown"
+                behavior="dropdown"
+                limit-children="cefCategoriesMenuBarCtrl.limitChildren"
+                limit-grand-children="cefCategoriesMenuBarCtrl.limitGrandChildren"
+                menu-data="cefCategoriesMenuBarCtrl.menuTree">
+            </div>
+        </li>
+        <li ng-switch-when="mega"
+            class="nav-item megamenu-li position-static"
+            id="menu-mega-top" name="menu-mega-top"
+            ng-mouseenter="cefCategoriesMenuBarCtrl.openMenuIfAllowed()"
+            uib-dropdown is-open="cefCategoriesMenuBarCtrl.isOpen">
+            <a uib-dropdown-toggle
+               class="nav-link pointer top-nav" ng-cloak translate-cloak
+               id="btnCategoriesMenuLinkMega" name="btnCategoriesMenuLinkMega"
+               tabindex="0">
+                <span ng-bind="cefCategoriesMenuBarCtrl.displayText"></span>
+            </a>
+            <div id="productsDropdown" uib-dropdown-menu aria-labelledby="btnCategoriesMenuLinkMega" role="menu"
+                 class="dropdown-menu megamenu m-0 p-0 w-100 position-absolute ax-0" ng-cloak translate-cloak>
+                 <div cef-categories-menu-inner
+                      ng-if="cefCategoriesMenuBarCtrl.firstOpenDone"
+                      render="{{cefCategoriesMenuBarCtrl.renderInner}}"
+                      behavior="{{cefCategoriesMenuBarCtrl.behavior}}"
+                      menu-data="cefCategoriesMenuBarCtrl.menuTree"
+                      limit-children="cefCategoriesMenuBarCtrl.limitChildren"
+                      limit-grand-children="cefCategoriesMenuBarCtrl.limitGrandChildren">
+                </div>
+            </div>
+        </li>
+    </ul>
+</li>

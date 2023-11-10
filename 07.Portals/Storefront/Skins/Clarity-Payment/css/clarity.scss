@@ -1,0 +1,72 @@
+// Primary Clarity CSS, for CEF-2020.1.x+ w/ BS4
+
+// Clarity overrides to the variable values
+@import 'bootstrapVariables';
+// Default bootstrap 4 variables
+@import '../bootstrap/stylesheets/bootstrap';
+// Default dnn styles
+@import 'dnn';
+#dnn_uxHeader_dnnLOGO_imgLogo {
+    max-width: 100%;
+    height: auto;
+}
+@import 'components/angular-bootstrap-toggle';
+// Classes that assist with setting up templates quickly
+// without having to edit css
+@import 'components/helpers';
+// Header, which includes menus, logos, etc.
+@import 'components/header';
+// Footer, which includes logos, commonly used links,
+// copyright info, contact info, etc.
+@import 'components/footer';
+// Specific stylings for regular dropdown menus
+@import 'components/dropdowns';
+// For UIB Typeaheads, styles so the popups can display
+// appropriately
+@import 'components/popup-wrappers';
+// Catalog styles
+@import 'components/catalog';
+// CV-Grid styles, that merge with kendo's
+@import 'components/cv-grid';
+// Styles for the User Dashboard Side-bar
+@import 'components/userDashSidebar';
+// User Dashboard
+@import 'components/ecommerce/dashboard/dashboard';
+// Mega Menu styles
+@import 'components/navMegaMenu';
+// Mini Menu styles
+@import 'components/navMiniMenu';
+// Carousel styles
+@import 'components/carousel';
+// Brand Admin
+@import 'components/brand-admin';
+
+// Fixes loading widget wobble
+.fa-cog.fa-5x {
+    padding-top: 6px;
+}
+
+// Allows body to "fill-up" empty space, pushing footer to bottom
+.reactive-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+// Allows body to "fill-up" empty space, pushing footer to bottom
+.reactive-content-area {
+    flex: 1;
+}
+
+// Main background for landing page
+.payhub-main-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/Portals/0/clarity-background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

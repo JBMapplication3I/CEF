@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="5.0.2" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Owin\Microsoft.Owin.csproj" />
+    <ProjectReference Include="..\Owin\Owin.csproj" />
+  </ItemGroup>
+
+</Project>

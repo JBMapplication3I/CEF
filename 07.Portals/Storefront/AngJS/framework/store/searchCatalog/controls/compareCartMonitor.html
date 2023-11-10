@@ -1,0 +1,57 @@
+﻿<div uib-accordion-group is-open="true" template-url="cat-filters-group-template.html"
+  ng-if="scccCtrl.$state.includes('searchCatalog.products')">
+  <div uib-accordion-heading>
+    <i class="far fa-sliders-h fa-fw mr-2 text-body small"></i>
+    <span sid="btnAppliedFiltersCompareText" class="text-body small"
+      data-translate="ui.storefront.common.Compare">
+    </span>
+  </div>
+  <div class="row" id="compare-items" name="compare-items">
+    <div class="col-12"
+      ng-if="!scccCtrl.service.getItems().length">
+      <p sid="AppliedFiltersCompareNoItemsText"
+        data-translate="ui.storefront.product.widgets.compare.noItemsHaveBeenSelected">
+      </p>
+    </div>
+    <div ng-repeat="product in scccCtrl.service.getItems()"
+      class="col-12 item">
+      <input type="hidden" value="{{product.ID}}" class="compare-item-id" />
+      <a class="float-left mr-2 mt-1 pointer"
+        sid="AppliedFiltersRemoveFromCompare_{{$index}}"
+        translate-attr="{ title: 'ui.storefront.product.widgets.compare.removeThisItem',
+                          'aria-label': 'ui.storefront.product.widgets.compare.removeThisItem' }"
+        ng-click="scccCtrl.service.removeItem(product.ID)">
+        <i class="far fa-times text-danger float-right"></i>
+        <span class="sr-only"
+          data-translate="ui.storefront.product.widgets.compare.removeThisItem">
+        </span>
+      </a>
+      <a class="product-name"
+        sid="AppliedFiltersCompareProduct_{{$index}}"
+        target="_blank"
+        ui-sref-plus uisrp-is-product="true" uisrp-path="{{product.SeoUrl}}">
+        <small ng-bind="product.Name | limitToEllipses: 33"></small>
+      </a>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 text-right">
+      <button type="button" class="btn btn-sm btn-secondary"
+        id="btnCompareClear" name="btnCompareClear"
+        translate-attr="{ title: 'ui.storefront.product.widgets.compare.Clear',
+                          'aria-label': 'ui.storefront.product.widgets.compare.Clear' }"
+        ng-disabled="!scccCtrl.service.getItems().length"
+        ng-click="scccCtrl.service.clearItems()">
+        <span data-translate="ui.storefront.product.widgets.compare.Clear"></span>
+      </button>
+      <button type="button"class="btn btn-sm btn-primary"
+        id="btnCompare" name="btnCompare"
+        translate-attr="{ title: 'ui.storefront.common.Compare',
+                          'aria-label': 'ui.storefront.common.Compare' }"
+        ng-disabled="scccCtrl.service.getItems().length <= 1"
+        ui-sref="searchCatalog.products.compare">
+        <span data-translate="ui.storefront.common.Compare"></span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,65 @@
+﻿namespace SiteManager.ViewModels.DesignerSampleData
+{
+    public class RunOutputViewModelDesignSample : RunOutputViewModel
+    {
+        public RunOutputViewModelDesignSample()
+        {
+            // Write values that override defaults for design time
+            Output = @"Design Time Test Output
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad
+asdsadad";
+        }
+    }
+}

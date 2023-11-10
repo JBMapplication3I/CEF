@@ -1,0 +1,15 @@
+﻿<div class="row">
+    <div class="col-sm-12"
+         ng-class="{'has-error': cefCheckoutCtrl.forms.payment.terms.termsAgreedCC.$invalid}">
+        <input type="checkbox" class="termsAgreed"
+               id="termsAgreedCC" name="termsAgreedCC"
+               ng-required="true"
+               ng-model="cefCheckoutCtrl.agreedTerms" />&nbsp;<!--
+        --><label class="form-control-static control-label" for="termsAgreedCC"
+               id="termsAgreedCCLbl"
+               data-translate="ui.admin.checkout.terms1"></label>&nbsp;<!--
+        --><span id="terms" style="text-decoration: underline; cursor: pointer;"
+                 onclick="return dnnModal.show('/terms?popUp=true', /*showReturn*/true, 600, 950, false, '')"
+                 data-translate="ui.admin.checkout.terms2"></span>
+    </div>
+</div>

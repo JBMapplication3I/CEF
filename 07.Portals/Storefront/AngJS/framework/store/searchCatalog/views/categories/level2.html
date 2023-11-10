@@ -1,0 +1,51 @@
+﻿<div class="row">
+<div class="col-12"
+ng-bind-html="searchCatalogCtrl.service.selectedCategory.HeaderContent"></div>
+</div>
+<div class="row">
+<div class="col-12">
+<h1 class="mt-0"
+ng-bind="searchCatalogCtrl.service.selectedCategory.Name"></h1>
+<p ng-bind-html="searchCatalogCtrl.service.selectedCategory.Description"></p>
+</div>
+<div ng-repeat="catZ in searchCatalogCtrl.service.activeSearchViewModel.CategoriesTree.Children
+| filter: {'Key':searchCatalogCtrl.service.breadcrumb.category1Name}
+| orderBy: 'Key'"
+class="mb-3">
+<div ng-class="searchCatalogCtrl.cefConfig.catalog.displayImages ? 'col-12 col-sm-6 col-md-3' : 'col-12'"
+ng-repeat="catP in catZ.Children | orderBy: 'Key'">
+<a class="category"
+ng-class="{'disabled':searchCatalogCtrl.service.searchIsRunning}"
+ng-click="!searchCatalogCtrl.service.searchIsRunning
+&& searchCatalogCtrl.service.pushCategory('single', catP.Key)">
+<div ng-show="searchCatalogCtrl.cefConfig.catalog.displayImages">
+<img ng-hide="catP.PrimaryImageFileName"
+class="img-fluid d-block mx-auto"
+ng-class="{'text-capitalize':!catP.DisplayName}"
+alt="{{catP | cleanSearchCategoryName}}"
+src="./images/placeholder.jpg?maxwidth=250&maxheight=250&mode=pad&scale=both" />
+<img ng-show="catP.PrimaryImageFileName"
+class="img-fluid d-block mx-auto"
+ng-class="{'text-capitalize':!catP.DisplayName}"
+alt="{{catP | cleanSearchCategoryName}}"
+ng-src="{{('/Images/ecommerce/Category/Images/' | corsLink) + catP.PrimaryImageFileName}}
+?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both" />
+</div>
+<label class="mt-1 category-title"
+ng-class="{'text-capitalize':!catP.DisplayName}"
+ng-bind="catP | cleanSearchCategoryName"></label>
+</a>
+<div ng-show="!searchCatalogCtrl.cefConfig.catalog.displayImages"
+class="col-12 mb-5">
+<a ng-repeat="child in catP.Children"
+class="clearfix">
+<span class="category-title pl-3"
+ng-class="{'text-capitalize':!child.DisplayName}"
+ng-click="!searchCatalogCtrl.service.searchIsRunning
+&& searchCatalogCtrl.service.pushCategory('single', child.Key)"
+ng-bind="child | cleanSearchCategoryName"></span>
+</a>
+</div>
+</div>
+</div>
+</div>

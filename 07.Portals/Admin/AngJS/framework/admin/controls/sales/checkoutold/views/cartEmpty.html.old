@@ -1,0 +1,8 @@
+﻿<div class="row">
+    <div class="col-md-12 text-center">
+        <h3 data-translate="ui.admin.checkout.cartEmpty"></h3>
+        <a class="btn btn-primary"
+           ui-sref-plus uisrp-root="{{cefCheckoutCtrl.cefConfig.catalog.root}}"
+           ><span data-translate="ui.admin.cart.continueShopping"></span></a>
+    </div>
+</div>

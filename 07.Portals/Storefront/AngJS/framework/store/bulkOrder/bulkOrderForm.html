@@ -1,0 +1,33 @@
+﻿<div class="col-12">
+    <h1 data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.quickOrderForm"></h1>
+</div>
+<div class="col-12">
+    <h4 data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.completeYourOrderThenClickAddToCartDiscountsWillBeApplied"></h4>
+</div>
+<div class="col-12">
+    <select class="selectpicker" ng-options="category.CategoryName as category.CategoryName for category in productData | filter: filterCategories()"
+    ng-model="selected" ng-change="jumpTo(selected)">
+        <option value="" data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.jumpToCategory"></option>
+    </select>
+    <div ng-repeat="category in productData | filter: filterCategories() " id="elBulkOrderCat{{category.CategoryName}}">
+        <div category-table category="category" temp-cart="tempCart"
+             form-subtotal="formSubtotal" get-subtotal="getSubtotal"
+             loaded="loaded" jump-to="jumpTo" one-loaded="oneLoaded"
+             product-data="productData">
+             <span data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.Retest"></span> {{ tableHeaders }}</div>
+    </div>
+</div>
+<div class="col-12">
+    <h4><span data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.orderSubtotal"></span> {{ formSubtotal | globalizedCurrency}}</h4>
+</div>
+<div class="col-12">
+    <button type="button" ng-hide="confirmation" class="btn btn-primary" id="btnBulkOrderAddToCart" ng-click="name.open();append()"
+    data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.addSelectedToCartAndCheckout"></button>
+</div>
+<div id="windowBulkOrderForm" kendo-window="name" k-title="'Confirm'" k-width="500" k-modal="true" k-height="100" k-visible="false">
+    <p data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.doYouWantToAddAllSelectedItemsToCart"></p>
+    <button type="button" class="btn btn-primary" ng-click="addItemsToCart()"
+    data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.addSelectedToCart"></button>
+    <button type="button" class="btn btn-primary" ng-click="name.close()"
+    data-translate="ui.storefront.product.bulkOrderForm.bulkOrderForm.returnToQuickOrderForm"></button>
+</div>

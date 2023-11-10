@@ -1,0 +1,334 @@
+﻿<div class="row form-vertical"
+  ng-form="cewCtrl.forms.edit">
+  <div class="col-sm-12" ng-if="cewCtrl.addressTitle">
+    <h3 class="inline-block"
+      ng-bind="cewCtrl.addressTitle">
+    </h3>
+    <div ng-if="cewCtrl.toMirror" class="pull-right">
+      <div class="checkbox inline-block mt-0">
+        <label><input type="checkbox"
+          id="ckDoMirror{{cewCtrl.idSuffix}}"
+          name="ckDoMirror{{cewCtrl.idSuffix}}"
+          ng-change="cewCtrl.propertyChanged('DoMirror')"
+          ng-disabled="!cewCtrl.toMirror"
+          ng-model="cewCtrl.doMirror" /><!--
+          --><span data-translate="ui.admin.controls.widgets.contactEditorWidget.MirrorOtherContact"></span></label>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <div ng-if="!cewCtrl.contact
+      && !(cewCtrl.doMirror && cewCtrl.toMirror)">
+      <p data-translate="ui.admin.controls.widgets.contactEditorWidget.NoContact.Message"></p>
+    </div>
+  </div>
+  <div class="col-sm-12"
+     ng-if="cewCtrl.showKey">
+    <div class="row">
+      <text-input-form-group
+        class="col-md-6"
+        input-class="text-uppercase"
+        key="Key{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Address.CustomKey"
+        label-key="ui.admin.common.AddressNickname"
+        placeholder-key="ui.admin.common.addressBook.EnterAReferenceNameEGMyOffice"
+        tooltip-key="ui.admin.common.addressBook.EnterAReferenceNameEGMyOffice"
+        when-changed="cewCtrl.updateKeys()"
+        max-length="15"
+        ng-required="true"
+        fails-on="cewCtrl.duplicateKey"
+        is-autofocus="true"
+        start-touched="true">
+      </text-input-form-group>
+    </div>
+  </div>
+  <div ng-if="cewCtrl.showPersonalDetails"
+     ng-class="cewCtrl.showAddress && !cewCtrl.oneCol ? 'col-lg-6' : 'col-md-12'">
+    <div class="row">
+      <!--first-->
+      <text-input-form-group
+        ng-if="cewCtrl.showFirstName"
+        class="col-md-6"
+        key="FirstName{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.FirstName"
+        label-key="ui.admin.common.FirstName"
+        placeholder-key="ui.admin.common.FirstName"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        auto-comp="fname"
+        max-length="128"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true">
+      </text-input-form-group>
+      <!--last-->
+      <text-input-form-group
+        ng-if="cewCtrl.showLastName"
+        class="col-md-6"
+        key="LastName{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.LastName"
+        label-key="ui.admin.common.LastName"
+        placeholder-key="ui.admin.common.LastName"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        auto-comp="lname"
+        max-length="128"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true">
+      </text-input-form-group>
+      <!--email-->
+      <text-input-form-group
+        ng-if="cewCtrl.showEmail"
+        class="col-sm-12"
+        key="Email{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Email1"
+        label-key="ui.admin.common.Email"
+        placeholder-key="ui.admin.common.Email"
+        when-changed="cewCtrl.emailChanged($event, control)"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true"
+        fails-on="cewCtrl.emailValidityState == 'Invalid'"
+        is-email="true">
+      </text-input-form-group>
+      <!--phone 1-->
+      <text-input-form-group
+        ng-if="cewCtrl.showPhone"
+        class="col-sm-12"
+        key="Phone1{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Phone1"
+        label-key="ui.admin.common.Phone"
+        placeholder-text="+1(555)555-5555 x55555"
+        when-changed="cewCtrl.runPhonePrefixLookups()"
+        is-phone="true"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true">
+      </text-input-form-group>
+      <!--phone 2-->
+      <text-input-form-group
+        ng-if="cewCtrl.showPhone2"
+        class="col-sm-12"
+        key="Phone2{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Phone2"
+        label-key="ui.admin.common.Phone"
+        placeholder-text="+1(555)555-5555 x55555"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        is-phone="true"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="false">
+      </text-input-form-group>
+      <!--phone 3-->
+      <text-input-form-group
+        ng-if="cewCtrl.showPhone3"
+        class="col-sm-12"
+        key="Phone3{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Phone3"
+        label-key="ui.admin.common.Phone"
+        placeholder-text="+1(555)555-5555 x55555"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        is-phone="true"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="false">
+      </text-input-form-group>
+      <!--fax-->
+      <text-input-form-group
+        ng-if="cewCtrl.showFax"
+        class="col-sm-12"
+        key="Fax1{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Fax1"
+        label-key="ui.admin.common.Fax"
+        placeholder-text="+1(555)555-5555"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="false"
+        is-fax="true">
+      </text-input-form-group>
+    </div>
+  </div>
+  <div ng-if="cewCtrl.showAddress"
+     ng-class="cewCtrl.showPersonalDetails && !cewCtrl.oneCol ? 'col-lg-6' : 'col-md-12'">
+    <div class="row">
+      <!--company-->
+      <text-input-form-group
+        class="col-sm-12"
+        key="Company{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Address.Company"
+        label-key="ui.admin.common.Company"
+        placeholder-key="ui.admin.common.Company"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        auto-comp="organization"
+        max-length="128"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="false"
+        left-icon="far fa-briefcase">
+      </text-input-form-group>
+      <!--country-->
+      <!--
+      <div class="col-sm-6">
+        <div class="form-group"
+           ng-class="{'has-error': !cewCtrl.contact.Address.CountryID}">
+          <label class="control-label" for="ddlCountry{{cewCtrl.idSuffix}}"
+               ><span data-translate="ui.admin.common.Country"
+               ></span>&nbsp;<span class="text-danger">*</span></label>
+          <input type="text" class="search-input form-control"
+               id="ddlCountry{{cewCtrl.idSuffix}}"
+               name="ddlCountry{{cewCtrl.idSuffix}}"
+               translate-attr="{ placeholder: 'ui.admin.searchCatalog.controls.externalSearchBox.Search.Ellipses' }"
+               autocomplete="false"
+               uib-typeahead="c.Name for c in cewCtrl.ddlCountries"
+               typeahead-loading="loadingSuggestions"
+               typeahead-wait-ms="500"
+               typeahead-min-length="1"
+               typeahead-focus-first="false"
+               typeahead-on-select="cewCtrl.selectCountry($item)"
+               ng-required="!cewCtrl.contact.Address.CountryID"
+               ng-change="cewCtrl.filterCountries(); cewCtrl.callOnChangeIfSet($event, control);"
+               ng-model="cewCtrl.selectedCountryName" />
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group" ng-if="cewCtrl.contact.Address.CountryName">
+          <label class="control-label" for="ddlCountry{{cewCtrl.idSuffix}}"
+            data-translate="ui.admin.common.Selected">
+          </label>
+          <label class="form-control-static text-weight-normal block nowrap"
+               style="overflow-x: hidden;"
+               ng-bind="cewCtrl.contact.Address.CountryName"></label>
+        </div>
+      </div>
+      -->
+      <select-form-group
+        class="col-sm-12"
+        key="CountryID{{cewCtrl.idSuffix}}"
+        label-key="ui.admin.common.Country"
+        ng-model="cewCtrl.contact.Address.CountryID"
+        selections="cewCtrl.countries"
+        include-null="true" null-key="ui.admin.common.SelectACountry"
+        auto-comp="{{cewCtrl.isBilling ? 'billing' : 'shipping'}} country"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true"
+        when-changed="cewCtrl.propagateCountryChange()"
+        ng-blur="cewCtrl.propagateCountryChange()"
+        hide-option-key="true"
+        left-icon="fal fa-globe-americas">
+      </select-form-group>
+      <!--street-->
+      <text-input-form-group
+        class="col-sm-12"
+        key="Street1{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Address.Street1"
+        label-key="ui.admin.checkout.views.accountInformation.Street"
+        placeholder-key="ui.admin.checkout.views.accountInformation.Street"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        auto-comp="{{cewCtrl.isBilling ? 'billing' : 'shipping'}} address-line1"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true"
+        left-icon="far fa-road">
+      </text-input-form-group>
+      <!--street 2-->
+      <text-input-form-group
+        ng-if="cewCtrl.showStreet2"
+        class="col-sm-12"
+        key="Street2{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Address.Street2"
+        label-key="ui.admin.checkout.views.accountInformation.Street"
+        placeholder-key="ui.admin.checkout.views.accountInformation.Street"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        auto-comp="{{cewCtrl.isBilling ? 'billing' : 'shipping'}} address-line2"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="false"
+        left-icon="far fa-road">
+      </text-input-form-group>
+      <!--street 3-->
+      <text-input-form-group
+        ng-if="cewCtrl.showStreet3"
+        class="col-sm-12"
+        key="Street3{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Address.Street3"
+        label-key="ui.admin.checkout.views.accountInformation.Street"
+        placeholder-key="ui.admin.checkout.views.accountInformation.Street"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        auto-comp="{{cewCtrl.isBilling ? 'billing' : 'shipping'}} address-line3"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="false"
+        left-icon="far fa-road">
+      </text-input-form-group>
+      <!--city-->
+      <text-input-form-group
+        class="col-sm-12"
+        key="City{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Address.City"
+        label-key="ui.admin.common.City"
+        placeholder-key="ui.admin.common.City"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        auto-comp="{{cewCtrl.isBilling ? 'billing' : 'shipping'}} address-level2"
+        max-length="128"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true"
+        left-icon="far fa-city">
+      </text-input-form-group>
+      <!--state-->
+      <select-form-group
+        ng-if="cewCtrl.regions.length"
+        class="col-sm-7"
+        key="RegionID{{cewCtrl.idSuffix}}"
+        label-key="ui.admin.common.State"
+        ng-model="cewCtrl.contact.Address.RegionID"
+        selections="cewCtrl.regions"
+        include-null="true" null-key="ui.admin.common.State.SelectA"
+        when-changed="cewCtrl.propagateRegionChange()"
+        auto-comp="{{cewCtrl.isBilling ? 'billing' : 'shipping'}} address-level1"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true"
+        hide-option-key="true">
+      </select-form-group>
+      <!--zip-->
+      <text-input-form-group
+        ng-form-class="{ 'col-sm-12': !cewCtrl.regions.length, 'col-sm-5': cewCtrl.regions.length }"
+        key="Zip{{cewCtrl.idSuffix}}"
+        ng-model="cewCtrl.contact.Address.PostalCode"
+        label-key="ui.admin.common.Zip"
+        placeholder-key="ui.admin.common.Zip"
+        when-changed="cewCtrl.callOnChangeIfSet($event, control)"
+        auto-comp="{{cewCtrl.isBilling ? 'billing' : 'shipping'}} postal-code"
+        max-length="12"
+        ng-disabled="cewCtrl.doMirror"
+        ng-required="true">
+      </text-input-form-group>
+      <div class="form-group col-sm-6"
+        ng-class="{'has-error': cewCtrl.forms.edit.nudLatitude.$invalid}">
+        <label class="control-label" for="nudLatitude"
+          data-translate="ui.admin.common.Latitude">
+        </label>
+        <div class="input-group">
+          <input type="number" class="form-control"
+            id="nudLatitude{{cewCtrl.idSuffix}}"
+            name="nudLatitude{{cewCtrl.idSuffix}}"
+            ng-required="false"
+            ng-change="cewCtrl.propertyChanged('Latitude')"
+            ng-disabled="cewCtrl.doMirror"
+            ng-model-options="cewCtrl.debounce500"
+            ng-model="cewCtrl.contact.Address.Latitude" />
+        </div>
+        <div ng-messages="cewCtrl.forms.edit.nudLatitude.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group col-sm-6"
+        ng-class="{'has-error': cewCtrl.forms.edit.nudLongitude.$invalid}">
+        <label class="control-label" for="nudLongitude"
+          data-translate="ui.admin.common.Longitude">
+        </label>
+        <div class="input-group">
+          <input type="number" class="form-control"
+            id="nudLongitude{{cewCtrl.idSuffix}}"
+            name="nudLongitude{{cewCtrl.idSuffix}}"
+            ng-required="false"
+            ng-change="cewCtrl.propertyChanged('Longitude')"
+            ng-disabled="cewCtrl.toMirror"
+            ng-model-options="cewCtrl.debounce500"
+            ng-model="cewCtrl.contact.Address.Longitude" />
+        </div>
+        <div ng-messages="cewCtrl.forms.edit.nudLongitude.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

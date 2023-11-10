@@ -1,0 +1,267 @@
+﻿@page "/catalog/lots/editor/{IDStr}"
+@using Clarity.Ecommerce.MVC.Core
+@inherits MVC.Core.EditorViewTemplatedControllerBase<LotModel, MVC.Api.Endpoints.UpdateLot>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="lotEditorPage">
+    @if (ViewState.loading || Record == null! && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (EditContext != null! && Record is not null)
+    {
+      <Validations
+        EditContext="EditContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="EditContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content-with-footer">
+            <Container Fluid="true">
+              <Row Class="m-0">
+                <Column ColumnSize="ColumnSize.IsFull">
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="@("fa-ball-pile")" Class="mr-1" />
+                    @ClippedName #@ID
+                  </Heading>
+                </Column>
+              </Row>
+              <Tabs
+                SelectedTab="@SelectedTab"
+                SelectedTabChanged="@OnSelectedTabChanged"
+                TabPosition="TabPosition.Start"
+                Mode="TabsMode.LazyReload"
+                Pills="true"
+                Shadow="Shadow.Small">
+                <Items>
+                  <Tab Name="details">Details</Tab>
+                  <Tab Name="categories">Categories</Tab>
+                  <Tab Name="attributes">Attributes</Tab>
+                </Items>
+                <Content>
+                  <TabPanel Name="details">
+                    <Row>
+                      <Column ColumnSize="ColumnSize.IsHalf.OnTablet.IsHalf.OnDesktop.Is12.OnMobile">
+                        <Heading Size="HeadingSize.Is3">Basic Information</Heading>
+                        <TextFormGroup
+                          FormIdentifier="Name"
+                          LabelText="Name"
+                          PlaceholderText="Name"
+                          @bind-Value="@Record.Name"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The name of the auction"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                        <TextFormGroup
+                          FormIdentifier="CustomKey"
+                          LabelText="Lot Key"
+                          PlaceholderText="Lot Key"
+                          @bind-Value="Record.CustomKey"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The unique lot key"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                        <Row>
+                          <Column ColumnSize="ColumnSize.IsHalf.OnTablet.Is12.OnMobile">
+                            <SelectFormGroup
+                              TValue="int"
+                              FormIdentifier="recordType"
+                              LabelText="Type"
+                              @bind-Value="@Record.TypeID"
+                              OptionsList="@Types"
+                              ItemValueFunc="@(x => ((TypeModel)x).ID)"
+                              ItemLabelFunc="@(x => ((TypeModel)x).DisplayName ?? ((TypeModel)x).Name)"
+                              Required="true"
+                            />
+                          </Column>
+                          <Column ColumnSize="ColumnSize.IsHalf.OnTablet.Is12.OnMobile">
+                            <SelectFormGroup
+                              TValue="int"
+                              FormIdentifier="recordStatus"
+                              LabelText="Status"
+                              @bind-Value="@Record.StatusID"
+                              OptionsList="@Statuses"
+                              ItemValueFunc="@(x => ((StatusModel)x).ID)"
+                              ItemLabelFunc="@(x => ((StatusModel)x).DisplayName ?? ((StatusModel)x).Name)"
+                              Required="true"
+                            />
+                          </Column>
+                        </Row>
+                      </Column>
+                    </Row>
+                    <Row>
+                      <Column ColumnSize="ColumnSize.IsHalf.OnTablet.IsHalf.OnDesktop.Is12.OnMobile">
+                        <Heading Size="HeadingSize.Is3">Description</Heading>
+                        <RichTextEditorFormGroup
+                          FormIdentifier="Description"
+                          LabelText="Long Description"
+                          PlaceholderText="Lot Long Description"
+                          @bind-Value="Record.Description"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The description of the Lot"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                      </Column>
+                    </Row>
+                  </TabPanel>
+                  <TabPanel Name="categories">
+                    <RecordCategories
+                      TMaster="LotModel"
+                      TSlave="LotCategoryModel"
+                      Record="@Record"
+                      AvailableCollection="@CategoryTreeData"
+                    />
+                  </TabPanel>
+                  <TabPanel Name="attributes">
+                    <RecordAttributes
+                      Record="Record"
+                      OtherTypeName="Lot"
+                    />
+                  </TabPanel>
+                </Content>
+              </Tabs>
+            </Container>
+          </Div>
+          <Div Class="page-footer">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Primary"
+              Disabled="@(FormInvalid || ViewState.saving || ViewState.running || ViewState.pristine)"
+              Clicked="OnSave">
+              Save Changes
+            </Blazorise.Button>
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Secondary"
+              Class="ml-1"
+              Disabled="@(ViewState.dirty || ViewState.InputDisable)"
+              Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, GridRouteFormat))">
+              Back
+            </Blazorise.Button>
+            @* @((MarkupString)ViewState.AsHTMLDebugBlock()) *@
+            <Blazorise.ValidationSummary Class="ml-3" />
+          </Div>
+        </EditForm>
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/catalog/lots";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+  #endregion
+
+  #region IHaveATypeBaseModel Handlers
+  private List<TypeModel>? Types { get; set; }
+
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetLotTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveAStatusBaseModel Handling
+  private List<StatusModel>? Statuses { get; set; }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetLotStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IAmFilterableByCategoryBaseModel Handling
+  private List<ProductCategorySelectorModel>? CategoryTreeData { get; set; }
+
+  private async Task LoadCategoryTreeAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetCategoryTree(
+      new()
+      {
+        Active = true,
+        AsListing = true,
+        IncludeChildrenInResults = false,
+        DisregardParents = false,
+      })
+      .ConfigureAwait(false);
+    CategoryTreeData = result.data
+      ?? throw new NullReferenceException("CategoryTreeData is null after load");
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region Loading
+  /// <inheritdoc />
+  protected override Func<int, Task<IHttpPromiseCallbackArg<LotModel>>> GetCallerFunc
+    => id => cvApi.GetLotByID(new() { ID = id });
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    return Task.WhenAll(
+      LoadTypesAsync()
+      , LoadStatusesAsync()
+      , LoadCategoryTreeAsync()
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+
+#endif
+      );
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<LotModel, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> UpdateCallerFunc
+    => record => cvApi.UpdateLot(Mapper.Map<MVC.Api.Endpoints.UpdateLot>(record));
+
+  /// <inheritdoc />
+  protected override Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    if (!Contract.CheckValidID(Record.TypeID))
+    {
+      Record.TypeID = Types?.First().ID ?? 1;
+    }
+    if (!Contract.CheckValidID(Record.StatusID))
+    {
+      Record.StatusID = Statuses?.First().ID ?? 1;
+    }
+    return Task.CompletedTask;
+  }
+  #endregion
+}

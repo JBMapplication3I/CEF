@@ -1,0 +1,27 @@
+<div>
+  <div ng-if="pcnwCtrl.product.SeoUrl">
+    <a ng-class="pcnwCtrl.service.activeSearchViewModel.Form.PageFormat === 'table' ? 'text-primary' : 'text-body'"
+      id="productCatalogDetailsLinkFor_{{pcnwCtrl.index}}"
+      name="productCatalogDetailsLinkFor_{{pcnwCtrl.index}}"
+      title="{{pcnwCtrl.product.Name}}"
+      aria-label="{{pcnwCtrl.product.Name}}"
+      ui-sref-plus uisrp-is-product="true"
+      uisrp-path="{{pcnwCtrl.product.SeoUrl}}">
+      <span class="rows-{{pcnwCtrl.nameR}} font-weight-bold"
+        id="cardProductName_{{pcnwCtrl.index}}"
+        name="cardProductName_{{pcnwCtrl.index}}"
+        ng-bind="pcnwCtrl.product.Name">
+      </span>
+    </a>
+  </div>
+  <!-- Lowest Variant Price-->
+  <div ng-show="pcnwCtrl.minPrice && pcnwCtrl.service.activeSearchViewModel.Form.PageFormat === 'table'">
+    <div class="price-holder text-left">
+      <span class="text-nowrap font-weight-bold">Starting at:</span>
+      <span sid="ProductCardLowestVariantPrice"
+      class="text-right"
+      ng-bind="pcnwCtrl.minPrice | globalizedCurrency">
+      </span>
+    </div>
+  </div>
+</div>

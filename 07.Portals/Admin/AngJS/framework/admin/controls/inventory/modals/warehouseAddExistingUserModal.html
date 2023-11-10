@@ -1,0 +1,91 @@
+﻿<div class="container-fluid cv-modal">
+  <div class="modal-header p-0">
+    <h3 data-translate="ui.admin.directives.accountExistingUserDetailModal.SelectAUser"></h3>
+  </div>
+  <div class="modal-body form-vertical p-0 pt-3"
+     ng-form="waeumCtrl.forms.existingUser">
+    <div class="row">
+      <div class="form-group col-sm-12">
+        <label class="control-label" for="txtUserSearchTerm"
+          data-translate="ui.admin.directives.accountExistingUserDetailModal.SearchByUsername">
+        </label>
+        <div class="input-group">
+          <input type="text" class="form-control"
+            id="txtUserSearchTerm" name="txtUserSearchTerm"
+            kendo-auto-complete
+            k-data-source="waeumCtrl.selectableUsers"
+            ng-required="false"
+            ng-change="waeumCtrl.reloadSelectables()"
+            ng-model="waeumCtrl.userText" />
+        </div>
+      </div>
+      <div class="form-group col-sm-12">
+        <label class="control-label" for="ddlUser"
+          data-translate="ui.admin.directives.accountExistingUserDetailModal.UserToAdd">
+        </label>
+        <div class="input-group">
+          <select class="form-control"
+            id="ddlUser" name="ddlUser"
+            ng-options="u as ((u.ContactFullName || u.Contact.FullName || (u.ContactFirstName + ' ' + u.ContactLastName) || (u.Contact.FirstName + ' ' + u.Contact.LastName)) + ' [' + u.UserName + ']')
+                        for u in waeumCtrl.selectableUsers"
+            ng-model="waeumCtrl.user">
+            <option selected value="" data-translate="ui.admin.directives.accountExistingUserDetailModal.SelectAUser"></option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-sm-12">
+        <label class="control-label"
+          data-translate="ui.admin.directives.accountExistingUserDetailModal.YourSelection">
+        </label>
+        <div class="input-group w-100">
+          <table class="w-100">
+            <tbody>
+              <tr>
+                <th class="w-50" data-translate="ui.admin.directives.accountExistingUserDetailModal.ID"></th>
+                <td class="w-50" ng-bind="waeumCtrl.user.ID"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.checkout.views.accountInformation.Username"></th>
+                <td ng-bind="waeumCtrl.user.UserName"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.directives.accountExistingUserDetailModal.Name"></th>
+                <td ng-bind="waeumCtrl.user.Contact.FullName
+                    || (waeumCtrl.user.Contact.FirstName
+                      + ' ' + waeumCtrl.user.Contact.LastName)"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.common.Phone"></th>
+                <td ng-bind="waeumCtrl.user.Phone || waeumCtrl.user.Contact.Phone1"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.common.Email"></th>
+                <td ng-bind="waeumCtrl.user.Email || waeumCtrl.user.Contact.Email1"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.directives.accountExistingUserDetailModal.CurrentAccountID"></th>
+                <td ng-bind="waeumCtrl.user.AccountID"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.directives.accountExistingUserDetailModal.CurrentAccountKey"></th>
+                <td ng-bind="waeumCtrl.user.AccountKey"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer p-0 pt-3">
+    <button type="button" class="btn btn-info"
+      data-translate="ui.admin.common.Cancel"
+      ng-click="waeumCtrl.close()">
+    </button>
+    <button type="button" class="btn btn-primary"
+      data-translate="ui.admin.common.Save"
+      ng-disabled="waeumCtrl.forms.existingUser.$invalid
+                || waeumCtrl.viewState.running"
+      ng-click="waeumCtrl.save()">
+    </button>
+  </div>
+</div>

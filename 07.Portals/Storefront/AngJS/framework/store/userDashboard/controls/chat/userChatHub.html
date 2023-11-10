@@ -1,0 +1,225 @@
+﻿<section id="main-container">
+    <div id="inquiries" class="box-area p-7">
+        <div class="row">
+            <div class="col-lg-5 col-xl-4">
+                <!--<div class="form-group row" ng-cloak="userChatHubCtrl.cvChatService.userOnlineStatuses">
+                    <label class="col-sm-6 col-form-label" for="ddlOnlineStatus">Set my online status</label>
+                    <div class="col-sm-6 input-group">
+                        <select class="form-control"
+                                id="ddlOnlineStatus" name="ddlOnlineStatus"
+                                ng-options="o.CustomKey as (o.DisplayName || o.Name) for o in userChatHubCtrl.cvChatService.userOnlineStatuses"
+                                ng-model="userChatHubCtrl.cvChatService.onlineStatus"></select>
+                    </div>
+                </div>-->
+                <!--<div class="input-group search-default mb-5">
+                    <input type="text" class="form-control"
+                           placeholder="Click here to search..."
+                           aria-label="Click here to search..."
+                           ng-model="userChatHubCtrl.searchTerm" />
+                    <span class="input-group-append input-group-btn">
+                        <button type="button" class="btn btn-outline-secondary"
+                                ng-click="userChatHubCtrl.doSearch()"
+                                ><i class="far fa-search fa-fw"></i></button>
+                    </span>
+                </div>
+                <div class="form-row align-items-center mb-3">
+                    <div class="col-auto">
+                        <div class="btn-group btn-select">
+                            <button type="button" class="btn btn-dark"
+                                    ng-click="userChatHubCtrl.doSomething()"
+                                    >Status</button>
+                            <button type="button" class="btn btn-dark btn-custom dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu px-5">
+                                <li><a ng-click="userChatHubCtrl.doSomething()">Option 1</a></li>
+                                <li><a ng-click="userChatHubCtrl.doSomething()">Option 2</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-check my-2 sm-my-0">
+                            <label class="form-check-label pl-0">
+                                <input type="checkbox" class="form-check-input"
+                                       ng-change="userChatHubCtrl.doSearch()"
+                                       ng-model="userChatHubCtrl.showOnlyUnread"
+                                       />&nbsp;Show only unread
+                            </label>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="card small py-2 px-3"
+                     ><b>{{userChatHubCtrl.cvChatService.activeConversations.length}}</b>&nbsp;<!--
+                     --><span data-translate="ui.storefront.userDashboard2.controls.userChatHub.ActiveConversations"></span></div>
+                <ul class="products-tabset">
+                    <li ng-repeat="conversation in userChatHubCtrl.cvChatService.activeConversations">
+                        <a class="py-5 pl-2 pr-5"
+                           ng-class="{'active': userChatHubCtrl.currentConversationID === conversation.ID}"
+                           ng-click="userChatHubCtrl.switchToConversation(conversation.ID)">
+                            <!--<span class="img-holder mr-5"><img src="images/image-empty@1x.png" srcset="images/image-empty@1x.png 2x, images/image-empty@1x.png 3x" alt="image description" width="50" height="50"></span>-->
+                            <span class="text-holder">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td><span data-translate="ui.storefront.common.Number.Symbol"></span><span ng-bind="conversation.ID"></span></td>
+                                            <td><span ng-repeat="cu in conversation.ConversationUserUserNames track by $index"
+                                                      >{{$first ? '' : ', '}}<span ng-bind="cu"></span></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </span>
+                            <!--<i class="icon-flag ml-5"></i>-->
+                        </a>
+                    </li>
+                </ul>
+                <div class="card small py-2 px-3"
+                     ><b>{{userChatHubCtrl.cvChatService.endedConversations.length}}</b>&nbsp;<!--
+                     --><span data-translate="ui.storefront.userDashboard2.controls.userChatHub.EndedConversations"></span></div>
+                <ul class="products-tabset">
+                    <li ng-repeat="conversation in userChatHubCtrl.cvChatService.endedConversations">
+                        <a class="py-5 pl-2 pr-5"
+                           ng-class="{'active': userChatHubCtrl.currentConversationID === conversation.ID}"
+                           ng-click="userChatHubCtrl.switchToConversation(conversation.ID)">
+                            <!--<span class="img-holder mr-5"><img src="images/image-empty@1x.png" srcset="images/image-empty@1x.png 2x, images/image-empty@1x.png 3x" alt="image description" width="50" height="50"></span>-->
+                            <span class="text-holder">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td><span data-translate="ui.storefront.common.Number.Symbol"></span><span ng-bind="conversation.ID"></span></td>
+                                            <td><span ng-repeat="cu in conversation.ConversationUserUserNames track by $index"
+                                                      >{{$first ? '' : ', '}}<span ng-bind="cu"></span></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </span>
+                            <!--<i class="icon-flag ml-5"></i>-->
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-7 col-xl-8">
+                <div ng-show="!userChatHubCtrl.currentConversationID" class="w-100"
+                     ><p data-translate="ui.storefront.messaging.chat.chatWindow.PleaseSelectAConversationFromTheLeft"></p></div>
+                <!-- chat-container -->
+                <div class="products-container" ng-show="userChatHubCtrl.currentConversationID">
+                    <!-- products-content -->
+                    <div class="product-content">
+                        <div class="chat-header-block p-3">
+                            <b><span data-translate="ui.storefront.common.Number.Symbol"></span>{{userChatHubCtrl.currentConversationID}}</b>
+                            <b data-translate="ui.storefront.userDashboard2.controls.userChatHub.HasEnded"></b>&nbsp;<!--
+                            -->{{'ui.storefront.userDashboard2.controls.addressBook2.' + (userChatHubCtrl.cvChatService.getConversation(userChatHubCtrl.currentConversationID).HasEnded ? 'Yes' : 'No') | translate}}
+                            <b data-translate="ui.storefront.userDashboard2.controls.userChatHub.CopyWhenEnded"></b>&nbsp;<!--
+                            -->{{'ui.storefront.userDashboard2.controls.addressBook2.' + (userChatHubCtrl.cvChatService.getConversation(userChatHubCtrl.currentConversationID).CopyUserWhenEnded ? 'Yes' : 'No') | translate}}
+                            <b data-translate="ui.storefront.userDashboard2.controls.userChatHub.Users"></b>&nbsp;<!--
+                            --><span ng-repeat="cu in userChatHubCtrl.cvChatService.getConversation(userChatHubCtrl.currentConversationID).ConversationUserUserNames track by $index"
+                                                >{{$first ? '' : ', '}}<span ng-bind="cu"></span></span>
+                        </div>
+                        <!-- chat-block -->
+                        <div class="chat-block py-3 pr-3 pl-5" du-scroll-container>
+                            <div ng-repeat="message in userChatHubCtrl.filteredData"
+                                 ng-class="message.SentByUserID === storeInboxCtrl.cvAuthenticationService.currentUser.ID ? 'chat-frame' : 'chat-holder'">
+                                <span class="small"
+                                      ng-hide="message.SentByUserID === userChatHubCtrl.filteredData[$index-1].SentByUserID
+                                               && (message.CreatedDate | date: 'yyyy/MM/dd') === (userChatHubCtrl.filteredData[$index-1].CreatedDate | date: 'yyyy/MM/dd')"
+                                      >{{message.SentByUserUserName}} - {{message.CreatedDate | date: 'yyyy/MM/dd hh:mm:ss a'}}</span>
+                                <div class="chat-box p-3"
+                                     ng-class="{'mb-3':message.SentByUserID !== userChatHubCtrl.filteredData[$index+1].SentByUserID}"
+                                     ng-bind="message.Body"></div>
+                            </div>
+                            <div id="chatBlockBottom"></div>
+                        </div>
+                        <div class="is-typing-block p-1" ng-show="!userChatHubCtrl.cvChatService.getConversation(userChatHubCtrl.currentConversationID).HasEnded">
+                            <span ng-repeat="userTypingStatus in userChatHubCtrl.cvChatService.otherConversationUsersTypingStatuses | filter: {'Status':'true','UserID':'!'+storeInboxCtrl.cvAuthenticationService.currentUser.ID}">
+                                <span ng-if="!$first">, </span>{{userTypingStatus.UserName}}&nbsp;<span data-translate="ui.storefront.messaging.chat.chatWindow.IsTyping.Ellipses"></span>
+                            </span>
+                        </div>
+                        <div class="chat-message p-3">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="w-99" rowspan="2">
+                                            <textarea class="form-control p-2" rows="3"
+                                                      placeholder="Type your message here..."
+                                                      ng-keypress="userChatHubCtrl.onKeyPress($event)"
+                                                      ng-keyup="userChatHubCtrl.sendMessageByKeyStroke($event)"
+                                                      ng-disabled="userChatHubCtrl.cvChatService.getConversation(userChatHubCtrl.currentConversationID).HasEnded"
+                                                      ng-model="userChatHubCtrl.newMessage[userChatHubCtrl.currentConversationID]"></textarea>
+                                        </td>
+                                        <td class="w-1 align-top">
+                                            <button type="button" class="btn btn-block btn-warning"
+                                                    translate-attr="{ title: 'ui.storefront.messaging.chat.chatWindow.EndChat', 'aria-label': 'ui.storefront.messaging.chat.chatWindow.EndChat' }"
+                                                    ng-disabled="userChatHubCtrl.cvChatService.getConversation(userChatHubCtrl.currentConversationID).HasEnded"
+                                                    ng-click="userChatHubCtrl.endConversation()"
+                                                    data-translate="ui.storefront.messaging.chat.chatWindow.EndChat"></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-bottom">
+                                            <button type="button" class="btn btn-block btn-lg btn-primary"
+                                                    translate-attr="{ title: 'ui.storefront.common.Send',
+                                                                      'aria-label': 'ui.storefront.common.Send' }"
+                                                    ng-disabled="userChatHubCtrl.cvChatService.getConversation(userChatHubCtrl.currentConversationID).HasEnded || !userChatHubCtrl.newMessage[userChatHubCtrl.currentConversationID]"
+                                                    ng-click="userChatHubCtrl.postMessage()"
+                                                    data-translate="ui.storefront.common.Send"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- products-aside -->
+                    <!--<div class="product-aside pt-5">
+                        <div class="tabset-area">-->
+                            <!-- Nav tabs -->
+                            <!--<ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#overview" role="tab">Overview</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#attachments" role="tab">Attachments</a>
+                                </li>
+                            </ul>-->
+                            <!-- Tab panes -->
+                            <!--<div class="tab-content p-5">
+                                <div class="tab-pane active" id="overview" role="tabpanel">
+                                    <p>
+                                        <span class="heading">Date of Request</span>
+                                        <b>00 Month 0000</b>
+                                    </p>
+                                    <p>
+                                        <span class="heading">Status</span>
+                                        <b>Submitted</b>
+                                    </p>
+                                    <figure class="figure">
+                                        <img src="images/img-100.jpg" srcset="images/img-100@2x.jpg 2x, images/img-100@3x.jpg 3x" class="figure-img img-fluid" alt="A generic square placeholder image with rounded corners in a figure." width="100" height="100">
+                                        <figcaption class="figure-caption">Mobile indoor gas heater...</figcaption>
+                                    </figure>
+                                    <p>
+                                        <span class="heading">Requested Quantity</span>
+                                        <b>25,000</b>
+                                    </p>
+                                    <p>
+                                        <span class="heading">Requested Unit of Measure</span>
+                                        <b>Pieces</b>
+                                    </p>
+                                    <p>
+                                        <span class="heading">Delivery Date Requested</span>
+                                        <b><a>« Request one</a></b>
+                                    </p>
+                                    <p>
+                                        <span class="heading">Quote Total</span>
+                                        <b>$ 00,000.00</b>
+                                    </p>
+                                    <button class="btn btn-success" type="submit">Accept quote & checkout</button>
+                                </div>
+                                <div class="tab-pane" id="attachments" role="tabpanel"></div>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

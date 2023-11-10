@@ -1,0 +1,18 @@
+<ul id="nav" class="nav navbar-nav">
+<div id="cssmenu"><cef-navigation render="'cef-menu-render-dropdown'" behavior="'cef-menu-fast-hover'"></cef-navigation></div>
+[*>NODE]
+</ul>
+[>NODE]
+    <li class="[?NODE]dropdown [/?][?SELECTED]active[/?]">
+    [?ENABLED]
+        <a href="[=URL]">[=TEXT] [?NODE]<b class="caret"></b>[/?]</a>
+    [?ELSE]
+        <a href="#">[=TEXT] [?NODE]<b class="caret"></b>[/?]</a>
+    [/?]
+    [?NODE]
+        <ul class="dropdown-menu">
+        [*>NODE]
+        </ul>
+    [/?]
+    </li>
+[/>]

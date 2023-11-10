@@ -1,0 +1,580 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-sales-header-widget
+    record="ssieCtrl.record"
+    new-kind-key="ui.admin.common.Invoice.New"
+    existing-kind-key="ui.admin.controls.sales.salesInvoiceDetail.SalesInvoice">
+  </div>
+  <div class="row details-body">
+    <!-- Invoice Details Section -->
+    <div class="col-sm-12 col-md-10 col-lg-10 order-tabs">
+      <uib-tabset justified="true">
+        <!-- Line Item Tab -->
+        <uib-tab heading="{{'ui.admin.common.LineItems' | translate}}">
+          <div ng-if="!ssieCtrl.holdLineItemEditor"
+            class="container-fluid full-height">
+            <div cef-line-items-widget
+              class="full-height"
+              kind="Sales Invoice"
+              record="ssieCtrl.record"
+              is-editable="false">
+            </div>
+          </div>
+        </uib-tab>
+        <!-- Billing & Shipping Tab -->
+        <uib-tab heading="{{'ui.admin.common.BillingAndShipping' | translate}}">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.AccountInformation"></h3>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group col-sm-12" ng-if="ssieCtrl.record.Account">
+                  <b data-translate="ui.admin.common.Account"></b>&nbsp;<!--
+                  --><a ui-sref="accounts.accounts.detail({ 'ID': ssieCtrl.record.AccountID })"
+                    target="_blank"
+                    ><span data-translate="ui.admin.common.Number.Symbol"
+                    ></span>{{ssieCtrl.record.AccountID}}&nbsp;<!--
+                  -->[{{ssieCtrl.record.Account.CustomKey}}]&nbsp;<!--
+                  -->{{ssieCtrl.record.Account.Name}}</a><br />
+                  <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (ssieCtrl.record.Account.Active ? "Yes" : "No")) | translate}}
+                  <b data-translate="ui.admin.common.OnHold"></b> {{('ui.admin.common.' + (ssieCtrl.record.Account.IsOnHold ? "Yes" : "No")) | translate}}
+                  <b data-translate="ui.admin.common.Status"></b> {{ssieCtrl.record.Account.StatusDisplayName || ssieCtrl.record.Account.StatusName}}
+                  <b data-translate="ui.admin.common.Type"></b> {{ssieCtrl.record.Account.TypeDisplayName || ssieCtrl.record.Account.TypeName}}
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group col-sm-12" ng-if="ssieCtrl.record.User">
+                  <b data-translate="ui.admin.common.User"></b>&nbsp;<!--
+                  --><a ui-sref="accounts.users.detail({ 'ID': ssieCtrl.record.UserID })"
+                    target="_blank"
+                    ><span data-translate="ui.admin.common.Number.Symbol"
+                    ></span>{{ssieCtrl.record.UserID}}&nbsp;<!--
+                  -->[{{ssieCtrl.record.User.CustomKey}}]&nbsp;<!--
+                  -->{{ssieCtrl.record.User.Name}}</a><br />
+                  <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (ssieCtrl.record.User.Active ? "Yes" : "No")) | translate}}
+                  <b data-translate="ui.admin.common.Status"></b> {{ssieCtrl.record.User.StatusDisplayName || ssieCtrl.record.User.StatusName}}
+                  <b data-translate="ui.admin.common.Type"></b> {{ssieCtrl.record.User.TypeDisplayName || ssieCtrl.record.User.TypeName}}
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssieCtrl.record">
+              <div class="col-sm-6"
+                ng-if="!ssieCtrl.record.SalesGroupID">
+                <div cef-contact-editor-widget class="mb-3"
+                  title-key="ui.admin.common.BillingInformation"
+                  contact="ssieCtrl.record.BillingContact"
+                  is-editable="!ssieCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+                  account="ssieCtrl.record.Account"
+                  id-suffix="Billing"
+                  hide-key="true">
+                </div>
+              </div>
+              <div class="col-sm-6"
+                ng-if="ssieCtrl.record.SalesGroupID">
+                <h3 data-translate="ui.admin.common.BillingInformation"></h3>
+                <p>
+                  This invoice belongs to Sales Group&nbsp;<!--
+                  --><a ui-sref="sales.salesGroups.detail({
+                      'ID': ssieCtrl.record.SalesGroupID
+                    })"
+                    target="_blank"
+                    ng-bind="ssieCtrl.record.SalesGroupID">
+                  </a>.&nbsp;See the Sales Group for the billing details.
+                </p>
+              </div>
+              <div class="col-sm-6"
+                ng-if="(ssieCtrl.cefConfig.checkout.mode == 0 || !ssieCtrl.record.SalesGroupID) && ssieCtrl.record.ShippingContact">
+                <h3 data-translate="ui.admin.common.ShippingInformation"></h3>
+                <div cef-contact-editor-widget class="mb-3"
+                  title-key="ui.admin.common.ShippingInformation"
+                  contact="ssieCtrl.record.ShippingContact"
+                  is-editable="!ssieCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+                  do-mirror="ssieCtrl.record.ShippingSameAsBilling"
+                  to-mirror="ssieCtrl.record.BillingContact"
+                  account="ssieCtrl.record.Account"
+                  id-suffix="Shipping"
+                  hide-key="true">
+                </div>
+              </div>
+              <div class="col-sm-6"
+                ng-if="ssieCtrl.cefConfig.checkout.mode == 1 && ssieCtrl.record.SalesGroupID">
+                <h3 data-translate="ui.admin.common.ShippingInformation"></h3>
+                <p>
+                  This invoice belongs to Sales Group&nbsp;<!--
+                  --><a ui-sref="sales.salesGroups.detail({
+                      'ID': ssieCtrl.record.SalesGroupID
+                    })"
+                    target="_blank"
+                    ng-bind="ssieCtrl.record.SalesGroupID">
+                  </a>.&nbsp;See the Sales Group to find the sub-orders which will each have separate shipping details.
+                </p>
+              </div>
+            </div>
+            <div class="row" ng-if="ssieCtrl.record.RateQuotes.length">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.sales.salesOrderDetail.SelectedShippingMethod"></h3>
+                <div class="table-responsive">
+                  <table class="table table-condensed table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.common.Rate"></th>
+                        <th data-translate="ui.admin.common.RateTimestamp"></th>
+                        <th data-translate="ui.admin.common.ShipCarrierKey"></th>
+                        <th data-translate="ui.admin.common.ShipCarrierName"></th>
+                        <th data-translate="ui.admin.common.ShipCarrierMethodKey"></th>
+                        <th data-translate="ui.admin.common.ShipCarrierMethodName"></th>
+                        <th data-translate="ui.admin.common.TargetShippingDate"></th>
+                        <th data-translate="ui.admin.common.EstimatedDeliveryDate"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="rq in ssieCtrl.record.RateQuotes">
+                        <td ng-bind="rq.Rate | globalizedCurrency : ssieCtrl.record.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                        <td ng-bind="rq.RateTimestamp | convertJSONDate | date: 'yyyy-MM-dd hh:mm:ss a'"></td>
+                        <td ng-bind="rq.ShipCarrierMethod.ShipCarrierKey"></td>
+                        <td ng-bind="rq.ShipCarrierMethod.ShipCarrierName"></td>
+                        <td ng-bind="rq.ShipCarrierMethodKey"></td>
+                        <td ng-bind="rq.ShipCarrierMethodName"></td>
+                        <td ng-bind="rq.TargetShippingDate | convertJSONDate | date: 'yyyy-MM-dd'"></td>
+                        <td ng-bind="rq.EstimatedDeliveryDate | convertJSONDate | date: 'yyyy-MM-dd'"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <!-- Notes Tab -->
+        <uib-tab heading="{{'ui.admin.common.Note.Plural' | translate}}">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.PrivateNote.Plural"></h3>
+                <div cef-notes-editor
+                  notes="ssieCtrl.record.Notes"
+                  note-type-name="'Private'">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.OrderNote.Plural"></h3>
+                <div cef-notes-editor
+                  notes="ssieCtrl.record.Notes"
+                  note-type-name="'Invoice'">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.CustomerNote.Plural"></h3>
+                <div cef-notes-editor
+                  notes="ssieCtrl.record.Notes"
+                  note-type-name="'Customer'">
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <!-- Attributes Tab -->
+        <uib-tab heading="{{'ui.admin.common.Attribute.Plural' | translate}}">
+          <div class="container-fluid">
+            <div cef-json-attributes-editor
+              master="ssieCtrl.record"
+              type="Sales Invoice"
+              ng-if="ssieCtrl.record">
+            </div>
+          </div>
+        </uib-tab>
+        <!-- Associations Tab -->
+        <uib-tab heading="{{'ui.admin.controls.inventory.productDetail.Association.Plural' | translate}}">
+          <div class="container-fluid">
+            <!--
+            <div class="row" ng-if="ssieCtrl.cefConfig.featureSet.shipping.splitShipping.enabled">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.controls.sales.salesOrderDetail.SubOrders">
+                </label>
+                <div ng-hide="ssieCtrl.record.Children.length > 0"
+                  class="input-group mb-1"
+                  data-translate="ui.admin.common.NoSubOrdersForThisOrder">
+                </div>
+                <div ng-repeat="child in ssieCtrl.record.Children"
+                  class="input-group order mb-1">
+                  <a class="block" ui-sref="sales.salesOrders.detail({ID: child.ID})"
+                    ><span data-translate="ui.admin.common.Number.Symbol"></span><! --
+                    -- ><span ng-bind="child.ID + ' ' + child.CustomKey"></span></a>
+                  <span class="block"
+                    ><span data-translate="ui.admin.common.Total"></span>&nbsp;< !--
+                    -- ><span ng-bind="child.Totals.Total | globalizedCurrency : child.SerializableAttributes.SellingCurrencyKey.Value"
+                    ></span></span>
+                </div>
+              </div>
+            </div>
+            -->
+            <div class="row" ng-if="!ssieCtrl.hasSalesGroup">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.common.Order.Plural">
+                </label>
+                <div ng-hide="ssieCtrl.record.AssociatedSalesOrders.length"
+                  class="input-group mb-1"
+                  data-translate="ui.admin.controls.sales.salesInvoiceDetail.NoOrdersForThisInvoice">
+                </div>
+                <div ng-repeat="order in ssieCtrl.record.AssociatedSalesOrders"
+                  class="input-group order mb-1">
+                  <a>
+                    <span data-translate="ui.admin.common.Number.Symbol"></span>{{order.MasterID}}
+                    <span data-translate="ui.admin.controls.sales.salesInvoiceDetail.OrderForInvoice"></span>-{{order.ID}}
+                  </a><br/>
+                  <span data-translate="ui.admin.common.Total"
+                    ></span>&nbsp;{{order.Slave.Totals.Total | globalizedCurrency : order.SerializableAttributes.SellingCurrencyKey.Value}}<br />
+                  <span ng-if="!order.Slave.BalanceDue || order.Slave.BalanceDue <= 0"
+                    data-translate="ui.admin.common.Paid"></span>
+                  <span ng-if="order.Slave.BalanceDue > 0"
+                    ><span data-translate="ui.admin.controls.sales.salesOrderDetail.Due"
+                    ></span>&nbsp;{{order.Slave.BalanceDue | globalizedCurrency : order.SerializableAttributes.SellingCurrencyKey.Value}}</span><br/>
+                  <button ng-if="order.Slave.BalanceDue > 0 && !ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+                    type="button" class="btn btn-info btn-xs"
+                    ng-click="ssieCtrl.addPaymentToOrder($index)"
+                    data-translate="ui.admin.common.Payment.Add">
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssieCtrl.hasSalesGroup
+                                && (ssieCtrl.salesGroupRecord.SalesOrderMasters || ssieCtrl.salesGroupRecord.SubSalesOrders)">
+              <div class="col-sm-12">
+                <div ng-hide="ssieCtrl.salesGroupRecord.SalesOrderMasters.length || ssieCtrl.salesGroupRecord.SubSalesOrders.length"
+                  class="input-group mb-1"
+                  data-translate="ui.admin.controls.sales.salesInvoiceDetail.NoOrdersForThisInvoice">
+                </div>
+                <label class="control-label"
+                  ng-show="ssieCtrl.salesGroupRecord.SalesOrderMasters.length"
+                  data-translate="ui.admin.home.MasterSalesOrderLabel">
+                </label>
+                <div ng-repeat="order in ssieCtrl.salesGroupRecord.SalesOrderMasters"
+                  class="input-group order mb-1">
+                  <a ui-sref="sales.salesOrders.detail({ID: order.ID})">
+                    <span data-translate="ui.admin.controls.sales.salesInvoiceDetail.OrderForInvoice"></span>-{{order.ID}}
+                  </a><br/>
+                  <span data-translate="ui.admin.common.Total"
+                    ></span>&nbsp;{{order.Totals.Total | globalizedCurrency : order.SerializableAttributes.SellingCurrencyKey.Value}}<br />
+                  <span ng-if="!order.BalanceDue || order.BalanceDue <= 0"
+                    data-translate="ui.admin.common.Paid"></span>
+                  <span ng-if="order.BalanceDue > 0"
+                    ><span data-translate="ui.admin.controls.sales.salesOrderDetail.Due"
+                    ></span>&nbsp;{{order.BalanceDue | globalizedCurrency : order.SerializableAttributes.SellingCurrencyKey.Value}}</span><br/>
+                  <!-- TODO: Add payments for SalesOrdersMasters -->
+                    <!-- <button ng-if="order.BalanceDue > 0 && !ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+                    type="button" class="btn btn-info btn-xs"
+                    ng-click="ssieCtrl.addPaymentToOrder($index)"
+                    data-translate="ui.admin.common.Payment.Add">
+                  </button> -->
+                </div>
+                <label class="control-label"
+                  ng-show="ssieCtrl.salesGroupRecord.SubSalesOrders.length"
+                  data-translate="ui.admin.home.SubSalesOrderLabel">
+                </label>
+                <div ng-repeat="order in ssieCtrl.salesGroupRecord.SubSalesOrders"
+                  class="input-group order mb-1">
+                  <a ui-sref="sales.salesOrders.detail({ID: order.ID})">
+                    <span data-translate="ui.admin.controls.sales.salesInvoiceDetail.OrderForInvoice"></span>-{{order.ID}}
+                  </a><br/>
+                  <span data-translate="ui.admin.common.Total"
+                    ></span>&nbsp;{{order.Totals.Total | globalizedCurrency : order.SerializableAttributes.SellingCurrencyKey.Value}}<br />
+                  <span ng-if="!order.BalanceDue || order.BalanceDue <= 0"
+                    data-translate="ui.admin.common.Paid"></span>
+                  <span ng-if="order.BalanceDue > 0"
+                    ><span data-translate="ui.admin.controls.sales.salesOrderDetail.Due"
+                    ></span>&nbsp;{{order.BalanceDue | globalizedCurrency : order.SerializableAttributes.SellingCurrencyKey.Value}}</span><br/>
+                  <!-- TODO: Add payments for SubSalesOrders -->
+                    <!-- <button ng-if="order.BalanceDue > 0 && !ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+                    type="button" class="btn btn-info btn-xs"
+                    ng-click="ssieCtrl.addPaymentToOrder($index)"
+                    data-translate="ui.admin.common.Payment.Add">
+                  </button> -->
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ssieCtrl.cefConfig.featureSet.payments.enabled">
+              <div class="col-sm-12">
+                <label class="control-label"
+                  data-translate="ui.admin.common.Payments">
+                </label>
+                <div ng-hide="ssieCtrl.payments.length"
+                  class="input-group mb-1"
+                  data-translate="ui.admin.common.NoPaymentsHaveBeenReceived">
+                </div>
+                <div ng-repeat="payment in ssieCtrl.payments"
+                  class="input-group payment mb-1">
+                  <span ng-if="payment.SlaveID"><span ng-bind="payment.SlaveID"></span><br/></span>
+                  <span ng-if="payment.Slave.CustomKey"><span ng-bind="payment.Slave.CustomKey"></span><br/></span>
+                  <span ng-bind="payment.Slave.TypeName"></span>&nbsp;<!--
+                  --><span ng-bind="payment.Slave.Last4CardDigits"></span><br />
+                  <span ng-bind="payment.Slave.Amount | globalizedCurrency
+                    : ssieCtrl.record.SerializableAttributes.SellingCurrencyKey.Value">
+                  </span><br />
+                  <span ng-bind="payment.Slave.StatusName"></span>
+                  <button ng-if="payment.Slave.TypeName == 'Credit Card'
+                    && payment.Slave.StatusKey != 'Payment Received'"
+                    type="button" class="btn btn-info btn-xs"
+                    ng-click="ssieCtrl.capturePayment($index)"
+                    data-translate="ui.admin.common.Capture">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <!-- Stored Files Tab -->
+        <uib-tab heading="{{'ui.admin.common.StoredFile.Plural' | translate}}">
+          <div class="form-vertical container-fluid" ng-form="ssieCtrl.forms.StoredFiles">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.StoredFile.Plural"></h3>
+                <!-- Uploader -->
+                <div cef-upload-file-widget
+                  master="ssieCtrl.record"
+                  upload-type="StoredFileSalesInvoice"
+                  type-key="General"
+                  allow-multiple="true">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed table-striped">
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.common.Name"></th>
+                        <th data-translate="ui.admin.common.FileName"></th>
+                        <th style="width: 43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!ssieCtrl.record.StoredFiles.length">
+                        <td colspan="3"
+                          data-translate="ui.admin.common.NoStoredFilesHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="storedFile in ssieCtrl.record.StoredFiles">
+                        <td>
+                          <input type="text" class="form-control"
+                            id="txtStoredFileName{{$index}}" name="txtStoredFileName{{$index}}"
+                            ng-required="true"
+                            max-length="128"
+                            ng-model="storedFile.Name" />
+                        </td>
+                        <td>
+                          <a class="form-control-static" target="_blank"
+                            ng-href="{{(storedFile.StoredFileName || storedFile.Slave.FileName) | corsStoredFilesLink : 'salesInvoices'}}"
+                            ng-bind="storedFile.StoredFileName || storedFile.Name">
+                          </a>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="ssieCtrl.removeFileNew($index)">
+                            <i class="far fa-trash-o"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+    <!-- Order Summary Section -->
+    <div class="col-sm-12 col-md-3 col-lg-3 order-summary">
+      <div class="form-vertical">
+        <div class="row" ng-if="ssieCtrl.record.SalesGroupID">
+          <p class="form-control-static col-xs-9 bold"
+            data-translate="ui.admin.common.SalesGroup">
+          </p>
+          <a class="form-control-static col-xs-3"
+            ui-sref="sales.salesGroups.detail({ 'ID': ssieCtrl.record.SalesGroupID })"
+            target="_blank"
+            ng-bind="ssieCtrl.record.SalesGroupID">
+          </a>
+        </div>
+        <!-- Totals -->
+        <div class="row">
+          <div class="col-sm-12 text-white">
+            <h3 data-translate="ui.admin.common.Total.Plural"></h3>
+            <!-- update-balance-due must be "true" for totals line item changes to be reflected on balance due -->
+            <div ng-cloak="ssieCtrl.record.Totals"
+              cef-totals-widget
+              totals="ssieCtrl.record.Totals"
+              original-currency="ssieCtrl.record.SerializableAttributes.OriginalCurrencyKey.Value || salesDetail.cefConfig.defaultCurrency || 'USD'"
+              selling-currency="ssieCtrl.record.SerializableAttributes.SellingCurrencyKey.Value"
+              is-editable="!ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+              record="ssieCtrl.record"
+              update-balance-due="true"
+              discount-items="ssieCtrl.discountItems">
+            </div>
+          </div>
+        </div>
+        <!-- Balance Due -->
+        <div class="form-group">
+          <label class="control-label"
+            data-translate="ui.admin.common.BalanceDue">
+          </label>
+          <p class="total">
+            <span ng-bind="(ssieCtrl.record.BalanceDue ? ssieCtrl.record.BalanceDue : 0)
+              | globalizedCurrency : ssieCtrl.record.SerializableAttributes.SellingCurrencyKey.Value">
+            </span>
+            <a ng-click="ssieCtrl.editValue('Balance Due')">
+              <i class="far fa-pencil small"></i>
+              <span class="sr-only" data-translate="ui.admin.common.Edit"></span>
+            </a>
+          </p>
+        </div>
+        <!-- Date Placed -->
+        <div class="form-group">
+          <label class="control-label"
+            data-translate="ui.admin.common.Date">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-bind="ssieCtrl.record.CreatedDate | convertJSONDate | date:'yyyy MMM dd hh:mm a'">
+          </p>
+        </div>
+        <!-- Paid status -->
+        <div class="form-group">
+          <label class="control-label"
+            data-translate="ui.admin.common.Status">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-bind="ssieCtrl.record.StatusDisplayName || ssieCtrl.record.Status.DisplayName || ssieCtrl.record.StatusName || ssieCtrl.record.Status.Name || '-'">
+          </p>
+        </div>
+        <!-- Keys -->
+        <div class="form-group" ng-if="ssieCtrl.cefConfig.featureSet.salesInvoices.hasIntegratedKeys.enabled">
+          <label class="control-label"
+            data-translate="ui.admin.common.Key">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-show="ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+            ng-bind="ssieCtrl.record.CustomKey || '-'">
+          </p>
+          <input type="text" class="form-control"
+            translate-attr="{ placeholder: 'ui.admin.common.Key' }"
+            ng-hide="ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+            ng-model="ssieCtrl.record.CustomKey" />
+        </div>
+        <!-- Customer's PO Number -->
+        <div class="form-group">
+          <label class="control-label"
+            data-translate="ui.admin.common.CustomersPONumber">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-show="ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+            ng-bind="ssieCtrl.salesGroupRecord.SalesOrderMasters[0].PurchaseOrderNumber || '-'">
+          </p>
+          <input type="text" class="form-control"
+            id="txtPurchaseOrderNumber" name="txtPurchaseOrderNumber"
+            translate-attr="{ placeholder: 'ui.admin.common.CustomersPONumber' }"
+            ng-hide="ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+            ng-model="ssieCtrl.salesGroupRecord.SalesOrderMasters[0].PurchaseOrderNumber" />
+        </div>
+        <!-- Transaction ID -->
+        <div class="form-group" ng-if="ssieCtrl.cefConfig.featureSet.taxes.enabled">
+          <label class="control-label"
+            data-translate="ui.admin.common.TaxTransactionID">
+          </label>
+          <p class="form-control-static ml-1"
+            ng-bind="ssieCtrl.record.TaxTransactionID || '-'">
+          </p>
+        </div>
+        <!-- Multi-Currency -->
+        <div class="form-group" ng-if="ssieCtrl.cefConfig.featureSet.multiCurrency.enabled">
+          <label class="control-label"
+            data-translate="ui.admin.common.Currency">
+          </label>
+           <p class="form-control-static ml-1"
+            ng-bind="ssieCtrl.record.SerializableAttributes.SellingCurrencyKey.Value || 'USD'">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <div class="row details-footer">
+    <div class="col-md-12" ng-cloak="ssieCtrl.record">
+      <button ng-if="ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+        type="button" class="btn btn-info"
+        ng-disabled="!ssieCtrl.record"
+        translate-attr="{ title: 'ui.admin.common.back',
+                          'aria-label': 'ui.admin.common.back' }"
+        ui-sref="sales.salesInvoices.list">
+        <span data-translate="ui.admin.common.back"></span>
+      </button>
+      <!-- Save/Cancel -->
+      <button ng-if="!ssieCtrl.recordIsNew() && !ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+        type="button" class="btn btn-primary"
+        ng-disabled="!ssieCtrl.record"
+        uib-tooltip="{{('ui.admin.common.SaveChange.Plural' | translate)
+                   + '\r\nThe Invoice will be saved with any changes.'}}"
+        tooltip-placement="top-left"
+        translate-attr="{ title: 'ui.admin.common.SaveChange.Plural',
+                          'aria-label': 'ui.admin.common.SaveChange.Plural' }"
+        ng-click="ssieCtrl.saveRecord()">
+        <span data-translate="ui.admin.common.SaveChange.Plural"></span>
+      </button>
+      <button ng-if="!ssieCtrl.recordIsNew() && !ssieCtrl.isOneOfTheseStatuses(['Completed','Split','Void'])"
+        type="button" class="btn btn-warning"
+        ng-disabled="!ssieCtrl.record"
+        uib-tooltip="{{('ui.admin.common.BackCancel' | translate)
+                   + '\r\n' + ('ui.admin.controls.sales.salesOrderDetail.BackCancel.Message' | translate)}}"
+        tooltip-placement="top-left"
+        translate-attr="{ title: 'ui.admin.common.BackCancel',
+                          'aria-label': 'ui.admin.common.BackCancel' }"
+        ui-sref="sales.salesInvoices.list">
+        <span data-translate="ui.admin.common.BackCancel"></span>
+      </button>
+      <!-- Actions against a Valid Invoice -->
+      <div ng-if="!ssieCtrl.isOneOfTheseStatuses(['Void'])"
+        class="btn-group dropup inline-block ml-1"
+        uib-dropdown keyboard-nav is-open="actionsMenuStatus.isopen">
+        <button type="button" class="btn btn-info dropdown-toggle"
+          id="btnInvoiceActions" name="btnInvoiceActions"
+          ng-disabled="!ssieCtrl.record"
+          translate-attr="{ title: 'ui.admin.controls.sales.salesInvoiceDetail.InvoiceActions',
+                            'aria-label': 'ui.admin.controls.sales.salesInvoiceDetail.InvoiceActions' }"
+          uib-dropdown-toggle>
+          <span data-translate="ui.admin.controls.sales.salesInvoiceDetail.InvoiceActions"></span>&nbsp;<!--
+          --><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btnInvoiceActions">
+          <li role="menuitem" ng-if="!ssieCtrl.isOneOfTheseStatuses(['Paid'])">
+            <a ng-click="ssieCtrl.payInvoice()"
+              uib-tooltip="{{('ui.admin.controls.sales.modals.PayInvoice' | translate)
+                  + '\r\n' + ('ui.admin.controls.sales.modals.PayInvoice.Message' | translate)}}"
+              tooltip-placement="top-right"
+              data-translate="ui.admin.controls.sales.modals.PayInvoice">
+            </a>
+          </li>
+          <li role="menuitem">
+            <a ng-click="ssieCtrl.voidInvoice()"
+              ng-disabled="ssieCtrl.isOneOfTheseStatuses(['Void'])"
+              uib-tooltip="{{('ui.admin.controls.sales.salesInvoiceDetail.VoidInvoice' | translate)
+                  + '\r\n' + ('ui.admin.controls.sales.salesInvoiceDetail.VoidInvoice.Message' | translate)}}"
+              tooltip-placement="top-right"
+              data-translate="ui.admin.controls.sales.salesInvoiceDetail.VoidInvoice">
+            </a>
+          </li>
+        </ul>
+      </div>
+      <span class="ml-1 alert alert-info" ng-if="ssieCtrl.viewState.running" data-translate="ui.admin.common.Running.Ellipses"></span>
+      <span class="ml-1 alert alert-success" ng-if="ssieCtrl.saveSuccess || ssieCtrl.viewState.success" data-translate="ui.admin.common.Success.Exclamation"></span>
+      <span class="ml-1 alert alert-danger" ng-if="ssieCtrl.saveFailed" data-translate="ui.admin.common.Failed.Exclamation"></span>
+      <span class="ml-1 alert alert-danger" ng-if="ssieCtrl.viewState.hasError" ng-bind="ssieCtrl.viewState.errorMessage"></span>
+    </div>
+  </div>
+</div>

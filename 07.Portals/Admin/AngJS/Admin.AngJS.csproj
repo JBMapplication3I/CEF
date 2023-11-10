@@ -1,0 +1,131 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net472</TargetFrameworks>
+    <AssemblyName>Clarity.Ecommerce.UI.AdminAngJS</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.UI.AdminAngJS</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.UI.AdminAngJS</RootNamespace>
+    <ProjectGuid>{DBE572BA-EED8-4D16-997F-26C9FFCA04D9}</ProjectGuid>
+    <AnalysisIgnoredDirectories>bower_components;node_moules;lib/bower_components</AnalysisIgnoredDirectories>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>bin\$(AssemblyName).xml</DocumentationFile>
+    <RunCommand>$(MSBuildExtensionsPath64)\..\IIS Express\iisexpress</RunCommand>
+    <RunArguments>/path:"$(MSBuildProjectDirectory)" /port:18083</RunArguments>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Content\**" />
+    <Compile Remove="framework\**" />
+    <Compile Remove="lib\**" />
+    <Compile Remove="Scripts\**" />
+    <Content Remove="Content\**" />
+    <Content Remove="framework\**" />
+    <Content Remove="lib\**" />
+    <Content Remove="Scripts\**" />
+    <EmbeddedResource Remove="Content\**" />
+    <EmbeddedResource Remove="framework\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <EmbeddedResource Remove="Scripts\**" />
+    <None Remove="Content\**" />
+    <None Remove="framework\**" />
+    <None Remove="lib\**" />
+    <None Remove="Scripts\**" />
+    <Content Remove="package-lock.json" />
+    <Content Remove="package.json" />
+    <Content Remove="tslint.json" />
+    <None Remove=".npmignore" />
+    <None Remove="gulpfile.js" />
+    <None Remove="npm-uber-install.bat" />
+    <None Remove="tsc-test.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="framework\admin\controls\system\widgets\appSettingsWidget.tstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>appSettingsWidget.tt</DependentUpon>
+    </None>
+    <None Include="framework\admin\controls\system\widgets\appSettingsWidget.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>appSettingsWidget.tstxt</LastGenOutput>
+    </None>
+    <None Include="framework\admin\controls\system\widgets\clearCacheButtonsWidget.tstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>clearCacheButtonsWidget.tt</DependentUpon>
+    </None>
+    <None Include="framework\admin\controls\system\widgets\clearCacheButtonsWidget.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>clearCacheButtonsWidget.tstxt</LastGenOutput>
+    </None>
+    <None Include="framework\admin\controls\types\types.details.ts.ttinclude" />
+    <None Include="framework\admin\controls\types\types.details.ui.ttinclude" />
+    <None Include="framework\admin\controls\types\types.details.view.ttinclude" />
+    <None Include="framework\admin\controls\types\types.search.ts.ttinclude" />
+    <None Include="framework\admin\controls\types\types.search.ui.ttinclude" />
+    <None Include="framework\admin\controls\types\types.tstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>types.tt</DependentUpon>
+    </None>
+    <None Include="framework\admin\controls\types\types.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>types.tstxt</LastGenOutput>
+    </None>
+    <None Include="framework\admin\widgets\associations\_T4\associators.ts.ttinclude" />
+    <None Include="framework\admin\widgets\associations\_T4\Associators.tstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Associators.tt</DependentUpon>
+    </None>
+    <None Include="framework\admin\widgets\associations\_T4\Associators.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Associators.tstxt</LastGenOutput>
+    </None>
+    <None Include="framework\admin\widgets\associations\_T4\associators.ui.ttinclude" />
+    <None Include="framework\admin\_api\cvApi.tstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>cvApi.tt</DependentUpon>
+    </None>
+    <None Include="framework\admin\_api\cvApi.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>cvApi.tstxt</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\Solution Items\rewrite.outboundRules.config">
+      <Link>rewrite.outboundRules.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Solution Items\rewrite.rewriteMaps.config">
+      <Link>rewrite.rewriteMaps.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Solution Items\rewrite.rules.config">
+      <Link>rewrite.rules.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="tsconfig.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="web.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="del &quot;$(ProjectDir)node_modules\angular-ui-router-title\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)node_modules\gulp-typescript\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;exit 0" />
+  </Target>
+</Project>

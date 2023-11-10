@@ -1,0 +1,19 @@
+﻿<div class="col-12"
+     ng-hide="cefUploadMappingWidgetCtrl.uploadData.name">
+    <div cef-upload-mapping
+         upload-type="'Document'"
+         data="cefUploadMappingWidgetCtrl.uploadData">
+    </div>
+</div>
+<div class="col-12"
+     ng-show="cefUploadMappingWidgetCtrl.uploadData.name">
+    <div ng-repeat="(key, value) in cefUploadMappingWidgetCtrl.uploadData.headers.SystemHeaders">
+        <label for="ddlUploadMapping_{{value}}_{{$index}}" ng-bind="value"></label>
+        <select class="form-control"
+                id="ddlUploadMapping_{{value}}_{{$index}}" name="ddlUploadMapping_{{value}}_{{$index}}"
+                ng-options="file as file for file in cefUploadMappingWidgetCtrl.uploadData.headers.FileHeaders"
+                ng-model="cefUploadMappingWidgetCtrl.mappingObject.Mappings[value]">
+            <option value="">--</option>
+        </select>
+    </div>
+</div>

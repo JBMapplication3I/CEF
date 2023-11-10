@@ -1,0 +1,307 @@
+﻿@page "/details/stores/editor/{IDStr}"
+@using Clarity.Ecommerce.MVC.Core
+@inherits MVC.Core.EditorViewTemplatedControllerBase<StoreModel, MVC.Api.Endpoints.UpdateStore>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="storeEditorPage">
+    @if (ViewState.loading || Record == null! && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (EditContext != null! && Record is not null)
+    {
+      <Validations
+        EditContext="EditContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="EditContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content-with-footer">
+            <Container Fluid="true">
+              <Row Class="m-0">
+                <Column ColumnSize="ColumnSize.IsFull">
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Store" Class="mr-1" />
+                    @ClippedName #@ID
+                  </Heading>
+                </Column>
+              </Row>
+              <Row Class="mb-2">
+                <Div Class="col-lg-4 col-md-6 col-12">
+                  <hr class="border-bottom w-100" />
+                  <Heading Size="HeadingSize.Is3">Operated By</Heading>
+                  <hr class="border-bottom w-100" />
+                  @if (StoreUsers is null)
+                  {
+                    <Paragraph>No Operators Assigned</Paragraph>
+                  }
+                  else
+                  {
+                    <Table Borderless="true" Narrow="true">
+                      <TableBody>
+                        <Repeater Items="StoreUsers">
+                          <ChildContent Context="user">
+                            @if (StoreUsers.IndexOf(user) == 0)
+                            {
+                              <TableRow>
+                                <TableRowCell><Strong>Primary</Strong></TableRowCell>
+                              </TableRow>
+                            }
+                            else
+                            {
+                              <TableRow>
+                                <TableRowCell><Strong>Additional Operator</Strong></TableRowCell>
+                                <TableRowCell>
+                                  @*
+                                  <Blazorise.Button
+                                    TextColor="TextColor.Danger"
+                                    Clicked="@(() => DeleteUser(user))">
+                                    <Icon Name="Icons.Trash" IconSize="IconSize.Small" />
+                                    Remove
+                                  </Blazorise.Button>
+                                  *@
+                                </TableRowCell>
+                              </TableRow>
+                            }
+                            <TableRow>
+                              <TableRowCell Class="w-100 text-capitalize">Name: @user.ContactFirstName</TableRowCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableRowCell Class="w-100">Email: @user.ContactEmail</TableRowCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableRowCell Class="w-100">Phone: @user.ContactPhone</TableRowCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableRowCell><hr /></TableRowCell>
+                            </TableRow>
+                          </ChildContent>
+                        </Repeater>
+                        <TableRow>
+                          <TableRowCell>
+                            <Blazorise.Anchor To="/" TextColor="TextColor.Danger">
+                              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Plus" />
+                              Add Operator
+                            </Blazorise.Anchor>
+                          </TableRowCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  }
+                </Div>
+                <Div Class="col-lg-4 col-12">
+                  <hr class="border-bottom w-100" />
+                  <Heading Size="HeadingSize.Is3">Store Details</Heading>
+                  <hr class="border-bottom w-100" />
+                  <Table Borderless="true" Narrow="true">
+                    <TableBody>
+                      <TableRow>
+                        <TableRowCell>
+                          <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.User" Class="fa-fw" TextColor="TextColor.Primary" />
+                        </TableRowCell>
+                        <TableRowCell Class="w-100 text-capitalize">@Record.Name</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Suitcase" Class="fa-fw" TextColor="TextColor.Primary" />
+                        </TableRowCell>
+                        <TableRowCell Class="w-100">
+                          <UnorderedList Class="list-unstyled mb-0">
+                            <UnorderedListItem>@Record.Contact.Address.Street1</UnorderedListItem>
+                            @if (Record.Contact.Address.Street2 is not null)
+                            {
+                              <UnorderedListItem>@Record.Contact.Address.Street2</UnorderedListItem>
+                            }
+                            <UnorderedListItem>
+                              <Span>@Record.Contact.Address.City,</Span>
+                              <Span>@Record.Contact.Address.RegionCode</Span>
+                            </UnorderedListItem>
+                          </UnorderedList>
+                        </TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <Blazorise.Icons.FontAwesome.Icon IconStyle="IconStyle.Regular" Name="@("fa-phone-rotary")" Class="fa-fw" TextColor="TextColor.Primary" />
+                        </TableRowCell>
+                        <TableRowCell Class="w-100">@Record.Contact.Phone1</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.At" Class="fa-fw" TextColor="TextColor.Primary" />
+                        </TableRowCell>
+                        <TableRowCell Class="w-100">@Record.Contact.Email1</TableRowCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Div>
+                <Div Class="col-lg-4 col-12">
+                  <hr class="border-bottom w-100" />
+                  <Heading Size="HeadingSize.Is3">Store Profile Image</Heading>
+                  <hr class="border-bottom w-100" />
+                  <Div Style="background-color:dimgrey;">
+                    <Row>
+                      <Column ColumnSize="ColumnSize.Is10"><Image></Image></Column>
+                      <Column ColumnSize="ColumnSize.Is2">
+                        <Blazorise.Button><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.ArrowUp" /></Blazorise.Button>
+                        <Blazorise.Button><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Trash" /></Blazorise.Button>
+                      </Column>
+                    </Row>
+                  </Div>
+                </Div>
+              </Row>
+              <Row>
+                <Column ColumnSize="ColumnSize.Is4" Class="text-sm-left">Shipping</Column>
+              </Row>
+              <Row>
+                <Column ColumnSize="ColumnSize.Is12"><hr /></Column>
+              </Row>
+              <Row>
+                <Column ColumnSize="ColumnSize.Is4" Class="text-left">
+                  <Row>
+                    Select Shipping Type
+                  </Row>
+                  <Row>
+                    @if (StoreShippingList is not null)
+                    {
+                      <SelectList
+                        TItem="string"
+                        TValue="string"
+                        Data="@StoreShippingList"
+                        TextField="@(item => item)"
+                        ValueField="@(item => item)"
+                        SelectedValue="@SelectedStoreShipping"
+                        SelectedValueChanged="@SetStoreShipping"
+                        Style="width:auto; padding-bottom:4px"
+                      />
+                    }
+                  </Row>
+                </Column>
+              </Row>
+            </Container>
+          </Div>
+        </EditForm>
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/details/stores";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+
+  private List<string>? StoreShippingList { get; }
+    = new() { "Custom Shipping Provider", "Delivery To Team Coordinator", "Custom Shipping or Delivery" };
+
+  private List<UserModel>? StoreUsers { get; set; }
+
+  private string? SelectedStoreShipping { get; set; } = "Custom Shipping Provider";
+  #endregion
+
+  #region IHaveATypeBaseModel Handlers
+  private List<TypeModel>? Types { get; set; }
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetStoreTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region Loading
+  /// <inheritdoc />
+  protected override Func<int, Task<IHttpPromiseCallbackArg<StoreModel>>> GetCallerFunc
+    => id => cvApi.GetStoreByID(new() { ID = ID });
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    return Task.WhenAll(
+      LoadTypesAsync()
+#if STOREADMIN
+      , LoadStoreUsersAsync()
+#endif
+      );
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<StoreModel, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> UpdateCallerFunc
+    => record => cvApi.UpdateStore(Mapper.Map<MVC.Api.Endpoints.UpdateStore>(record));
+
+  /// <inheritdoc />
+  protected override Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    if (!Contract.CheckValidID(Record.TypeID))
+    {
+      Record.TypeID = Types?.First().ID ?? 1;
+    }
+    return Task.CompletedTask;
+  }
+  #endregion
+
+  private async Task LoadStoreUsersAsync()
+  {
+    DebugBeginMethod();
+    var storeUsersRaw = await cvApi.GetStoreUsers(new() { Active = true, MasterID = ID, }).ConfigureAwait(false);
+    var ids = storeUsersRaw?.data?.Results?.Select(x => x.SlaveID).ToArray();
+    var usersRaw = await cvApi.GetUsers(new() { IDs = ids, }).ConfigureAwait(false);
+    if (usersRaw.data is not null)
+    {
+      StoreUsers = usersRaw.data.Results;
+    }
+    DebugEndMethod();
+  }
+
+  private void SetStoreShipping(string shipping)
+  {
+    DebugBeginMethod();
+    SelectedStoreShipping = shipping;
+    StateHasChanged();
+    DebugEndMethod();
+  }
+
+  // NOTE: Use deactivate on the association, don't delete
+  // private async void DeleteUser(UserModel user)
+  // {
+  //   DebugBeginMethod();
+  //   await cvApi.DeactivateStoreUserByID(new(){ ID = store.ID }).ConfigureAwait(false);
+  //   StateHasChanged();
+  //   DebugEndMethod();
+  // }
+
+  // Not needed currently
+  // private async Task Save()
+  // {
+  //   DebugBeginMethod();
+  //   if (Record is null)
+  //   {
+  //     throw new InvalidOperationException();
+  //   }
+  //   await cvApi.UpdatePurchaseOrder(leMapper.Map<MVC.Api.Endpoints.UpdatePurchaseOrder>(Record)).ConfigureAwait(false);
+  //   ConsoleDebug("Save: Update finished, calling Load...");
+  //   await LoadRecordAsync().ConfigureAwait(false);
+  //   DebugEndMethod();
+  // }
+}

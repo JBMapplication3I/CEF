@@ -1,0 +1,62 @@
+<!-- This will repeat rows based on the # of stores, their stock of the product, and etc. -->
+<!-- Stock, Price, and Fulfillment Center all need to go into one module -->
+<!-- Stock -->
+<!--
+<div class="row no-gutters"
+  ng-repeat="store in pcsiCtrl.stores.Results">
+  <div class="d-inline-block"
+    style="overflow-wrap: break-word; width: 37.5%; padding: 0.5rem"
+    cef-product-card-sku-and-stock-gen-widget
+    product-id="product.ID"
+    hide-labels="true"
+    left="true"
+    hide-sku="true"></div>
+  <div class="d-inline-block" style="width: 25%; padding: 0.5rem"
+    cef-product-card-pricing-gen-widget
+    product-id="product.ID"
+    display-style="{{'sideBySide'}}">
+  </div>
+  <div class="d-inline-block" style="width: 37.5%; padding: 0.5rem">
+    <span>test</span>
+  </div>
+</div>
+-->
+<table class="table table-sm table-bordered table-hover table-striped">
+  <tbody ng-repeat="variant in pcsiCtrl.product.ProductAssociations"
+    ng-if="variant"
+    style="max-height: 40px;">
+    <!-- Availability -->
+    <td class="w-10 text-truncate">
+      <div cef-product-card-stock-gen-widget
+        product-id="variant.SlaveID"
+        hide-labels="true"
+        left="true">
+      </div>
+    </td>
+    <!-- Price -->
+    <td class="w-10 text-truncate">
+      <div cef-product-card-pricing-gen-widget
+        product-id="variant.SlaveID"
+        display-style="$parent.scprtCtrl.pds">
+      </div>
+    </td>
+    <!-- Fulfilment Center -->
+    <td class="w-10 text-truncate"
+      ng-bind="variant.Slave.ProductInventoryLocationSections[0].Slave.InventoryLocationName">
+    </td>
+    <!-- Incoterm -->
+    <td class="w-10 text-truncate"
+      ng-bind="variant.Slave.Stores[0].SerializableAttributes.INCOTerm.Value">
+    </td>
+    <!-- Action -->
+    <td class="w-35">
+      <div cef-product-card-action-button-gen-widget
+        class="flex-fill"
+        product-id="variant.SlaveID"
+        as-icon="true"
+        quick-add="$parent.scprtCtrl.quickA"
+        button-view="'addToCart'">
+      </div>
+    </td>
+  </tbody>
+</table>

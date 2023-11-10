@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Models</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Models</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Models</RootNamespace>
+    <ProjectGuid>EE6D2B76-FB73-4642-A74A-38289C32AA1D</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Models.tt" />
+    <None Remove="SearchModels.tt" />
+    <None Remove="ModelsRegistry.tt" />
+    <Content Include="Models.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Models.cstxt</LastGenOutput>
+    </Content>
+    <Content Include="SearchModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SearchModels.cstxt</LastGenOutput>
+    </Content>
+    <Content Include="ModelsRegistry.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelsRegistry.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Models.cstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Models.tt</DependentUpon>
+    </None>
+    <None Update="SearchModels.cstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SearchModels.tt</DependentUpon>
+    </None>
+    <Compile Update="ModelsRegistry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelsRegistry.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <PackageReference Include="ServiceStack.Interfaces" Version="6.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

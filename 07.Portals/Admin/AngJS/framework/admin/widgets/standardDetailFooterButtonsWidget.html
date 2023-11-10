@@ -1,0 +1,66 @@
+﻿<button ng-if="sdfbCtrl.includeSave"
+		type="button" class="btn btn-success"
+		translate-attr="{ title: 'ui.admin.common.Save',
+						  'aria-label': 'ui.admin.common.Save' }"
+		ng-disabled="!sdfbCtrl.validForms() || !sdfbCtrl.dirtyForms()"
+		ng-click="sdfbCtrl.save()">
+	<i class="far fa-fw fa-save"></i>&nbsp;<!--
+	--><span data-translate="ui.admin.common.Save"></span>
+</button>
+<button ng-if="sdfbCtrl.includeSaveAndClose"
+		type="button" class="btn btn-success"
+		translate-attr="{ title: 'ui.admin.common.SaveAndClose',
+						  'aria-label': 'ui.admin.common.SaveAndClose' }"
+		ng-disabled="!sdfbCtrl.validForms() || !sdfbCtrl.dirtyForms()"
+		ng-click="sdfbCtrl.saveAndClose()">
+	<i class="far fa-fw fa-save"></i>&nbsp;<!--
+	--><span data-translate="ui.admin.common.SaveAndClose"></span>
+</button>
+<button ng-if="sdfbCtrl.includeDeactivate"
+		type="button" class="btn btn-warning"
+		translate-attr="{ title: 'ui.admin.common.Recycle',
+						  'aria-label': 'ui.admin.common.Recycle' }"
+		ng-disabled="sdfbCtrl.dirtyForms()"
+		ng-click="sdfbCtrl.deactivate()">
+	<i class="far fa-fw fa-recycle"></i>&nbsp;<!--
+	--><span data-translate="ui.admin.common.Recycle"></span>
+</button>
+<button ng-if="sdfbCtrl.includeReactivate"
+		type="button" class="btn btn-info"
+		translate-attr="{ title: 'ui.admin.common.Restore',
+						  'aria-label': 'ui.admin.common.Restore' }"
+		ng-disabled="sdfbCtrl.dirtyForms()"
+		ng-click="sdfbCtrl.reactivate()">
+	<i class="far fa-fw fa-recycle"></i>&nbsp;<!--
+	--><span data-translate="ui.admin.common.Restore"></span>
+</button>
+<button ng-if="sdfbCtrl.includeDelete"
+		type="button" class="btn btn-danger"
+		translate-attr="{ title: 'ui.admin.common.Delete',
+						  'aria-label': 'ui.admin.common.Delete' }"
+		ng-disabled="sdfbCtrl.dirtyForms()"
+		ng-click="sdfbCtrl.delete()">
+	<i class="far fa-fw fa-times"></i>&nbsp;<!--
+	--><span data-translate="ui.admin.common.Delete"></span>
+</button>
+<button type="button" class="btn btn-default btn-secondary"
+		translate-attr="{ title: 'ui.admin.common.BackCancel',
+						  'aria-label': 'ui.admin.common.BackCancel' }"
+		ng-click="sdfbCtrl.backCancel()">
+	<i class="far fa-fw fa-undo"></i>&nbsp;<!--
+	--><span data-translate="ui.admin.common.BackCancel"></span>
+</button>
+<div class="alert alert-danger inline-block ml-1" role="alert"
+	 ng-if="sdfbCtrl.masterController.viewState.hasError">
+	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><!--
+	--><span class="sr-only" data-translate="ui.admin.common.Error"></span><!--
+	--><span ng-if="sdfbCtrl.masterController.viewState.errorMessage">&nbsp;<!--
+	--><span ng-bind="sdfbCtrl.masterController.viewState.errorMessage"></span></span>
+</div>
+<div class="alert alert-info inline-block ml-1" role="alert"
+	 ng-if="sdfbCtrl.masterController.viewState.running">
+	<i class="far fa-info-circle" aria-hidden="true"></i><!--
+	--><span class="sr-only" data-translate="ui.admin.common.Info"></span><!--
+	--><span ng-if="sdfbCtrl.masterController.viewState.waitMessage">&nbsp;<!--
+	--><span ng-bind="sdfbCtrl.masterController.viewState.waitMessage"></span></span>
+</div>

@@ -1,0 +1,84 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net472</TargetFrameworks>
+    <AssemblyName>Clarity.Ecommerce.DataModel</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.DataModel</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.DataModel</RootNamespace>
+    <ProjectGuid>{43DE0904-B73B-4893-A3F6-EC53A78B4635}</ProjectGuid>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Solution Items\connectionStrings.config" Link="connectionStrings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DataSets\DefaultData.Identity.Permissions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DefaultData.Identity.Permissions.cs</LastGenOutput>
+    </None>
+    <None Update="DataModelRegistry.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataModelRegistry.cs</LastGenOutput>
+    </None>
+    <None Update="DataModelContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataModelContext.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DataModelContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModelContext.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DataModelRegistry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModelRegistry.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DataSets\DefaultData.Identity.Permissions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultData.Identity.Permissions.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFAttributeConfig" Version="1.0.0" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.2.3" />
+    <PackageReference Include="Microsoft.Owin.Security.Cookies" Version="4.2.0" />
+    <PackageReference Include="Microsoft.Owin.Security.OAuth" Version="4.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
+    <PackageReference Include="Twilio" Version="5.68.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
+  <Import Project="..\01.Clarity.Ecommerce.DataModel.Shared\01.Clarity.Ecommerce.DataModel.Shared.projitems" Label="Shared" />
+</Project>

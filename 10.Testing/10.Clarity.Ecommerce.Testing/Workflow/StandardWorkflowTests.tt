@@ -1,0 +1,41 @@
+﻿﻿<#@ template debug="true" hostspecific="True" language="C#"
+#><#@ output extension=".cstxt"
+#><#@ assembly name="System"
+#><#@ assembly name="System.Core"
+#><#@ assembly name="System.ComponentModel.DataAnnotations"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\entityframework\6.4.4\lib\net45\EntityFramework.dll"
+#><#@ assembly name="$(SolutionDir)01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\bin\Debug\net472\Clarity.Ecommerce.DataModel.dll"
+#><#@ assembly name="$(SolutionDir)03.ModelsAndMapping\03.Clarity.Ecommerce.Models\bin\Debug\net472\Clarity.Ecommerce.Models.dll"
+#><#@ assembly name="$(SolutionDir)04.Providers\Clarity.Ecommerce.Providers.Pricing\bin\Debug\net472\Clarity.Ecommerce.Providers.Pricing.dll"
+#><#@ assembly name="$(SolutionDir)05.BusinessLogic\05.Clarity.Ecommerce.Workflow\bin\Debug\net472\Clarity.Ecommerce.Workflow.dll"
+#><#@ assembly name="$(SolutionDir)11.T4\11.T4.CodeGenerator\bin\Debug\net472\CodeGenerator.dll"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.ComponentModel.DataAnnotations"
+#><#@ import namespace="System.ComponentModel.DataAnnotations.Schema"
+#><#@ import namespace="System.Data.Entity"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Reflection"
+#><#@ import namespace="System.Runtime.InteropServices"
+#><#@ import namespace="Clarity.Ecommerce.DataModel"
+#><#@ include file="$(SolutionDir)11.T4\11.T4.CodeGenerator\MultiOutput.old.ttinclude"
+#><#@ include file="StandardWorkflowTests.ttinclude"
+#><#
+var tableClasses = AppDomain.CurrentDomain.GetAssemblies()
+    .Where(x => x.FullName.StartsWith("Clarity.Ecommerce.DataModel"))
+    .SelectMany(x => x.GetTypes().Where(t => t.CustomAttributes.Any(at => at.AttributeType == typeof(SqlSchemaAttribute))))
+    .OrderBy(x => ((SqlSchemaAttribute)Attribute.GetCustomAttribute(x, typeof(SqlSchemaAttribute))).Both)
+    .GroupBy(x => ((SqlSchemaAttribute)Attribute.GetCustomAttribute(x, typeof(SqlSchemaAttribute))).Schema);
+string[] skips = new string[] { "RoleUser", "Report" };
+foreach (var group in tableClasses)
+{
+    string schema = group.Key.Replace("System", "Structure");
+    foreach (var theType in group)
+    {
+        var td = new TypeDeterminer(theType);
+        if (td.IsExcludedFromT4 || skips.Contains(theType.Name)) { continue; }
+        GenerateStandardWorkflowTestsFile(schema, theType);
+        SaveOutput(schema + "\\" + theType.Name + "\\" + theType.Name + "StandardWorkflowTests", "generated.cs", true);
+    }
+}
+DeleteOldOutputs();
+#>

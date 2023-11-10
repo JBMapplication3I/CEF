@@ -1,0 +1,23 @@
+﻿<div class="featured-section-title">
+    <h3 data-translate="ui.storefront.common.Shop"></h3>
+    <h4 data-translate="ui.storefront.category.PopularCategories"></h4>
+    <a class="btn btn-link"
+       ui-sref-plus uisrp-area="catalog"
+       ><b data-translate="ui.storefront.common.ViewAll"></b></a>
+</div>
+<div class="row popular-categories">
+    <div class="col-md-2 col-sm-4" ng-repeat="category in popularCategoriesCtrl.categories">
+        <a ui-sref-plus uisrp-is-catalog="true"
+           uisrp-state="searchCatalog.products.results.both"
+           uisrp-params="{ 'category': '{{category.Name}}|{{category.CustomKey}}' }">
+            <p><div cef-product-card-thumbnail-widget
+                    product-id="category.ID"
+                    product-image="category.PrimaryImageFileName"
+                    is-category="true"
+                    width="250"
+                    height="250"
+                    index="$index"></div></p>
+            <b ng-bind="category.DisplayName || category.Name"></b>
+        </a>
+    </div>
+</div>

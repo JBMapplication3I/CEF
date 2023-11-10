@@ -1,0 +1,20 @@
+﻿<div class="row" ng-form="getInvitedCtrl.forms.sendInvite">
+    <div class="col-md-12 form-group" ng-class="{'has-error': getInvitedCtrl.forms.sendInvite.txtEmail.$dirty && getInvitedCtrl.forms.sendInvite.txtEmail.$invalid}">
+        <div class="input-group">
+            <input type="email" class="form-control"
+                   id="txtEmail" name="txtEmail"
+                   placeholder="Your email..."
+                   ng-required="true"
+                   ng-model="getInvitedCtrl.inviteData.Email" />
+            <div class="input-group-append input-group-btn">
+                <button type="button" class="btn btn-success"
+                        ng-disabled="getInvitedCtrl.forms.sendInvite.$invalid"
+                        ng-click="getInvitedCtrl.sendInvitation()"
+                        data-translate="ui.storefront.common.SendMyInvitation"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12" ng-show="getInvitedCtrl.successMessage">
+        <p data-translate="ui.storefront.user.getInvited.YourInvitationWasSuccessfullySentPleaseCheckYourEmailForYourRegistrationLink"></p>
+    </div>
+</div>

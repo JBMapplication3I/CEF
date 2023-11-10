@@ -1,0 +1,238 @@
+﻿<div class="form-vertical" ng-form="jaewCtrl.forms.JsonAttributes">
+  <h3 data-translate="ui.admin.common.Attribute.Plural"></h3>
+  <div class="form-group">
+    <p>
+      <b data-translate="ui.admin.controls.shared.jsonAttributesEditor.Note.Colon"></b>&nbsp;<!--
+      --><span data-translate="ui.admin.controls.shared.jsonAttributesEditor.Note.Message.Part1"></span>&nbsp;<!--
+      --><span ng-bind="jaewCtrl.type"></span>&nbsp;<!--
+      --><span data-translate="ui.admin.controls.shared.jsonAttributesEditor.Note.Message.Part2"></span>
+    </p>
+  </div>
+  <div class="separator-h"></div>
+  <div class="row">
+    <div class="col-sm-12 col-md-5 col-lg-6">
+      <div class="form-group">
+        <label class="control-label"
+          data-translate="ui.admin.common.QuickFilter">
+        </label>
+        <input type="text" class="form-control"
+          translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+          ng-model="jaewCtrl.paging.quickFilter" />
+      </div>
+    </div>
+    <div class="col-sm-3 col-md-2 col-lg-2">
+      <div class="form-group">
+        <label class="control-label"
+          data-translate="ui.admin.common.PageSize">
+        </label>
+        <select class="form-control text-right"
+          ng-change="jaewCtrl.paging.resetCachedPagesInSets()"
+          ng-options="o for o in [8,16,32,64,128]"
+          ng-model="jaewCtrl.paging.pageSize">
+        </select>
+      </div>
+    </div>
+    <div class="visible-xs col-xs-12">
+      <div class="form-group">
+        <label class="control-label text-center"
+          ng-bind="jaewCtrl.paging.showingLabelContent">
+        </label>
+        <div class="input-group">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-info"
+              ng-disabled="jaewCtrl.paging.currentPage <= 0"
+              ng-click="jaewCtrl.paging.goToFirstPage()">
+              <i class="far fa-fw fa-angle-double-left"></i>
+            </button>
+            <button type="button" class="btn btn-info"
+              ng-disabled="jaewCtrl.paging.currentPage <= 0"
+              ng-click="jaewCtrl.paging.goToPreviousPage()">
+              <i class="far fa-fw fa-angle-left"></i>
+            </button>
+          </div>
+          <select class="form-control"
+            ng-options="p as (p+1) for p in jaewCtrl.paging.pagesInSets()[jaewCtrl.paging.pageSetCurrent]"
+            ng-model="jaewCtrl.paging.currentPage">
+          </select>
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-info"
+              ng-disabled="jaewCtrl.paging.currentPage >= jaewCtrl.paging.maxPage()-1"
+              ng-click="jaewCtrl.paging.goToNextPage()">
+              <i class="far fa-fw fa-angle-right"></i>
+            </button>
+            <button type="button" class="btn btn-info"
+              ng-disabled="jaewCtrl.paging.currentPage >= jaewCtrl.paging.maxPage()-1"
+              ng-click="jaewCtrl.paging.goToLastPage()">
+              <i class="far fa-fw fa-angle-double-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hidden-xs col-sm-9 col-md-5 col-lg-4">
+      <div class="form-group text-right">
+        <label class="control-label text-right"
+          ng-bind="jaewCtrl.paging.showingLabelContent">
+        </label>
+        <div class="btn-group btn-group-justified" role="group" aria-label="Paging">
+          <div class="btn-group">
+            <button type="button" class="btn btn-info"
+              ng-disabled="jaewCtrl.paging.currentPage <= 0"
+              ng-click="jaewCtrl.paging.goToFirstPage()">
+              <i class="far fa-fw fa-angle-double-left"></i>
+            </button>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-info"
+              ng-disabled="jaewCtrl.paging.currentPage <= 0"
+              ng-click="jaewCtrl.paging.goToPreviousPage()">
+              <i class="far fa-fw fa-angle-left"></i>
+            </button>
+          </div>
+          <div class="btn-group"
+             ng-repeat="p in jaewCtrl.paging.pagesInSets()[jaewCtrl.paging.pageSetCurrent]">
+            <button type="button" class="btn hidden-xs"
+              ng-class="jaewCtrl.paging.currentPage == p ? 'btn-primary' : 'btn-info'"
+              ng-disabled="p == jaewCtrl.paging.currentPage"
+              ng-click="jaewCtrl.paging.currentPage = p;"
+              ng-bind="p+1">
+            </button>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-info"
+              ng-disabled="jaewCtrl.paging.currentPage >= jaewCtrl.paging.maxPage()-1"
+              ng-click="jaewCtrl.paging.goToNextPage()">
+              <i class="far fa-fw fa-angle-right"></i>
+            </button>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-info"
+              ng-disabled="jaewCtrl.paging.currentPage >= jaewCtrl.paging.maxPage()-1"
+              ng-click="jaewCtrl.paging.goToLastPage()">
+              <i class="far fa-fw fa-angle-double-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-condensed mb-0">
+      <thead>
+        <tr>
+          <th class="w-33" data-translate="ui.admin.common.Attribute"></th>
+          <th class="w-42" data-translate="ui.admin.common.Value"></th>
+          <th class="w-10" data-translate="ui.admin.common.UnitOfMeasure.Abbr"></th>
+          <th class="w-10" data-translate="ui.admin.common.SortOrder"></th>
+          <th class="w-6"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-show="jaewCtrl.paging.filteredCount === 0">
+          <td colspan="6"
+            data-translate="ui.admin.controls.shared.jsonAttributesEditor.NoAttributesHaveBeenAdded">
+          </td>
+        </tr>
+        <tr ng-repeat="attr in jaewCtrl.paging.filteredData
+                       | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                       | limitTo: jaewCtrl.paging.pageSize
+                                : jaewCtrl.paging.skip()">
+          <td class="p-1">
+            <a ui-sref="inventory.attributes.detail({ 'ID': attr.ID })" target="_blank">
+              <span ng-bind="attr.ID + (attr.CustomKey != (attr.DisplayName || attr.Name) ? ('-' + attr.CustomKey) : '')
+                + '-' + (attr.DisplayName || attr.Name)"></span>&nbsp;<!--
+              --><i class="far fa-external-link" aria-hidden="true"></i>
+            </a>
+          </td>
+          <td class="p-0">
+            <textarea ng-if="attr.IsMarkup && !attr.IsPredefined"
+              kendo-editor class="form-control" k-encoded="false" style="width: 100%; height: 300px;"
+              id="txtAreaAttr{{jaewCtrl.typeAsID}}{{$index}}Value"
+              name="txtAreaAttr{{jaewCtrl.typeAsID}}{{$index}}Value"
+              k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter',
+                        'justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink',
+                        'insertImage','createTable']"
+              k-paste="jaewCtrl.sanitizeMarkup"
+              translate-attr="{ placeholder: 'ui.admin.controls.shared.jsonAttributesEditor.NoValueWillNotBeSaved' }"
+              ng-change="jaewCtrl.attributeChanged(
+                $event,
+                attr.CustomKey || attr.Name,
+                'Value',
+                jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].Value)"
+              ng-model="jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].Value"
+              ng-model-options="jaewCtrl.debounce500">
+            </textarea>
+            <input ng-if="!attr.IsMarkup && !attr.IsPredefined"
+              type="text" class="form-control"
+              id="txtAttr{{jaewCtrl.typeAsID}}{{$index}}Value"
+              name="txtAttr{{jaewCtrl.typeAsID}}{{$index}}Value"
+              translate-attr="{ placeholder: 'ui.admin.controls.shared.jsonAttributesEditor.NoValueWillNotBeSaved' }"
+              ng-change="jaewCtrl.attributeChanged(
+                $event,
+                attr.CustomKey || attr.Name,
+                'Value',
+                jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].Value)"
+              ng-model="jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].Value"
+              ng-model-options="jaewCtrl.debounce500" />
+            <select ng-if="attr.IsPredefined"
+              class="form-control"
+              id="ddlAttr{{jaewCtrl.typeAsID}}{{$index}}Value"
+              name="ddlAttr{{jaewCtrl.typeAsID}}{{$index}}Value"
+              ng-change="jaewCtrl.attributeChanged(
+                $event,
+                attr.CustomKey || attr.Name,
+                'Value',
+                jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].Value)"
+              ng-options="o.Value as (o.Value + (o.UofM ? ' ' + o.UofM : ''))
+                          for o in attr.PredefinedOptions
+                          | orderBy: ['SortOrder','Value','UofM']"
+              ng-model="jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].Value"
+              ng-model-options="jaewCtrl.debounce500">
+              <option value=""
+                data-translate="ui.admin.controls.shared.jsonAttributesEditor.NoValueWillNotBeSaved">
+              </option>
+            </select>
+          </td>
+          <td class="p-0">
+            <input type="text" class="form-control"
+              id="txtAttr{{jaewCtrl.typeAsID}}{{$index}}UofM"
+              name="txtAttr{{jaewCtrl.typeAsID}}{{$index}}UofM"
+              placeholder="Each"
+              ng-disabled="attr.IsPredefined"
+              ng-change="jaewCtrl.attributeChanged(
+                $event,
+                attr.CustomKey || attr.Name,
+                'UofM',
+                jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].UofM)"
+              ng-model="jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].UofM"
+              ng-model-options="jaewCtrl.debounce500" />
+          </td>
+          <td class="p-0">
+            <input type="number" class="form-control text-right"
+              id="nudAttr{{jaewCtrl.typeAsID}}{{$index}}SortOrder"
+              name="nudAttr{{jaewCtrl.typeAsID}}{{$index}}SortOrder"
+              step="1" placeholder="0"
+              ng-change="jaewCtrl.attributeChanged(
+                $event,
+                attr.CustomKey || attr.Name,
+                'SortOrder',
+                jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].SortOrder)"
+              ng-model="jaewCtrl.master.SerializableAttributes[attr.CustomKey || attr.Name].SortOrder"
+              ng-model-options="jaewCtrl.debounce500" />
+          </td>
+          <td class="p-0">
+            <button type="button" class="btn btn-danger"
+              id="btnDelete{{jaewCtrl.typeAsID}}{{$index}}"
+              name="btnDelete{{jaewCtrl.typeAsID}}{{$index}}"
+              translate-attr="{ title: 'ui.admin.common.Delete',
+                                'aria-label': 'ui.admin.common.Delete' }"
+              ng-click="jaewCtrl.removeAttribute(attr.CustomKey || attr.Name)">
+              <i class="far fa-times"></i><!--
+              --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+# https://www.jetbrains.com/help/resharper/EditorConfig_Index.html
+# https://www.jetbrains.com/help/resharper/StyleCop_Styles.html
+# Suppress: EC112
+
+[*.cs]
+resharper_missing_xml_doc_highlighting=do_not_show
+dotnet_diagnostic.CA1033.severity = none
+dotnet_diagnostic.SA1403.severity = none
+dotnet_diagnostic.SA1649.severity = none
+
+[Migrations/**.cs]
+dotnet_diagnostic.IDE0055.severity = none
+resharper_multiple_spaces_highlighting=do_not_show
+
+[DataSets/*.cs]
+dotnet_diagnostic.SA1025.severity = none
+resharper_multiple_spaces_highlighting=do_not_show

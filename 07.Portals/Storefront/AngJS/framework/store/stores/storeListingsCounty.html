@@ -1,0 +1,249 @@
+<div id="wrapper">
+    <main id="main">
+        <div class="header-counties py-30 pt-lg-60 pb-lg-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="photo mb-30 mb-lg-0">
+                            <img src="images/img10.jpg" srcset="images/img10@2x.jpg 2x, images/img10@3x.jpg 3x" alt="image description" width="210" height="244">
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-white">
+                        <a ui-sref-plus uisrp-root="/Store-Listings#!?state={{storeListingsCountyCtrl.stateName}}" class="btn btn-link btn-back mb-10">
+                            <img src="images/arrow-red.svg" width="17" height="14" alt="image description"> Back To All Counties
+                        </a>
+                        <h1>{{storeListingsCountyCtrl.countyName}}, {{storeListingsCountyCtrl.state.Code}}</h1>
+                        <div class="row align-items-end py-15">
+                            <div class="col-lg-6" ng-repeat="user in storeListingsCountyCtrl.users 
+                                | orderBy: ['DisplayName', 'Contact.FullName', 'Customkey']  track by $index">
+                                <h2 class="h3">
+                                    <span class="subtitle" ng-if="$index === 0">Operated by:</span>
+                                    {{user.DisplayName || user.Contact.FullName || user.CustomKey}}
+                                </h2>
+                                <address>
+                                    <a href="mailto:{{user.Email}}" ng-bind="user.Email"></a><br>
+                                    <a href="tel:{{user.PhoneNumber}}" ng-bind="user.PhoneNumber"></a>
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container py-40 py-lg-60">
+            <div class="advantage-section row text-center pb-30 pb-60">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-lg-10 mx-auto">
+                            <h3>Proud To Serve You</h3>
+                            <p>
+                                As your local Destination Athlete® representative, I am here to provide exceptional service for all your team needs. 
+                                We provide a one-stop resource with everything a team needs, specializing in 4 key areas:
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="row advantage-section-list list-unstyled py-15 py-lg-35">
+                        <li>
+                            <img src="images/football-helmet.svg" width="63" height="60" alt="football-helmet">
+                            <h4 class="h6">Equipment</h4>
+                            <ul class="list-unstyled">
+                                <li>Field Equipment</li>
+                                <li>Sports Equipment</li>
+                                <li>Reconditioning</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <img src="images/tshirt.svg" width="75" height="60" alt="tshirt">
+                            <h4 class="h6">Apparel</h4>
+                            <ul class="list-unstyled">
+                                <li>Team Uniforms</li>
+                                <li>Spirit Wear</li>
+                                <li>Varsity Jackets</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <img src="images/hands.svg" width="75" height="60" alt="hands">
+                            <h4 class="h6">Fundraising</h4>
+                            <ul class="list-unstyled">
+                                <li>Campaigns</li>
+                                <li>Team Stores</li>
+                                <li>Consulting</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <img src="images/running.svg" width="50" height="60" alt="running">
+                            <h4 class="h6">Performance</h4>
+                            <ul class="list-unstyled">
+                                <li>Services</li>
+                                <li>Items</li>
+                                <li>Showcase</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-lg-10 mx-auto">
+                            <p>Our purpose is building better communities through athletes™.  Let us help your team get to its personal DESTINATION!</p>
+                            <a ui-sref-plus uisrp-root="/Quick-Quote" class="btn btn-danger shadow-sm mt-16">Get A Quick Quote</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pb-20 pb-lg-45">
+                <div class="col">
+                    <h3 class="text-center mb-35"><span class="subtitle">team stores / {{storeListingsCountyCtrl.stateName}}</span> {{storeListingsCountyCtrl.countyName}} County</h3>
+                    <div class="products-table table-responsive">
+                        <form>
+                            <table class="table table-striped table-borderless table-sm mb-0" title="team stores table">
+                                <thead>
+                                    <tr class="sort-panel">
+                                        <th scope="col">
+                                            <span ng-click="storeListingsCountyCtrl.sortStores('Team')"
+                                                data-translate="ui.admin.common.Team"></span>
+                                        </th>
+                                        <th scope="col">
+                                            <span ng-click="storeListingsCountyCtrl.sortStores('Sport')"
+                                                data-translate="ui.admin.common.Sport"></span>
+                                        </th>
+                                        <th scope="col">
+                                            <span ng-click="storeListingsCountyCtrl.sortStores('City')"
+                                                data-translate="ui.admin.common.City"></span>
+                                        </th>
+                                        <th scope="col">
+                                            <span ng-click="storeListingsCountyCtrl.sortStores('Organization')"
+                                                data-translate="ui.admin.common.Organization"></span>
+                                        </th>
+                                        <th scope="col">
+                                            <span ng-click="storeListingsCountyCtrl.sortStores('Status')"
+                                                data-translate="ui.admin.common.Status"></span>
+                                        </th>
+                                    </tr>
+                                    <tr class="filter-panel">
+                                        <td>
+                                            <label for="select-team" class="sr-only">select team</label>
+                                            <select id="select-team" 
+                                                class="custom-select"
+                                                ng-change="storeListingsCountyCtrl.filtersSelected()"
+                                                ng-model="storeListingsCountyCtrl.selectedTeamFilter"
+                                                ng-init="storeListingsCountyCtrl.paramTeam
+                                                    ? storeListingsCountyCtrl.selectedTeamFilter = storeListingsCountyCtrl.paramTeam
+                                                    : ''"
+                                                ng-options="store.Name as store.Name for store in storeListingsCountyCtrl.franchiseStores">
+                                                <option value="" data-translate="ui.admin.common.All" selected></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label for="select-sport" class="sr-only">select sport</label>
+                                            <select id="select-sport" 
+                                                class="custom-select"
+                                                ng-change="storeListingsCountyCtrl.filtersSelected()"
+                                                ng-model="storeListingsCountyCtrl.selectedSportFilter"
+                                                ng-init="storeListingsCountyCtrl.paramSport
+                                                    ? storeListingsCountyCtrl.selectedSportFilter = storeListingsCountyCtrl.paramSport
+                                                    : ''"
+                                                ng-options="sport as sport for sport in storeListingsCountyCtrl.sports">
+                                                <option value="" data-translate="ui.admin.common.All" selected></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label for="select-city" class="sr-only">select city</label>
+                                            <select id="select-city" 
+                                                class="custom-select"
+                                                ng-change="storeListingsCountyCtrl.filtersSelected()"
+                                                ng-model="storeListingsCountyCtrl.selectedCityFilter"
+                                                ng-init="storeListingsCountyCtrl.paramCity
+                                                    ? storeListingsCountyCtrl.selectedCityFilter = storeListingsCountyCtrl.paramCity
+                                                    : ''"
+                                                ng-options="city as city for city in storeListingsCountyCtrl.cities">
+                                                <option value="" data-translate="ui.admin.common.All" selected></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label for="select-organization" class="sr-only">select organization</label>
+                                            <select id="select-organization" 
+                                                class="custom-select"
+                                                ng-change="storeListingsCountyCtrl.filtersSelected()"
+                                                ng-model="storeListingsCountyCtrl.selectedOrganizationFilter"
+                                                ng-init="storeListingsCountyCtrl.paramOrganization
+                                                    ? storeListingsCountyCtrl.selectedOrganizationFilter = storeListingsCountyCtrl.paramOrganization
+                                                    : ''"
+                                                ng-options="organization as organization for organization in storeListingsCountyCtrl.organizations">
+                                                <option value="" data-translate="ui.admin.common.All" selected></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label for="select-status" class="sr-only">select status</label>
+                                            <select id="select-status" 
+                                                class="custom-select select-sm"
+                                                ng-change="storeListingsCountyCtrl.filtersSelected()"
+                                                ng-model="storeListingsCountyCtrl.selectedStatusFilter"
+                                                ng-init="storeListingsCountyCtrl.paramStatus
+                                                    ? storeListingsCountyCtrl.selectedStatusFilter = storeListingsCountyCtrl.paramStatus
+                                                    : ''"
+                                                ng-options="status as status for status in storeListingsCountyCtrl.statuses">
+                                                <option value="" data-translate="ui.admin.common.All" selected></option>
+                                            </select>
+                                            <input type="submit" value="submit" class="sr-only">
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="store in storeListingsCountyCtrl.sortedStores
+                                        | filter: (storeListingsCountyCtrl.selectedTeamFilter 
+                                                ? {'Name' : storeListingsCountyCtrl.selectedTeamFilter}
+                                                : '')
+                                        | filter: (storeListingsCountyCtrl.selectedSportFilter 
+                                                ? {'Categories' : {$ : storeListingsCountyCtrl.selectedSportFilter}}
+                                                : '')
+                                        | filter: (storeListingsCountyCtrl.selectedOrganizationFilter 
+                                                ? {'SerializableAttributes' : {'Organization': {'Value' : storeListingsCountyCtrl.selectedOrganizationFilter}}} 
+                                                : '')
+                                        | filter: (storeListingsCountyCtrl.selectedStatusFilter 
+                                                ? {'SerializableAttributes' : {'Status': {'Value' : storeListingsCountyCtrl.selectedStatusFilter}}} 
+                                                : '')"
+                                        >
+                                        <td>
+                                            <img alt="store logo" width="88" height="88" 
+                                                ng-src="{{store.Images && store.Images.length && store.Images[0].Name ? store.Images[0].Name : 'logo-school.png'
+                                                            | corsImageLink : 'stores' : { 'maxwidth': 88, 'maxheight': 88, 'mode': 'pad', 'scale': 'both' } }}">
+                                            <a ui-sref-plus uisrp-is-catalog="true"
+                                                uisrp-state="searchCatalog.products.results.both"
+                                                uisrp-params="{ 'storeId': '{{store.ID}}' }"
+                                                ng-bind="store.Name || store.CustomKey"></a>
+                                        </td>
+                                        <td ng-bind="store.Categories[0].SlaveName || store.Categories[0].SlaveKey || store.Categories[0].CustomKey"></td>
+                                        <td ng-bind="store.Contact.Address.City"></td>
+                                        <td ng-bind="store.SerializableAttributes.Organization.Value"></td>
+                                        <td ng-bind="store.SerializableAttributes.Status.Value"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5">
+                                            <nav aria-label="Table navigation" class="nav-table pt-15">
+                                                <ul class="pagination mb-0 justify-content-center">
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#" aria-label="Previous">
+                                                            <i class="far fa-angle-left fa-fw"></i><!--
+                                                            --><span class="sr-only" data-translate="ui.admin.common.Previous"></span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#" aria-label="Next">
+                                                            <i class="far fa-angle-right fa-fw"></i><!--
+                                                            --><span class="sr-only" data-translate="ui.admin.checkout.views.paymentInformation.Next"></span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

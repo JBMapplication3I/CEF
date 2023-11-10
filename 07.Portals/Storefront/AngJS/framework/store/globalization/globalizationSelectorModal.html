@@ -1,0 +1,56 @@
+﻿<div class="modal-header bg-dark text-light">
+    <h5 class="modal-title"
+        data-translate="ui.storefront.user.globalization.globalizationSelectorModal.SelectLanguageAndCurrency"></h5>
+    <button type="button" class="close"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="globalizationSelectorModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body" ng-form="globalizationSelectorModalCtrl.forms.edit">
+    <div class="form-group"
+         ng-class="{'has-error': globalizationSelectorModalCtrl.forms.edit.ddlCurrency.$invalid}">
+        <label class="control-label" for="ddlCurrency"
+               data-translate="ui.storefront.common.Currency.Select"></label>
+        <div class="input-group">
+            <select class="form-control"
+                    id="ddlCurrency" name="ddlCurrency"
+                    ng-required="true"
+                    ng-options="c.CustomKey as (c.Name + ' [' + c.CustomKey + ']')
+                                for c in globalizationSelectorButtonCtrl.currencies
+                                | orderBy: 'Name'"
+                    ng-model="globalizationSelectorButtonCtrl.selectedCurrency"></select>
+        </div>
+    </div>
+    <div class="form-group"
+         ng-class="{'has-error': globalizationSelectorModalCtrl.forms.edit.ddlLanguage.$invalid}">
+        <label class="control-label" for="ddlLanguage"
+               data-translate="ui.storefront.common.Language.Select"></label>
+        <div class="input-group">
+            <select class="form-control"
+                    id="ddlLanguage" name="ddlLanguage"
+                    ng-required="true"
+                    ng-options="l.CustomKey as (l.UnicodeName + ' [' + l.CustomKey + ']')
+                                for l in globalizationSelectorButtonCtrl.languages
+                                | orderBy: 'UnicodeName'"
+                    ng-model="globalizationSelectorButtonCtrl.selectedLanguage"></select>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary"
+            id="btnGlobalizationModalCancel" name="btnGlobalizationModalCancel"
+            translate-attr="{ title: 'ui.storefront.common.Cancel',
+                              'aria-label': 'ui.storefront.common.Cancel' }"
+            data-translate="ui.storefront.common.Cancel"
+            ng-click="globalizationSelectorButtonCtrl.cancel()"></button>
+    <button type="button" class="btn btn-primary"
+            id="btnGlobalizationModalOk" name="btnGlobalizationModalOk"
+            translate-attr="{ title: 'ui.storefront.common.Save',
+                              'aria-label': 'ui.storefront.common.Save' }"
+            data-translate="ui.storefront.common.Save"
+            ng-disabled="globalizationSelectorModalCtrl.forms.edit.$invalid"
+            ng-click="globalizationSelectorModalCtrl.ok()"></button>
+</div>

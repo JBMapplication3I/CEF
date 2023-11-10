@@ -1,0 +1,36 @@
+<div class="mt-3 small">
+  <div class="d-flex justify-content-between">
+    <div ng-if="pckwCtrl.product" class="product-sku font-weight-bold">
+      <span sid="CatalogProductCardSkuText" id="lblProductSku{{pckwCtrl.product.ID}}"
+        class="font-weight-bold"
+        ng-bind="pckwCtrl.product.CustomKey"
+      ></span>
+    </div>
+    <div ng-if="pckwCtrl.displayHCPC && pckwCtrl.product.HCPCCode">
+      <span class="font-weight-bold" ng-bind="pckwCtrl.product.HCPCCode"></span>
+    </div>
+  </div>
+  <hr class="my-1"/>
+  <div class="d-flex justify-content-between">
+    <div class="catalog-manufacturer">
+      <span class="font-weight-bold" ng-bind="pckwCtrl.manufacturer"></span>
+    </div>
+    <div class="catalog-uom">
+      <div ng-if="pckwCtrl.uomSelections.length > 0 && pckwCtrl.cvProductService.productUOMSelection != null">
+        <div class="d-flex justify-content-between align-items-center uom-select-input">
+          <span class="font-weight-bold mr-1" data-translate="ui.storefront.common.UoM"></span>
+          <select class="mb-0 form-control custom-select"
+              id="ProductCardUOMSelection"
+              name="ProductCardUOMSelection"
+              ng-change="pckwCtrl.cvProductService.productUOMSelectionOnChange(
+                pckwCtrl.cvProductService.initalProductUOMObject[pckwCtrl.productId], pckwCtrl.productId)"
+              ng-options="o.ID as o.Name
+                          for o in pckwCtrl.uomSelections
+                          | orderBy: ['sortOrder']"
+              ng-model="pckwCtrl.cvProductService.initalProductUOMObject[pckwCtrl.productId]">
+            </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

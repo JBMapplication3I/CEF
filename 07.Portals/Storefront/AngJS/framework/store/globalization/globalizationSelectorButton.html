@@ -1,0 +1,11 @@
+<button ng-if="globalizationSelectorButtonCtrl.cefConfig.featureSet.multiCurrency.enabled
+               && globalizationSelectorButtonCtrl.cefConfig.featureSet.languages.enabled"
+        type="button" class="btn btn-secondary"
+        translate-attr="{ title: 'ui.storefront.user.globalization.globalizationSelectorButton.SelectCurrencyAndLanguage',
+                          'aria-label': 'ui.storefront.user.globalization.globalizationSelectorButton.SelectCurrencyAndLanguage' }"
+        ng-bind="globalizationSelectorButtonCtrl.selectedLanguageObject.UnicodeName
+                 + ' / ' + globalizationSelectorButtonCtrl.selectedCurrencyObject.Name
+                 + ' ('
+                 + (globalizationSelectorButtonCtrl.selectedCurrencyObject.UnicodeSymbolValue | hex2char) + ')'"
+        ng-click="globalizationSelectorButtonCtrl.open()">
+</button>

@@ -1,0 +1,9 @@
+<li class="uib-tab nav-item custom-tab">
+    <a href
+       ng-click="select($event)"
+       ng-class="[{'active': active, 'disabled': disabled}, classes]"
+       class="nav-link"
+       uisrp-params="{ 'category': '{{item.Name}}|{{item.CustomKey}}', 'term': null  }"
+       uib-tab-heading-transclude
+       >{{heading}}</a>
+</li>

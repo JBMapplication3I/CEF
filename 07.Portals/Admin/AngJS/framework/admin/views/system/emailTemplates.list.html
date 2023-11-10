@@ -1,0 +1,28 @@
+﻿<div ng-controller="SystemEmailTemplatesSearchController as systemEmailTemplateSearch" class="full-height">
+    <cv-page caption="{{'ui.admin.views.system.emailTemplatesList.ManageEmailTemplates' | translate}}" head-icon="fa-gear"
+        ng-if="$root.cvSecurityService.hasPermission('Admin.System.EmailTemplates')">
+        <cv-widget>
+            <widget-menu-item caption="{{'ui.admin.views.system.emailTemplatesList.AddEmailTemplate' | translate}}"
+                              icon-class="fa-plus-circle"
+                              click="$root.$state.go('system.emailTemplates.detail',{ID:'New'})"
+                              permission="'Messaging.EmailTemplate.Create'"></widget-menu-item>
+            <widget-menu-item caption="{{'ui.admin.controls.system.siteMaintenance.ProcessEmailBatch' | translate}}" icon-class="fa-refresh"
+                              click="$parent.$parent.$parent.$parent.systemEmailTemplateSearch.doProcessEmailBatch()"></widget-menu-item>
+            <widget-body ng-controller="SearchController as search">
+                <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                         sortable="false" server-sorting="true"
+                         on-search="search.getEmailTemplates"
+                         partial-reset="false"
+                         on-deactivate="search.deactivateEmailTemplate"
+                         on-reactivate="search.reactivateEmailTemplate"
+                         on-delete="search.deleteEmailTemplate"
+                         edit-state="system.emailTemplates.detail,[ID]"
+                         permissions-base="Messaging.EmailTemplate">
+                    <cv-column filter field="ID" title="#" width="50px" />
+                    <cv-column filter field="CustomKey" title="Key" width="150px" />
+                    <cv-column filter field="Name" width="150px" />
+                </cv-grid>
+            </widget-body>
+        </cv-widget>
+    </cv-page>
+</div>

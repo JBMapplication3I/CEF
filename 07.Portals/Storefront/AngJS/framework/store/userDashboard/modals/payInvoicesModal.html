@@ -1,0 +1,359 @@
+<div ng-form="pmimCtrl.forms.payment">
+  <div class="modal-header bg-dark text-light px-3 py-2 align-items-center">
+    <h3 class="modal-title"
+      data-translate="ui.storefront.userDashboard.controls.salesDetail.PayInvoice.OptionalPlural">
+    </h3>
+    <button type="button" class="close"
+      id="btnPayInvoicesModalCancelHeader" name="btnPayInvoicesModalCancelHeader"
+      translate-attr="{ title: 'ui.storefront.common.Close',
+                        'aria-label': 'ui.storefront.common.Close' }"
+      ng-click="pmimCtrl.cancel()">
+      <i class="far fa-times text-light" aria-hidden="true"></i>
+      <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+  </div>
+  <div class="modal-body form-vertical p-3">
+    <div class="row">
+      <div class="col">
+        <div class="table-responsive w-100 scroll-over-300">
+          <table class="table table-hover table-sm table-striped w-99">
+            <thead>
+              <tr>
+                <th class="w-15 text-right" data-translate="ui.storefront.common.Number.Symbol"></th>
+                <th class="w-25" data-translate="ui.storefront.common.Key"
+                  ng-if="pmimCtrl.cefConfig.featureSet.salesInvoices.hasIntegratedKeys">
+                </th>
+                <th class="w-25 text-right" data-translate="ui.storefront.userDashboard2.controls.salesDetail.BalanceDue"></th>
+                <th class="w-35 text-center" data-translate="ui.storefront.cart.amount"></th>
+              </tr>
+            </thead>
+            <tbody class="scroll-over-300">
+              <tr ng-repeat="inv in pmimCtrl.unpaidInvoices | orderBy: ['ID']">
+                <td>
+                  <label class="font-weight-normal form-control-static w-100 text-right mb-0"
+                    ng-bind="inv.ID">
+                  </label>
+                </td>
+                <td ng-if="pmimCtrl.cefConfig.featureSet.salesInvoices.hasIntegratedKeys">
+                  <label class="font-weight-normal form-control-static w-100 small mb-0"
+                    style="word-break: break-all;"
+                    ng-bind="inv.CustomKey">
+                  </label>
+                </td>
+                <td>
+                  <label class="font-weight-normal form-control-static w-100 text-right mb-0"
+                    ng-bind="inv.BalanceDue | globalizedCurrency">
+                  </label>
+                </td>
+                <td>
+                  <div class="form-group mb-0"
+                    ng-class="{'has-error': pmimCtrl.forms.payment['nudAmount'+inv.ID].$invalid}">
+                    <input type="number" class="form-control text-right"
+                      id="nudAmountInv{{inv.ID}}" name="nudAmount{{inv.ID}}"
+                      step="0.01" min="0" max="{{inv.BalanceDue}}"
+                      ng-required="false"
+                      ng-change="pmimCtrl.updateAmount()"
+                      ng-model="inv.amount" />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row" ng-form="pmimCtrl.forms.wallet">
+          <div ng-if="pmimCtrl.cefConfig.featureSet.payments.wallet.enabled && pmimCtrl.wallet.length"
+            class="col-12">
+            <div class="form-group"
+              ng-class="{ 'has-error': pmimCtrl.forms.wallet.ddlSelectedCard.$invalid }">
+              <label class="control-label" for="ddlSelectedCard"
+                data-translate="ui.storefront.checkout.views.paymentInformation.selectACard">
+              </label>
+              <div class="input-group">
+                <select class="form-control custom-select"
+                  ng-class="{ 'is-valid': pmimCtrl.forms.wallet.ddlSelectedCard.$valid,
+                              'is-invalid': pmimCtrl.forms.wallet.ddlSelectedCard.$invalid }"
+                  id="ddlSelectedCard" name="ddlSelectedCard"
+                  ng-required="true"
+                  ng-change="pmimCtrl.updatePaymentDataWithCard(pmimCtrl.selectedCard)"
+                  ng-options="entry as entry.Name for entry in pmimCtrl.wallet"
+                  ng-model="pmimCtrl.selectedCard">
+                  <option ng-disabled="true" value=""
+                    data-translate="ui.storefront.checkout.views.paymentInformation.PleaseSelectAnEntry">
+                  </option>
+                </select>
+                <div class="input-group-append input-group-btn">
+                  <button type="button" class="btn btn-secondary rounded-right"
+                    id="btnAddWalletEntry" name="btnAddWalletEntry"
+                    translate-attr="{ title: 'ui.storefront.cart.Add',
+                                      'aria-label': 'ui.storefront.cart.Add' }"
+                    data-translate="ui.storefront.cart.Add"
+                    ng-click="pmimCtrl.addWalletEntry()">
+                  </button>
+                </div>
+                <div ng-messages-multiple ng-messages="pmimCtrl.forms.wallet.ddlSelectedCard.$error"
+                  role="alert" class="invalid-feedback">
+                  <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-if="pmimCtrl.cefConfig.featureSet.payments.wallet.enabled && pmimCtrl.selectedCardIsFromWallet()"
+            class="col-12">
+            <div class="card mb-3">
+              <div class="card-body pb-1">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <p class="h3 mt-0"
+                      ng-bind-html="'&bull;&bull;&bull;&bull;&nbsp;'
+                        + '&bull;&bull;&bull;&bull;&nbsp;'
+                        + '&bull;&bull;&bull;&bull;&nbsp;'
+                        + pmimCtrl.selectedCard.CreditCardNumber">
+                    </p>
+                  </div>
+                  <div class="col-auto" aria-hidden="true">
+                    <p class="h3 mt-0">
+                      <i class="fa-lg" ng-class="{
+                        'fab fa-cc-amex': pmimCtrl.selectedCard.CardType == 'American Express',
+                        'fab fa-cc-discover': pmimCtrl.selectedCard.CardType == 'Discover',
+                        'fab fa-cc-mastercard': pmimCtrl.selectedCard.CardType == 'MasterCard',
+                        'fab fa-cc-diners-club': pmimCtrl.selectedCard.CardType == 'Diners Club',
+                        'fab fa-cc-visa': pmimCtrl.selectedCard.CardType == 'Visa'}">
+                      </i>
+                      <span class="sr-only"
+                        ng-bind="pmimCtrl.selectedCard.CardType">
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-5">
+                    <p class="small"
+                      data-translate="ui.storefront.wallet.walletCard.CardHolderName">
+                    </p>
+                    <p class="bold"
+                      ng-bind="pmimCtrl.selectedCard.CardHolderName">
+                    </p>
+                  </div>
+                  <div class="col-4">
+                    <p class="small"
+                      data-translate="ui.storefront.checkout.checkoutCard.ValidThrough">
+                    </p>
+                    <p class="bold"
+                      ng-bind="(pmimCtrl.selectedCard.ExpirationMonth | zeroPadNumber: 2)
+                       + '/' + (pmimCtrl.selectedCard.ExpirationYear | zeroPadNumber: 4)">
+                    </p>
+                  </div>
+                  <div class="col-3">
+                    <div class="form-group"
+                      ng-class="{'has-error': pmimCtrl.forms.payment.txtCVVWallet.$invalid}">
+                      <label class="control-label small" for="txtCVVWallet"
+                        ><span data-translate="ui.storefront.checkout.views.paymentInformation.CVV"
+                        ></span>&nbsp;<span class="text-danger">*</span></label>
+                      <input type="text" class="form-control"
+                        id="txtCVVWallet" name="txtCVVWallet"
+                        placeholder="123"
+                        ng-required="true"
+                        ng-model="pmimCtrl.selectedCard.CVV"
+                        cc-cvc cc-type="pmimCtrl.forms.payment.txtCardNumber.type" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-form="pmimCtrl.forms.billing">
+          <div class="col-12">
+            <div class="form-group"
+              ng-class="{ 'has-error': pmimCtrl.forms.billing.ddlBillingSelection.$invalid }">
+              <label class="control-label">Select a Billing Address</label>
+              <div class="input-group">
+                <select class="form-control custom-select"
+                  ng-class="{ 'is-valid': pmimCtrl.forms.billing.ddlBillingSelection.$valid,
+                              'is-invalid': pmimCtrl.forms.billing.ddlBillingSelection.$invalid }"
+                  sid="BillingAddressDropDownText"
+                  id="ddlBillingSelection" name="ddlBillingSelection"
+                  ng-required="true"
+                  ng-options="ac as (ac | acToDropdownItem)
+                              for ac in pmimCtrl.book
+                              | orderBy: ['Slave.Address.CustomKey','Slave.CustomKey','CustomKey']"
+                  ng-model="pmimCtrl.currentAccountContact">
+                  <option ng-disabled="true" value=""
+                    data-translate="ui.storefront.userDashboard2.controls.addressBook.PleaseSelectABillingAddress">
+                  </option>
+                </select>
+                <div class="input-group-append input-group-btn">
+                  <button type="button" class="btn btn-secondary rounded-right"
+                    id="btnAddBilling" name="btnAddBilling"
+                    translate-attr="{ title: 'ui.storefront.cart.Add',
+                                      'aria-label': 'ui.storefront.cart.Add' }"
+                    data-translate="ui.storefront.cart.Add"
+                    ng-click="pmimCtrl.addAddress()">
+                  </button>
+                </div>
+                <div ng-messages-multiple ng-messages="pmimCtrl.forms.billing.ddlBillingSelection.$error"
+                  role="alert" class="invalid-feedback">
+                  <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-if="!pmimCtrl.currentAccountContact.Slave.Address.CountryID"
+            class="col-12">
+            <div class="alert alert-info mb-3 py-2">
+              <span data-translate="ui.storefront.purchasing.PleaseSelectAnAddress.Message"></span>
+            </div>
+          </div>
+          <div ng-if="pmimCtrl.currentAccountContact.Slave
+            && pmimCtrl.currentAccountContact.Slave.Address.Street1"
+            class="col-12">
+            <div class="card mb-3">
+              <div class="card-body p-3">
+                <div cef-contact-address-block
+                  contact="pmimCtrl.currentAccountContact.Slave"
+                  no-links="true"
+                  two-col="true"
+                  small-text="false">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <!-- Start of Totals -->
+            <div class="bg-light p-3">
+              <div class="d-flex">
+                <div ng-class="pmimCtrl.cefConfig.featureSet.salesInvoices.canPayViaUserDashboard.multiple.partial ? 'w-50' : 'w-100'">
+                  <p class="mb-1">Balance Due</p>
+                  <p class="h3 mt-0 mb-2"
+                    ng-bind="pmimCtrl.balanceDue | globalizedCurrency">
+                  </p>
+                  <p class="mb-2" data-translate="ui.storefront.purchasing.transactionFee"></p>
+                  <p class="h3 mt-0 mb-1" ng-show="pmimCtrl.viewState.running"
+                    data-translate="ui.storefront.purchasing.calculating.ellipsis"></p>
+                  <p class="h3 mt-0 mb-1"
+                    ng-hide="pmimCtrl.viewState.running"
+                    ng-bind="pmimCtrl.surchargeAmount | globalizedCurrency"></p>
+                </div>
+                <div class="w-50" ng-if="pmimCtrl.cefConfig.featureSet.salesInvoices.canPayViaUserDashboard.multiple.partial">
+                  <p class="mb-1">Chosen Amount</p>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend input-group-text">
+                      <i class="far fa-dollar-sign" aria-hidden="true"></i>
+                    </div>
+                    <input type="number" class="form-control text-right"
+                      readonly
+                      ng-model-options="{ updateOn: 'default blur', debounce: {'default':125,'blur':125} }"
+                      ng-model="pmimCtrl.manualAmount" />
+                      <p class="my-1">Total Payment Amount</p>
+                      <p class="h3 mt-0 mb-1"
+                        ng-bind="(pmimCtrl.manualAmount + pmimCtrl.surchargeAmount) | globalizedCurrency">
+                      </p>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex">
+                <div class="w-50">
+                  <p class="mb-1" ng-if="pmimCtrl.fee > 0">Total Fees</p>
+                  <p class="h3 mt-0 mb-1" ng-if="pmimCtrl.fee > 0"
+                    ng-bind="pmimCtrl.fee | globalizedCurrency">
+                  </p>
+                </div>
+                <div class="w-50">
+                  <p class="mb-1" ng-if="pmimCtrl.fee > 0">Total Payment Amount</p>
+                  <p class="h3 my-0" ng-if="pmimCtrl.fee > 0"
+                    ng-bind="pmimCtrl.sumTotal | globalizedCurrency">
+                  </p>
+                </div>
+              </div>
+              <div ng-hide="pmimCtrl.viewState.running">
+                <p class="mb-0 mt-2" >
+                  <small>
+                    <span data-translate="ui.storefront.purchasing.weMayApplyFeeToCCtransToCoverCosts"></span>
+                  </small>
+                </p>
+              </div>
+              <!-- TODO: Remarks about useGreater uplift fee result setting when active (default off) -->
+              <div ng-if="pmimCtrl.paymentMethod == pmimCtrl.cvServiceStrings.checkout.paymentMethods.creditCard">
+                <p class="mb-0 mt-2" ng-if="pmimCtrl.cefConfig.featureSet.payments.methods.creditCard.uplifts.percent > 0">
+                  <small>
+                    <span data-translate="ui.storefront.purchasing.weMayApplyFeeToCCtransToCoverCosts"></span>
+                  </small>
+                </p>
+                <p class="mb-0 mt-2" ng-if="pmimCtrl.cefConfig.featureSet.payments.methods.creditCard.uplifts.amount > 0">
+                  <b>NOTE:</b> A {{pmimCtrl.cefConfig.featureSet.payments.methods.creditCard.uplifts.amount | globalizedCurrency}}
+                  processing fee is charged for credit card transactions.
+                </p>
+              </div>
+              <div ng-if="pmimCtrl.paymentMethod == pmimCtrl.cvServiceStrings.checkout.paymentMethods.echeck">
+                <p class="mb-0 mt-2" ng-if="pmimCtrl.cefConfig.featureSet.payments.methods.eCheck.uplifts.percent > 0">
+                  <small>
+                    <b>NOTE:</b> A {{pmimCtrl.cefConfig.featureSet.payments.methods.eCheck.uplifts.percent * 100 | number: 0}}%
+                    processing fee is charged for eCheck transactions.
+                  </small>
+                </p>
+                <p class="mb-0 mt-2" ng-if="pmimCtrl.cefConfig.featureSet.payments.methods.eCheck.uplifts.amount > 0">
+                  <small>
+                    <b>NOTE:</b> A {{pmimCtrl.cefConfig.featureSet.payments.methods.eCheck.uplifts.amount | globalizedCurrency}}
+                    processing fee is charged for eCheck transactions.
+                  </small>
+                </p>
+              </div>
+            </div>
+            <!-- End of Totals -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer px-3 py-2">
+    <table class="w-100">
+      <tbody>
+        <tr>
+          <td class="text-left">
+            <div ng-if="pmimCtrl.viewState.running"
+              class="alert alert-info md-mb-0 lg-mb-0 text-left"
+              style="padding: 6px 12px;">
+              <p class="mb-0">
+                <i class="far fa-question-circle"></i>&nbsp;<!--
+                --><span data-translate="ui.storefront.common.Running.Ellipses"></span>
+              </p>
+            </div>
+            <div ng-if="pmimCtrl.viewState.hasError"
+              class="alert alert-danger md-mb-0 lg-mb-0 text-left"
+              style="padding: 6px 12px;">
+              <p class="mb-0">
+                <i class="far fa-question-circle"></i>&nbsp;<!--
+                --><span ng-if="pmimCtrl.viewState.errorMessage"
+                  ng-bind="pmimCtrl.viewState.errorMessage"></span><!--
+                --><span ng-if="!pmimCtrl.viewState.errorMessage"
+                  data-translate="ui.storefront.userDashboard2.modals.paymultipleInvoices.OopsSomethingWentWrongWithYourPayment">
+                </span>
+              </p>
+            </div>
+          </td>
+          <td class="w-8 pl-2">
+            <button type="button" class="btn btn-large btn-outline-secondary ml-1"
+              id="btnPayMultipleInvoicesCancel" name="btnPayMultipleInvoicesCancel"
+              translate-attr="{ title: 'ui.storefront.common.Cancel',
+                                'aria-label': 'ui.storefront.common.Cancel' }"
+              data-translate="ui.storefront.common.Cancel"
+              ng-click="pmimCtrl.cancel()">
+            </button>
+          </td>
+          <td class="w-8 pl-2">
+            <button type="button" class="btn btn-large btn-primary"
+              id="btnPayMultipleInvoicesOK" name="btnPayMultipleInvoicesOK"
+              translate-attr="{ title: 'ui.storefront.userDashboard2.controls.salesReturnCreate',
+                                'aria-label': 'ui.storefront.userDashboard2.controls.salesReturnCreate' }"
+              ng-disabled="pmimCtrl.forms.payment.$invalid || !pmimCtrl.paymentData.amount || pmimCtrl.isSubmitting || inv.balanceDue <= 0"
+              data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate"
+              ng-click="pmimCtrl.ok()">
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

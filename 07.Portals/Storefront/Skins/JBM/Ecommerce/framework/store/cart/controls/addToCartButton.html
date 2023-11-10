@@ -1,0 +1,73 @@
+<div ng-switch="atcbCtrl.menuEnabled">
+  <button ng-switch-when="false"
+    type="button" class="btn {{atcbCtrl.currentBtnClass()}}"
+    id="addToCartBtn-product-id-{{atcbCtrl.item.ID}}"
+    translate-attr="{ title: atcbCtrl.currentTitleKey(),
+                      'aria-label': atcbCtrl.currentTitleKey() }"
+    ng-disabled="atcbCtrl.isDisabled()"
+    ng-click="atcbCtrl.click()">
+    <i class="{{atcbCtrl.currentIcon()}}" aria-hidden="true"
+      ng-if="atcbCtrl.showIcon"></i><!--
+    --><span ng-if="atcbCtrl.showIcon && atcbCtrl.showText">&nbsp;</span><!--
+    --><span ng-class="{ 'sr-only': !atcbCtrl.showText }"
+      data-translate="{{atcbCtrl.currentTitleKey()}}">
+    </span>
+  </button>
+  <!-- Don't display add to cart / quote cart if it is a custom line item -->
+  <div ng-switch-when="true"
+    ng-if="atcbCtrl.itemId && atcbCtrl.itemName && atcbCtrl.itemSeoUrl && !atcbCtrl.handleUoms">
+    <!-- dropdown-append-to-body -->
+    <div class="btn-group w-100" uib-dropdown>
+      <button type="button" class="btn btn-primary"
+        id="addToCartBtn-product-id-{{atcbCtrl.item.ID}}"
+        translate-attr="{ title: atcbCtrl.currentTitleKey(),
+                          'aria-label': atcbCtrl.currentTitleKey() }"
+        ng-disabled="atcbCtrl.isDisabled()"
+        ng-click="atcbCtrl.click()">
+        <i class="{{atcbCtrl.currentIcon()}}" aria-hidden="true"
+          ng-if="atcbCtrl.showIcon"></i><!--
+        --><span ng-if="atcbCtrl.showIcon && atcbCtrl.showText">&nbsp;</span><!--
+        --><span ng-class="{ 'sr-only': !atcbCtrl.showText }"
+          data-translate="{{atcbCtrl.currentTitleKey()}}">
+        </span>
+      </button>
+      <button uib-dropdown-toggle
+        ng-if="!atcbCtrl.isDisabledQuote()"
+        type="button" style="min-width: 1rem" class="btn btn-primary rounded-right px-1">
+        <span class="sr-only">Toggle Dropdown</span>
+        <i class="far fa-chevron-down" aria-hidden="true"></i>
+      </button>
+      <div uib-dropdown-menu
+        ng-if="!atcbCtrl.isDisabledQuote()"
+        class="dropdown-menu dropdown-menu-right" role="menu">
+        <button type="button" class="dropdown-item px-2"
+          ng-disabled="atcbCtrl.isDisabledQuote()"
+          ng-click="atcbCtrl.clickQuote()">
+          <i class="far fa-quote-right" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.quotes.cart.add"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- ATC button for handling UOMs-->
+  <div ng-switch-when="true"
+    ng-if="atcbCtrl.itemId && atcbCtrl.itemName && atcbCtrl.itemSeoUrl && atcbCtrl.handleUoms">
+    <!-- dropdown-append-to-body -->
+    <div class="btn-group w-100" uib-dropdown>
+      <button type="button" class="btn btn-primary non-dropdown-rounded"
+        id="addToCartBtn-product-id-{{atcbCtrl.item.ID}}"
+        translate-attr="{ title: atcbCtrl.currentTitleKey(),
+                          'aria-label': atcbCtrl.currentTitleKey() }"
+        ng-disabled="atcbCtrl.isDisabled()"
+        ng-click="atcbCtrl.addCartItemWithUOM()">
+        <i class="{{atcbCtrl.currentIcon()}}" aria-hidden="true"
+          ng-if="atcbCtrl.showIcon"></i><!--
+        --><span ng-if="atcbCtrl.showIcon && atcbCtrl.showText">&nbsp;</span><!--
+        --><span ng-if="atcbCtrl.isSupervisor" ng-class="{ 'sr-only': !atcbCtrl.showText }"
+          data-translate="ui.storefront.cart.addToCart"></span><!--
+        --><span ng-if="!atcbCtrl.isSupervisor" ng-class="{ 'sr-only': !atcbCtrl.showText }"
+          data-translate="ui.storefront.cart.addToOrderRequest"></span>
+      </button>
+    </div>
+  </div>
+</div>

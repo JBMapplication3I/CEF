@@ -1,0 +1,78 @@
+﻿<div class="row" class="ship-to-block">
+    <div class="col-12" class="ship-to">
+        <!-- Radios: pick up in store or none -->
+        <p ng-class="{'mb':cefShipToCtrl.condenseRadios}" ng-show="cefShipToCtrl.showInStorePickup()">
+            <span class="span-spacer">
+                <label class="control-label font-weight-normal">
+                    <input type="radio"
+                           id="shipToSelection{{cefShipToCtrl.productID}}Pickup"
+                           name="shipToSelection{{cefShipToCtrl.productID}}{{cefShipToCtrl.unique}}"
+                           ng-disabled="!cefShipToCtrl.haveInStorePickupStock"
+                           ng-value="'InStorePickup'"
+                           ng-model="cefShipToCtrl.shipToValue" />
+                    <span data-translate="ui.storefront.location.shipTo.shipToSelect.storePickup"></span><!--
+                    --><span ng-if="cefShipToCtrl.showInStorePickupAsChooseStoreLinkWhenNoStore && !cefShipToCtrl.hasStore"
+                            >&nbsp;<a ui-sref-plus uisrp-area="storeLocator"
+                            ><span data-translate="ui.storefront.product.detail.productDetails.ChooseAStore"></span></a></span><!--
+                    --><span ng-if="cefShipToCtrl.showInStorePickupStock && cefShipToCtrl.hasStore"
+                             >&nbsp;({{cefShipToCtrl.inStorePickupStock() | number:0}})</span>
+                </label>
+            </span>
+        </p>
+        <!-- Radios: ship to store if no store inv -->
+        <p ng-class="{'mb':cefShipToCtrl.condenseRadios}" ng-show="cefShipToCtrl.showShipToStore()">
+            <span class="span-spacer">
+                <label class="control-label font-weight-normal">
+                    <input type="radio"
+                           id="shipToSelection{{cefShipToCtrl.productID}}Store"
+                           name="shipToSelection{{cefShipToCtrl.productID}}{{cefShipToCtrl.unique}}"
+                           ng-disabled="!cefShipToCtrl.haveShipToStoreStock"
+                           ng-value="'ShipToStore'"
+                           ng-model="cefShipToCtrl.shipToValue" />
+                    <span data-translate="ui.storefront.location.shipTo.shipToSelect.shipToStore"></span><!--
+                    --><span ng-if="cefShipToCtrl.showShipToStoreStock">&nbsp;({{cefShipToCtrl.shipToStoreStock() | number:0}})</span>
+                </label>
+            </span>
+        </p>
+        <!-- Radios: ship to home or none -->
+        <p ng-class="{'mb':cefShipToCtrl.condenseRadios}" ng-show="cefShipToCtrl.showShipToHome()">
+            <span class="span-spacer">
+                <label class="control-label font-weight-normal">
+                    <input type="radio"
+                           id="shipToSelection{{cefShipToCtrl.productID}}Home"
+                           name="shipToSelection{{cefShipToCtrl.productID}}{{cefShipToCtrl.unique}}"
+                           ng-disabled="cefShipToCtrl.isShippingRestricted || !cefShipToCtrl.haveShipToHomeStock"
+                           ng-value="'ShipToHome'"
+                           ng-model="cefShipToCtrl.shipToValue" />
+                    <span data-translate="ui.storefront.common.ShipToHome"></span><!--
+                    --><span ng-if="cefShipToCtrl.isShippingRestricted || !cefShipToCtrl.haveShipToHomeStock">&nbsp;<!--
+                    --><span data-translate="ui.storefront.product.detail.productDetails.IsUnavailable"></span></span><!--
+                    --><span ng-if="cefShipToCtrl.showShipToHomeStock && !cefShipToCtrl.isShippingRestricted && cefShipToCtrl.haveShipToHomeStock"
+                             >&nbsp;({{cefShipToCtrl.shipToHomeStock() | number:0}})</span>
+                </label>
+            </span>
+        </p>
+        <p ng-class="{'mb':cefShipToCtrl.condenseRadios}" ng-show="cefShipToCtrl.showOneFillerBlock">
+            <span class="span-spacer">
+                <label class="control-label font-weight-normal">&nbsp;</label>
+            </span>
+        </p>
+        <p ng-class="{'mb':cefShipToCtrl.condenseRadios}" ng-show="cefShipToCtrl.showTwoFillerBlocks">
+            <span class="span-spacer">
+                <label class="control-label font-weight-normal">&nbsp;</label>
+            </span>
+        </p>
+        <p ng-if="cefShipToCtrl.debug">
+            <small>
+                <span data-translate="ui.storefront.product.detail.productDetails.CaseCode"></span>
+                {{cefShipToCtrl.haveInStorePickupStock ? 'Y' : 'N'}}<!--
+                -->{{cefShipToCtrl.haveShipToStoreStock ? 'Y' : 'N'}}<!--
+                -->{{cefShipToCtrl.haveShipToHomeStock ? 'Y' : 'N'}}<!--
+                -->{{cefShipToCtrl.packProduct ? 'Y' : 'N'}}<!--
+                -->{{cefShipToCtrl.breakablePack || '-'}}<!--
+                -->{{cefShipToCtrl.isShippingRestricted ? 'N' : 'Y'}}<!--
+                -->Y<!-- Non-Web Items { {cefShipToCtrl. ? 'Y' : 'N'}}-->
+            </small>
+        </p>
+    </div>
+</div>

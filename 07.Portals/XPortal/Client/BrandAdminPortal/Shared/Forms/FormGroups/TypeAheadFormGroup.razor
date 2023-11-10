@@ -1,0 +1,183 @@
+﻿@inherits MVC.Core.InputFormGroupControllerBase<TValue>
+@typeparam TValue
+@typeparam TItem
+
+<Validation>
+  <Tooltip
+    Inline="false"
+    Text="@Tooltip"
+    Placement="TooltipPlacement.Top"
+    Fade="true"
+    AlwaysActive="TooltipIsOpen">
+    <Field
+      Horizontal="@IsHorizontal"
+      sid="@("field_" + InputName)"
+      Class="@AllFormClasses">
+      @if (!NoLabel)
+      {
+        <FieldLabel
+          For="@InputName"
+          title="@Tooltip"
+          sid="@("fieldLabel_" + InputName)">
+          <Span>
+            @LabelText
+            @if (Required)
+            {
+              <Span TextColor="TextColor.Danger">&nbsp;*</Span>
+            }
+            @if (Contract.CheckValidKey(Tooltip) && Tooltip != LabelText)
+            {
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.QuestionCircle" TextColor="TextColor.Info" Class="ml-1" />
+            }
+          </Span>
+        </FieldLabel>
+      }
+      <FieldBody
+        sid="@("fieldBody_" + InputName)">
+        
+          <Addons>
+            @if (Contract.CheckValidKey(LeftIcon))
+            {
+              <Addon AddonType="AddonType.Start">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon Name="@LeftIcon" Class="fa-fw" />
+                </AddonLabel>
+              </Addon>
+            }
+            <Addon AddonType="AddonType.Body">
+              <Autocomplete 
+                TItem="TItem"
+                TValue="TValue"
+                sid="@("input_" + InputName)"
+                ElementId="@InputName"
+                Class="@AllInputClasses"
+                Disabled="@Disabled"
+                required="@Required"
+                Data="@OptionsList"
+                TextField="@ItemLabelFunc"
+                ValueField="@ItemValueFunc"
+                SelectedValue="@Value"
+                SearchChanged="@(val => OnSearchChanged.InvokeAsync(val))"
+                SelectedText="@SelectedText"
+                Placeholder="@(PlaceholderText ?? "Search...")"
+                Filter="AutocompleteFilter.StartsWith"
+                FreeTyping="@FreeTyping"
+                Debounce="true"
+                DebounceInterval="@DebounceInterval"
+                Autofocus="@Autofocus"
+                >
+                @* 
+                CustomFilter="@CustomFilterFunc"
+                FocusOut="@ExtraOnFocusOut"
+                FocusIn="@ExtraOnFocusIn"
+                KeyDown="@ExtraOnKeyDown"
+                KeyPress="@ExtraOnKeyPress"
+                KeyUp="@ExtraOnKeyUp"
+                *@
+                <NotFoundContent>@(NotFoundContentMessage ?? "Sorry... " + @context + " was not found!")</NotFoundContent>
+            </Autocomplete>
+            </Addon>
+            @if (Contract.CheckValidKey(RightIcon))
+            {
+              <Addon AddonType="AddonType.End" Class="rounded-right">
+                <AddonLabel>
+                  <Blazorise.Icons.FontAwesome.Icon
+                    IconStyle="IconStyle.Regular"
+                    Name="@RightIcon"
+                    Class="fa-fw"
+                    aria-hidden="true"
+                  />
+                </AddonLabel>
+              </Addon>
+            }
+          </Addons>
+        
+      </FieldBody>
+    </Field>
+  </Tooltip>
+</Validation>
+
+@code
+{
+    #region Parameters
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  /// <summary>Gets or sets a value indicating whether this object is horizontal.</summary>
+  /// <value>True if this object is horizontal, false if not.</value>
+  [Parameter]
+  public bool IsHorizontal { get; set; }
+
+  /// <summary>Gets or sets the placeholder text.</summary>
+  /// <value>The placeholder text.</value>
+  [Parameter]
+  public string? PlaceholderText { get; set; }
+
+  /// <summary>Gets or sets the message when no content is found.</summary>
+  /// <value>The message when no content is found.</value>
+  [Parameter]
+  public string? NotFoundContentMessage { get; set; }
+
+  /// <summary>Gets or sets the debounce interval.</summary>
+  /// <value>The debounce interval.</value>
+  [Parameter]
+  public int DebounceInterval { get; set; } = 500;
+
+  /// <summary>Gets or sets a list of options.</summary>
+  /// <value>A List of options.</value>
+  [Parameter, EditorRequired]
+  public IEnumerable<TItem>? OptionsList { get; set; }
+
+  /// <summary>Gets or sets a list of options.</summary>
+  /// <value>A List of options.</value>
+  [Parameter]
+  public EventCallback<Func<IEnumerable<TItem>>?> OptionsListChanged { get; set; }  
+
+  /// <summary>Gets or sets the selected text.</summary>
+  /// <value>The selected text.</value>
+  [Parameter/*, EditorRequired NOTE: Causes RZ2012 when using @bind-Value */]
+  public string? SelectedText { get; set; }
+
+  /// <summary>Gets or sets the value indicating whether free typing list allowed.</summary>
+  /// <value>true if free typing list allowed, false if not.</value>
+  [Parameter/*, EditorRequired NOTE: Causes RZ2012 when using @bind-Value */]
+  public bool FreeTyping { get; set; } = true;
+
+  /// <summary>Gets or sets the item value function.</summary>
+  /// <value>The item value function.</value>
+  [Parameter]
+  public Func<TItem, string, bool>? CustomFilterFunc { get; set; }
+
+  /// <summary>Gets or sets the item value function.</summary>
+  /// <value>The item value function.</value>
+  [Parameter, EditorRequired]
+  public Func<TItem, TValue> ItemValueFunc { get; set; }
+
+  /// <summary>Gets or sets the item label function.</summary>
+  /// <value>The item label function.</value>
+  [Parameter, EditorRequired]
+  public Func<TItem, string> ItemLabelFunc { get; set; }
+
+  /// <summary>Gets or sets the on toggle.</summary>
+  /// <value>The on toggle.</value>
+  [Parameter, EditorRequired]
+  public EventCallback<string> OnSearchChanged { get; set; }
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  #endregion
+
+  /// <summary>Gets the input prefix.</summary>
+  /// <value>The input prefix.</value>
+  protected override string InputPrefix => "ddl";
+
+  private string AllInputClasses => (FieldCssClasses
+    + (Contract.CheckValidKey(InputClasses) ? " " + InputClasses : string.Empty)
+    + (Contract.CheckValidKey(RightIcon) ? string.Empty : " rounded-right"))
+    .Trim();
+
+  private string AllFormClasses => ("form-group"
+    + (Contract.CheckValidKey(FormClasses) ? " " + FormClasses : string.Empty)
+    + (FormInvalid == true ? " has-error" : string.Empty))
+    .Trim();
+
+  private bool UseAddons =>
+    Contract.CheckValidKey(LeftIcon)
+    || Contract.CheckValidKey(RightIcon);
+}

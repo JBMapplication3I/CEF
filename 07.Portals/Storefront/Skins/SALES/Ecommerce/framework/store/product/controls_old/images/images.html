@@ -1,0 +1,26 @@
+﻿<div class="row" ng-switch="productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value">
+  <div class="cef-product-photo col-12 pt-3 mask" ng-switch-when="Clothing">
+        <div cef-magic-image-carousel
+            images="productDetailsCtrl.productToDisplay.Images"
+            image-directory="{{'/' | corsImageLink}}"
+            large-image-resize="{width:800,height:1200,mode:'pad',scale:'both'}"
+            medium-image-resize="{width:600,height:900,mode:'pad',scale:'both'}"
+            thumb-image-resize="{width:101,height:101,mode:'crop',scale:'both'}"
+            options="selectorTrigger: hover; transitionEffect: false; zoomWidth: 150%;hint: off;zoomPosition: inner;"
+            scroll-options="items: 5; pagination: false; draggable: true; height: 600; orientation: vertical;loop: off;arrows: inside;"
+            template="Clothing">
+        </div>
+    </div>  
+    <div class="cef-product-photo col-12 mask" ng-switch-default>
+        <div cef-magic-image-carousel
+             images="productDetailsCtrl.productToDisplay.Images"
+             image-directory="{{'/' | corsImageLink}}"
+             large-image-resize="{width:800,height:800,mode:'pad',scale:'both'}"
+             medium-image-resize="{width:366,height:366,mode:'pad',scale:'both'}"
+             thumb-image-resize="{width:51,height:51,mode:'pad',scale:'both'}"
+             options="selectorTrigger: hover; transitionEffect: false; zoomWidth: 150%;"
+             scroll-options="items: 4; pagination: true; draggable: true; height: 51"
+             template="default">
+        </div>
+    </div>
+</div>

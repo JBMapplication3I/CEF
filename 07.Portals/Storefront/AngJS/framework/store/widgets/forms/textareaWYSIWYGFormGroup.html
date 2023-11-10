@@ -1,0 +1,35 @@
+<div ng-form="tawfgCtrl.forms.{{tawfgCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="{'has-error': tawfgCtrl.forms[tawfgCtrl.formIdentifier].$invalid}">
+  <label class="control-label" for="txta{{tawfgCtrl.formIdentifier}}"
+    uib-tooltip="{{tawfgCtrl.tooltip}}" tooltip-placement="auto top-left">
+    <span data-translate="{{tawfgCtrl.labelKey}}">{{tawfgCtrl.labelText}}</span><!--
+    --><span ng-if="tawfgCtrl.required" class="text-danger">&nbsp;*</span><!--
+    --><span ng-if="tawfgCtrl.tooltip" class="text-info">&nbsp;<i class="far fa-question-circle"></i></span>
+  </label>
+  <div class="input-group">
+    <textarea
+      kendo-editor k-encoded="false" style="width: 100%; height: 300px;"
+      ng-class="tawfgCtrl.inputClass"
+      id="txta{{tawfgCtrl.formIdentifier}}"
+      name="txta{{tawfgCtrl.formIdentifier}}"
+      k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft',
+        'justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList',
+        'indent','createLink','insertImage','createTable']"
+      k-paste="tawfgCtrl.sanitizeMarkup"
+      translate-attr="{ placeholder: tawfgCtrl.placeholderKey }"
+      placeholder="{{tawfgCtrl.placeholderText}}"
+      maxlength="tawfgCtrl.maxLength || ''"
+      ng-disabled="tawfgCtrl.disabled"
+      ng-required="tawfgCtrl.required"
+      ng-model-options="tawfgCtrl.options"
+      ng-model="tawfgCtrl.property">
+    </textarea>
+  </div>
+  <div ng-if="tawfgCtrl.maxLength > 0 && tawfgCtrl.showCharacterCounter"
+    ng-bind="(tawfgCtrl.property || '').length + ' of ' + tawfgCtrl.maxLength">
+  </div>
+  <div ng-messages="tawfgCtrl.forms.{{tawfgCtrl.formIdentifier}}.$error">
+    <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+</div>

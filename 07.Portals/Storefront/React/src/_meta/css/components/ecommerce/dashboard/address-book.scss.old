@@ -1,0 +1,28 @@
+
+// styles for the CEF user dashboard page - Address Book tab
+
+// wrapper for the entire CEF Address Book
+.cef-address-book {  }
+
+// add a new address button
+// .cef-add-address { border: 1px dashed $dashboard-panel-border-color; padding: $grid-gutter-width; margin-bottom: $grid-gutter-width; color: $gray-light; white-space: normal;
+//   //&:hover { border-color: $primary; background: #fff; }
+//   &:hover { background: lighten($success,42%); }
+//   &:active { background: #fff; }
+// }// end .cef-add-address
+
+// wrapper class for an individual existing saved address
+.cef-address-block.cef-dashboard-panel {
+  .panel-body {
+    .cef-address-addresses { /*position: relative;*/
+      .fa-map-marker { /*position: absolute; left: ($grid-gutter-width/2); top: 5px;*/ }
+      p { /*padding-left: ($grid-gutter-width/2);*/ }
+    }// end .cef-address-addresses
+    .cef-address-contact-info {  }
+      p { /*margin: 0;*/ }
+        i.fa { /*color: $gray-light;*/ }
+        .has-success .control-label i.fa { /*color: $success;*/ }
+        .has-warning .control-label i.fa { /*color: $warning;*/ }
+        .has-error .control-label i.fa { /*color: $danger;*/ }
+  }// end .panel-body
+}// end .cef-address-block

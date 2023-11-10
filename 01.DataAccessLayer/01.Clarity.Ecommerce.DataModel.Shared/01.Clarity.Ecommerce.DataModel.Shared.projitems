@@ -1,0 +1,1544 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>99C7D311-7854-48A9-9670-FD4A49184B11</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>_01.Clarity.Ecommerce.DataModel.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\AllowLookupAssignInWithAssociateWorkflowsButDontAffectAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\AllowLookupAssignInWithRelateWorkflowsButDontAffectAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\AllowMapInWithAssociateWorkflowsButDontAutoGenerateAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\AllowMapInWithRelateWorkflowsButDontAutoGenerateAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DecimalPrecisionAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DontMapInEverAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DontMapInWithAssociateWorkflowsAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DontMapInWithMappingLayerAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DontMapInWithRelateWorkflowsAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DontMapOutEverAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DontMapOutWithListingAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\DontMapOutWithLiteAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\ForceMapOutWithListingAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\ForceMapOutWithLiteAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\OnlyMapOutFlattenedValuesInsteadOfObjectWithLiteAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\SqlSchemaAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Attributes\StringIsUnicodeAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClarityCustomExecutionStrategy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClarityEcommerceEntities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ColumnDesc.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DatabaseDescriptor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\DefaultData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\DefaultData.Identity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Accounts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Attributes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Brands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Categories.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Franchises.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Inventory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Manufacturers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.PriceRules.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Products.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.SalesInvoices.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.SalesOrders.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.SalesQuotes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Stores.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Users.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SampleData.Vendors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataSets\SeedDatabaseException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CEFDbMigrationBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CEFEmailService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CEFRoleManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CEFRoleStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CEFSMSService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CEFUserManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\CEFUserStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DatabaseExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ICEFRoleStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ICEFUserStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IRoleForAccountModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\IRoleForUserModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\MigrationExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\RoleForAccountModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\RoleForUserModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\RollingList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\UserManagerExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IDbContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612021738169_InitialCreate_4pt7.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612021738169_InitialCreate_4pt7.Designer.cs">
+      <DependentUpon>201612021738169_InitialCreate_4pt7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612070517527_SalesQuotesAndSampleRequestsSchema.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612070517527_SalesQuotesAndSampleRequestsSchema.Designer.cs">
+      <DependentUpon>201612070517527_SalesQuotesAndSampleRequestsSchema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612070728240_FilesForAllSalesCollections.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612070728240_FilesForAllSalesCollections.Designer.cs">
+      <DependentUpon>201612070728240_FilesForAllSalesCollections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612081922468_DropCheckouts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612081922468_DropCheckouts.Designer.cs">
+      <DependentUpon>201612081922468_DropCheckouts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612202054553_DropAttributeFilterValuesAndAccountAddresses.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612202054553_DropAttributeFilterValuesAndAccountAddresses.Designer.cs">
+      <DependentUpon>201612202054553_DropAttributeFilterValuesAndAccountAddresses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612230147293_DropFavoritesCustomersAndIndividuals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201612230147293_DropFavoritesCustomersAndIndividuals.Designer.cs">
+      <DependentUpon>201612230147293_DropFavoritesCustomersAndIndividuals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201701061432005_SplitShipping.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201701061432005_SplitShipping.Designer.cs">
+      <DependentUpon>201701061432005_SplitShipping.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201701062139203_GlobalizationAndCurrency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201701062139203_GlobalizationAndCurrency.Designer.cs">
+      <DependentUpon>201701062139203_GlobalizationAndCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201701102149344_FixTriggerName.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201701102149344_FixTriggerName.Designer.cs">
+      <DependentUpon>201701102149344_FixTriggerName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201701111447011_SavedSellers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201701111447011_SavedSellers.Designer.cs">
+      <DependentUpon>201701111447011_SavedSellers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201702021418384_OrdersWithMultipleContacts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201702021418384_OrdersWithMultipleContacts.Designer.cs">
+      <DependentUpon>201702021418384_OrdersWithMultipleContacts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201702111901020_ImagesForGlobalizationAndGeographyAssignments.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201702111901020_ImagesForGlobalizationAndGeographyAssignments.Designer.cs">
+      <DependentUpon>201702111901020_ImagesForGlobalizationAndGeographyAssignments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201702121904460_ProductSalesAnalytics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201702121904460_ProductSalesAnalytics.Designer.cs">
+      <DependentUpon>201702121904460_ProductSalesAnalytics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201703231920001_Groups.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201703231920001_Groups.Designer.cs">
+      <DependentUpon>201703231920001_Groups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201703291331233_PILInSalesItems.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201703291331233_PILInSalesItems.Designer.cs">
+      <DependentUpon>201703291331233_PILInSalesItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704032222033_InventoryHash.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704032222033_InventoryHash.Designer.cs">
+      <DependentUpon>201704032222033_InventoryHash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704121839113_UserAccountsOptionallyRequireApprovalForLogin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704121839113_UserAccountsOptionallyRequireApprovalForLogin.Designer.cs">
+      <DependentUpon>201704121839113_UserAccountsOptionallyRequireApprovalForLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704140207336_CategoryHashes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704140207336_CategoryHashes.Designer.cs">
+      <DependentUpon>201704140207336_CategoryHashes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704172328247_StoreProductHash.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704172328247_StoreProductHash.Designer.cs">
+      <DependentUpon>201704172328247_StoreProductHash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704211808567_CalendarEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201704211808567_CalendarEvents.Designer.cs">
+      <DependentUpon>201704211808567_CalendarEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201705082235329_SiteDomainAlternateUrls.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201705082235329_SiteDomainAlternateUrls.Designer.cs">
+      <DependentUpon>201705082235329_SiteDomainAlternateUrls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201705151602561_ConnectHashes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201705151602561_ConnectHashes.Designer.cs">
+      <DependentUpon>201705151602561_ConnectHashes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201707101843095_AddProductImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201707101843095_AddProductImageType.Designer.cs">
+      <DependentUpon>201707101843095_AddProductImageType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201707192228353_MediaOverhaul.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201707192228353_MediaOverhaul.Designer.cs">
+      <DependentUpon>201707192228353_MediaOverhaul.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201707260616429_DropNotificationsTables.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201707260616429_DropNotificationsTables.Designer.cs">
+      <DependentUpon>201707260616429_DropNotificationsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201708211733285_QuoteCategories.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201708211733285_QuoteCategories.Designer.cs">
+      <DependentUpon>201708211733285_QuoteCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201708212133226_AutoAppliedDiscountAndDiscountShippingOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201708212133226_AutoAppliedDiscountAndDiscountShippingOptions.Designer.cs">
+      <DependentUpon>201708212133226_AutoAppliedDiscountAndDiscountShippingOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201708281909147_CartShipment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201708281909147_CartShipment.Designer.cs">
+      <DependentUpon>201708281909147_CartShipment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709071543314_ProductPricePointQuantities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709071543314_ProductPricePointQuantities.Designer.cs">
+      <DependentUpon>201709071543314_ProductPricePointQuantities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709130128394_SalesReturns.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709130128394_SalesReturns.Designer.cs">
+      <DependentUpon>201709130128394_SalesReturns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709192126532_SalesOrderEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709192126532_SalesOrderEvents.Designer.cs">
+      <DependentUpon>201709192126532_SalesOrderEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709211625228_UniqueCarts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709211625228_UniqueCarts.Designer.cs">
+      <DependentUpon>201709211625228_UniqueCarts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709220043077_AllSalesContactsOptional.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709220043077_AllSalesContactsOptional.Designer.cs">
+      <DependentUpon>201709220043077_AllSalesContactsOptional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709252127491_ChatService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709252127491_ChatService.Designer.cs">
+      <DependentUpon>201709252127491_ChatService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709262315353_PhonePrefixLookups.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709262315353_PhonePrefixLookups.Designer.cs">
+      <DependentUpon>201709262315353_PhonePrefixLookups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709271843270_ReferralCodes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709271843270_ReferralCodes.Designer.cs">
+      <DependentUpon>201709271843270_ReferralCodes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709272115558_StoreBadges.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201709272115558_StoreBadges.Designer.cs">
+      <DependentUpon>201709272115558_StoreBadges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201710131652314_AllSalesContactsOptionalReHash.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201710131652314_AllSalesContactsOptionalReHash.Designer.cs">
+      <DependentUpon>201710131652314_AllSalesContactsOptionalReHash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201711022055531_MembershipToInvoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201711022055531_MembershipToInvoice.Designer.cs">
+      <DependentUpon>201711022055531_MembershipToInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201711151848297_AddressResolutions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201711151848297_AddressResolutions.Designer.cs">
+      <DependentUpon>201711151848297_AddressResolutions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201801082055564_RFQParent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201801082055564_RFQParent.Designer.cs">
+      <DependentUpon>201801082055564_RFQParent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201801151906449_PriceRuleNullableDates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201801151906449_PriceRuleNullableDates.Designer.cs">
+      <DependentUpon>201801151906449_PriceRuleNullableDates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201801221557427_JsonAttributesEverywhere.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201801221557427_JsonAttributesEverywhere.Designer.cs">
+      <DependentUpon>201801221557427_JsonAttributesEverywhere.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201801252013363_AttributesIsComparibleAndHideFromStorefront.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201801252013363_AttributesIsComparibleAndHideFromStorefront.Designer.cs">
+      <DependentUpon>201801252013363_AttributesIsComparibleAndHideFromStorefront.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201802262158431_CalendarEventImages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201802262158431_CalendarEventImages.Designer.cs">
+      <DependentUpon>201802262158431_CalendarEventImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201803201704234_AddRateQuotes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201803201704234_AddRateQuotes.Designer.cs">
+      <DependentUpon>201803201704234_AddRateQuotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201803231823227_SalesGroups.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201803231823227_SalesGroups.Designer.cs">
+      <DependentUpon>201803231823227_SalesGroups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201803271657395_ProviderCachesAndMappingFiles.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201803271657395_ProviderCachesAndMappingFiles.Designer.cs">
+      <DependentUpon>201803271657395_ProviderCachesAndMappingFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201804022337061_QuoteResponseAs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201804022337061_QuoteResponseAs.Designer.cs">
+      <DependentUpon>201804022337061_QuoteResponseAs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201804181946553_AttrsAndSalesItemTargets.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201804181946553_AttrsAndSalesItemTargets.Designer.cs">
+      <DependentUpon>201804181946553_AttrsAndSalesItemTargets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201805091939224_SplitShippingTargets2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201805091939224_SplitShippingTargets2.Designer.cs">
+      <DependentUpon>201805091939224_SplitShippingTargets2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201806050014509_V2018.2.0-Drop-4.6-Depr-Tables.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201806050014509_V2018.2.0-Drop-4.6-Depr-Tables.Designer.cs">
+      <DependentUpon>201806050014509_V2018.2.0-Drop-4.6-Depr-Tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201806130212123_ChangeStoreToStoreProductForTargets.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201806130212123_ChangeStoreToStoreProductForTargets.Designer.cs">
+      <DependentUpon>201806130212123_ChangeStoreToStoreProductForTargets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201806152035017_CartParents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201806152035017_CartParents.Designer.cs">
+      <DependentUpon>201806152035017_CartParents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201806202052536_FixSalesGroupMasterLinks.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201806202052536_FixSalesGroupMasterLinks.Designer.cs">
+      <DependentUpon>201806202052536_FixSalesGroupMasterLinks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201807181800109_AttributeTabsAndDiscountBuyXGetY.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201807181800109_AttributeTabsAndDiscountBuyXGetY.Designer.cs">
+      <DependentUpon>201807181800109_AttributeTabsAndDiscountBuyXGetY.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201808020000321_PricePointsAndRulesProperties.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201808020000321_PricePointsAndRulesProperties.Designer.cs">
+      <DependentUpon>201808020000321_PricePointsAndRulesProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201808112013256_SchemaCleanupAndEmailAttach.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201808112013256_SchemaCleanupAndEmailAttach.Designer.cs">
+      <DependentUpon>201808112013256_SchemaCleanupAndEmailAttach.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201808211832050_ProductRestrictions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201808211832050_ProductRestrictions.Designer.cs">
+      <DependentUpon>201808211832050_ProductRestrictions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810101538291_StoredFilesOnAccountsAndUsers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810101538291_StoredFilesOnAccountsAndUsers.Designer.cs">
+      <DependentUpon>201810101538291_StoredFilesOnAccountsAndUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810201539534_TargetsByVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810201539534_TargetsByVendor.Designer.cs">
+      <DependentUpon>201810201539534_TargetsByVendor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810222046204_SalesGroupLinks.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810222046204_SalesGroupLinks.Designer.cs">
+      <DependentUpon>201810222046204_SalesGroupLinks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810222322361_CleanupAndAccountCredits.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810222322361_CleanupAndAccountCredits.Designer.cs">
+      <DependentUpon>201810222322361_CleanupAndAccountCredits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810252046577_UniqueCartsIndexFix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201810252046577_UniqueCartsIndexFix.Designer.cs">
+      <DependentUpon>201810252046577_UniqueCartsIndexFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201811282338482_NothingToShipProducts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201811282338482_NothingToShipProducts.Designer.cs">
+      <DependentUpon>201811282338482_NothingToShipProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201812051727294_TargetsWithNothingToShip.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201812051727294_TargetsWithNothingToShip.Designer.cs">
+      <DependentUpon>201812051727294_TargetsWithNothingToShip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201901141927112_ForceUniqueLineItemKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201901141927112_ForceUniqueLineItemKey.Designer.cs">
+      <DependentUpon>201901141927112_ForceUniqueLineItemKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201902010024488_ScheduledImports.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201902010024488_ScheduledImports.Designer.cs">
+      <DependentUpon>201902010024488_ScheduledImports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201902042245342_PriceRulesOverhaul2019.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201902042245342_PriceRulesOverhaul2019.Designer.cs">
+      <DependentUpon>201902042245342_PriceRulesOverhaul2019.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201902181819454_WalletWithEchecks.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201902181819454_WalletWithEchecks.Designer.cs">
+      <DependentUpon>201902181819454_WalletWithEchecks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201902201850014_RateQuotesOnAllSalesCollections.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201902201850014_RateQuotesOnAllSalesCollections.Designer.cs">
+      <DependentUpon>201902201850014_RateQuotesOnAllSalesCollections.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903020249227_PriceRuleCountries.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903020249227_PriceRuleCountries.Designer.cs">
+      <DependentUpon>201903020249227_PriceRuleCountries.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903042201225_UserProductTypes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903042201225_UserProductTypes.Designer.cs">
+      <DependentUpon>201903042201225_UserProductTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903122304457_MinimumOrders.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903122304457_MinimumOrders.Designer.cs">
+      <DependentUpon>201903122304457_MinimumOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903182024241_Overhaul2019Q1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903182024241_Overhaul2019Q1.Designer.cs">
+      <DependentUpon>201903182024241_Overhaul2019Q1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903182059034_Overhaul2019Q1b.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903182059034_Overhaul2019Q1b.Designer.cs">
+      <DependentUpon>201903182059034_Overhaul2019Q1b.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903182103541_Overhaul2019Q1c.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903182103541_Overhaul2019Q1c.Designer.cs">
+      <DependentUpon>201903182103541_Overhaul2019Q1c.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903182110571_Overhaul2019Q1d.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201903182110571_Overhaul2019Q1d.Designer.cs">
+      <DependentUpon>201903182110571_Overhaul2019Q1d.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201904042105269_DiscountRestrictionsByX.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201904042105269_DiscountRestrictionsByX.Designer.cs">
+      <DependentUpon>201904042105269_DiscountRestrictionsByX.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201904240227151_AddressCompanyFieldNotRequired.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201904240227151_AddressCompanyFieldNotRequired.Designer.cs">
+      <DependentUpon>201904240227151_AddressCompanyFieldNotRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201904252039551_PriceRulePriority.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201904252039551_PriceRulePriority.Designer.cs">
+      <DependentUpon>201904252039551_PriceRulePriority.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201905162113393_SubscriptionsOverhaul.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201905162113393_SubscriptionsOverhaul.Designer.cs">
+      <DependentUpon>201905162113393_SubscriptionsOverhaul.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201910162150375_ClientRequirements2019Q3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201910162150375_ClientRequirements2019Q3.Designer.cs">
+      <DependentUpon>201910162150375_ClientRequirements2019Q3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201910230352558_OrderMinimums.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201910230352558_OrderMinimums.Designer.cs">
+      <DependentUpon>201910230352558_OrderMinimums.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201910300403028_ProductRestrictions1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201910300403028_ProductRestrictions1.Designer.cs">
+      <DependentUpon>201910300403028_ProductRestrictions1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201911042200421_PreSales.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201911042200421_PreSales.Designer.cs">
+      <DependentUpon>201911042200421_PreSales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201911181951180_AccountRoles.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201911181951180_AccountRoles.Designer.cs">
+      <DependentUpon>201911181951180_AccountRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201911200111448_DisplayablesWithTranslations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201911200111448_DisplayablesWithTranslations.Designer.cs">
+      <DependentUpon>201911200111448_DisplayablesWithTranslations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201912030141238_ForceUserPWResetAndProductDropShipOnly.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201912030141238_ForceUserPWResetAndProductDropShipOnly.Designer.cs">
+      <DependentUpon>201912030141238_ForceUserPWResetAndProductDropShipOnly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201912310626422_BufferSkusEverywhere.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\201912310626422_BufferSkusEverywhere.Designer.cs">
+      <DependentUpon>201912310626422_BufferSkusEverywhere.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202001281947047_EventLogRecordLogLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202001281947047_EventLogRecordLogLevel.Designer.cs">
+      <DependentUpon>202001281947047_EventLogRecordLogLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202002011534012_CurrencyConvAndWalletCurrency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202002011534012_CurrencyConvAndWalletCurrency.Designer.cs">
+      <DependentUpon>202002011534012_CurrencyConvAndWalletCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202005010036230_ProductAssociationStores.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202005010036230_ProductAssociationStores.Designer.cs">
+      <DependentUpon>202005010036230_ProductAssociationStores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202006020330171_DropCategoryTypeValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202006020330171_DropCategoryTypeValue.Designer.cs">
+      <DependentUpon>202006020330171_DropCategoryTypeValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202006060940352_ByBrand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202006060940352_ByBrand.Designer.cs">
+      <DependentUpon>202006060940352_ByBrand.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202006090625533_ByBrand2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202006090625533_ByBrand2.Designer.cs">
+      <DependentUpon>202006090625533_ByBrand2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202009202104522_ProductDownloadsAndVersions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202009202104522_ProductDownloadsAndVersions.Designer.cs">
+      <DependentUpon>202009202104522_ProductDownloadsAndVersions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202009301819538_Overhaul2020Q3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202009301819538_Overhaul2020Q3.Designer.cs">
+      <DependentUpon>202009301819538_Overhaul2020Q3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202010160059107_SchemaDropQ3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202010160059107_SchemaDropQ3.Designer.cs">
+      <DependentUpon>202010160059107_SchemaDropQ3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202010200015369_BrandCurrencyAndISOs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202010200015369_BrandCurrencyAndISOs.Designer.cs">
+      <DependentUpon>202010200015369_BrandCurrencyAndISOs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202010201825270_BrandLanguages.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202010201825270_BrandLanguages.Designer.cs">
+      <DependentUpon>202010201825270_BrandLanguages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202011260008217_MessageAttachmentsSeoAndSTRT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202011260008217_MessageAttachmentsSeoAndSTRT.Designer.cs">
+      <DependentUpon>202011260008217_MessageAttachmentsSeoAndSTRT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202101080220571_DiscountLimits.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202101080220571_DiscountLimits.Designer.cs">
+      <DependentUpon>202101080220571_DiscountLimits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202101312244032_DiscountApplicationsUsed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202101312244032_DiscountApplicationsUsed.Designer.cs">
+      <DependentUpon>202101312244032_DiscountApplicationsUsed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202103120204105_WalletContacts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202103120204105_WalletContacts.Designer.cs">
+      <DependentUpon>202103120204105_WalletContacts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202103170753458_SalesEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202103170753458_SalesEvents.Designer.cs">
+      <DependentUpon>202103170753458_SalesEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202103290016369_SalesGroupBrandsAndSubscriptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202103290016369_SalesGroupBrandsAndSubscriptions.Designer.cs">
+      <DependentUpon>202103290016369_SalesGroupBrandsAndSubscriptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202104201836548_SalesQuotesMastersAndSubs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202104201836548_SalesQuotesMastersAndSubs.Designer.cs">
+      <DependentUpon>202104201836548_SalesQuotesMastersAndSubs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202104201850337_SalesQuotesTotalsModifiers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202104201850337_SalesQuotesTotalsModifiers.Designer.cs">
+      <DependentUpon>202104201850337_SalesQuotesTotalsModifiers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202106260124509_TargetApplicationsUsed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202106260124509_TargetApplicationsUsed.Designer.cs">
+      <DependentUpon>202106260124509_TargetApplicationsUsed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202107301623530_Bids.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202107301623530_Bids.Designer.cs">
+      <DependentUpon>202107301623530_Bids.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202108082143506_Auctions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202108082143506_Auctions.Designer.cs">
+      <DependentUpon>202108082143506_Auctions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202108090038205_StoreBrandOnAuction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202108090038205_StoreBrandOnAuction.Designer.cs">
+      <DependentUpon>202108090038205_StoreBrandOnAuction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202109242150261_Franchises.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202109242150261_Franchises.Designer.cs">
+      <DependentUpon>202109242150261_Franchises.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202110132215060_IncludeAccountInCartCluster.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202110132215060_IncludeAccountInCartCluster.Designer.cs">
+      <DependentUpon>202110132215060_IncludeAccountInCartCluster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111040635224_InventoryUsersAndQuestionnaires.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111040635224_InventoryUsersAndQuestionnaires.Designer.cs">
+      <DependentUpon>202111040635224_InventoryUsersAndQuestionnaires.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111052049577_ElasticIndexingRequirements.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111052049577_ElasticIndexingRequirements.Designer.cs">
+      <DependentUpon>202111052049577_ElasticIndexingRequirements.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111060256068_RenameColumn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111060256068_RenameColumn.Designer.cs">
+      <DependentUpon>202111060256068_RenameColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111170253058_SchedulingUpdates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111170253058_SchedulingUpdates.Designer.cs">
+      <DependentUpon>202111170253058_SchedulingUpdates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111200552283_Contractors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111200552283_Contractors.designer.cs">
+      <DependentUpon>202111200552283_Contractors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111292031386_AutoPay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202111292031386_AutoPay.Designer.cs">
+      <DependentUpon>202111292031386_AutoPay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202112082315116_ZipperFix2021-12-08.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202112082315116_ZipperFix2021-12-08.Designer.cs">
+      <DependentUpon>202112082315116_ZipperFix2021-12-08.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202201132213009_DisplayStoreInStorefront.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202201132213009_DisplayStoreInStorefront.Designer.cs">
+      <DependentUpon>202201132213009_DisplayStoreInStorefront.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202202040140189_DropListingsAndFixLotGroups.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202202040140189_DropListingsAndFixLotGroups.Designer.cs">
+      <DependentUpon>202202040140189_DropListingsAndFixLotGroups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202202040157516_AddPriceRuleFranchise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202202040157516_AddPriceRuleFranchise.Designer.cs">
+      <DependentUpon>202202040157516_AddPriceRuleFranchise.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202202041920550_FixLotGroupAssignment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202202041920550_FixLotGroupAssignment.Designer.cs">
+      <DependentUpon>202202041920550_FixLotGroupAssignment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202207091601579_AccountSchemaHippaUpdates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202207091601579_AccountSchemaHippaUpdates.Designer.cs">
+      <DependentUpon>202207091601579_AccountSchemaHippaUpdates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202211011319290_HCPCCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202211011319290_HCPCCode.Designer.cs">
+      <DependentUpon>202211011319290_HCPCCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202306250507158_UpdateProductRequiresRolesLength.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202306250507158_UpdateProductRequiresRolesLength.Designer.cs">
+      <DependentUpon>202306250507158_UpdateProductRequiresRolesLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202307270143331_EndDateOnAccountContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202307270143331_EndDateOnAccountContact.Designer.cs">
+      <DependentUpon>202307270143331_EndDateOnAccountContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202308011856530_StatusOnSalesItems.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202308011856530_StatusOnSalesItems.Designer.cs">
+      <DependentUpon>202308011856530_StatusOnSalesItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202308072230039_AddSalesEntitiesToShipments.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202308072230039_AddSalesEntitiesToShipments.Designer.cs">
+      <DependentUpon>202308072230039_AddSalesEntitiesToShipments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202308170750372_UpdateAccountContactEndDate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202308170750372_UpdateAccountContactEndDate.Designer.cs">
+      <DependentUpon>202308170750372_UpdateAccountContactEndDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202309111530199_ShipmentLines.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\202309111530199_ShipmentLines.Designer.cs">
+      <DependentUpon>202309111530199_ShipmentLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\ClarityEFConfigurations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\Configuration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\ModelDBInitializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\Account.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountAssociation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountAssociationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountCurrency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountPricePoint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountProductType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountUsageBalance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\AccountUserRole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\Contractor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Accounts\ServiceArea.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\Ad.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdBrand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdFranchise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdZone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\AdZoneAccess.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\Zone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\ZoneStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Advertising\ZoneType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Attributes\AttributeGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Attributes\AttributeTab.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Attributes\AttributeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Attributes\GeneralAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Attributes\GeneralAttributePredefinedOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\Auction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\LotGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\StoreAuction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\FranchiseAuction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\BrandAuction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\LotCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\AuctionStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\AuctionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\Bid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\BidStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\Lot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\LotType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\LotStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Auctions\AuctionCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Badges\Badge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Badges\BadgeImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Badges\BadgeImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Badges\BadgeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\Brand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandCurrency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandFranchise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandInventoryLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandInventoryLocationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandSiteDomain.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandManufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Brands\BrandUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\CalendarEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\CalendarEventDetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\CalendarEventFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\CalendarEventImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\CalendarEventImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\CalendarEventProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\CalendarEventStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\CalendarEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\UserEventAttendance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CalendarEvents\UserEventAttendanceType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Categories\Category.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Categories\CategoryFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Categories\CategoryImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Categories\CategoryImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Categories\CategoryType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\Contact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\ContactImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\ContactImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\ContactType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\Permission.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\ProfanityFilter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\ReferralCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\ReferralCodeStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\ReferralCodeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\RolePermission.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\RoleUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserClaim.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserLogin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserOnlineStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserProductType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserRole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Contacts\UserType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Counters\Counter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Counters\CounterLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Counters\CounterLogType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Counters\CounterType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Currencies\Currency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Currencies\CurrencyConversion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Currencies\CurrencyImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Currencies\CurrencyImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Currencies\HistoricalCurrencyRate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedCartDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedCartItemDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedPurchaseOrderDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedPurchaseOrderItemDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSalesInvoiceDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSalesInvoiceItemDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSalesOrderDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSalesOrderItemDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSalesQuoteDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSalesQuoteItemDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSalesReturnDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSalesReturnItemDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSampleRequestDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\AppliedSampleRequestItemDiscount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\Discount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountAccountType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountBrand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountCountry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountFranchise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountManufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountProductType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountShipCarrierMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountUserRole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Discounts\DiscountVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Favorites\FavoriteCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Favorites\FavoriteManufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Favorites\FavoriteShipCarrier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Favorites\FavoriteStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Favorites\FavoriteVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseManufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\Franchise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseCountry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseCurrency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseDistrict.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseInventoryLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseInventoryLocationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseRegion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseSiteDomain.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Franchises\FranchiseUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\Address.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\Country.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\CountryCurrency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\CountryImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\CountryImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\CountryLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\District.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\DistrictCurrency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\DistrictImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\DistrictImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\DistrictLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\HistoricalAddressValidation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\PhonePrefixLookup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\Region.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\RegionCurrency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\RegionImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\RegionImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\RegionLanguage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Geography\ZipCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Globalization\Language.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Globalization\LanguageImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Globalization\LanguageImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Globalization\UiKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Globalization\UiTranslation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Group\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Group\GroupStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Group\GroupType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Group\GroupUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireAggregatedCounter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireCounter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireHash.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireJob.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireJobParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireJobQueue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireSchema.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireServer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\HangfireState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\ScheduledJobConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\ScheduledJobConfigurationSetting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Hangfire\_IHasId.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Inventory\InventoryLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Inventory\InventoryLocationRegion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Inventory\InventoryLocationSection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Inventory\InventoryLocationUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceItemTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Invoicing\SalesInvoiceType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Manufacturers\Manufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Manufacturers\ManufacturerImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Manufacturers\ManufacturerImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Manufacturers\ManufacturerProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Manufacturers\ManufacturerType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Media\StoredFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\Conversation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\ConversationUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\EmailQueue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\EmailQueueAttachment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\EmailStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\EmailTemplate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\EmailType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\Message.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\MessageAttachment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\MessageRecipient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\ProductNotification.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Messaging\UserSupportRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderItemTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Ordering\SalesOrderType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\Membership.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\MembershipAdZoneAccess.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\MembershipAdZoneAccessByLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\MembershipLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\MembershipRepeatType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\Payment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\PaymentMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\PaymentStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\PaymentType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\RepeatType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\SalesInvoicePayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\SalesOrderPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\SalesReturnPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\Subscription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\SubscriptionHistory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\SubscriptionStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\SubscriptionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\SubscriptionTypeRepeatType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payments\Wallet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PricePoint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRounding.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleAccountType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleFranchise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleBrand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleCountry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleManufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleProductType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleUserRole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Pricing\PriceRuleVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\FutureImport.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\FutureImportStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\Product.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductAssociation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductAssociationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductDownload.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductDownloadType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductInventoryLocationSection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductMembershipLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductPricePoint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductRestriction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductShipCarrierMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductSubscriptionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Products\ProductType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderItemTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Purchasing\PurchaseOrderType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Questionnaire\Answer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Questionnaire\Question.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Questionnaire\QuestionOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Questionnaire\QuestionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuote.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteItemTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Quoting\SalesQuoteType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reporting\Report.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reporting\ReportType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnItemTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnReason.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Returning\SalesReturnType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reviews\Review.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reviews\ReviewType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sales\SalesGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sales\SalesItemTargetType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sales\SalesOrderPurchaseOrder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sales\SalesOrderSalesInvoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sales\SalesQuoteSalesOrder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sales\SalesReturnSalesOrder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestItemTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Sampling\SampleRequestType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scheduling\Appointment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scheduling\AppointmentStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scheduling\AppointmentType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scheduling\Calendar.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scheduling\CalendarAppointment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scouting\Scout.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scouting\ScoutCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Scouting\ScoutCategoryType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\Package.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\PackageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\RateQuote.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\ShipCarrier.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\ShipCarrierMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\ShipmentLine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\Shipment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\ShipmentEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\ShipmentStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shipping\ShipmentType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\Cart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartEventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartItemTarget.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Shopping\CartType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\SiteDomain.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\SiteDomainSocialProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\SocialProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\Store.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreBadge.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreContact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreCountry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreDistrict.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreInventoryLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreInventoryLocationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreManufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreRegion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreSubscription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Stores\StoreVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\EventLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\ImportExportMapping.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\Note.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\NoteType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\RecordVersion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\RecordVersionType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\Setting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\SettingGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Structure\SettingType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Taxing\HistoricalTaxRate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Taxing\TaxCountry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Taxing\TaxDistrict.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Taxing\TaxRegion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\Campaign.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\CampaignAd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\CampaignStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\CampaignType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\Event.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\EventStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\EventType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\IPOrganization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\IPOrganizationStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\PageView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\PageViewEvent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\PageViewStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\PageViewType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\Visit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\Visitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tracking\VisitStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Vendors\Vendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Vendors\VendorAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Vendors\VendorImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Vendors\VendorImageType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Vendors\VendorManufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Vendors\VendorProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Vendors\VendorType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmABrandRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmACategoryRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAContactRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmACurrencyRelationshipTableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmADiscountFilterRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAFavoriteRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAFranchiseRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAGeographicalLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmALanguageRelationshipTableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmALitelyTrackedEventBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAManufacturerRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAnAccountRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAProductRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmARelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAStoredFileRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAStoreRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmATrackedEventBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAUserRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmAVendorRelationshipTable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmExcludedFromT4Generation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByBrand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByCategory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByFranchise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByManufacturer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAmFilterableByVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IAppliedDiscountBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IAm\IObjectNoteBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveAContactBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveAdCounters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveAParentBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveAppliedDiscountsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveAStateBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveAStatusBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveAStoredFileBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveATypeBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveContactsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveCurrenciesBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveDimensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveFreeShippingMinimumsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveImagesBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveJsonAttributesBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveLanguagesBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveMatchCodes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveNotesBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveOrderMinimumsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveRequiresRolesBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveReviewsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveSalesEventsBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveSeoBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\IHave\IHaveStoredFilesBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\AppliedDiscountBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\Base.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\DisplayableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\ImageBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\NameableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\SalesCollectionBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\SalesEventBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\SalesItemBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\SalesItemTargetBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\StateableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\StatusableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootConcretes\TypableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\IBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\IDisplayableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\IImageBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\INameableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\ISalesCollectionBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\ISalesEventBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\ISalesItemBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\ISalesItemTargetBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\IStateableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\IStatusableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\_Shared\RootInterfaces\ITypableBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SqlRetryErrorCodes.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory).editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201612021738169_InitialCreate_4pt7.resx">
+      <DependentUpon>201612021738169_InitialCreate_4pt7.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201612070517527_SalesQuotesAndSampleRequestsSchema.resx">
+      <DependentUpon>201612070517527_SalesQuotesAndSampleRequestsSchema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201612070728240_FilesForAllSalesCollections.resx">
+      <DependentUpon>201612070728240_FilesForAllSalesCollections.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201612081922468_DropCheckouts.resx">
+      <DependentUpon>201612081922468_DropCheckouts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201612202054553_DropAttributeFilterValuesAndAccountAddresses.resx">
+      <DependentUpon>201612202054553_DropAttributeFilterValuesAndAccountAddresses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201612230147293_DropFavoritesCustomersAndIndividuals.resx">
+      <DependentUpon>201612230147293_DropFavoritesCustomersAndIndividuals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201701061432005_SplitShipping.resx">
+      <DependentUpon>201701061432005_SplitShipping.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201701062139203_GlobalizationAndCurrency.resx">
+      <DependentUpon>201701062139203_GlobalizationAndCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201701102149344_FixTriggerName.resx">
+      <DependentUpon>201701102149344_FixTriggerName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201701111447011_SavedSellers.resx">
+      <DependentUpon>201701111447011_SavedSellers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201702021418384_OrdersWithMultipleContacts.resx">
+      <DependentUpon>201702021418384_OrdersWithMultipleContacts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201702111901020_ImagesForGlobalizationAndGeographyAssignments.resx">
+      <DependentUpon>201702111901020_ImagesForGlobalizationAndGeographyAssignments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201702121904460_ProductSalesAnalytics.resx">
+      <DependentUpon>201702121904460_ProductSalesAnalytics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201703231920001_Groups.resx">
+      <DependentUpon>201703231920001_Groups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201703291331233_PILInSalesItems.resx">
+      <DependentUpon>201703291331233_PILInSalesItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201704032222033_InventoryHash.resx">
+      <DependentUpon>201704032222033_InventoryHash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201704121839113_UserAccountsOptionallyRequireApprovalForLogin.resx">
+      <DependentUpon>201704121839113_UserAccountsOptionallyRequireApprovalForLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201704140207336_CategoryHashes.resx">
+      <DependentUpon>201704140207336_CategoryHashes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201704172328247_StoreProductHash.resx">
+      <DependentUpon>201704172328247_StoreProductHash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201704211808567_CalendarEvents.resx">
+      <DependentUpon>201704211808567_CalendarEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201705082235329_SiteDomainAlternateUrls.resx">
+      <DependentUpon>201705082235329_SiteDomainAlternateUrls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201705151602561_ConnectHashes.resx">
+      <DependentUpon>201705151602561_ConnectHashes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201707101843095_AddProductImageType.resx">
+      <DependentUpon>201707101843095_AddProductImageType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201707192228353_MediaOverhaul.resx">
+      <DependentUpon>201707192228353_MediaOverhaul.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201707260616429_DropNotificationsTables.resx">
+      <DependentUpon>201707260616429_DropNotificationsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201708211733285_QuoteCategories.resx">
+      <DependentUpon>201708211733285_QuoteCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201708212133226_AutoAppliedDiscountAndDiscountShippingOptions.resx">
+      <DependentUpon>201708212133226_AutoAppliedDiscountAndDiscountShippingOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201708281909147_CartShipment.resx">
+      <DependentUpon>201708281909147_CartShipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709071543314_ProductPricePointQuantities.resx">
+      <DependentUpon>201709071543314_ProductPricePointQuantities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709130128394_SalesReturns.resx">
+      <DependentUpon>201709130128394_SalesReturns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709192126532_SalesOrderEvents.resx">
+      <DependentUpon>201709192126532_SalesOrderEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709211625228_UniqueCarts.resx">
+      <DependentUpon>201709211625228_UniqueCarts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709220043077_AllSalesContactsOptional.resx">
+      <DependentUpon>201709220043077_AllSalesContactsOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709252127491_ChatService.resx">
+      <DependentUpon>201709252127491_ChatService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709262315353_PhonePrefixLookups.resx">
+      <DependentUpon>201709262315353_PhonePrefixLookups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709271843270_ReferralCodes.resx">
+      <DependentUpon>201709271843270_ReferralCodes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201709272115558_StoreBadges.resx">
+      <DependentUpon>201709272115558_StoreBadges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201710131652314_AllSalesContactsOptionalReHash.resx">
+      <DependentUpon>201710131652314_AllSalesContactsOptionalReHash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201711022055531_MembershipToInvoice.resx">
+      <DependentUpon>201711022055531_MembershipToInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201711151848297_AddressResolutions.resx">
+      <DependentUpon>201711151848297_AddressResolutions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201801082055564_RFQParent.resx">
+      <DependentUpon>201801082055564_RFQParent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201801151906449_PriceRuleNullableDates.resx">
+      <DependentUpon>201801151906449_PriceRuleNullableDates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201801221557427_JsonAttributesEverywhere.resx">
+      <DependentUpon>201801221557427_JsonAttributesEverywhere.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201801252013363_AttributesIsComparibleAndHideFromStorefront.resx">
+      <DependentUpon>201801252013363_AttributesIsComparibleAndHideFromStorefront.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201802262158431_CalendarEventImages.resx">
+      <DependentUpon>201802262158431_CalendarEventImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201803201704234_AddRateQuotes.resx">
+      <DependentUpon>201803201704234_AddRateQuotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201803231823227_SalesGroups.resx">
+      <DependentUpon>201803231823227_SalesGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201803271657395_ProviderCachesAndMappingFiles.resx">
+      <DependentUpon>201803271657395_ProviderCachesAndMappingFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201804022337061_QuoteResponseAs.resx">
+      <DependentUpon>201804022337061_QuoteResponseAs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201804181946553_AttrsAndSalesItemTargets.resx">
+      <DependentUpon>201804181946553_AttrsAndSalesItemTargets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201805091939224_SplitShippingTargets2.resx">
+      <DependentUpon>201805091939224_SplitShippingTargets2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201806050014509_V2018.2.0-Drop-4.6-Depr-Tables.resx">
+      <DependentUpon>201806050014509_V2018.2.0-Drop-4.6-Depr-Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201806130212123_ChangeStoreToStoreProductForTargets.resx">
+      <DependentUpon>201806130212123_ChangeStoreToStoreProductForTargets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201806152035017_CartParents.resx">
+      <DependentUpon>201806152035017_CartParents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201806202052536_FixSalesGroupMasterLinks.resx">
+      <DependentUpon>201806202052536_FixSalesGroupMasterLinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201807181800109_AttributeTabsAndDiscountBuyXGetY.resx">
+      <DependentUpon>201807181800109_AttributeTabsAndDiscountBuyXGetY.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201808020000321_PricePointsAndRulesProperties.resx">
+      <DependentUpon>201808020000321_PricePointsAndRulesProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201808112013256_SchemaCleanupAndEmailAttach.resx">
+      <DependentUpon>201808112013256_SchemaCleanupAndEmailAttach.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201808211832050_ProductRestrictions.resx">
+      <DependentUpon>201808211832050_ProductRestrictions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201810101538291_StoredFilesOnAccountsAndUsers.resx">
+      <DependentUpon>201810101538291_StoredFilesOnAccountsAndUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201810201539534_TargetsByVendor.resx">
+      <DependentUpon>201810201539534_TargetsByVendor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201810222046204_SalesGroupLinks.resx">
+      <DependentUpon>201810222046204_SalesGroupLinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201810222322361_CleanupAndAccountCredits.resx">
+      <DependentUpon>201810222322361_CleanupAndAccountCredits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201810252046577_UniqueCartsIndexFix.resx">
+      <DependentUpon>201810252046577_UniqueCartsIndexFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201811282338482_NothingToShipProducts.resx">
+      <DependentUpon>201811282338482_NothingToShipProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201812051727294_TargetsWithNothingToShip.resx">
+      <DependentUpon>201812051727294_TargetsWithNothingToShip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201901141927112_ForceUniqueLineItemKey.resx">
+      <DependentUpon>201901141927112_ForceUniqueLineItemKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201902010024488_ScheduledImports.resx">
+      <DependentUpon>201902010024488_ScheduledImports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201902042245342_PriceRulesOverhaul2019.resx">
+      <DependentUpon>201902042245342_PriceRulesOverhaul2019.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201902181819454_WalletWithEchecks.resx">
+      <DependentUpon>201902181819454_WalletWithEchecks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201902201850014_RateQuotesOnAllSalesCollections.resx">
+      <DependentUpon>201902201850014_RateQuotesOnAllSalesCollections.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201903020249227_PriceRuleCountries.resx">
+      <DependentUpon>201903020249227_PriceRuleCountries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201903042201225_UserProductTypes.resx">
+      <DependentUpon>201903042201225_UserProductTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201903122304457_MinimumOrders.resx">
+      <DependentUpon>201903122304457_MinimumOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201903182024241_Overhaul2019Q1.resx">
+      <DependentUpon>201903182024241_Overhaul2019Q1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201903182059034_Overhaul2019Q1b.resx">
+      <DependentUpon>201903182059034_Overhaul2019Q1b.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201903182103541_Overhaul2019Q1c.resx">
+      <DependentUpon>201903182103541_Overhaul2019Q1c.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201903182110571_Overhaul2019Q1d.resx">
+      <DependentUpon>201903182110571_Overhaul2019Q1d.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201904042105269_DiscountRestrictionsByX.resx">
+      <DependentUpon>201904042105269_DiscountRestrictionsByX.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201904240227151_AddressCompanyFieldNotRequired.resx">
+      <DependentUpon>201904240227151_AddressCompanyFieldNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201904252039551_PriceRulePriority.resx">
+      <DependentUpon>201904252039551_PriceRulePriority.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201905162113393_SubscriptionsOverhaul.resx">
+      <DependentUpon>201905162113393_SubscriptionsOverhaul.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201910162150375_ClientRequirements2019Q3.resx">
+      <DependentUpon>201910162150375_ClientRequirements2019Q3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201910230352558_OrderMinimums.resx">
+      <DependentUpon>201910230352558_OrderMinimums.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201910300403028_ProductRestrictions1.resx">
+      <DependentUpon>201910300403028_ProductRestrictions1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201911042200421_PreSales.resx">
+      <DependentUpon>201911042200421_PreSales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201911181951180_AccountRoles.resx">
+      <DependentUpon>201911181951180_AccountRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201911200111448_DisplayablesWithTranslations.resx">
+      <DependentUpon>201911200111448_DisplayablesWithTranslations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201912030141238_ForceUserPWResetAndProductDropShipOnly.resx">
+      <DependentUpon>201912030141238_ForceUserPWResetAndProductDropShipOnly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\201912310626422_BufferSkusEverywhere.resx">
+      <DependentUpon>201912310626422_BufferSkusEverywhere.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202001281947047_EventLogRecordLogLevel.resx">
+      <DependentUpon>202001281947047_EventLogRecordLogLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202002011534012_CurrencyConvAndWalletCurrency.resx">
+      <DependentUpon>202002011534012_CurrencyConvAndWalletCurrency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202005010036230_ProductAssociationStores.resx">
+      <DependentUpon>202005010036230_ProductAssociationStores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202006020330171_DropCategoryTypeValue.resx">
+      <DependentUpon>202006020330171_DropCategoryTypeValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202006060940352_ByBrand.resx">
+      <DependentUpon>202006060940352_ByBrand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202006090625533_ByBrand2.resx">
+      <DependentUpon>202006090625533_ByBrand2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202009202104522_ProductDownloadsAndVersions.resx">
+      <DependentUpon>202009202104522_ProductDownloadsAndVersions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202009301819538_Overhaul2020Q3.resx">
+      <DependentUpon>202009301819538_Overhaul2020Q3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202010160059107_SchemaDropQ3.resx">
+      <DependentUpon>202010160059107_SchemaDropQ3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202010200015369_BrandCurrencyAndISOs.resx">
+      <DependentUpon>202010200015369_BrandCurrencyAndISOs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202010201825270_BrandLanguages.resx">
+      <DependentUpon>202010201825270_BrandLanguages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202011260008217_MessageAttachmentsSeoAndSTRT.resx">
+      <DependentUpon>202011260008217_MessageAttachmentsSeoAndSTRT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202101080220571_DiscountLimits.resx">
+      <DependentUpon>202101080220571_DiscountLimits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202101312244032_DiscountApplicationsUsed.resx">
+      <DependentUpon>202101312244032_DiscountApplicationsUsed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202103120204105_WalletContacts.resx">
+      <DependentUpon>202103120204105_WalletContacts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202103170753458_SalesEvents.resx">
+      <DependentUpon>202103170753458_SalesEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202103290016369_SalesGroupBrandsAndSubscriptions.resx">
+      <DependentUpon>202103290016369_SalesGroupBrandsAndSubscriptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202104201836548_SalesQuotesMastersAndSubs.resx">
+      <DependentUpon>202104201836548_SalesQuotesMastersAndSubs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202104201850337_SalesQuotesTotalsModifiers.resx">
+      <DependentUpon>202104201850337_SalesQuotesTotalsModifiers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202106260124509_TargetApplicationsUsed.resx">
+      <DependentUpon>202106260124509_TargetApplicationsUsed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202107301623530_Bids.resx">
+      <DependentUpon>202107301623530_Bids.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202108082143506_Auctions.resx">
+      <DependentUpon>202108082143506_Auctions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202108090038205_StoreBrandOnAuction.resx">
+      <DependentUpon>202108090038205_StoreBrandOnAuction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202109242150261_Franchises.resx">
+      <DependentUpon>202109242150261_Franchises.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202110132215060_IncludeAccountInCartCluster.resx">
+      <DependentUpon>202110132215060_IncludeAccountInCartCluster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202111040635224_InventoryUsersAndQuestionnaires.resx">
+      <DependentUpon>202111040635224_InventoryUsersAndQuestionnaires.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202111052049577_ElasticIndexingRequirements.resx">
+      <DependentUpon>202111052049577_ElasticIndexingRequirements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202111060256068_RenameColumn.resx">
+      <DependentUpon>202111060256068_RenameColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202111170253058_SchedulingUpdates.resx">
+      <DependentUpon>202111170253058_SchedulingUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202111200552283_Contractors.resx">
+      <DependentUpon>202111200552283_Contractors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202111292031386_AutoPay.resx">
+      <DependentUpon>202111292031386_AutoPay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202112082315116_ZipperFix2021-12-08.resx">
+      <DependentUpon>202112082315116_ZipperFix2021-12-08.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202201132213009_DisplayStoreInStorefront.resx">
+      <DependentUpon>202201132213009_DisplayStoreInStorefront.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202202040140189_DropListingsAndFixLotGroups.resx">
+      <DependentUpon>202202040140189_DropListingsAndFixLotGroups.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202202040157516_AddPriceRuleFranchise.resx">
+      <DependentUpon>202202040157516_AddPriceRuleFranchise.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202202041920550_FixLotGroupAssignment.resx">
+      <DependentUpon>202202041920550_FixLotGroupAssignment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202207091601579_AccountSchemaHippaUpdates.resx">
+      <DependentUpon>202207091601579_AccountSchemaHippaUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202211011319290_HCPCCode.resx">
+      <DependentUpon>202211011319290_HCPCCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202306250507158_UpdateProductRequiresRolesLength.resx">
+      <DependentUpon>202306250507158_UpdateProductRequiresRolesLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202307270143331_EndDateOnAccountContact.resx">
+      <DependentUpon>202307270143331_EndDateOnAccountContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202308011856530_StatusOnSalesItems.resx">
+      <DependentUpon>202308011856530_StatusOnSalesItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202308072230039_AddSalesEntitiesToShipments.resx">
+      <DependentUpon>202308072230039_AddSalesEntitiesToShipments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202308170750372_UpdateAccountContactEndDate.resx">
+      <DependentUpon>202308170750372_UpdateAccountContactEndDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Migrations\202309111530199_ShipmentLines.resx">
+      <DependentUpon>202309111530199_ShipmentLines.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

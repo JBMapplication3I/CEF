@@ -1,0 +1,30 @@
+<div class="row">
+  <div ng-if="psmbCtrl.allowLogin"
+    ng-hide="psmbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-md-6"
+    ng-class="{ 'mx-auto': !psmbCtrl.allowGuest }">
+     <div class="row">
+      <div class="col"
+        cef-purchase-login
+        no-return="true"
+        login-callback="psmbCtrl.loginCallback(loginSuccessful)"
+        return-url="%2FCheckout">
+      </div>
+    </div>
+  </div>
+  <div ng-if="psmbCtrl.allowGuest"
+    ng-hide="psmbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-md-6 text-center"
+    ng-class="{ 'mx-auto': !psmbCtrl.allowLogin }">
+    <i class="far fa-user fa-5x" aria-hidden="true"></i>
+    <h4 data-translate="ui.storefront.checkout.methodNew"></h4>
+    <p data-translate="ui.storefront.checkout.methodGuest"></p>
+    <button type="button" class="btn btn-primary"
+      id="btnPurchaseAsNewUser" name="btnPurchaseAsNewUser"
+      translate-attr="{ title: 'ui.storefront.checkout.views.checkoutMethod.continueAsNewUser',
+                        'aria-label': 'ui.storefront.checkout.views.checkoutMethod.continueAsNewUser' }"
+      data-translate="ui.storefront.checkout.views.checkoutMethod.continueAsNewUser"
+      ng-click="psmbCtrl.nextStep()">
+    </button>
+  </div>
+</div>

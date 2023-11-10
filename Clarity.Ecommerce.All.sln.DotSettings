@@ -1,0 +1,903 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/CodeEditing/Intellisense/CodeCompletion/CacheImportCompletion/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeEditing/Intellisense/CodeCompletion/ConfirmReferenceAdd/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeEditing/Intellisense/ParameterInfo/DelegatesAsLambdas/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeEditing/StackTraceExplorer/WrapLines/@EntryValue">True</s:Boolean>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MaximumChainedReferences/@EntryValue">12</s:Int64>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MaximumConstructorDependencies/@EntryValue">6</s:Int64>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MaximumDeclarationsInMethod/@EntryValue">10</s:Int64>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MaximumExpressionsInCondition/@EntryValue">6</s:Int64>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MaximumIndentationDepth/@EntryValue">4</s:Int64>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MaximumMethodParameters/@EntryValue">10</s:Int64>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MaximumMethodsInClass/@EntryValue">40</s:Int64>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MaximumMethodStatements/@EntryValue">40</s:Int64>
+	<s:String x:Key="/Default/CodeInspection/CleanCode/MeaninglessClassNameSuffixes/@EntryValue"></s:String>
+	<s:Int64 x:Key="/Default/CodeInspection/CleanCode/MinimumMeaningfulMethodNameLength/@EntryValue">3</s:Int64>
+	<s:Boolean x:Key="/Default/CodeInspection/CodeAnnotations/NamespacesWithAnnotations/=Hangfire_002EAnnotations/@EntryIndexedValue">True</s:Boolean>
+	<s:Int64 x:Key="/Default/CodeInspection/CognitiveComplexityAnalysis/CSharpThreshold/@EntryValue">26</s:Int64>
+	<s:Int64 x:Key="/Default/CodeInspection/CyclomaticComplexityAnalysis/Thresholds/=CSHARP/@EntryIndexedValue">26</s:Int64>
+	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=BE57C4D4_002D9372_002D4DA8_002DB05D_002DBEE9C4B44F30_002Fd_003A_005FT4/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=E775460A_002D62B1_002D4868_002D823E_002DF2E28215E07A_002Fd_003AMapping/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FA143352_002D14D8_002D4360_002DAD49_002D3547203FCFCE_002Fd_003A_005FT4/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FA143352_002D14D8_002D4360_002DAD49_002D3547203FCFCE_002Fd_003A_005FT4_002Ff_003AAccounts_002EAccount_002EWorkflows_002Ecs/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FA143352_002D14D8_002D4360_002DAD49_002D3547203FCFCE_002Fd_003AQuoting_002Ff_003ASalesQuoteWorkflow_002Ecs/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FE9CFD40_002D0BBC_002D4042_002DA1B8_002D2D6A2535E915/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=FE9CFD40_002D0BBC_002D4042_002DA1B8_002D2D6A2535E915_002Fd_003A_005FT4/@EntryIndexRemoved">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/Highlighting/ContextExitsHighlightingEnabled/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/Highlighting/DoNotShowVsBulb/@EntryValue">False</s:Boolean>
+	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=ArrangeNamespaceBody/@EntryIndexedValue">ERROR</s:String>
+
+	<s:Boolean x:Key="/Default/CodeInspection/Highlighting/MergeVsBulbItemsIntoReSharperBulb/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/Highlighting/ShowMissingConstructHints/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/MODIFIERS_ORDER/@EntryValue">public private protected internal abstract virtual sealed static new readonly override extern unsafe volatile async</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/TRAILING_COMMA_IN_MULTILINE_LISTS/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_MULTILINE_ARRAY_AND_OBJECT_INITIALIZER/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_MULTILINE_BINARY_EXPRESSIONS_CHAIN/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_MULTILINE_EXPRESSION/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_MULTIPLE_DECLARATION/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_MULTLINE_TYPE_PARAMETER_CONSTRAINS/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_MULTLINE_TYPE_PARAMETER_LIST/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INDENT_NESTED_FIXED_STMT/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INDENT_NESTED_FOR_STMT/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INDENT_NESTED_FOREACH_STMT/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INDENT_NESTED_LOCK_STMT/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INDENT_NESTED_USINGS_STMT/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INDENT_NESTED_WHILE_STMT/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/KEEP_EXISTING_EMBEDDED_ARRANGEMENT/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/KEEP_EXISTING_SWITCH_EXPRESSION_ARRANGEMENT/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/LINE_FEED_AT_FILE_END/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_ACCESSOR_WITH_ATTRS_HOLDER_ON_SINGLE_LINE/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_CONSTRUCTOR_INITIALIZER_ON_SAME_LINE/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_LINQ_INTO_ON_NEW_LINE/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_SIMPLE_ACCESSOR_ON_SINGLE_LINE/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_SIMPLE_ACCESSORHOLDER_ON_SINGLE_LINE/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_SIMPLE_METHOD_ON_SINGLE_LINE/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_BEFORE_ARROW_WITH_EXPRESSIONS/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_BEFORE_EXTENDS_COLON/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_BEFORE_LINQ_EXPRESSION/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/BlankLineAfterProcessingInstructions/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/LINE_FEED_AT_FILE_END/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/LinebreaksInsideTagsWithTags/@EntryValue">False</s:Boolean>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/MaxBlankLines/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/MultilineElementsOnNewLine/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/NormalizeTagNames/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/ProcessingInstructionAttributeIndenting/@EntryValue">OneStep</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/ProcessingInstructionAttributesFormat/@EntryValue">OnDifferentLines</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/ProcessingInstructionSpaceAfterLastAttr/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/TagAttributeIndenting/@EntryValue">OneStep</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/HtmlFormatter/TagSpaceBeforeHeaderEnd1/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CSharpUsing/AddImportsToDeepestScope/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CSharpUsing/QualifiedUsingAtNestedScope/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/EditorConfig/ShowEditorConfigStatusBarIndicator/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/EditorConfig/SyncToVisualStudio/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ADI/@EntryIndexedValue">ADI</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=APIURL/@EntryIndexedValue">APIURL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=BID/@EntryIndexedValue">BID</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=BIN/@EntryIndexedValue">BIN</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CEFAPI/@EntryIndexedValue">CEFAPI</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CEFE/@EntryIndexedValue">CEFE</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CEFSMS/@EntryIndexedValue">CEFSMS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CMMC/@EntryIndexedValue">CMMC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CSR/@EntryIndexedValue">CSR</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DEA/@EntryIndexedValue">DEA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GLV/@EntryIndexedValue">GLV</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GP/@EntryIndexedValue">GP</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IL/@EntryIndexedValue">IL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MFA/@EntryIndexedValue">MFA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=NPI/@EntryIndexedValue">NPI</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=OSC/@EntryIndexedValue">OSC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=OTP/@EntryIndexedValue">OTP</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PC/@EntryIndexedValue">PC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PN/@EntryIndexedValue">PN</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=QA/@EntryIndexedValue">QA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ROW/@EntryIndexedValue">ROW</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=RP/@EntryIndexedValue">RP</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=RPO/@EntryIndexedValue">RPO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=RX/@EntryIndexedValue">RX</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SMS/@EntryIndexedValue">SMS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SSN/@EntryIndexedValue">SSN</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=TS/@EntryIndexedValue">TS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UAT/@EntryIndexedValue">UAT</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UID/@EntryIndexedValue">UID</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UUID/@EntryIndexedValue">UUID</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=XLSX/@EntryIndexedValue">XLSX</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/Naming/CSharpNaming/ApplyAutoDetectedRules/@EntryValue">False</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=LocalConstants/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
+	<s:Boolean x:Key="/Default/Environment/ContinuousTesting/ShadowCopyAllFiles/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/ContinuousTesting/TriggerMode/@EntryValue">OnBuild</s:String>
+	<s:Boolean x:Key="/Default/Environment/Editor/UseCamelHumps/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Feedback/SendActivityLogs/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=01_002EClarity_002EEcommerce_002EDataModel_003B_002A_003BClarity_002EEcommerce_002EDataModel_002EClarityEcommerceEntities_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=01_002EClarity_002EEcommerce_002EDataModel_003B_002A_003BClarity_002EEcommerce_002EDataModel_002EDatabaseDescriptor_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=01_002EClarity_002EEcommerce_002EDataModel_003B_002A_003BClarity_002EEcommerce_002EDataModel_002EDataSets_002E_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=06_002EClarity_002EEcommerce_002EService_002EStorefront_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=07_002EClarity_002EEcommerce_002EReporting_002ESyncfusion_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=08_002EClarity_002EEcommerce_002EUI_002EAzureDeploy_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=08_002EClarity_002EEcommerce_002EUI_002EDNNModule_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=CEFAzureUI_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002EADI_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002EATLAS_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002EATLAS_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002ECCS_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002EIIA_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002EMERCK_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002EMERCK_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002ERED_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002EUAG_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EClients_002EUAG_003B_002A_003BClarity_002EEcommerce_002EWorkflow_002EUAGEmailQueueWorkflow_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECache_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECache_003B_002A_003BClarity_002EEcommerce_002ECache_002EMemory_002ECEFCacheMemory_003BExistsAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECache_003B_002A_003BClarity_002EEcommerce_002ECache_002ERedis_002ECEFCacheRedis_003BAddAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECache_003B_002A_003BClarity_002EEcommerce_002ECache_002ERedis_002ECEFCacheRedis_003BGetAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECache_003B_002A_003BClarity_002EEcommerce_002ECache_002ERedis_002ECEFCacheRedis_003BRemoveAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EClients_002ESEFA_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECore_003B_002A_003BClarity_002EEcommerce_002EMatchExtensions_003BGetMatchCode/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECore_003B_002A_003BClarity_002EEcommerce_002EModels_002ECEFActionResponse_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECore_003B_002A_003BClarity_002EEcommerce_002EModels_002ECEFActionResponse_00601_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ECore_003B_002A_003BClarity_002EEcommerce_002EModels_002ECEFAR_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EDataModel_002EOracle_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EDataModel_002EOracle_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EDataModel_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EDataModel_003B_002A_003BClarity_002EEcommerce_002EDataModel_002EDataSets_002ESampleData_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EFramework_002EReporting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ELogger_003B_002A_003BClarity_002EEcommerce_002ELogger_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EAddressValidation_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EApi_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EChatting_002EWeChat_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ECurrencyConversions_002EFixerIO_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EImporter_003B_002A_003BClarity_002EEcommerce_002EProviders_002EImporter_002EImporterProviderBase_003BAssignCellDataByFieldEnumAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EImporter_003B_002A_003BClarity_002EEcommerce_002EProviders_002EImporter_002EImporterProviderBase_003BResolveItemAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EMemberships_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EPayments_002EHeartland_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EPayments_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EPricing_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EQuoteCheckouts_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_002EActions_002EServices_002EEndpoints_002ECreateInvoiceForSalesOrder_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_002EActions_002EServices_002EEndpoints_002ESetSalesInvoiceAsPaid_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_002EActions_002EServices_002EEndpoints_002ESetSalesInvoiceAsPartiallyPaid_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_002EActions_002EServices_002EEndpoints_002ESetSalesInvoiceAsUnpaid_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_002EActions_002EServices_002EEndpoints_002ESetSalesInvoiceAsVoided_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_002EActions_002EServices_002ESalesInvoiceActionsService_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_002EQueries_002EServices_002ESalesInvoiceQueriesService_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesInvoiceHandlers_002ESalesInvoiceHandlersFeature_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesQuoteImporter_002EExcel_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESalesQuoteImporter_003B_002A_003BClarity_002EEcommerce_002EProviders_002ESalesQuoteImporter_002EImportAssigners_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EScheduledTasks_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESearching_002EElasticSearch_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002EShipping_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ESurveys_002ESurveyMonkey_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EProviders_002ETaxes_003B_002A_003BAvalara_002EAvaTax_002ERestClient_002E_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EScheduler_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EService_002EAdmin_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EService_002EBrandAdmin_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EService_002ECore_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EService_002EStoreAdmin_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EService_002EStorefront_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EService_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EService_002EVendorAdmin_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EService_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002ETokenGenerator_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUI_002EMVCHost_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUI_002ESeleniumTesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUI_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002ECEFErrorCodeLibrary_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EErrorCodeWithMessage_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EGlobals_003Bget_005FCEFRootPath/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EStringExtensions_003BSplitCamelCase/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EStringExtensions_003BTruncate/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EDigest_003BCrc32/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EDigest_003BCrc64/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EDigest_003BMapIntToUint/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EDigest_003BMapLongToUlong/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EDigest_003BMapUintToInt/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EDigest_003BSHA256/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EDigest_003BSHA384/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EDigest_003BSHA512/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EQueryExtensions_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BClarity_002EEcommerce_002EUtilities_002EXmlTools_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BExportToExcel_002ECreateExcelFile_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EUtilities_003B_002A_003BSystem_002ENet_002ESystemWebClientFactory_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EWorkflow_002ETesting_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EWorkflow_003B_002A_003BClarity_002EEcommerce_002EWorkflow_002EProductWorkflow_003BRelateOptionalMasterPackAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EWorkflow_003B_002A_003BClarity_002EEcommerce_002EWorkflow_002EProductWorkflow_003BRelateOptionalPackageAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=Clarity_002EEcommerce_002EWorkflow_003B_002A_003BClarity_002EEcommerce_002EWorkflow_002EProductWorkflow_003BRelateOptionalPalletAsync/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=ClarityEcommerceDNN_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=CodeGenerator_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=ServiceStack_002EAuthentication_002EAspNetIdentity_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=ServiceStack_002EAuthentication_002EClarityTokens_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=ServiceStack_002EAuthentication_002ECobalt_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=ServiceStack_002EAuthentication_002EDotNetNukeSSO_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=ServiceStack_002EAuthentication_002EMock_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=ServiceStack_002EAuthentication_002EOpenID_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/ExcludeCoverageFilters/=ServiceStack_002ECodeGenerator_002ETypeScript_003B_002A_003B_002A_003B_002A/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/Filtering/HideAutoProperties/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/General/RunTestClassesInParallel/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/Hierarchy/PsiConfigurationSettingsKey/LocationType/@EntryValue">SOLUTION_FOLDER</s:String>
+	<s:Boolean x:Key="/Default/Environment/Highlighting/HighlightingEnabled/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/InlayHints/CSharpOtherInlayHintsOptions/ShowMissingConstructHints/@EntryValue">Default</s:String>
+	<s:String x:Key="/Default/Environment/PerformanceGuide/SwitchBehaviour/=Antivirus/@EntryIndexedValue">LIVE_MONITOR</s:String>
+	<s:Boolean x:Key="/Default/Environment/SearchAndNavigation/MergeOccurrences/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EdotCover_002EIde_002ECore_002EFilterManagement_002EModel_002ESolutionFilterSettingsManagerMigrateSettings/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EdotCover_002EIde_002ECore_002EUnitTesting_002EModel_002EInterface_002EContinuousTesting_002ESettings_002EContinuousTestingMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EFeature_002EServices_002ECSharp_002EParameterNameHints_002ECSharpOtherInlayHintsOptionsMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ECSharpKeepExistingMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ECSharpPlaceEmbeddedOnSameLineMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ECSharpUseContinuousIndentInsideBracesMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EAlwaysTreatStructAsNotReorderableMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateBlankLinesAroundFieldToBlankLinesAroundProperty/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EUnitTestFramework_002ESettings_002EMigrations_002ERemoveBuildPolicyAlwaysMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/UnitTesting/MsTestProvider/UseTestRunConfigFromMetadataFile/@EntryValue">True</s:Boolean>
+	<s:Int64 x:Key="/Default/Environment/UnitTesting/ParallelProcessesCount/@EntryValue">14</s:Int64>
+	<s:String x:Key="/Default/Environment/UnitTesting/ShadowCopy2/@EntryValue">None</s:String>
+	<s:Boolean x:Key="/Default/Housekeeping/ExcludedProjects/ProjectMasksToIgnore/=01_002EClarity_002EEcommerce_002EDataModel_002ETesting/@EntryIndexedValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/Housekeeping/ExcludedProjects/ProjectMasksToIgnore/=01_002EClarity_002EEcommerce_002EDataModel_002ETesting/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/SpawnedProcessesResponse/@EntryValue">KillOrphaned</s:String>
+	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionDefault/ActivateOnRun/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ABCD/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=admin_0027s/@EntryIndexedValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=axios/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=BOGO/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Bulleted/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=BXGY/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=clarityinternal/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=claritymis/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=dDate_003A/@EntryIndexedValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Dlls/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=dnnsso/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=dotnetnukesso/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=elasticsearch/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=expirable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Hasnt/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=iface/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Interpayments/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Okta/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=passcode/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Perc/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=pred/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Reqs/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=SAML/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Sellable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=setupid/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=timestep/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Twilio/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=uaid/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Unapprove/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=upserting/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=usperted/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=_0020name_003A_0020_0022Bac/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=_0028contex/@EntryIndexedValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=aavid/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Abas/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ables/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=accessorials/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Accountkf/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ACEFAR/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=acount/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=addendums/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Advapi/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Analytics/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ANGBT/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ANGRF/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=APAC/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=apos/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ARPC/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ascx/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Authed/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Avalara/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Backfill/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=backorder/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Backordered/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=BFUT/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Callout/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Casted/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ceeded/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=cefalt/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=CEFAR/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Combinable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Comparible/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Cust/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Cyber/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=decomposer/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=decryptor/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=directionals/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Displayables/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=distro/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Doesnt/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Dont/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=echeck/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Ecommerce/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=EMEA/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=encryptor/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=errored/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ETHO/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=EVENTKEY/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=functionalities/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Geocoded/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=geoidal/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Hangfire/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Hashable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=HAZM/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Hipaa/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=HOMD/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=HOMP/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ICEF/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ICMS/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ietf/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=IHTML/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ILID/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Inactives/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Indexable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=inheritdoc/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Inkf/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=INTL/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Intra/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Invalidkf/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Jollyville/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Jothay/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Kendo/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Kibana/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Laars/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=LFTD/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=LFTO/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Liftgate/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=lightbox/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Linebreak/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Litely/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Litle/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Loomis/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Manies/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Mapping_0027s/@EntryIndexedValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Marshaler/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Maximumkf/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Mids/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Miera/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=migrator/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=MMYY/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=MSRP/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=NOCOUNT/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=NTFY/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Numerics/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=officedocument/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=OIDC/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=OLEDB/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=openxmlformats/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Orgill/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Parsable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Payeezy/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Payflow/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Paymentech/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Payoneer/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Performant/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Permutater/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=pluggable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Pointe/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Preload/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Preorder/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Puerto/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Purchaseable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Queuable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Quickbooks/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Quirion/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=reauthed/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Reqd/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Resizer/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Rhode/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Roundings/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=RQMW/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Scarbonneutral/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Scotia/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=seealso/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Sitemap/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Sizeable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Slugified/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=spreadsheetml/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=SQLA/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=SQLB/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=SREF/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Stateable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Stateables/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Statusable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=subadministrative/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=subnational/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Suppressions/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Syte/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Syteline/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=tfoot/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=tokenized/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=tokenizers/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=transarmor/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Tranz/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=tranzaction/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=TSQL/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Typable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=UI_0027s/@EntryIndexedValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=uisrp/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=unioned/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Unparsable/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Unsecure/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Upsert/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=upserted/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Upserts/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=urlset/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=USNC/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=USPSPIC/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=webex/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Webhook/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Webhooks/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Workflows/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Xpci/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Xtra/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=XXXX/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=YYYYMMDD/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=ZORK/@EntryIndexedValue">True</s:Boolean>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_AFTER_BLOCK_STATEMENTS/@EntryValue">0</s:Int64>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_AFTER_START_COMMENT/@EntryValue">0</s:Int64>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_AROUND_LOCAL_METHOD/@EntryValue">0</s:Int64>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_BETWEEN_USING_GROUPS/@EntryValue">0</s:Int64>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_INSIDE_REGION/@EntryValue">0</s:Int64>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/MAX_ENUM_MEMBERS_ON_LINE/@EntryValue">10000</s:Int64>
+	<s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/MAX_INITIALIZER_ELEMENTS_ON_LINE/@EntryValue">10000</s:Int64>
+	<s:Int64 x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/WaitIntervalForRunnerToExit/@EntryValue">10</s:Int64>
+	<s:Int64 x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionDefault/OutputLineNumberLimit/@EntryValue">999</s:Int64>
+	<s:Int64 x:Key="/Default/StyleCopOptions/DashesCountInFileHeader/@EntryValue">120</s:Int64>
+	<s:String x:Key="/Default/CodeEditing/GenerateMemberBody/DocumentationGenerationKind/@EntryValue">Inherit</s:String>
+	<s:String x:Key="/Default/CodeInspection/Browsers/Browsers/@EntryValue">C55+,E12+,FF78+,S10+</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=18BD57D9_002DE8C9_002D44A9_002D857A_002D98A6720636CA_002Fd_003AWooCommerce/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=2E3DF5C2_002D8A38_002D4A03_002D86D7_002D8D463C917E47_002Fd_003AMockingSetup/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=43DE0904_002DB73B_002D4893_002DA3F6_002DEC53A78B4635_002Fd_003AMigrations/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=50BAEA5B_002D6ACC_002D42D4_002D8431_002D28D9575B1219_002Fd_003AReports/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=74E87FD1_002D1707_002D40A0_002D9BF1_002D7BBA0019B7A2_002Fd_003AAvalara_002Fd_003ALibrary/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=861FFA6C_002D9F42_002D47F4_002DA1EF_002D3E9B195E5C87/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=8B0333E1_002DAB6E_002D489A_002D9AAB_002D69046D66993B/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=BE57C4D4_002D9372_002D4DA8_002DB05D_002DBEE9C4B44F30_002Fd_003A_005FT4/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=C7CA508F_002DDE92_002D47E5_002D98EB_002DD9A688EC1AC1/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=E775460A_002D62B1_002D4868_002D823E_002DF2E28215E07A_002Fd_003AMapping/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FA143352_002D14D8_002D4360_002DAD49_002D3547203FCFCE_002Fd_003A_005FT4/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FA143352_002D14D8_002D4360_002DAD49_002D3547203FCFCE_002Fd_003A_005FT4_002Ff_003AAccounts_002EAccount_002EWorkflows_002Ecs/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FA143352_002D14D8_002D4360_002DAD49_002D3547203FCFCE_002Fd_003AQuoting_002Ff_003ASalesQuoteWorkflow_002Ecs/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FE68F6E4_002D46C9_002D4C2D_002DB6FA_002D31080EE7D09E/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FE9CFD40_002D0BBC_002D4042_002DA1B8_002D2D6A2535E915/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=FE9CFD40_002D0BBC_002D4042_002DA1B8_002D2D6A2535E915_002Fd_003A_005FT4/@EntryIndexedValue">ExplicitlyExcluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/GeneratedFilesAndFolders/=FE9CFD40_002D0BBC_002D4042_002DA1B8_002D2D6A2535E915_002Fd_003A_005FT4/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/XmlDocInspections/ProjectExclusionRegex/@EntryValue">Test(s|ing)$</s:String>
+	<s:String x:Key="/Default/CodeInspection/XmlDocInspections/TypeAccessibility/@EntryValue">All</s:String>
+	<s:String x:Key="/Default/CodeInspection/XmlDocInspections/TypeMemberAccessibility/@EntryValue">Public, Internal, ProtectedOrInternal, Protected</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeCleanup/Profiles/=StyleCop/@EntryIndexedValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;Profile name="StyleCop"&gt;&lt;CSArrangeQualifiers&gt;True&lt;/CSArrangeQualifiers&gt;&lt;CSOptimizeUsings&gt;&lt;OptimizeUsings&gt;True&lt;/OptimizeUsings&gt;&lt;EmbraceInRegion&gt;False&lt;/EmbraceInRegion&gt;&lt;RegionName&gt;&lt;/RegionName&gt;&lt;/CSOptimizeUsings&gt;&lt;CSReformatCode&gt;True&lt;/CSReformatCode&gt;&lt;CSReorderTypeMembers&gt;True&lt;/CSReorderTypeMembers&gt;&lt;/Profile&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/FORCE_ATTRIBUTE_STYLE/@EntryValue">Join</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/ThisQualifier/INSTANCE_MEMBERS_QUALIFY_DECLARED_IN/@EntryValue">BaseClass</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpCodeStyle/ThisQualifier/INSTANCE_MEMBERS_QUALIFY_MEMBERS/@EntryValue">None</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ANONYMOUS_METHOD_DECLARATION_BRACES/@EntryValue">NEXT_LINE</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/CASE_BLOCK_BRACES/@EntryValue">NEXT_LINE</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/EMPTY_BLOCK_STYLE/@EntryValue">TOGETHER_SAME_LINE</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INITIALIZER_BRACES/@EntryValue">NEXT_LINE</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/NESTED_TERNARY_STYLE/@EntryValue">EXPANDED</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_SIMPLE_CASE_STATEMENT_ON_SAME_LINE/@EntryValue">IF_OWNER_IS_SINGLE_LINE</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_ARRAY_INITIALIZER_STYLE/@EntryValue">CHOP_IF_LONG</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_CHAINED_BINARY_EXPRESSIONS/@EntryValue">CHOP_IF_LONG</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_CHAINED_METHOD_CALLS/@EntryValue">CHOP_IF_LONG</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_MULTIPLE_DECLARATION_STYLE/@EntryValue">CHOP_ALWAYS</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/WRAP_MULTIPLE_TYPE_PARAMEER_CONSTRAINTS_STYLE/@EntryValue">CHOP_ALWAYS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ACH/@EntryIndexedValue">ACH</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=AMEX/@EntryIndexedValue">AMEX</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=API/@EntryIndexedValue">API</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ATLAS/@EntryIndexedValue">ATLAS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=AVS/@EntryIndexedValue">AVS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=AWSS/@EntryIndexedValue">AWSS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=AX/@EntryIndexedValue">AX</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=BCC/@EntryIndexedValue">BCC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=BNG/@EntryIndexedValue">BNG</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=BO/@EntryIndexedValue">BO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=BOM/@EntryIndexedValue">BOM</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CC/@EntryIndexedValue">CC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CCS/@EntryIndexedValue">CCS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CEF/@EntryIndexedValue">CEF</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CEFAR/@EntryIndexedValue">CEFAR</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CEFMEF/@EntryIndexedValue">CEFMEF</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CMS/@EntryIndexedValue">CMS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CORS/@EntryIndexedValue">CORS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CSV/@EntryIndexedValue">CSV</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=CVV/@EntryIndexedValue">CVV</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DB/@EntryIndexedValue">DB</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DC/@EntryIndexedValue">DC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DNN/@EntryIndexedValue">DNN</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DST/@EntryIndexedValue">DST</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DT/@EntryIndexedValue">DT</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=DTO/@EntryIndexedValue">DTO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ECP/@EntryIndexedValue">ECP</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=EDI/@EntryIndexedValue">EDI</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=EDP/@EntryIndexedValue">EDP</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=EF/@EntryIndexedValue">EF</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ERP/@EntryIndexedValue">ERP</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=FIPS/@EntryIndexedValue">FIPS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=FOB/@EntryIndexedValue">FOB</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GET/@EntryIndexedValue">GET</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=GUID/@EntryIndexedValue">GUID</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=HMAC/@EntryIndexedValue">HMAC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=HTML/@EntryIndexedValue">HTML</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=HTTPS/@EntryIndexedValue">HTTPS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IAVS/@EntryIndexedValue">IAVS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ID/@EntryIndexedValue">ID</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IIA/@EntryIndexedValue">IIA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ILS/@EntryIndexedValue">ILS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IO/@EntryIndexedValue">IO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=IP/@EntryIndexedValue">IP</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ISO/@EntryIndexedValue">ISO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=ISOUM/@EntryIndexedValue">ISOUM</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=JCB/@EntryIndexedValue">JCB</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=JS/@EntryIndexedValue">JS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=JSONXML/@EntryIndexedValue">JSONXML</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=KEY/@EntryIndexedValue">KEY</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=LCDTCO/@EntryIndexedValue">LCDTCO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MEF/@EntryIndexedValue">MEF</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MERCK/@EntryIndexedValue">MERCK</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MS/@EntryIndexedValue">MS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MSA/@EntryIndexedValue">MSA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=MSO/@EntryIndexedValue">MSO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=NA/@EntryIndexedValue">NA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=NAFTA/@EntryIndexedValue">NAFTA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=NMFC/@EntryIndexedValue">NMFC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PIL/@EntryIndexedValue">PIL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PILS/@EntryIndexedValue">PILS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PILSID/@EntryIndexedValue">PILSID</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PIN/@EntryIndexedValue">PIN</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PLN/@EntryIndexedValue">PLN</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=PMT/@EntryIndexedValue">PMT</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=POST/@EntryIndexedValue">POST</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=RED/@EntryIndexedValue">RED</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=RFQ/@EntryIndexedValue">RFQ</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SAD/@EntryIndexedValue">SAD</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SCAC/@EntryIndexedValue">SCAC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SEFA/@EntryIndexedValue">SEFA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SEO/@EntryIndexedValue">SEO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SEOURL/@EntryIndexedValue">SEOURL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SHA/@EntryIndexedValue">SHA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SKU/@EntryIndexedValue">SKU</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SMTP/@EntryIndexedValue">SMTP</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SPTA/@EntryIndexedValue">SPTA</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SQL/@EntryIndexedValue">SQL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SS/@EntryIndexedValue">SS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SSDATE/@EntryIndexedValue">SSDATE</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SSL/@EntryIndexedValue">SSL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=SSO/@EntryIndexedValue">SSO</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=TNT/@EntryIndexedValue">TNT</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=TSQL/@EntryIndexedValue">TSQL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UAG/@EntryIndexedValue">UAG</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UB/@EntryIndexedValue">UB</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UC/@EntryIndexedValue">UC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UDF/@EntryIndexedValue">UDF</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UI/@EntryIndexedValue">UI</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UM/@EntryIndexedValue">UM</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UOM/@EntryIndexedValue">UOM</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UPS/@EntryIndexedValue">UPS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=URI/@EntryIndexedValue">URI</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=URL/@EntryIndexedValue">URL</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=US/@EntryIndexedValue">US</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=USPS/@EntryIndexedValue">USPS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UTC/@EntryIndexedValue">UTC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=UTF/@EntryIndexedValue">UTF</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=VI/@EntryIndexedValue">VI</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=WGS/@EntryIndexedValue">WGS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=XLS/@EntryIndexedValue">XLS</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=XML/@EntryIndexedValue">XML</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/Abbreviations/=YRC/@EntryIndexedValue">YRC</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=LocalFunctions/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=PrivateStaticFields/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
+	<s:String x:Key="/Default/FilterSettingsManager/AttributeFilterXml/@EntryValue">&lt;data /&gt;</s:String>
+	<s:String x:Key="/Default/FilterSettingsManager/CoverageFilterXml/@EntryValue">&lt;data&gt;&lt;IncludeFilters /&gt;&lt;ExcludeFilters&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Cache.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.DataModel.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.UI.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Workflow.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.QuoteCheckouts.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Api.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Surveys.SurveyMonkey.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.ScheduledTasks.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Chatting.WeChat.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.CurrencyConversions.FixerIO.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Pricing.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Payments.Heartland.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Searching.ElasticSearch.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Memberships.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Shipping.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.AddressValidation.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesQuoteImporter.Excel.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Payments.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Service.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="CodeGenerator" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="ServiceStack.CodeGenerator.TypeScript" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesQuoteImporter" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesQuoteImporter.ImportAssigners" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Taxes" ModuleVersionMask="*" ClassMask="Avalara.AvaTax.RestClient.*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Importer" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.Importer.ImporterProviderBase" FunctionMask="AssignCellDataByFieldEnumAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.Importer" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.Importer.ImporterProviderBase" FunctionMask="ResolveItemAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.CEFErrorCodeLibrary" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Service.Core" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Service" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.TokenGenerator" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="ServiceStack.Authentication.Mock" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="ServiceStack.Authentication.ClarityTokens" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="ServiceStack.Authentication.OpenID" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="ServiceStack.Authentication.Cobalt" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="ServiceStack.Authentication.AspNetIdentity" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="ServiceStack.Authentication.DotNetNukeSSO" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Scheduler" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Framework.Reporting" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.UI.MVCHost" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.MERCK.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.ATLAS.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="06.Clarity.Ecommerce.Service.Storefront" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="08.Clarity.Ecommerce.UI.DNNModule" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="08.Clarity.Ecommerce.UI.AzureDeploy" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="01.Clarity.Ecommerce.DataModel" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.DataModel.DataSets.*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="01.Clarity.Ecommerce.DataModel" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.DataModel.DatabaseDescriptor" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="01.Clarity.Ecommerce.DataModel" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.DataModel.ClarityEcommerceEntities" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.DataModel" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.DataModel.DataSets.SampleData" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.UAG" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Workflow.UAGEmailQueueWorkflow" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.DataModel.Oracle.Testing" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Service.Storefront" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="CEFAzureUI" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="ClarityEcommerceDNN" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="System.Net.SystemWebClientFactory" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="ExportToExcel.CreateExcelFile" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.ErrorCodeWithMessage" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.QueryExtensions" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.XmlTools" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.Digest" FunctionMask="MapUintToInt" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.Digest" FunctionMask="MapIntToUint" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.Digest" FunctionMask="MapLongToUlong" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.Digest" FunctionMask="Crc32" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.Digest" FunctionMask="Crc64" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.Digest" FunctionMask="SHA512" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.Digest" FunctionMask="SHA384" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Utilities.Digest" FunctionMask="SHA256" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.StringExtensions" FunctionMask="SplitCamelCase" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.StringExtensions" FunctionMask="Truncate" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Utilities" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Globals" FunctionMask="get_CEFRootPath" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Core" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Models.CEFAR" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Core" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Models.CEFActionResponse`1" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Core" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Models.CEFActionResponse" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Core" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.MatchExtensions" FunctionMask="GetMatchCode" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Logger" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Logger" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Cache" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Cache.Redis.CEFCacheRedis" FunctionMask="AddAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Cache" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Cache.Redis.CEFCacheRedis" FunctionMask="RemoveAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Cache" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Cache.Redis.CEFCacheRedis" FunctionMask="GetAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Cache" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Cache.Memory.CEFCacheMemory" FunctionMask="ExistsAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Workflow" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Workflow.ProductWorkflow" FunctionMask="RelateOptionalPackageAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Workflow" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Workflow.ProductWorkflow" FunctionMask="RelateOptionalMasterPackAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Workflow" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Workflow.ProductWorkflow" FunctionMask="RelateOptionalPalletAsync" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Service.StoreAdmin" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Service.BrandAdmin" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Service.Admin" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Service.VendorAdmin" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="07.Clarity.Ecommerce.Reporting.Syncfusion" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.CCS" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.ATLAS" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.IIA" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.UAG" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.MERCK" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Clients.SEFA" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.ADI" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Clients.RED" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.DataModel.Oracle" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.UI.SeleniumTesting" ModuleVersionMask="*" ClassMask="*" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers.Queries.Services.SalesInvoiceQueriesService" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers.Actions.Services.SalesInvoiceActionsService" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers.Actions.Services.Endpoints.CreateInvoiceForSalesOrder" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers.Actions.Services.Endpoints.SetSalesInvoiceAsPaid" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers.Actions.Services.Endpoints.SetSalesInvoiceAsPartiallyPaid" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers.Actions.Services.Endpoints.SetSalesInvoiceAsUnpaid" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers.Actions.Services.Endpoints.SetSalesInvoiceAsVoided" FunctionMask="*" IsEnabled="True" /&gt;&lt;Filter ModuleMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers" ModuleVersionMask="*" ClassMask="Clarity.Ecommerce.Providers.SalesInvoiceHandlers.SalesInvoiceHandlersFeature" FunctionMask="*" IsEnabled="True" /&gt;&lt;/ExcludeFilters&gt;&lt;/data&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/CSharpFileLayoutPatterns/Pattern/@EntryValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&#xD;
+&lt;Patterns xmlns="urn:schemas-jetbrains-com:member-reordering-patterns"&gt;&#xD;
+	&lt;TypePattern DisplayName="COM interfaces or structs"&gt;&#xD;
+		&lt;TypePattern.Match&gt;&#xD;
+			&lt;Or&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Interface" /&gt;&#xD;
+					&lt;Or&gt;&#xD;
+						&lt;HasAttribute Name="System.Runtime.InteropServices.InterfaceTypeAttribute" /&gt;&#xD;
+						&lt;HasAttribute Name="System.Runtime.InteropServices.ComImport" /&gt;&#xD;
+					&lt;/Or&gt;&#xD;
+				&lt;/And&gt;&#xD;
+				&lt;Kind Is="Struct" /&gt;&#xD;
+			&lt;/Or&gt;&#xD;
+		&lt;/TypePattern.Match&gt;&#xD;
+	&lt;/TypePattern&gt;&#xD;
+	&lt;TypePattern DisplayName="P/Invoke classes called 'NativeMethods' (StyleCop)"&gt;&#xD;
+		&lt;TypePattern.Match&gt;&#xD;
+			&lt;And&gt;&#xD;
+				&lt;Kind Is="Class" /&gt;&#xD;
+				&lt;Name Is=".*NativeMethods" /&gt;&#xD;
+			&lt;/And&gt;&#xD;
+		&lt;/TypePattern.Match&gt;&#xD;
+	&lt;/TypePattern&gt;&#xD;
+	&lt;TypePattern DisplayName="DataMember serialisation classes (StyleCop)"&gt;&#xD;
+		&lt;TypePattern.Match&gt;&#xD;
+			&lt;And&gt;&#xD;
+				&lt;Or&gt;&#xD;
+					&lt;Kind Is="Field" /&gt;&#xD;
+					&lt;Kind Is="Property" /&gt;&#xD;
+				&lt;/Or&gt;&#xD;
+				&lt;HasAttribute Name="System.Runtime.Serialization.DataMemberAttribute" /&gt;&#xD;
+			&lt;/And&gt;&#xD;
+		&lt;/TypePattern.Match&gt;&#xD;
+	&lt;/TypePattern&gt;&#xD;
+	&lt;TypePattern DisplayName="NUnit Test Fixtures" RemoveRegions="All"&gt;&#xD;
+		&lt;TypePattern.Match&gt;&#xD;
+			&lt;And&gt;&#xD;
+				&lt;Kind Is="Class" /&gt;&#xD;
+				&lt;HasAttribute Name="NUnit.Framework.TestFixtureAttribute" Inherited="True" /&gt;&#xD;
+			&lt;/And&gt;&#xD;
+		&lt;/TypePattern.Match&gt;&#xD;
+		&lt;Entry DisplayName="Setup/Teardown Methods"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Method" /&gt;&#xD;
+					&lt;Or&gt;&#xD;
+						&lt;HasAttribute Name="NUnit.Framework.SetUpAttribute" Inherited="True" /&gt;&#xD;
+						&lt;HasAttribute Name="NUnit.Framework.TearDownAttribute" Inherited="True" /&gt;&#xD;
+						&lt;HasAttribute Name="NUnit.Framework.FixtureSetUpAttribute" Inherited="True" /&gt;&#xD;
+						&lt;HasAttribute Name="NUnit.Framework.FixtureTearDownAttribute" Inherited="True" /&gt;&#xD;
+					&lt;/Or&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="All other members" /&gt;&#xD;
+		&lt;Entry Priority="100" DisplayName="Test Methods"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Method" /&gt;&#xD;
+					&lt;HasAttribute Name="NUnit.Framework.TestAttribute" /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+	&lt;/TypePattern&gt;&#xD;
+	&lt;TypePattern DisplayName="Default Pattern (StyleCop)" RemoveRegions="All"&gt;&#xD;
+		&lt;Entry DisplayName="Constants"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Constant" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Static fields"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Field" /&gt;&#xD;
+					&lt;Static /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Readonly /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Fields"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Field" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Readonly /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry Priority="200" DisplayName="Constructors and Destructors"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Or&gt;&#xD;
+					&lt;Kind Is="Constructor" /&gt;&#xD;
+					&lt;Kind Is="Destructor" /&gt;&#xD;
+				&lt;/Or&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Kind Order="Constructor Destructor" /&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Delegates"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Delegate" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Public events"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Event" /&gt;&#xD;
+					&lt;Access Is="Public" /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public" /&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Interface events"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Event" /&gt;&#xD;
+					&lt;ImplementsInterface /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;ImplementsInterface Immediate="True" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Other events"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Event" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Enums"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Enum" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Interfaces"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Interface" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Public properties"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Property" /&gt;&#xD;
+					&lt;Access Is="Public" /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Interface properties"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Property" /&gt;&#xD;
+					&lt;ImplementsInterface /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;ImplementsInterface Immediate="True" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Other properties"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Property" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry Priority="1000" DisplayName="Public indexers"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Indexer" /&gt;&#xD;
+					&lt;Access Is="Public" /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry Priority="1000" DisplayName="Interface indexers"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Indexer" /&gt;&#xD;
+					&lt;ImplementsInterface /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;ImplementsInterface Immediate="True" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry Priority="1000" DisplayName="Other indexers"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Indexer" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Public methods and operators"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Or&gt;&#xD;
+						&lt;Kind Is="Method" /&gt;&#xD;
+						&lt;Kind Is="Operator" /&gt;&#xD;
+					&lt;/Or&gt;&#xD;
+					&lt;Access Is="Public" /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Interface methods"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;And&gt;&#xD;
+					&lt;Kind Is="Method" /&gt;&#xD;
+					&lt;ImplementsInterface /&gt;&#xD;
+				&lt;/And&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;ImplementsInterface Immediate="True" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Other methods"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Method" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="Operators"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Operator" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry Priority="600" DisplayName="Nested structs"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Struct" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry Priority="700" DisplayName="Nested classes"&gt;&#xD;
+			&lt;Entry.Match&gt;&#xD;
+				&lt;Kind Is="Class" /&gt;&#xD;
+			&lt;/Entry.Match&gt;&#xD;
+			&lt;Entry.SortBy&gt;&#xD;
+				&lt;Static /&gt;&#xD;
+				&lt;Access Order="Public Internal ProtectedInternal Protected Private" /&gt;&#xD;
+				&lt;Name /&gt;&#xD;
+			&lt;/Entry.SortBy&gt;&#xD;
+		&lt;/Entry&gt;&#xD;
+		&lt;Entry DisplayName="All other members" /&gt;&#xD;
+	&lt;/TypePattern&gt;&#xD;
+&lt;/Patterns&gt;</s:String>
+</wpf:ResourceDictionary>

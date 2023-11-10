@@ -1,0 +1,9 @@
+﻿<button type="button" class="btn btn-outline-secondary"
+        id="btnProductDetails{{productNotifyMeCtrl.index}}"
+        name="btnProductDetails{{productNotifyMeCtrl.index}}"
+        translate-attr="{ title: productNotifyMeCtrl.key,
+                          'aria-label': productNotifyMeCtrl.key }"
+        ng-click="productNotifyMeCtrl.toggle()">
+    <i class="fa-heart fa-fw" ng-class="productNotifyMeCtrl.in() ? 'fas' : 'far'"></i>&nbsp;<!--
+    --><span data-translate="{{productNotifyMeCtrl.key}}"></span>
+</button>

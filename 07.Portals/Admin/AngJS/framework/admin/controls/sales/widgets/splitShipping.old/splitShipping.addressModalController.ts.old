@@ -1,0 +1,126 @@
+/**
+ * @file framework/admin/controls/sales/widgets/splitShipping/splitShipping.addressModalController.ts
+ * @author Copyright (c) 2018-2022 clarity-ventures.com. All rights reserved.
+ * @desc Split shipping new address modal controller class
+ */
+module cef.admin.controls.sales.widgets.splitShipping {
+    export class SplitShippingAddressModalController extends core.TemplatedControllerBase {
+        // Properties
+        currentContact: api.AccountContactModel;
+        countries: api.CountryModel[];
+        regions: api.RegionModel[];
+        emptyAccountContact: api.AccountContactModel = {
+            ID: 0,
+            Active: true,
+            CreatedDate: new Date(),
+            UpdatedDate: null,
+            CustomKey: null,
+            IsBilling: false,
+            IsPrimary: false,
+            TransmittedToERP: false,
+            Name: null,
+            Description: null,
+            MasterID: null,
+            SlaveID: null,
+            Slave: this.cvContactFactory.new()
+        };
+        // Functions
+        loadCollections(): void {
+            this.cvApi.geography.GetCountries({ Active: true, AsListing: true }).then(r => this.countries = r.data.Results);
+        }
+        newContact(): void {
+            this.currentContact = _.cloneDeep(this.emptyAccountContact);
+        }
+        runPhonePrefixLookups(): void {
+            if (!this.usePhonePrefixLookups // Don't use this
+                || !this.currentContact.Slave.Phone1) { // Must have content
+                return;
+            }
+            const m = /\d+/.exec(this.currentContact.Slave.Phone1 || "");
+            if (!m || m.length <= 0) { return; } // Must have a number in the value
+            const cleanPhone = `+${this.currentContact.Slave.Phone1.trim().replace(/[a-zA-Z\s)(+_-]+/, "")}`;
+            this.cvApi.geography.ReversePhonePrefixToCityRegionCountry({ Prefix: cleanPhone }).then(r => {
+                if (!r || !r.data || !r.data.Results) {
+                    // console.log("Failed to get phone prefix lookups data.");
+                    return;
+                }
+                if (r.data.Results.length <= 0) {
+                    // console.log(`No results from phone prefix lookups data for "${cleanPhone}"`);
+                    return;
+                }
+                var result = r.data.Results[0];
+                this.currentContact.Slave.Address.CountryID = result.CountryID;
+                this.propagateCountryChange();
+                this.currentContact.Slave.Address.RegionID = result.RegionID;
+                this.propagateRegionChange();
+                this.currentContact.Slave.Address.City = result.CityName;
+            });
+        }
+        propagateCountryChange(): void {
+            this.currentContact.Slave.Address.CountryID = this.currentContact.Slave.Address.CountryID
+                ? this.currentContact.Slave.Address.CountryID
+                : null;
+            if (this.currentContact.Slave.Address.CountryID == null) {
+                this.currentContact.Slave.Address.Country = null;
+                this.currentContact.Slave.Address.CountryKey
+                    = this.currentContact.Slave.Address.CountryCode
+                    = this.currentContact.Slave.Address.CountryName = null;
+                return;
+            }
+            this.currentContact.Slave.Address.Country = _.find(this.countries, v => v.ID === this.currentContact.Slave.Address.CountryID);
+            this.currentContact.Slave.Address.CountryKey = this.currentContact.Slave.Address.Country.CustomKey;
+            this.currentContact.Slave.Address.CountryCode = this.currentContact.Slave.Address.Country.Code;
+            this.currentContact.Slave.Address.CountryName = this.currentContact.Slave.Address.Country.Name;
+            this.cvApi.geography.GetRegions({ Active: true, AsListing: true, CountryID: this.currentContact.Slave.Address.CountryID })
+                .then(r => this.regions = r.data.Results);
+        }
+        propagateRegionChange(): void {
+            this.currentContact.Slave.Address.RegionID = this.currentContact.Slave.Address.RegionID
+                ? this.currentContact.Slave.Address.RegionID
+                : null;
+            if (this.currentContact.Slave.Address.RegionID == null) {
+                this.currentContact.Slave.Address.Region = null;
+                this.currentContact.Slave.Address.RegionKey
+                    = this.currentContact.Slave.Address.RegionCode
+                    = this.currentContact.Slave.Address.RegionName = null;
+                return;
+            }
+            this.currentContact.Slave.Address.Region = _.find(this.regions, v => v.ID === this.currentContact.Slave.Address.RegionID);
+            this.currentContact.Slave.Address.RegionKey = this.currentContact.Slave.Address.Region.CustomKey;
+            this.currentContact.Slave.Address.RegionCode = this.currentContact.Slave.Address.Region.Code;
+            this.currentContact.Slave.Address.RegionName = this.currentContact.Slave.Address.Region.Name;
+        }
+        ok(): void {
+            this.cvApi.providers.ValidateAddress({
+                Address: this.currentContact.Slave.Address
+            }).then(r => {
+                if (!r.data.IsValid) {
+                    this.$translate("ui.admin.checkout.validateAddress.Failed").then(translated => {
+                        this.cvMessageModalFactory(translated).then(() => {
+                            this.finishRunning(true, translated);
+                            return;
+                        });
+                    });
+                    return;
+                }
+                this.$uibModalInstance.close(this.currentContact);
+            }).catch(reason => this.finishRunning(true, reason));
+        }
+        cancel(): void {
+            this.$uibModalInstance.dismiss();
+        }
+        // Constructor
+        constructor(
+                private readonly $uibModalInstance: ng.ui.bootstrap.IModalServiceInstance,
+                private readonly $translate: ng.translate.ITranslateService,
+                protected readonly cefConfig: core.CefConfig,
+                private readonly cvApi: api.ICEFAPI,
+                private readonly cvContactFactory: factories.IContactFactory,
+                private readonly cvMessageModalFactory: admin.modals.IMessageModalFactory,
+                private readonly usePhonePrefixLookups: boolean) {
+            super(cefConfig);
+            this.loadCollections();
+            this.newContact(); // For now it's always creating a new address
+        }
+    }
+}

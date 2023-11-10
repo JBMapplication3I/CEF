@@ -1,0 +1,120 @@
+﻿<div class="row">
+    <div ng-if="cefCheckoutCtrl.viewstate.isLoggedIn
+                && cefCheckoutCtrl.cefConfig.featureSet.payments.wallet.enabled
+                && (cefCheckoutCtrl.wallet | filter: { 'RoutingNumber': '' }).length"
+         class="col-sm-12">
+        <div class="form-group">
+            <label class="control-label hidden" for="ddlSelectedECheck"
+                   data-translate="ui.admin.checkout.views.paymentInformation.SelectAnECheckAccount"></label>
+            <select class="form-control"
+                    id="ddlSelectedECheck" name="ddlSelectedECheck"
+                    ng-change="cefCheckoutCtrl.updatePaymentDataWithWalletEntry(cefCheckoutCtrl.selectedECheck)"
+                    ng-options="entry as entry.Name for entry in cefCheckoutCtrl.wallet | filter: { 'RoutingNumber': '' }"
+                    ng-model="cefCheckoutCtrl.selectedEcheck">
+                <option value=""
+                        data-translate="ui.admin.checkout.views.paymentInformation.enterANewECheck"></option>
+            </select>
+        </div>
+    </div>
+    <div ng-if="cefCheckoutCtrl.cefConfig.featureSet.payments.wallet.enabled && cefCheckoutCtrl.selectedEcheckIsFromWallet()"
+         class="col-sm-12">
+        <cef-checkout-wallet-echeck>
+        </cef-checkout-wallet-echeck>
+    </div>
+    <div ng-if="!cefCheckoutCtrl.cefConfig.featureSet.payments.wallet.enabled || !cefCheckoutCtrl.selectedEcheckIsFromWallet()"
+         class="col-sm-12">
+        <!--Reference Name-->
+        <div class="form-group"
+             ng-class="{'has-error': cefCheckoutCtrl.forms.payment.echeck.$dirty && cefCheckoutCtrl.forms.payment.echeck.txtReferenceName.$invalid}"
+             ng-if="cefCheckoutCtrl.viewstate.isLoggedIn && cefCheckoutCtrl.cefConfig.featureSet.payments.wallet.enabled">
+            <label class="control-label" for="txtReferenceName"
+                   data-translate="ui.admin.common.ECheckAccountNickname"></label>
+            <input type="text" class="form-control" 
+                   id="txtReferenceName" name="txtReferenceName"
+                   ng-required="false"
+                   ng-model="cefCheckoutCtrl.paymentData.ReferenceName" />
+        </div>
+        <p ng-if="cefCheckoutCtrl.viewstate.isLoggedIn"
+           class="small"
+           data-translate="ui.admin.checkout.modularCheckout.WalletReferenceName.Note"></p>
+        <!--Account Type-->
+        <div class="form-group"
+             ng-class="{'has-error': cefCheckoutCtrl.forms.payment.echeck.$dirty && cefCheckoutCtrl.forms.payment.echeck.ddlAccountType.$invalid}">
+            <label class="control-label" for="ddlAccountType"
+                   ><span data-translate="ui.admin.checkout.echeck.AccountType"
+                   ></span>&nbsp;<span class="text-danger">*</span></label>
+            <select class="form-control"
+                    id="ddlAccountType" name="ddlAccountType"
+                    ng-required="true"
+                    ng-options="type.Key as type.Value for type in cefCheckoutCtrl.cvWalletService.eCheckAccountTypes"
+                    ng-model="cefCheckoutCtrl.paymentData.CardType">
+                <option value="" ng-disabled="true"
+                        data-translate="ui.admin.checkout.echeck.SelectAnAccountType"></option>
+            </select>
+        </div>
+        <!--Account holder Name-->
+        <div class="form-group"
+             ng-class="{'has-error': cefCheckoutCtrl.forms.payment.echeck.$dirty && cefCheckoutCtrl.forms.payment.echeck.txtCardHolderName.$invalid}">
+            <label class="control-label" for="txtCardHolderName"
+                   ><span data-translate="ui.admin.checkout.echeck.AccountHolder"
+                   ></span>&nbsp;<span class="text-danger">*</span></label>
+            <input type="text" class="form-control"
+                   id="txtCardHolderName" name="txtCardHolderName"
+                   ng-required="true"
+                   ng-model="cefCheckoutCtrl.paymentData.CardHolderName" />
+        </div>
+        <!--Bank Name-->
+        <div class="form-group"
+             ng-class="{'has-error': cefCheckoutCtrl.forms.payment.echeck.$dirty && cefCheckoutCtrl.forms.payment.echeck.txtBankName.$invalid}">
+            <label class="control-label" for="txtCardHolderName"
+                   ><span data-translate="ui.admin.checkout.echeck.BankName"
+                   ></span>&nbsp;<span class="text-danger">*</span></label>
+            <input type="text" class="form-control"
+                   id="txtBankName" name="txtBankName"
+                   ng-required="true"
+                   ng-model="cefCheckoutCtrl.paymentData.BankName" />
+        </div>
+        <!--Routing Number-->
+        <div class="form-group"
+             ng-class="{'has-error': cefCheckoutCtrl.forms.payment.echeck.$dirty && cefCheckoutCtrl.forms.payment.echeck.txtRoutingNumber.$invalid}">
+            <label class="control-label" for="txtCardNumber"
+                   ><span data-translate="ui.admin.checkout.echeck.RoutingNumber"
+                   ></span>&nbsp;<span class="text-danger">*</span></label>
+            <input type="text" class="form-control"
+                   id="txtRoutingNumber" name="txtRoutingNumber"
+                   placeholder="123456789"
+                   ng-required="true"
+                   ng-model="cefCheckoutCtrl.paymentData.RoutingNumber" />
+        </div>
+        <!--Account Number-->
+        <div class="form-group"
+             ng-class="{'has-error': cefCheckoutCtrl.forms.payment.echeck.$dirty && cefCheckoutCtrl.forms.payment.echeck.txtAccountNumber.$invalid}">
+            <label class="control-label" for="txtCardNumber"
+                   ><span data-translate="ui.admin.common.AccountNumber"
+                   ></span>&nbsp;<span class="text-danger">*</span></label>
+            <input type="text" class="form-control"
+                   id="txtAccountNumber" name="txtAccountNumber"
+                   placeholder="012345678"
+                   ng-required="true"
+                   ng-model="cefCheckoutCtrl.paymentData.AccountNumber" />
+        </div>
+        <div class="row"
+             ng-if="cefCheckoutCtrl.forms.payment.echeck.$dirty && cefCheckoutCtrl.forms.payment.echeck.$invalid">
+            <div class="col-md-12">
+                <div ng-messages="cefCheckoutCtrl.forms.payment.echeck.$error"
+                     role="alert">
+                    <div ng-message="required" class="alert alert-danger mb-3">
+                        <span data-translate="ui.admin.userDashboard2.controls.walletCard.AllFieldsAreRequired"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"
+             ng-if="cefCheckoutCtrl.forms.payment.echeck.$valid && cefCheckoutCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0">
+            <div class="col-md-12">
+                <p data-translate="ui.admin.checkout.paymentMethods.creditCard.GrandTotalWithSplitTargets.Template"
+                   translate-value-total="{{cefCheckoutCtrl.cvCartService.grandTotal()}}"></p>
+            </div>
+        </div>
+    </div>
+</div>

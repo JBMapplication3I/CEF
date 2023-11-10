@@ -1,0 +1,33 @@
+﻿<div class="contact-address-block" ng-class="{'small':wcabCtrl.smallText}">
+  <div ng-class="wcabCtrl.twoCol ? 'w-50 inline-block pr-1' : 'block'"
+    ng-hide="wcabCtrl.hideAddress">
+    <span ng-repeat="obj in wcabCtrl.addressArray">
+      <br ng-if="!$first" />
+      <i class="far fa-fw"
+        ng-class="{'fa-map-marker':$first,'fa-lg':!wcabCtrl.smallText}"
+        ng-hide="wcabCtrl.hideIcons">
+      </i>
+      <span ng-if="!wcabCtrl.smallText" ng-bind="obj.text" id="contactAddress_billing_{{$index}}"></span>
+      <small ng-if="wcabCtrl.smallText" ng-bind="obj.text" id="contactAddress_billing_{{$index}}"></small>
+    </span>
+  </div>
+  <div ng-class="wcabCtrl.twoCol ? 'w-50 inline-block pl-1' : 'block'">
+    <span ng-repeat="obj in wcabCtrl.contactArray" class="block">
+      <!-- <br ng-if="!$first" /> -->
+      <i class="{{obj.fa}} fa-fw"
+        ng-class="{'fa-lg':!wcabCtrl.smallText}"
+        ng-hide="wcabCtrl.hideIcons">
+      </i>
+      <span  id="contactAddress_fax"    ng-if="!wcabCtrl.smallText && !obj.tel && !obj.mailto"                                                        ng-bind="obj.text"></span>
+      <small id="contactAddress_mailTo" ng-if=" wcabCtrl.smallText && !obj.tel && !obj.mailto"                                                        ng-bind="obj.text"></small>
+      <a     id="contactAddress_phone"  ng-if="!wcabCtrl.smallText &&  obj.tel && !obj.mailto && !wcabCtrl.noLinks" href="tel:{{obj.text}}"           ng-bind="obj.text"></a>
+      <a     id="contactAddress_phone"  ng-if=" wcabCtrl.smallText &&  obj.tel && !obj.mailto && !wcabCtrl.noLinks" href="tel:{{obj.text}}"   ><small ng-bind="obj.text"></small></a>
+      <span  id="contactAddress_phone"  ng-if="!wcabCtrl.smallText &&  obj.tel && !obj.mailto &&  wcabCtrl.noLinks"                                   ng-bind="obj.text"></span>
+      <span  id="contactAddress_phone"  ng-if=" wcabCtrl.smallText &&  obj.tel && !obj.mailto &&  wcabCtrl.noLinks"                           ><small ng-bind="obj.text"></small></span>
+      <a     id="contactAddress_email"  ng-if="!wcabCtrl.smallText && !obj.tel &&  obj.mailto && !wcabCtrl.noLinks" href="mailto:{{obj.text}}"        ng-bind="obj.text"></a>
+      <a     id="contactAddress_email"  ng-if=" wcabCtrl.smallText && !obj.tel &&  obj.mailto && !wcabCtrl.noLinks" href="mailto:{{obj.text}}"><small ng-bind="obj.text"></small></a>
+      <span  id="contactAddress_email"  ng-if="!wcabCtrl.smallText && !obj.tel &&  obj.mailto &&  wcabCtrl.noLinks"                                   ng-bind="obj.text"></span>
+      <span  id="contactAddress_email"  ng-if=" wcabCtrl.smallText && !obj.tel &&  obj.mailto &&  wcabCtrl.noLinks"                           ><small ng-bind="obj.text"></small></span>
+    </span>
+  </div>
+</div>

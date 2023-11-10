@@ -1,0 +1,280 @@
+﻿@page "/sales/invoices"
+@inherits MVC.Core.GridViewTemplatedControllerBase<SalesInvoicePagedResults, SalesInvoiceModel, MVC.Api.Endpoints.AdminGetSalesInvoicesForPortal>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="salesInvoicesPage">
+    @if (ViewState.loading || CurrentDataCollection is null && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (CurrentDataCollection is not null)
+    {
+      <Div Class="page-content-with-footer">
+        <Container Fluid="true">
+          <Row>
+            <Column>
+              <Div Class="d-flex justify-content-between align-items-center">
+                <Heading Size="HeadingSize.Is1">
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.FileInvoiceDollar" Class="mr-2" />
+                  @(PortalRoute?.HeaderText ?? PortalRoute?.Title ?? "Invoices")
+                </Heading>
+                @* NOTE: No generic invoice creator
+                <Div>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Primary"
+                    Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, CreatorRouteBase))">
+                    Create Invoice
+                  </Blazorise.Button>
+                </Div>
+                *@
+              </Div>
+              <Validations
+                EditContext="EditContext"
+                Mode="ValidationMode.Manual"
+                ValidateOnLoad="true">
+                <DataGrid
+                  TItem="SalesInvoiceModel"
+                  Data="@CurrentDataCollection.Results"
+                  Responsive="Responsive"
+                  Narrow="Narrow"
+                  Hoverable="Hoverable"
+                  Striped="Striped"
+                  Bordered="Bordered"
+                  Borderless="Borderless"
+                  Filterable="Filterable"
+                  ShowCaptions="ShowCaptions"
+                  Sortable="Sortable"
+                  Resizable="Resizable"
+                  ShowPageSizes="ShowPageSizes"
+                  ShowPager="ShowPager"
+                  PageSizes="PageSizes"
+                  PageSize="CurrentPageSize"
+                  PageSizeChanged="i => { CurrentPageSize = i; StateHasChanged(); }"
+                  CurrentPage="CurrentPage"
+                  PageChanged="e => { CurrentPage = e.Page; StateHasChanged(); }"
+                  MaxPaginationLinks="MaxPaginationLinks"
+                  TotalItems="@CurrentDataCollection.TotalCount"
+                  ReadData="@OnReadData"
+                  CustomFilter="@OnCustomFilter"
+                  SelectedRowChanged="@OnSelectedRowChanged"
+                  FilterMethod="DataGridFilterMethod.Contains"
+                  CommandMode="DataGridCommandMode.Default"
+                  SelectionMode="DataGridSelectionMode.Single"
+                  SortMode="DataGridSortMode.Multiple"
+                  PagerPosition="DataGridPagerPosition.Bottom"
+                  FixedHeader="true"
+                  FixedHeaderDataGridHeight="100%"
+                  FixedHeaderDataGridMaxHeight="100%"
+                  ResizeMode="TableResizeMode.Header"
+                  RowDoubleClicked="@(i => OnItemViewClicked(i.Item.ID))">
+                  <DataGridColumns>
+                    <DataGridNumericColumn
+                      TItem="SalesInvoiceModel"
+                      Field="@nameof(BaseModel.ID)"
+                      Caption="#"
+                      Sortable="true"
+                      Filterable="true"
+                      FilterCellClass="text-right"
+                      Width="5%"
+                      DisplayFormat="{0:00000}"
+                      CellClass="@(_ => "text-right")">
+                      <FilterTemplate>
+                        <NumericEdit
+                          ValueExpression="@(() => IDFilterValue)"
+                          Value="@IDFilterValue"
+                          ValueChanged="@((int? val) => { IDFilterValue = val; })"
+                        />
+                      </FilterTemplate>
+                    </DataGridNumericColumn>
+                    <DataGridNumericColumn
+                      TItem="SalesInvoiceModel"
+                      Field="@nameof(SalesInvoiceModel.Totals.Fees)"
+                      Caption="Fees"
+                      Sortable="true"
+                      Filterable="true"
+                      FilterCellClass="text-right"
+                      Width="5%"
+                      DisplayFormat="{0:00000}"
+                      CellClass="@(_ => "text-right")"
+                    />
+                    <DataGridColumn
+                      TItem="SalesInvoiceModel"
+                      Field="@nameof(BaseModel.ID)"
+                      Caption=""
+                      Width="48px"
+                      Sortable="false"
+                      Filterable="false">
+                      <DisplayTemplate>
+                        <Button
+                          Color="Color.Link"
+                          Clicked="@(() => OnItemViewClicked(context.ID))">
+                          View
+                        </Button>
+                      </DisplayTemplate>
+                    </DataGridColumn>
+                  </DataGridColumns>
+                  <EmptyTemplate><Div Class="box p-3">No records found.</Div></EmptyTemplate>
+                  <LoadingTemplate><Div Class="box p-3"><Progress Size="Size.Small" Color="Color.Primary" Value="35"></Progress></Div></LoadingTemplate>
+                  <FirstPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleLeft" /></Span></FirstPageButtonTemplate>
+                  <PreviousPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleLeft" /></Span></PreviousPageButtonTemplate>
+                  <NextPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleRight" /></Span></NextPageButtonTemplate>
+                  <LastPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleRight" /></Span></LastPageButtonTemplate>
+                </DataGrid>
+              </Validations>
+            </Column>
+          </Row>
+        </Container>
+      </Div>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridViewRouteBase => "/sales/invoices";
+
+  /// <inheritdoc />
+  protected override string EditorRouteBase => GridViewRouteBase + "/editor/";
+
+  /// <inheritdoc />
+  protected override string CreatorRouteBase => GridViewRouteBase + "/creator/";
+
+  #region Dynamic Properties for UI
+  private int? IDFilterValue { get; set; }
+  private int SelectedStatusFilter { get; set; }
+  private List<StatusModel>? Statuses { get; set; }
+  #endregion
+  #endregion
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedInitialDataAsync()
+  {
+    return Task.WhenAll(LoadStatusesAsync());
+  }
+
+  /// <inheritdoc />
+  protected override async Task<MVC.Core.IHttpPromiseCallbackArg<SalesInvoicePagedResults?>> FilteredDataLoadCallAsync(
+    DataGridReadDataEventArgs<SalesInvoiceModel>? e)
+  {
+#if MANUFACTURERADMIN || VENDORADMIN
+    throw new InvalidOperationException();
+#else
+    DebugBeginMethod();
+    var dto = new MVC.Api.Endpoints.AdminGetSalesInvoicesForPortal
+    {
+      Active = true,
+      Paging = new() { Size = CurrentPageSize, StartIndex = CurrentPage },
+    };
+    await ExtendSearchDTOAsync(e, dto).ConfigureAwait(false);
+    DebugEndMethod();
+    return await cvApi.AdminGetSalesInvoicesForPortal(dto).ConfigureAwait(false);
+#endif
+  }
+
+  /// <inheritdoc />
+  protected override Task<MVC.Core.IHttpPromiseCallbackArg<SalesInvoicePagedResults?>> InitialDataLoadCallAsync()
+  {
+    return FilteredDataLoadCallAsync(null);
+  }
+
+  /// <inheritdoc />
+  protected override bool CustomFilterCheck(SalesInvoiceModel model)
+  {
+    return model.CustomKey?.Contains(CustomFilterValue!, StringComparison.OrdinalIgnoreCase) == true;
+  }
+
+  /// <summary>Extend search data transfer object.</summary>
+  /// <typeparam name="TDTO">Type of the data transfer object model.</typeparam>
+  /// <param name="e">  The DataGridReadDataEventArgs{SalesInvoiceModel}? to process.</param>
+  /// <param name="dto">The data transfer object.</param>
+  /// <returns>A Task.</returns>
+  protected /*override*/ Task ExtendSearchDTOAsync<TDTO>(
+      DataGridReadDataEventArgs<SalesInvoiceModel>? e,
+      TDTO dto)
+    where TDTO : SalesInvoiceSearchModel
+  {
+    DebugBeginMethod();
+    if (e is null)
+    {
+      return Task.CompletedTask;
+    }
+    var sorts = (
+      from dataGridColumnInfo in e.Columns
+      where dataGridColumnInfo.SortDirection != SortDirection.None
+      select new Sort
+      {
+        Dir = dataGridColumnInfo.SortDirection == SortDirection.Ascending ? "asc" : "desc",
+        Order = dataGridColumnInfo.SortIndex,
+        Field = dataGridColumnInfo.Field,
+      })
+      .ToList();
+    dto.Sorts = Contract.CheckEmpty(sorts) ? null : sorts.ToArray();
+    foreach (var dataGridColumnInfo in e.Columns.Where(x => x.SearchValue is not null))
+    {
+      switch (dataGridColumnInfo.Field)
+      {
+        case nameof(BaseModel.ID):
+        {
+          dto.ID = dataGridColumnInfo.SearchValue as int?;
+          break;
+        }
+        case nameof(BaseModel.CustomKey):
+        {
+          dto.CustomKey = dataGridColumnInfo.SearchValue as string;
+          break;
+        }
+        case nameof(SalesInvoiceModel.StatusID) when dataGridColumnInfo.SearchValue is int asInt and > 0:
+        {
+          dto.StatusID = asInt;
+          break;
+        }
+      }
+    }
+    // NOTE: MasterID, Active, AsListing are enforced on api-side
+    dto.ID = IDFilterValue;
+    dto.CustomKey = CustomFilterValue;
+    DebugEndMethod();
+    return Task.CompletedTask;
+  }
+
+  private string StatusIDToDisplayName(int id)
+  {
+    if (!Contract.CheckValidID(id) || Contract.CheckEmpty(Statuses))
+    {
+      return "Unknown";
+    }
+    var found = Statuses!.SingleOrDefault(x => x.ID == id);
+    if (found is not null)
+    {
+      return found.DisplayName ?? found.Name ?? "Unknown";
+    }
+    return "Unknown";
+  }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetSalesInvoiceStatuses(new() { Active = true }).ConfigureAwait(false);
+    ////ConsoleDebug(result.data);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+}

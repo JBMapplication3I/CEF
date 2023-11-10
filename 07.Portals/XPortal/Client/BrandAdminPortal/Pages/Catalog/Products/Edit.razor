@@ -1,0 +1,328 @@
+﻿@page "/catalog/products/editor/{IDStr}"
+@using Clarity.Ecommerce.MVC.Core
+@using Clarity.Ecommerce.UI.XPortal.SharedLibrary.Pages.Catalog.Products.EditParts
+@inherits MVC.Core.EditorViewTemplatedControllerBase<ProductModel, MVC.Api.Endpoints.UpdateProduct>
+@inject IMapper mapper
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  @if (ViewState.loading || Record == null! && !ViewState.hasError)
+  {
+    <Layout ElementId="productEditorPage">
+      <LayoutContent Display="Display.Flex" TextAlignment="TextAlignment.Center" Class="p-3">
+        <LoadingBlock />
+      </LayoutContent>
+    </Layout>
+  }
+  else if (ViewState.hasError)
+  {
+    <Layout ElementId="productEditorPage">
+      <LayoutContent Display="Display.Flex" Class="p-3">
+        <ErrorBlock />
+      </LayoutContent>
+    </Layout>
+  }
+  else if (EditContext != null! && Record is not null)
+  {
+    <Div Class="page" ElementId="productEditorPage">
+      <Div Class="page-content-with-footer">
+        <Validations
+          EditContext="EditContext"
+          Mode="ValidationMode.Manual"
+          ValidateOnLoad="true">
+          <EditForm EditContext="EditContext" class="w-100">
+            <Container Fluid="true">
+              <DataAnnotationsValidator />
+              <Row>
+                <Column>
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="@("fa-box-full")" Class="mr-1" />
+                    #@ID: @ClippedName
+                  </Heading>
+                </Column>
+              </Row>
+              <Tabs
+                SelectedTab="@SelectedTab"
+                SelectedTabChanged="@OnSelectedTabChanged"
+                TabPosition="TabPosition.Start"
+                Mode="TabsMode.LazyReload"
+                Pills="true"
+                Shadow="Shadow.Small"
+                Class="h-100">
+                <Items>
+                  <Tab Name="details">Details</Tab>
+                  <Tab Name="images">Images</Tab>
+                  @if (CEFConfig.featureSet?.products_storedFiles?.enabled == true)
+                  {
+                    <Tab Name="storedFiles">Stored Files</Tab>
+                  }
+                  <Tab Name="designer">Designer</Tab>
+                  <Tab Name="pricing">Pricing</Tab>
+                  @if (CEFConfig.featureSet?.taxes?.enabled == true)
+                  {
+                    <Tab Name="taxes">Taxes</Tab>
+                  }
+                  <Tab Name="inventory">Inventory</Tab>
+                  @if (CEFConfig.featureSet?.shipping?.enabled == true)
+                  {
+                    <Tab Name="shipping">Shipping</Tab>
+                  }
+                  <Tab Name="purchasing">Purchasing</Tab>
+                  @if (CEFConfig.featureSet?.salesReturns_enabled == true)
+                  {
+                    <Tab Name="returning">Returning</Tab>
+                  }
+                  <Tab Name="associations">Associations</Tab>
+                  @if (CEFConfig.featureSet?.products_notifications?.enabled == true)
+                  {
+                    <Tab Name="notifications">Notifications</Tab>
+                  }
+                  @if (CEFConfig.featureSet?.products_restrictions?.enabled == true)
+                  {
+                    <Tab Name="restrictions">Restrictions</Tab>
+                  }
+                  @if (CEFConfig.featureSet?.categories?.enabled == true)
+                  {
+                    <Tab Name="categories">Categories</Tab>
+                  }
+                  @if (CEFConfig.featureSet?.manufacturers?.enabled == true)
+                  {
+                    <Tab Name="manufacturers">Manufacturers</Tab>
+                  }
+                  @if (CEFConfig.featureSet?.vendors?.enabled == true)
+                  {
+                    <Tab Name="vendors">Vendors</Tab>
+                  }
+                  @if (CEFConfig.featureSet?.stores_enabled == true)
+                  {
+                    <Tab Name="stores">Stores</Tab>
+                  }
+                  @if (CEFConfig.featureSet?.franchises?.enabled == true)
+                  {
+                    <Tab Name="franchises">Franchises</Tab>
+                  }
+                  <Tab Name="attributes">Attributes</Tab>
+                </Items>
+                <Content>
+                  <TabPanel Name="details"><TabDetails @ref="tabDetails" Record="Record" /></TabPanel>
+                  <TabPanel Name="images"><TabImages @ref="tabImages" Record="Record" /></TabPanel>
+                  @if (CEFConfig.featureSet?.products_storedFiles?.enabled == true)
+                  {
+                    <TabPanel Name="storedFiles"><TabStoredFiles @ref="tabStoredFiles" Record="Record" /></TabPanel>
+                  }
+                  @if (IncludeDesigner)
+                  {
+                    <TabPanel Name="designer" Class="h-100"><TabDesigner Record="Record" /></TabPanel>
+                  }
+                  <TabPanel Name="pricing"><TabPricing @ref="tabPricing" Record="Record" /></TabPanel>
+                  @if (CEFConfig.featureSet?.taxes?.enabled == true)
+                  {
+                    <TabPanel Name="taxes"><TabTaxes @ref="tabTaxes" Record="Record" /></TabPanel>
+                  }
+                  <TabPanel Name="inventory"><TabInventory @ref="tabInventory" Record="Record" /></TabPanel>
+                  @if (CEFConfig.featureSet?.shipping?.enabled == true)
+                  {
+                    <TabPanel Name="shipping"><TabShipping @ref="tabShipping" Record="Record" /></TabPanel>
+                  }
+                  <TabPanel Name="purchasing"><TabPurchasing @ref="tabPurchasing" Record="Record" /></TabPanel>
+                  @if (CEFConfig.featureSet?.salesReturns_enabled == true)
+                  {
+                    <TabPanel Name="returning"><TabReturning @ref="tabReturning" Record="Record" /></TabPanel>
+                  }
+                  <TabPanel Name="associations"><TabAssociations @ref="tabAssociations" Record="Record" /></TabPanel>
+                  @if (CEFConfig.featureSet?.products_notifications?.enabled == true)
+                  {
+                    <TabPanel Name="notifications"><TabNotifications @ref="tabNotifications" Record="Record" /></TabPanel>
+                  }
+                  @if (CEFConfig.featureSet?.products_restrictions?.enabled == true)
+                  {
+                    <TabPanel Name="restrictions"><TabRestrictions @ref="tabRestrictions" Record="Record" /></TabPanel>
+                  }
+                  @if (CEFConfig.featureSet?.categories?.enabled == true)
+                  {
+                    <TabPanel Name="categories"><TabCategories @ref="tabCategories" Record="Record" /></TabPanel>
+                  }
+                  @if (CEFConfig.featureSet?.manufacturers?.enabled == true)
+                  {
+                    <TabPanel Name="manufacturers"><TabManufacturers @ref="tabManufacturers" Record="Record" /></TabPanel>
+                  }
+                  @if (CEFConfig.featureSet?.vendors?.enabled == true)
+                  {
+                    <TabPanel Name="vendors"><TabVendors @ref="tabVendors" Record="Record" /></TabPanel>
+                  }
+                  @if (CEFConfig.featureSet?.stores_enabled == true)
+                  {
+                    <TabPanel Name="stores"><TabStores @ref="tabStores" Record="Record" /></TabPanel>
+                  }
+                  @if (CEFConfig.featureSet?.franchises?.enabled == true)
+                  {
+                    <TabPanel Name="franchises"><TabFranchises @ref="tabFranchises" Record="Record" /></TabPanel>
+                  }
+                  <TabPanel Name="attributes">
+                    <RecordAttributes
+                      Record="Record"
+                      OtherTypeName="Product"
+                    />
+                  </TabPanel>
+                </Content>
+              </Tabs>
+            </Container>
+          </EditForm>
+        </Validations>
+      </Div>
+      <Div Class="page-footer">
+        <Blazorise.Button
+          Type="ButtonType.Button"
+          Color="Color.Primary"
+          Disabled="@(FormInvalid || ViewState.saving || ViewState.running || ViewState.pristine)"
+          Clicked="OnSave">
+          Save Changes
+        </Blazorise.Button>
+        <Blazorise.Button
+          Type="ButtonType.Button"
+          Color="Color.Secondary"
+          Class="ml-1"
+          Disabled="ViewState.InputDisable"
+          Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, GridRouteFormat))">
+          Back
+        </Blazorise.Button>
+        @*<Blazorise.ValidationSummary Class="ml-3" />*@
+        <ErrorBlock
+          Class="ml-1"
+          Orientation="Blazorise.Orientation.Horizontal"
+        />
+        <DebugViewStateBlock
+          Class="ml-1 mb-0"
+          Orientation="Blazorise.Orientation.Horizontal"
+        />
+      </Div>
+    </Div>
+  }
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/catalog/products";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+  #endregion
+
+  #region Tabs
+  private TabDetails? tabDetails;
+  private TabImages? tabImages;
+  private TabStoredFiles? tabStoredFiles;
+  // private TabDesigner tabDesigner;
+  private TabPricing? tabPricing;
+  private TabShipping? tabShipping;
+  private TabPurchasing? tabPurchasing;
+  private TabRestrictions? tabRestrictions;
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+  private TabAssociations? tabAssociations;
+  private TabTaxes? tabTaxes;
+  private TabInventory? tabInventory;
+  private TabReturning? tabReturning;
+  private TabNotifications? tabNotifications;
+  private TabCategories? tabCategories;
+  private TabManufacturers? tabManufacturers;
+  private TabVendors? tabVendors;
+#else
+  private object? tabAssociations;
+  private object? tabTaxes;
+  private object? tabInventory;
+  private object? tabReturning;
+  private object? tabNotifications;
+  private object? tabCategories;
+  private object? tabManufacturers;
+  private object? tabVendors;
+#endif
+#if BRANDADMIN || FRANCHISEADMIN
+  private TabStores? tabStores;
+#else
+  private object? tabStores;
+#endif
+#if BRANDADMIN
+  private TabFranchises? tabFranchises;
+#else
+  private object? tabFranchises;
+#endif
+#if STOREADMIN
+  private bool IncludeDesigner => true;
+#else
+  private bool IncludeDesigner => false;
+#endif
+  // private TabAttributes? tabAttributes;
+  #endregion
+
+  #region Loading
+  /// <inheritdoc />
+  protected override Func<int, Task<IHttpPromiseCallbackArg<ProductModel>>> GetCallerFunc
+    => id => cvApi.GetProductByID(new() { ID = id });
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    return Task.CompletedTask;
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<ProductModel, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> UpdateCallerFunc
+    => record => cvApi.UpdateProduct(Mapper.Map<MVC.Api.Endpoints.UpdateProduct>(record));
+
+  /// <inheritdoc />
+  protected override async Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    await (tabDetails?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabImages?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabStoredFiles?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    // await (tabDesigner?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabPricing?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabShipping?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabPurchasing?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabRestrictions?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+    await (tabAssociations?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabTaxes?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabInventory?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabReturning?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabNotifications?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabCategories?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabManufacturers?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabVendors?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+#endif
+#if BRANDADMIN || FRANCHISEADMIN
+    await (tabStores?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+#endif
+#if BRANDADMIN
+    await (tabFranchises?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+#endif
+    // await tabAttributes?.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+#pragma warning disable CS1998
+  protected override async Task ExtendedRecordDataCallsOnAfterSaveAsync(DateTime timestamp)
+#pragma warning restore CS1998
+  {
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+    await (tabPricing?.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabInventory?.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabManufacturers?.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+    await (tabVendors?.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+#if BRANDADMIN || FRANCHISEADMIN
+    await (tabStores?.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+#endif
+#if BRANDADMIN
+    await (tabFranchises?.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp) ?? Task.CompletedTask).ConfigureAwait(false);
+#endif
+#endif
+  }
+  #endregion
+}

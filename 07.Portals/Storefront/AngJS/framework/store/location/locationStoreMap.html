@@ -1,0 +1,34 @@
+<ui-gmap-google-map
+    center="locationStoreMapCtrl.userCoords"
+    zoom="9"
+    zoom-to-include-markers="auto"
+    refresh="locationStoreMapCtrl.userCoords"
+    options="locationStoreMapCtrl.mapOptions"
+    control="locationStoreMapCtrl.control">
+
+    <!-- other ui-gmap-directives here -->
+
+    <ui-gmap-markers
+        models="locationStoreMapCtrl.stores"
+        idKey="'ID'"
+        coords="'coords'"
+        events="locationStoreMapCtrl.markerEvents">
+
+        <ui-gmap-window
+            show="locationStoreMapCtrl.infoWindow.show"
+            coords="locationStoreMapCtrl.infoWindow.model.coords"
+            options="locationStoreMapCtrl.infoWindow.options"
+            closeClick="locationStoreMapCtrl.infoWindow.closeClick()"
+            templateUrl="'/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/location/locationMapInfoWindow.html'"
+            templateParameter="locationStoreMapCtrl.infoWindow">
+        </ui-gmap-window>
+
+    </ui-gmap-markers>
+
+    <ui-gmap-map-control ng-if="locationStoreMapCtrl.showToolbar()"
+        template="/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/location/customerLocationEntry.html"
+        controller="customerLocationEntryController"
+        position="TOP_LEFT">
+    </ui-gmap-map-control>
+
+</ui-gmap-google-map>

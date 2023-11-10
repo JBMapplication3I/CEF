@@ -1,0 +1,102 @@
+﻿<div class="row" id="results-table" ng-init="kind = 'vendors'">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped table-hover mb-0">
+        <thead>
+          <tr>
+            <th class="w-16" data-translate="ui.storefront.common.Name"></th>
+            <th class="w-16" ng-if="!scvetCtrl.hideK"
+              data-translate="ui.storefront.cart.SKU">
+            </th>
+            <th class="w-auto" ng-if="!scvetCtrl.hideS"
+              data-translate="ui.storefront.searchCatalog.compare.Stock">
+            </th>
+            <th class="w-8" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-auto" data-translate="ui.storefront.cart.addToCart"></th>
+            <th class="w-auto" ng-if="!scvetCtrl.hideI"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="recordID in scvetCtrl.service.activeSearchViewModel.ResultIDs
+                         | orderBy: scvetCtrl.service.getSorter()"
+            class="vendor catalog-result-card"
+            id="vendorTableBlock{{recordID}}"
+            name="vendorTableBlock{{recordID}}">
+            <!-- Name -->
+            <td class="w-16">
+              <div cef-vendor-card-name-widget
+                vendor="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                vendor-id="recordID"
+                vendor-seo-url="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                vendor-name="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                rows="scvetCtrl.nameR"
+                index="$index">
+              </div>
+            </td>
+            <!-- SKU -->
+            <td class="w-16" ng-if="!scvetCtrl.hideK">
+              <div style="overflow-wrap: break-word;"
+                cef-vendor-card-sku-widget
+                vendor="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                vendor-id="recordID"
+                vendor-seo-url="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                vendor-name="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                hide-sku="scvetCtrl.hideK">
+              </div>
+            </td>
+            <!-- Stock -->
+            <td class="w-auto" ng-if="!scvetCtrl.hideS">
+              <div style="overflow-wrap: break-word;"
+                cef-vendor-card-stock-widget
+                vendor="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                vendor-id="recordID"
+                vendor-seo-url="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                vendor-name="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                left="true"
+                hide-stock="scvetCtrl.hideS">
+              </div>
+            </td>
+            <!-- Price -->
+            <td class="w-8">
+              <div cef-vendor-card-pricing-widget
+                vendor="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                vendor-id="recordID"
+                vendor-seo-url="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                vendor-name="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                display-style="scvetCtrl.pds">
+              </div>
+            </td>
+            <!-- Action -->
+            <td class="w-auto">
+              <div cef-vendor-card-action-button-widget
+                vendor="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                vendor-id="recordID"
+                vendor-seo-url="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                vendor-name="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                as-icon="true"
+                quick-add="scvetCtrl.quickA"
+                button-view="scvetCtrl.abv">
+              </div>
+            </td>
+            <!-- Controls -->
+            <td class="w-auto" ng-if="!scvetCtrl.hideI">
+              <div cef-vendor-card-controls-widget
+                vendor="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                vendor-id="recordID"
+                vendor-seo-url="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                vendor-name="scvetCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-favorites-list="scvetCtrl.hideFL"
+                hide-wish-list="scvetCtrl.hideWL"
+                hide-notify-me="scvetCtrl.hideNM"
+                hide-compare="scvetCtrl.hideC"
+                hide-icons="scvetCtrl.hideI">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

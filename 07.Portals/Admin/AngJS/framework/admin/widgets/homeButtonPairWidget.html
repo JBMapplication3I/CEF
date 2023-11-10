@@ -1,0 +1,24 @@
+<div class="btn-group btn-group-justified btn-group-lg">
+    <div class="btn-group" ng-if="homeButtonPairWidgetCtrl.allowList">
+        <button type="button" class="btn btn-info mb-1"
+                id="btn{{homeButtonPairWidgetCtrl.listStateAsID}}"
+                name="btn{{homeButtonPairWidgetCtrl.listStateAsID}}"
+                translate-attr="{ title: homeButtonPairWidgetCtrl.listKey || 'ui.admin.common.View',
+                                  'aria-label': homeButtonPairWidgetCtrl.listKey || 'ui.admin.common.View' }"
+                ui-sref="{{homeButtonPairWidgetCtrl.listState}}">
+            <span data-translate="ui.admin.common.View"></span>
+            <!-- <span data-translate="{{homeButtonPairWidgetCtrl.listKey || 'ui.admin.common.View'}}"></span> -->
+        </button>
+    </div>
+    <div class="btn-group" ng-if="homeButtonPairWidgetCtrl.allowList && homeButtonPairWidgetCtrl.allowNew">
+        <button type="button" class="btn btn-success mb-1"
+                id="btn{{homeButtonPairWidgetCtrl.newStateAsID}}"
+                name="btn{{homeButtonPairWidgetCtrl.newStateAsID}}"
+                translate-attr="{ title: homeButtonPairWidgetCtrl.newKey || 'ui.admin.common.New',
+                                  'aria-label': homeButtonPairWidgetCtrl.newKey || 'ui.admin.common.New' }"
+                ui-sref="{{homeButtonPairWidgetCtrl.newState}}">
+            <span data-translate="ui.admin.common.New"></span>
+            <!-- <span data-translate="{{homeButtonPairWidgetCtrl.newKey || 'ui.admin.common.New'}}"></span> -->
+        </button>
+    </div>
+</div>

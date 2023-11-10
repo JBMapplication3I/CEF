@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12 col-sm-6 col-md-8 col-lg-8"
+    ng-if="!rmCtrl.hideComment">
+    <div class="row">
+      <div class="col-12"
+        ng-if="!rmCtrl.summary.Reviews.length">
+        <p sid="NoReviewsText"
+          data-translate="ui.storefront.product.reviews.reviewList.thereAreNoReviewsForThisProduct">
+        </p>
+      </div>
+      <div class="col-12 cef-ratings mb-3" ng-if="rmCtrl.summary.Reviews.length">
+        <div cef-rating-summary
+          value="rmCtrl.cvProductReviewsService.getCached(rmCtrl.productId).Value"
+          count="rmCtrl.cvProductReviewsService.getCached(rmCtrl.productId).Count"
+          scale="5">
+        </div>
+      </div>
+      <div class="col-12" ng-repeat="r in rmCtrl.summary.Reviews | orderBy: ['SortOrder','!ID']"
+        ng-if="r.Approved">
+        <div class="card">
+          <div class="card-header" ng-if="r.Title || r.Value">
+            <div class="row no-gutters">
+              <div class="col"
+                ng-if="r.Title"
+                ng-bind="r.Title">
+              </div>
+              <div class="col-auto" ng-if="r.Value">
+                <cef-rating-summary
+                  value="r.Value"
+                  scale="5"
+                  hide-count="true">
+                </cef-rating-summary>
+              </div>
+            </div>
+          </div>
+          <div class="card-body" ng-if="r.Comment">
+            <div class="card-text"
+              ng-bind="r.Comment">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+    <div cef-review-entry
+      product-id="rmCtrl.productId">
+    </div>
+  </div>
+</div>

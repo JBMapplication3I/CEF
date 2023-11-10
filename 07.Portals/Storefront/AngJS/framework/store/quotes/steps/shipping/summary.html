@@ -1,0 +1,19 @@
+<!-- step.shipping.summary Template -->
+<div class="row">
+  <div class="col-12 sm-text-right md-text-right lg-text-right"
+    ng-if="sqsssCtrl.sameAsBilling">
+    <h5 class="text-success" data-translate="Same as Billing"></h5>
+  </div>
+  <div class="col-12 sm-text-right md-text-right lg-text-right"
+    ng-if="!sqsssCtrl.sameAsBilling && sqsssCtrl.currentAccountContact.Slave">
+    <div cef-contact-address-block
+      contact="sqsssCtrl.currentAccountContact.Slave"
+      small-text="true"
+      hide-icons="true"
+      hide-phones="true"
+      hide-email="true"
+      hide-fax="true"
+      class="mb-3">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,170 @@
+<!-- step.completed.body Template -->
+<!-- Orders -->
+<div class="row"
+  ng-if="pscbCtrl.cvPurchaseService.checkoutResult.OrderID
+    || pscbCtrl.cvPurchaseService.checkoutResult.OrderIDs.length">
+  <div ng-hide="pscbCtrl.cvPurchaseService.paypal.error"
+    class="col-12 text-center">
+    <h4 sid="lblThankYouForYourPurchase"
+      data-translate="ui.storefront.checkout.views.orderConfirmation.thankYouForYouPurchase"
+      id="lbThankYouForYourPurchase"
+      class="mt-0">
+    </h4>
+  </div>
+  <div ng-hide="pscbCtrl.cvPurchaseService.paypal.error"
+    class="col-12 col-sm-6">
+    <p sid="PurchaseSuccessText"
+      data-translate="ui.storefront.checkout.views.orderConfirmation.yourPurchaseWasSuccessfulAndIsInTheProcessOfBeing">
+    </p>
+  </div>
+  <div class="col-12 col-sm-6">
+    <div ng-if="!pscbCtrl.cvPurchaseService.isPayPal"
+      class="row">
+      <div ng-if="!pscbCtrl.cefConfig.featureSet.shipping.splitShipping.enabled"
+        class="col-12">
+        <p sid="OrderNumberText" class="very-big"><span data-translate="ui.storefront.checkout.views.orderConfirmation.orderNumber"></span>&nbsp;<!--
+        --><b ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.OrderID"></b></p>
+      </div>
+      <div ng-if="pscbCtrl.cefConfig.featureSet.shipping.splitShipping.enabled"
+        class="col-12">
+        <h5><span sid="CheckoutMasterOrderText"
+          data-translate="ui.storefront.checkout.views.orderConfirmation.MasterOrder"></span>&nbsp;<!--
+        --><b sid="CheckoutMasterOrderNumberText"
+          ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.OrderIDs[0]"></b></h5>
+        <p class="small bold" sid="MasterOrderMessageText"
+          data-translate="ui.storefront.checkout.views.orderConfirmation.MasterOrder.Message">
+        </p>
+        <h5><span sid="CheckoutSubOrderText"
+          data-translate="ui.storefront.checkout.views.orderConfirmation.SubOrder.OptionalPlural"></span>&nbsp;<!--
+        --><b ng-repeat="orderID in pscbCtrl.cvPurchaseService.checkoutResult.OrderIDs"
+          sid="CheckoutSubOrderNumberText_{{$index}}" 
+          ng-hide="$first"
+          ng-bind="orderID + (!$last ? ', ' : '')"></b></h5>
+        <p class="small" sid="SubOrderMessageText"
+          data-translate="ui.storefront.checkout.views.orderConfirmation.SubOrder.Message">
+        </p>
+      </div>
+      <div ng-if="pscbCtrl.cvPurchaseService.isPayPal"
+        class="col-12">
+        <h5><span data-translate="ui.storefront.checkout.views.orderConfirmation.orderNumber.Plural"></span>&nbsp;<!--
+        --><b ng-bind="pscbCtrl.cvPurchaseService.paypal.confirmationNumber"></b></h5>
+        <p class="alert alert-warning" role="alert"
+          ng-bind-html="pscbCtrl.cvPurchaseService.paypal.message">
+        </p>
+      </div>
+    </div>
+    <p ng-if="pscbCtrl.cvPurchaseService.checkoutResult.WarningMessage"
+      class="alert alert-warning" role="alert"
+      ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.WarningMessage">
+    </p>
+    <p ng-if="pscbCtrl.cvPurchaseService.isPayPal"
+      ng-show="pscbCtrl.cvPurchaseService.paypal.error"
+      class="alert alert-danger" role="alert"
+      ng-bind-html="pscbCtrl.cvPurchaseService.paypal.message">
+    </p>
+  </div>
+  <div class="col-12 text-right">
+    <button type="button" class="btn btn-secondary"
+      id="btnContinueShoppingCompletedOrder"
+      translate-attr="{ title: 'ui.storefront.cart.continueShopping',
+                        'aria-label': 'ui.storefront.cart.continueShopping' }"
+      ui-sref-plus uisrp-is-catalog="true"
+      uisrp-state="searchCatalog.products.results.both">
+      <span data-translate="ui.storefront.cart.continueShopping"></span>
+    </button>
+    <button ng-if="pscbCtrl.cefConfig.featureSet.salesOrders.enabled"
+      type="button" class="btn btn-primary"
+      id="btnYourOrderHistory" name="btnYourOrderHistory"
+      translate-attr="{ title: 'ui.storefront.checkout.confirmation.YourOrderHistory',
+                        'aria-label': 'ui.storefront.checkout.confirmation.YourOrderHistory' }"
+      ui-sref-plus uisrp-is-dashboard="true"
+      uisrp-state="userDashboard.salesOrders.list">
+      <span data-translate="ui.storefront.checkout.confirmation.YourOrderHistory"></span>
+    </button>
+  </div>
+</div>
+<!-- Quotes -->
+<div class="row"
+  ng-if="pscbCtrl.cvPurchaseService.checkoutResult.QuoteID
+    || pscbCtrl.cvPurchaseService.checkoutResult.QuoteIDs.length">
+  <div ng-hide="pscbCtrl.cvPurchaseService.paypal.error"
+    class="col-12 text-center">
+    <h4 sid="ThankYouforYourSubmissionText"
+      data-translate="ui.storefront.submitQuote.confirmation.ThankYouForYourSubmission"
+      id="lbThankYouForYourSubmission"
+      class="mt-0">
+    </h4>
+  </div>
+  <div ng-hide="pscbCtrl.cvPurchaseService.paypal.error"
+    class="col-12 col-sm-6">
+    <p sid="SubmitQuoteSuccessText"
+      data-translate="ui.storefront.submitQuote.confirmation.YourSubmissionWasSuccessful.Message">
+    </p>
+  </div>
+  <div class="col-12 col-sm-6">
+    <div ng-if="!pscbCtrl.cvPurchaseService.isPayPal"
+      class="row">
+      <div ng-if="!pscbCtrl.cefConfig.featureSet.shipping.splitShipping.enabled"
+        class="col-12">
+        <p class="very-big"><span
+          data-translate="ui.storefront.submitQuote.confirmation.QuoteNumber"></span>&nbsp;<!--
+        --><b ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.QuoteID"></b></p>
+      </div>
+      <div ng-if="pscbCtrl.cefConfig.featureSet.shipping.splitShipping.enabled"
+        class="col-12">
+        <h5><span sid="CheckoutMasterQuoteText"
+          data-translate="ui.storefront.submitQuote.confirmation.MasterQuote"></span>&nbsp;<!--
+        --><b sid="CheckoutMasterQuoteNumberText"
+          ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.QuoteIDs[0]"></b></h5>
+        <p class="small bold" sid="MasterQuoteMessageText"
+          data-translate="ui.storefront.submitQuote.confirmation.MasterQuote.Message">
+        </p>
+        <h5><span sid="CheckoutSubQuoteText"
+          data-translate="ui.storefront.submitQuote.confirmation.SubQuote.OptionalPlural"></span>&nbsp;<!--
+        --><b ng-repeat="quoteID in pscbCtrl.cvPurchaseService.checkoutResult.QuoteIDs"
+          sid="CheckoutSubQuoteNumberText_{{$index}}" 
+          ng-hide="$first"
+          ng-bind="quoteID + (!$last ? ', ' : '')"></b></h5>
+        <p class="small" sid="SubQuoteMessageText"
+          data-translate="ui.storefront.submitQuote.confirmation.SubQuote.Message">
+        </p>
+      </div>
+      <div ng-if="pscbCtrl.cvPurchaseService.isPayPal"
+        class="col-12">
+        <h5><span data-translate="ui.storefront.checkout.views.orderConfirmation.orderNumber.Plural"></span>&nbsp;<!--
+        --><b ng-bind="pscbCtrl.cvPurchaseService.paypal.confirmationNumber"></b></h5>
+        <p class="alert alert-warning" role="alert"
+          ng-bind-html="pscbCtrl.cvPurchaseService.paypal.message">
+        </p>
+      </div>
+    </div>
+    <p ng-if="pscbCtrl.cvPurchaseService.checkoutResult.WarningMessage"
+      class="alert alert-warning" role="alert"
+      ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.WarningMessage">
+    </p>
+    <p ng-if="pscbCtrl.cvPurchaseService.isPayPal"
+      ng-show="pscbCtrl.cvPurchaseService.paypal.error"
+      class="alert alert-danger" role="alert"
+      ng-bind-html="pscbCtrl.cvPurchaseService.paypal.message">
+    </p>
+  </div>
+  <div class="col-12 text-right">
+    <button type="button" class="btn btn-secondary"
+      id="btnContinueShoppingCompletedOrder"
+      translate-attr="{ title: 'ui.storefront.cart.continueShopping',
+                        'aria-label': 'ui.storefront.cart.continueShopping' }"
+      ui-sref-plus uisrp-is-catalog="true"
+      uisrp-state="searchCatalog.products.results.both">
+      <span data-translate="ui.storefront.cart.continueShopping"></span>
+    </button>
+    <button ng-if="pscbCtrl.cefConfig.featureSet.salesQuotes.enabled"
+      type="button" class="btn btn-primary"
+      id="btnYourQuoteHistory" name="btnYourQuoteHistory"
+      translate-attr="{ title: 'ui.storefront.submitQuote.confirmation.YourQuoteHistory',
+                        'aria-label': 'ui.storefront.submitQuote.confirmation.YourQuoteHistory' }"
+      ui-sref-plus uisrp-is-dashboard="true"
+      uisrp-state="userDashboard.salesQuotes.list">
+      <span data-translate="ui.storefront.submitQuote.confirmation.YourQuoteHistory"></span>
+    </button>
+  </div>
+</div>

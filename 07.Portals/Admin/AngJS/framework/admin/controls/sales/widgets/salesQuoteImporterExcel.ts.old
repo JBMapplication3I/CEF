@@ -1,0 +1,78 @@
+﻿/**
+ * @file admin/controls/sales/widgets/salesQuoteImporterExcel.ts
+ * @since 2018-02-27
+ * @version 4.7
+ * @author Clarity Ventures, Inc. Copyright 2018. All rights reserved.
+ * @desc The widget which allows uploading an Excel (.xlsx) file as a Sales Quote
+ */
+module cef.admin.controls.sales.widgets {
+    class SalesQuoteImporterExcelController extends core.TemplatedControllerBase {
+        // SalesQuoteImporterExcelController Properties
+        isImporting: boolean = false;
+        importButtonEnabled: boolean = false;
+        importLog: string[];
+        sheetName: string;
+        // Constructors
+        constructor(
+                private readonly $translate: ng.translate.ITranslateService,
+                protected readonly cefConfig: core.CefConfig,
+                private readonly cvApi: api.ICEFAPI,
+                private readonly cvConfirmModalFactory: admin.modals.IConfirmModalFactory) {
+            super(cefConfig);
+        }
+        // Functions
+        importData() {
+            if (!this.sheetName || !this.importButtonEnabled) {
+                return;
+            }
+            this.$translate(
+                "ui.admin.sales.widgets.salesQuoteImporterExcel.ImportConfirm.Message.Template",
+                { name: this.sheetName })
+                .then(translated => {
+                    this.cvConfirmModalFactory(translated as string).then(() => {
+                        this.importButtonEnabled = false;
+                        this.isImporting = true;
+                        this.setRunning();
+                        this.cvApi.providers.ExcelImportFileAsSalesQuote({
+                            FileName: this.sheetName
+                        }).then(response => {
+                            if (!response || !response.data) {
+                                this.$translate("ui.admin.common.Errors.NoValidReturnFromService")
+                                    .then(translated => this.finishRunning(true, translated as string));
+                                return;
+                            }
+                            if (!response.data.ActionSucceeded) {
+                                this.$translate("ui.admin.common.Errors.TheImportFailed")
+                                    .then(translated => this.finishRunning(true, translated as string));
+                                console.warn(response.data);
+                                return;
+                            }
+                            this.importLog = response.data.Messages;
+                            this.finishRunning();
+                        }).catch(reason => this.finishRunning(true, reason.data.ResponseStatus.Message))
+                        .finally(() => { this.isImporting = false; this.importButtonEnabled = true; });
+                    });
+                });
+        }
+        // Events
+        // NOTE: This must remain an arrow function
+        uploadFile = (e: kendo.ui.UploadUploadEvent) => {
+            e.data = { EntityFileType: String(api.FileEntityType.ImportSalesQuote) };
+        }
+        // NOTE: This must remain an arrow function
+        uploadedFile = (e: kendo.ui.UploadSuccessEvent) => {
+            this.sheetName = e.response.UploadFiles[0].FileName.split("\\").pop();
+            if (this.sheetName.toLowerCase().endsWith(".xlsx")) {
+                this.importButtonEnabled = true;
+            }
+        }
+    }
+
+    adminApp.directive("cefSalesQuoteImporterExcel", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "A",
+        scope: true,
+        templateUrl: $filter("corsLink")("/framework/admin/controls/sales/widgets/salesQuoteImporterExcel.html", "ui"),
+        controller: SalesQuoteImporterExcelController,
+        controllerAs: "salesQuoteImporterExcelCtrl"
+    }));
+}

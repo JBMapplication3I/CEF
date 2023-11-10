@@ -1,0 +1,18 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Clarity eCommerce Administration Portal";
+}
+
+<div class="standalone full-height" ng-cloak>
+    <div class="container-fluid menu-hidden">
+        <div id="header" cv-admin-site-menu-2></div>
+    </div>
+    <div id="content"
+         ng-controller="AppController"
+         ng-class="{'cvContentNoAuth': !$root.currentUser.isAuthenticated}">
+        <div class="innerLR" cef-admin-body>
+            <div ui-view="page" class="full-height"></div>
+        </div>
+    </div>
+</div>

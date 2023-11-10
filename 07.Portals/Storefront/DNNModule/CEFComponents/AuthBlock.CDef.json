@@ -1,0 +1,32 @@
+{
+  "Name": "AuthBlock",
+  "FriendlyName": "SSO Authentication Block",
+  "Description": "CEF SSO Authentication block to recognize your DNN login status",
+  "ComponentType": "UserControl",
+  "Parameters": {
+    "PasswordHash": {
+      "Name": "PasswordHash",
+      "FriendlyName": "Password Hash",
+      "Description": "Enter a string value to be used to hash the password, this must match the settings in CEF for decryption",
+      "Type": "System.String",
+      "Value": "qpzm9731",
+      "Order": 1
+    },
+    "SaltKey": {
+      "Name": "SaltKey",
+      "FriendlyName": "Salt Key",
+      "Description": "Enter a string value to use as a salt for the encryption, this must match the settings in CEF for decryption.",
+      "Type": "System.String",
+      "Value": "Cl4r1tyV3ntur3s",
+      "Order": 2
+    },
+    "VIKey": {
+      "Name": "VIKey",
+      "FriendlyName": "VI Key",
+      "Description": "Enter a string value to use as a salt for the encryption, this must match the settings in CEF for decryption.",
+      "Type": "System.String",
+      "Value": "46g7HeDF@52c831B",
+      "Order": 3
+    }
+  }
+}

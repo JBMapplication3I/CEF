@@ -1,0 +1,35 @@
+﻿<cv-page caption="Manage Stores" head-icon="fa-building"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.Stores')">
+    <cv-widget>
+        <widget-menu-item caption="Add Store" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.stores.detail',{ID:'New'})"
+                          permission="'Stores.Store.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     filter-side="true" force-show-labels="true"
+                     sortable="false" server-sorting="true"
+                     groupable="false"
+                     on-search="search.getStores"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateStore"
+                     on-reactivate="search.reactivateStore"
+                     on-delete="search.deleteStore"
+                     edit-state="accounts.stores.detail,[ID]"
+                     permissions-base="Stores.Store">
+                <cv-column field="ID" title-key="ui.admin.common.Number.Symbol"
+                           width="8%" header-class="text-center" cell-class="text-right"
+                           filter filter-type="id"
+                           groupable="false" />
+                <cv-column field="CustomKey" title-key="ui.admin.common.Key"
+                           width="20%"
+                           filter
+                           groupable="false" />
+                <cv-column field="Name" title-key="ui.admin.common.Name"
+                           width="20%"
+                           filter
+                           sort-by="1" sort-by-direction="asc"
+                           groupable="false" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

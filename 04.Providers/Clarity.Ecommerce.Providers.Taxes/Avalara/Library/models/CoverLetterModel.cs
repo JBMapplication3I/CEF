@@ -1,0 +1,90 @@
+﻿/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2019 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Genevieve Conty
+ * @author Greg Hester
+ */
+
+namespace Avalara.AvaTax.RestClient
+{
+    using System;
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+
+    /// <summary>
+    /// The CoverLetter model represents a message sent along with an invitation to use CertExpress to
+    /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption
+    /// certificates directly; this cover letter explains why the invitation was sent.
+    /// </summary>
+    public class CoverLetterModel
+    {
+        /// <summary>
+        /// A unique ID number representing a cover letter sent with a CertExpress invitation.
+        /// </summary>
+        public int? id { get; set; }
+
+        /// <summary>
+        /// The unique ID number of the AvaTax company that received this certificate.
+        /// </summary>
+        public int? companyId { get; set; }
+
+        /// <summary>
+        /// The title used when sending the cover letter.
+        /// </summary>
+        public string? title { get; set; }
+
+        /// <summary>
+        /// The subject message used when sending the cover letter via email.
+        /// </summary>
+        public string? subject { get; set; }
+
+        /// <summary>
+        /// A full description of the cover letter's contents and message.
+        /// </summary>
+        public string? description { get; set; }
+
+        /// <summary>
+        /// The date when this record was created.
+        /// </summary>
+        public DateTime? createdDate { get; set; }
+
+        /// <summary>
+        /// The date/time when this record was last modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// Is this cover letter active
+        /// </summary>
+        public bool? active { get; set; }
+
+        /// <summary>
+        /// How many pages this cover letter encompasses
+        /// </summary>
+        public int? pageCount { get; set; }
+
+        /// <summary>
+        /// The file name of the cover letter template
+        /// </summary>
+        public string? templateFilename { get; set; }
+
+        /// <summary>
+        /// The version number of the template
+        /// </summary>
+        public int? version { get; set; }
+
+        /// <summary>
+        /// Convert this object to a JSON string of itself
+        /// </summary>
+        /// <returns>A JSON string of this object.</returns>
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, new JsonSerializerSettings() { Formatting = Formatting.Indented });
+        }
+    }
+}

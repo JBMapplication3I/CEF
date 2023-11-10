@@ -1,0 +1,15 @@
+﻿<div class="row">
+    <div class="col-12">
+        <div ng-form="customerLocationEntryForm">
+            <div class="form-group form-group-lg">
+                <label class="sr-only"
+                       data-translate="ui.storefront.common.Zip"></label>
+                <input translate-attr="{ placeholder: 'ui.storefront.product.catalog.results.quickView.cityStateZip' }"
+                       class="form-control"
+                       ng-model="customerLocationEntrySimpleCtrl.userEntry.zip"
+                       ng-model-options="{ debounce: 750 }"
+                       ng-focus="customerLocationEntrySimpleCtrl.zipFocused()" />
+            </div>
+        </div>
+    </div>
+</div>

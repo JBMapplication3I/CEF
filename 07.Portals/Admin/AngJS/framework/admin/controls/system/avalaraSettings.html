@@ -1,0 +1,184 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row details-header">
+        <h2 class="col-md-12 details-title">Avalara Settings</h2>
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 setting-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': avalaraDetailCtrl.forms.Details.$invalid}"
+                        ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.controls.system.avalaraSettings.TaxService"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="avalaraDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3 data-translate="ui.admin.controls.system.avalaraSettings.TaxServiceSettings"></h3>
+                                <div class="form-group" ng-class="{'has-error': avalaraDetailCtrl.forms.Details.txtAccountNumber.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.AccountNumber"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtAccountNumber" Name="txtAccountNumber"
+                                               ng-required="true" maxlength="128"
+                                               ng-model="avalaraDetailCtrl.accountNumber" />
+                                    </div>
+                                    <div ng-messages="avalaraDetailCtrl.forms.Details.txtAccountNumber.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': avalaraDetailCtrl.forms.Details.txtLicenseKey.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.avalaraSettings.LicenseKey"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtLicenseKey" Name="txtLicenseKey"
+                                               ng-required="true" maxlength="128"
+                                               ng-model="avalaraDetailCtrl.licenseKey" />
+                                    </div>
+                                    <div ng-messages="avalaraDetailCtrl.forms.Details.txtLicenseKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': avalaraDetailCtrl.forms.Details.txtServiceUrl.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.avalaraSettings.ServiceUrl"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtServiceUrl" Name="txtServiceUrl"
+                                               ng-required="true" maxlength="128"
+                                               ng-model="avalaraDetailCtrl.serviceUrl" />
+                                    </div>
+                                    <div ng-messages="avalaraDetailCtrl.forms.Details.txtServiceUrl.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': avalaraDetailCtrl.forms.Details.txtCompanyCode.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.avalaraSettings.CompanyCode"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtCompanyCode" Name="txtCompanyCode"
+                                               ng-required="true" maxlength="128"
+                                               ng-model="avalaraDetailCtrl.companyCode" />
+                                    </div>
+                                    <div ng-messages="avalaraDetailCtrl.forms.Details.txtCompanyCode.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.avalaraSettings.TaxService"></label>
+                                    <div class="input-group">
+                                        <toggle id="ckTaxServiceEnabled" name="ckTaxServiceEnabled" class="btn-block"
+                                                ng-model="avalaraDetailCtrl.taxServiceEnabled"
+                                                data-on="{{'ui.admin.common.Enabled' | translate}}" data-truestyle="btn-success"
+                                                data-off="{{'ui.admin.common.Disabled' | translate}}" data-offstyle="btn-danger"></toggle>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.avalaraSettings.EventLogging"></label>
+                                    <div class="input-group">
+                                        <toggle id="ckLoggingEnabled" name="ckLoggingEnabled" class="btn-block"
+                                                ng-model="avalaraDetailCtrl.loggingEnabled"
+                                                data-on="{{'ui.admin.common.Enabled' | translate}}" data-truestyle="btn-success"
+                                                data-off="{{'ui.admin.common.Disabled' | translate}}" data-offstyle="btn-danger"></toggle>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.avalaraSettings.DocumentCommit"></label>
+                                    <div class="input-group">
+                                        <toggle id="ckDocumentCommitingEnabled" name="ckDocumentCommitingEnabled" class="btn-block"
+                                                ng-model="avalaraDetailCtrl.documentCommitingEnabled"
+                                                data-on="{{'ui.admin.common.Enabled' | translate}}" data-truestyle="btn-success"
+                                                data-off="{{'ui.admin.common.Disabled' | translate}}" data-offstyle="btn-danger"></toggle>
+                                    </div>
+                                </div>
+                                <!--
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.avalaraSettings.UserImplementationGuide"></label>
+                                    <div class="input-group">
+                                        <a target="_blank" ui-sref-plus uisrp-root="/Documentation/v1.pdf"
+                                           ><span data-translate="ui.admin.controls.system.avalaraSettings.ClickForPDF"></span></a>
+                                    </div>
+                                </div>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': avalaraDetailCtrl.forms.AddressDetails.$invalid}"
+                        ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.controls.system.avalaraSettings.AddressService"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="avalaraDetailCtrl.forms.AddressDetails">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           data-translate="ui.admin.controls.system.avalaraSettings.AddressValidationService"></label>
+                                    <div class="input-group">
+                                        <toggle id="ckAddressServiceEnabled" name="ckAddressServiceEnabled" class="btn-block"
+                                                ng-model="avalaraDetailCtrl.addressServiceEnabled"
+                                                data-on="{{'ui.admin.common.Enabled' | translate}}" data-truestyle="btn-success"
+                                                data-off="{{'ui.admin.common.Disabled' | translate}}" data-offstyle="btn-danger"></toggle>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           data-translate="ui.admin.controls.system.avalaraSettings.CountriesToValidate"></label>
+                                    <div class="input-group">
+                                        <style>
+                                            .chosen-container {
+                                                width: 100% !important;
+                                            }
+                                        </style>
+                                        <select class="form-control w-100" chosen multiple
+                                                id="chosenCategories" name="chosenCategories"
+                                                placeholder="Pick one or more of these"
+                                                allow-single-deselect="true"
+                                                ng-model="avalaraDetailCtrl.selectedCountries"
+                                                ng-options="o as o.Name for o in avalaraDetailCtrl.countries"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-success"
+                    ng-click="avalaraDetailCtrl.save()"
+                    ><i class="far fa-fw fa-save"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Save"></span></button>
+            <button type="button" class="btn btn-info"
+                    ng-click="avalaraDetailCtrl.testService()"
+                    ><i class="far fa-fw fa-plug"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.system.avalaraSettings.TestService"></span></button>
+            <a target="_blank" ng-href="{{avalaraDetailCtrl.adminURL}}">AvaTax Administration Console</a>
+        </div>
+    </div>
+</div>

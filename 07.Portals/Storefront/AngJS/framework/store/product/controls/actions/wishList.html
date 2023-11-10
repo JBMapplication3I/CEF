@@ -1,0 +1,8 @@
+﻿<button type="button" class="btn btn-outline-dark border-light text-left"
+id="btnProductDetails{{pwlCtrl.index}}"
+name="btnProductDetails{{pwlCtrl.index}}"
+translate-attr="{ title: pwlCtrl.key, 'aria-label': pwlCtrl.key }"
+ng-click="pwlCtrl.toggle()">
+<i class="fa-heart fa-fw" ng-class="pwlCtrl.in() ? 'fas' : 'far'"></i>&nbsp;<!--
+--><span data-translate="{{pwlCtrl.key}}"></span>
+</button>

@@ -1,0 +1,301 @@
+<div ng-if="newBulkOrderCtrl.viewState.addProduct"
+     class="row">
+    <div class="col-12">
+        <h2 class="bold mt-0"
+          sid="ChooseYourCertificationText"
+          data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.ChooseYourCertification"></h2>
+        <p sid="UseTheSelectionOptionsBelowText"
+          data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.UseTheSelectionOptionsBelow.Colon"></p>
+    </div>
+    <div ng-form="newBulkOrderCtrl.form.certifications">
+        <div ng-repeat="position in newBulkOrderCtrl.positions track by $index"
+             class="col-sm-12 col-md-4 form-group equal"
+             ng-if="!position.hidden"
+             ng-class="{ 'has-error': newBulkOrderCtrl.form.certifications.$dirty
+                                          && newBulkOrderCtrl.form.certifications['ddlNewBulkOrder_'+position.name].$invalid }">
+            <label class="control-label" for="ddlNewBulkOrder_{{position.name}}">
+                <span data-translate="{{position.titleKey}}"></span>&nbsp;<span class="text-danger">*</span>
+            </label>
+            <select class="form-control"
+                    id="ddlNewBulkOrder_{{position.name}}" name="ddlNewBulkOrder_{{position.name}}"
+                    ng-required="true"
+                    ng-disabled="newBulkOrderCtrl.shouldHideDropdown($index)"
+                    ng-change="newBulkOrderCtrl.updateTree($index)"
+                    ng-options="o as (o.data.titleKey + ' [' + o.value + ']')
+                                    for o in ($first
+                                        ? newBulkOrderCtrl.selections
+                                        : position.staticOptions && position.staticOptions.length
+                                            ? position.staticOptions
+                                            : newBulkOrderCtrl.selected[newBulkOrderCtrl.positions[$index - 1].name].data.options)"
+                    ng-model="newBulkOrderCtrl.selected[position.name]">
+                <option value="" data-translate="{{position.placeholderKey}}"></option>
+            </select>
+        </div>
+        <div class="col-sm-12 col-md-4 equal">
+            <button type="button" class="btn btn-primary float-right"
+                    id="btnNextAddUsers" name="btnNextAddUsers"
+                    translate-attr="{ title: 'ui.storefront.userDashboard2.controls.orders.newBulkOrder.NextAddUsers',
+                                  'aria-label': 'ui.storefront.userDashboard2.controls.orders.newBulkOrder.NextAddUsers' }"
+                    data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.NextAddUsers"
+                    ng-disabled="newBulkOrderCtrl.form.certifications.$invalid"
+                    ng-click="newBulkOrderCtrl.toggleChooseAdd()"></button>
+        </div>
+    </div>
+</div>
+<div ng-if="newBulkOrderCtrl.viewState.addProductSummary"
+     class="row">
+    <div class="col-12">
+        <p ng-repeat="position in newBulkOrderCtrl.positions"
+           class="pr-2">
+            <b data-translate="{{position.titleKey}}"></b>&nbsp;
+            <span class="hide" ng-bind="newBulkOrderCtrl.selected[position.name].value"></span>&nbsp;
+            <span data-translate="{{newBulkOrderCtrl.selected[position.name].data.titleKey
+                                        || newBulkOrderCtrl.selected[position.name].titleKey}}"></span>
+        </p>
+    </div>
+</div>
+<div ng-if="newBulkOrderCtrl.viewState.chooseAdd"
+     class="row">
+    <div class="col-12">
+        <h2 sid="AddUsersToThisOrderText" data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.AddUsersToThisOrder"></h2>
+        <p class="mb-6" sid="HowToAddUsersQuestionText"
+           data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.HowWouldYouLikeToAddUsersToThisOrder.Question"></p>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-2 text-center">
+                <svg width="77px" height="53px" viewBox="0 0 77 53" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Affliate-Bulk" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Organization---new-order---add-users-prompt" transform="translate(-369.000000, -315.000000)">
+                            <g id="Group" transform="translate(369.000000, 315.000000)">
+                                <g id="np_profile_937801_000000" opacity="0.5" transform="translate(50.000000, 0.000000)" fill="#00588F" fill-rule="nonzero">
+                                    <path d="M11.6302083,11.78125 C14.3784719,11.78125 16.6145833,9.54513854 16.6145833,6.796875 L16.6145833,4.984375 C16.6145833,2.23611146 14.3784719,0 11.6302083,0 C8.88194479,0 6.64583333,2.23611146 6.64583333,4.984375 L6.64583333,6.796875 C6.64583333,9.54513854 8.88194479,11.78125 11.6302083,11.78125 Z M7.85416667,4.984375 C7.85416667,2.90166146 9.54749479,1.20833333 11.6302083,1.20833333 C13.7129219,1.20833333 15.40625,2.90166146 15.40625,4.984375 L15.40625,6.796875 C15.40625,8.87958854 13.7129219,10.5729167 11.6302083,10.5729167 C9.54749479,10.5729167 7.85416667,8.87958854 7.85416667,6.796875 L7.85416667,4.984375 Z" id="Shape"></path>
+                                    <path d="M21.3699792,17.4664583 C21.3605391,17.3519959 21.3180571,17.2387147 21.240177,17.1419604 C19.1031791,14.4645052 15.5655416,12.8656687 11.775302,12.8656687 C5.31222906,12.8656687 0.249010313,17.564575 0.249010313,23.5624396 C0.249010313,23.8963927 0.519232917,24.1666063 0.853176979,24.1666063 L14.9849374,24.1666063 C15.494703,26.7767875 17.7969103,28.7546479 20.5547499,28.7546479 C23.6840311,28.7546479 26.2305936,26.208176 26.2305936,23.0788042 C26.2305936,20.2255365 24.1136541,17.8642417 21.3700728,17.4667 L21.3699792,17.4664583 Z M11.7752083,14.0740625 C14.9778958,14.0740625 17.9703333,15.3236906 19.9066875,17.4416875 C17.1194854,17.7591167 14.9434583,20.1026187 14.8833437,22.9583333 L1.4771875,22.9583333 C1.80521979,17.92925 6.21022917,14.0740625 11.7752083,14.0740625 Z M20.5543542,27.546375 C18.0905021,27.546375 16.0868438,25.5415385 16.0868438,23.0788646 C16.0868438,20.6150125 18.0916802,18.6101458 20.5543542,18.6101458 C23.0182062,18.6101458 25.0218646,20.6149823 25.0218646,23.0788646 C25.0218646,25.5415385 23.0170281,27.546375 20.5543542,27.546375 Z" id="Shape"></path>
+                                </g>
+                                <g id="np_profile_937801_000000" transform="translate(17.000000, 3.000000)">
+                                    <path d="M20.0520833,20.3125 C24.7904688,20.3125 28.6458333,16.4571354 28.6458333,11.71875 L28.6458333,8.59375 C28.6458333,3.85536458 24.7904688,0 20.0520833,0 C15.3136979,0 11.4583333,3.85536458 11.4583333,8.59375 L11.4583333,11.71875 C11.4583333,16.4571354 15.3136979,20.3125 20.0520833,20.3125 Z M13.5416667,8.59375 C13.5416667,5.00286458 16.4611979,2.08333333 20.0520833,2.08333333 C23.6429688,2.08333333 26.5625,5.00286458 26.5625,8.59375 L26.5625,11.71875 C26.5625,15.3096354 23.6429688,18.2291667 20.0520833,18.2291667 C16.4611979,18.2291667 13.5416667,15.3096354 13.5416667,11.71875 L13.5416667,8.59375 Z" id="Shape" fill="#00588F" fill-rule="nonzero"></path>
+                                    <path d="M38.8854167,36.7614583 L34.4563021,41.5282812 L32.5173958,39.5385417 C32.116599,39.1255365 31.4573958,39.1275729 31.0444271,39.5283693 C30.6314583,39.9291656 30.62125,40.6127443 31.0220474,41.0257651 L33.7238703,43.8577964 C33.9212193,44.059213 34.1918078,44.2708016 34.4725682,44.2708016 L34.4827406,44.2708016 C34.767574,44.2708016 35.0401885,44.0490411 35.2334698,43.8415203 L40.409251,38.1774578 C40.8019125,37.7563172 40.7774958,37.0971453 40.3563552,36.7065203 C39.9372458,36.3138589 39.2760427,36.340312 38.8854177,36.7614526 L38.8854167,36.7614583 Z" id="Path" fill="#41AC18"></path>
+                                    <path d="M36.8447917,30.1145833 C36.8285156,29.9172344 36.7552708,29.7219219 36.6209948,29.5551042 C32.9365156,24.9388021 26.8371406,22.1821875 20.3022448,22.1821875 C9.15901563,22.1821875 0.429328125,30.28375 0.429328125,40.6248958 C0.429328125,41.2006771 0.895229167,41.6665625 1.47099479,41.6665625 L25.836099,41.6665625 C26.7150052,46.166875 30.6843281,49.5769792 35.439224,49.5769792 C40.8345365,49.5769792 45.2251615,45.1865104 45.2251615,39.7910417 C45.2251615,34.8716146 41.5752656,30.8004167 36.8449531,30.115 L36.8447917,30.1145833 Z M20.3020833,24.265625 C25.8239583,24.265625 30.9833333,26.4201562 34.321875,30.071875 C29.5163542,30.6191667 25.7645833,34.6596875 25.6609375,39.5833333 L2.546875,39.5833333 C3.11244792,30.9125 10.7072917,24.265625 20.3020833,24.265625 Z M35.4385417,47.49375 C31.1905208,47.49375 27.7359375,44.0371354 27.7359375,39.7911458 C27.7359375,35.543125 31.1925521,32.0864583 35.4385417,32.0864583 C39.6865625,32.0864583 43.1411458,35.5430729 43.1411458,39.7911458 C43.1411458,44.0371354 39.6845312,47.49375 35.4385417,47.49375 Z" id="Shape" fill="#00588F" fill-rule="nonzero"></path>
+                                </g>
+                                <g id="np_profile_937801_000000" transform="translate(0.000000, 0.000000)">
+                                    <path d="M11.6302083,11.78125 C14.3784719,11.78125 16.6145833,9.54513854 16.6145833,6.796875 L16.6145833,4.984375 C16.6145833,2.23611146 14.3784719,0 11.6302083,0 C8.88194479,0 6.64583333,2.23611146 6.64583333,4.984375 L6.64583333,6.796875 C6.64583333,9.54513854 8.88194479,11.78125 11.6302083,11.78125 Z M7.85416667,4.984375 C7.85416667,2.90166146 9.54749479,1.20833333 11.6302083,1.20833333 C13.7129219,1.20833333 15.40625,2.90166146 15.40625,4.984375 L15.40625,6.796875 C15.40625,8.87958854 13.7129219,10.5729167 11.6302083,10.5729167 C9.54749479,10.5729167 7.85416667,8.87958854 7.85416667,6.796875 L7.85416667,4.984375 Z" id="Shape" fill="#00588F" fill-rule="nonzero"></path>
+                                    <path d="M22.5535417,21.3216458 L19.9846552,24.0864031 L18.8600896,22.9323542 C18.6276274,22.6928111 18.2452896,22.6939923 18.0057677,22.9264542 C17.7662458,23.1589161 17.760325,23.5553917 17.9927875,23.7949438 L19.5598448,25.4375219 C19.6743072,25.5543436 19.8312485,25.6770649 19.9940896,25.6770649 L19.9999896,25.6770649 C20.1651929,25.6770649 20.3233094,25.5484439 20.4354125,25.4280818 L23.4373656,22.1429255 C23.6651093,21.898664 23.6509476,21.5163443 23.406686,21.2897818 C23.1636026,21.0620381 22.7801048,21.0773809 22.5535423,21.3216425 L22.5535417,21.3216458 Z" id="Path" fill="#41AC18"></path>
+                                    <path d="M21.3699792,17.4664583 C21.3605391,17.3519959 21.3180571,17.2387147 21.240177,17.1419604 C19.1031791,14.4645052 15.5655416,12.8656687 11.775302,12.8656687 C5.31222906,12.8656687 0.249010313,17.564575 0.249010313,23.5624396 C0.249010313,23.8963927 0.519232917,24.1666062 0.853176979,24.1666062 L14.9849374,24.1666062 C15.494703,26.7767875 17.7969103,28.7546479 20.5547499,28.7546479 C23.6840311,28.7546479 26.2305936,26.208176 26.2305936,23.0788042 C26.2305936,20.2255365 24.1136541,17.8642417 21.3700728,17.4667 L21.3699792,17.4664583 Z M11.7752083,14.0740625 C14.9778958,14.0740625 17.9703333,15.3236906 19.9066875,17.4416875 C17.1194854,17.7591167 14.9434583,20.1026187 14.8833437,22.9583333 L1.4771875,22.9583333 C1.80521979,17.92925 6.21022917,14.0740625 11.7752083,14.0740625 Z M20.5543542,27.546375 C18.0905021,27.546375 16.0868438,25.5415385 16.0868438,23.0788646 C16.0868438,20.6150125 18.0916802,18.6101458 20.5543542,18.6101458 C23.0182063,18.6101458 25.0218646,20.6149823 25.0218646,23.0788646 C25.0218646,25.5415385 23.0170281,27.546375 20.5543542,27.546375 Z" id="Shape" fill="#00588F" fill-rule="nonzero"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <div class="col-md-8">
+                <h3 sid="AllUsersInTheAccountText" class="my-0" data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.AllUsersInTheAccount"></h3>
+                <p sid="EveryUserInYourAccountText" data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.EveryUserInYourAccountWillBeOnThisOrder"></p>
+            </div>
+            <div class="col-md-2"></div>
+            <button type="button" class="btn iia-btn"
+                    translate-attr="{ title: 'ui.storefront.checkout.views.orderConfirmation.Continue',
+                                      'aria-label': 'ui.storefront.checkout.views.orderConfirmation.Continue' }"
+                    data-translate="ui.storefront.checkout.views.orderConfirmation.Continue"
+                    ng-disabled="newBulkOrderCtrl.viewState.running"
+                    ng-click="newBulkOrderCtrl.toggleChooseAddUsers('allExisting')"></button>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <h2 class="order-alt">OR</h2>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-2 text-center">
+                <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="CSR-dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Dashboard---initial" transform="translate(-370.000000, -420.000000)" fill="#00588F">
+                            <path d="M399.997807,427.106706 C393.683172,427.106706 388.485154,432.238937 388.485154,438.619359 C388.485154,444.933994 393.618262,450.067102 399.997807,450.067102 C406.312442,450.067102 411.51046,444.933994 411.51046,438.619359 C411.51046,432.235428 406.312442,427.106706 399.997807,427.106706 L399.997807,427.106706 Z M399.997807,447.565458 C395.063813,447.565458 391.051708,443.553353 391.051708,438.619359 C391.051708,433.685365 395.063813,429.603965 399.997807,429.603965 C404.931801,429.603965 408.943906,433.616947 408.943906,438.550941 C408.943906,443.484935 404.931801,447.565458 399.997807,447.565458 L399.997807,447.565458 Z M399.997807,420 C383.486251,420 370,433.486251 370,449.997807 C370,466.513749 383.486251,480 399.997807,480 C416.509364,480 429.995614,466.513749 429.995614,450.001316 C429.995614,433.489759 416.509364,420 399.997807,420 L399.997807,420 Z M399.997807,477.498355 C391.57537,477.498355 384.009912,473.680979 378.946099,467.630367 C382.893294,460.064909 391.380641,454.537959 399.997807,454.537959 C408.749178,454.537959 416.972501,460 420.919697,467.825973 C415.851498,473.750274 408.35095,477.498355 399.997807,477.498355 L399.997807,477.498355 Z M399.997807,452.0407 C390.852594,452.0407 382.300338,457.039604 377.695277,465.067322 L377.431253,465.595369 C374.341038,461.181527 372.497259,455.788781 372.497259,449.997807 C372.497259,434.866892 384.866892,422.501645 399.997807,422.501645 C415.128722,422.501645 427.498355,434.801982 427.498355,450.001316 C427.498355,455.79229 425.654577,461.185036 422.564361,465.660278 C418.089119,457.368536 409.471953,452.0407 399.997807,452.0407 L399.997807,452.0407 Z" id="Page-1-Copy-3"></path>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <div class="col-md-8">
+                <h3 sid="SelectUsersText" class="my-0" data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.SelectUsers"></h3>
+                <p sid="SelectUsersFromYourAccountText" data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.ChooseSpecificUsersFromYourAccount"></p>
+            </div>
+            <div class="col-md-2"></div>
+            <button type="button" class="btn iia-btn"
+                    translate-attr="{ title: 'ui.storefront.checkout.views.orderConfirmation.Continue',
+                                      'aria-label': 'ui.storefront.checkout.views.orderConfirmation.Continue' }"
+                    data-translate="ui.storefront.checkout.views.orderConfirmation.Continue"
+                    ng-disabled="newBulkOrderCtrl.viewState.running"
+                    ng-click="newBulkOrderCtrl.toggleChooseAddUsers('selectFromExisting')"></button>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <h2 class="order-alt">OR</h2>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-2 text-center">
+                <svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Affliate-Bulk" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Organization---new-order---add-users-prompt" transform="translate(-382.000000, -448.000000)" fill="#00588F" fill-rule="nonzero">
+                            <g id="np_import_1479974_000000-2" transform="translate(382.000000, 448.000000)">
+                                <g id="np_import_1479974_000000">
+                                    <path d="M16.4536675,32.056747 L21.3458964,32.056747 C22.0118602,32.056747 22.5507157,31.5178735 22.5507157,30.8519277 C22.5507157,30.1859639 22.0118422,29.6471084 21.3458964,29.6471084 L16.4536675,29.6471084 C16.0771614,29.6471084 15.7689084,29.3411988 15.7689084,28.9646988 L15.7689084,14.1562651 C15.7689084,13.779759 16.0748181,13.4738554 16.4536675,13.4738554 L32.939812,13.4738554 C33.3163181,13.4738554 33.6222217,13.7797651 33.6222217,14.1562651 L33.6245747,28.9646988 C33.6245747,29.3412048 33.3186651,29.6471084 32.9421651,29.6471084 L28.4264422,29.6471084 C27.7604783,29.6471084 27.2216229,30.1859819 27.2216229,30.8519277 C27.2216229,31.5178916 27.7604964,32.056747 28.4264422,32.056747 L32.9421651,32.056747 C34.6481892,32.056747 36.0342133,30.6683735 36.0342133,28.9646988 L36.0342133,14.1562651 C36.0342133,12.4525904 34.6458398,11.0642169 32.9421651,11.0642169 L16.4560205,11.0642169 C14.7499964,11.0642169 13.3616229,12.4525904 13.3616229,14.1562651 L13.3616229,28.9646988 C13.3616229,30.6707229 14.747647,32.056747 16.4536711,32.056747 L16.4536675,32.056747 Z M29.0217398,25.8868675 C29.4923723,25.4162349 29.4923723,24.6537952 29.0217398,24.1831928 L25.5484867,20.7099398 C25.4920108,20.6534639 25.4308301,20.6040482 25.3625892,20.5593373 C25.3343512,20.540512 25.3037596,20.5263934 25.2731675,20.5099211 C25.2355169,20.4887428 25.1955108,20.4652108 25.1555108,20.4463849 C25.1155066,20.4299127 25.0755048,20.4205006 25.0354988,20.4087343 C25.0002012,20.3993217 24.9672578,20.385203 24.9319566,20.3781434 C24.8543,20.3640247 24.774294,20.3546114 24.6966434,20.3546114 C24.6166373,20.3546114 24.5389807,20.3640247 24.4613301,20.3781434 C24.4260325,20.385203 24.3930892,20.3993217 24.357788,20.4087343 C24.3177843,20.4205006 24.2754265,20.4299127 24.2377759,20.4463849 C24.1977723,20.4628572 24.1577699,20.4863886 24.1201193,20.5099211 C24.0895283,20.5263934 24.0589386,20.540512 24.0306976,20.5593373 C23.964806,20.6040476 23.9012759,20.6534639 23.8448,20.7099398 L20.371547,24.1831928 C19.9009145,24.6538253 19.9009145,25.4162651 20.371547,25.8868675 C20.8421795,26.3574699 21.6046193,26.3575 22.0752217,25.8868675 L23.4918482,24.470241 L23.4918482,37.1280723 C23.4918482,37.7940361 24.0307217,38.3328916 24.6966675,38.3328916 C25.3626133,38.3328916 25.9014867,37.7940181 25.9014867,37.1280723 L25.9014867,24.470241 L27.3181133,25.8868675 C27.7887458,26.3575 28.5511855,26.3575 29.021788,25.8868675 L29.0217398,25.8868675 Z M0.904216867,32.9512048 C1.40308434,32.9512048 1.80783133,32.5464578 1.80783133,32.0475904 L1.80783133,29.0825904 C1.80783133,28.5837229 1.40308434,28.1789759 0.904216867,28.1789759 C0.405349398,28.1789759 0.000602409638,28.5837229 0.000602409638,29.0825904 L0.000602409638,32.0475904 C0.000602409638,32.5464578 0.405349398,32.9512048 0.904216867,32.9512048 Z M0.904216867,26.4307229 C1.40308434,26.4307229 1.80783133,26.0259759 1.80783133,25.5271084 L1.80783133,22.5621084 C1.80783133,22.063241 1.40308434,21.658494 0.904216867,21.658494 C0.405349398,21.658494 0.000602409638,22.063241 0.000602409638,22.5621084 L0.000602409638,25.5271084 C0.000602409638,26.0259759 0.405349398,26.4307229 0.904216867,26.4307229 Z M7.7686747,47.4518072 C6.90036145,47.2800241 6.07909639,46.9576446 5.32373494,46.4916867 C4.90251807,46.230488 4.34246988,46.3599096 4.08126506,46.7858313 C3.82006627,47.2094036 3.94948795,47.7670964 4.37540964,48.0283012 C5.3143253,48.6071807 6.33793976,49.0095663 7.42040964,49.2213735 C7.47923855,49.2331392 7.53806627,49.2378458 7.59689759,49.2378458 C8.02046386,49.2378458 8.39695783,48.9389964 8.48171687,48.508388 C8.57584337,48.0236349 8.25816867,47.5482675 7.76870482,47.4518217 L7.7686747,47.4518072 Z M2.00578313,41.9030723 C1.8904759,41.4159699 1.40337349,41.1171084 0.918614458,41.2324096 C0.431512048,41.3477169 0.132650602,41.8324639 0.247951807,42.3195783 C0.502096386,43.390241 0.939759036,44.399759 1.5563253,45.3175301 C1.73045783,45.5787289 2.01754217,45.7175663 2.30698795,45.7175663 C2.47877108,45.7175663 2.65525301,45.66815 2.81056627,45.5646084 C3.22472289,45.2869337 3.33531928,44.7245482 3.0576506,44.3103916 C2.56348795,43.5714759 2.21054217,42.7620181 2.00578313,41.9031024 L2.00578313,41.9030723 Z M3.73301205,2.89945783 C3.36827108,2.56060241 2.79644578,2.58178313 2.45524096,2.94652108 C1.70457831,3.75603916 1.11156627,4.68079819 0.690361446,5.69971386 C0.499753012,6.16093072 0.72095241,6.69037651 1.17981928,6.88097892 C1.29277108,6.92804217 1.41042771,6.94921988 1.52337952,6.94921988 C1.87870482,6.94921988 2.21518675,6.73743675 2.35874096,6.38916566 C2.69524096,5.57025 3.17295783,4.82663554 3.77771687,4.17717771 C4.12127711,3.81008133 4.10010241,3.23826205 3.73300663,2.89940663 L3.73301205,2.89945783 Z M0.904518072,39.474759 C1.40338554,39.474759 1.80813253,39.070012 1.80813253,38.5711446 L1.80813253,35.6061446 C1.80813253,35.1072771 1.40338554,34.7025301 0.904518072,34.7025301 C0.405650602,34.7025301 0.000903614458,35.1072771 0.000903614458,35.6061446 L0.000903614458,38.5711446 C0.000903614458,39.070012 0.405650602,39.474759 0.904518072,39.474759 Z M32.0159639,1.80789157 L34.9809639,1.80789157 C35.4798313,1.80789157 35.8845783,1.40314458 35.8845783,0.904277108 C35.8845783,0.405409639 35.4798313,0.000662650602 34.9809639,0.000662650602 L32.0159639,0.000662650602 C31.5170964,0.000662650602 31.1123494,0.405409639 31.1123494,0.904277108 C31.1123494,1.40314458 31.5170964,1.80789157 32.0159639,1.80789157 L32.0159639,1.80789157 Z M44.285241,3.04096386 C45.0241566,3.53042169 45.6618675,4.14457831 46.1818675,4.85993976 C46.3583554,5.10231325 46.6336747,5.23174096 46.9136747,5.23174096 C47.0995723,5.23174096 47.2831205,5.17526506 47.445488,5.05995783 C47.8502349,4.76581325 47.9373012,4.20104217 47.6431566,3.79628313 C46.9960482,2.90441566 46.2006867,2.14435542 45.2852651,1.53489759 C44.8711084,1.25957831 44.3086988,1.3701747 44.0333976,1.78668675 C43.7557229,2.2031988 43.8686747,2.76325301 44.2851867,3.04090361 L44.285241,3.04096386 Z M25.4930723,1.80789157 L28.4580723,1.80789157 C28.9569398,1.80789157 29.3616867,1.40314458 29.3616867,0.904277108 C29.3616867,0.405409639 28.9569398,0.000662650602 28.4580723,0.000662650602 L25.4930723,0.000662650602 C24.9942048,0.000662650602 24.5894578,0.405409639 24.5894578,0.904277108 C24.5894578,1.40314458 24.9942048,1.80789157 25.4930723,1.80789157 Z M0.905120482,19.908494 C1.40398795,19.908494 1.80873494,19.503747 1.80873494,19.0048795 L1.80873494,16.0398795 C1.80873494,15.541012 1.40398795,15.1362651 0.905120482,15.1362651 C0.406253012,15.1362651 0.0015060241,15.541012 0.0015060241,16.0398795 L0.0015060241,19.0048795 C0.0015060241,19.503747 0.406253012,19.908494 0.905120482,19.908494 Z M0.905120482,13.388012 C1.40398795,13.388012 1.80873494,12.9832651 1.80873494,12.4843976 L1.80873494,9.51939759 C1.80873494,9.02053012 1.40398795,8.61578313 0.905120482,8.61578313 C0.406253012,8.61578313 0.0015060241,9.02053012 0.0015060241,9.51939759 L0.0015060241,12.4843976 C0.0015060241,12.9832651 0.406253012,13.388012 0.905120482,13.388012 Z M12.4496988,1.80789157 L15.4146988,1.80789157 C15.9135663,1.80789157 16.3183133,1.40314458 16.3183133,0.904277108 C16.3183133,0.405409639 15.9135663,0.000662650602 15.4146988,0.000662650602 L12.4496988,0.000662650602 C11.9508313,0.000662650602 11.5460843,0.405409639 11.5460843,0.904277108 C11.5460843,1.40314458 11.9508313,1.80789157 12.4496988,1.80789157 Z M18.9725904,1.80789157 L21.9375904,1.80789157 C22.4364639,1.80789157 22.8412048,1.40314458 22.8412048,0.904277108 C22.8388518,0.405409639 22.4341084,0.000662650602 21.935241,0.000662650602 L18.970241,0.000662650602 C18.4713735,0.000662650602 18.0666265,0.405409639 18.0666265,0.904277108 C18.0689801,1.40314458 18.4737229,1.80789157 18.9725904,1.80789157 Z M48.4954819,26.2127108 C47.9966145,26.2127108 47.5918675,26.6174578 47.5918675,27.1163253 L47.5918675,30.0813253 C47.5918675,30.5801928 47.9966145,30.9849398 48.4954819,30.9849398 C48.9943494,30.9849398 49.3990964,30.5801928 49.3990964,30.0813253 L49.3990964,27.1163253 C49.3990964,26.6174578 48.9943494,26.2127108 48.4954819,26.2127108 Z M48.4954819,32.7331928 C47.9966145,32.7331928 47.5918675,33.1379337 47.5918675,33.6368072 L47.5918675,36.6018072 C47.5918675,37.1006807 47.9966145,37.5054217 48.4954819,37.5054217 C48.9943494,37.5054217 49.3990964,37.1006807 49.3990964,36.6018072 L49.3990964,33.6368072 C49.3990964,33.1379337 48.9943494,32.7331928 48.4954819,32.7331928 Z M48.4954819,39.2723494 C47.9966145,39.2723494 47.5918675,39.6935663 47.5918675,40.1924096 C47.5918675,41.0842771 47.4342048,41.9525904 47.1282952,42.7785542 C46.9541627,43.2468313 47.1918313,43.7668675 47.657759,43.9410241 C47.7636506,43.9786747 47.8695422,43.9975 47.9730843,43.9975 C48.3378253,43.9975 48.683747,43.7739518 48.8201928,43.4092108 C49.203759,42.383247 49.3990723,41.3007771 49.3990723,40.1948133 L49.3990723,40.1595157 C49.3990723,39.6606482 48.9943253,39.272347 48.4954578,39.272347 L48.4954819,39.2723494 Z M48.4954819,19.6892169 C47.9966145,19.6892169 47.5918675,20.0939639 47.5918675,20.5928313 L47.5918675,23.5578313 C47.5918675,24.0566988 47.9966145,24.4614458 48.4954819,24.4614458 C48.9943494,24.4614458 49.3990964,24.0566988 49.3990964,23.5578313 L49.3990964,20.5928313 C49.3990964,20.0939639 48.9943494,19.6892169 48.4954819,19.6892169 Z M49.2178916,7.38198795 C49.1190602,6.89253012 48.639012,6.57957831 48.1542771,6.6736747 C47.6648193,6.77250602 47.3471687,7.24784337 47.4459639,7.73728916 C47.5424458,8.21733735 47.5918614,8.70915663 47.589506,9.20331325 L47.589506,10.5116867 C47.589506,11.0105542 47.994253,11.4153012 48.4931205,11.4153012 C48.991988,11.4153012 49.3967349,11.0105542 49.3967349,10.5116867 L49.3967349,9.20331325 C49.399088,8.59150602 49.337906,7.9796988 49.2178916,7.38198795 L49.2178916,7.38198795 Z M48.4954819,13.1660843 C47.9966145,13.1660843 47.5918675,13.5708313 47.5918675,14.0696988 L47.5918675,17.0346988 C47.5918675,17.5335663 47.9966145,17.9383133 48.4954819,17.9383133 C48.9943494,17.9383133 49.3990964,17.5335663 49.3990964,17.0346988 L49.3990964,14.0696988 C49.3990964,13.5708313 48.9943494,13.1660843 48.4954819,13.1660843 Z M45.4245783,45.4233133 C44.7962651,46.0492771 44.071506,46.5551807 43.266747,46.9222892 C42.8125843,47.1293675 42.6125904,47.6659036 42.822,48.1200602 C42.9749578,48.4518554 43.3020482,48.6471687 43.6432651,48.6471687 C43.7703373,48.6471687 43.8974096,48.6212843 44.0174157,48.5648072 C45.0175361,48.1059398 45.9211506,47.479988 46.700006,46.6987229 C47.0529819,46.345747 47.0529819,45.7739036 46.700006,45.4209518 C46.3493855,45.0726807 45.7775964,45.0726807 45.4245843,45.4233048 L45.4245783,45.4233133 Z M40.193494,47.5906024 L37.228494,47.5906024 C36.7296265,47.5906024 36.3248795,47.9953494 36.3248795,48.4942169 C36.3248795,48.9930843 36.7296265,49.3978313 37.228494,49.3978313 L40.193494,49.3978313 C40.6923614,49.3978313 41.0971084,48.9930843 41.0971084,48.4942169 C41.0971084,47.9953494 40.6923614,47.5906024 40.193494,47.5906024 Z M41.6383133,0.113493976 C41.1629759,0.0381927711 40.6781928,0.000542168675 40.1958434,0.000542168675 L38.5392169,0.000542168675 C38.0403494,0.000542168675 37.6356024,0.405289157 37.6356024,0.904156627 C37.6356024,1.4030241 38.0403494,1.80777108 38.5392169,1.80777108 L40.1958434,1.80777108 C40.5841145,1.80777108 40.9771084,1.83836205 41.3583133,1.89719277 C41.4053765,1.90425181 41.4524398,1.90895843 41.499506,1.90895843 C41.9371928,1.90895843 42.3207711,1.59128373 42.3913735,1.1465488 C42.4666747,0.654735542 42.1325241,0.191187349 41.6383614,0.113536747 L41.6383133,0.113493976 Z M14.1063855,47.5906024 L11.1413855,47.5906024 C10.642512,47.5906024 10.2377711,47.9953494 10.2377711,48.4942169 C10.2377711,48.9930843 10.642512,49.3978313 11.1413855,49.3978313 L14.1063855,49.3978313 C14.605259,49.3978313 15.01,48.9930843 15.01,48.4942169 C15.01,47.9953494 14.605259,47.5906024 14.1063855,47.5906024 Z M27.149759,47.5906024 L24.184759,47.5906024 C23.6858916,47.5906024 23.2811446,47.9953494 23.2811446,48.4942169 C23.2811446,48.9930843 23.6858916,49.3978313 24.184759,49.3978313 L27.149759,49.3978313 C27.6486265,49.3978313 28.0533735,48.9930843 28.0533735,48.4942169 C28.0533735,47.9953494 27.6486265,47.5906024 27.149759,47.5906024 Z M20.6268675,47.5906024 L17.6618675,47.5906024 C17.163,47.5906024 16.758253,47.9953494 16.758253,48.4942169 C16.758253,48.9930843 17.163,49.3978313 17.6618675,49.3978313 L20.6268675,49.3978313 C21.1257349,49.3978313 21.5304819,48.9930843 21.5304819,48.4942169 C21.5304819,47.9953494 21.1257349,47.5906024 20.6268675,47.5906024 Z M33.6726506,47.5906024 L30.7076506,47.5906024 C30.2087831,47.5906024 29.8040361,47.9953494 29.8040361,48.4942169 C29.8040361,48.9930843 30.2087831,49.3978313 30.7076506,49.3978313 L33.6726506,49.3978313 C34.1715181,49.3978313 34.5762651,48.9930843 34.5762651,48.4942169 C34.5762651,47.9953494 34.1715181,47.5906024 33.6726506,47.5906024 Z M8.85879518,0.00746987952 C7.75283133,0.049826506 6.67975904,0.285144578 5.66554217,0.706385542 C5.2043253,0.899343373 4.98783133,1.42644578 5.17843976,1.8876506 C5.32198193,2.23356627 5.65848795,2.443 6.0138012,2.443 C6.12910843,2.443 6.24676506,2.42182108 6.35971687,2.37475904 C7.17393373,2.03590361 8.03754819,1.84529518 8.92700602,1.81235542 C9.42587349,1.79353012 9.8141747,1.37466867 9.79531928,0.875789157 C9.77646386,0.376909639 9.36939759,-0.023126506 8.85875301,0.00747590361 L8.85879518,0.00746987952 Z" id="Shape"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <div class="col-md-8">
+                <h3 sid="ImportUsersText" class="my-0" data-translate="ui.storefront.common.ImportUser.Plural"></h3>
+                <p sid="ImportUsersToAssociateText" data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.UseOurBulkImportToolToAssociateUsersToThisOrder"></p>
+            </div>
+            <div class="col-md-2"></div>
+            <button type="button" class="btn iia-btn"
+                    translate-attr="{ title: 'ui.storefront.checkout.views.orderConfirmation.Continue',
+                                      'aria-label': 'ui.storefront.checkout.views.orderConfirmation.Continue' }"
+                    data-translate="ui.storefront.checkout.views.orderConfirmation.Continue"
+                    ng-disabled="newBulkOrderCtrl.viewState.running"
+                    ng-click="newBulkOrderCtrl.toggleChooseAddUsers('selectByImport')"></button>
+        </div>
+    </div>
+</div>
+<div ng-if="newBulkOrderCtrl.viewState.addUsersSelectExisting && !newBulkOrderCtrl.viewState.usersAdded"
+     class="row">
+    <div class="col-sm-9">
+        <h2 sid="ChooseExistingUsersText" data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.ChooseExistingUsers"></h2>
+        <p sid="SelectExistingUsersText" data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.SelectTheUsersThatYouWouldLikeToAssociateToThisOrder.Colon"></p>
+    </div>
+    <div class="col-sm-3 text-right">
+        <button type="button" class="btn btn-primary"
+                translate-attr="{ title: 'ui.storefront.userDashboard2.controls.orders.newBulkOrder.AddSelectedUsersToOrder',
+                                  'aria-label': 'ui.storefront.userDashboard2.controls.orders.newBulkOrder.AddSelectedUsersToOrder' }"
+                data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.AddSelectedUsersToOrder"
+                ng-disabled="newBulkOrderCtrl.viewState.running"
+                ng-click="newBulkOrderCtrl.addToCart()"></button>
+    </div>
+    <div ng-if="newBulkOrderCtrl.viewState.addUsersSelectExisting"
+         class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <div cef-paging-header paging="newBulkOrderCtrl.userPaging"></div>
+            </div>
+            <div class="col-12">
+                <table class="table table-bordered"
+                       ng-form="newBulkOrderCtrl.userSelectorForm">
+                    <thead>
+                        <tr class="active">
+                            <th>
+                                <input type="checkbox" class="checkbox"
+                                       id="ckSelectAll" name="ckSelectAll"
+                                       translate-attr="{ title: 'ui.storefront.userDashboard2.controls.orders.newBulkOrder.SelectAll',
+                                                         'aria-label': 'ui.storefront.userDashboard2.controls.orders.newBulkOrder.SelectAll' }"
+                                       ng-required="false"
+                                       ng-change="newBulkOrderCtrl.toggleAllSelected()"
+                                       ng-model="allSelected" />
+                                <label class="sr-only" for="ckSelectAll"
+                                       data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.SelectAll"></label>
+                            </th>
+                            <th data-translate="ui.storefront.common.Username"></th>
+                            <th data-translate="ui.storefront.common.FirstName"></th>
+                            <th data-translate="ui.storefront.common.LastName"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="newBulkOrderCtrl.userPaging.filteredCount === 0">
+                            <td colspan="7" ng-if="!newBulkOrderCtrl.viewState.running"
+                                data-translate="ui.storefront.common.NoResults"></td>
+                            <td colspan="7" ng-if="newBulkOrderCtrl.viewState.running"
+                                data-translate="ui.storefront.common.Loading.Ellipses"></td>
+                        </tr>
+                        <tr ng-repeat="user in newBulkOrderCtrl.userPaging.filteredData
+                                       | orderBy: ['CustomKey','UserName','Email']
+                                       | limitTo: newBulkOrderCtrl.userPaging.pageSize
+                                                : newBulkOrderCtrl.userPaging.skip()">
+                            <td>
+                                <input type="checkbox" class="checkbox"
+                                       id="ckUserSelected_{{user.ID}}" name="ckUserSelected_{{user.ID}}"
+                                       ng-change="newBulkOrderCtrl.addUsersToOrder()"
+                                       ng-model="user.selected" />
+                            </td>
+                            <td ng-bind="user.UserName"></td>
+                            <td ng-bind="user.ContactFirstName"></td>
+                            <td ng-bind="user.ContactLastName"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="newBulkOrderCtrl.viewState.addUsersImport && !newBulkOrderCtrl.viewState.usersAdded"
+     class="row">
+    <div class="col-12">
+        <div cef-local-admin-import-users dont-redirect="true"></div>
+    </div>
+    <div class="col-sm-12 text-right">
+        <button type="button" class="btn btn-primary"
+                translate-attr="{ title: 'ui.storefront.userDashboard2.controls.orders.newBulkOrder.AddImportedUsersToOrder',
+                                  'aria-label': 'ui.storefront.userDashboard2.controls.orders.newBulkOrder.AddImportedUsersToOrder' }"
+                data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.AddImportedUsersToOrder"
+                ng-disabled="newBulkOrderCtrl.viewState.running || !newBulkOrderCtrl.importedUsers.length"
+                ng-click="newBulkOrderCtrl.addUsersToOrder(); newBulkOrderCtrl.addToCart();"></button>
+    </div>
+</div>
+<div ng-if="newBulkOrderCtrl.viewstate.running && newBulkOrderCtrl.viewState.addUsersAllExisting && !newBulkOrderCtrl.viewState.usersAdded"
+    class="row">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <table>
+                <tr>
+                    <td>
+                        <i class="far fa-cog fa-spin fa-5x fa-fw"></i>
+                    </td>
+                    <td class="w-100">
+                        <p data-translate="We're adding users to the order now, if there are many on this account it could take several minutes..."></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div ng-if="newBulkOrderCtrl.viewState.usersAdded"
+    class="row">
+    <div class="col-12">
+        <div class="alert alert-success">
+            <div class="row">
+                <div class="col-sm-9">
+                    <p data-translate="ui.storefront.userDashboard2.controls.orders.newBulkOrder.YourUsersWereSuccessfullyAddedToThisOrder"></p>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <a ui-sref-plus uisrp-area="checkout" class="btn btn-success mb-3">
+                        <span data-translate="ui.storefront.cart.proceedToCheckout"></span>
+                    </a>
+                    <!--
+                    <button type="button" class="btn btn-success mb-3"
+                            translate-attr="{ title: 'ui.storefront.cart.proceedToCheckout',
+                                              'aria-label': 'ui.storefront.cart.proceedToCheckout' }"
+                            ng-disabled="newBulkOrderCtrl.viewState.running"
+                            ui-sref-plus uisrp-area="checkout">
+                    </button>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="newBulkOrderCtrl.viewState.running"
+     class="row">
+    <div class="col-12">
+        <div class="alert alert-info"
+             ng-bind="newBulkOrderCtrl.viewState.waitMessage
+                      || ('ui.storefront.common.Running.Ellipses' | translate)"></div>
+    </div>
+</div>
+<div ng-if="newBulkOrderCtrl.viewState.hasError"
+     class="row">
+    <div class="col-12">
+        <div class="alert alert-danger"
+             ng-bind="newBulkOrderCtrl.viewState.errorMessage
+                      || ('ui.storefront.userDashboard2.controls.orders.newBulkOrder.AnUnknownErrorHasOccurred' | translate)"></div>
+    </div>
+</div>

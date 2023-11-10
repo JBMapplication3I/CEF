@@ -1,0 +1,51 @@
+﻿<div class="col-md-12 table-responsive">
+    <table class="table table-hover table-sm">
+        <thead>
+        <tr>
+            <th class="col-md-3"
+                data-translate="ui.storefront.pricePointsTable.fulfillmentLocation"></th>
+            <th data-translate="ui.storefront.pricePointsTable.available"></th>
+            <th data-translate="ui.storefront.pricePoints.cartonCount"></th>
+            <th data-translate="ui.storefront.pricePoints.PalletQty"></th>
+            <th data-translate="ui.storefront.pricePoints.PriceTerm"></th>
+            <th data-translate="ui.storefront.pricePoints.MinPurchQty"></th>
+            <th data-translate="ui.storefront.product.ordersCatalog.ListPrice"></th>
+            <th data-translate="ui.storefront.pricePoints.MSRP"></th>
+            <th data-translate="ui.storefront.common.SalePrice"></th>
+            <th data-translate="ui.storefront.pricePoints.TotalQty"></th>
+            <th data-translate="ui.storefront.common.Total"></th>
+            <th data-translate="ui.storefront.pricePointsTable.addToOrder"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="loc in productDetailsCtrl.product.ProductInventoryLocationSections">
+            <td ng-bind="loc.InventoryLocationSectionName"></td>
+            <td ng-bind="loc.Quantity"></td>
+            <td ng-bind="productDetailsCtrl.product.SerializableAttributes.Carton.Value"><td>
+            <td ng-bind="productDetailsCtrl.product.SerializableAttributes.Pallet.Value"><td>
+            <td></td>
+            <td ng-bind="productDetailsCtrl.product.MinimumPurchaseQuantity"></td>
+            <td ng-bind="productDetailsCtrl.product.readPrices().base | globalizedCurrency"></td>
+            <td ng-bind="productDetailsCtrl.product.readPrices().msrp | globalizedCurrency"></td>
+            <td ng-bind="productDetailsCtrl.product.readPrices().sale | globalizedCurrency"></td>
+            <td>
+                <input type="number" class="input-text qty form-control"
+                       translate-attr="{ placeholder: 'ui.storefront.common.Quantity.Abbreviation' }"
+                       min="1"
+                       ng-model="productDetailsCtrl.quantity" />
+            </td>
+            <td>$$$</td>
+            <td>
+                <button type="button" class="dnnPrimaryAction orderBtn"
+                        translate-attr="{ title: 'ui.storefront.pricePointsTable.addToOrder',
+                                          'aria-label': 'ui.storefront.pricePointsTable.addToOrder' }"
+                        ng-disabled="!loc.Quantity || loc.Quantity < productDetailsCtrl.quantity"
+                        ng-click="productDetailsCtrl.addCurrentItemToCart(productDetailsCtrl.quantity)">
+                    <i class="far fa-cart-plus"></i>&nbsp;<!--
+                    --><span data-translate="ui.storefront.pricePointsTable.addToOrder"></span>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

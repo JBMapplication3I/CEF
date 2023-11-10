@@ -1,0 +1,12 @@
+﻿<div class="row" ng-if="cefShipToCtrl.includeModelSkuBlock">
+    <div class="col-12">
+        <b class="product-price" ng-bind="cefShipToCtrl.displayPrice | globalizedCurrency"></b>&nbsp;<!--
+        --><small ng-bind="cefShipToCtrl.displayUofMShort"></small>
+    </div>
+    <div class="col-12">
+        <p class="model-number"
+           ><span class="span-spacer"
+                  data-translate="ui.storefront.product.detail.productDetails.StoreSKU"
+                  ></span>&nbsp;{{cefShipToCtrl.displaySKU}}</p>
+    </div>
+</div>

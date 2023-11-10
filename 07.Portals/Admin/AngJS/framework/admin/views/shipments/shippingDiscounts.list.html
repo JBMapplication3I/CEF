@@ -1,0 +1,26 @@
+﻿<cv-page caption="Manage Shipping Discounts" head-icon="fa-archive"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Shipping.Packages')">
+    <cv-widget>
+        <widget-menu-item caption="Add Shipping Discount" icon-class="fa-plus-circle"
+                          click="$root.$state.go('shipments.shippingDiscounts.detail')"
+                          permission="'Shipping.Package.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="false"
+                    on-search="search.getShippingDiscounts"
+                    on-deactivate="search.deactivateShippingDiscount"
+                    id-field="'OptionName'"
+                    partial-reset="false"
+                    edit-state="shipments.shippingDiscounts.detail,'#= OptionName #'"
+                    permissions-base="Shipping.Package">
+                <cv-column filter field="OptionName" title="Option Name" />
+                <cv-column filter field="Value">
+                    <cv-column-template>
+                        <script type="x-column-template">
+                            <span ng-bind="(dataItem.Value * 100) + '%'"></span>
+                        </script>
+                    </cv-column-template>
+                </cv-column>
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

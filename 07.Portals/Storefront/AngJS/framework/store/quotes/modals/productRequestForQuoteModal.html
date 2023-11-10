@@ -1,0 +1,98 @@
+﻿<div class="modal-header bg-dark text-light">
+  <h3 class="modal-title"
+    data-translate="ui.storefront.common.RequestAQuote">
+  </h3>
+  <button type="button" class="close"
+    translate-attr="{ title: 'ui.storefront.common.Close',
+                      'aria-label': 'ui.storefront.common.Close' }"
+    ng-click="prfqmCtrl.cancel()">
+    <i class="far fa-times text-light" aria-hidden="true"></i>
+    <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+  </button>
+</div>
+<div class="modal-body form-vertical"
+  ng-form="prfqmCtrl.forms.modalForm">
+  <div class="row mb-3">
+    <div class="col-auto text-center">
+      <div cef-product-card-thumbnail-widget
+        product-id="prfqmCtrl.product.ID"
+        product-image="prfqmCtrl.product.PrimaryImageFileName"
+        width="250" height="250">
+      </div>
+    </div>
+    <div class="col">
+      <p ng-bind="prfqmCtrl.product.Name"></p>
+    </div>
+    <div class="col-auto">
+      <div class="form-group"
+        ng-class="{ 'has-error': prfqmCtrl.forms.modalForm['nudItemQuantity0'].$invalid }">
+        <label class="control-label"
+          data-translate="ui.storefront.common.Quantity">
+        </label>
+        <div class="input-group">
+          <div cef-add-to-cart-quantity-selector
+            item="prfqmCtrl.salesQuote.SalesItems[0].Product"
+            sales-item="prfqmCtrl.salesQuote.SalesItems[0]"
+            default-value="1"
+            current-value="prfqmCtrl.salesQuote.SalesItems[0].Quantity"
+            is-required="true"
+            always-allow-input="true"
+            step="1">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card col-sm-12">
+      <div class="form-group"
+        ng-class="{ 'has-error': prfqmCtrl.forms.modalForm.txtaMessage.$invalid }">
+        <div class="input-group">
+          <textarea class="form-control"
+            id="txtaMessage" name="txtaMessage"
+            ng-required="false" maxlength="300"
+            translate-attr="{
+              placeholder: 'ui.storefront.requestsForQuotes.requestForQuoteModal.TypeYourMessageHere.Ellipses'
+            }"
+            ng-model="prfqmCtrl.message">
+          </textarea>
+        </div>
+      </div>
+      <div cef-upload-file-widget
+        master="prfqmCtrl.salesQuote"
+        upload-type="StoredFileSalesQuote"
+        type-key="General"
+        allow-multiple="true">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="row w-100 mx-n2">
+    <div class="col">
+      <div class="alert alert-danger" ng-if="prfqmCtrl.viewState.hasError">
+        <p><b data-translate="ui.storefront.common.Error"></b>&nbsp;<!--
+        --><span data-translate="ui.storefront.common.ThereWasAnErrorProcessingTheRequest"></span><br/><!--
+        -->{{prfqmCtrl.viewState.errorMessage}}</p>
+      </div>
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-outline-secondary"
+        id="btnCancelQuoteModal"
+        translate-attr="{ title: 'ui.storefront.common.Cancel',
+                          'aria-label': 'ui.storefront.common.Cancel' }"
+        data-translate="ui.storefront.common.Cancel"
+        ng-click="prfqmCtrl.cancel()">
+      </button>
+      <button type="button" class="btn btn-primary"
+        id="btnSendQuoteModal"
+        translate-attr="{ title: 'ui.storefront.common.Send',
+                          'aria-label': 'ui.storefront.common.Send' }"
+        data-translate="ui.storefront.common.Send"
+        ng-disabled="prfqmCtrl.viewState.running
+          || prfqmCtrl.forms.modalForm.$invalid"
+        ng-click="prfqmCtrl.sendInquiry()">
+      </button>
+    </div>
+  </div>
+</div>

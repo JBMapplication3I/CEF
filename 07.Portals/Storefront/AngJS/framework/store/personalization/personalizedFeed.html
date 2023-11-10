@@ -1,0 +1,70 @@
+﻿<div class="tabs-horizontal">
+    <div class="nav nav-pills" id="v-pills-tab" role="tablist">
+        <ul class="tabs-nav">
+            <li ng-repeat="feedItem in personalizedFeedCtrl.feed | limitTo: 4">
+                <a class="nav-link d-flex"
+                   id="v-pills-{{feedItem.Key.ID}}-tab"
+                   data-toggle="pill"
+                   href="#v-pills-{{feedItem.Key.ID}}"
+                   role="tab"
+                   aria-controls="v-pills-{{feedItem.Key.ID}}"
+                   aria-expanded="true"
+                   ng-click="personalizedFeedCtrl.activeTab = feedItem.Key.ID"
+                   ng-class="{'active':personalizedFeedCtrl.activeTab == feedItem.Key.ID}">
+                    <div class="media align-self-center">
+                        <img class="d-flex mr-3"
+                             ng-src="{{feedItem.Key.PrimaryImageFileName
+                                       | corsImageLink : 'stores' : { 'maxwidth': 50, 'maxheight': 50, 'mode': 'pad', 'scale': 'both' } }}"
+                             alt="{{feedItem.Key.DisplayName || feedItem.Key.Name.toLowerCase()}}"
+                             onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=50&amp;maxheight=50&amp;mode=pad&amp;scale=both';"
+                             width="50" height="50" />
+                        <div class="media-body align-self-center"
+                             ng-class="{'text-capitalize':!feedItem.Key.DisplayName}"
+                             ng-bind="feedItem.Key.DisplayName || (feedItem.Key.Name | lowercase)"></div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div class="more-holder py-4 md-py-8 px-4">
+            <a class="more text-primary"
+               ui-sref-plus uisrp-is-catalog="true"
+               uisrp-state="searchCatalog.products.categories.level1"
+               ><span data-translate="ui.storefront.personalization.personalizedFeed.MoreCategories"></span>&nbsp;<!--
+               --><i class="far fa-angle-double-right"></i></a>
+        </div>
+    </div>
+    <div class="tab-content" id="v-pills-tabContent">
+        <div ng-repeat="feedItem in personalizedFeedCtrl.feed | limitTo: 4"
+             class="tab-pane fade" id="v-pills-{{feedItem.Key.ID}}"
+             role="tabpanel" aria-labelledby="v-pills-{{feedItem.Key.ID}}-tab">
+            <div class="row">
+                <div ng-repeat="product in feedItem.Value | limitTo: 6"
+                     class="col-6">
+                    <div class="border p-2 d-flex mx-2" id="personalized-product-{{feedItem.Key.ID}}-{{product.ID}}">
+                        <div cef-product-card-thumbnail-widget
+                             product-id="product.ID"
+                             product-image="product.PrimaryImageFileName"
+                             width="100"
+                             height="100"
+                             index="$index"></div>
+                        <div class="d-flex media-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p><a ui-sref-plus uisrp-is-product="true" uisrp-path="{{product.SeoUrl}}"
+                                          ng-bind="product.Name"></a></p>
+                                </div>
+                                <div class="col-12">
+                                    <b class="lead"
+                                      ng-bind="(product.readPrices().isSale
+                                                ? product.readPrices().sale
+                                                : product.readPrices().base) | globalizedCurrency">
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

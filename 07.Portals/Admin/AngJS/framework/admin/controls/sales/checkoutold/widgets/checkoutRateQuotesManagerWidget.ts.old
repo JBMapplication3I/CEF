@@ -1,0 +1,41 @@
+﻿/**
+ * @file framework/admin/controls/sales/checkout/widgets/checkoutRateQuotesManagerWidget.ts
+ * @author Copyright (c) 2018-2022 clarity-ventures.com. All rights reserved.
+ * @desc Checkout rate quotes manager widget class.
+ */
+module cef.admin.controls.sales.checkout.widgets {
+    class CheckoutRateQuotesManagerWidgetController extends controls.sales.widgets.RateQuotesManagerWidgetControllerBase {
+        // Properties
+        get cart(): api.CartModel { return this.cvCartService.accessCart(this.type); }
+        get havePostalCode() {
+            return this.contact && this.contact.Address && this.contact.Address.PostalCode;
+        }
+        // Constructors
+        constructor(
+                protected readonly $rootScope: ng.IRootScopeService,
+                protected readonly $scope: ng.IScope,
+                protected readonly $q: ng.IQService,
+                protected readonly cefConfig: core.CefConfig,
+                protected readonly cvCartService: admin.services.ICartService,
+                protected readonly cvApi: api.ICEFAPI,
+                protected readonly cvServiceStrings: admin.services.IServiceStrings,
+                protected readonly cvViewStateService: admin.services.IViewStateService) {
+            super($rootScope, $scope, $q, cvCartService, cefConfig, cvApi, cvServiceStrings, cvViewStateService);
+        }
+    }
+
+    adminApp.directive("cefCheckoutRateQuotesManagerWidget2", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        scope: {
+            currentCartId: "=",
+            userId: "=",
+            type: "=", // The type of the cart e.g.- "Cart"
+            contact: "=", // The selected address in Checkout
+            apply: "="
+        },
+        templateUrl: $filter("corsLink")("/framework/admin/controls/sales/checkout/widgets/checkoutRateQuotesManagerWidget.html", "ui"),
+        controller: CheckoutRateQuotesManagerWidgetController,
+        controllerAs: "cefCheckoutRateQuotesManagerWidgetCtrl",
+        bindToController: true
+    }));
+}

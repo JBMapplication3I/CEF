@@ -1,0 +1,197 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- TODO: Until we can work out Lamar with Child Containers, we can't target net6.0 + -->
+    <TargetFrameworks>net472</TargetFrameworks>
+    <AssemblyName>Clarity.Ecommerce.Testing</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Testing</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Testing</RootNamespace>
+    <ProjectGuid>861ffa6c-9f42-47f4-a1ef-3e9b195e5c87</ProjectGuid>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TestProjectType>UnitTest</TestProjectType>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Providers\AddressValidation\Avalara\AvalaraAddressValidationProviderTests.cs" />
+    <Compile Remove="Providers\AddressValidation\Mock\MockAddressValidationProviderTests.cs" />
+    <Compile Remove="Providers\AddressValidation\ProviderTestHelper.cs" />
+    <Compile Remove="Providers\Api\Basic\BasicApiProviderTests.cs" />
+    <Compile Remove="Providers\Chatting\WeChat\WeChatChattingProviderTests.cs" />
+    <Compile Remove="Providers\CurrencyConversions\FixerIO\FixerIOCurrencyConversionsProviderTests.cs" />
+    <Compile Remove="Providers\Discounts\OLD\**" />
+    <Compile Remove="Providers\Importer\Excel\ExcelImportTesting.cs" />
+    <Compile Remove="Providers\Memberships\Basic\BasicMembershipProviderTests.cs" />
+    <Compile Remove="Providers\Payments\Authorize\AuthorizePaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\BasePaymentTest.cs" />
+    <Compile Remove="Providers\Payments\BridgePay\BridgePayPaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\OrbitalPaymentech\OrbitalPaymentechPaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\PayPal.PayFlowPro\PayPalPayflowProPaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\PayTrace\PayTracePaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\Payeezy.API\PayeezyAPIPaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\Payeezy\PayeezyPaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\Sage\SagePaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\Stripe\StripePaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Payments\UnitedTranz\UnitedTranzactionPaymentsProviderTests.cs" />
+    <Compile Remove="Providers\Pricing\PriceFactoryTests.cs" />
+    <Compile Remove="Providers\Pricing\PriceRules\PriceRulesPricingProviderTests.cs" />
+    <Compile Remove="Providers\Pricing\Tiered\TieredPricingProviderTests.cs" />
+    <Compile Remove="Providers\QuoteCheckouts\QuoteCheckoutTests.cs" />
+    <Compile Remove="Providers\SalesQuoteImporter\Asserts.cs" />
+    <Compile Remove="Providers\SalesQuoteImporter\Excel\ExcelSalesQuoteImporterProviderTests.cs" />
+    <Compile Remove="Providers\Shipping\FlatRate\FlatRateShippingProviderTests.cs" />
+    <Compile Remove="Providers\Shipping\Loomis\LoomisShippingProviderTests.cs" />
+    <Compile Remove="Providers\Shipping\PercentageOfSubtotalAndTargetDate\PercentageOfSubtotalAndTargetDateShippingProviderTests.cs" />
+    <Compile Remove="Providers\Shipping\TNT\TNTShippingProviderTests.cs" />
+    <Compile Remove="Providers\Shipping\UPS\UPSShippingProviderTests.cs" />
+    <Compile Remove="Providers\Shipping\YRC\YRCShippingProviderTests.cs" />
+    <Compile Remove="Providers\Surveys\SurveyMonkey\SurveyMonkeyProviderTests.cs" />
+    <Compile Remove="ScheduledTasks\SendFinalStatementsTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Solution Items\connectionStrings.config">
+      <Link>connectionStrings.config</Link>
+    </None>
+    <None Include="..\..\Solution Items\mailSettings.config">
+      <Link>mailSettings.config</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Workflow\StandardWorkflowTests.ttinclude" />
+    <None Include="DataModel\MockingSetup\MockingSetup.ttinclude" />
+    <None Update="DataModel\DataModelPropertyTests.tt">
+      <LastGenOutput>DataModelPropertyTests.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="DataModel\DataModelTestingRegistry.tt">
+      <LastGenOutput>DataModelTestingRegistry.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="DataModel\MockingSetup\MockingSetup.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MockingSetup.cs</LastGenOutput>
+    </None>
+    <None Update="Mapping\MappingObjectsTests.tt">
+      <LastGenOutput>MappingObjectsTests.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Models\ModelsPropertyTests.tt">
+      <LastGenOutput>ModelsPropertyTests.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="Workflow\StandardWorkflowTests.cstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StandardWorkflowTests.tt</DependentUpon>
+    </None>
+    <None Update="Workflow\StandardWorkflowTests.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StandardWorkflowTests.cstxt</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="DataModel\DataModelPropertyTests.cs">
+      <DependentUpon>DataModelPropertyTests.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="DataModel\DataModelTestingRegistry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModelTestingRegistry.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DataModel\MockingSetup\MockingSetup.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MockingSetup.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Mapping\MappingObjectsTests.cs">
+      <DependentUpon>MappingObjectsTests.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Models\ModelsPropertyTests.cs">
+      <DependentUpon>ModelsPropertyTests.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build" Version="17.6.3" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.6.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.analyzers" Version="1.1.0" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.2" PrivateAssets="all" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <Reference Include="System.Configuration" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="LINQtoCSV" Version="1.5.0" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+    <Reference Include="ServiceStack.Common">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Common\bin\Debug\net472\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Text\bin\Debug\net472\ServiceStack.Text.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.Core\bin\Debug\net5.0\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.EntityFramework\bin\Debug\net5.0\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Encryption\00.Clarity.Ecommerce.Encryption.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj" />
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Utilities\00.Clarity.Ecommerce.Utilities.csproj" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models.Mapping\03.Clarity.Ecommerce.Models.Mapping.csproj" />
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Caching\Clarity.Ecommerce.Providers.Caching.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.SalesInvoiceHandlers\Clarity.Ecommerce.Providers.SalesInvoiceHandlers.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.SalesQuoteHandlers\Clarity.Ecommerce.Providers.SalesQuoteHandlers.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.SalesReturnHandlers\Clarity.Ecommerce.Providers.SalesReturnHandlers.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.SampleRequestHandlers\Clarity.Ecommerce.Providers.SampleRequestHandlers.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Surcharges\Clarity.Ecommerce.Providers.Surcharges.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.VinLookup\Clarity.Ecommerce.Providers.VinLookup.csproj" />
+    <ProjectReference Include="..\..\05.BusinessLogic\05.Clarity.Ecommerce.Workflow\05.Clarity.Ecommerce.Workflow.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.AddressValidation\Clarity.Ecommerce.Providers.AddressValidation.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Api\Clarity.Ecommerce.Providers.Api.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.CartValidation\Clarity.Ecommerce.Providers.CartValidation.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Checkouts\Clarity.Ecommerce.Providers.Checkouts.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.CurrencyConversions\Clarity.Ecommerce.Providers.CurrencyConversions.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Discounts\Clarity.Ecommerce.Providers.Discounts.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Emails\Clarity.Ecommerce.Providers.Emails.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Files\Clarity.Ecommerce.Providers.Files.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Importer\Clarity.Ecommerce.Providers.Importer.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Inventory\Clarity.Ecommerce.Providers.Inventory.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Memberships\Clarity.Ecommerce.Providers.Memberships.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Packaging\Clarity.Ecommerce.Providers.Packaging.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Payments\Clarity.Ecommerce.Providers.Payments.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Personalization\Clarity.Ecommerce.Providers.Personalization.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Pricing\Clarity.Ecommerce.Providers.Pricing.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Proxy\Clarity.Ecommerce.Providers.Proxy.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.ScheduledTasks\Clarity.Ecommerce.Providers.ScheduledTasks.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Searching\Clarity.Ecommerce.Providers.Searching.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Shipping\Clarity.Ecommerce.Providers.Shipping.csproj" />
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Taxes\Clarity.Ecommerce.Providers.Taxes.csproj" />
+    <None Include="Workflow\StandardWorkflowTests.ttinclude" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,76 @@
+﻿<div ng-controller="SystemEmailQueuesSearchController as systemEmailQueueSearch" class="full-height"
+  ng-if="$root.cvSecurityService.hasPermission('Admin.System.EmailQueues')">
+  <cv-page
+    caption="{{'ui.admin.views.system.emailQueuesList.ManageQueuedEmails' | translate}}"
+    head-icon="fa-at">
+    <cv-widget>
+      <widget-menu-item
+        caption="{{'ui.admin.controls.system.siteMaintenance.ProcessEmailBatch' | translate}}"
+        icon-class="fa-refresh"
+        click="$parent.$parent.$parent.$parent.systemEmailQueueSearch.doProcessEmailBatch()">
+      </widget-menu-item>
+      <widget-body ng-controller="SearchController as search">
+        <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+          sortable="false" server-sorting="true"
+          filter-side="true" force-show-labels="true"
+          on-search="search.getEmailQueues"
+          partial-reset="false"
+          on-deactivate="search.deactivateEmailQueue"
+          on-reactivate="search.reactivateEmailQueue"
+          on-delete="search.deleteEmailQueue"
+          edit-state="system.emailQueues.detail,[ID]"
+          permissions-base="Messaging.EmailQueue">
+          <cv-column hidden field="TypeID" title="Type"
+            filter filter-type="select"
+            on-option-repeat="$parent.search.searchTypes.getEmailTypes">
+            <option value="" data-translate="ui.admin.views.inventory.productslist.Any"></option>
+          </cv-column>
+          <cv-column hidden field="StatusID" title="Status"
+            filter filter-type="select"
+            on-option-repeat="$parent.search.searchTypes.getEmailStatuses"
+            groupable="false">
+            <option value="" data-translate="ui.admin.views.inventory.productslist.Any"></option>
+          </cv-column>
+          <cv-column field="StatusName" title="Status"
+            hidden
+            groupable="false" />
+          <cv-column field="ID" title="#"
+            width="5%" header-class="text-center" cell-class="text-right"
+            filter filter-type="id"
+            sort-by="4" sort-by-direction="desc"
+            groupable="false" />
+          <cv-column field="CustomKey" title="Key"
+            width="10%"
+            filter
+            sortable="true"
+            groupable="false" />
+          <!-- <cv-column field="AddressFrom" title="From" /> -->
+          <cv-column field="AddressesTo" title="To"
+            width="15%"
+            sortable="true"
+            groupable="false" />
+          <cv-column field="Subject"
+            width="30%"
+            sortable="true"
+            groupable="false" />
+          <cv-column field="IsHtml" title="HTML" type="boolean"
+            width="5%" cell-class="text-center" header-class="text-center"
+            filter filter-type="boolean"
+            sortable="true"
+            groupable="false" />
+          <cv-column field="HasError" title="Error" type="boolean"
+            width="5%" cell-class="text-center" header-class="text-center"
+            filter filter-type="boolean"
+            sortable="true"
+            groupable="false" />
+          <cv-column field="Attempts"
+            width="5%" header-class="text-center" cell-class="text-right"
+            sortable="true"
+            groupable="false" />
+          <!-- TODO: <cv-column field="EmailTemplateID" /> -->
+        </cv-grid>
+      </widget-body>
+      -*/
+    </cv-widget>
+  </cv-page>
+</div>

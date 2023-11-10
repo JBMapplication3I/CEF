@@ -1,0 +1,88 @@
+﻿<div class="container-fluid cv-modal">
+    <div class="form-vertical" ng-form="userRoleDetails.forms.MngRole">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group" ng-if="userRoleDetails.dgType == 'Remove'"
+                     data-translate="ui.admin.controls.accounts.modals.userRoleModal.AreYouSureYouWantToRemoveThisRoleThisActionCannotBeUndone"></div>
+                <div class="form-group" ng-class="{'has-error': userRoleDetails.forms.MngRole.ddlDGRole.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.Role"></label>
+                    <div class="input-group">
+                        <!-- TODO: Filter out roles that they already have on 'Add' -->
+                        <select class="form-control" id="ddlDGRole" name="ddlDGRole"
+                                ng-disabled="userRoleDetails.dgType != 'Add'"
+                                ng-model="userRoleDetails.role.RoleId"
+                                ng-required="userRoleDetails.dgType == 'Add'"
+                                ng-options="value as name for (name,value) in userRoleDetails.roles">
+                            <option value="" ng-disabled="true" data-translate="ui.admin.common.SelectARole"></option>
+                        </select>
+                    </div>
+                    <div ng-messages="userRoleDetails.forms.MngRole.ddlDGRole.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': userRoleDetails.forms.MngRole.dateStartDate.$invalid || userRoleDetails.forms.MngRole.timeStartDate.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.controls.accounts.modals.userRoleModal.StartOptional"></label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="dateStartDate" name="dateStartDate"
+                               style="width: 60%;"
+                               ng-disabled="userRoleDetails.dgType == 'Remove'"
+                               ng-required="false"
+                               ng-model="userRoleDetails.role.StartDate" />
+                        <input type="time" class="form-control" id="timeStartDate" name="timeStartDate"
+                               style="width: 40%;"
+                               ng-disabled="userRoleDetails.dgType == 'Remove'"
+                               ng-required="false"
+                               ng-model="userRoleDetails.role.StartDate" />
+                    </div>
+                    <div ng-messages="userRoleDetails.forms.MngRole.dateStartDate.$error || userRoleDetails.forms.MngRole.timeStartDate.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': userRoleDetails.forms.MngRole.dateEndDate.$invalid || userRoleDetails.forms.MngRole.timeEndDate.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.controls.accounts.modals.userRoleModal.EndOptional"></label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="dateEndDate" name="dateEndDate"
+                               style="width: 60%;"
+                               ng-disabled="userRoleDetails.dgType == 'Remove'"
+                               ng-required="false"
+                               ng-model="userRoleDetails.role.EndDate" />
+                        <input type="time" class="form-control" id="timeEndDate" name="timeEndDate"
+                               style="width: 40%;"
+                               ng-disabled="userRoleDetails.dgType == 'Remove'"
+                               ng-required="false"
+                               ng-model="userRoleDetails.role.EndDate" />
+                    </div>
+                    <div ng-messages="userRoleDetails.forms.MngRole.dateEndDate.$error || userRoleDetails.forms.MngRole.timeEndDate.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group btn-group-justified" ng-if="userRoleDetails.dgType == 'Add'">
+                            <button type="button" class="btn btn-success"
+                                    ng-disabled="userRoleDetails.forms.MngRole.$invalid || userRoleDetails.forms.MngRole.$pristine"
+                                    ng-click="userRoleDetails.save()"
+                                    ><i class="far fa-plus"></i>&nbsp;<span data-translate="ui.admin.common.Add"></span></button>
+                        </div>
+                        <div class="btn-group btn-group-justified" ng-if="userRoleDetails.dgType == 'Update'">
+                            <button type="button" class="btn btn-success"
+                                    ng-disabled="userRoleDetails.forms.MngRole.$invalid || userRoleDetails.forms.MngRole.$pristine"
+                                    ng-click="userRoleDetails.save()"
+                                    ><i class="far fa-save"></i>&nbsp;<span data-translate="ui.admin.common.Save"></span></button>
+                        </div>
+                        <div class="btn-group btn-group-justified" ng-if="userRoleDetails.dgType == 'Remove'">
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="userRoleDetails.save()"
+                                    ><i class="far fa-times"></i>&nbsp;<span data-translate="ui.admin.common.Confirm"></span></button>
+                        </div>
+                        <div class="btn-group btn-group-justified">
+                            <button type="button" class="btn btn-primary"
+                                    ng-click="userRoleDetails.close()"
+                                    ><i class="far fa-undo"></i>&nbsp;<span data-translate="ui.admin.common.Cancel"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+.zHigh {
+  z-index: 1040 !important;
+}
+
+@keyframes delayZIndex {
+  from {
+    z-index: 1040;
+  }
+
+  99% {
+    z-index: 1040;
+  }
+
+  to {
+    z-index: -1;
+  }
+}
+
+.zLow {
+  animation: delayZIndex 1200ms forwards;
+}

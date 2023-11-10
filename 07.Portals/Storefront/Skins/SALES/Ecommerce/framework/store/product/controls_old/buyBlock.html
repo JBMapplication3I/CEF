@@ -1,0 +1,142 @@
+﻿<div class="row" ng-form="productBuyBlockCtrl.forms.buy"
+    ng-if="productBuyBlockCtrl.productToDisplay"
+    ng-switch="productBuyBlockCtrl.productToDisplay.SerializableAttributes.Template.Value">
+
+    <!-- Clothing -->
+    <div class="col-12 d-flex" ng-switch-when="Clothing">
+      <div class="form-group mb-2"
+           ng-if="productBuyBlockCtrl.productWhichIsTheMaster.TypeName == 'Variant Master'">
+          <label class="control-label font-weight-normal" for="variations"
+                 data-translate="ui.storefront.product.detail.productDetails.Options"></label>
+          <div class="input-group">
+              <select class="form-control"
+                      id="variations" name="variations"
+                      ng-required="true"
+                      ng-change="productBuyBlockCtrl.variantChanged()"
+                      ng-options="variant.SlaveID as variant.SlaveName.replace(productBuyBlockCtrl.productWhichIsTheMaster.Name, '').trim()
+                                  for variant in productBuyBlockCtrl.productVariants
+                                  | orderBy: ['SortOrder','Name']"
+                      ng-model="productBuyBlockCtrl.productIdForTheCurrentVariant">
+                  <option value="" ng-disabled="true"
+                          data-translate="ui.storefront.product.detail.productDetails.pleaseSelectAProductVersion"></option>
+              </select>
+          </div>
+      </div>
+      <div cef-add-to-cart-quantity-selector
+           item="productBuyBlockCtrl.productToDisplay"
+           default-value="1"
+           current-value="productBuyBlockCtrl.quantityForAddToCart"
+           is-required="true"
+           step="1"
+           index="productBuyBlockCtrl.productToDisplay.ID">
+      </div>
+      <button ng-if="productBuyBlockCtrl.productToDisplay.isOutOfStock() && !productBuyBlockCtrl.productToDisplay.AllowBackOrder"
+              type="button" class="btn btn-lg btn-primary w-100 ml-3"
+              id="btnDetailsAddToCartProductOutOfStock{{productBuyBlockCtrl.productToDisplay.ID}}"
+              name="btnDetailsAddToCartProductOutOfStock{{productBuyBlockCtrl.productToDisplay.ID}}"
+              ng-disabled="true"
+              data-translate="ui.storefront.common.OutOfStock">
+      </button>
+      <button ng-if="!(productBuyBlockCtrl.productToDisplay.isOutOfStock() && !productBuyBlockCtrl.productToDisplay.AllowBackOrder)"
+              type="button" class="btn btn-lg btn-success w-100 ml-3"
+              id="btnDetailsAddToCartProduct{{productBuyBlockCtrl.productToDisplay.ID}}"
+              name="btnDetailsAddToCartProduct{{productBuyBlockCtrl.productToDisplay.ID}}"
+              translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                                'aria-label': 'ui.storefront.cart.addToCart' }"
+              ng-disabled="productBuyBlockCtrl.viewstate.running
+                        || productBuyBlockCtrl.forms.buy.$invalid
+                        || productBuyBlockCtrl.productToDisplay.IsDiscontinued"
+              ng-click="productBuyBlockCtrl.addCurrentItemToCart(
+                  productBuyBlockCtrl.quantityForAddToCart, null, productBuyBlockCtrl.productToDisplay)">
+          <i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.cart.addToCart"></span>
+      </button>
+    </div>
+    <!-- Default -->
+    <div class="col-12" ng-switch-default>
+        <div class="form-group mb-2"
+             ng-if="productBuyBlockCtrl.productWhichIsTheMaster.TypeName == 'Variant Master'">
+            <label class="control-label font-weight-normal" for="variations"
+                   data-translate="ui.storefront.product.detail.productDetails.Options"></label>
+            <div class="input-group">
+                <select class="form-control"
+                        id="variations" name="variations"
+                        ng-required="true"
+                        ng-change="productBuyBlockCtrl.variantChanged()"
+                        ng-options="variant.SlaveID as variant.SlaveName.replace(productBuyBlockCtrl.productWhichIsTheMaster.Name, '').trim()
+                                    for variant in productBuyBlockCtrl.productVariants
+                                    | orderBy: ['SortOrder','Name']"
+                        ng-model="productBuyBlockCtrl.productIdForTheCurrentVariant">
+                    <option value="" ng-disabled="true"
+                            data-translate="ui.storefront.product.detail.productDetails.pleaseSelectAProductVersion"></option>
+                </select>
+            </div>
+        </div>
+        <div cef-add-to-cart-quantity-selector
+             item="productBuyBlockCtrl.productToDisplay"
+             default-value="1"
+             current-value="productBuyBlockCtrl.quantityForAddToCart"
+             is-required="true"
+             step="1"
+             index="productBuyBlockCtrl.productToDisplay.ID"
+             class="mb-1">
+        </div>
+        <button ng-if="productBuyBlockCtrl.productToDisplay.isOutOfStock() && !productBuyBlockCtrl.productToDisplay.AllowBackOrder"
+                type="button" class="btn btn-lg btn-primary w-100"
+                id="btnDetailsAddToCartProductOutOfStock{{productBuyBlockCtrl.productToDisplay.ID}}"
+                name="btnDetailsAddToCartProductOutOfStock{{productBuyBlockCtrl.productToDisplay.ID}}"
+                ng-disabled="true"
+                data-translate="ui.storefront.common.OutOfStock">
+        </button>
+        <button ng-if="!(productBuyBlockCtrl.productToDisplay.isOutOfStock() && !productBuyBlockCtrl.productToDisplay.AllowBackOrder)"
+                type="button" class="btn btn-lg btn-success w-100"
+                id="btnDetailsAddToCartProduct{{productBuyBlockCtrl.productToDisplay.ID}}"
+                name="btnDetailsAddToCartProduct{{productBuyBlockCtrl.productToDisplay.ID}}"
+                translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                                  'aria-label': 'ui.storefront.cart.addToCart' }"
+                ng-disabled="productBuyBlockCtrl.viewstate.running
+                          || productBuyBlockCtrl.forms.buy.$invalid
+                          || productBuyBlockCtrl.productToDisplay.IsDiscontinued"
+                ng-click="productBuyBlockCtrl.addCurrentItemToCart(
+                    productBuyBlockCtrl.quantityForAddToCart, null, productBuyBlockCtrl.productToDisplay)">
+            <i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;<!--
+            --><span data-translate="ui.storefront.cart.addToCart"></span>
+        </button>
+    </div>
+    <div class="col-12 cef-product-restrictions"
+         ng-if="productBuyBlockCtrl.showMinAllowedToPurchaseMessage()
+             || productBuyBlockCtrl.showMinAllowedToPurchaseAfterMessage()
+             || productBuyBlockCtrl.showMaxAllowedToPurchaseMessage()
+             || productBuyBlockCtrl.showMaxAllowedToPurchaseAfterMessage()
+             || productBuyBlockCtrl.showMissingRolesAltMessage()">
+        <p ng-if="productBuyBlockCtrl.showMinAllowedToPurchaseMessage()"
+           data-translate="ui.storefront.product.detail.productDetails.MinimumRequiredToPurchase.Template"
+           translate-value-min="{{productBuyBlockCtrl.calculateMinAllowedPurchase()}}">
+        </p>
+        <p ng-if="productBuyBlockCtrl.showMinAllowedToPurchaseAfterMessage()"
+           data-translate="ui.storefront.product.detail.productDetails.MinimumRequiredToPurchaseWithAfter.Template"
+           translate-value-min="{{productBuyBlockCtrl.calculateMinAllowedPurchase()}}"
+           translate-value-after="{{productBuyBlockCtrl.calculateMinAllowedPurchaseAfter() == 0
+                ? ('ui.storefront.product.detail.productDetails.MinimumRequiredToPurchase.NoRequirement' | translate)
+                : productBuyBlockCtrl.calculateMinAllowedPurchaseAfter()}}">
+        </p>
+        <p ng-if="productBuyBlockCtrl.showMaxAllowedToPurchaseMessage()"
+           data-translate="ui.storefront.product.detail.productDetails.MaximumAllowedToPurchase.Template"
+           translate-value-max="{{productBuyBlockCtrl.calculateMaxAllowedPurchase()}}">
+        </p>
+        <p ng-if="productBuyBlockCtrl.showMaxAllowedToPurchaseAfterMessage()"
+           data-translate="ui.storefront.product.detail.productDetails.MaximumAllowedToPurchaseWithAfter.Template"
+           translate-value-max="{{productBuyBlockCtrl.calculateMaxAllowedPurchase()}}"
+           translate-value-after="{{productBuyBlockCtrl.calculateMaxAllowedPurchaseAfter()}}">
+        </p>
+        <p ng-if="productBuyBlockCtrl.showMissingRolesAltMessage()"
+           data-translate="ui.storefront.product.detail.productDetails.MaximumAllowedToPurchaseWithAfter.Template">
+        </p>
+    </div>
+    <div ng-if="productBuyBlockCtrl.viewState.running"
+         cef-loading-widget
+         overlay="true"
+         size="4"
+         message="productBuyBlockCtrl.viewState.waitMessage">
+    </div>
+</div>

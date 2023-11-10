@@ -1,0 +1,44 @@
+<div ng-form="difgCtrl.forms.{{difgCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="{'has-error': difgCtrl.forms[difgCtrl.formIdentifier].$invalid}">
+  <label class="control-label" for="date{{difgCtrl.formIdentifier}}"
+    uib-tooltip="{{difgCtrl.tooltip}}" tooltip-placement="auto top-left">
+    <span data-translate="{{difgCtrl.labelKey}}">{{difgCtrl.labelText}}</span><!--
+    --><span ng-if="difgCtrl.required" class="text-danger">&nbsp;*</span><!--
+    --><span ng-if="difgCtrl.tooltip" class="text-info">&nbsp;<i class="far fa-question-circle"></i></span>
+  </label>
+  <div class="input-group">
+    <input type="date" class="form-control" ng-class="difgCtrl.inputClass"
+      id="date{{difgCtrl.formIdentifier}}"
+      name="date{{difgCtrl.formIdentifier}}"
+      translate-attr="{ placeholder: difgCtrl.placeholderKey }"
+      placeholder="{{difgCtrl.placeholderText}}"
+      min="difgCtrl.min || ''"
+      max="difgCtrl.max || ''"
+      ng-change="difgCtrl.extraOnChange($event)"
+      ng-disabled="difgCtrl.disabled"
+      ng-required="difgCtrl.required"
+      ng-model-options="difgCtrl.options"
+      ng-model="difgCtrl.property"
+    />
+    <div ng-if="difgCtrl.includeTime"
+       class="input-group-append with-control">
+      <input type="time" class="form-control"
+        ng-class="difgCtrl.inputClass"
+        id="time{{difgCtrl.formIdentifier}}"
+        name="time{{difgCtrl.formIdentifier}}"
+        min="difgCtrl.min || ''"
+        max="difgCtrl.max || ''"
+        ng-disabled="difgCtrl.disabled"
+        ng-required="difgCtrl.required"
+        ng-model="difgCtrl.property"
+      />
+    </div>
+  </div>
+  <div ng-messages="difgCtrl.forms.difgCtrl.formIdentifier.$error">
+    <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+  <div ng-messages="difgCtrl.includeTime && difgCtrl.forms.difgCtrl.formIdentifier.$error">
+    <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+</div>

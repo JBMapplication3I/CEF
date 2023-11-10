@@ -1,0 +1,181 @@
+<div ng-switch="pcabwCtrl.abv" ng-if="pcabwCtrl.product">
+  <!-- View Details button -->
+  <div ng-switch-when="viewDetails">
+    <a class="btn btn-primary w-100"
+      ui-sref-plus uisrp-is-product="true"
+      uisrp-path="{{pcabwCtrl.product.SeoUrl}}">
+      <span class="text-white" data-translate="ui.storefront.common.ViewDetails"></span>
+    </a>
+  </div>
+  <!-- Add to Cart button -->
+  <div ng-switch-when="addToQuoteCart">
+    <div cef-add-to-cart-quantity-selector
+      item="pcabwCtrl.product"
+      ng-if="pcabwCtrl.hideQuantitySelector.toString() !== 'true'"
+      default-value="1"
+      current-value="pcabwCtrl.quantity"
+      is-required="false"
+      step="1"
+      ng-class="{ 'mb-1 d-block': !pcabwCtrl.asIcon,
+                  'inline-block': pcabwCtrl.asIcon }"
+      ng-style="{ 'width': (pcabwCtrl.asIcon ? 'calc(100% - 46px)' : '100%') }"
+      index="pcabwCtrl.product.ID">
+    </div>
+    <!--
+    <button ng-if="pcabwCtrl.product.readInventory().IsOutOfStock
+      && !pcabwCtrl.product.readInventory().AllowBackOrder"
+      type="button" class="btn btn-secondary"
+      ng-class="{ 'btn-lg': !pcabwCtrl.small && !pcabwCtrl.asIcon,
+              'btn-block': !pcabwCtrl.asIcon }"
+      ng-style="{ 'vertical-align': (pcabwCtrl.asIcon ? 'top' : 'middle') }"
+      id="btnGridOutOfStockProduct{{pcabwCtrl.product.ID}}"
+      name="btnGridOutOfStockProduct{{pcabwCtrl.product.ID}}"
+      translate-attr="{ title: 'ui.storefront.common.OutOfStock',
+                        'aria-label': 'ui.storefront.common.OutOfStock' }"
+      ng-disabled="true">
+      <i class="far fa-cart-plus" aria-hidden="true" ng-if="pcabwCtrl.asIcon"></i>< !--
+      -- ><span ng-class="{ 'sr-only': pcabwCtrl.asIcon }"
+        data-translate="ui.storefront.common.OutOfStock">
+      </span>
+    </button>
+    -->
+    <a ng-if="pcabwCtrl.product.readInventory().IsOutOfStock
+      && !pcabwCtrl.product.readInventory().AllowBackOrder"
+      class="btn btn-secondary"
+      ng-class="{ 'btn-lg': !pcabwCtrl.small && !pcabwCtrl.asIcon,
+                  'btn-block': !pcabwCtrl.asIcon }"
+      ng-style="{ 'vertical-align': (pcabwCtrl.asIcon ? 'top' : 'middle') }"
+      id="btnGridOutOfStockViewDetailsProduct{{pcabwCtrl.product.ID}}"
+      name="btnGridOutOfStockViewDetailsProduct{{pcabwCtrl.product.ID}}"
+      ui-sref-plus uisrp-is-product="true"
+      uisrp-path="{{pcabwCtrl.product.SeoUrl}}">
+      <i class="far fa-list" aria-hidden="true" ng-if="pcabwCtrl.asIcon"></i><!--
+      --><span ng-class="{ 'sr-only': pcabwCtrl.asIcon }"
+        data-translate="ui.storefront.common.ViewDetails">
+      </span>
+    </a>
+    <button ng-if="!(pcabwCtrl.product.readInventory().IsOutOfStock
+      && !pcabwCtrl.product.readInventory().AllowBackOrder)"
+      type="button" class="btn btn-success"
+      ng-class="{ 'btn-lg': !pcabwCtrl.small && !pcabwCtrl.asIcon,
+                  'btn-block': !pcabwCtrl.asIcon }"
+      ng-style="{ 'vertical-align': (pcabwCtrl.asIcon ? 'top' : 'middle') }"
+      id="btnGridAddToCartProduct{{pcabwCtrl.product.ID}}"
+      name="btnGridAddToCartProduct{{pcabwCtrl.product.ID}}"
+      translate-attr="{ title: 'ui.storefront.quotes.cart.add',
+                        'aria-label': 'ui.storefront.quotes.cart.add' }"
+      ng-disabled="pcabwCtrl.cvCartService.viewstate.checkoutIsProcessing"
+      ng-click="pcabwCtrl.addCartItem()">
+      <i class="far fa-quote-right" aria-hidden="true" ng-if="pcabwCtrl.asIcon"></i><!--
+      --><span ng-class="{ 'sr-only': pcabwCtrl.asIcon }"
+        data-translate="ui.storefront.quotes.cart.add">
+      </span>
+    </button>
+  </div>
+  <div ng-switch-when="addToCart">
+    <div cef-add-to-cart-quantity-selector
+      item="pcabwCtrl.product"
+      ng-if="pcabwCtrl.hideQuantitySelector.toString() !== 'true'"
+      default-value="1"
+      current-value="pcabwCtrl.quantity"
+      is-required="false"
+      step="1"
+      no-buttons="false"
+      ng-class="{ 'mb-1 d-block': !pcabwCtrl.asIcon,
+                  'd-inline-block': pcabwCtrl.asIcon }"
+      ng-style="{ 'width': (pcabwCtrl.asIcon ? 'calc(100% - 46px)' : '100%') }"
+      index="pcabwCtrl.product.ID">
+    </div>
+    <a ng-if="!pcabwCtrl.menuEnabled
+      && pcabwCtrl.product.readInventory().IsOutOfStock
+      && !pcabwCtrl.product.readInventory().AllowBackOrder"
+      class="btn btn-secondary rounded"
+      ng-class="{ 'btn-lg': !pcabwCtrl.small && !pcabwCtrl.asIcon,
+                  'btn-block': !pcabwCtrl.asIcon }"
+      ng-style="{ 'vertical-align': (pcabwCtrl.asIcon ? 'top' : 'middle') }"
+      id="btnGridOutOfStockViewDetailsProduct{{pcabwCtrl.product.ID}}"
+      name="btnGridOutOfStockViewDetailsProduct{{pcabwCtrl.product.ID}}"
+      translate-attr="{ title: 'ui.storefront.common.ViewDetails',
+                        'aria-label': 'ui.storefront.common.ViewDetails' }"
+      ui-sref-plus uisrp-is-product="true"
+      uisrp-path="{{pcabwCtrl.product.SeoUrl}}">
+      <i class="far fa-list" aria-hidden="true" ng-if="pcabwCtrl.asIcon"></i><!--
+      --><span ng-class="{ 'sr-only': pcabwCtrl.asIcon }"
+        data-translate="ui.storefront.common.ViewDetails">
+      </span>
+    </a>
+    <button ng-if="!pcabwCtrl.menuEnabled
+      && !(pcabwCtrl.product.readInventory().IsOutOfStock
+           && !pcabwCtrl.product.readInventory().AllowBackOrder)"
+      type="button" class="btn btn-success rounded"
+      ng-class="{ 'btn-lg': !pcabwCtrl.small && !pcabwCtrl.asIcon,
+                  'btn-block': !pcabwCtrl.asIcon }"
+      ng-style="{ 'vertical-align': (pcabwCtrl.asIcon ? 'top' : 'middle') }"
+      id="btnGridAddToCartProduct{{pcabwCtrl.product.ID}}"
+      name="btnGridAddToCartProduct{{pcabwCtrl.product.ID}}"
+      sid="btnGridAddToCartProduct_{{pcabwCtrl.index}}"
+      translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                        'aria-label': 'ui.storefront.cart.addToCart' }"
+      ng-disabled="pcabwCtrl.cvCartService.viewstate.checkoutIsProcessing"
+      ng-click="pcabwCtrl.addCartItem()">
+      <i class="far fa-cart-plus" aria-hidden="true" ng-if="pcabwCtrl.asIcon"></i><!--
+      --><span ng-class="{ 'sr-only': pcabwCtrl.asIcon }"
+        data-translate="ui.storefront.cart.addToCart">
+      </span>
+    </button>
+    <div ng-if="pcabwCtrl.menuEnabled" class="btn-group w-100" uib-dropdown>
+      <a ng-if="pcabwCtrl.showViewDetailsButton"
+        class="btn btn-secondary rounded-left"
+        ng-class="{ 'btn-lg': !pcabwCtrl.small && !pcabwCtrl.asIcon,
+                    'btn-block': !pcabwCtrl.asIcon }"
+        ng-style="{ 'vertical-align': (pcabwCtrl.asIcon ? 'top' : 'middle') }"
+        id="btnGridOutOfStockViewDetailsProduct{{pcabwCtrl.product.ID}}"
+        name="btnGridOutOfStockViewDetailsProduct{{pcabwCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.ViewDetails',
+                          'aria-label': 'ui.storefront.common.ViewDetails' }"
+        ui-sref-plus uisrp-is-product="true"
+        uisrp-path="{{pcabwCtrl.product.SeoUrl}}">
+        <i class="far fa-list" aria-hidden="true" ng-if="pcabwCtrl.asIcon"></i><!--
+        --><span ng-class="{ 'sr-only': pcabwCtrl.asIcon }"
+          data-translate="ui.storefront.common.ViewDetails">
+        </span>
+      </a>
+      <button ng-if="!pcabwCtrl.showViewDetailsButton"
+        type="button" class="btn btn-success rounded-left"
+        ng-class="{ 'btn-lg': !pcabwCtrl.small && !pcabwCtrl.asIcon,
+                    'btn-block': !pcabwCtrl.asIcon }"
+        ng-style="{ 'vertical-align': (pcabwCtrl.asIcon ? 'top' : 'middle') }"
+        id="btnGridAddToCartProduct{{pcabwCtrl.product.ID}}"
+        name="btnGridAddToCartProduct{{pcabwCtrl.product.ID}}"
+        sid="btnGridAddToCartProduct_{{pcabwCtrl.index}}"
+        translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                          'aria-label': 'ui.storefront.cart.addToCart' }"
+        ng-disabled="pcabwCtrl.cvCartService.viewstate.checkoutIsProcessing"
+        ng-click="pcabwCtrl.addCartItem()">
+        <i class="far fa-cart-plus" aria-hidden="true" ng-if="pcabwCtrl.asIcon"></i><!--
+        --><span ng-class="{ 'sr-only': pcabwCtrl.asIcon }"
+          data-translate="ui.storefront.cart.addToCart">
+        </span>
+      </button>
+      <!-- <button uib-dropdown-toggle
+        ng-if="pcabwCtrl.product.TypeName.toLowerCase() != 'variant master'"
+        type="button" class="btn rounded-right"
+        ng-class="{
+          'btn-secondary': pcabwCtrl.product.readInventory().IsOutOfStock
+                       && !pcabwCtrl.product.readInventory().AllowBackOrder,
+          'btn-success': !(pcabwCtrl.product.readInventory().IsOutOfStock
+                       && !pcabwCtrl.product.readInventory().AllowBackOrder) }">
+        <span class="sr-only">Toggle Dropdown</span>
+        <i class="far fa-chevron-down" aria-hidden="true"></i>
+      </button> -->
+      <div uib-dropdown-menu
+        class="dropdown-menu dropdown-menu-right" role="menu">
+        <button type="button" class="dropdown-item px-2"
+          ng-click="pcabwCtrl.addQuoteCartItem()">
+          <i class="far fa-quote-right fa-fw" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.quotes.cart.add"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

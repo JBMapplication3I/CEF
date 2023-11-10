@@ -1,0 +1,21 @@
+﻿@using Clarity.Ecommerce.MVC.Core
+@using Clarity.Ecommerce.MVC.Api.Endpoints
+
+@inherits TabAssociationBase<
+  ProductModel,
+  VendorModel,
+  VendorPagedResults,
+  GetVendors,
+  VendorProductModel,
+  VendorProductPagedResults,
+  GetVendorProducts,
+  CreateVendorProduct,
+  DeactivateVendorProductByID,
+  ModalEditVendorProduct>
+
+@{
+  /* Write the base component content here */
+  base.BuildRenderTree(__builder);
+}
+
+<ModalEditVendorProduct @ref="modalEdit" />

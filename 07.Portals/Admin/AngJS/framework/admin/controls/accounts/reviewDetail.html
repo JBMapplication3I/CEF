@@ -1,0 +1,238 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-standard-detail-header-widget
+    record="reviewDetailCtrl.record"
+    new-kind-key="ui.admin.common.Review.New"
+    existing-kind-key="ui.admin.common.Review">
+  </div>
+  <div class="row details-body">
+    <div class="col-md-12 review-editor">
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': reviewDetailCtrl.forms.Details.$invalid}"
+            ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="reviewDetailCtrl.forms.Details">
+            <div class="row">
+              <div class="col-md-6">
+                <h3 data-translate="ui.admin.common.ReviewInformation"></h3>
+                <div class="row">
+                  <div class="form-group col-sm-4">
+                    <label class="control-label" data-translate="ui.admin.common.Type"></label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.TypeName">
+                      </label>
+                    </div>
+                  </div>
+                  <div ng-if="reviewDetailCtrl.record.TypeName == 'Category'"
+                    class="form-group col-sm-8">
+                    <label class="control-label" data-translate="ui.admin.common.Category"></label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.Category.Name">
+                      </label>
+                    </div>
+                  </div>
+                  <div ng-if="reviewDetailCtrl.record.TypeName == 'Manufacturer'"
+                    class="form-group col-sm-8">
+                    <label class="control-label" data-translate="ui.admin.common.Manufacturer"></label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.Manufacturer.Name"></label>
+                    </div>
+                  </div>
+                  <div ng-if="reviewDetailCtrl.record.TypeName == 'Product'"
+                    class="form-group col-sm-8">
+                    <label class="control-label" data-translate="ui.admin.common.Product"></label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.Product.Name">
+                      </label>
+                    </div>
+                  </div>
+                  <div ng-if="reviewDetailCtrl.record.TypeName == 'Store'"
+                    class="form-group col-sm-8">
+                    <label class="control-label" data-translate="ui.admin.common.Store"></label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.Store.Name">
+                      </label>
+                    </div>
+                  </div>
+                  <div ng-if="reviewDetailCtrl.record.TypeName == 'User'"
+                    class="form-group col-sm-8">
+                    <label class="control-label" data-translate="ui.admin.common.User"></label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.User.Name">
+                      </label>
+                    </div>
+                  </div>
+                  <div ng-if="reviewDetailCtrl.record.TypeName == 'Vendor'"
+                    class="form-group col-sm-8">
+                    <label class="control-label" data-translate="ui.admin.common.Vendor"></label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.Vendor.Name">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': reviewDetailCtrl.forms.Details.txtTitle.$invalid}">
+                  <label class="control-label" for="txtTitle"
+                    data-translate="ui.admin.common.Title">
+                  </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control"
+                      id="txtTitle" name="txtTitle"
+                      maxlength="128"
+                      ng-required="true"
+                      ng-model="reviewDetailCtrl.record.Title" />
+                  </div>
+                  <div ng-messages="reviewDetailCtrl.forms.Details.txtTitle.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': reviewDetailCtrl.forms.Details.txtLocation.$invalid}">
+                  <label class="control-label" for="txtLocation"
+                    data-translate="ui.admin.common.Location">
+                  </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control"
+                      id="txtLocation" name="txtLocation"
+                      maxlength="128"
+                      ng-required="false"
+                      ng-model="reviewDetailCtrl.record.Location" />
+                  </div>
+                  <div ng-messages="reviewDetailCtrl.forms.Details.txtLocation.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-sm-4">
+                    <label class="control-label"
+                      data-translate="ui.admin.controls.accounts.reviewDetail.SubmittedBy">
+                    </label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.SubmittedByUserUserName">
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label class="control-label"
+                      data-translate="ui.admin.controls.accounts.reviewDetail.SubmittedDate">
+                    </label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.CreatedDate | convertJSONDate | date: 'yyyy-MM-dd hh:mm'">
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-4"
+                     ng-class="{'has-error': reviewDetailCtrl.forms.Details.nudRating.$invalid}">
+                    <label class="control-label" for="nudRating"
+                      data-translate="ui.admin.controls.accounts.reviewDetail.Rating">
+                    </label>
+                    <div class="input-group">
+                      <input type="number" class="form-control"
+                        id="nudRating" name="nudRating"
+                        min="0" max="999" step="1"
+                        ng-required="false"
+                        ng-model="reviewDetailCtrl.record.Value" />
+                    </div>
+                    <div ng-messages="reviewDetailCtrl.forms.Details.nudRating.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                </div>
+                <textarea-form-group
+                  key="Comment"
+                  ng-model="reviewDetailCtrl.record.Comment"
+                  placeholder-key="ui.admin.controls.accounts.reviewDetail.Comment"
+                  label-key="ui.admin.controls.accounts.reviewDetail.Comment"
+                  max-length="1024"
+                  ng-required="false">
+                </textarea-form-group>
+              </div>
+              <div class="col-md-6">
+                <h3 data-translate="ui.admin.controls.accounts.reviewDetail.PermissionsAndDisplay"></h3>
+                <div class="row">
+                  <div class="form-group col-sm-4">
+                    <label class="control-label"
+                      data-translate="ui.admin.controls.accounts.reviewDetail.Approved">
+                    </label>
+                    <div class="input-group">
+                      <label ng-if="reviewDetailCtrl.record.Approved"
+                        class="form-control-static font-weight-normal">
+                        <span data-translate="ui.admin.controls.accounts.reviewDetail.ApprovedBy"></span>&nbsp;<!--
+                        --><b ng-bind="reviewDetailCtrl.record.ApprovedByUserUserName"></b>
+                      </label>
+                      <label ng-if="!reviewDetailCtrl.record.Approved"
+                        class="form-control-static font-weight-normal"
+                        data-translate="ui.admin.common.NotApproved">
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label class="control-label"
+                      data-translate="ui.admin.controls.accounts.reviewDetail.ApprovalDate">
+                    </label>
+                    <div class="input-group">
+                      <label ng-if="reviewDetailCtrl.record.ApprovedDate"
+                        class="form-control-static font-weight-normal"
+                        ng-bind="reviewDetailCtrl.record.ApprovedDate | convertJSONDate | date: 'yyyy-MM-dd hh:mm'">
+                      </label>
+                      <label ng-if="!reviewDetailCtrl.record.ApprovedDate"
+                        class="form-control-static font-weight-normal"
+                        data-translate="ui.admin.common.NotApproved">
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label class="control-label">&nbsp;</label>
+                    <div class="input-group">
+                      <button ng-if="!reviewDetailCtrl.record.Approved"
+                        type="button" class="btn btn-primary btn-block mt-0"
+                        data-translate="ui.admin.controls.accounts.reviewDetail.Approve"
+                        ng-click="reviewDetailCtrl.approve()">
+                      </button>
+                      <button ng-if="reviewDetailCtrl.record.Approved"
+                        type="button" class="btn btn-primary btn-block mt-0"
+                        data-translate="ui.admin.controls.accounts.reviewDetail.Unapprove"
+                        ng-click="reviewDetailCtrl.unapprove()">
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': reviewDetailCtrl.forms.Details.nudSortOrder.$invalid}">
+                  <label class="control-label" for="nudSortOrder"
+                    data-translate="ui.admin.common.SortOrder">
+                  </label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="nudSortOrder" name="nudSortOrder"
+                      ng-required="false" step="1"
+                      ng-model="reviewDetailCtrl.record.SortOrder" />
+                  </div>
+                  <div ng-messages="reviewDetailCtrl.forms.Details.nudSortOrder.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <!-- Form actions -->
+  <div class="row details-footer">
+    <div class="col-md-12">
+      <cef-standard-detail-footer-buttons
+        master-controller="reviewDetailCtrl"
+        return-state="accounts.reviews.list"
+        permissions-base="Reviews.Review">
+      </cef-standard-detail-footer-buttons>
+    </div>
+  </div>
+</div>

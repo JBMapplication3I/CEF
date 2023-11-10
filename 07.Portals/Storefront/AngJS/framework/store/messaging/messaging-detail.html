@@ -1,0 +1,114 @@
+﻿<div class="row">
+    <div class="col-12" ng-if="messageCtrl.viewstate.readmode">
+        <h3 ng-bind="messageCtrl.message.model.Subject"></h3>
+        <div class="row">
+            <div class="col-sm-9">
+                <p>from <b ng-bind="messageCtrl.message.model.SentByUserUserName"></b>
+                <span class="hidden-mobile"> on <i ng-bind="messageCtrl.message.model.UpdatedDate | convertJSONDate | date : 'short'"></i></span></p>
+            </div>
+            <div class="col-sm-3 text-right">
+                <div class="btn-group text-left" uib-dropdown>
+                    <button type="button" class="btn btn-primary btn-sm replythis"
+                            ui-sref="userDashboard.inbox.reply({id: messageCtrl.message.model.ID, msg: messageCtrl.message})">
+                        <i class="far fa-reply"></i>&nbsp;<span data-translate="ui.storefront.messaging.messaging-detail.Reply"></span></button>
+                    <button class="btn btn-primary btn-sm dropdown-toggle" uib-dropdown-toggle><i class="far fa-angle-down"></i></button>
+                    <ul class="dropdown-menu float-right">
+                        <li><a ui-sref="userDashboard.inbox.reply({id: messageCtrl.message.model.ID, msg: messageCtrl.message})" class="replythis"><i class="far fa-reply" aria-hidden="true"></i>&nbsp;<span data-translate="ui.storefront.messaging.messaging-detail.Reply"></span></a></li>
+                        <li><a ui-sref="userDashboard.inbox.forward({id: messageCtrl.message.model.ID, msg: messageCtrl.message})" class="forwardthis"><i class="far fa-share" aria-hidden="true"></i>&nbsp;<span data-translate="ui.storefront.messaging.messaging-detail.Forward"></span></a></li>
+                        <li><a ui-sref="userDashboard.inbox.delete({id: messageCtrl.message.model.ID, msg: messageCtrl.message})"><i class="far fa-trash" aria-hidden="true"></i>&nbsp;<span data-translate="ui.storefront.common.Delete"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    <div class="card">
+                        <div class="card-body" ng-bind-html="messageCtrl.message.model.Body"></div>
+                    </div>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" ng-if="message.attachments.length">
+                <span ng-bind="message.attachments.length"></span>&nbsp;<!--
+                --><span data-translate="ui.storefront.messaging.messaging-detail.Attachments"></span>&nbsp;-&nbsp;<!--
+                --><a data-translate="ui.storefront.messaging.messaging-detail.downloadAllAttachments"></a>
+                <ul class="list-unstyled">
+                    <li ng-repeat="attachment in message.attachments">
+                        <div class="card">
+                            <span ng-if="attachment.picture"><img ng-src="{{attachment.picture}}" /></span>
+                            <span ng-if="!attachment.picture"><i class="far fa-paperclip"></i></span>
+                            <br/>
+                            <b ng-bind="attachment.name"></b>
+                            <br/>
+                            <span ng-bind="attachment.size"></span>
+                            <br/>
+                            <a href-void data-translate="ui.storefront.messaging.messaging-detail.Download"></a>&nbsp;|&nbsp;<!--
+                            --><a href-void data-translate="ui.storefront.common.View"></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12" ng-if="messageCtrl.viewstate.composemode || messageCtrl.viewstate.replymode || messageCtrl.viewstate.forwardmode">
+        <h3 class="email-open-header" ng-show="messageCtrl.viewstate.composemode" data-translate="ui.storefront.messaging.messaging-detail.composeNewMessage"></h3>
+        <h3 class="email-open-header" ng-show="messageCtrl.viewstate.replymode" data-translate="ui.storefront.messaging.messaging-detail.replyToMessage"></h3>
+        <h3 class="email-open-header" ng-show="messageCtrl.viewstate.forwardmode" data-translate="ui.storefront.messaging.messaging-detail.forwardMessage"></h3>
+        <div ng-form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2" data-translate="ui.storefront.common.To.Lowercase"></label>
+                <div class="col-md-10">
+                    <select kendo-multi-select
+                            k-options="messageCtrl.selectOptions"
+                            k-value-primitve="false"
+                            k-ng-delay="messageCtrl.message.model.MessageRecipients"
+                            k-ng-model="messageCtrl.message.model.MessageRecipients">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2" data-translate="ui.storefront.messaging.messaging-detail.Subject"></label>
+                <div class="col-md-10">
+                    <input class="form-control" placeholder="Subject" type="text" ng-model="messageCtrl.message.model.Subject" />
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal" ng-show="composeCtrl.attachments">
+            <div class="form-group">
+                <label class="col-md-2" data-translate="ui.storefront.messaging.messaging-detail.Attachments"></label>
+                <div class="col-md-10">
+                    <input class="form-control" type="file" multiple="multiple" />
+                </div>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+            <label class="col-sm-2" data-translate="ui.storefront.messaging.messaging-detail.Body"></label>
+            <div class="col-sm-10">
+                <textarea kendo-editor k-ng-model="messageCtrl.message.model.Body"></textarea>
+            </div>
+            </div>
+        </div>
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-danger"
+                    data-translate="ui.storefront.common.Cancel"
+                    ng-click="messageCtrl.cancel()"></button>
+            <button ng-if="!sending"
+                    type="button" class="btn btn-primary"
+                    ng-click="messageCtrl.sendMessage()"
+                    ><span data-translate="ui.storefront.common.Send"></span>&nbsp;<!--
+                    --><i class="far fa-arrow-circle-right fa-lg"></i></button>
+            <button ng-if="sending" type="button" class="btn btn-primary" ng-disabled="true"
+                    ><i class="far fa-sync fa-spin"></i>&nbsp;<!--
+                    --><span data-translate="ui.storefront.common.Sending"></span></button>
+        </div>
+    </div>
+    <div class="col-12" ng-if="messageCtrl.viewstate.showmessage">
+        <div class="alert alert-info" ng-bind="messageCtrl.viewstate.messagetext"></div>
+    </div>
+</div>

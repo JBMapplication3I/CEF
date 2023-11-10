@@ -1,0 +1,64 @@
+#dnn_uxHeader_dnnLOGO_imgLogo {
+  max-height: 50px;
+  margin-top: 20px;
+}
+
+.object-w100 {
+  object-fit: contain;
+  width: 100%;
+}
+
+#txtSearch {
+  border-right: 0px;
+}
+
+.input-group-append {
+  .btn.btn-outline-secondary {
+    border-left: 0px;
+  }
+}
+
+#headerBot {
+  .col-12.bg-dark {
+    background-color: #264253 !important;
+    .bg-dark {
+      background-color: #264253 !important;
+    }
+  }
+  #headerBotContent {
+    a.nav-link.pointer.top-nav.dropdown-toggle {
+      color: $white;
+      &:hover span, &:hover span::after{
+        color: $white;
+      }
+    }
+    li.nav-item a {
+      color: $white;
+      &:hover {
+        color: $white;
+      }
+      &#btnMenuItemBrowseAllCategories:hover span {
+        color: $white;
+      }
+    }
+  }
+}
+
+#carouselExampleControls {
+  .carousel-inner {
+    height: 100%;
+    .carousel-item {
+      height: 100%;
+      img {
+        object-fit: contain;
+        height: 100%;
+      }
+    }
+  }
+}
+
+/*
+#footer {
+  background-color: #264253 !important;
+}
+*/

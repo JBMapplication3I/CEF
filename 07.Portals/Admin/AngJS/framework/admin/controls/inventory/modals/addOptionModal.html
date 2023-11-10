@@ -1,0 +1,49 @@
+<div ng-form="addOptionModalCtrl.forms.edit">
+    <div class="modal-header">
+        <span class="h2" data-translate="ui.admin.controls.inventory.attributeDetail.AddOption"></span>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12 form-vertical">
+                <text-input-form-group
+                    key="value"
+                    ng-model="addOptionModalCtrl.value"
+                    label-key="ui.admin.common.Value"
+                    placeholder-key="ui.admin.common.Value"
+                    max-length="128"
+                    ng-required="true">
+                </text-input-form-group>
+                <text-input-form-group
+                    key="uofm"
+                    ng-model="addOptionModalCtrl.uofm"
+                    label-key="ui.admin.common.UnitOfMeasure.Abbr"
+                    placeholder-key="ui.admin.common.UnitOfMeasure.Abbr"
+                    max-length="128"
+                    ng-required="false">
+                </text-input-form-group>
+                <number-input-form-group
+                    key="sortOrder"
+                    ng-model="addOptionModalCtrl.sortOrder"
+                    label-key="ui.admin.common.SortOrder"
+                    placeholder-key="ui.admin.common.SortOrder"
+                    step="1"
+                    precision="0"
+                    ng-required="false">
+                </number-input-form-group>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer p-3">
+        <button type="button" class="btn btn-primary"
+                translate-attr="{ title: 'ui.admin.controls.inventory.attributeDetail.AddOption',
+                                  'aria-label': 'ui.admin.controls.inventory.attributeDetail.AddOption' }"
+                data-translate="ui.admin.controls.inventory.attributeDetail.AddOption"
+                ng-disabled="addOptionModalCtrl.forms.edit.$invalid"
+                ng-click="addOptionModalCtrl.ok()"></button>
+        <button type="button" class="btn btn-warning"
+                translate-attr="{ title: 'ui.admin.common.Cancel',
+                                  'aria-label': 'ui.admin.common.Cancel' }"
+                data-translate="ui.admin.common.Cancel"
+                ng-click="addOptionModalCtrl.cancel()"></button>
+    </div>
+</div>

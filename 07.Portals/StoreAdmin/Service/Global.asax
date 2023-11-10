@@ -1,0 +1,1 @@
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Clarity.Ecommerce.Service.ServiceApplicationStoreAdmin" Language="C#" %>

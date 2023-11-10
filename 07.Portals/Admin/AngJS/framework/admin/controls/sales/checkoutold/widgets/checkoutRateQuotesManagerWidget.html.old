@@ -1,0 +1,115 @@
+﻿<div class="row" ng-form="cefCheckoutRateQuotesManagerWidgetCtrl.forms.shippingEstimator">
+    <div class="col-sm-3">
+        <h5 data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourFullAddress"></h5>
+        <div cef-contact-address-block
+             contact="cefCheckoutRateQuotesManagerWidgetCtrl.contact"
+             hide-icons="true"
+             hide-phones="true"
+             hide-fax="true"
+             hide-email="true"
+             small-text="true"></div>
+    </div>
+    <div class="col-sm-5">
+        <h5 ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.showYourShippingRateQuotesHeader"
+            data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourShippingRateQuotes"></h5>
+        <div class="alert alert-info"
+             ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.viewState.running"
+             data-translate="ui.admin.cart.cartShippingEstimator.wereSearchingForRatesForTheAddressInformationProvided"></div>
+        <div class="alert alert-warning"
+             ng-if="!cefCheckoutRateQuotesManagerWidgetCtrl.viewState.running
+                    && cefCheckoutRateQuotesManagerWidgetCtrl.rateQuotes.length <= 0"
+             data-translate="ui.admin.cart.cartShippingEstimator.noShippingRateInformationWasFoundForTheAddressInformationProvided"></div>
+        <div class="alert alert-danger"
+             ng-if="!cefCheckoutRateQuotesManagerWidgetCtrl.viewState.running
+                    && cefCheckoutRateQuotesManagerWidgetCtrl.viewState.hasError
+                    && cefCheckoutRateQuotesManagerWidgetCtrl.viewState.errorMessages.length">
+            <div ng-repeat="error in cefCheckoutRateQuotesManagerWidgetCtrl.viewState.errorMessages track by $index"
+                 class="block" ng-bind="error">
+            </div>
+        </div>
+        <div ng-show="cefCheckoutRateQuotesManagerWidgetCtrl.rateQuotes.length > 0">
+            <table class="table table-condensed table-hover table-striped col-sm-12">
+                <colgroup>
+                    <col class="w-8" />
+                    <col class="w-58" />
+                    <col class="w-34" />
+                </colgroup>
+                <tbody>
+                    <tr ng-repeat="rate in cefCheckoutRateQuotesManagerWidgetCtrl.rateQuotes
+                                   | limitTo: cefCheckoutRateQuotesManagerWidgetCtrl.quantityRatesShown">
+                        <td>
+                            <input type="radio"
+                                   id="rd_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}_{{rate.ShipCarrierMethodKey}}"
+                                   name="selectedRateQuote_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}"
+                                   value="{{rate.ID}}"
+                                   ng-required="true"
+                                   ng-disabled="cefCheckoutRateQuotesManagerWidgetCtrl.viewState.running"
+                                   ng-change="cefCheckoutRateQuotesManagerWidgetCtrl.onSelectRateQuote()"
+                                   ng-model="cefCheckoutRateQuotesManagerWidgetCtrl.selectedRateQuoteID" />
+                        </td>
+                        <td>
+                            <label class="font-weight-normal mb-0"
+                                   for="rd_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}_{{rate.ShipCarrierMethodKey}}"
+                                   ng-bind="rate.ShipCarrierMethodName"></label>
+                        </td>
+                        <td class="text-right"
+                            ng-init="cefCheckoutRateQuotesManagerWidgetCtrl.calcdindex[$index] = { original: rate.Rate, discounted: rate.Rate }">
+                            <label class="font-weight-normal mb-0"
+                                   for="rd_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}_{{rate.ShipCarrierMethodKey}}"
+                                   ng-class="{'text-danger strike-through': cefCheckoutRateQuotesManagerWidgetCtrl.isCalcdIndexDiscounted($index)}">
+                                <span ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.calcdindex[$index].original > 0"
+                                      ng-bind="cefCheckoutRateQuotesManagerWidgetCtrl.calcdindex[$index].original | globalizedCurrency"></span>
+                                <span ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.calcdindex[$index].original <= 0"
+                                      class="text-success"
+                                      data-translate="ui.admin.common.Free"></span>
+                            </label>
+                            <label class="font-weight-normal mb-0"
+                                   for="rd_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}_{{rate.ShipCarrierMethodKey}}"
+                                   ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.isCalcdIndexDiscounted($index)">
+                                <span ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.calcdindex[$index].discounted > 0"
+                                      ng-bind="cefCheckoutRateQuotesManagerWidgetCtrl.calcdindex[$index].discounted | globalizedCurrency"></span>
+                                <span ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.calcdindex[$index].discounted <= 0"
+                                      class="text-success"
+                                      data-translate="ui.admin.common.Free"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.showShowMoreButton">
+                        <td colspan="3">
+                            <button type="button" class="btn btn-default btn-secondary btn-block"
+                                    ng-click="cefCheckoutRateQuotesManagerWidgetCtrl.showMore(); apply();"
+                                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.ShowMore"></button></td>
+                    </tr>
+                    <tr ng-if="cefCheckoutRateQuotesManagerWidgetCtrl.showShowLessButton">
+                        <td colspan="3">
+                            <button type="button" class="btn btn-default btn-secondary btn-block"
+                                    ng-click="cefCheckoutRateQuotesManagerWidgetCtrl.showLess(); apply();"
+                                    data-translate="ui.admin.cart.cartShippingEstimator.ShowLess"></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <h5 class="text-center"
+            data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourSelectedShippingRate"></h5>
+        <p ng-if="!cefCheckoutRateQuotesManagerWidgetCtrl.selectedRateQuoteID"
+           ng-bind="ui.admin.cart.cartShippingEstimator.PleaseSelectARate"></p>
+        <p ng-repeat-start="rate in cefCheckoutRateQuotesManagerWidgetCtrl.rateQuotes
+                            | filter: { 'ID': cefCheckoutRateQuotesManagerWidgetCtrl.selectedRateQuoteID }
+                            | limitTo: 1"
+           class="text-center bold"
+           id="selectedAddressShippingLabel_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}"
+           name="selectedAddressShippingLabel_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}"
+           ng-bind="rate.ShipCarrierMethodName.replace('Internal ', '')">
+        </p>
+        <p ng-repeat-end class="text-center bold big"
+           id="selectedAddressShippingTotal_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}"
+           name="selectedAddressShippingTotal_{{cefCheckoutRateQuotesManagerWidgetCtrl.type}}">
+           <span ng-if="rate.Rate <= 0" class="text-success"
+                 data-translate="ui.admin.common.Free"></span>
+           <span ng-if="rate.Rate > 0"
+                 ng-bind="rate.Rate | globalizedCurrency"></span>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,433 @@
+﻿<#@ template hostspecific="True" language="C#"
+#><#@ output extension=".cstxt"
+#><#@ assembly name="EnvDTE"
+#><#@ assembly name="System.Configuration"
+#><#@ assembly name="System.Core"
+#><#@ assembly name="System.Web.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\servicestack.interfaces\4.5.14\lib\portable-wp80+sl5+net45+win8+wpa81+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\servicestack.signed\4.5.14\lib\net45\ServiceStack.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\servicestack.client.signed\4.5.14\lib\net45\ServiceStack.Client.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\hangfire.core\1.7.27\lib\net46\Hangfire.Core.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\microsoft.aspnet.identity.entityframework\2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\microsoft.aspnet.identity.core\2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\newtonsoft.json\13.0.1\lib\net45\Newtonsoft.Json.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\structuremap\4.7.1\lib\netstandard2.0\StructureMap.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\jetbrains.annotations\2021.3.0\lib\netstandard2.0\JetBrains.Annotations.dll"
+#><#@ assembly name="$(SolutionDir)00.Core\00.Clarity.Ecommerce.Core\bin\Debug\net472\Clarity.Ecommerce.Core.dll"
+#><#@ assembly name="$(SolutionDir)00.Core\00.Clarity.Ecommerce.Utilities\bin\Debug\net472\Clarity.Ecommerce.Utilities.dll"
+#><#@ assembly name="$(SolutionDir)06.Services\06.Clarity.Ecommerce.Service.Core\bin\Debug\net472\Clarity.Ecommerce.Service.Core.dll"
+#><#@ assembly name="$(SolutionDir)06.Services\06.Clarity.Ecommerce.Service\bin\Clarity.Ecommerce.Service.dll"
+#><#@ assembly name="$(SolutionDir)11.T4\11.T4.CodeGenerator\bin\Debug\net472\CodeGenerator.dll"
+#><#@ assembly name="$(SolutionDir)11.T4\11.T4.ServiceStack.CodeGenerator.TypeScript\bin\Debug\net472\ServiceStack.CodeGenerator.TypeScript.dll"
+#><#@ import namespace="System"
+#><#@ import namespace="System.Collections.Concurrent"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.Configuration"
+#><#@ import namespace="System.IO"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Reflection"
+#><#@ import namespace="System.Runtime.InteropServices"
+#><#@ import namespace="System.Text"
+#><#@ import namespace="System.Text.RegularExpressions"
+#><#@ import namespace="Microsoft.VisualStudio.TextTemplating"
+#><#@ import namespace="CodeGenerator"
+#><#@ import namespace="ServiceStack"
+#><#@ import namespace="Clarity.Ecommerce"
+#><#@ import namespace="Clarity.Ecommerce.Service"
+#><#@ include file="$(SolutionDir)11.T4\11.T4.CodeGenerator\MultiOutput.ttinclude"
+#><#
+List<Type> routeTypes = new List<Type>();
+ConcurrentDictionary<Type, List<Type>> typeToRouteLookup = new ConcurrentDictionary<Type, List<Type>>();
+ConcurrentDictionary<Type, bool[]> resultsToWrite = new ConcurrentDictionary<Type, bool[]>();
+List<ProcessedResult> processedResultsToWrite = new List<ProcessedResult>();
+var serviceProvider = (IServiceProvider)this.Host;
+var dte = (EnvDTE.DTE)serviceProvider.GetCOMService(typeof(EnvDTE.DTE));
+var solutionDirectory = Path.GetDirectoryName(dte.Solution.FullName) + "\\";
+AsyncExtensions.RunSync(
+	() => EndpointHelpers.InterrogateTypesAsync(
+		solutionDirectory,
+		routeTypes,
+		typeToRouteLookup,
+		resultsToWrite,
+		processedResultsToWrite));
+var skips = new string[]
+{
+	// CEF Config parts
+	"CEFConfig", "InventoryConfig", "InventoryPreSaleConfig", "InventoryPreSaleMaxPerProductAccountConfig", "InventoryAdvancedConfig", "InventoryBackOrderConfig", "InventoryBackOrderMaxPerProductAccountConfig", "PricingConfig", "PurchaseConfig", "PurchasingConfig", "ShippingConfig", "SplitShippingConfig", "ShippingRatesConfig", "TaxesConfig", "CheckoutConfig", "CheckoutConfigFlags", "CEFConfigCartType", "DashboardSettings", "RegistrationConfig", "RegistrationStepConfig",
+	"PersonalDetailsDisplay", "FeatureSet", "SimpleEnablableFeature", "AddressBookFeatureSet", "CartsFeatureSet", "CategoriesFeatureSet", "PaymentConfig",
+	"PurchasePaymentMethodConfig", "Uplifts", "PurchaseStepConfig", "PaymentSection", "TemplateSection", "CheckoutStore",
+	// Shared Base Models
+	"BaseModel", "BaseSearchModel",
+	"NameableBaseModel", "NameableBaseSearchModel",
+	"AmARelationshipTableBaseModel", "AmARelationshipTableBaseSearchModel",
+	"AmARelationshipTableNameableBaseModel", "AmARelationshipTableNameableBaseSearchModel",
+	"SalesItemBaseModel",
+	"SalesCollectionBaseModel", "SalesCollectionBaseSearchModel",
+	"CartTotals",
+	"DisplayableBaseModel", "DisplayableBaseSearchModel",
+	"StateModel", "StateSearchModel", "StateableBaseModel", "StateableBaseSearchModel",
+	"StatusModel", "StatusSearchModel", "StatusableBaseModel", "StatusableBaseSearchModel",
+	"TypeModel", "TypeSearchModel", "TypableBaseModel", "TypableBaseSearchModel",
+	// Other
+	"RawProductPricesModel", "CalculatedInventory",
+};
+#>
+// <autogenerated>
+// <copyright file="Endpoints.Routes.cs" company="clarity-ventures.com">
+// Copyright (c) 2021-2023 clarity-ventures.com. All rights reserved.
+// </copyright>
+// <summary>Implements the endpoints routes classes</summary>
+// </autogenerated>
+#nullable disable
+// ReSharper disable InconsistentNaming, MissingXmlDoc, PartialTypeWithSinglePart, RedundantExtendsListEntry
+// ReSharper disable RedundantTypeArgumentsOfMethod, StyleCop.SA1300, StyleCop.SA1402, StyleCop.SA1516
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable SA1027 // Tabs vs Spaces
+#pragma warning disable SA1117 // Parameter wrapping
+#pragma warning disable SA1600 // XML Docs
+namespace Clarity.Ecommerce.MVC.Api.Endpoints
+{
+	using System;
+	using System.Collections.Generic;
+	using JetBrains.Annotations;
+	using Models;
+	using ServiceStack;
+<#
+for (int i = 0; i < routeTypes.Count; i++)
+{
+	if (routeTypes[i].Name == "PayoneerOrderEventWebhookReturn")
+	{
+		continue;
+	}
+	Type rt = routeTypes[i];
+	RouteAttribute route = rt.GetCustomAttributes<RouteAttribute>().First();
+	bool usedInStorefront = rt.GetCustomAttribute<UsedInStorefrontAttribute>() != null;
+	bool usedInAdmin = rt.GetCustomAttribute<UsedInAdminAttribute>() != null;
+	bool usedInBrandAdmin = rt.GetCustomAttribute<UsedInBrandAdminAttribute>() != null;
+	bool usedInFranchiseAdmin = rt.GetCustomAttribute<UsedInFranchiseAdminAttribute>() != null;
+	bool usedInStoreAdmin = rt.GetCustomAttribute<UsedInStoreAdminAttribute>() != null;
+	bool usedInVendorAdmin = rt.GetCustomAttribute<UsedInVendorAdminAttribute>() != null;
+	bool usedInManufacturerAdmin = rt.GetCustomAttribute<UsedInManufacturerAdminAttribute>() != null;
+	Type ifaceForIReturnVoid = rt.GetInterfaces().FirstOrDefault(x => x.Name.StartsWith("IReturnVoid"));
+	Type ifaceForIReturnT = rt.GetInterfaces().FirstOrDefault(x => x.IsGenericType && x.Name.StartsWith("IReturn`"));
+	bool iReturnVoid = ifaceForIReturnVoid != null || ifaceForIReturnT == null;
+	string iReturnToUse = null;
+	if (!iReturnVoid && ifaceForIReturnT.GenericTypeArguments[0].IsGenericType)
+	{
+		iReturnToUse = ifaceForIReturnT.GenericTypeArguments[0].ToString()
+			.Replace("Clarity.Ecommerce.Models.", string.Empty)
+			.Replace("Clarity.Ecommerce.Interfaces.Models.", string.Empty)
+			.Replace("Clarity.Ecommerce.Interfaces.Providers.Searching.", string.Empty)
+			.Replace("`1", string.Empty)
+			.Replace("`2", string.Empty)
+			.Replace("System.Collections.Generic.", string.Empty)
+			.Replace("System.", string.Empty)
+			.Replace("String", "string")
+			.Replace("Object", "object")
+			.Replace(",", ", ")
+			.Replace("[", "<")
+			.Replace("]", ">")
+			.Replace("Nullable<Int32>", "int?")
+			.Replace("List<Int32>", "List<int>")
+			.Replace("Decimal", "decimal")
+			.Replace("Int32", "int")
+			.Replace("Boolean", "bool")
+			;
+	}
+	else if (!iReturnVoid)
+	{
+		iReturnToUse = ifaceForIReturnT.GenericTypeArguments[0].Name
+			.Replace("String", "string")
+			.Replace("Boolean", "bool")
+			.Replace("Decimal", "decimal");
+	}
+#>
+
+#if <#= (usedInStorefront ? "STOREFRONT" : "NOTSTOREFRONT")
+	+ " || " + (usedInAdmin ? "ADMIN" : "NOTADMIN")
+	+ " || " + (usedInBrandAdmin ? "BRANDADMIN" : "NOTBRANDADMIN")
+	+ " || " + (usedInFranchiseAdmin ? "FRANCHISEADMIN" : "NOTFRANCHISEADMIN")
+	+ " || " + (usedInManufacturerAdmin ? "MANUFACTURERADMIN" : "NOTMANUFACTURERADMIN")
+	+ " || " + (usedInStoreAdmin ? "STOREADMIN" : "NOTSTOREADMIN")
+	+ " || " + (usedInVendorAdmin ? "VENDORADMIN" : "NOTVENDORADMIN") #>
+	[PublicAPI, Route("<#= route.Path #>", "<#= route.Verbs #>")]
+	public partial <#= rt.BaseType == typeof(Enum) ? "enum" : "class" #> <#=
+		rt.Name #> :<#= rt.BaseType != null && rt.BaseType != typeof(object) && rt.BaseType != typeof(Array) && rt.BaseType != typeof(Enum) && rt.BaseType != typeof(ValueType)
+		? " " + rt.BaseType.Name + ","
+		: string.Empty #> IReturn<#= iReturnVoid ? "Void" : ("<" + iReturnToUse + ">") #>
+	{
+<#  PropertyInfo[] props = rt.GetPublicProperties(BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, true);
+	bool first = true;
+	foreach (PropertyInfo property in props)
+	{
+		if (property.PropertyType.Name == "IPricingFactoryContextModel")
+		{
+			continue;
+		}
+		if (rt.Name == "AddCartItems" && property.Name == "Items")
+		{
+			if (!first)
+			{ #>
+
+<#			} #>
+		[ApiMember(Name = nameof(Items), DataType = "List<SalesItemBaseModel>", ParameterType = "body", IsRequired = true,
+			Description = "Cart items to add")]
+		// ReSharper disable once CollectionNeverUpdated.Global
+		public List<SalesItemBaseModel<IAppliedCartItemDiscountModel, AppliedCartItemDiscountModel>>? Items { get; set; }
+<#			first = false; continue;
+		}
+		if (rt.Name == "UpdateCartItems" && property.Name == "Items")
+		{
+			if (!first)
+			{ #>
+
+<#			} #>
+		[ApiMember(Name = nameof(Items), DataType = "List<SalesItemBaseModel>", ParameterType = "body", IsRequired = true,
+			Description = "Cart items to update")]
+		// ReSharper disable once CollectionNeverUpdated.Global
+		public List<SalesItemBaseModel<IAppliedCartItemDiscountModel, AppliedCartItemDiscountModel>>? Items { get; set; }
+<#			continue;
+		}
+		if (!first)
+		{ #>
+
+<#		}
+		ApiMemberAttribute apiMember = property.GetCustomAttribute<ApiMemberAttribute>();
+		if (apiMember != null)
+		{ #>
+		[ApiMember(Name = "<#= apiMember.Name #>", DataType = "<#= apiMember.DataType ?? string.Empty #>", ParameterType = "<#=
+			apiMember.ParameterType ?? string.Empty #>", IsRequired = <#= apiMember.IsRequired ? "true" : "false" #>,
+			Description = "<#= apiMember.Description ?? string.Empty #>")]
+<#		} #>
+		public <#= HelpFunctions.ProcessType(property.PropertyType)
+			.Replace("&lt;", "<").Replace("&gt;", ">").Replace(",", ", ") #> <#= property.Name #> { get; set; }
+<#		if (first) { first = false; } #>
+<#	} #>
+	}
+#endif
+<#	} #>
+}
+<# SaveOutput("Endpoints.Routes", "cs", true); #>
+// <autogenerated>
+// <copyright file="Endpoints.DTOs.cs" company="clarity-ventures.com">
+// Copyright (c) 2021-2023 clarity-ventures.com. All rights reserved.
+// </copyright>
+// <summary>Implements the endpoints DTOs classes</summary>
+// </autogenerated>
+#nullable disable
+// ReSharper disable InconsistentNaming, MissingXmlDoc, PartialTypeWithSinglePart, RedundantExtendsListEntry
+// ReSharper disable RedundantTypeArgumentsOfMethod, StyleCop.SA1300, StyleCop.SA1402, StyleCop.SA1516
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable SA1027 // Tabs vs Spaces
+#pragma warning disable SA1117 // Parameter wrapping
+#pragma warning disable SA1600 // XML Docs
+namespace Clarity.Ecommerce.MVC.Api.Models
+{
+	using System;
+	using System.Collections.Generic;
+	using JetBrains.Annotations;
+	using ServiceStack;
+<#
+foreach (ProcessedResult result in processedResultsToWrite.Where(x => x.generatedBaseName != "Enum" && !skips.Contains(x.generatedName)).OrderBy(x => x.generatedName))
+{ #>
+
+#if <#=		   ((result.usedIn[0] || new string[] { }.Contains(result.t.Name)) && !(new string[] { }).Contains(result.t.Name) ? "STOREFRONT" : "NOTSTOREFRONT")
+	+ " || " + ((result.usedIn[1] || new string[] { }.Contains(result.t.Name)) && !(new string[] { }).Contains(result.t.Name) ? "ADMIN" : "NOTADMIN")
+	+ " || " + ((result.usedIn[2] || new string[] { }.Contains(result.t.Name)) && !(new string[] { }).Contains(result.t.Name) ? "BRANDADMIN" : "NOTBRANDADMIN")
+	+ " || " + ((result.usedIn[3] || new string[] { }.Contains(result.t.Name)) && !(new string[] { }).Contains(result.t.Name) ? "FRANCHISEADMIN" : "NOTFRANCHISEADMIN")
+	+ " || " + ((result.usedIn[6] || new string[] { }.Contains(result.t.Name)) && !(new string[] { }).Contains(result.t.Name) ? "MANUFACTURERADMIN" : "NOTMANUFACTURERADMIN")
+	+ " || " + ((result.usedIn[4] || new string[] { }.Contains(result.t.Name)) && !(new string[] { }).Contains(result.t.Name) ? "STOREADMIN" : "NOTSTOREADMIN")
+	+ " || " + ((result.usedIn[5] || new string[] { }.Contains(result.t.Name)) && !(new string[] { }).Contains(result.t.Name) ? "VENDORADMIN" : "NOTVENDORADMIN") #>
+	[PublicAPI]
+	public partial class <#= result.generatedName #><#= result.hasBase && result.generatedBaseName != "Object" && result.generatedBaseName != "Array" ? " : " + result.generatedBaseName : string.Empty #>
+	{
+<#	PropertyInfo[] props = result.t.GetPublicProperties(
+		BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly,
+		true);
+	bool first = true;
+	foreach (PropertyInfo property in props.Where(x => x.Name != "UserEventAttendances"))
+	{
+		if (property.PropertyType.Name == "IPricingFactoryContextModel")
+		{
+			continue;
+		}
+		ApiMemberAttribute apiMember = property.GetCustomAttribute<ApiMemberAttribute>(); #>
+<#		if (!first)
+		{ #>
+
+<#		} #>
+<#		if (new string[] { /*"SiteDomainSocialProviders", "PriceRuleVendors", "PriceRuleAccounts", "StoreBadges", "ProductMembershipLevels", "ProductMembershipLevel"*/ }.Contains(property.Name))
+		{ #>
+#if !VENDORADMIN
+<#		}
+		if (new string[] { /*"ProductMembershipLevels",*/ }.Contains(property.Name)) { #>
+#if !STOREADMIN
+<#		}
+		if (apiMember != null)
+		{ #>
+		[ApiMember(Name = "<#= apiMember.Name ?? string.Empty #>", DataType = "<#= apiMember.DataType ?? string.Empty #>", ParameterType = "<#=
+			apiMember.ParameterType ?? string.Empty #>", IsRequired = <#= apiMember.IsRequired ? "true" : "false" #>,
+			Description = "<#= apiMember.Description ?? string.Empty #>")]
+<#		} #>
+		public <#= HelpFunctions.ProcessType(property.PropertyType)
+			.Replace("&lt;", "<").Replace("&gt;", ">").Replace(",", ", ") #> <#= property.Name #> { get; set; }
+<#		if (first)
+		{
+			first = false;
+		}
+		if (new string[] { /*"ProductMembershipLevels",*/ }.Contains(property.Name))
+		{ #>
+#endif // !STOREADMIN
+<#		}
+		if (new string[] { /*"SiteDomainSocialProviders", "PriceRuleVendors", "PriceRuleAccounts", "StoreBadges", "ProductMembershipLevels", "ProductMembershipLevel",*/ }.Contains(property.Name))
+		{ #>
+#endif // !VENDORADMIN
+<#		}
+	} #>
+	}
+#endif
+<#
+}
+#>
+}
+<#
+SaveOutput("Endpoints.DTOs", "cs", true);
+#>
+// <autogenerated>
+// <copyright file="Endpoints.Callers.cs" company="clarity-ventures.com">
+// Copyright (c) 2021-2023 clarity-ventures.com. All rights reserved.
+// </copyright>
+// <summary>Implements the endpoints callers classes</summary>
+// </autogenerated>
+#nullable disable
+// ReSharper disable InconsistentNaming, MissingXmlDoc, PartialTypeWithSinglePart, RedundantExtendsListEntry
+// ReSharper disable RedundantTypeArgumentsOfMethod, StyleCop.SA1300, StyleCop.SA1402, StyleCop.SA1516
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable SA1027 // Tabs vs Spaces
+#pragma warning disable SA1117 // Parameter wrapping
+#pragma warning disable SA1600 // XML Docs
+namespace Clarity.Ecommerce.MVC.Api.Callers
+{
+	using System;
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using Core;
+	using Endpoints;
+	using JetBrains.Annotations;
+	using Microsoft.JSInterop;
+	using Models;
+	using Service;
+
+	[PublicAPI]
+	public partial class CEFAPI
+	{
+		public CEFAPI(CEFService service)
+		{
+			CEFService = service;
+		}
+
+		public CEFService CEFService { get; }
+<#	HelpFunctions.ResetPreviouslyLoadedProperties();
+	for (int i = 0; i < routeTypes.Count; i++)
+	{
+		if (routeTypes[i].Name == "PayoneerOrderEventWebhookReturn")
+		{
+			continue;
+		}
+		Type rt = routeTypes[i];
+		Type[] routeCustomAttributes = rt.GetCustomAttributes().Select(x => x.GetType()).ToArray();
+		bool usedInStorefront = routeCustomAttributes.Contains(typeof(UsedInStorefrontAttribute));
+		bool usedInAdmin = routeCustomAttributes.Contains(typeof(UsedInAdminAttribute));
+		bool usedInBrandAdmin = routeCustomAttributes.Contains(typeof(UsedInBrandAdminAttribute));
+		bool usedInFranchiseAdmin = routeCustomAttributes.Contains(typeof(UsedInFranchiseAdminAttribute));
+		bool usedInManufacturerAdmin = routeCustomAttributes.Contains(typeof(UsedInManufacturerAdminAttribute));
+		bool usedInStoreAdmin = routeCustomAttributes.Contains(typeof(UsedInStoreAdminAttribute));
+		bool usedInVendorAdmin = routeCustomAttributes.Contains(typeof(UsedInVendorAdminAttribute));
+		Type interfaces = rt.GetInterfaces().FirstOrDefault(x => x.Name.StartsWith("IReturnVoid"));
+		bool iReturnVoid = interfaces != null;
+		Type iReturnInner = null;
+		Type iReturn = rt.GetInterfaces().FirstOrDefault(x => x.IsGenericType && x.Name.StartsWith("IReturn`"));
+		bool rtHasParameters = rt.GetPublicProperties().Any();
+		string iReturnToUse = null;
+		if (iReturn == null)
+		{
+			iReturnVoid = true;
+		}
+		else
+		{
+			iReturnInner = iReturn.GenericTypeArguments[0];
+			if (iReturnInner.IsGenericType)
+			{
+				iReturnToUse = iReturnInner.ToString()
+					.Replace("Clarity.Ecommerce.Models.", string.Empty)
+					.Replace("Clarity.Ecommerce.Interfaces.Models.", string.Empty)
+					.Replace("Clarity.Ecommerce.Interfaces.Providers.Searching.", string.Empty)
+					.Replace("`1", string.Empty)
+					.Replace("`2", string.Empty)
+					.Replace("System.Collections.Generic.", string.Empty)
+					.Replace("System.", string.Empty)
+					.Replace("String", "string")
+					.Replace("Object", "object")
+					.Replace(",", ", ")
+					.Replace("[", "<")
+					.Replace("]", ">")
+					.Replace("Nullable<Int32>", "int?")
+					.Replace("List<Int32>", "List<int>")
+					.Replace("Decimal", "decimal")
+					.Replace("Int32", "int")
+					.Replace("Boolean", "bool")
+					.Replace("ValueTuple<int?, int?>", "(int?, int?)")
+					;
+			}
+			else
+			{
+				iReturnToUse = iReturnInner.Name
+					.Replace("String", "string")
+					.Replace("Boolean", "bool")
+					.Replace("Decimal", "decimal")
+					.Replace("ValueTuple<int?, int?>", "(int?, int?)");
+			}
+		}
+#>
+
+#if <#= (usedInStorefront ? "STOREFRONT" : "NOTSTOREFRONT")
+	+ " || " + (usedInAdmin ? "ADMIN" : "NOTADMIN")
+	+ " || " + (usedInBrandAdmin ? "BRANDADMIN" : "NOTBRANDADMIN")
+	+ " || " + (usedInFranchiseAdmin ? "FRANCHISEADMIN" : "NOTFRANCHISEADMIN")
+	+ " || " + (usedInManufacturerAdmin ? "MANUFACTURERADMIN" : "NOTMANUFACTURERADMIN")
+	+ " || " + (usedInStoreAdmin ? "STOREADMIN" : "NOTSTOREADMIN")
+	+ " || " + (usedInVendorAdmin ? "VENDORADMIN" : "NOTVENDORADMIN") #>
+<#	if (iReturnVoid)
+	{ #>
+		public async Task<IHttpPromiseCallback> <#= rt.Name #>(<#= rtHasParameters ? string.Empty : ")" #>
+<#	} else { #>
+		public async Task<IHttpPromiseCallbackArg<<#= iReturnToUse #>>> <#= rt.Name #>(<#= rtHasParameters ? string.Empty : ")" #>
+<#	}
+	if (rtHasParameters)
+	{ #>
+			<#= rt.Name #> request = null)
+<#	} #>
+		{
+<#	if (rtHasParameters)
+	{ #>
+			request ??= new();
+<#	}
+	if (iReturnVoid)
+	{ #>
+			await CEFService.RequestAsync(<#= rtHasParameters ? "request" : ("new " + rt.Name + "()") #>).ConfigureAwait(false);
+			return new HttpPromiseCallback();
+<#	} else { #>
+			return new HttpPromiseCallbackArg<<#= iReturnToUse #>>(
+				await CEFService.RequestAsync<<#= rt.Name #>, <#=
+					iReturnToUse #>>(<#= rtHasParameters ? "request" : "new()" #>).ConfigureAwait(false));
+<#	} #>
+		}
+#endif
+<#  } #>
+	}
+}
+<#
+SaveOutput("Endpoints.Callers", "cs", true);
+DeleteOldOutputs();
+#>
+// See other files

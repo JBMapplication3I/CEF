@@ -1,0 +1,183 @@
+<div class="container">
+    <div class="row condensed-row">
+        <div class="col-sm-12 text-right d-print-none">
+            <div class="btn-group" uib-dropdown is-open="dashboardPrintCtrl.isopen">
+                <button type="button" class="btn btn-lg btn-primary"
+                        id="btnActions" name="btnActions"
+                        uib-dropdown-toggle>
+                    <span data-translate="ui.storefront.messaging.messaging-folder.Actions"></span>&nbsp;<!--
+                    --><span class="ml-1 caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="btnActions">
+                    <li role="menuitem">
+                        <button type="button" class="btn btn-link dropdown-item w-100 text-left"
+                                id="btnPrint" name="btnPrint"
+                                ng-click="dashboardPrintCtrl.print()"
+                                ><i class="far fa-print fa-fw" aria-hidden="true"></i>&nbsp;<!--
+                                --><span data-translate="ui.storefront.common.PrintReceipt"></span></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- logo and info area -->
+        <!-- <div class="col-sm-7"></div> -->
+        <!-- invoice table -->
+
+        <div class="col-sm-5 table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th ng-if="dashboardPrintCtrl.type == 'sales-quote'" colspan="2" data-translate="ui.storefront.common.SalesQuote" class="text-center"></th>
+                        <th ng-if="dashboardPrintCtrl.type == 'sales-order'" colspan="2" data-translate="ui.storefront.common.SalesOrder" class="text-center"></th>
+                        <th ng-if="dashboardPrintCtrl.type == 'sales-invoice'" colspan="2" data-translate="ui.storefront.common.SalesInvoice" class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span ng-bind="dashboardPrintCtrl.salesObjectType"></span>&nbsp;#</td>
+                        <td>02-I-23970-B4B8</td>
+                    </tr>
+                    <tr>
+                        <td data-translate="ui.storefront.common.Date"></td>
+                        <td ng-bind="dashboardPrintCtrl.salesObject.CreatedDate | date: 'M-dd-yyyy'"></td>
+                    </tr>
+                    <tr>
+                        <td data-translate="ui.storefront.checkout.views.orderConfirmation.orderNumber"></td>
+                        <td>M0027483</td>
+                    </tr>
+                    <tr>
+                        <td data-translate="ui.storefront.storeDashboard.print.ShipperID"></td>
+                        <td>M0027506</td>
+                    </tr>
+                    <tr>
+                        <td data-translate="ui.storefront.storeDashboard.print.OrderType"></td>
+                        <td ng-bind="dashboardPrintCtrl.salesObject.Type.DisplayName"></td>
+                    </tr>
+                    <tr>
+                        <td><span data-translate="ui.storefront.storeDashboard.storeAccountSettings.payoneer.CustomerID"></span> - (<span data-translate="ui.storefront.storeDashboard.print.Purchaser"></span>)</td>
+                        <td data-bind="dashboardPrintCtrl.salesObject.AccountID"></td>
+                    </tr>
+                    <tr>
+                        <td data-translate="ui.storefront.storeDashboard.print.CustomerPO"></td>
+                        <td>PO892015-785</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            <span data-translate="ui.storefront.storeDashboard.print.Terms"></span>&nbsp;:<span ng-bind=""></span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-sm-7">
+            <div class="row">
+                <div class="col-12">
+                    <p>1035 Greenwood Blvd.</p>
+                    <p>Suite 401</p>
+                    <p>Lake Mary fl 32746-5402</p>
+                    <p>Phone: (407) 937-1100</p>
+                    <p>Fax: (407) 937-1101</p>
+                    <p>Web: www.theiia.org</p>
+                </div>
+                <div class="col-sm-12 table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th data-translate="ui.storefront.checkout.views.reviewOrderInformation.BillTo"></th>
+                                <th data-translate="ui.storefront.checkout.views.reviewOrderInformation.ShipTo"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td ng-bind="dashboardPrintCtrl.salesObject.BillingContact.FirstName + ' ' + dashboardPrintCtrl.salesObject.BillingContact.LastName"></td>
+                                <td ng-bind="dashboardPrintCtrl.salesObject.ShippingContact.FirstName + ' ' + dashboardPrintCtrl.salesObject.ShippingContact.LastName"></td>
+                            </tr>
+                            <tr ng-if="dashboardPrintCtrl.salesObject.BillingContact.Company || dashboardPrintCtrl.salesObject.ShippingContact.Company">
+                                <td ng-bind="dashboardPrintCtrl.salesObject.BillingContact.Company"></td>
+                                <td ng-bind="dashboardPrintCtrl.salesObject.ShippingContact.Company"></td>
+                            </tr>
+                            <tr>
+                                <td>MSIN H1-O1</td>
+                                <td>MSIN H1-O1</td>
+                            </tr>
+                            <tr>
+                                <td ng-bind="dashboardPrintCtrl.salesObject.BillingContact.Address.City + ' ' + dashboardPrintCtrl.salesObject.BillingContact.Address.RegionCode + ' ' + dashboardPrintCtrl.salesObject.BillingContact.Address.PostalCode"></td>
+                                <td ng-bind="dashboardPrintCtrl.salesObject.ShippingContact.Address.City + ' ' + dashboardPrintCtrl.salesObject.ShippingContact.Address.RegionCode + ' ' + dashboardPrintCtrl.salesObject.ShippingContact.Address.PostalCode"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-3">
+                    <!-- Notes -->
+                    <table class="table table-hover" ng-if="dashboardPrintCtrl.salesObject.Notes.length">
+                        <thead>
+                            <tr>
+                                <th data-translate="ui.storefront.quotes.cart.notes"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><p ng-repeat="line in dashboardPrintCtrl.salesObject.Notes" ng-bind="line"></p></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-translate="ui.storefront.storeDashboard.print.LN"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.ProductDescription"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.CustomerName"></th>
+                        <th data-translate="ui.storefront.storeDashboard.storeAccountSettings.payoneer.CustomerID"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.Beginning"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.EndingDate"></th>
+                        <th data-translate="ui.storefront.common.Price"></th>
+                        <th data-translate="ui.storefront.common.Quantity"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.Sale"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.Discount"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.Tax"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.ShipHandling"></th>
+                        <th data-translate="ui.storefront.storeDashboard.print.Net"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in dashboardPrintCtrl.salesObject.SalesItems">
+                        <!-- LN -->
+                        <td ng-bind="$index + 1"></td>
+                        <!-- Product Description -->
+                        <td ng-bind="row.ProductShortDescription"></td>
+                        <!-- Customer Name -->
+                        <td ng-bind="dashboardPrintCtrl.cvAuthenticationService.currentAccount.Name"></td>
+                        <!-- Customer ID -->
+                        <td ng-bind="dashboardPrintCtrl.cvAuthenticationService.currentAccount.ID"></td>
+                        <!-- Beginning -->
+                        <td ></td>
+                        <!-- Ending Date -->
+                        <td></td>
+                        <!-- Price -->
+                        <td ng-bind="row.UnitCorePrice | globalizedCurrency"></td>
+                        <!-- Quantity -->
+                        <td ng-bind="row.Quantity"></td>
+                        <!-- Sale -->
+                        <td ng-bind="(row.UnitSoldPrice || row.UnitCorePrice || row.Product.readPrices().sale || row.Product.readPrices().base) | globalizedCurrency"></td>
+                        <!-- Discount -->
+                        <td ng-bind="row.UnitSoldPrice - row.UnitCorePrice"></td>
+                        <!-- Tax -->
+                        <td ng-bind="(row.ExtendedTaxAmount || 0) | globalizedCurrency"></td>
+                        <!-- Ship/Handling -->
+                        <td ng-bind="(row.ExtendedShippingAmount || 0) | globalizedCurrency"></td>
+                        <!-- Net -->
+                        <td ng-bind="row.UnitSoldPrice | globalizedCurrency"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

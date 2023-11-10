@@ -1,0 +1,72 @@
+﻿// Primary Clarity CSS, for CEF-2021.1 w/ BS4
+
+// Clarity overrides to the variable values
+@import "_bootstrapVariables";
+// Default bootstrap 4 variables
+@import "bootstrap/stylesheets/bootstrap";
+@import "angular-bootstrap-toggle";
+
+#blazor-error-ui {
+  background: lightyellow;
+  bottom: 0;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+  display: none;
+  left: 0;
+  padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+  cursor: pointer;
+  position: absolute;
+  right: 0.75rem;
+  top: 0.5rem;
+}
+
+// Classes that assist with setting up templates quickly without having to edit css
+@import "helpers";
+// For UIB Typeaheads, styles so the popups can display appropriately
+@import "popup-wrappers";
+@import "cv-grid";
+@import "carousel";
+
+@import "../Shared/MainLayout.razor.scss";
+@import "../Shared/NavMenu.razor.scss";
+@import "../Shared/ErrorBlock.razor.scss";
+@import "../Shared/LoadingBlock.razor.scss";
+
+@import "../Shared/Forms/ContactEditor.razor.scss";
+
+@import "../Pages/Index.razor.scss";
+@import "../Pages/Login.razor.scss";
+
+@import "../Pages/Catalog/Attributes/Grid.razor.scss";
+@import "../Pages/Catalog/Auctions/Grid.razor.scss";
+@import "../Pages/Catalog/Categories/Grid.razor.scss";
+@import "../Pages/Catalog/Discounts/New.razor.scss";
+@import "../Pages/Catalog/Products/Grid.razor.scss";
+@import "../Pages/Catalog/Warehouses/Grid.razor.scss";
+
+@import "../Pages/Customers/Accounts/Grid.razor.scss";
+@import "../Pages/Customers/Users/Grid.razor.scss";
+
+@import "../Pages/Details/Currencies/Grid.razor.scss";
+@import "../Pages/Details/Languages/Grid.razor.scss";
+@import "../Pages/Details/Nations/Grid.razor.scss";
+@import "../Pages/Details/Notifications/Grid.razor.scss";
+@import "../Pages/Details/Settings/Grid.razor.scss";
+@import "../Pages/Details/Stores/Grid.razor.scss";
+
+@import "../Pages/Details/Profile.razor.scss";
+@import "../Pages/Details/Reports.razor.scss";
+
+@import "../Pages/Sales/SalesInvoices/Grid.razor.scss";
+@import "../Pages/Sales/SalesOrders/Grid.razor.scss";
+
+@import "../Pages/Sales/Dashboard.razor.scss";
+
+select[readonly].custom-select {
+  background-color: var(--b-theme-light, var(--gray, #cccccc));
+}

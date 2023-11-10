@@ -1,0 +1,205 @@
+﻿<div class="form-vertical" ng-form="wceCtrl.forms.Card">
+  <div class="row">
+    <!--edit or create block-->
+    <text-input-form-group
+      class="col-xs-12"
+      key="WalletCardNickname"
+      ng-model="wceCtrl.entry.Name"
+      label-key="ui.admin.common.CardNickname"
+      placeholder-key="ui.admin.common.CardNickname"
+      max-length="128"
+      ng-required="true">
+    </text-input-form-group>
+    <!--show block-->
+    <div class="col-xs-12" ng-if="!wceCtrl.viewstate.createMode">
+      <p class="bold"
+        sid="WalletEntryCardholderNameText"
+        ng-bind="wceCtrl.entry.CardHolderName">
+      </p>
+      <p ng-bind-html="('&bull;&bull;&bull;&bull;&nbsp;'
+        + '&bull;&bull;&bull;&bull;&nbsp;'
+        + '&bull;&bull;&bull;&bull;&nbsp;'
+        + wceCtrl.entry.CreditCardNumber | limitTo: -4) | trustedHtml"
+        sid="CardNumberText">
+      </p>
+      <span class="float-right m-0" aria-hidden="true">
+        <i class="fa-lg" ng-class="{
+          'fab fa-cc-amex': wceCtrl.entry.CardType == 'American Express',
+          'fab fa-cc-discover': wceCtrl.entry.CardType == 'Discover',
+          'fab fa-cc-mastercard': wceCtrl.entry.CardType == 'MasterCard',
+          'fab fa-cc-diners-club': wceCtrl.entry.CardType == 'Diners Club',
+          'fab fa-cc-visa': wceCtrl.entry.CardType == 'Visa' }">
+        </i>
+        <span class="sr-only" ng-bind="wceCtrl.entry.CardType"></span>
+      </span>
+      <p class="mb-0" sid="WalletEntryExpirationText"
+        ><span data-translate="ui.admin.common.wallet.walletCard.Expiration.Abbreviation"
+        ></span>&nbsp;<span sid="WalletEntryExpirationDate"
+        ng-bind="(wceCtrl.entry.ExpirationMonth | zeroPadNumber: 2) + '/'
+              + (wceCtrl.entry.ExpirationYear | zeroPadNumber: 4)"></span></p>
+    </div>
+    <!--create block-->
+    <text-input-form-group
+      ng-if="wceCtrl.viewstate.createMode"
+      class="col-xs-12"
+      key="WalletCardHolderName"
+      ng-model="wceCtrl.entry.CardHolderName"
+      label-key="ui.admin.common.CardholderName"
+      placeholder-text="John Smith"
+      max-length="128"
+      ng-required="true"
+      auto-comp="cc-name">
+    </text-input-form-group>
+    <div class="form-group col-xs-12"
+      ng-if="wceCtrl.viewstate.createMode"
+      ng-class="{'has-error': wceCtrl.forms.Card.txtWalletCardNumber.$invalid }">
+      <label class="control-label" for="txtWalletCardNumber">
+        <span sid="txtWalletCardNumber"
+          data-translate="ui.admin.common.CardNumber"></span><!--
+        --><span class="text-danger">&nbsp;*</span>
+      </label>
+      <div class="input-group">
+        <input type="text" class="form-control"
+          ng-class="{ 'is-valid': wceCtrl.forms.Card.txtWalletCardNumber.$valid
+                      && (wceCtrl.forms.Card.txtWalletCardNumber.$dirty
+                        || wceCtrl.forms.Card.txtWalletCardNumber.$touched
+                        || wceCtrl.forms.Card.$submitted),
+                'is-invalid': wceCtrl.forms.Card.txtWalletCardNumber.$invalid
+                      && (wceCtrl.forms.Card.txtWalletCardNumber.$dirty
+                        || wceCtrl.forms.Card.txtWalletCardNumber.$touched
+                        || wceCtrl.forms.Card.$submitted) }"
+          id="txtWalletCardNumber"
+          name="txtWalletCardNumber"
+          placeholder="1234 5678 9012 3456"
+          autocomplete="cc-number"
+          cc-number cc-format cc-eager-type
+          ng-change="wceCtrl.entry.CardType = wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType;"
+          ng-required="true"
+          ng-model="wceCtrl.entry.CreditCardNumber" />
+        <div ng-if="wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType"
+          class="input-group-addon" aria-hidden="true">
+          <i ng-class="{
+            'fab fa-cc-amex': wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType == 'American Express',
+            'fab fa-cc-discover': wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType == 'Discover',
+            'fab fa-cc-mastercard': wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType == 'MasterCard',
+            'fab fa-cc-diners-club': wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType == 'Diners Club',
+            'fab fa-cc-visa': wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType == 'Visa'}">
+          </i>
+          <span class="sr-only"
+            ng-bind="wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType">
+          </span>
+        </div>
+      </div>
+      <div ng-messages-multiple ng-messages="wceCtrl.forms.Card.txtWalletCardNumber.$error"
+        role="alert" class="invalid-feedback">
+        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+      </div>
+      <!--
+      <div ng-messages-multiple ng-messages="wceCtrl.forms.Card.txtWalletCardNumber.$$success"
+        role="alert" class="valid-feedback">
+        <div ng-messages-include="{{'/framework/admin/widgets/forms/_successMessages.html' | corsLink: 'ui'}}"></div>
+      </div>
+      -->
+    </div>
+    <div class="col-xs-12" ng-if="wceCtrl.viewstate.createMode">
+      <div class="row" cc-exp>
+        <div class="form-group col-xs-6 mb-0"
+          ng-class="{'has-error': wceCtrl.forms.Card.ddlWalletExpirationMonth.$invalid}">
+          <label class="control-label" for="ddlWalletExpirationMonth"
+            ><span data-translate="ui.admin.common.ExpirationMonth"
+              sid="WalletExpirationMonthText"
+            ></span><span class="text-danger">&nbsp;*</span></label>
+          <select class="form-control custom-select"
+            id="ddlWalletExpirationMonth" name="ddlWalletExpirationMonth"
+            ng-class="{ 'is-valid': wceCtrl.forms.Card.ddlWalletExpirationMonth.$valid
+                          && (wceCtrl.forms.Card.ddlWalletExpirationMonth.$dirty
+                            || wceCtrl.forms.Card.ddlWalletExpirationMonth.$touched
+                            || wceCtrl.forms.Card.$submitted),
+                    'is-invalid': wceCtrl.forms.Card.ddlWalletExpirationMonth.$invalid
+                          && (wceCtrl.forms.Card.ddlWalletExpirationMonth.$dirty
+                            || wceCtrl.forms.Card.ddlWalletExpirationMonth.$touched
+                            || wceCtrl.forms.Card.$submitted) }"
+            cc-exp-month
+            ng-required="true"
+            ng-options="month.Key as month.Value for month in wceCtrl.expirationMonths"
+            ng-model="wceCtrl.entry.ExpirationMonth"
+            autocomplete="cc-exp-month">
+            <option value="" ng-disabled="true"
+              data-translate="ui.admin.checkout.views.paymentInformation.Month">
+            </option>
+          </select>
+          <div ng-messages-multiple ng-messages="wceCtrl.forms.Card.ddlWalletExpirationMonth.$error"
+            role="alert" class="invalid-feedback">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}">
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-xs-6 mb-0"
+          ng-class="{'has-error': wceCtrl.forms.Card.ddlWalletExpirationYear.$invalid}">
+          <label class="control-label" for="ddlWalletExpirationYear"
+            ><span data-translate="ui.admin.common.ExpirationYear"
+              sid="WalletExpirationYearText"
+            ></span><span class="text-danger">&nbsp;*</span></label>
+          <select class="form-control custom-select"
+            id="ddlWalletExpirationYear" name="ddlWalletExpirationYear"
+            ng-class="{ 'is-valid': wceCtrl.forms.Card.ddlWalletExpirationYear.$valid
+                          && (wceCtrl.forms.Card.ddlWalletExpirationYear.$dirty
+                            || wceCtrl.forms.Card.ddlWalletExpirationYear.$touched
+                            || wceCtrl.forms.Card.$submitted),
+                    'is-invalid': wceCtrl.forms.Card.ddlWalletExpirationYear.$invalid
+                          && (wceCtrl.forms.Card.ddlWalletExpirationYear.$dirty
+                            || wceCtrl.forms.Card.ddlWalletExpirationYear.$touched
+                            || wceCtrl.forms.Card.$submitted) }"
+            cc-exp-year
+            ng-required="true"
+            ng-options="year.Key as year.Value for year in wceCtrl.expirationYears"
+            ng-model="wceCtrl.entry.ExpirationYear"
+            autocomplete="cc-exp-year">
+            <option value="" ng-disabled="true"
+              data-translate="ui.admin.checkout.views.paymentInformation.Year">
+            </option>
+          </select>
+          <div ng-messages-multiple ng-messages="wceCtrl.forms.Card.ddlWalletExpirationYear.$error"
+            role="alert" class="invalid-feedback">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="wceCtrl.forms.Card.$invalid"
+    class="p-0 mt-3">
+    <div ng-messages="wceCtrl.forms.Card.$error"
+      role="alert">
+      <div ng-message-exp="['ccNumber','card']" class="alert alert-danger mb-0">
+        <span data-translate="ui.admin.common.wallet.walletCard.ThisIsNotAValidCreditCardNum.Part1"></span>&nbsp;<!--
+        --><span ng-bind="$parent.wceCtrl.forms.Card.txtWalletCardNumber.$ccEagerType"></span>&nbsp;<!--
+        --><span data-translate="ui.admin.common.wallet.walletCard.ThisIsNotAValidCreditCardNum.Part2"></span>
+      </div>
+      <div ng-message-exp="['ccCvc','cvc']" class="alert alert-danger mb-0">
+        <span data-translate="ui.admin.common.wallet.walletCard.ThisIsNotAValidSecurityCode"></span>
+      </div>
+      <div ng-message="ccExpMonth" class="alert alert-danger mb-0">
+        <span data-translate="ui.admin.common.wallet.walletCard.ThisIsNotAValidExpirationMonth"></span>
+      </div>
+      <div ng-message="ccExpYear" class="alert alert-danger mb-0">
+        <span data-translate="ui.admin.common.wallet.walletCard.ThisIsNotAValidExpirationYear"></span>
+      </div>
+      <div ng-message="ccExp" class="alert alert-danger mb-0">
+        <span data-translate="ui.admin.common.wallet.walletCard.TheSelectedExpirationDateHasPassed"></span>
+      </div>
+      <div ng-message="required" class="alert alert-danger mb-0">
+        <span sid="WalletAllFieldsRequiredText"
+          data-translate="ui.admin.common.walletCard.AllFieldsAreRequired">
+        </span>
+      </div>
+    </div>
+  </div>
+  <div ng-if="wceCtrl.viewState.errorMessage"
+    class="p-0 mt-3">
+    <div class="alert alert-danger m-0"
+      ng-bind="wceCtrl.viewState.errorMessage">
+    </div>
+  </div>
+</div>

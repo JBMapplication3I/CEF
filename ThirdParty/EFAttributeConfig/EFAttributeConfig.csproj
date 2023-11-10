@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>RichardLawley.EF.AttributeConfig</RootNamespace>
+    <Copyright>Copyright © Richard Lawley 2016</Copyright>
+    <Description>Allows configuration of properties by attributes on the model class</Description>
+    <Product>Entity Framework Attribute Config</Product>
+    <Company>Richard Lawley</Company>
+    <Authors>Richard Lawley</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+  </ItemGroup>
+
+</Project>

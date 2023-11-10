@@ -1,0 +1,229 @@
+﻿<div class="row" ng-form="freeShippingMinimumsEditorWidgetCtrl.forms.orderMinimums">
+    <div class="col-sm-12">
+        <h3 data-translate="ui.admin.common.FreeShipping"></h3>
+    </div>
+    <div class="col-md-6">
+        <h4 data-translate="ui.admin.controls.widgets.minimumFreeShipping.ByDollarAmount"></h4>
+        <div class="row">
+            <number-input-form-group
+                class="col-sm-5"
+                input-class="text-right"
+                key="MinimumForFreeShippingDollarAmount"
+                ng-model-options="freeShippingMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmount"
+                label-key="ui.admin.controls.widgets.minimumFreeShipping.ByDollarAmount"
+                tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set."
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="true">
+            </number-input-form-group>
+            <number-input-form-group
+                class="col-sm-7"
+                input-class="text-right"
+                key="MinimumForFreeShippingDollarAmountAfter"
+                ng-model-options="freeShippingMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountAfter"
+                ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmount"
+                label-key="ui.admin.controls.widgets.minimumFreeShipping.ByDollarAmountAfter"
+                tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set. If they have previously met the base minimum order dollar amount, the requirement changes to this value."
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="true">
+            </number-input-form-group>
+        </div>
+        <textarea-form-group
+            key="MinimumForFreeShippingDollarAmountWarningMessage"
+            ng-model-options="freeShippingMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountWarningMessage"
+            ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmount"
+            label-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+            placeholder-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountWarningMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="(freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountWarningMessage.replace('{{checkbox}}', '')) | trustedHtml"></div>
+            </div>
+        </div>
+        <textarea-form-group
+            key="MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage"
+            ng-model-options="freeShippingMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage"
+            ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmount"
+            label-key="ui.admin.controls.widgets.minimumFreeShipping.ByDollarAmountIgnoredAcceptedMessage"
+            placeholder-key="ui.admin.controls.widgets.minimumFreeShipping.ByDollarAmountIgnoredAcceptedMessage"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="(freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountIgnoredAcceptedMessage.replace('{{checkbox}}', '')) | trustedHtml"></div>
+            </div>
+        </div>
+        <div class="row">
+            <select-form-group
+                class="col-sm-12"
+                key="MinimumForFreeShippingDollarAmountBufferProductID"
+                label-key="ui.admin.controls.inventory.categoryDetail.MinimumForFreeShippingDollarAmountBufferProduct"
+                null-key="ui.admin.common.PleaseSelect"
+                include-null="true"
+                ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountBufferProductID"
+                selections="freeShippingMinimumsEditorWidgetCtrl.products"
+                ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmount"
+                ng-required="false">
+            </select-form-group>
+            <select-form-group
+                class="col-sm-12"
+                key="MinimumForFreeShippingDollarAmountBufferCategoryID"
+                label-key="ui.admin.controls.inventory.categoryDetail.MinimumForFreeShippingDollarAmountBufferCategory"
+                null-key="ui.admin.common.PleaseSelect"
+                include-null="true"
+                ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmountBufferCategoryID"
+                selections="freeShippingMinimumsEditorWidgetCtrl.categories"
+                ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingDollarAmount"
+                ng-required="false">
+            </select-form-group>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4 data-translate="ui.admin.controls.widgets.minimumFreeShipping.ByQuantityAmount"></h4>
+        <div class="row">
+            <number-input-form-group
+                class="col-sm-5"
+                input-class="text-right"
+                key="MinimumForFreeShippingQuantityAmount"
+                ng-model-options="freeShippingMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmount"
+                label-key="ui.admin.controls.widgets.minimumFreeShipping.ByQuantityAmount"
+                tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set."
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="false">
+            </number-input-form-group>
+            <number-input-form-group
+                class="col-sm-7"
+                input-class="text-right"
+                key="MinimumForFreeShippingQuantityAmountAfter"
+                ng-model-options="freeShippingMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountAfter"
+                ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmount"
+                label-key="ui.admin.controls.widgets.minimumFreeShipping.ByQuantityAmountAfter"
+                tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set. If they have previously met the base minimum order Quantity amount, the requirement changes to this value."
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="false">
+            </number-input-form-group>
+        </div>
+        <textarea-form-group
+            key="MinimumForFreeShippingQuantityAmountWarningMessage"
+            ng-model-options="freeShippingMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountWarningMessage"
+            ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmount"
+            label-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+            placeholder-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountWarningMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="(freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountWarningMessage.replace('{{checkbox}}', '')) | trustedHtml"></div>
+            </div>
+        </div>
+        <textarea-form-group
+            key="MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage"
+            ng-model-options="freeShippingMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage"
+            ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmount"
+            label-key="ui.admin.controls.widgets.minimumFreeShipping.ByQuantityAmountIgnoredAcceptedMessage"
+            placeholder-key="ui.admin.controls.widgets.minimumFreeShipping.ByQuantityAmountIgnoredAcceptedMessage"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                        Tokens: {{ownerID}}, {{ownerName}},
+                        {{requiredAmount}}, {{missingAmount}},
+                        {{relatedStoreID}}, {{relatedStoreName}},
+                        {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                        {{bufferItemName}}, {{bufferItemSeoUrl}},
+                        {{checkbox}}, {{attrKey}}
+                    </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="(freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountIgnoredAcceptedMessage.replace('{{checkbox}}', '')) | trustedHtml"></div>
+            </div>
+        </div>
+        <div class="row">
+            <select-form-group
+                class="col-sm-12"
+                key="MinimumForFreeShippingQuantityAmountBufferProductID"
+                label-key="ui.admin.controls.inventory.categoryDetail.MinimumForFreeShippingQuantityAmountBufferProduct"
+                null-key="ui.admin.common.PleaseSelect"
+                include-null="true"
+                ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountBufferProductID"
+                selections="freeShippingMinimumsEditorWidgetCtrl.products"
+                ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmount"
+                ng-required="false">
+            </select-form-group>
+            <select-form-group
+                class="col-sm-12"
+                key="MinimumForFreeShippingQuantityAmountBufferCategoryID"
+                label-key="ui.admin.controls.inventory.categoryDetail.MinimumForFreeShippingQuantityAmountBufferCategory"
+                null-key="ui.admin.common.PleaseSelect"
+                include-null="true"
+                ng-model="freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmountBufferCategoryID"
+                selections="freeShippingMinimumsEditorWidgetCtrl.categories"
+                ng-disabled="!freeShippingMinimumsEditorWidgetCtrl.master.MinimumForFreeShippingQuantityAmount"
+                ng-required="false">
+            </select-form-group>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="card" ng-form="qatcCtrl.forms.QuickAdd">
+  <div class="card-body bg-light p-3">
+    <label class="control-label" for="txtQuickAddSearch"
+      sid="CartQuickAddText"
+      data-translate="{{qatcCtrl.type === 'Quote Cart' ? 'ui.storefront.cart.QuicklyAddItemsToYourOrderRequest' : 'ui.storefront.cart.QuicklyAddItemsToYourShoppingCart'}}">
+    </label>
+    <div class="input-group mb-1">
+      <input type="text" class="form-control border-right-0"
+        id="autoQuickAddSearch" name="autoQuickAddSearch"
+        translate-attr="{ placeholder: 'ui.storefront.cart.searchProducts' }"
+        uib-typeahead="sug as sug.Name for sug in qatcCtrl.getSuggestionsPromise($viewValue)"
+        typeahead-popup-template-url="/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/cart/controls/quickAdd/quickAddToCart.Popout.html"
+        typeahead-template-url="/DesktopModules/ClarityEcommerce/UI-Storefront/framework/store/cart/controls/quickAdd/quickAddToCart.Item.html"
+        typeahead-loading="qatcCtrl.viewState.running" typeahead-wait-ms="500"
+        typeahead-min-length="1" typeahead-focus-first="false"
+        ng-keypress="qatcCtrl.inputKeyPress($event)"
+        ng-model="qatcCtrl.product" />
+      <!-- typeahead won't resolve the scope values before attempting to read the content
+      typeahead-popup-template-url="{{'/framework/store/cart/controls/quickAdd/quickAddToCart.Popout.html' | corsLink : 'ui'}}"
+      typeahead-template-url="{{'/framework/store/cart/controls/quickAdd/quickAddToCart.Item.html' | corsLink : 'ui'}}" -->
+      <div class="input-group-append input-group-text bg-white border-left-0">
+        <i class="far" ng-class="qatcCtrl.viewState.running ? 'fa-spinner fa-spin' : 'fa-search'"></i>
+      </div>
+    </div>
+    <div cef-add-to-cart-quantity-selector
+      always-allow-input="true"
+      class="mb-1"
+      item="qatcCtrl.product"
+      default-value="1"
+      current-value="qatcCtrl.quantity"
+      is-required="false"
+      step="1">
+    </div>
+    <button type="button" class="btn btn-primary btn-update float-right"
+      id="btnAddQuickOrderItemToCart" name="btnAddQuickOrderItemToCart"
+      translate-attr="{ title: 'ui.storefront.cart.Add',
+                        'aria-label': 'ui.storefront.cart.Add' }"
+      data-translate="ui.storefront.cart.Add"
+      ng-disabled="!qatcCtrl.isValid()"
+      ng-click="qatcCtrl.add()">
+    </button>
+  </div>
+</div>

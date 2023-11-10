@@ -1,0 +1,86 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net472</TargetFrameworks>
+    <AssemblyName>Clarity.Ecommerce.UI.StorefrontAngJS</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.UI.StorefrontAngJS</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.UI.StorefrontAngJS</RootNamespace>
+    <ProjectGuid>{3F0F8C84-B572-4C8F-83B8-92F8EF5DF88C}</ProjectGuid>
+    <AnalysisIgnoredDirectories>bower_components;node_moules;lib/bower_components</AnalysisIgnoredDirectories>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>bin\$(AssemblyName).xml</DocumentationFile>
+    <RunCommand>$(MSBuildExtensionsPath64)\..\IIS Express\iisexpress</RunCommand>
+    <RunArguments>/path:"$(MSBuildProjectDirectory)" /port:18082</RunArguments>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Content\**" />
+    <Compile Remove="framework\**" />
+    <Compile Remove="lib\**" />
+    <Compile Remove="Scripts\**" />
+    <Content Remove="Content\**" />
+    <Content Remove="framework\**" />
+    <Content Remove="lib\**" />
+    <Content Remove="Scripts\**" />
+    <EmbeddedResource Remove="Content\**" />
+    <EmbeddedResource Remove="framework\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <EmbeddedResource Remove="Scripts\**" />
+    <None Remove="Content\**" />
+    <None Remove="framework\**" />
+    <None Remove="lib\**" />
+    <None Remove="Scripts\**" />
+    <Content Remove="package-lock.json" />
+    <Content Remove="package.json" />
+    <Content Remove="tslint.json" />
+    <None Remove=".npmignore" />
+    <None Remove="gulpfile.js" />
+    <None Remove="npm-uber-install.bat" />
+    <None Remove="tsc-test.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="framework\store\_api\cvApi.tstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>cvApi.tt</DependentUpon>
+    </None>
+    <None Include="framework\store\_api\cvApi.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>cvApi.tstxt</LastGenOutput>
+    </None>
+    <Content Include="..\..\..\Solution Items\rewrite.outboundRules.config">
+      <Link>rewrite.outboundRules.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Solution Items\rewrite.rewriteMaps.config">
+      <Link>rewrite.rewriteMaps.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\Solution Items\rewrite.rules.config">
+      <Link>rewrite.rules.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="tsconfig.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="web.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="del &quot;$(ProjectDir)node_modules\angular-intro.js\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)node_modules\angular-ui-router-title\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)node_modules\gulp-typescript\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;del &quot;$(ProjectDir)node_modules\uri-js\tsconfig.json&quot; /q &gt;nul 2&gt;&amp;1&#xD;&#xA;exit 0" />
+  </Target>
+</Project>

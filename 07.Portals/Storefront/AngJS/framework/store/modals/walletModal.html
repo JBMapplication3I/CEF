@@ -1,0 +1,77 @@
+<div class="modal-header bg-dark text-light py-2 align-items-center">
+  <h3 class="modal-title" sid="WalletModalHeaderText"
+    data-translate="{{wmCtrl.modalTitle
+      || 'ui.storefront.userDashboard.wallet.AddANewEntry'}}">
+  </h3>
+  <button type="button" class="close"
+    id="btnAddModalCancelHeader" name="btnAddModalCancelHeader"
+    translate-attr="{ title: 'ui.storefront.common.Close',
+                      'aria-label': 'ui.storefront.common.Close' }"
+    ng-click="wmCtrl.cancel()">
+    <i class="far fa-times text-light" aria-hidden="true"></i>
+    <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+  </button>
+</div>
+<div class="modal-body form-vertical" ng-form="wmCtrl.forms.entry">
+  <div class="row" ng-if="wmCtrl.showTypeSelectors">
+    <div class="col">
+      <label>
+        <input type="radio" class="radio-inline"
+          name="entryType"
+          ng-change="wmCtrl.typeChanged()"
+          ng-model="wmCtrl.type"
+          ng-value="'card'" />
+        Credit/Debit Card
+      </label>
+      <label>
+        <input type="radio" class="radio-inline"
+          name="entryType"
+          ng-change="wmCtrl.typeChanged()"
+          ng-model="wmCtrl.type"
+          ng-value="'echeck'" />
+        Bank Account (eCheck)
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12"
+      ng-if="wmCtrl.type == 'card'"
+      cef-wallet-card-editor
+      entry="wmCtrl.currentEntry"
+      id-suffix="wmCtrl.idSuffix">
+    </div>
+    <div class="col-12"
+      ng-if="wmCtrl.type == 'echeck'"
+      cef-wallet-echeck-editor
+      entry="wmCtrl.currentEntry"
+      id-suffix="wmCtrl.idSuffix">
+    </div>
+  </div>
+</div>
+<div class="modal-footer py-2">
+  <div ng-if="wmCtrl.viewState.hasError"
+    class="alert alert-danger mb-0 p-2" role="alert">
+    <p class="text-left small"><span
+      ng-repeat="m in wmCtrl.viewState.errorMessages"
+      >{{$first ? '' : ' '}}{{m}}</span></p>
+  </div>
+  <button type="button" class="btn btn-outline-secondary"
+    id="btnAddModalCancelFooter" name="btnAddModalCancelFooter"
+    translate-attr="{ title: 'ui.storefront.common.Cancel',
+                      'aria-label': 'ui.storefront.common.Cancel' }"
+    data-translate="ui.storefront.common.Cancel"
+    ng-click="wmCtrl.cancel()"></button>
+  <button type="button" class="btn btn-primary"
+    id="btnAddEntryFooter" name="btnAddEntryFooter"
+    translate-attr="{ title: wmCtrl.buttonTitle
+        || 'ui.storefront.wallet.AddEntry.AddEntry',
+      'aria-label': wmCtrl.buttonTitle
+        || 'ui.storefront.wallet.AddEntry.AddEntry' }"
+    data-translate="{{wmCtrl.buttonTitle
+      || 'ui.storefront.wallet.AddEntry'}}"
+    ng-disabled="wmCtrl.forms.entry.$invalid
+      || wmCtrl.forms.entry.$pristine
+      || wmCtrl.viewState.running"
+    ng-click="wmCtrl.ok()">
+  </button>
+</div>

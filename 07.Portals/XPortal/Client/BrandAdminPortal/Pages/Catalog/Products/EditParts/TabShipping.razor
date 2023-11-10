@@ -1,0 +1,914 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+<Heading Size="HeadingSize.Is2">Shipping</Heading>
+<Row>
+@if (CEFConfig.featureSet?.shipping?.enabled == true)
+  {
+    <Column ColumnSize="ColumnSize.Is6.OnTablet.Is4.OnDesktop">
+      <Heading Size="HeadingSize.Is3">Charges &amp; Fees</Heading>
+      <ToggleFormGroup
+        TValue="bool"
+        FormIdentifier="NothingToShip"
+        @bind-Value="@Record.NothingToShip"
+        IsOptionToggled="@(_ => Record.NothingToShip)"
+        LabelText="Is Shippable"
+        ToggleOnText="Nothing to Ship"
+        ToggleOffText="Requires Shipping"
+        TooltipText="Nothing to ship occurs with digital goods or other services that do not include a physical product to send."
+        Required="false"
+      />
+      @if (CEFConfig.featureSet?.shipping?.rates?.productsCanBeFreeShipping == true)
+      {
+        <ToggleFormGroup
+          TValue="bool"
+          FormIdentifier="IsFreeShipping"
+          Disabled="Record.NothingToShip"
+          @bind-Value="Record.IsFreeShipping"
+          IsOptionToggled="@(_ => Record.IsFreeShipping)"
+          LabelText="Is Always Free Shipping"
+          TooltipText="Sets free shipping with all providers"
+          ToggleOnText="Always Free"
+          ToggleOffText="Normal Shipping"
+          Required="false"
+        />
+      }
+      @if (CEFConfig.featureSet?.shipping?.handlingFees?.enabled == true)
+      {
+        <NumericFormGroup
+          FormIdentifier="HandlingCharge"
+          Disabled="@(Record.NothingToShip || Record.IsFreeShipping)"
+          @bind-Value="Record.HandlingCharge"
+          LabelText="Handling Charge"
+          TooltipText="Adds a handling fee to the cart and resulting order"
+          PlaceholderText="0.00"
+          Step="0.01m"
+          Min="0"
+          Required="false"
+          InputClasses="text-right"
+          IsCurrency="true"
+        />
+      }
+      @if (CEFConfig.featureSet?.shipping?.rates?.flat?.enabled == true)
+      {
+        <NumericFormGroup
+          FormIdentifier="FlatShippingCharge"
+          Disabled="@(Record.NothingToShip || Record.IsFreeShipping)"
+          @bind-Value="Record.FlatShippingCharge"
+          LabelText="Flat Shipping Charge"
+          TooltipText="Provides a value to the flat shipping rate provider"
+          PlaceholderText="0.00"
+          Step="0.01m"
+          Min="0"
+          Required="false"
+          InputClasses="text-right"
+          IsCurrency="true"
+        />
+      }
+    </Column>
+  }
+  else
+  {
+    <Paragraph>Shipping Disabled or null</Paragraph>
+  }
+  @if (CEFConfig.featureSet?.shipping?.leadTimes?.enabled == true)
+  {
+    <Column ColumnSize="ColumnSize.Is6.OnTablet.Is4.OnDesktop">
+      <Heading Size="HeadingSize.Is3">Lead Times</Heading>
+      <ToggleFormGroup
+        TValue="bool"
+        FormIdentifier="ShippingLeadTimeIsCalendarDays"
+        Disabled="@(Record.NothingToShip)"
+        @bind-Value="Record.ShippingLeadTimeIsCalendarDays"
+        IsOptionToggled="@(_ => Record.ShippingLeadTimeIsCalendarDays)"
+        LabelText="Shipping Lead Time is in Calendar Days"
+        ToggleOnText="Calendar"
+        ToggleOffText="Business"
+        Required="false"
+      />
+      @* // ShippingLeadTimesDays doesn't exist on ProductModel
+      <NumericFormGroup
+        FormIdentifier="ShippingLeadTimesDays"
+        Disabled="@(Record.NothingToShip)"
+        @bind-Value="Record.ShippingLeadTimesDays"
+        LabelText="Shipping Lead Times Days"
+        PlaceholderText="0"
+        Step="1"
+        Min="0"
+        InputClasses="text-right"
+        Required="false"
+      />
+      *@
+    </Column>
+  }
+  <Column ColumnSize="CS.Start.LG(CW.Is6)">
+    <Heading Size="HeadingSize.Is3">Unit Out of Box Dimensions</Heading>
+    <Blazorise.Table Borderless="true">
+      <TableBody>
+        <TableRow>
+          <TableRowCell
+            Width="Width.Auto"
+            Class="bg-light">
+            Weight
+          </TableRowCell>
+          <TableRowCell
+            Width="Width.Is75"
+            Class="p-0">
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="Weight"
+              IsHorizontal="false"
+              PlaceholderText="0.00"
+              @bind-Value="@Record.Weight"
+              Step="1"
+              Required="true"
+              Disabled="@ViewState.InputDisable"
+              ShowValidTooltip="false"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0 text-right"
+            />
+          </TableRowCell>
+          <TableRowCell
+            Width="Width.Is25"
+            Class="p-0">
+            <SelectFormGroup
+              TValue="string"
+              FormIdentifier="WeightUofM"
+              IsHorizontal="false"
+              PlaceholderText="in"
+              @bind-Value="@Record.WeightUnitOfMeasure"
+              OptionsList="UnitsOfMeasureWeights"
+              ItemLabelFunc="@(x => (string)x)"
+              ItemValueFunc="@(x => (string)x)"
+              Disabled="@ViewState.InputDisable"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0"
+              DontAllowNull="Contract.CheckValidID(Record.Weight)"
+            />
+          </TableRowCell>
+        </TableRow>
+        <TableRow>
+          <TableRowCell Class="bg-light">Width</TableRowCell>
+          <TableRowCell Class="p-0">
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="Width"
+              IsHorizontal="false"
+              PlaceholderText="0.00"
+              @bind-Value="@Record.Width"
+              Step="1"
+              Required="true"
+              Disabled="@ViewState.InputDisable"
+              ShowValidTooltip="false"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0 text-right"
+            />
+          </TableRowCell>
+          <TableRowCell Class="p-0">
+            <SelectFormGroup
+              TValue="string"
+              FormIdentifier="WidthUofM"
+              IsHorizontal="false"
+              PlaceholderText="in"
+              @bind-Value="@Record.WidthUnitOfMeasure"
+              OptionsList="UnitsOfMeasureLengths"
+              ItemLabelFunc="@(x => (string)x)"
+              ItemValueFunc="@(x => (string)x)"
+              Disabled="@ViewState.InputDisable"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0"
+              DontAllowNull="Contract.CheckValidID(Record.Width)"
+            />
+          </TableRowCell>
+        </TableRow>
+        <TableRow>
+          <TableRowCell Class="bg-light">Depth</TableRowCell>
+          <TableRowCell Class="p-0">
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="Depth"
+              IsHorizontal="false"
+              PlaceholderText="0.00"
+              @bind-Value="@Record.Depth"
+              Step="1"
+              Required="true"
+              Disabled="@ViewState.InputDisable"
+              ShowValidTooltip="false"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0 text-right"
+            />
+          </TableRowCell>
+          <TableRowCell Class="p-0">
+            <SelectFormGroup
+              TValue="string"
+              FormIdentifier="DepthUofM"
+              IsHorizontal="false"
+              PlaceholderText="in"
+              @bind-Value="@Record.DepthUnitOfMeasure"
+              OptionsList="UnitsOfMeasureLengths"
+              ItemLabelFunc="@(x => (string)x)"
+              ItemValueFunc="@(x => (string)x)"
+              Disabled="@ViewState.InputDisable"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0"
+              DontAllowNull="Contract.CheckValidID(Record.Depth)"
+            />
+          </TableRowCell>
+        </TableRow>
+        <TableRow>
+          <TableRowCell Class="bg-light">Height</TableRowCell>
+          <TableRowCell Class="p-0">
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="Height"
+              IsHorizontal="false"
+              PlaceholderText="0.00"
+              @bind-Value="@Record.Height"
+              Step="1"
+              Required="true"
+              Disabled="@ViewState.InputDisable"
+              ShowValidTooltip="false"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0 text-right"
+            />
+          </TableRowCell>
+          <TableRowCell Class="p-0">
+            <SelectFormGroup
+              TValue="string"
+              FormIdentifier="HeightUofM"
+              IsHorizontal="false"
+              PlaceholderText="in"
+              @bind-Value="@Record.HeightUnitOfMeasure"
+              OptionsList="UnitsOfMeasureLengths"
+              ItemLabelFunc="@(x => (string)x)"
+              ItemValueFunc="@(x => (string)x)"
+              Disabled="@ViewState.InputDisable"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0"
+              DontAllowNull="Contract.CheckValidID(Record.Height)"
+            />
+          </TableRowCell>
+        </TableRow>
+      </TableBody>
+    </Blazorise.Table>
+  </Column>
+  @if (CEFConfig.featureSet?.shipping?.packages?.enabled == true && Record.Package is not null)
+  {
+    <Column ColumnSize="ColumnSize.IsFull">
+      <ToggleFormGroup
+        TValue="bool"
+        @bind-Value="Record.Package.IsCustom"
+        IsOptionToggled="@(_ => Record.Package.IsCustom)"
+        ToggleOnText="Yes"
+        ToggleOffText="No"
+        SwitchColor="Color.Success"
+        FormIdentifier="IsCustom2"
+        LabelText="Custom Package"
+        Disabled="@Record.NothingToShip"
+        Required="false"
+      />
+      <NumericFormGroup
+        TValue="decimal"
+        FormIdentifier="PackageDimensionalWeight"
+        LabelText="Dim. Weight"
+        PlaceholderText="0.0000"
+        @bind-Value="Record.Package.DimensionalWeight"
+        Min="0"
+        Step="0.01m"
+        Required="@Record.Package.IsCustom"
+        Disabled="@(!Record.Package.IsCustom || Record.NothingToShip)"
+        ShowValidTooltip="true"
+        StartTouched="true"
+      />
+      <TextFormGroup
+        FormIdentifier="PackageDimensionalWeightUnitOfMeasure"
+        PlaceholderText="lbs"
+        @bind-Value="Record.Package.DimensionalWeightUnitOfMeasure"
+        Required="@Record.Package.IsCustom"
+        Disabled="@(!Record.Package.IsCustom || Record.NothingToShip)"
+      />
+      @*
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPackageDimensionalWeight.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.DimensionalWeight.Abbr"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudPackageDimensionalWeight" name="nudPackageDimensionalWeight"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.Package.DimensionalWeight"
+            ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.Package.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="lbs"
+              id="txtPackageDimensionalWeightUnitOfMeasure" name="txtPackageDimensionalWeightUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.Package.DimensionalWeightUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.Package.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudPackageDimensionalWeight.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      *@
+    </Column>
+    <Column>
+      <Row>
+        <Column ColumnSize="ColumnSize.IsFull">
+          <ToggleFormGroup
+            TValue="bool"
+            @bind-Value="Record.Package.IsCustom"
+            IsOptionToggled="@(_ => Record.Package.IsCustom)"
+            ToggleOnText="Yes"
+            ToggleOffText="No"
+            SwitchColor="Color.Success"
+            FormIdentifier="IsCustom1"
+            LabelText="Predefined Package"
+            Disabled="@Record.NothingToShip"
+            Required="false"
+          />
+          <SelectFormGroup
+            TValue="PackageModel"
+            FormIdentifier="recordPackage"
+            @bind-Value="@Record.Package"
+            OptionsList="@(packages?.Where(x => x.IsCustom && x.TypeKey == "Package"))"
+            ItemValueFunc="@(x => (PackageModel)x)"
+            ItemLabelFunc="@(x => ((PackageModel)x).Name ?? ((PackageModel)x).CustomKey)"
+          />
+        </Column>
+      </Row>
+    </Column>
+    <Column ColumnSize="ColumnSize.IsFull">
+      <Heading Size="HeadingSize.Is3">Unit Package Dimensions</Heading>
+      <Div Class="d-flex flex-column mb-0">
+        @*
+        <Row>
+          <Column ColumnSize="ColumnSize.Is3" Class="bg-light border-light form-control rounded-0">
+            Weight<Span TextColor="TextColor.Danger">&nbsp;*</Span>
+          </Column>
+          <Column class="p-0">
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="PackageWeight"
+              IsHorizontal="false"
+              PlaceholderText="0.00"
+              @bind-Value="Record.Package.Weight"
+              Step="1"
+              Min="0"
+              Required="Record.Package.IsCustom"
+              Disabled="@(!Record.Package.IsCustom || Record.NothingToShip)"
+              ShowValidTooltip="false"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0"
+            />
+          </Column>
+          <Column ColumnSize="ColumnSize.Is2" Class="border-light form-control rounded-0">
+            @Record.Package.WeightUnitOfMeasure
+          </Column>
+        </Row>
+        <Row>
+          <Column ColumnSize="ColumnSize.Is3" Class="bg-light border-light form-control rounded-0">
+            Width<Span TextColor="TextColor.Danger">&nbsp;*</Span>
+          </Column>
+          <Column class="p-0">
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="PackageWidth"
+              IsHorizontal="false"
+              PlaceholderText="0.00"
+              @bind-Value="Record.Package.Width"
+              Step="0.01m"
+              Min="0"
+              Required="Record.Package.IsCustom"
+              Disabled="@(!Record.Package.IsCustom || Record.NothingToShip)"
+              ShowValidTooltip="false"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0"
+            />
+          </Column>
+          <Column ColumnSize="ColumnSize.Is2" Class="border-light form-control rounded-0">
+            @Record.Package.WidthUnitOfMeasure
+          </Column>
+        </Row>
+        <Row>
+          <Column ColumnSize="ColumnSize.Is3" Class="bg-light border-light form-control rounded-0">
+            Depth<Span TextColor="TextColor.Danger">&nbsp;*</Span>
+          </Column>
+          <Column class="p-0">
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="PackageDepth"
+              IsHorizontal="false"
+              PlaceholderText="0.00"
+              @bind-Value="Record.Package.Depth"
+              Step="0.01m"
+              Min="0"
+              Required="Record.Package.IsCustom"
+              Disabled="@(!Record.Package.IsCustom || Record.NothingToShip)"
+              ShowValidTooltip="false"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0"
+            />
+          </Column>
+          <Column ColumnSize="ColumnSize.Is2" Class="border-light form-control rounded-0">
+            @Record.Package.DepthUnitOfMeasure
+          </Column>
+        </Row>
+        <Row>
+          <Column ColumnSize="ColumnSize.Is3" Class="bg-light border-light form-control rounded-0">
+            Height<Span TextColor="TextColor.Danger">&nbsp;*</Span>
+          </Column>
+          <Column class="p-0">
+            <NumericFormGroup
+              TValue="decimal?"
+              FormIdentifier="PackageHeight"
+              IsHorizontal="false"
+              PlaceholderText="0.00"
+              @bind-Value="Record.Package.Height"
+              Step="0.01m"
+              Min="0"
+              Required="Record.Package.IsCustom"
+              Disabled="@(!Record.Package.IsCustom || Record.NothingToShip)"
+              ShowValidTooltip="false"
+              StartTouched="true"
+              NoLabel="true"
+              FormClasses="mb-0"
+              InputClasses="mb-0 rounded-0"
+            />
+          </Column>
+          <Column ColumnSize="ColumnSize.Is2" Class="border-light form-control rounded-0">
+            @Record.Package.HeightUnitOfMeasure
+          </Column>
+        </Row>
+        *@
+        <Row>
+          <Column ColumnSize="ColumnSize.Is6.OnMobile.Is4.OnTablet.Is4.OnDesktop">
+            @*
+            <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.txtHeightUnitOfMeasure.$invalid}">
+              <label class="control-label">
+                <input type="radio" name="rdPackageType"
+                  ng-change="ipeCtrl.switchPackage(false)"
+                  ng-value="false"
+                  ng-disabled="ipeCtrl.record.NothingToShip"
+                  ng-model="ipeCtrl.record.Package.IsCustom" />&nbsp;<!--
+                --><span data-translate="ui.admin.common.PredefinedPackageDimensions"></span></label>
+              <div class="input-group">
+                <select class="form-control" id="ddlPackageID" name="ddlPackageID"
+                  ng-disabled="ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                  ng-change="ipeCtrl.switchPackage(false)"
+                  ng-options="sp.ID as (sp.Name + (sp.ID > 0 ? ' (' + sp.Width + sp.WidthUnitOfMeasure + ' x ' + sp.Depth + sp.DepthUnitOfMeasure + ' x ' + sp.Height + sp.HeightUnitOfMeasure + ' @@ ' + sp.Weight + sp.WeightUnitOfMeasure + ')' : ''))
+                              for sp in ipeCtrl.packages
+                              | filter: { IsCustom: false, TypeKey: 'Package' }
+                              | orderBy: ['SortOrder','DisplayName || Name']"
+                  ng-model="ipeCtrl.record.PackageID">
+                </select>
+              </div>
+            </div>
+            *@
+            <Paragraph><Strong>NOTE</Strong>&nbsp;<!--
+            --><Span>productDetail.CustomPackages.Message</Span></Paragraph>
+          </Column>
+        </Row>
+      </Div>
+    </Column>
+  }
+  @if (CEFConfig.featureSet?.shipping?.masterPacks?.enabled == true)
+  {
+    <div class="col-sm-6 col-md-4">
+      <Heading Size="HeadingSize.Is3">Master Pack Dimensions</Heading>
+      <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.ddlMasterPackID.$invalid}">
+        <label class="control-label">
+          <input type="radio" name="masterPackType"
+            ng-change="ipeCtrl.switchMasterPack(false)"
+            ng-value="false"
+            ng-disabled="ipeCtrl.record.NothingToShip"
+            ng-model="ipeCtrl.record.MasterPack.IsCustom" />&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.productDetail.PredefinedMasterPackDimensions"></span></label>
+        <div class="input-group">
+          <select class="form-control" id="ddlMasterPackID" name="ddlMasterPackID"
+            ng-disabled="ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-change="ipeCtrl.switchMasterPack(false)"
+            ng-options="sp.ID as (sp.Name + (sp.ID > 0 ? ' (' + sp.Width + sp.WidthUnitOfMeasure + ' x ' + sp.Depth + sp.DepthUnitOfMeasure + ' x ' + sp.Height + sp.HeightUnitOfMeasure + ' @@ ' + sp.Weight + sp.WeightUnitOfMeasure + ')' : ''))
+                        for sp in ipeCtrl.packages
+                        | filter: { IsCustom: false, TypeKey: 'Master Pack' }
+                        | orderBy: ['SortOrder','DisplayName || Name']"
+            ng-model="ipeCtrl.record.MasterPackID">
+          </select>
+        </div>
+      </div>
+      <div class="form-group mb-0">
+        <label class="control-label">
+          <input type="radio" name="masterPackType"
+            ng-change="ipeCtrl.switchMasterPack(true)"
+            ng-value="true"
+            ng-disabled="ipeCtrl.record.NothingToShip"
+            ng-model="ipeCtrl.record.MasterPack.IsCustom" />&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.productDetail.CustomMasterPackDimensions"></span></label>
+      </div>
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackDimensionalWeight.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.DimensionalWeight.Abbr"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudMasterPackDimensionalWeight" name="nudMasterPackDimensionalWeight"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.MasterPack.DimensionalWeight"
+            ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="lbs"
+              id="txtMasterPackDimensionalWeightUnitOfMeasure" name="txtMasterPackDimensionalWeightUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.MasterPack.DimensionalWeightUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackDimensionalWeight.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackWeight.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.Weight"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudMasterPackWeight" name="nudMasterPackWeight"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.MasterPack.Weight"
+            ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="lbs"
+              id="txtMasterPackWeightUnitOfMeasure" name="txtMasterPackWeightUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.MasterPack.WeightUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackWeight.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackWidth.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.Width"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudMasterPackWidth" name="nudMasterPackWidth"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.MasterPack.Width"
+            ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="in"
+              id="txtMasterPackWidthUnitOfMeasure" name="txtMasterPackWidthUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.MasterPack.WidthUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackWidth.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackDepth.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.Depth"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudMasterPackDepth" name="nudMasterPackDepth"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.MasterPack.Depth"
+            ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="in"
+              id="txtMasterPackDepthUnitOfMeasure" name="txtMasterPackDepthUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.MasterPack.DepthUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackDepth.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackHeight.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.Height"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudMasterPackHeight" name="nudMasterPackHeight"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.MasterPack.Height"
+            ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="in"
+              id="txtMasterPackHeightUnitOfMeasure" name="txtMasterPackHeightUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.MasterPack.HeightUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackHeight.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <p><b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+      --><span data-translate="ui.admin.controls.inventory.productDetail.CustomMasterPacks.Message"></span></p>
+      <number-input-form-group
+        key="QuantityPerMasterPack"
+        ng-model="ipeCtrl.record.QuantityPerMasterPack"
+        label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityPerMasterPack"
+        input-class="text-right"
+        placeholder-text="1"
+        step="0.01"
+        precision="4"
+        ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0))"
+        ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0)">
+      </number-input-form-group>
+      <number-input-form-group
+        key="QuantityMasterPackPerLayer"
+        ng-model="ipeCtrl.record.QuantityMasterPackPerLayer"
+        label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityMasterPackPerLayer"
+        input-class="text-right"
+        placeholder-text="1"
+        step="0.01"
+        precision="4"
+        ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0))"
+        ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0)">
+      </number-input-form-group>
+      <number-input-form-group
+        key="QuantityMasterPackLayersPerPallet"
+        ng-model="ipeCtrl.record.QuantityMasterPackLayersPerPallet"
+        label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityMasterPackLayersPerPallet"
+        input-class="text-right"
+        placeholder-text="1"
+        step="0.01"
+        precision="4"
+        ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0))"
+        ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0)">
+      </number-input-form-group>
+    </div>
+  }
+  @if (CEFConfig.featureSet?.shipping?.pallets?.enabled == true)
+  {
+    <div class="col-sm-6 col-md-4">
+      <Heading Size="HeadingSize.Is3">Pallet Dimensions</Heading>
+      <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.ddlPalletID.$invalid}">
+        <label class="control-label">
+          <input type="radio" name="palletType"
+            ng-change="ipeCtrl.switchPallet(false)"
+            ng-value="false"
+            ng-disabled="ipeCtrl.record.NothingToShip"
+            ng-model="ipeCtrl.record.Pallet.IsCustom" />&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.productDetail.PredefinedPalletDimensions"></span></label>
+        <div class="input-group">
+          <select class="form-control" id="ddlPalletID" name="ddlPalletID"
+            ng-disabled="ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-change="ipeCtrl.switchPallet(false)"
+            ng-model="ipeCtrl.record.PalletID"
+            ng-options="sp.ID as (sp.Name + (sp.ID > 0 ? ' (' + sp.Width + sp.WidthUnitOfMeasure + ' x ' + sp.Depth + sp.DepthUnitOfMeasure + ' x ' + sp.Height + sp.HeightUnitOfMeasure + ' @@ ' + sp.Weight + sp.WeightUnitOfMeasure + ')' : ''))
+                        for sp in ipeCtrl.packages
+                        | filter: { IsCustom: false, TypeKey: 'Pallet' }
+                        | orderBy: ['SortOrder','DisplayName || Name']">
+          </select>
+        </div>
+      </div>
+      <div class="form-group mb-0">
+        <label class="control-label">
+          <input type="radio" name="palletType"
+            ng-change="ipeCtrl.switchPallet(true)"
+            ng-value="true"
+            ng-disabled="ipeCtrl.record.NothingToShip"
+            ng-model="ipeCtrl.record.Pallet.IsCustom" />&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.productDetail.CustomPalletDimensions"></span></label>
+      </div>
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletDimensionalWeight.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.DimensionalWeight.Abbr"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudPalletDimensionalWeight" name="nudPalletDimensionalWeight"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.Pallet.DimensionalWeight"
+            ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="lbs"
+              id="txtPalletDimensionalWeightUnitOfMeasure" name="txtPalletDimensionalWeightUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.Pallet.DimensionalWeightUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudPalletDimensionalWeight.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletWeight.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.Weight"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudPalletWeight" name="nudPalletWeight"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.Pallet.Weight"
+            ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="lbs"
+              id="txtPalletWeightUnitOfMeasure" name="txtPalletWeightUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.Pallet.WeightUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudPalletWeight.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletWidth.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.Width"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudPalletWidth" name="nudPalletWidth"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.Pallet.Width"
+            ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="in"
+              id="txtPalletWidthUnitOfMeasure" name="txtPalletWidthUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.Pallet.WidthUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudPalletWidth.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletDepth.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.Depth"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudPalletDepth" name="nudPalletDepth"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.Pallet.Depth"
+            ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="in"
+              id="txtPalletDepthUnitOfMeasure" name="txtPalletDepthUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.Pallet.DepthUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudPalletDepth.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletHeight.$invalid}">
+        <div class="input-group">
+          <div class="input-group-addon stack" data-translate="ui.admin.common.Weight"></div>
+          <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+            id="nudPalletHeight" name="nudPalletHeight"
+            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+            ng-model="ipeCtrl.record.Pallet.Height"
+            ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+            ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          <div class="input-group-addon with-control">
+            <input type="text" class="form-control" placeholder="in"
+              id="txtPalletHeightUnitOfMeasure" name="txtPalletHeightUnitOfMeasure"
+              maxlength="64"
+              ng-model="ipeCtrl.record.Pallet.HeightUnitOfMeasure"
+              ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+              ng-required="ipeCtrl.record.Pallet.IsCustom" />
+          </div>
+        </div>
+        <div ng-messages="ipeCtrl.forms.Shipping.nudPalletHeight.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <p><b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+      --><span data-translate="ui.admin.controls.inventory.productDetail.CustomPallets.Message"></span></p>
+      <number-input-form-group
+        key="QuantityPerPallet"
+        ng-model="ipeCtrl.record.QuantityPerPallet"
+        label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityPerPallet"
+        input-class="text-right"
+        placeholder-text="1"
+        step="0.01"
+        precision="4"
+        ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0))"
+        ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0)">
+      </number-input-form-group>
+      <number-input-form-group
+        key="QuantityMasterPackPerPallet"
+        ng-model="ipeCtrl.record.QuantityMasterPackPerPallet"
+        label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityPerPallet"
+        input-class="text-right"
+        placeholder-text="1"
+        step="0.01"
+        precision="4"
+        ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0) && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0))"
+        ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0) && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0)">
+      </number-input-form-group>
+      <number-input-form-group
+        key="QuantityPerLayer"
+        ng-model="ipeCtrl.record.QuantityPerLayer"
+        label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityPerLayer"
+        input-class="text-right"
+        placeholder-text="1"
+        step="0.01"
+        precision="4"
+        ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0))"
+        ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0)">
+      </number-input-form-group>
+      <number-input-form-group
+        key="QuantityLayersPerPallet"
+        ng-model="ipeCtrl.record.QuantityLayersPerPallet"
+        label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityLayersPerPallet"
+        input-class="text-right"
+        placeholder-text="1"
+        step="0.01"
+        precision="4"
+        ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0))"
+        ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0)">
+      </number-input-form-group>
+    </div>
+  }
+</Row>
+
+@code
+{
+  private static readonly string[] UnitsOfMeasureWeights = { "lbs", "oz" };
+  private static readonly string[] UnitsOfMeasureLengths = { "in", "mm" };
+
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+    await Task.WhenAll(LoadPackagesAsync()).ConfigureAwait(false);
+#endif
+  }
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    return Task.CompletedTask;
+  }
+
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+  private List<PackageModel>? packages;
+
+  private async Task LoadPackagesAsync()
+  {
+    packages = await LoadCollection<MVC.Api.Endpoints.GetPackages, PackagePagedResults, PackageModel>(
+        cvApi.GetPackages,
+        new() { Active = true, AsListing = true })
+      .ConfigureAwait(false);
+  }
+#else
+  private List<PackageModel>? packages = null;
+#endif
+}

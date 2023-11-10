@@ -1,0 +1,51 @@
+<!-- purchase template -->
+<div class="row mb-3">
+  <div ng-if="pCtrl.viewState.running || pCtrl.service.anyStepIsBuilding(pCtrl.cartType)"
+    cef-loading-widget
+    overlay="true"
+    message="pCtrl.viewState.waitMessage">
+  </div>
+  <div class="col-12 py-5"
+    ng-show="pCtrl.service.showEmptyCartMessage">
+    <div cef-purchase-cart-empty></div>
+  </div>
+  <div class="col-12" id="purchase-checkout"
+    ng-hide="pCtrl.service.anyStepIsBuilding(pCtrl.cartType)
+      || pCtrl.service.showEmptyCartMessage"
+    translate-cloak>
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-tk-8 offset-tk-2 col-fk-8 offset-fk-3">
+        <h1 class="mt-3" sid="CheckoutPurchaseText"
+          data-translate="ui.storefront.memberships.membershipRegistration.membershipLevelPurchase">
+        </h1>
+      </div>
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-tk-6 offset-tk-2 col-fk-4 offset-fk-3 order-2 order-md-1">
+        <div ng-repeat="step in pCtrl.service.steps[pCtrl.cartType]
+                        | orderBy: ['order']"
+          class="row">
+          <div class="col-12">
+            <div ng-include="step.templateURL | corsLink: 'ui'"></div>
+          </div>
+        </div>
+        <div class="row" ng-if="pCtrl.viewState.hasError">
+          <div class="col-12">
+            <div uib-alert class="alert-danger"
+              ng-bind="pCtrl.viewState.errorMessage">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-tk-3 col-fk-2 order-1 order-md-2"
+        ng-hide="pCtrl.service.anyStepIsBuilding(pCtrl.cartType)
+          || pCtrl.service.isOrderComplete">
+        <div cef-mini-cart
+          type="pCtrl.cartType"
+          quantity-items-iterate="4"
+          no-initial-load="true"
+          hide-shipping="!pCtrl.cefConfig.featureSet.shipping.enabled
+            || !pCtrl.service.showShippingSubtotal">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

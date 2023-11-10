@@ -1,0 +1,82 @@
+<!-- step.completed.body Template -->
+<div class="row">
+  <div ng-hide="sqscbCtrl.cvSubmitQuoteService.paypal.error"
+    class="col-12 text-center">
+    <h4 data-translate="ui.storefront.submitQuote.confirmation.ThankYouForYourSubmission"
+      id="lbThankYouForYourSubmission"
+      class="mt-0">
+    </h4>
+  </div>
+  <div ng-hide="sqscbCtrl.cvSubmitQuoteService.paypal.error"
+    class="col-12 col-sm-6">
+    <p sid="SubmitQuoteSuccessText"
+      data-translate="ui.storefront.submitQuote.confirmation.YourSubmissionWasSuccessful.Message">
+    </p>
+  </div>
+  <div class="col-12 col-sm-6">
+    <div ng-if="!sqscbCtrl.cvSubmitQuoteService.isPayPal"
+      class="row">
+      <div ng-if="!sqscbCtrl.cefConfig.featureSet.shipping.splitShipping.enabled"
+        class="col-12">
+        <p class="very-big"><span
+          data-translate="ui.storefront.submitQuote.confirmation.QuoteNumber"></span>&nbsp;<!--
+        --><b ng-bind="sqscbCtrl.cvSubmitQuoteService.checkoutResult.QuoteID"></b></p>
+      </div>
+      <div ng-if="sqscbCtrl.cefConfig.featureSet.shipping.splitShipping.enabled"
+        class="col-12">
+        <h5><span sid="CheckoutMasterQuoteText"
+          data-translate="ui.storefront.submitQuote.confirmation.MasterQuote"></span>&nbsp;<!--
+        --><b sid="CheckoutMasterQuoteNumberText"
+          ng-bind="sqscbCtrl.cvSubmitQuoteService.checkoutResult.QuoteIDs[0]"></b></h5>
+        <p class="small bold" sid="MasterQuoteMessageText"
+          data-translate="ui.storefront.submitQuote.confirmation.MasterQuote.Message">
+        </p>
+        <h5><span sid="CheckoutSubQuoteText"
+          data-translate="ui.storefront.submitQuote.confirmation.SubQuote.OptionalPlural"></span>&nbsp;<!--
+        --><b ng-repeat="quoteID in sqscbCtrl.cvSubmitQuoteService.checkoutResult.QuoteIDs"
+          sid="CheckoutSubQuoteNumberText_{{$index}}" 
+          ng-hide="$first"
+          ng-bind="quoteID + (!$last ? ', ' : '')"></b></h5>
+        <p class="small" sid="SubQuoteMessageText"
+          data-translate="ui.storefront.submitQuote.confirmation.SubQuote.Message">
+        </p>
+      </div>
+      <div ng-if="sqscbCtrl.cvSubmitQuoteService.isPayPal"
+        class="col-12">
+        <h5><span data-translate="ui.storefront.submitQuote.confirmation.QuoteNumber.Plural"></span>&nbsp;<!--
+        --><b ng-bind="sqscbCtrl.cvSubmitQuoteService.paypal.confirmationNumber"></b></h5>
+        <p class="alert alert-warning" role="alert"
+          ng-bind-html="sqscbCtrl.cvSubmitQuoteService.paypal.message">
+        </p>
+      </div>
+    </div>
+    <p ng-if="sqscbCtrl.cvSubmitQuoteService.checkoutResult.WarningMessage"
+      class="alert alert-warning" role="alert"
+      ng-bind="sqscbCtrl.cvSubmitQuoteService.checkoutResult.WarningMessage">
+    </p>
+    <p ng-if="sqscbCtrl.cvSubmitQuoteService.isPayPal"
+      ng-show="sqscbCtrl.cvSubmitQuoteService.paypal.error"
+      class="alert alert-danger" role="alert"
+      ng-bind-html="sqscbCtrl.cvSubmitQuoteService.paypal.message">
+    </p>
+  </div>
+  <div class="col-12 text-right">
+    <button type="button" class="btn btn-secondary"
+      id="btnContinueShoppingCompletedQuote"
+      translate-attr="{ title: 'ui.storefront.cart.continueShopping',
+                        'aria-label': 'ui.storefront.cart.continueShopping' }"
+      ui-sref-plus uisrp-is-catalog="true"
+      uisrp-state="searchCatalog.products.results.both">
+      <span data-translate="ui.storefront.cart.continueShopping"></span>
+    </button>
+    <button ng-if="sqscbCtrl.cefConfig.featureSet.salesQuotes.enabled"
+      type="button" class="btn btn-primary"
+      id="btnYourQuoteHistory" name="btnYourQuoteHistory"
+      translate-attr="{ title: 'ui.storefront.submitQuote.confirmation.YourQuoteHistory',
+                        'aria-label': 'ui.storefront.submitQuote.confirmation.YourQuoteHistory' }"
+      ui-sref-plus uisrp-is-dashboard="true"
+      uisrp-state="userDashboard.salesQuotes.list">
+      <span data-translate="ui.storefront.submitQuote.confirmation.YourQuoteHistory"></span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="row text-center">
+    <div class="col-12 col-sm-8 col-lg-10 col-xl-auto mx-auto">
+        <h1 class="font-weight-bold h1 font-weight-bolder">Equipment</h1>
+        <p class="my-4 text-normal lead">Destination Athlete® is your preferred supplier for teams, leagues, and athletic departments, offering more than 200
+            premier brands that focus on the total athlete. We are dedicated in providing the safest and most innovative products.
+            Including the, MVP Sprint the world's first robotic self-righting tackling dummy.
+        </p>
+        <div class="mt-20">
+            <a class="btn btn-md btn-danger btn-click font-weight-bold m-3 text-white">Quick Quote</a>
+            <a class="btn btn-md btn-primary btn-click font-weight-bold m-3"
+            ui-sref-plus uisrp-root="/Contact-Team-Sales">Contact Sales</a>
+        </div>
+    </div>
+    <div class="col-12">
+        <section class="products container py-30 py-lg-60 py-xl-100">
+            <div class="row justify-content-between text-center">
+                <div class="col-lg-6 my-20 my-lg-40 text-center text-primary">
+                    <div class="bg-secondary d-flex justify-content-center align-items-center" style="width: 540px; height: 150px;">
+                        <span class="d-block text-primary align-self-center mx-auto">Ad Space</span>
+                    </div>
+                </div>
+                <div class="col-lg-6 my-20 my-lg-40 text-center">
+                    <div class="bg-secondary d-flex justify-content-center align-items-center" style="width: 540px; height: 150px;">
+                        <span class="d-block text-primary mx-auto">Ad Space</span>
+                    </div>
+                </div>  
+                <div class="col-lg-6 my-20 my-lg-40"
+                    ng-repeat="category in teamEquipmentCtrl.categories | orderBy: ['SortOrder', 'CustomKey'] | limitTo: 8">
+                    <div ng-if="category && category.PrimaryImageFileName">
+                        <div class="visual-box">
+                            <img alt="category.Name"
+                                ng-src="{{category.PrimaryImageFileName | corsImageLink}}?maxwidth=540&amp;maxheight=250&amp;mode=pad&amp;scale=both"" srcset="{{category.PrimaryImageFileName}}@2x.jpg 2x, {{category.PrimaryImageFileName}}@3x.jpg 3x"
+                                onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both'">
+                        </div>
+                        <a href="#" class="btn btn-light"
+                            ui-sref-plus=""
+                            uisrp-is-catalog="true"
+                            uisrp-params="{ 'category': '{{category.Name}}|{{category.CustomKey}}' }"
+                            uisrp-state="searchCatalog.products.results.both"
+                            >{{category.Name}}<img src="/portals/0/images/arrow.svg" width="21" height="18" alt="image description"></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,205 @@
+﻿@using System.IO
+@inherits MVC.Core.TemplatedControllerBase
+@inject IJSRuntime jsRuntime
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+@inject Microsoft.Extensions.Options.IOptions<APIOptions> apiOpts
+
+@typeparam TMaster where TMaster : class, IHaveImagesBaseModel<TImageModel, TImageTypeModel>
+@typeparam TImageModel where TImageModel : class, IImageBaseModel<TImageTypeModel>, new()
+@typeparam TImageTypeModel where TImageTypeModel : class, ITypeModel, new()
+@typeparam TCreateImageCall where TCreateImageCall : class, TImageModel
+
+<Row>
+  <Column ColumnSize="ColumnSize.IsFull">
+    <Heading Size="HeadingSize.Is3">Images</Heading>
+  </Column>
+  <Column ColumnSize="ColumnSize.IsHalf.OnTablet">
+    <Div Class="form-group">
+      <Div Class="btn btn-outline-primary pointer btn-block">
+        <Div Class="mb-1">Drag &amp; drop or click to upload</Div>
+        @*
+        <Blazorise.FileEdit
+          ElementId="fileInput"
+          Class="fileUploadInput"
+          Changed="UploadFiles"
+          @ref="inputFileEl"
+          Multiple="false"
+          Filter="image/png,image/gif,image/jpeg"
+        />
+        *@
+        <InputFile
+          id="fileInput"
+          OnChange="UploadFiles"
+          @ref="inputFileEl"
+          single
+          accept="image/png,image/gif,image/jpeg"
+        />
+      </Div>
+    </Div>
+  </Column>
+  <Column ColumnSize="ColumnSize.IsHalf.OnTablet">
+    <Paragraph TextColor="TextColor.Muted" Class="small mb-0">Recommended File Types: JPG, PNG, GIF, SVG, WEBP</Paragraph>
+    <Paragraph TextColor="TextColor.Muted" Class="small mb-0">Recommended Minimum Width: 200px</Paragraph>
+    <Paragraph TextColor="TextColor.Muted" Class="small mb-3">Maximum File Size: @MaxFileSize KB</Paragraph>
+  </Column>
+  <Column ColumnSize="ColumnSize.IsFull">
+    @if (isUploading)
+    {
+      <LoadingBar />
+    }
+  </Column>
+  <Column ColumnSize="ColumnSize.IsFull">
+    <CardDeck>
+      <Repeater Items="Record.Images">
+        <ChildContent Context="image">
+          <Card
+            ColumnSize="ColumnSize.Is12.OnMobile.Is6.OnTablet.Is4.OnDesktop.Is3.OnWidescreen.Is2.OnFullHD"
+            Padding="Padding.Is0.OnX">
+            <CardImage
+              Source="@(apiOpts.Value.BaseImageAddress // "images/productImages/Images/"
+                        + image.OriginalFileName + "?maxheight=128&maxwidth=128&mode=pad&scale=both")"
+              Alt="@image.Name"
+            />
+            <CardBody Padding="Padding.Is3.OnX.Is2.FromBottom">
+              <EditForm Model="image">
+                <TextFormGroup
+                  FormIdentifier="@("ImageName_" + image.OriginalFileName)"
+                  PlaceholderText="Name of Image Goes Here"
+                  @bind-Value="image.Name"
+                  IsHorizontal="false"
+                  Required="true"
+                  Disabled="false"
+                  LabelText="Name"
+                  TooltipText="The name for image"
+                  ShowValidTooltip="false"
+                  StartTouched="true"
+                />
+                <ToggleFormGroup
+                  TValue="bool"
+                  FormIdentifier="@("IsPrimary_" + image.OriginalFileName)"
+                  Value="@image.IsPrimary"
+                  ValueExpression="@(() => image.IsPrimary)"
+                  ValueChanged="@(_ => IfTrueSetOthersToFalse(image))"
+                  IsOptionToggled="@(_ => image.IsPrimary)"
+                  ToggleOnText="Yes"
+                  ToggleOffText="No"
+                  Disabled="false"
+                  SwitchColor="Color.Success"
+                  LabelText="Primary Image"
+                  Required="false"
+                  TooltipText="Image to be shown as the main thumbnail"
+                />
+                <Blazorise.Button
+                  Color="Color.Link"
+                  TextColor="TextColor.Danger"
+                  Block="true"
+                  Clicked="@(() => RemoveImageNew(image))">
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Trash" />
+                  Remove
+                </Blazorise.Button>
+              </EditForm>
+            </CardBody>
+          </Card>
+        </ChildContent>
+      </Repeater>
+    </CardDeck>
+  </Column>
+</Row>
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter]
+  public TMaster Record { get; set; } = null!;
+
+  /// <summary>Gets or sets the size of the maximum file.</summary>
+  /// <value>The size of the maximum file.</value>
+  [Parameter]
+  public int MaxFileSize { get; set; } = 1_024 * 5;
+
+  /// <summary>Gets or sets the create image call.</summary>
+  /// <value>The create image call.</value>
+  [Parameter, EditorRequired]
+  public Func<TCreateImageCall, Task<int>> CreateImageCallAsync { get; set; } = null!;
+  #endregion
+
+  private bool isUploading;
+  private InputFile? inputFileEl;
+  private bool BClearInputFile { get; set; }
+  private const int MaxAllowedFiles = 3;
+
+  /// <summary>Uploads the files.</summary>
+  /// <param name="e">Input file change event information.</param>
+  /// <returns>A Task.</returns>
+  private async Task UploadFiles(InputFileChangeEventArgs e)
+  {
+    isUploading = true;
+    StateHasChanged();
+    var stream = new MemoryStream();
+    await using var _ = stream.ConfigureAwait(false);
+    await e.File.OpenReadStream().CopyToAsync(stream).ConfigureAwait(false);
+    foreach (var __ in e.GetMultipleFiles(MaxAllowedFiles))
+    {
+      try
+      {
+        var toAdd = new TImageModel
+        {
+          ID = 0,
+          Name = e.File.Name,
+          // TODO: Tie to the image type
+          TypeID = 1,
+          Active = true,
+          IsPrimary = Record.Images!.All(i => !i.IsPrimary),
+          OriginalIsStoredInDB = false,
+          MasterID = Record.ID,
+          OriginalBytes = stream.GetBuffer(),
+          OriginalFileName = e.File.Name,
+        };
+        toAdd.ID = await CreateImageCallAsync((TCreateImageCall)toAdd).ConfigureAwait(false);
+        Record.Images!.Add(toAdd);
+      }
+      catch (Exception ex)
+      {
+        ConsoleDebug($"File: {e.File.Name} Error: {ex.Message}");
+      }
+    }
+    isUploading = false;
+    ClearInputFile();
+    StateHasChanged();
+  }
+
+  /// <summary>Clears the input file.</summary>
+  private void ClearInputFile()
+  {
+    BClearInputFile = true;
+    StateHasChanged();
+    BClearInputFile = false;
+    StateHasChanged();
+  }
+
+  /// <summary>Removes the image.</summary>
+  /// <param name="image">The image.</param>
+  private void RemoveImageNew(TImageModel image)
+  {
+    Record.Images!.Remove(image);
+    StateHasChanged();
+  }
+
+  /// <summary>If true set others to false.</summary>
+  /// <param name="image">The image.</param>
+  private void IfTrueSetOthersToFalse(TImageModel image)
+  {
+    if (!image.IsPrimary)
+    {
+      return;
+    }
+    foreach (var i in Record.Images!.Where(x => x.IsPrimary && x != image))
+    {
+      i.IsPrimary = true;
+    }
+    StateHasChanged();
+  }
+}

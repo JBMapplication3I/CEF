@@ -1,0 +1,59 @@
+<div ng-form="attributesCompareModalCtrl.forms.edit">
+    <div class="modal-header">
+        <h2 data-translate="ui.admin.controls.sales.modals.attributesCompareModal.AttributesComparisons"></h2>
+    </div>
+    <div class="modal-body fills-and-scrolls">
+        <div class="modal-body-wrap">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="text-center" data-translate="ui.admin.common.Attribute"></th>
+                        <th class="text-center" data-translate="ui.admin.controls.sales.modals.attributesCompareModal.OriginalLineItem"></th>
+                        <th class="text-center" data-translate="ui.admin.controls.sales.modals.attributesCompareModal.ResponseLineItem"></th>
+                        <th class="text-center" data-translate="ui.admin.controls.sales.modals.attributesCompareModal.ReponseProduct"></th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th class="w-8" ng-bind="attributesCompareModalCtrl.originalItem.ID"></th>
+                        <th class="w-17" ng-bind="attributesCompareModalCtrl.originalItem.CustomKey"></th>
+                        <th class="w-25 text-capitalize" ng-bind="attributesCompareModalCtrl.originalItem.Name | lowercase"></th>
+                        <th class="w-25" ng-bind="attributesCompareModalCtrl.responseItem.CustomKey"></th>
+                        <th class="w-25 text-capitalize" ng-bind="attributesCompareModalCtrl.responseItem.ProductName | lowercase"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="attr in attributesCompareModalCtrl.originalItem.SerializableAttributes | toArray | filter: { 'Key': '!ImportGuid' } | orderBy: ['Key']"
+                        ng-class="attributesCompareModalCtrl.responseItem.Product.SerializableAttributes[attr.Key].Value
+                                  || attributesCompareModalCtrl.responseItem.SerializableAttributes[attr.Key].Value
+                                  ? 'has-success' : 'has-warning'">
+                        <td class="p-1" ng-bind="attr.ID"></td>
+                        <td class="p-1" ng-bind="attr.Key"></td>
+                        <td class="p-1" ng-bind="attr.Value"></td>
+                        <td class="p-0" ng-class="{ 'has-success': attributesCompareModalCtrl.responseItem.SerializableAttributes[attr.Key].Value }">
+                            <input type="text" class="form-control"
+                                   id="txtResponseLineItemAttrValue{{attr.Key}}" name="txtResponseLineItemAttrValue{{attr.Key}}"
+                                   placeholder="No Value"
+                                   ng-required="false"
+                                   ng-model="attributesCompareModalCtrl.responseItem.SerializableAttributes[attr.Key].Value" />
+                        </td>
+                        <td class="p-0" ng-class="{ 'has-success': attributesCompareModalCtrl.responseItem.Product.SerializableAttributes[attr.Key].Value }">
+                            <input type="text" class="form-control"
+                                   id="txtResponseLineItemProductAttrValue{{attr.Key}}" name="txtResponseLineItemProductAttrValue{{attr.Key}}"
+                                   placeholder="No Value"
+                                   ng-required="false"
+                                   ng-model="attributesCompareModalCtrl.responseItem.Product.SerializableAttributes[attr.Key].Value" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer p-3">
+        <button type="button" class="btn btn-large btn-primary"
+                translate-attr="{ title: 'ui.admin.common.OK', 'aria-label': 'ui.admin.common.OK' }"
+                data-translate="ui.admin.common.OK"
+                ng-disabled="attributesCompareModalCtrl.forms.edit.$invalid"
+                ng-click="attributesCompareModalCtrl.ok()"></button>
+    </div>
+</div>

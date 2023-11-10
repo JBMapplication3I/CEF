@@ -1,0 +1,493 @@
+﻿<nav class="navbar navbar-fixed-top yamm cef-admin-navbar" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header" ng-init="isNavCollapsed = false;">
+    <button type="button" class="navbar-toggle" ng-click="isNavCollapsed = !isNavCollapsed">
+      <span class="sr-only" data-translate="ui.admin.controls.adminSiteMenu2.ToggleNavigation"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" ui-sref="home">
+      <img ng-src="{{'/Content/Clarity-eCommerce-Logo.png' | corsLink: 'ui'}}" alt="Clarity Ecommerce" />
+    </a>
+  </div>
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
+    <ul class="nav navbar-nav">
+      <li uib-dropdown class="yamm-fw" auto-close="outsideClick" is-open="siteMenu2Ctrl.status.isopen">
+        <a uib-dropdown-toggle toggle-event="click">
+          <i aria-hidden="true"><img alt="{{$state.$current.parent.parent.self.$title || $state.$current.parent.self.$title}}"
+             ng-src="{{('/Content/menu/' + $state.current.name.split('.')[0] + '-icon.png') | corsLink: 'ui'}}" /></i>&nbsp;<!--
+             --><span class="primary-link-text" ng-repeat="crumb in $breadcrumbs"
+                ><span data-translate="{{crumb.title}}"
+                     translate-value-id="{{crumb.stateParams.ID}}"
+                     ></span><span ng-if="!$last">&nbsp;&gt;&nbsp;</span></span>
+          <span class="caret" ng-show="siteMenu2Ctrl.cvAuthenticationService.isAuthenticated()"></span>
+          <span class="sr-only" data-translate="ui.admin.common.Current"></span>
+        </a>
+        <ul uib-dropdown-menu role="menu">
+          <li>
+            <div ng-if="siteMenu2Ctrl.cvAuthenticationService.isAuthenticated() && siteMenu2Ctrl.status.isopen"
+               class="yamm-content grid-yamm">
+              <div class="row">
+                <div class="condensed-row">
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-sm-12 mb-3" ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('sales').requiresPermission + '')">
+                        <h3 ng-class="{'active': $state.includes('sales')}">
+                          <i aria-hidden="true"><img translate-attr="{ alt: 'ui.admin.common.Sale.Plural' }"
+                             ng-src="{{'/Content/menu/sales-icon.png' | corsLink: 'ui'}}" /></i>&nbsp;<!--
+                          --><div class="inline-block" data-translate="ui.admin.common.Sale.Plural"></div>
+                          <span ng-if="$state.includes('sales')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                        </h3>
+                        <div class="row sub-links">
+                          <div class="condensed-row">
+                            <div class="col-xs-12 sub-link" ng-class="{'active': $state.includes('sales.salesGroups')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.salesGroups.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('sales.salesGroups').requiresPermission + '')">
+                              <a ui-sref="sales.salesGroups.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.SalesGroup.Plural"></span>
+                                <span ng-if="$state.includes('sales.salesGroups')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('sales.salesOrders')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.salesOrders.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('sales.salesOrders').requiresPermission + '')">
+                              <a ui-sref="sales.salesOrders.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.SalesOrder.Plural"></span>
+                                <span ng-if="$state.includes('sales.salesOrders')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('sales.salesInvoices')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.salesInvoices.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('sales.salesInvoices').requiresPermission + '')">
+                              <a ui-sref="sales.salesInvoices.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Invoice.Plural"></span>
+                                <span ng-if="$state.includes('sales.salesInvoices')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('sales.salesQuotes')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.salesQuotes.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('sales.salesQuotes').requiresPermission + '')">
+                              <a ui-sref="sales.salesQuotes.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Quote.Plural"></span>
+                                <span ng-if="$state.includes('sales.salesQuotes')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('sales.sampleRequests')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.sampleRequests.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('sales.sampleRequests').requiresPermission + '')">
+                              <a ui-sref="sales.sampleRequests.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.SampleRequest.Plural"></span>
+                                <span ng-if="$state.includes('sales.sampleRequests')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('sales.purchaseOrders')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.purchaseOrders.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('sales.purchaseOrders').requiresPermission + '')">
+                              <a ui-sref="sales.purchaseOrders.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.PurchaseOrder.Plural"></span>
+                                <span ng-if="$state.includes('sales.purchaseOrders')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('sales.salesReturns')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.salesReturns.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('sales.salesReturns').requiresPermission + '')">
+                              <a ui-sref="sales.salesReturns.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.SalesReturn.Plural"></span>
+                                <span ng-if="$state.includes('sales.salesReturns')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 mb-3" ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('inventory').requiresPermission + '')">
+                        <h3 ng-class="{'active': $state.includes('inventory')}">
+                          <i aria-hidden="true"><img alt="{{'ui.admin.common.Inventory' | translate}}"
+                             ng-src="{{'/Content/menu/inventory-icon.png' | corsLink: 'ui'}}" /></i>&nbsp;<!--
+                          --><div class="inline-block" data-translate="ui.admin.common.Inventory"></div>
+                          <span ng-if="$state.includes('inventory')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                        </h3>
+                        <div class="row sub-links">
+                          <div class="condensed-row">
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('inventory.products')}"
+                                ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('inventory.products').requiresPermission + '')">
+                              <a ui-sref="inventory.products.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Product.Plural"></span>
+                                <span ng-if="$state.includes('inventory.products')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('inventory.warehouses')}"
+                                ng-show="siteMenu2Ctrl.cefConfig.featureSet.inventory.advanced.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('inventory.warehouses').requiresPermission + '')">
+                              <a ui-sref="inventory.warehouses.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Warehouse.Plural"></span>
+                                <span ng-if="$state.includes('inventory.warehouses')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('inventory.vendors')}"
+                                ng-show="siteMenu2Ctrl.cefConfig.featureSet.vendors.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('inventory.vendors').requiresPermission + '')">
+                              <a ui-sref="inventory.vendors.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Vendor.Plural"></span>
+                                <span ng-if="$state.includes('inventory.vendors')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('inventory.manufacturers')}"
+                                ng-show="siteMenu2Ctrl.cefConfig.featureSet.manufacturers.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('inventory.manufacturers').requiresPermission + '')">
+                              <a ui-sref="inventory.manufacturers.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Manufacturer.Plural"></span>
+                                <span ng-if="$state.includes('inventory.manufacturers')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('inventory.categories')}"
+                                ng-show="siteMenu2Ctrl.cefConfig.featureSet.categories.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('inventory.categories').requiresPermission + '')">
+                              <a ui-sref="inventory.categories.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Category.Plural"></span>
+                                <span ng-if="$state.includes('inventory.categories')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('inventory.attributes')}"
+                                ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('inventory.attributes').requiresPermission + '')">
+                              <a ui-sref="inventory.attributes.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Attribute.Plural"></span>
+                                <span ng-if="$state.includes('inventory.attributes')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 mb-3" ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('shipments').requiresPermission + '')">
+                        <h3 ng-class="{'active': $state.includes('shipments')}">
+                          <i aria-hidden="true"><img translate-attr="{ alt: 'ui.admin.common.Shipment.Plural' }"
+                            ng-src="{{'/Content/menu/shipments-icon.png' | corsLink: 'ui'}}" /></i>&nbsp;<!--
+                          --><div class="inline-block" data-translate="ui.admin.common.Shipment.Plural"></div>
+                          <span ng-if="$state.includes('shipments')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                        </h3>
+                        <div class="row sub-links">
+                          <div class="condensed-row">
+                            <!-- Disabled until validated for Core
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('shipments.carrierAccounts')}"
+                                ng-show="siteMenu2Ctrl.cefConfig.featureSet.shipping.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('shipments.carrierAccounts').requiresPermission + '')">
+                              <a ui-sref="shipments.carrierAccounts.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.Carriers"></span>
+                                <span ng-if="$state.includes('shipments.carrierAccounts.list')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            -->
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('shipments.shippingPackages')}"
+                                 ng-show="siteMenu2Ctrl.cefConfig.featureSet.shipping.packages.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('shipments.shippingPackages').requiresPermission + '')">
+                              <a ui-sref="shipments.shippingPackages.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Package.Plural"></span>
+                                <span ng-if="$state.includes('shipments.shippingPackages.list')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-sm-12 mb-3" ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts').requiresPermission + '')">
+                        <h3 ng-class="{'active': $state.includes('accounts')}">
+                          <i aria-hidden="true"><img translate-attr="{ alt: 'ui.admin.common.Account.Plural' }"
+                            ng-src="{{'/Content/menu/accounts-icon.png' | corsLink: 'ui'}}" /></i>&nbsp;<!--
+                          --><div class="inline-block" data-translate="ui.admin.common.Account.Plural"></div>
+                          <span ng-if="$state.includes('accounts')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                        </h3>
+                        <div class="row sub-links">
+                          <div class="condensed-row">
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.accounts')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.accounts').requiresPermission + '')">
+                              <a ui-sref="accounts.accounts.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Account.Plural"></span>
+                                <span ng-if="$state.includes('accounts.accounts')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.users')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.users').requiresPermission + '')">
+                              <a ui-sref="accounts.users.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.User.Plural"></span>
+                                <span ng-if="$state.includes('accounts.users')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.roles')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.roles').requiresPermission + '')">
+                              <a ui-sref="accounts.roles.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Role.Plural"></span>
+                                <span ng-if="$state.includes('accounts.roles')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.discounts')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.discounts.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.discounts').requiresPermission + '')">
+                              <a ui-sref="accounts.discounts.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Discount.Plural"></span>
+                                <span ng-if="$state.includes('accounts.discounts')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.priceRules')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.pricing.priceRules.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.priceRules').requiresPermission + '')">
+                              <a ui-sref="accounts.priceRules.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.PriceRule.Plural"></span>
+                                <span ng-if="$state.includes('accounts.priceRules')" class="sr-only" data-translate="ui.admin.controls.adminSiteMenu2.Current"></span>
+                              </a>
+                            </div>
+                            <!-- Disabled until valiated for Core
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.ticketRules')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.ticketExchange.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.ticketRules').requiresPermission + '')">
+                              <a ui-sref="accounts.ticketRules.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="Ticket Rules"></span>
+                                <span ng-if="$state.includes('accounts.ticketRules')" class="sr-only" data-translate="ui.admin.controls.adminSiteMenu2.Current"></span>
+                              </a>
+                            </div>
+                            -->
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.stores')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.stores.enabled && siteMenu2Ctrl.cefConfig.featureSet.stores.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.stores').requiresPermission + '')">
+                              <a ui-sref="accounts.stores.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Store.Plural"></span>
+                                <span ng-if="$state.includes('accounts.stores')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.brands')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.brands.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.brands').requiresPermission + '')">
+                              <a ui-sref="accounts.brands.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Brand.Plural"></span>
+                                <span ng-if="$state.includes('accounts.brands')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.badges')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.badges.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.badges').requiresPermission + '')">
+                              <a ui-sref="accounts.badges.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Badge.Plural"></span>
+                                <span ng-if="$state.includes('accounts.badges')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.siteDomains')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.stores.siteDomains.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.siteDomains').requiresPermission + '')">
+                              <a ui-sref="accounts.siteDomains.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.SiteDomain.Plural"></span>
+                                <span ng-if="$state.includes('accounts.siteDomains')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.socialProviders')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.stores.socialProviders.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.socialProviders').requiresPermission + '')">
+                              <a ui-sref="accounts.socialProviders.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.SocialProvider.Plural"></span>
+                                <span ng-if="$state.includes('accounts.socialProviders')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('accounts.reviews')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.reviews.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('accounts.reviews').requiresPermission + '')">
+                              <a ui-sref="accounts.reviews.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Review.Plural"></span>
+                                <span ng-if="$state.includes('accounts.reviews')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 mb-3" ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system').requiresPermission + '')">
+                        <h3 ng-class="{'active': $state.includes('system')}">
+                          <i aria-hidden="true"><img translate-attr="{ alt: 'ui.admin.common.System' }"
+                            ng-src="{{'/Content/menu/system-icon.png' | corsLink: 'ui'}}" /></i>&nbsp;<!--
+                          --><div class="inline-block" data-translate="ui.admin.common.System"></div>
+                          <span ng-if="$state.includes('system')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                        </h3>
+                        <div class="row sub-links">
+                          <div class="condensed-row">
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.reporting.sfloader')}"
+                              ng-show="siteMenu2Ctrl.cefConfig.featureset.reporting.syncFusion.enabled
+                                && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.reporting.sfloader').requiresPermission + '')">
+                              <a ui-sref="system.reporting.sfloader" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.ReportLoader"></span>
+                                <span ng-if="$state.includes('system.reporting.sfloader')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                            </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.reporting.loader')}"
+                              ng-show="siteMenu2Ctrl.cefConfig.featureset.reporting.devExpress.enabled
+                                && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.reporting.loader').requiresPermission + '')">
+                              <a ui-sref="system.reporting.loader">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.ReportLoader"></span>
+                                <span ng-if="$state.includes('system.reporting.loader')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.reporting.designer')}"
+                              ng-show="siteMenu2Ctrl.cefConfig.featureSet.reporting.devExpress.enabled
+                                && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.reporting.designer').requiresPermission + '')">
+                              <a ui-sref="system.reporting.designer" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.ReportDesigner"></span>
+                                <span ng-if="$state.includes('system.reporting.designer')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.siteMaintenance')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.siteMaintenance').requiresPermission + '')">
+                              <a ui-sref="system.siteMaintenance" ng-click="siteMenu2Ctrl.toggleDropdown($event)" id="menuItemSiteMaintenance" name="menuItemSiteMaintenance">
+                                <span data-translate="ui.admin.views.system.SiteMaintenance"></span>
+                                <span ng-if="$state.includes('system.siteMaintenance')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.scheduledTasks')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.scheduledTasks').requiresPermission + '')">
+                              <a ui-sref="system.scheduledTasks" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.ScheduledTask.Plural"></span>
+                                <span ng-if="$state.includes('system.scheduledTasks')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.connect')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.connect').requiresPermission + '') && siteMenu2Ctrl.cefConfig.connectFullUrl">
+                              <a ui-sref="system.connect" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.views.home.ClarityConnect"></span>
+                                <span ng-if="$state.includes('system.connect')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.apiReference')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.apiReference').requiresPermission + '')">
+                              <a ui-sref="system.apiReference" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.APIReference"></span>
+                                <span ng-if="$state.includes('system.apiReference')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.settings')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.settings').requiresPermission + '')">
+                              <a ui-sref="system.settings.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Setting.Plural"></span>
+                                <span ng-if="$state.includes('system.settings')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.emailQueues')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.emails.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.emailQueues').requiresPermission + '')">
+                              <a ui-sref="system.emailQueues.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.EmailQueue.Plural"></span>
+                                <span ng-if="$state.includes('system.emailQueues')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.emailTemplates')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.emails.splitTemplates.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.emailTemplates').requiresPermission + '')">
+                              <a ui-sref="system.emailTemplates.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.EmailTemplate.Plural"></span>
+                                <span ng-if="$state.includes('system.emailTemplates')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.currencies')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.multiCurrency.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.currencies').requiresPermission + '')">
+                              <a ui-sref="system.currencies.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Currency.Plural"></span>
+                                <span ng-if="$state.includes('system.currencies')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.languages')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.languages.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.languages').requiresPermission + '')">
+                              <a ui-sref="system.languages.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.common.Language.Plural"></span>
+                                <span ng-if="$state.includes('system.languages')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.uiKeys')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.uiKeys').requiresPermission + '')">
+                              <a ui-sref="system.uiKeys.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.UiKey.Plural"></span>
+                                <span ng-if="$state.includes('system.uiKeys')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.uiTranslations')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.uiTranslations').requiresPermission + '')">
+                              <a ui-sref="system.uiTranslations.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.UiTranslation.Plural"></span>
+                                <span ng-if="$state.includes('system.uiTranslations')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.importExportMappings')}"
+                               ng-show="siteMenu2Ctrl.cefConfig.featureSet.products.futureImports.enabled && siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.importExportMappings').requiresPermission + '')">
+                              <a ui-sref="system.importExportMappings.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.ImportExportMapping.Plural"></span>
+                                <span ng-if="$state.includes('system.importExportMappings')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.avalara')}"
+                              ng-show="siteMenu2Ctrl.cefConfig.featureSet.taxes.avalara.enabled">
+                              <a ui-sref="system.avalara">
+                                Avalara Settings
+                                <span ng-if="$state.includes('system.avalara')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                            <div class="col-xs-6 sub-link" ng-class="{'active': $state.includes('system.logs')}"
+                               ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('system.logs').requiresPermission + '')">
+                              <a ui-sref="system.logs.list" ng-click="siteMenu2Ctrl.toggleDropdown($event)">
+                                <span data-translate="ui.admin.controls.adminSiteMenu2.Log.Plural"></span>
+                                <span ng-if="$state.includes('system.logs')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-sm-12 mb-3" ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('statuses').requiresPermission + '')">
+                        <h3 ng-class="{'active': $state.includes('statuses')}" ng-click="expandMenuPart = expandMenuPart == 'Statuses' ? '' : 'Statuses';">
+                          <i aria-hidden="true"><img translate-attr="{ alt: 'ui.admin.common.Status.Plural' }"
+                            ng-src="{{'/Content/menu/statuses-icon.png' | corsLink: 'ui'}}" /></i>&nbsp;<!--
+                          --><div class="inline-block" data-translate="ui.admin.common.Status.Plural"></div>
+                          <span ng-if="$state.includes('statuses')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                          <i class="far pull-right" style="margin-top: 7px;" ng-class="expandStatuses ? 'fa-caret-down' : 'fa-caret-right'"></i>
+                        </h3>
+                        <div class="row sub-links scroll-over-300" ng-show="expandMenuPart == 'Statuses'">
+                          <!-- Include the generated content for Statuses -->
+                          <div class="menu-include condensed-row" uib-dropdown-toggle toggle-event="click" ng-include="'/framework/admin/controls/types/menu.statuses.html' | corsLink: 'ui'"></div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 mb-3" ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('types').requiresPermission + '')">
+                        <h3 ng-class="{'active': $state.includes('types')}" ng-click="expandMenuPart = expandMenuPart == 'Types' ? '' : 'Types';">
+                          <i aria-hidden="true"><img translate-attr="{ alt: 'ui.admin.common.Type.Plural' }"
+                            ng-src="{{'/Content/menu/types-icon.png' | corsLink: 'ui'}}" /></i>&nbsp;<!--
+                          --><div class="inline-block" data-translate="ui.admin.common.Type.Plural"></div>
+                          <span ng-if="$state.includes('types')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                          <i class="far pull-right" style="margin-top: 7px;" ng-class="expandTypes ? 'fa-caret-down' : 'fa-caret-right'"></i>
+                        </h3>
+                        <div class="row sub-links scroll-over-300" ng-show="expandMenuPart == 'Types'">
+                          <!-- Include the generated content for Types -->
+                          <div class="menu-include condensed-row" uib-dropdown-toggle toggle-event="click" ng-include="'/framework/admin/controls/types/menu.types.html' | corsLink: 'ui'"></div>
+                          <div class="menu-include condensed-row" uib-dropdown-toggle toggle-event="click" ng-include="'/framework/admin/controls/types/menu.other.html' | corsLink: 'ui'"></div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 mb-3" ng-show="siteMenu2Ctrl.cvSecurityService.hasPermission($state.get('states').requiresPermission + '')">
+                        <h3 ng-class="{'active': $state.includes('states')}" ng-click="expandMenuPart = expandMenuPart == 'States' ? '' : 'States';">
+                          <i aria-hidden="true"><img translate-attr="{ alt: 'ui.admin.common.State.Plural' }"
+                            ng-src="{{'/Content/menu/states-icon.png' | corsLink: 'ui'}}" /></i>&nbsp;<!--
+                          --><div class="inline-block" data-translate="ui.admin.common.State.Plural"></div>
+                          <span ng-if="$state.includes('states')" class="sr-only" data-translate="ui.admin.common.Current"></span>
+                          <i class="far pull-right" style="margin-top: 7px;" ng-class="expandStates ? 'fa-caret-down' : 'fa-caret-right'"></i>
+                        </h3>
+                        <div class="row sub-links scroll-over-300" ng-show="expandMenuPart == 'States'">
+                          <!-- Include the generated content for States -->
+                          <div class="menu-include condensed-row" uib-dropdown-toggle toggle-event="click" ng-include="'/framework/admin/controls/types/menu.states.html' | corsLink: 'ui'"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right mr-0">
+      <li ng-if="siteMenu2Ctrl.cvAuthenticationService.isAuthenticated()"
+        uib-dropdown auto-close="always" is-open="siteMenu2Ctrl.status2.isopen">
+        <a class="header-link" uib-dropdown-toggle toggle-event="click">
+          <span><span data-translate="ui.admin.common.Welcome"></span>&nbsp;<!--
+          -->{{siteMenu2Ctrl.cvAuthenticationService.currentUser.DisplayName || siteMenu2Ctrl.cvAuthenticationService.currentUser.username}}</span>
+        </a>
+        <ul uib-dropdown-menu role="menu" auto-close="outsideClick">
+          <li><a ng-click="siteMenu2Ctrl.logout()" data-translate="ui.admin.common.SignOut"></a></li>
+        </ul>
+      </li>
+      <li ng-if="siteMenu2Ctrl.cefConfig.showStorefrontButton">
+        <a ui-sref-plus uisrp-is-home="true" target="_self" class="header-link">
+          <span data-translate="ui.admin.common.Storefront"></span>
+        </a>
+      </li>
+      <li ng-if="siteMenu2Ctrl.cefConfig.showDNNButton"
+        class="cms-back-link">
+        <a class="header-link" ui-sref-plus uisrp-root="/Admin" target="_self">
+          <img ng-src="{{'/DesktopModules/Admin/Dnn.PersonaBar/images/Logo.svg' | corsLink}}"
+            alt="DotNetNuke" width="19" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,25 @@
+<div ng-if="homePanelWidgetCtrl.allowList || homePanelWidgetCtrl.allowNew"
+     class="panel-group">
+    <div class="panel panel-primary">
+        <div class="panel-heading"
+             data-translate="{{homePanelWidgetCtrl.headerKey}}">
+        </div>
+        <div class="panel-body">
+            <div cef-home-button-pair-widget
+                 list-state="{{homePanelWidgetCtrl.listState}}"
+                 list-key="{{homePanelWidgetCtrl.listKey}}"
+                 new-state="{{homePanelWidgetCtrl.newState}}"
+                 new-key="{{homePanelWidgetCtrl.newKey}}">
+            </div>
+        </div>
+        <div class="panel-footer"
+             data-translate="{{homePanelWidgetCtrl.footerKey}}">
+        </div>
+        <div class="panel-footer small" style="overflow-wrap: break-word;"
+             ng-if="homePanelWidgetCtrl.keywords.length">
+            <span ng-repeat="word in homePanelWidgetCtrl.keywords | filter: '!!'"
+                  ng-class="{ 'pl-1': !$first }"
+                  ng-bind="word"></span>
+        </div>
+    </div>
+</div>

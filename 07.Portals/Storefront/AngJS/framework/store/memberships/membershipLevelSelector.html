@@ -1,0 +1,185 @@
+﻿<div class="col-10 col-sm-offset-1 text-center" ng-show="membershipLevelSelectorCtrl.hasError">
+    <p class="bg-danger text-error" ng-bind="membershipLevelSelectorCtrl.errorMessage"></p>
+</div>
+<div ng-if="!membershipLevelSelectorCtrl.showDefaultPricing">
+    <div class="col-sm-12 text-center" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <h1 class="mb-0"><b data-translate="ui.storefront.memberships.membershipLevelSelector.africasDirectory"></b></h1>
+        <p style="max-width: 800px; margin: 10px auto 50px;">
+            <span data-translate="ui.storefront.memberships.membershipLevelSelector.theAfricanDirectoryHasTwoDifferentMembershipOptionsShownBelow"></span>:
+        </p>
+    </div>
+    <div class="col-12">
+        <div class="row" style="padding-bottom:40px;">
+            <div class="col-md-4 text-center">
+                <p><img src="/Portals/_default/Skins/GoAfricaMain/css/components/seller/landing-discounted-membership.png"
+                        translate-attr="{ alt: 'ui.storefront.memberships.membershipLevelSelector.powerfulDirectoryPlatform' }" /></p>
+                <p style="color:#52504a;"><b data-translate="ui.storefront.memberships.membershipLevelSelector.powerfulDirectoryPlatform"></b></p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p><img src="/Portals/_default/Skins/GoAfricaMain/css/components/seller/landing-free-ads-banners.png"
+                        translate-attr="{ alt: 'ui.storefront.memberships.membershipLevelSelector.robustAdsAndBanners' }" /></p>
+                <p style="color:#52504a;"><b data-translate="ui.storefront.memberships.membershipLevelSelector.robustAdsAndBanners"></b></p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p><img src="/Portals/_default/Skins/GoAfricaMain/css/components/seller/landing-worldwide-exposure.png"
+                        translate-attr="{ alt: 'ui.storefront.memberships.membershipLevelSelector.worldwideProductAndServiceExposure' }" /></p>
+                <p style="color:#52504a;"><b data-translate="ui.storefront.memberships.membershipLevelSelector.worldwideProductAndServiceExposure"></b></p>
+            </div>
+        </div>
+    </div>
+    <div class="clear" ng-hide="membershipLevelSelectorCtrl.hasError"></div>
+    <div class="col-md-4 col-md-push-2" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <div class="box text-center">
+            <p class="title" data-translate="ui.storefront.memberships.membershipLevelSelector.standardDirectory"></p>
+            <p class="price" style="color:#2b6e45"><sup>$</sup>0<sub>US</sub></p>
+            <p style="color:#2b6e45"><small><span data-translate="ui.storefront.common.Free"></span>!</small></p>
+            <hr />
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.directoryListing"></p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.inclusionInThreeCategories"></p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.selectionOfRegions"></p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.selectionOfLanguages"></p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.searchAndFiltering"></p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.optionToUpgradeToPremium"></p>
+            <p><a ui-sref-plus uisrp-area="membershipRegistration"
+                  uisrp-params="{ 'email': membershipLevelSelectorCtrl.email,
+                                  'type': membershipLevelSelectorCtrl.sellerType,
+                                  'mtype': membershipLevelSelectorCtrl.membershipTypeName,
+                                  'membership': 'BasicDirectory',
+                                  'vtoken': membershipLevelSelectorCtrl.token }"
+                  class="btn btn-primary btn-lg"
+                  ><span data-translate="ui.storefront.memberships.membershipLevelSelector.signUpNow"></span></a></p>
+        </div>
+    </div>
+    <div class="col-md-4 col-md-push-2" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <div class="box text-center">
+            <p class="title" data-translate="ui.storefront.memberships.membershipLevelSelector.premiumDirectory"></p>
+            <!--<p class="price" style="color:#ccc"><sup>$</sup>7.99<sub>USD</sub></p>
+            <p style="color:#ccc"><small>Paid Monthly</small></p>
+            <p style="color:#ccc"><small> - OR - </small></p>-->
+            <p class="price" style="color:#ccc"><sup>$</sup>79<sub>USD</sub></p>
+            <p style="color:#ccc"><small data-translate="ui.storefront.memberships.membershipLevelSelector.paidAnnually"></small></p>
+            <hr />
+            <p><span data-translate="ui.storefront.memberships.membershipLevelSelector.standardOptionsPlus"></span>&nbsp;<!--
+            -->(<span data-translate="ui.storefront.memberships.membershipLevelSelector.Below"></span>)</p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.listingImages"></p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.mapOfLocation"></p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.aboutUsAndCompanyOverview"></p>
+            <p data-translate="ui.storefront.common.HoursOfOperation"></p>
+            <p data-translate="ui.storefront.memberships.membershipLevelSelector.shareContactInfo"></p>
+            <p><a ui-sref-plus uisrp-area="membershipRegistration"
+                  uisrp-params="{ 'email': membershipLevelSelectorCtrl.email,
+                                  'type': membershipLevelSelectorCtrl.sellerType,
+                                  'mtype': membershipLevelSelectorCtrl.membershipTypeName,
+                                  'membership': 'PremiumDirectory',
+                                  'vtoken': membershipLevelSelectorCtrl.token }"
+                  class="btn btn-primary btn-lg"
+                  ><span data-translate="ui.storefront.memberships.membershipLevelSelector.unleashYourBusiness"></span></a></p>
+        </div>
+    </div>
+    <div class="col-12" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <!--<p class="text-center"><em>Promotional prices &amp; offerings will be valid until 31 August 2016 or until introductory memberships have been filled.</em></p>-->
+    </div>
+</div>
+<div ng-if="membershipLevelSelectorCtrl.showDefaultPricing">
+    <div class="col-sm-12 text-center" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <h1 class="mb-0"><b data-translate="ui.storefront.memberships.membershipLevelSelector.africasMarketplace"></b></h1>
+        <p style="max-width: 800px; margin: 10px auto 50px;" data-translate="ui.storefront.memberships.membershipLevelSelector.theGoafricaPlatformHasThreeDifferentMembershipOptionsShownBelow"></p>
+    </div>
+    <div class="col-12">
+        <div class="row" style="padding-bottom:40px;">
+            <div class="col-md-4 text-center">
+                <p><img src="/Portals/_default/Skins/GoAfricaMain/css/components/seller/landing-discounted-membership.png"
+                        translate-attr="{ alt: 'ui.storefront.memberships.membershipLevelSelector.powerfulMembershipPlatform' }" /></p>
+                <p style="color:#52504a;"><b data-translate="ui.storefront.memberships.membershipLevelSelector.powerfulMembershipPlatform"></b></p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p><img src="/Portals/_default/Skins/GoAfricaMain/css/components/seller/landing-free-ads-banners.png"
+                        translate-attr="{ alt: 'ui.storefront.memberships.membershipLevelSelector.robustAdsAndBanners' }" /></p>
+                <p style="color:#52504a;"><b data-translate="ui.storefront.memberships.membershipLevelSelector.robustAdsAndBanners"></b></p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p><img src="/Portals/_default/Skins/GoAfricaMain/css/components/seller/landing-worldwide-exposure.png"
+                        translate-attr="{ alt: 'ui.storefront.memberships.membershipLevelSelector.worldwideProductAndServiceExposure' }" /></p>
+                <p style="color:#52504a;"><b data-translate="ui.storefront.memberships.membershipLevelSelector.worldwideProductAndServiceExposure"></b></p>
+            </div>
+        </div>
+    </div>
+    <div class="clear" ng-hide="membershipLevelSelectorCtrl.hasError"></div>
+    <div class="col-md-4 col-md-push-4 promoted" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <div class="box text-center">
+            <p class="title" data-translate="ui.storefront.memberships.membershipLevelSelector.bronzeMembership"></p>
+            <p class="price" style="color:#2b6e45"><sup>$</sup>99<sub>US</sub></p>
+            <p style="color:#2b6e45"><small data-translate="ui.storefront.memberships.membershipLevelSelector.paidAnnually"></small></p>
+            <hr />
+            <!--<p class="mb-0"><b>1st 2,500 Memberships</b></p>
+            <p style="font-size:70px;line-height:80px"><b>FREE!</b></p>
+            <hr />
+            <p><b>2nd 4,500 Memberships</b></p>
+            <p class="price"><sup>$</sup>50<sub>US</sub></p>
+            <p><small>Paid Annually</small></p>
+            <hr />-->
+            <p class="number-products"><span data-translate="ui.storefront.memberships.membershipLevelSelector.numberOfProducts"></span><br /><big>50</big></p>
+            <p><a ui-sref-plus uisrp-area="membershipRegistration"
+                  uisrp-params="{ 'email': {membershipLevelSelectorCtrl.email,
+                                  'type': membershipLevelSelectorCtrl.sellerType,
+                                  'mtype': membershipLevelSelectorCtrl.membershipTypeName,
+                                  'membership': 'Bronze',
+                                  'vtoken': membershipLevelSelectorCtrl.token }"
+                  class="btn btn-primary btn-lg"
+                  ><span data-translate="ui.storefront.memberships.membershipLevelSelector.signUpNow"></span></a></p>
+        </div>
+    </div>
+    <div class="col-md-4 col-md-float-4" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <div class="box text-center">
+            <p class="title" data-translate="ui.storefront.memberships.membershipLevelSelector.silverMembership"></p>
+            <p class="price" style="color:#ccc"><sup>$</sup>499<sub>US</sub></p>
+            <p style="color:#ccc"><small data-translate="ui.storefront.memberships.membershipLevelSelector.paidAnnually"></small></p>
+            <hr />
+            <!--<p><b>1st 2,500 Memberships</b></p>
+            <p class="price"><sup>$</sup>125<sub>US</sub></p>
+            <p><small>Paid Annually</small></p>
+            <hr />
+            <p><b>2nd 5,000 Memberships</b></p>
+            <p class="price"><sup>$</sup>250<sub>US</sub></p>
+            <p><small>Paid Annually</small></p>
+            <hr />-->
+            <p class="number-products"><span data-translate="ui.storefront.memberships.membershipLevelSelector.numberOfProducts"></span><br /><big>250</big></p>
+            <p><a ui-sref-plus uisrp-area="membershipRegistration"
+                  uisrp-params="{ 'email': {membershipLevelSelectorCtrl.email,
+                                  'type': membershipLevelSelectorCtrl.sellerType,
+                                  'mtype': membershipLevelSelectorCtrl.membershipTypeName,
+                                  'membership': 'Silver',
+                                  'vtoken': membershipLevelSelectorCtrl.token }"
+                  class="btn btn-primary btn-lg"
+                  ><span data-translate="ui.storefront.memberships.membershipLevelSelector.signUpToday"></span></a></p>
+        </div>
+    </div>
+    <div class="col-md-4" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <div class="box text-center">
+            <p class="title" data-translate="ui.storefront.memberships.membershipLevelSelector.goldMembership"></p>
+            <p class="price" style="color:#ccc"><sup>$</sup>1499<sub>US</sub></p>
+            <p style="color:#ccc"><small data-translate="ui.storefront.memberships.membershipLevelSelector.paidAnnually"></small></p>
+            <hr />
+            <!--<p><b>1st 2,500 Memberships</b></p>
+            <p class="price"><sup>$</sup>375<sub>US</sub></p>
+            <p><small>Paid Annually</small></p>
+            <hr />
+            <p><b>2nd 5,000 Memberships</b></p>
+            <p class="price"><sup>$</sup>750<sub>US</sub></p>
+            <p><small>Paid Annually</small></p>
+            <hr />-->
+            <p class="number-products"><span data-translate="ui.storefront.memberships.membershipLevelSelector.numberOfProducts"></span><br /><big data-translate="ui.storefront.common.Unlimited"></big></p>
+            <p><a ui-sref-plus uisrp-area="membershipRegistration"
+                uisrp-params="{ 'email': {membershipLevelSelectorCtrl.email,
+                                'type': membershipLevelSelectorCtrl.sellerType,
+                                'mtype': membershipLevelSelectorCtrl.membershipTypeName,
+                                'membership': 'Gold',
+                                'vtoken': membershipLevelSelectorCtrl.token }"
+                  class="btn btn-primary btn-lg"
+                  ><span data-translate="ui.storefront.memberships.membershipLevelSelector.unleashYourBusiness"></span></a></p>
+        </div>
+    </div>
+    <div class="col-12" ng-hide="membershipLevelSelectorCtrl.hasError">
+        <!--<p class="text-center"><em>Promotional prices &amp; offerings will be valid until 31 August 2016 or until introductory memberships have been filled.</em></p>-->
+    </div>
+</div>

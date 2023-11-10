@@ -1,0 +1,333 @@
+﻿<div id="accountStepper" class="row">
+    <div class="a-step step-1" ng-class="{'active-step': membershipRegistrationCtrl.currentStep == 1, 'completed-step': membershipRegistrationCtrl.currentStep > 1 }">
+        <p><i class="far fa-check" aria-hidden="true"></i>&nbsp;<span data-translate="ui.storefront.memberships.membershipRegistration.step1BasicInformation"></span></p>
+        <div class="step-triangle"></div>
+    </div>
+    <div class="a-step step-2" ng-class="{'active-step': membershipRegistrationCtrl.currentStep == 2, 'completed-step': membershipRegistrationCtrl.currentStep > 2 }">
+        <p><i class="far fa-check" aria-hidden="true"></i>&nbsp;<span data-translate="ui.storefront.memberships.membershipRegistration.step2ValidateAccount"></span></p>
+        <div class="step-triangle"></div>
+    </div>
+    <div class="a-step step-3" ng-class="{'active-step': membershipRegistrationCtrl.currentStep == 3, 'completed-step': membershipRegistrationCtrl.currentStep > 3 }">
+        <p><i class="far fa-check" aria-hidden="true"></i>&nbsp;<span data-translate="ui.storefront.memberships.membershipRegistration.step3AccountDetails"></span></p>
+    </div>
+</div>
+<div class="row" style="max-width: 960px; margin: 0 auto;">
+    <div id="account-creation-1" class="form-vertical col-md-6 col-md-offset-3" ng-form="membershipRegistrationCtrl.forms.basicInfo" ng-show="membershipRegistrationCtrl.currentStep == 1">
+        <h3 data-translate="ui.storefront.memberships.membershipRegistration.letsGetStartedWithSomeBasicInformation"></h3>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.basicInfo.txtFirstName.$invalid}">
+            <label class="control-label" for="txtFirstName" data-translate="ui.storefront.memberships.membershipRegistration.firstName"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control" id="txtFirstName" name="txtFirstName" required ng-required="true"
+                       ng-model="membershipRegistrationCtrl.validateAccountData.FirstName" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.basicInfo.txtFirstName.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.basicInfo.txtLastName.$invalid)}">
+            <label for="txtLastName" data-translate="ui.storefront.common.LastName"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control" id="txtLastName" name="txtLastName" required ng-required="true"
+                       ng-model="membershipRegistrationCtrl.validateAccountData.LastName" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.basicInfo.txtLastName.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.basicInfo.txtEmail1.$invalid)}">
+            <label class="control-label" for="txtEmail1" data-translate="ui.storefront.common.Email"></label>
+            <div class="input-group col-12">
+                <input type="email" class="form-control" id="txtEmail1" name="txtEmail1" required ng-required="true"
+                       ng-model="membershipRegistrationCtrl.validateAccountData.Email" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.basicInfo.txtEmail1.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary"
+                ng-class="{'disabled': membershipRegistrationCtrl.forms.basicInfo.$invalid}"
+                ng-disabled="!membershipRegistrationCtrl.forms.basicInfo.$valid || membershipRegistrationCtrl.viewState.running"
+                ng-click="membershipRegistrationCtrl.sendValidateAccountEmail()" data-translate="ui.storefront.memberships.membershipRegistration.nextValidateMyAccount"></button>
+        <div class="form-group mt-3" ng-show="membershipRegistrationCtrl.showValidateAccountEmailMessage">
+            <div class="alert alert-success">
+                <p class="text-center" data-translate="ui.storefront.memberships.membershipRegistration.checkYourEmailForAValidationToken"></p>
+            </div>
+        </div>
+    </div>
+    <div id="account-creation-2" class="form-vertical col-md-6 col-md-offset-3" ng-form="membershipRegistrationCtrl.forms.validateAccount" ng-show="membershipRegistrationCtrl.currentStep == 2">
+        <h3 data-translate="ui.storefront.memberships.membershipRegistration.pleaseVerifyYourAccount"></h3>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.validateAccount.txtEmail.$invalid)">
+            <label class="control-label" for="txtEmail" data-translate="ui.storefront.common.Email"></label>
+            <div class="input-group col-12">
+                <input type="email" class="form-control" style="line-height: 24px;" id="txtEmail" name="txtEmail" required ng-required="true"
+                       disabled ng-model="membershipRegistrationCtrl.validateAccountData.Email" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.validateAccount.txtEmail.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.validateAccount.txtToken.$invalid}">
+            <label class="control-label" style="line-height: 24px;" for="txtToken" data-translate="ui.storefront.memberships.membershipRegistration.inviteToken"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control" id="txtToken" name="txtToken" required ng-required="true"
+                       ng-model="membershipRegistrationCtrl.validateAccountData.Token" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.validateAccount.txtToken.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.validateAccount.txtResetToken.$invalid}">
+            <label class="control-label" style="line-height: 24px;" for="txtToken" data-translate="ui.storefront.memberships.membershipRegistration.validationToken"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control" id="txtResetToken" name="txtResetToken" required ng-required="true"
+                       ng-model="membershipRegistrationCtrl.validateAccountData.ResetToken" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.validateAccount.txtResetToken.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary"
+                ng-class="{'disabled': membershipRegistrationCtrl.forms.validateAccount.$invalid}"
+                ng-disabled="!membershipRegistrationCtrl.forms.validateAccount.$valid || membershipRegistrationCtrl.viewState.running"
+                ng-click="membershipRegistrationCtrl.validateAccountTokens()" data-translate="ui.storefront.memberships.membershipRegistration.nextAccountDetails"></button>
+        <!--<button type="button" class="btn btn-secondary">Resend Verification Code</button>-->
+    </div>
+    <div id="account-creation-3a" class="form-vertical col-md-12 text-center" ng-show="membershipRegistrationCtrl.currentStep == 3">
+        <h3 class="text-center" data-translate="ui.storefront.memberships.membershipRegistration.almostFinishedWeJustNeedAFewMoreAccountDetails"></h3>
+    </div>
+    <div id="account-creation-3b" class="form-vertical col-md-6 col-md-offset-3" ng-form="membershipRegistrationCtrl.forms.remainingInfo" ng-show="membershipRegistrationCtrl.currentStep == 3">
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.txtPassword.$invalid}">
+            <label class="control-label text-nowrap" for="txtPassword"
+            uib-tooltip="{{'ui.storefront.user.registration.PasswordRequirements.Message' | translate}}"
+                   ><span data-translate="ui.storefront.common.Password"></span><span class="text-danger">*</span></label>
+            <div class="input-group">
+                <input type="password" class="form-control"
+                       id="txtPassword" name="txtPassword"
+                       placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                       ng-required="true"
+                       ng-change="membershipRegistrationCtrl.passwordChanged()"
+                       ng-model="membershipRegistrationCtrl.registrationData.Password">
+                <div class="input-group-append input-group-text" ng-if="membershipRegistrationCtrl.passwordValidityState == 'Empty'">
+                    <i class="far fa-minus" aria-hidden="true"></i>
+                </div>
+                <div class="input-group-append input-group-text alert-success" ng-if="membershipRegistrationCtrl.passwordValidityState == 'Valid'">
+                    <i class="far fa-check" aria-hidden="true"></i>
+                </div>
+                <div class="input-group-append input-group-text alert-danger" ng-if="membershipRegistrationCtrl.passwordValidityState == 'Invalid'">
+                    <i class="far fa-times" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.txtPassword.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.txtCompanyName.$invalid}">
+            <label class="control-label" for="txtCompanyName"
+                   data-translate="ui.storefront.common.CompanyName"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control"
+                       id="txtCompanyName" name="txtCompanyName"
+                       ng-required="true"
+                       ng-model="membershipRegistrationCtrl.registrationData.CompanyName" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.txtCompanyName.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.txtPhone.$invalid}">
+            <label class="control-label" for="txtPhone" data-translate="ui.storefront.common.Phone"></label>
+            <div class="input-group col-12">
+                <input type="tel" class="form-control"
+                       id="txtPhone" name="txtPhone"
+                       ng-required="true"
+                       ng-change="membershipRegistrationCtrl.runPhonePrefixLookup()"
+                       ng-model-options="{ updateOn: 'default blur', debounce: {'default':500,'blur':0} }"
+                       ng-model="membershipRegistrationCtrl.registrationData.Phone" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.txtPhone.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group"
+             ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.txtAddress1.$invalid}">
+            <label class="control-label" for="txtAddress1"
+                   data-translate="ui.storefront.common.Address"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control"
+                       id="txtAddress1" name="txtAddress1"
+                       ng-required="true"
+                       ng-model="membershipRegistrationCtrl.registrationData.Address.Street1" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.txtAddress1.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.txtAddress2.$invalid}">
+            <label class="control-label" for="txtAddress2" data-translate="ui.storefront.common.AddressCont"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control" id="txtAddress2" name="txtAddress2"
+                       ng-model="membershipRegistrationCtrl.registrationData.Address.Street2" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.txtAddress2.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.ddlCountry.$invalid}">
+            <label class="control-label" for="ddlCountry" data-translate="ui.storefront.common.Country"></label>
+            <div class="input-group col-12">
+                <select class="form-control" id="ddlCountry" name="ddlCountry" required ng-required="true"
+                        ng-model="membershipRegistrationCtrl.registrationData.Address.CountryID"
+                        ng-options="country.ID as country.Name for country in membershipRegistrationCtrl.countries | orderBy:'Name'"
+                        ng-change="membershipRegistrationCtrl.getStates()">
+                    <option value="" data-translate="ui.storefront.common.Country.SelectA"></option>
+                </select>
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.ddlCountry.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.txtCity.$invalid}">
+            <label class="control-label" for="txtCity" data-translate="ui.storefront.common.City"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control" id="txtCity" name="txtCity" required ng-required="true"
+                       ng-model="membershipRegistrationCtrl.registrationData.Address.City" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.txtCity.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="membershipRegistrationCtrl.registrationData.Address.CountryID"
+             ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.ddlState.$invalid}">
+            <label class="control-label" for="ddlState" data-translate="ui.storefront.common.geography.State"></label>
+            <div class="input-group col-12">
+                <select class="form-control" id="ddlState" name="ddlState" ng-required="membershipRegistrationCtrl.registrationData.Address.CountryID"
+                        ng-model="membershipRegistrationCtrl.registrationData.Address.RegionID "
+                        ng-options="state.ID as state.Name for state in membershipRegistrationCtrl.states | orderBy:'Name'">
+                    <option value="" data-translate="ui.storefront.common.geography.State.SelectA"></option>
+                </select>
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.ddlState.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.txtZip.$invalid}">
+            <label for="txtZip" data-translate="ui.storefront.common.Zip"></label>
+            <div class="input-group col-12">
+                <input type="text" class="form-control" id="txtZip" name="txtZip" required ng-required="true"
+                       ng-model="membershipRegistrationCtrl.registrationData.Address.PostalCode" />
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.txtZip.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <div ng-if="membershipRegistrationCtrl.showDirectoryFields">
+            <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.$invalid}">
+                <label for="txtWebsite" data-translate="ui.storefront.common.Website"></label>
+                <div class="input-group col-12">
+                    <input type="text" class="form-control" id="txtWebsite" name="txtWebsite" ng-required="false"
+                           ng-model="membershipRegistrationCtrl.registrationData.Website" />
+                </div>
+                <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.txtWebsite.$error">
+                    <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <p data-translate="ui.storefront.memberships.membershipRegistration.pleaseSelectUpToThreeCategoriesThatMatchYourBusinessFocus"></p>
+                <p>
+                    <label for="directory-options-category-1" class="control-label"><span data-translate="ui.storefront.memberships.membershipRegistration.Category"></span> 1</label>
+                    <select name="directory-options-category-1" id="directory-options-category-1"
+                            class="form-control"
+                            ng-model="membershipRegistrationCtrl.storeCategory1.SlaveID"
+                            ng-options="c.ID as c.Name group by c.Parent.Name for c in membershipRegistrationCtrl.categoriesGrouped | filter: {TypeID: 1002}"
+                            required>
+                        <option value="" data-translate="ui.storefront.memberships.membershipRegistration.selectACategory"></option>
+                    </select>
+                </p>
+                <p>
+                    <label for="directory-options-category-2" class="control-label"><span data-translate="ui.storefront.memberships.membershipRegistration.Category"></span> 2</label>
+                    <select name="directory-options-category-2" id="directory-options-category-2"
+                            class="form-control"
+                            ng-model="membershipRegistrationCtrl.storeCategory2.SlaveID"
+                            ng-options="c.ID as c.Name group by c.Parent.Name for c in membershipRegistrationCtrl.categoriesGrouped | filter: {TypeID: 1002}"
+                            required>
+                        <option value="" data-translate="ui.storefront.memberships.membershipRegistration.selectASecondCategory"></option>
+                    </select>
+                </p>
+                <p>
+                    <label for="directory-options-category-3" class="control-label"><span data-translate="ui.storefront.memberships.membershipRegistration.Category"></span> 3</label>
+                    <select name="directory-options-category-3" id="directory-options-category-3"
+                            class="form-control"
+                            ng-model="membershipRegistrationCtrl.storeCategory3.SlaveID"
+                            ng-options="c.ID as c.Name group by c.Parent.Name for c in membershipRegistrationCtrl.categoriesGrouped | filter: {TypeID: 1002}"
+                            required>
+                        <option value="" data-translate="ui.storefront.memberships.membershipRegistration.selectAThirdCategory"></option>
+                    </select>
+                </p>
+                <p></p>
+            </div>
+            <div class="form-group">
+                <p></p>
+                <p>
+                    <span data-translate="ui.storefront.memberships.membershipRegistration.pleaseCheckTheRegionsThatYouCurrentlyServe"></span>&nbsp;<!--
+                    --><a ng-click="membershipRegistrationCtrl.checkAllCountries()">(<span data-translate="ui.storefront.memberships.membershipRegistration.checkAll"></span>)</a>
+                </p>
+                <div class="row">
+                    <div class="col-md-4" ng-repeat="c in membershipRegistrationCtrl.regionList | filter: {CustomKey: 'REGION'}">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="region-{{c.CustomKey}}" value="{{c.Code}}" ng-model="c.Active" /> {{c.Name}}
+                        </label>
+                    </div>
+                    <p></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <p></p>
+                <p>
+                    <span data-translate="ui.storefront.memberships.membershipRegistration.pleaseCheckTheLanguagesThatYourBusinessUses"></span>&nbsp;<!--
+                    --><a ng-click="membershipRegistrationCtrl.checkAllLanguages()">(<span data-translate="ui.storefront.memberships.membershipRegistration.checkAll"></span>)</a>
+                </p>
+                <div class="row">
+                    <div class="col-md-4" ng-repeat="l in membershipRegistrationCtrl.languageList">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" id="region-{{l.CustomKey}}" value="{{l.Code}}" ng-model="l.Active" /> {{l.Name}}
+                        </label>
+                    </div>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': membershipRegistrationCtrl.forms.remainingInfo.ckAgreed.$invalid}">
+            <div class="checkbox" style="line-height: 24px;">
+                <label>
+                    <input type="checkbox" id="ckAgreed" name="ckAgreed" ng-required="true"
+                           ng-model="membershipRegistrationCtrl.termsAgreementAgreed" />
+                   <span data-translate="ui.storefront.memberships.membershipRegistration.iAgreeToGoafricas"></span>
+                    <a ui-sref-plus uisrp-area="terms"
+                       id="terms" target="_blank"
+                       ><span data-translate="ui.storefront.common.TermsAndConditions"></span></a>
+                </label>
+            </div>
+            <div ng-messages="membershipRegistrationCtrl.forms.remainingInfo.ckAgreed.$error">
+                <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary"
+                ng-disabled="!membershipRegistrationCtrl.forms.remainingInfo.$valid || membershipRegistrationCtrl.viewState.running"
+                ng-click="membershipRegistrationCtrl.checkout()" data-translate="ui.storefront.memberships.membershipRegistration.completeRegistration"></button>
+    </div>
+    <div id="account-creation-4" class="form-vertical col-md-6 col-md-offset-3" ng-show="membershipRegistrationCtrl.currentStep == 4">
+        <h3 class="text-center" data-translate="ui.storefront.memberships.membershipRegistration.successYourSellerAccountHasBeenCreated"></h3>
+        <p class="text-center" data-translate="ui.storefront.memberships.membershipRegistration.additionalDetailsHaveBeenSentToTheProvidedEmailPleaseKeep"></p>
+        <p class="text-center"
+           ><a class="btn btn-primary"
+               ui-sref-plus uisrp-adrea="myStoreAdmin"
+               ><span a-translate="ui.storefront.common.MyStoreDashboard"></span></a></p>
+    </div>
+    <div class="col-md-6 col-md-offset-3" ng-if="membershipRegistrationCtrl.hasError">
+        <div class="alert alert-danger mt-3">
+            <p ng-bind="membershipRegistrationCtrl.errorMessage"></p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,341 @@
+﻿<div class="row" ng-form="orderMinimumsEditorWidgetCtrl.forms.orderMinimums">
+    <div class="col-sm-12">
+        <h3 data-translate="ui.admin.common.MinimumPurchase"></h3>
+    </div>
+    <div class="col-md-6">
+        <h4 data-translate="ui.admin.controls.widgets.minimumOrders.ByDollarAmount"></h4>
+        <div class="row">
+            <number-input-form-group
+                class="col-sm-5"
+                input-class="text-right"
+                key="MinimumOrderDollarAmount"
+                ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount"
+                label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmount"
+                tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set."
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="true">
+            </number-input-form-group>
+            <number-input-form-group
+                class="col-sm-7"
+                input-class="text-right"
+                key="MinimumOrderDollarAmountAfter"
+                ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountAfter"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount"
+                label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountAfter"
+                tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set. If they have previously met the base minimum order dollar amount, the requirement changes to this value."
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="true">
+            </number-input-form-group>
+        </div>
+        <textarea-form-group
+            key="MinimumOrderDollarAmountWarningMessage"
+            ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountWarningMessage"
+            ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount"
+            label-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+            placeholder-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountWarningMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{overrideFee}}, {{overrideFeeWarningMessage}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="(orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountWarningMessage.replace('{{checkbox}}', '')) | trustedHtml"></div>
+            </div>
+        </div>
+        <div class="row">
+            <number-input-form-group
+                class="col-sm-6"
+                input-class="text-right"
+                key="MinimumOrderDollarAmountOverrideFee"
+                ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFee"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount"
+                label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFee"
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeIsPercent"
+                is-percent="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeIsPercent">
+            </number-input-form-group>
+            <toggle-form-group
+                class="col-sm-6"
+                key="MinimumOrderDollarAmountOverrideFeeIsPercent"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeIsPercent"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount || orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFee === undefined || !orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFee === null"
+                label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeIsPercent"
+                tog-on-key="ui.admin.common.Yes" tog-on-style="btn-primary"
+                tog-off-key="ui.admin.common.No" tog-off-style="btn-info">
+            </toggle-form-group>
+        </div>
+        <textarea-form-group
+            key="MinimumOrderDollarAmountOverrideFeeWarningMessage"
+            ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeWarningMessage"
+            ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount || orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFee === undefined || !orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFee === null"
+            label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+            placeholder-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeWarningMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{overrideFee}}, {{overrideFeeWarningMessage}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeWarningMessage.replace('{{checkbox}}', '') | trustedHtml"></div>
+            </div>
+        </div>
+        <textarea-form-group
+            key="MinimumOrderDollarAmountOverrideFeeAcceptedMessage"
+            ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeAcceptedMessage"
+            ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount || orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFee === undefined || !orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFee === null"
+            label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+            placeholder-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeAcceptedMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{overrideFee}}, {{overrideFeeWarningMessage}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountOverrideFeeAcceptedMessage.replace('{{checkbox}}', '') | trustedHtml"></div>
+            </div>
+        </div>
+        <div class="row">
+            <select-form-group
+                class="col-sm-12"
+                key="MinimumOrderDollarAmountBufferProductID"
+                label-key="ui.admin.controls.inventory.categoryDetail.MinimumOrderDollarAmountBufferProduct"
+                null-key="ui.admin.common.PleaseSelect"
+                include-null="true"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountBufferProductID"
+                selections="orderMinimumsEditorWidgetCtrl.products"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount"
+                ng-required="false">
+            </select-form-group>
+            <select-form-group
+                class="col-sm-12"
+                key="MinimumOrderDollarAmountBufferCategoryID"
+                label-key="ui.admin.controls.inventory.categoryDetail.MinimumOrderDollarAmountBufferCategory"
+                null-key="ui.admin.common.PleaseSelect"
+                include-null="true"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmountBufferCategoryID"
+                selections="orderMinimumsEditorWidgetCtrl.categories"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderDollarAmount"
+                ng-required="false">
+            </select-form-group>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4 data-translate="ui.admin.controls.widgets.minimumOrders.ByQuantityAmount"></h4>
+        <div class="row">
+            <number-input-form-group
+                class="col-sm-5"
+                input-class="text-right"
+                key="MinimumOrderQuantityAmount"
+                ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmount"
+                label-key="ui.admin.controls.widgets.minimumOrders.ByQuantityAmount"
+                tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set."
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="false">
+            </number-input-form-group>
+            <number-input-form-group
+                class="col-sm-7"
+                input-class="text-right"
+                key="MinimumOrderQuantityAmountAfter"
+                ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountAfter"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmount"
+                label-key="ui.admin.controls.widgets.minimumOrders.ByQuantityAmountAfter"
+                tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set. If they have previously met the base minimum order Quantity amount, the requirement changes to this value."
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="false">
+            </number-input-form-group>
+        </div>
+        <textarea-form-group
+            key="MinimumOrderQuantityAmountWarningMessage"
+            ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountWarningMessage"
+            ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmount"
+            label-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+            placeholder-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountWarningMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{overrideFee}}, {{overrideFeeWarningMessage}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountWarningMessage.replace('{{checkbox}}', '') | trustedHtml"></div>
+            </div>
+        </div>
+        <div class="row">
+            <number-input-form-group
+                class="col-sm-6"
+                input-class="text-right"
+                key="MinimumOrderQuantityAmountOverrideFee"
+                ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFee"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmount"
+                label-key="ui.admin.controls.widgets.minimumOrders.ByQuantityAmountOverrideFee"
+                placeholder-text="0.00"
+                step="0.01"
+                precision="4"
+                ng-required="false"
+                is-currency="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeIsPercent"
+                is-percent="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeIsPercent">
+            </number-input-form-group>
+            <toggle-form-group
+                class="col-sm-6"
+                key="MinimumOrderQuantityAmountOverrideFeeIsPercent"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeIsPercent"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFee || orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFee === undefined || orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFee === null"
+                label-key="ui.admin.controls.widgets.minimumOrders.ByQuantityAmountOverrideFeeIsPercent"
+                tog-on-key="ui.admin.common.Yes" tog-on-style="btn-primary"
+                tog-off-key="ui.admin.common.No" tog-off-style="btn-info">
+            </toggle-form-group>
+        </div>
+        <textarea-form-group
+            key="MinimumOrderQuantityAmountOverrideFeeWarningMessage"
+            ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeWarningMessage"
+            ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmount || orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFee === undefined || orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFee === null"
+            label-key="ui.admin.controls.widgets.minimumOrders.ByQuantityAmountOverrideFeeWarningMessage"
+            placeholder-key="ui.admin.controls.widgets.minimumOrders.ByQuantityAmountOverrideFeeWarningMessage"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeWarningMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{overrideFee}}, {{overrideFeeWarningMessage}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeWarningMessage.replace('{{checkbox}}', '') | trustedHtml"></div>
+            </div>
+        </div>
+        <textarea-form-group
+            key="MinimumOrderQuantityAmountOverrideFeeAcceptedMessage"
+            ng-model-options="orderMinimumsEditorWidgetCtrl.debounce500"
+            ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeAcceptedMessage"
+            ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmount || orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFee === undefined || orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFee === null"
+            label-key="ui.admin.controls.widgets.minimumOrders.ByQuantityAmountOverrideFeeAcceptedMessage"
+            placeholder-key="ui.admin.controls.widgets.minimumOrders.ByQuantityAmountOverrideFeeAcceptedMessage"
+            max-length="1024"
+            show-character-counter="true"
+            ng-required="false">
+        </textarea-form-group>
+        <div class="row"
+             ng-if="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeAcceptedMessage">
+            <div class="col-sm-12">
+                <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                <div class="my-2" ng-non-bindable>
+                    Tokens: {{ownerID}}, {{ownerName}},
+                    {{requiredAmount}}, {{missingAmount}},
+                    {{overrideFee}}, {{overrideFeeWarningMessage}},
+                    {{relatedStoreID}}, {{relatedStoreName}},
+                    {{bufferCategoryName}}, {{bufferCategorySeoUrl}},
+                    {{bufferItemName}}, {{bufferItemSeoUrl}},
+                    {{checkbox}}, {{attrKey}}
+                </div>
+                <div class="mb-3 well well-sm"
+                     ng-bind-html="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountOverrideFeeAcceptedMessage.replace('{{checkbox}}', '') | trustedHtml"></div>
+            </div>
+        </div>
+        <div class="row">
+            <select-form-group
+                class="col-sm-12"
+                key="MinimumOrderQuantityAmountBufferProductID"
+                label-key="ui.admin.controls.inventory.categoryDetail.MinimumOrderQuantityAmountBufferProduct"
+                null-key="ui.admin.common.PleaseSelect"
+                include-null="true"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountBufferProductID"
+                selections="orderMinimumsEditorWidgetCtrl.products"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmount"
+                ng-required="false">
+            </select-form-group>
+            <select-form-group
+                class="col-sm-12"
+                key="MinimumOrderQuantityAmountBufferCategoryID"
+                label-key="ui.admin.controls.inventory.categoryDetail.MinimumOrderQuantityAmountBufferCategory"
+                null-key="ui.admin.common.PleaseSelect"
+                include-null="true"
+                ng-model="orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmountBufferCategoryID"
+                selections="orderMinimumsEditorWidgetCtrl.categories"
+                ng-disabled="!orderMinimumsEditorWidgetCtrl.master.MinimumOrderQuantityAmount"
+                ng-required="false">
+            </select-form-group>
+        </div>
+    </div>
+</div>

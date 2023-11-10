@@ -1,0 +1,272 @@
+﻿<div class="form-vertical container-fluid cv-modal" ng-form="contactEditorModalCtrl.forms.Details">
+  <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.AddressInformation"></h3></div></div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtCustomKey.$valid}">
+        <label class="control-label" data-translate="ui.admin.controls.accounts.modals.accountContactDetailModal.AccountAddressKey"></label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="txtCustomKey" name="txtCustomKey"
+            style="text-transform: uppercase;" maxlength="15"
+            ng-required="true"
+            ng-model="contactEditorModalCtrl.accountContact.CustomKey" />
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.txtCustomKey.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtAddressKey.$valid}">
+        <label class="control-label" data-translate="ui.admin.common.AddressKey"></label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="txtAddressKey" name="txtAddressKey"
+            style="text-transform: uppercase;"
+            ng-required="true" maxlength="15"
+            ng-change="contactEditorModalCtrl.accountContact.Slave.CustomKey = contactEditorModalCtrl.accountContact.Slave.Address.CustomKey;"
+            ng-model="contactEditorModalCtrl.accountContact.Slave.Address.CustomKey" />
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.txtAddressKey.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtFirstName.$valid}">
+          <label class="control-label" data-translate="ui.admin.common.FirstName"></label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="txtFirstName" name="txtFirstName"
+              ng-required="true" maxlength="128" placeholder="John"
+              ng-model="contactEditorModalCtrl.accountContact.Slave.FirstName" />
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.txtFirstName.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+        <div class="form-group col-sm-6" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtLastName.$valid}">
+          <label class="control-label" data-translate="ui.admin.common.LastName"></label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="txtLastName" name="txtLastName"
+              ng-required="true" maxlength="128" placeholder="smith"
+              ng-model="contactEditorModalCtrl.accountContact.Slave.LastName" />
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.txtLastName.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtPhone1.$valid}">
+          <label class="control-label" data-translate="ui.admin.common.Phone1"></label>
+          <div class="input-group">
+            <div class="input-group-addon" aria-hidden="true"><i class="far fa-phone"></i></div>
+            <input type="text" class="form-control" id="txtPhone1" name="txtPhone1"
+              ng-required="true" maxlength="64" placeholder="+1 (555) 555-5555 x55555"
+              ng-pattern="/^(\+?\d{1,2}(-|\s)?)?\(?\d{3}(\)\s?|-)?\d{3}-?\d{4}(\s?x\d{1,5})?$/"
+              ng-change="contactEditorModalCtrl.accountContact.Slave.Phone1 = contactEditorModalCtrl.accountContact.Slave.Address.Phone;"
+              ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Phone" />
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.txtPhone1.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+        <div class="form-group col-sm-6" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtPhone2.$valid}">
+          <label class="control-label" data-translate="ui.admin.common.Phone2"></label>
+          <div class="input-group">
+            <div class="input-group-addon" aria-hidden="true"><i class="far fa-phone"></i></div>
+            <input type="text" class="form-control" id="txtPhone2" name="txtPhone2"
+              ng-required="false" maxlength="64" placeholder="+1 (555) 555-5555 x55555"
+              ng-pattern="/^(\+?\d{1,2}(-|\s)?)?\(?\d{3}(\)\s?|-)?\d{3}-?\d{4}(\s?x\d{1,5})?$/"
+              ng-change="contactEditorModalCtrl.accountContact.Slave.Phone2 = contactEditorModalCtrl.accountContact.Slave.Address.Phone2;"
+              ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Phone2" />
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.txtPhone2.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtPhone3.$valid}">
+          <label class="control-label" data-translate="ui.admin.common.Phone3"></label>
+          <div class="input-group">
+            <div class="input-group-addon" aria-hidden="true"><i class="far fa-phone"></i></div>
+            <input type="text" class="form-control" id="txtPhone3" name="txtPhone3"
+              ng-required="false" maxlength="64" placeholder="+1 (555) 555-5555 x55555"
+              ng-pattern="/^(\+?\d{1,2}(-|\s)?)?\(?\d{3}(\)\s?|-)?\d{3}-?\d{4}(\s?x\d{1,5})?$/"
+              ng-change="contactEditorModalCtrl.accountContact.Slave.Phone3 = contactEditorModalCtrl.accountContact.Slave.Address.Phone3;"
+              ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Phone3" />
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.txtPhone3.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+        <div class="form-group col-sm-6" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtFax.$valid}">
+          <label class="control-label" data-translate="ui.admin.common.Fax"></label>
+          <div class="input-group">
+            <div class="input-group-addon" aria-hidden="true"><i class="far fa-fax"></i></div>
+            <input type="text" class="form-control" id="txtFax" name="txtFax"
+              ng-required="false" maxlength="64" placeholder="+1 (555) 555-5555"
+              ng-pattern="/^(\+?\d{1,2}(-|\s)?)?\(?\d{3}(\)\s?|-)?\d{3}-?\d{4}$/"
+              ng-change="contactEditorModalCtrl.accountContact.Slave.Fax1 = contactEditorModalCtrl.accountContact.Slave.Address.Fax;"
+              ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Fax" />
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.txtFax.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtEmail.$valid}">
+        <label class="control-label" data-translate="ui.admin.common.Email"></label>
+        <div class="input-group">
+          <div class="input-group-addon" aria-hidden="true"><i class="far fa-at"></i></div>
+          <input type="email" class="form-control" id="txtEmail" name="txtEmail"
+            ng-required="true" maxlength="512" placeholder="john.smith@email.com"
+            ng-change="contactEditorModalCtrl.accountContact.Slave.Email1 = contactEditorModalCtrl.accountContact.Slave.Address.Email;"
+            ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Email" />
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.txtEmail.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-xs-6" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.ckIsBilling.$valid}">
+          <label class="control-label" data-translate="ui.admin.controls.accounts.modals.accountContactDetailModal.IsBilling"></label>
+          <div class="input-group">
+            <toggle id="ckIsBilling" name="ckIsBilling" class="btn-block"
+              ng-model="contactEditorModalCtrl.accountContact.IsBilling"
+              data-on="Default Billing" data-truestyle="btn-success"
+              data-off="Not Billing" data-offstyle="btn-info"></toggle>
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.ckIsBilling.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+        <div class="form-group col-xs-6" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.ckIsPrimary.$valid}">
+          <label class="control-label" data-translate="ui.admin.controls.accounts.modals.accountContactDetailModal.IsDefaultShipping"></label>
+          <div class="input-group">
+            <toggle id="ckIsPrimary" name="ckIsPrimary" class="btn-block"
+              ng-model="contactEditorModalCtrl.accountContact.IsPrimary"
+              data-on="Default Shipping" data-truestyle="btn-success"
+              data-off="Not Default" data-offstyle="btn-info">
+            </toggle>
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.ckIsPrimary.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtCompany.$valid}">
+        <label class="control-label"
+          data-translate="ui.admin.common.CompanyName">
+        </label>
+        <div class="input-group">
+          <input type="text" class="form-control"
+            id="txtCompany" name="txtCompany"
+            ng-required="false"
+            ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Company" />
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.txtCompany.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtStreet1.$valid}">
+        <label class="control-label" data-translate="ui.admin.common.Street1"></label>
+        <div class="input-group">
+          <input type="text" class="form-control"
+            id="txtStreet1" name="txtStreet1"
+            ng-required="true"
+            ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Street1" />
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.txtStreet1.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtStreet2.$valid}">
+        <label class="control-label" data-translate="ui.admin.common.Street2"></label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="txtStreet2" name="txtStreet2"
+            ng-required="false"
+            ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Street2" />
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.txtStreet2.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtStreet3.$valid}">
+        <label class="control-label" data-translate="ui.admin.common.Street3"></label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="txtStreet3" name="txtStreet3"
+            ng-required="false"
+            ng-model="contactEditorModalCtrl.accountContact.Slave.Address.Street3" />
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.txtStreet3.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtCity.$valid}">
+        <label class="control-label" data-translate="ui.admin.common.City"></label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="txtCity" name="txtCity"
+            ng-required="true"
+            ng-model="contactEditorModalCtrl.accountContact.Slave.Address.City" />
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.txtCity.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-7" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.ddlRegion.$valid}">
+          <label class="control-label" data-translate="ui.admin.common.State"></label>
+          <div class="input-group">
+            <select class="form-control" id="ddlRegion" name="ddlRegion"
+              ng-required="false"
+              ng-options="r.ID as r.Name for r in contactEditorModalCtrl.regions"
+              ng-model="contactEditorModalCtrl.accountContact.Slave.Address.RegionID">
+              <option value="" data-translate="ui.admin.common.SelectAState"></option>
+            </select>
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.ddlRegion.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+        <div class="form-group col-sm-5" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.txtPostalCode.$valid}">
+          <label class="control-label" data-translate="ui.admin.common.Zip"></label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="txtPostalCode" name="txtPostalCode"
+              ng-required="true"
+              ng-model="contactEditorModalCtrl.accountContact.Slave.Address.PostalCode" />
+          </div>
+          <div ng-messages="contactEditorModalCtrl.forms.Details.txtPostalCode.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error':!contactEditorModalCtrl.forms.Details.ddlCountry.$valid}">
+        <label class="control-label" data-translate="ui.admin.common.Country"></label>
+        <div class="input-group">
+          <select class="form-control" id="ddlCountry" name="ddlCountry"
+            ng-required="true"
+            ng-options="c.ID as c.Name for c in contactEditorModalCtrl.countries"
+            ng-model="contactEditorModalCtrl.accountContact.Slave.Address.CountryID">
+            <option value="" ng-disabled="true" data-translate="ui.admin.common.SelectACountry"></option>
+          </select>
+        </div>
+        <div ng-messages="contactEditorModalCtrl.forms.Details.ddlCountry.$error">
+          <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <a class="btn btn-info"
+        ng-click="contactEditorModalCtrl.close()">
+        <i class="far fa-undo" aria-hidden="true"></i>&nbsp;<!--
+        --><span data-translate="ui.admin.common.Cancel"></span>
+      </a>
+      <a class="btn btn-primary"
+        ng-click="contactEditorModalCtrl.save()">
+        <i class="far fa-save" aria-hidden="true"></i>&nbsp;<!--
+        --><span data-translate="ui.admin.common.Save"></span>
+      </a>
+    </div>
+  </div>
+</div>

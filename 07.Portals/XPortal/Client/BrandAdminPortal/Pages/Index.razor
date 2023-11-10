@@ -1,0 +1,58 @@
+﻿@page "/"
+@inject RoutingOptions routingOptions
+@inject NavigationManager navigationManager
+
+<Div Class="page h-100" ElementId="indexPage">
+  <Div Class="page-content">
+    <Container Fluid="true">
+      <Row>
+        <Column>
+          <Heading Size="HeadingSize.Is1">
+            Brand Administrator Portal@* TODO: Replace with token for portal name*@
+          </Heading>
+          @* TODO: Replace content with token for home page blurb *@
+          <Paragraph>
+            This portal allows Brand Administrators to view and modify the following aspects of the Brand:
+          </Paragraph>
+          <UnorderedList>
+            <UnorderedListItem>Basic Information about your Brand (company motto, contact info, etc)</UnorderedListItem>
+            <UnorderedListItem>Styling information for your Brand (company logo, basic color scheme)</UnorderedListItem>
+            <UnorderedListItem>Users and Accounts tied to your Brand for CSRs</UnorderedListItem>
+            <UnorderedListItem>Sales data for your CSRs</UnorderedListItem>
+            <UnorderedListItem>Product, Inventory and Catalog management for your Brand</UnorderedListItem>
+            <UnorderedListItem>Brick and Mortar Store Locations</UnorderedListItem>
+            <UnorderedListItem>Additional details like Multi-Currency and Language support (if enabled)</UnorderedListItem>
+          </UnorderedList>
+          <Paragraph>
+            Use the left navigation menu to delve into the specifics of each area. Actions you can take against
+            specific records will be listed in the right-sidebar.
+          </Paragraph>
+          <Paragraph>
+            If you ever need assistance with managing your Brand, feel free to contact us at {phone number}.
+          </Paragraph>
+        </Column>
+      </Row>
+    </Container>
+  </Div>
+  <Div Class="page-footer">
+    <Paragraph>
+      This is the page's footer
+    </Paragraph>
+  </Div>
+</Div>
+
+@code
+{
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    if (Contract.CheckValidKey(routingOptions.DefaultRoute))
+    {
+        navigationManager.NavigateTo(routingOptions.DefaultRoute!);
+        // return;
+    }
+    // Continue normally
+  }
+}

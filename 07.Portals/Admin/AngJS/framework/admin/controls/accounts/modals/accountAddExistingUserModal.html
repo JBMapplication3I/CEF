@@ -1,0 +1,91 @@
+﻿<div class="container-fluid cv-modal">
+  <div class="modal-header p-0">
+    <h3 data-translate="ui.admin.directives.accountExistingUserDetailModal.SelectAUser"></h3>
+  </div>
+  <div class="modal-body form-vertical p-0 pt-3"
+     ng-form="aaeumCtrl.forms.existingUser">
+    <div class="row">
+      <div class="form-group col-sm-12">
+        <label class="control-label" for="txtUserSearchTerm"
+          data-translate="ui.admin.directives.accountExistingUserDetailModal.SearchByUsername">
+        </label>
+        <div class="input-group">
+          <input type="text" class="form-control"
+            id="txtUserSearchTerm" name="txtUserSearchTerm"
+            kendo-auto-complete
+            k-data-source="aaeumCtrl.selectableUsers"
+            ng-required="false"
+            ng-change="aaeumCtrl.reloadSelectables()"
+            ng-model="aaeumCtrl.userText" />
+        </div>
+      </div>
+      <div class="form-group col-sm-12">
+        <label class="control-label" for="ddlUser"
+          data-translate="ui.admin.directives.accountExistingUserDetailModal.UserToAdd">
+        </label>
+        <div class="input-group">
+          <select class="form-control" ng-required="true"
+            id="ddlUser" name="ddlUser"
+            ng-options="u as ((u.ContactFullName || u.Contact.FullName || (u.ContactFirstName + ' ' + u.ContactLastName) || (u.Contact.FirstName + ' ' + u.Contact.LastName)) + ' [' + u.UserName + ']')
+                        for u in aaeumCtrl.selectableUsers"
+            ng-model="aaeumCtrl.user">
+            <option selected value="" data-translate="ui.admin.directives.accountExistingUserDetailModal.SelectAUser"></option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group col-sm-12">
+        <label class="control-label"
+          data-translate="ui.admin.directives.accountExistingUserDetailModal.YourSelection">
+        </label>
+        <div class="input-group w-100">
+          <table class="w-100">
+            <tbody>
+              <tr>
+                <th class="w-50" data-translate="ui.admin.directives.accountExistingUserDetailModal.ID"></th>
+                <td class="w-50" ng-bind="aaeumCtrl.user.ID"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.common.Username"></th>
+                <td ng-bind="aaeumCtrl.user.UserName"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.common.Name"></th>
+                <td ng-bind="aaeumCtrl.user.Contact.FullName
+                    || (aaeumCtrl.user.Contact.FirstName
+                      + ' ' + aaeumCtrl.user.Contact.LastName)"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.common.Phone"></th>
+                <td ng-bind="aaeumCtrl.user.Phone || aaeumCtrl.user.Contact.Phone1"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.common.Email"></th>
+                <td ng-bind="aaeumCtrl.user.Email || aaeumCtrl.user.Contact.Email1"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.directives.accountExistingUserDetailModal.CurrentAccountID"></th>
+                <td ng-bind="aaeumCtrl.user.AccountID"></td>
+              </tr>
+              <tr>
+                <th data-translate="ui.admin.directives.accountExistingUserDetailModal.CurrentAccountKey"></th>
+                <td ng-bind="aaeumCtrl.user.AccountKey"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer p-0 pt-3">
+    <button type="button" class="btn btn-info"
+      data-translate="ui.admin.common.Cancel"
+      ng-click="aaeumCtrl.close()">
+    </button>
+    <button type="button" class="btn btn-primary"
+      data-translate="ui.admin.common.Save"
+      ng-disabled="aaeumCtrl.forms.existingUser.$invalid
+                || aaeumCtrl.viewState.running"
+      ng-click="aaeumCtrl.save()">
+    </button>
+  </div>
+</div>

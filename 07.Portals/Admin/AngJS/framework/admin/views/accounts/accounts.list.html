@@ -1,0 +1,98 @@
+﻿<cv-page
+  ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.Accounts')"
+  caption="Manage Accounts"
+  head-icon="fa-users">
+  <cv-widget>
+    <widget-menu-item
+      caption="Add Account"
+      icon-class="fa-plus-circle"
+      click="$root.$state.go('accounts.accounts.detail',{ID:'New'})"
+      permission="'Accounts.Account.Create'">
+    </widget-menu-item>
+    <widget-body ng-controller="SearchController as search">
+      <cv-grid
+        show-pager="true"
+        page-sizes="8,16,32,64,128"
+        server-paging="true"
+        filter-side="true"
+        force-show-labels="true"
+        sortable="false"
+        server-sorting="true"
+        groupable="false"
+        on-search="search.getAccounts"
+        partial-reset="false"
+        on-deactivate="search.deactivateAccount"
+        on-reactivate="search.reactivateAccount"
+        on-delete="search.deleteAccount"
+        edit-state="accounts.accounts.detail,[ID]"
+        permissions-base="Accounts.Account">
+        <cv-column
+          hidden
+          field="TypeID"
+          title="Type"
+          filter
+          filter-type="select"
+          on-option-repeat="$parent.search.searchTypes.getAccountTypes">
+          <option value="" selected
+            data-translate="ui.admin.views.accounts.accountslist.Any">
+          </option>
+        </cv-column>
+        <cv-column
+          hidden
+          field="StatusID"
+          title="Status"
+          filter
+          filter-type="select"
+          on-option-repeat="$parent.search.searchTypes.getAccountStatuses">
+          <option value="" selected
+            data-translate="ui.admin.views.accounts.accountslist.Any">
+          </option>
+        </cv-column>
+        <cv-column
+          field="ID"
+          title="#"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-right"
+          filter
+          filter-type="id"
+          sort-by="4"
+          sort-by-direction="asc"
+          groupable="false" />
+        <cv-column
+          field="CustomKey"
+          title="Key"
+          width="15%"
+          filter
+          sort-by="1"
+          sort-by-direction="asc"
+          groupable="false" />
+        <cv-column
+          field="Name"
+          width="20%"
+          filter
+          sort-by="2"
+          sort-by-direction="asc"
+          groupable="false" />
+        <cv-column
+          field="IsOnHold"
+          title="On Hold"
+          type="boolean"
+          width="5%"
+          cell-class="text-center"
+          header-class="text-center"
+          filter
+          filter-type="boolean"
+          filter-value="true" />
+        <cv-column
+          field="Active"
+          title="Active"
+          type="boolean"
+          hidden
+          filter
+          filter-type="boolean"
+          filter-value="true" />
+      </cv-grid>
+    </widget-body>
+  </cv-widget>
+</cv-page>

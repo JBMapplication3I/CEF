@@ -1,0 +1,12 @@
+<small><button type="button" class="btn btn-link p-0"
+ng-class="{'active': cfnCtrl.active}"
+id="btnFtrCat_{{cfnCtrl.level}}_{{cfnCtrl.index}}"
+name="btnFtrCat_{{cfnCtrl.level}}_{{cfnCtrl.index}}"
+title="{{cfnCtrl.name}}"
+aria-label="{{cfnCtrl.name}}"
+ng-disabled="cfnCtrl.service.searchIsRunning"
+ng-click="cfnCtrl.push()"
+><span ng-class="{'text-capitalize':!cfnCtrl.hasDN}"
+ng-bind="cfnCtrl.name"></span></button>&nbsp;<!--
+--><span ng-if="!cfnCtrl.category.HasChildren || cfnCtrl.level === 7">(<span
+ng-bind="cfnCtrl.category.DocCount | number:0"></span>)</span></small>

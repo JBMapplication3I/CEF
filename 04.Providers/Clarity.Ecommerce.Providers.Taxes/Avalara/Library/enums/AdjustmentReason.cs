@@ -1,0 +1,73 @@
+﻿/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2019 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Genevieve Conty
+ * @author Greg Hester
+ */
+
+namespace Avalara.AvaTax.RestClient
+{
+    using System;
+
+    /// <summary>
+    /// Indicates the type of adjustment that was performed on a transaction
+    /// </summary>
+    public enum AdjustmentReason
+    {
+        /// <summary>
+        /// The transaction has not been adjusted
+        /// </summary>
+        NotAdjusted = 0,
+
+        /// <summary>
+        /// A sourcing issue existed which caused the transaction to be adjusted
+        /// </summary>
+        SourcingIssue = 1,
+
+        /// <summary>
+        /// Transaction was adjusted to reconcile it with a general ledger
+        /// </summary>
+        ReconciledWithGeneralLedger = 2,
+
+        /// <summary>
+        /// Transaction was adjusted after an exemption certificate was applied
+        /// </summary>
+        ExemptCertApplied = 3,
+
+        /// <summary>
+        /// Transaction was adjusted when the price of an item changed
+        /// </summary>
+        PriceAdjusted = 4,
+
+        /// <summary>
+        /// Transaction was adjusted due to a product return
+        /// </summary>
+        ProductReturned = 5,
+
+        /// <summary>
+        /// Transaction was adjusted due to a product exchange
+        /// </summary>
+        ProductExchanged = 6,
+
+        /// <summary>
+        /// Transaction was adjusted due to bad or uncollectable debt
+        /// </summary>
+        BadDebt = 7,
+
+        /// <summary>
+        /// Transaction was adjusted for another reason not specified
+        /// </summary>
+        Other = 8,
+
+        /// <summary>
+        /// Offline
+        /// </summary>
+        Offline = 9,
+
+    }
+}

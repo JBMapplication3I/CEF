@@ -1,0 +1,400 @@
+@thirdParty: '../../../../Scripts/thirdparty';
+@nodemodules: '../../../../node_modules';
+@bootstrap: '@{nodemodules}/bootstrap/less';
+
+//@import url('@{nodemodules}/bootstrap/less/bootstrap');
+
+/*!
+ * Bootstrap v3.3.6 (http://getbootstrap.com)
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// Core variables and mixins
+@import "@{bootstrap}/variables";
+@import "variables";
+@import "@{bootstrap}/mixins";
+@import "mixins";
+
+// Reset and dependencies
+@import "@{bootstrap}/normalize";
+@import "@{bootstrap}/print";
+@import "@{bootstrap}/glyphicons";
+
+// Core CSS
+@import "@{bootstrap}/scaffolding";
+@import "@{bootstrap}/type";
+@import "@{bootstrap}/code";
+@import "@{bootstrap}/grid";
+@import "@{bootstrap}/tables";
+@import "@{bootstrap}/forms";
+@import "@{bootstrap}/buttons";
+
+// Components
+@import "@{bootstrap}/component-animations";
+@import "@{bootstrap}/dropdowns";
+@import "@{bootstrap}/button-groups";
+@import "@{bootstrap}/input-groups";
+@import "@{bootstrap}/navs";
+@import "@{bootstrap}/navbar";
+@import "@{bootstrap}/breadcrumbs";
+@import "@{bootstrap}/pagination";
+@import "@{bootstrap}/pager";
+@import "@{bootstrap}/labels";
+@import "@{bootstrap}/badges";
+@import "@{bootstrap}/jumbotron";
+@import "@{bootstrap}/thumbnails";
+@import "@{bootstrap}/alerts";
+@import "@{bootstrap}/progress-bars";
+@import "@{bootstrap}/media";
+@import "@{bootstrap}/list-group";
+@import "@{bootstrap}/panels";
+@import "@{bootstrap}/responsive-embed";
+@import "@{bootstrap}/wells";
+@import "@{bootstrap}/close";
+
+// Components w/ JavaScript
+@import "@{bootstrap}/modals";
+@import "@{bootstrap}/tooltip";
+@import "@{bootstrap}/popovers";
+@import "@{bootstrap}/carousel";
+
+// Utility classes
+@import "@{bootstrap}/utilities";
+@import "@{bootstrap}/responsive-utilities";
+
+
+//@import url('@{nodemodules}/bootstrap/dist/css/bootstrap.min.css');
+@import url('@{nodemodules}/bootstrap/dist/css/bootstrap-theme.min.css');
+@import '@{thirdParty}/bootstrap/pagination-bootstrap/assets/pagination';
+@import url('@{thirdParty}/bootstrap/bootstrap-select/assets/lib/css/bootstrap-select.css');
+@import '@{thirdParty}/bootstrap/bootstrap-select/assets/custom/less/bootstrap-select';
+@import url('@{thirdParty}/icons/glyphicons/assets/css/glyphicons_regular.css');
+@import url('@{thirdParty}/icons/glyphicons/assets/css/glyphicons_social.css');
+@import url('@{thirdParty}/icons/glyphicons/assets/css/glyphicons_filetypes.css');
+@import url('@{thirdParty}/icons/pictoicons/css/picto.css');
+@import url('@{nodemodules}/angular-loading-bar/build/loading-bar.css');
+// @import url('@{nodemodules}/animate.css/animate.min.css');
+// @import url('@{thirdParty}/angular/Chosen/chosen-spinner.css');
+// @import url('@{thirdParty}/jquery/Chosen/chosen.css');
+//@import 'bootstrap-chosen';
+@import "@{thirdParty}/angular/angular-bootstrap-toggle/src/angular-bootstrap-toggle";
+// @import url('@{nodemodules}/ng-Dialog/css/ngDialog.min.css');
+// @import url('@{nodemodules}/ng-Dialog/css/ngDialog-theme-default.min.css');
+@import url('@{thirdParty}/jquery/notyfy/css/jquery.notyfy.css');
+@import url('@{thirdParty}/jquery/notyfy/css/notyfy.theme.default.css');
+@import url('@{thirdParty}/telerik-kendo-ui/styles/kendo.common.min.css');
+@import url('@{thirdParty}/telerik-kendo-ui/styles/kendo.default.min.css');
+@import url('@{thirdParty}/angular/ui-select/select.css');
+@import url('@{thirdParty}/angular/select2.css');
+@import "@{thirdParty}/yamm3/yamm/yamm";
+@import 'backport';
+@import 'layout';
+@import 'dashboard';
+@import 'ngDialog';
+@import 'footer';
+@import 'responsive';
+@import 'cvDetailsForm';
+@import '@{thirdParty}/tables/classic/assets/less/tables';
+@import 'scaffolding';
+@import 'helpers';
+@import 'layout';
+@import 'menus';
+@import 'widgets';
+@import 'forms';
+@import 'alerts';
+@import 'breadcrumb';
+@import 'tabs';
+@import 'accordions';
+@import 'gallery';
+@import 'labels';
+@import 'animations';
+@import 'login';
+@import 'admin-site-menu';
+@import 'admin-site-menu-2';
+@import 'importer';
+@import 'modals';
+
+/* These borders are for debugging purposes */
+.border-red { border: solid 2px red; }
+.border-green { border: solid 2px green; }
+.border-blue { border: solid 2px blue; }
+.border-purple { border: solid 2px purple; }
+.border-orange { border: solid 2px orange; }
+
+.font-weight-normal { font-weight: normal; }
+.bold { font-weight: bold; }
+.big { font-size: larger; }
+
+/* This is for ng-validate not valid tabs */
+.background-red { background: @btn-danger-bg; }
+.color-red { color: @btn-danger-bg; }
+
+@media(max-width: 767px) {
+    .visible-xs-table { display: table-cell !important; }
+    .visible-xs-table-cell { display: table-cell !important; }
+}
+@media(min-width: 768px) {
+    .visible-xs-table { display: none !important; }
+    .visible-xs-table-cell { display: none !important; }
+}
+
+@media(min-width: 991px) {
+    .full-height, cv-page, cv-widget {
+        /* Body should be full height minus the area of the Detail Title for md and lg screens
+           use natural height for others */
+        height: 100%;
+    }
+}
+
+#Body > form#Form {
+    height: 100%;
+    width: 100%;
+    margin-top: 0 !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+.k-editor-widget .k-editable-area {
+    padding: 0;
+}
+
+// This does half-width gutters
+.row > .condensed-row {
+    padding-left: ceil(@grid-gutter-width / 2 / 2);
+    padding-right: ceil(@grid-gutter-width / 2 / 2);
+    //margin-left: floor(@grid-gutter-width / 2 / 2 * -1);
+    //margin-right: floor(@grid-gutter-width / 2 / 2 * -1);
+    > [class*="col-"] {
+        padding-left: floor(@grid-gutter-width / 2 / 2);
+        padding-right: floor(@grid-gutter-width / 2 / 2);
+    }
+    /*:first-child[class*="col-"] {
+        padding-left: floor(@grid-gutter-width / 2);
+    }
+    :last-child[class*="col-"] {
+        padding-right: floor(@grid-gutter-width / 2);
+    }*/
+}
+
+.scroll-over-500 {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.scroll-over-300 {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Reapply the button styles from bootstrap, overriding any styles that are breaking them, also applying the CEF color scheme */
+@import "@{nodemodules}/bootstrap/less/mixins/buttons";
+.btn-default { .button-variant(@cef-btn-default-color; @cef-btn-default-bg; @cef-btn-default-border); }
+.btn-primary { .button-variant(@cef-btn-primary-color; @cef-btn-primary-bg; @cef-btn-primary-border); }
+.btn-success { .button-variant(@cef-btn-success-color; @cef-btn-success-bg; @cef-btn-success-border); }
+.btn-warning { .button-variant(@cef-btn-warning-color; @cef-btn-warning-bg; @cef-btn-warning-border); }
+.btn-info    { .button-variant(@cef-btn-info-color;    @cef-btn-info-bg;    @cef-btn-info-border   ); }
+.btn-danger  { .button-variant(@cef-btn-danger-color;  @cef-btn-danger-bg;  @cef-btn-danger-border ); }
+.btn-lg { .button-size(@padding-large-vertical; @padding-large-horizontal; @font-size-large; @line-height-large; @btn-border-radius-large); }
+.btn-sm { .button-size(@padding-small-vertical; @padding-small-horizontal; @font-size-small; @line-height-small; @btn-border-radius-small); }
+.btn-xs { .button-size(@padding-xs-vertical; @padding-xs-horizontal; @font-size-small; @line-height-small; @btn-border-radius-small); }
+.btn-default { background-image: none; }
+.btn-primary { background-image: none; }
+.btn-success { background-image: none; }
+.btn-warning { background-image: none; }
+.btn-info { background-image: none; }
+.btn-danger { background-image: none; }
+.btn { border-radius: 0; }
+/* END Reapply the button styles from bootstrap, overriding the DNN styles that are breaking them */
+.btn.btn-split-block { width: calc(~"100% - 26px"); }
+
+#content {
+    width: 100%;
+    height: 400px;
+    height: calc(100% ~"-" @admin-menu-height);
+    top: @admin-menu-height;
+    bottom: 0;
+    display: block;
+    > .innerLR {
+        height: 100%;
+    }
+}
+
+.content-border-box * {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+toggle {
+    > .toggle {
+        width: 100% !important;
+    }
+    &[disabled] {
+        > .toggle {
+            &.btn-default { color: @cef-btn-default-color; background: darken(@cef-btn-default-bg, 17%); border: solid 1px darken(@cef-btn-default-border, 25%); }
+            &.btn-primary { color: @cef-btn-primary-color; background: darken(@cef-btn-primary-bg, 17%); border: solid 1px darken(@cef-btn-primary-border, 25%); }
+            &.btn-success { color: @cef-btn-success-color; background: darken(@cef-btn-success-bg, 17%); border: solid 1px darken(@cef-btn-success-border, 25%); }
+            &.btn-warning { color: @cef-btn-warning-color; background: darken(@cef-btn-warning-bg, 17%); border: solid 1px darken(@cef-btn-warning-border, 25%); }
+            &.btn-info    { color: @cef-btn-info-color;    background: darken(@cef-btn-info-bg,    17%); border: solid 1px darken(@cef-btn-info-border,    25%); }
+            &.btn-danger  { color: @cef-btn-danger-color;  background: darken(@cef-btn-danger-bg,  17%); border: solid 1px darken(@cef-btn-danger-border,  25%); }
+            > .toggle-group {
+                > .toggle-handle {
+                    cursor: not-allowed;
+                }
+                > label.btn {
+                    cursor: not-allowed;
+                    &.btn-default { color: @cef-btn-default-color; background: darken(@cef-btn-default-bg, 17%); border: solid 1px darken(@cef-btn-default-border, 25%); }
+                    &.btn-primary { color: @cef-btn-primary-color; background: darken(@cef-btn-primary-bg, 17%); border: solid 1px darken(@cef-btn-primary-border, 25%); }
+                    &.btn-success { color: @cef-btn-success-color; background: darken(@cef-btn-success-bg, 17%); border: solid 1px darken(@cef-btn-success-border, 25%); }
+                    &.btn-warning { color: @cef-btn-warning-color; background: darken(@cef-btn-warning-bg, 17%); border: solid 1px darken(@cef-btn-warning-border, 25%); }
+                    &.btn-info    { color: @cef-btn-info-color;    background: darken(@cef-btn-info-bg,    17%); border: solid 1px darken(@cef-btn-info-border,    25%); }
+                    &.btn-danger  { color: @cef-btn-danger-color;  background: darken(@cef-btn-danger-bg,  17%); border: solid 1px darken(@cef-btn-danger-border,  25%); }
+                }
+            }
+        }
+    }
+}
+
+/* To prevent modal from touching the menu */
+
+div.modal-dialog {
+    margin-top: 50px;
+}
+
+body > div.container-fluid {
+    padding-left: 0px;
+}
+
+.cvSalesOrderItemSelector-Head {
+    padding-top:15px;
+    padding-bottom:10px;
+}
+
+.cvSalesOrderItemSelector-Head > div,
+.cvSalesOrderItemSelector-Head > div > div.input-group {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.cvSalesOrderItemSelector-Head > div > label {
+    margin-left:10px;
+    margin-right:5px;
+    margin-top:5px;
+    display:inline-block;
+    margin-bottom:auto;
+}
+
+.cvLogin {
+    background-image: url('/DesktopModules/ClarityEcommerce/UI-Admin/framework/admin/img/Login-Background.jpg');
+    background-repeat: repeat-y;
+    height: 100%;
+    width: 100%;
+    background-size: 100%;
+    overflow: hidden;
+    display: block;
+}
+
+.cv-modal {
+    background:#FFF;
+    padding:15px 15px 15px 15px;
+}
+
+.cv-modal .form-horizontal {
+    padding:0 20px 0 20px;
+}
+
+.k-menu > li:hover:not(.k-state-disabled) {
+    background-color: lightblue;
+}
+
+.form-control-static {
+    display: inline-block;
+}
+
+.look-up-kit table img {
+    max-height: 80px;
+    height: 100%;
+    width: auto;
+}
+.product-info span,
+.product-price span {
+    font-weight: bold;
+}
+.look-up-kit table p {
+    margin-bottom: 5px;
+}
+.product-price a {
+    width: 150px;
+    margin-bottom: 5px;
+}
+.title-row {
+    background: #4193D0;
+    color: #ffffff;
+}
+.title-row h4 {
+    padding: 10px 5px;
+    margin: 0px;
+}
+.look-up-kit th {
+    background: #32373B;
+    color: #ffffff;
+    font-weight: lighter;
+}
+.look-up-kit table {
+    margin-bottom: 30px;
+}
+span.price,
+.count-row span {
+    font-size: 16px;
+    font-weight: bold;
+}
+.po-status a {
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+.po-status select {
+    margin-top: 0px;
+    padding: 5px;
+}
+.po-status div {
+    margin-bottom: 15px;
+}
+.product-price select {
+    margin-bottom: 10px;
+    padding: 5px;
+}
+.count-row {
+    margin: 15px 0px;
+}
+.text-align-right {
+    text-align: right;
+}
+.text-align-left {
+    text-align: left;
+}
+.text-align-center {
+    text-align: center;
+}
+
+.glyphicon {
+    top: auto !important;
+}
+
+hr.form-actions-separator {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+.wrap {
+    white-space: normal;
+}
+
+.pointer {
+    cursor: pointer;
+}

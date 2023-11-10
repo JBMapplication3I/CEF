@@ -1,0 +1,37 @@
+﻿<cv-page caption="Manage Shipping Packages" head-icon="fa-archive"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Shipping.Packages')">
+    <cv-widget>
+        <widget-menu-item caption="Add Shipping Package" icon-class="fa-plus-circle"
+                          click="$root.$state.go('shipments.shippingPackages.detail',{ID:'New'})"
+                          permission="'Shipping.Package.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     on-search="search.getShippingPackages"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateShippingPackage"
+                     on-reactivate="search.reactivateShippingPackage"
+                     on-delete="search.deleteShippingPackage"
+                     edit-state="shipments.shippingPackages.detail,[ID]"
+                     permissions-base="Shipping.Package">
+                <cv-column hidden field="TypeID" title="Type"
+                           filter filter-type="select"
+                           on-option-repeat="$parent.search.searchTypes.getPackageTypes">
+                    <option value="" selected data-translate="ui.admin.views.shipments.shippingpackageslist.Any"></option>
+                </cv-column>
+                <cv-query-param field="IsCustom" value="false" />
+                <cv-column width="50px" filter field="ID" title="#" />
+                <cv-column filter field="CustomKey" title="Key" />
+                <cv-column filter field="Name" />
+                <cv-column field="TypeName" title="Type" />
+                <cv-column width="75px" cell-class="text-right" format="number:2" field="Weight" />
+                <cv-column width="50px" cell-class="text-left" field="WeightUnitOfMeasure" title="Wt UofM" />
+                <cv-column width="75px" cell-class="text-right" format="number:2" field="Width" />
+                <cv-column width="50px" cell-class="text-left" field="WidthUnitOfMeasure" title="W UofM" />
+                <cv-column width="75px" cell-class="text-right" format="number:2" field="Height" />
+                <cv-column width="50px" cell-class="text-left" field="HeightUnitOfMeasure" title="H UofM" />
+                <cv-column width="75px" cell-class="text-right" format="number:2" field="Depth" />
+                <cv-column width="50px" cell-class="text-left" field="DepthUnitOfMeasure" title="D UofM" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

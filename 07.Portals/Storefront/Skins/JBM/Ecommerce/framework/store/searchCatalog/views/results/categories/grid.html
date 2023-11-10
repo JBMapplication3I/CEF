@@ -1,0 +1,72 @@
+﻿<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-tk-5 row-cols-fk-6 category-results-grid"
+  id="results-grid" ng-init="kind = 'categories'">
+  <div ng-repeat="recordID in sccagCtrl.service.searchViewModelCa.ResultIDs
+      | orderBy: sccagCtrl.service.getSorter()
+      | filter: sccagCtrl.filterByOnlyShowCurrentCategoriesLevel(recordID)"
+    class="col-sm-6 col-md-4 col-lg-3 catalog-result-card category"
+    id="categoryGridBlock{{recordID}}">
+    <div ng-if="sccagCtrl.service.allCategories.length > 0"
+      class="row">
+      <div class="col-12">
+        <a ui-sref-plus
+          class="item category-catalog-card position-relative"
+          uisrp-is-catalog="true"
+          uisrp-state="{{sccagCtrl.service.getCachedByAllCategories(recordID).HasChildren ? 'searchCatalog.categories.results.both' : 'searchCatalog.products.results.both'}}"
+          uisrp-params="{
+            'category': '{{sccagCtrl.service.getCachedByAllCategories(recordID).Name}}|{{sccagCtrl.service.getCachedByAllCategories(recordID).CustomKey}}',
+            'term': null,
+            'page': 1
+          }">
+          <div cef-product-card-thumbnail-widget
+            class="jbm-homepage-category-images"
+            product-id="sccagCtrl.service.getCachedByAllCategories(recordID).ID"
+            product-from-scope="sccagCtrl.service.getCachedByAllCategories(recordID)"
+            product-image="sccagCtrl.service.getCachedByAllCategories(recordID).PrimaryImageFileName"
+            is-category="sccagCtrl.service.getCachedByAllCategories(recordID).HasChildren"
+            width="250"
+            height="500"
+            index="$index">
+          </div>
+          <h3 ng-bind="sccagCtrl.service.getCachedByAllCategories(recordID).DisplayName
+            || sccagCtrl.service.getCachedByAllCategories(recordID).Name"
+            class="h5 item-title position-absolute w-100">
+          </h3>
+        </a>
+      </div>
+      <!--
+      <div class="col-12">
+        <a class="product-title rows-2"
+          title="{{sccagCtrl.service.getCachedByAllCategories(recordID).Name}}"
+          ui-sref-plus
+          uisrp-is-catalog="true"
+          uisrp-state="{{sccagCtrl.service.getCachedByAllCategories(recordID).HasChildren ? 'searchCatalog.categories.results.both' : 'searchCatalog.products.results.both'}}"
+          uisrp-params="{
+            'category': '{{sccagCtrl.service.getCachedByAllCategories(recordID).Name}}|{{sccagCtrl.service.getCachedByAllCategories(recordID).CustomKey}}',
+            'term': null,
+            'page': 1
+          }">
+          <p ng-bind="sccagCtrl.service.getCachedByAllCategories(recordID).Name"></p>
+        </a>
+      </div>
+      <div class="col-12">
+        <p>
+          <a class="btn btn-block btn-lg btn-primary"
+            ui-sref-plus
+            uisrp-is-catalog="true"
+            uisrp-state="{{sccagCtrl.service.getCachedByAllCategories(recordID).HasChildren ? 'searchCatalog.categories.results.both' : 'searchCatalog.products.results.both'}}"
+            uisrp-params="{
+              'category': '{{sccagCtrl.service.getCachedByAllCategories(recordID).Name}}|{{sccagCtrl.service.getCachedByAllCategories(recordID).CustomKey}}',
+              'term': null,
+              'page': 1
+            }">
+            <span data-translate="ui.storefront.common.ViewDetails"></span>
+          </a>
+        </p>
+      </div>
+      -->
+    </div>
+    <div ng-if="!sccagCtrl.service.allCategories.length > 0"
+      cef-loading-widget overlay="false">
+    </div>
+  </div>
+</div>

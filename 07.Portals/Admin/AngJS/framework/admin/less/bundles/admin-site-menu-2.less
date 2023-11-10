@@ -1,0 +1,251 @@
+﻿@menu2-top-height: 42px;
+@menu2-bottom-height: 43px;
+@menu2-background-color: #21262C; // near black
+@menu2-background-color-hover: #555757; // gray
+@menu2-background-color-light: #27B9DD; // Clarity Light Blue
+@menu2-background-color-light-hover: #49C0E0; // Clarity Lighter Blue
+@menu2-color-very-dark-gray: #32373B;
+
+.navbar.cef-admin-navbar {
+    border-radius: 0;
+    background-color: @menu2-background-color;
+
+    &.yamm {
+        .yamm-content {
+            background-color: @menu2-background-color-hover;
+        }
+    }
+
+    margin-bottom: 0;
+    border-bottom: none;
+
+    /* The header stays visible in all modes, the navbar-toggle button hugs right and shows only in mobile */
+    >.navbar-header {
+        >a.navbar-brand {
+            padding: 11px;
+
+            &:hover {
+                background-color: @menu2-background-color-hover;
+            }
+        }
+
+        >button.navbar-toggle {
+            >span.icon-bar {
+                border: solid 1px @menu2-background-color-light;
+            }
+
+            &:hover {
+                >span.icon-bar {
+                    border-color: #fff;
+                }
+            }
+        }
+    }
+
+    /* The collapse stays visible down to mobile, then becomes only visible with the click of the nav-bar toggle */
+    >.navbar-collapse {
+        >.nav.navbar-nav {
+            >li {
+                &.primary-state {
+                    >a {
+                        padding-top: 12px;
+                        padding-bottom: 12px;
+                    }
+                }
+
+                &.secondary-state {
+                    >a {
+                        padding-top: 15px;
+                        padding-bottom: 15px;
+                    }
+                }
+
+                a.header-link {
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                }
+
+                &.cms-back-link {
+                    >a {
+                        padding-top: 10px;
+                        padding-bottom: 11px;
+                        padding-right: 15px;
+                        margin-right: 15px;
+                    }
+                }
+
+                >a {
+                    color: #fff;
+                    cursor: pointer;
+
+                    &:visited {
+                        color: #fff;
+                    }
+                }
+
+                &:hover {
+                    background-color: @menu2-background-color-hover;
+                }
+
+                &.open,
+                &.active {
+                    background-color: @menu2-background-color-light;
+
+                    >a {
+                        background-color: @menu2-background-color-light;
+                        //color: @menu2-color-very-dark-gray;
+                        //&:visited {
+                        //    color: @menu2-color-very-dark-gray;
+                        //}
+                    }
+
+                    &:hover {
+                        background-color: @menu2-background-color-light-hover;
+
+                        >a {
+                            background-color: @menu2-background-color-light-hover;
+                        }
+                    }
+                }
+
+                &.dropdown {
+                    >.dropdown-menu {
+                        top: 49px;
+                        padding: 0;
+
+                        >li,
+                        .menu-include>li {
+                            background: @menu2-background-color;
+
+                            >a {
+                                padding: 3px 15px;
+                                width: 100%;
+                                background: @menu2-background-color;
+                                color: #fff;
+                                display: block;
+                                clear: both;
+                                font-weight: 400;
+                                filter: none;
+                                white-space: nowrap;
+
+                                &:visited {
+                                    color: #fff;
+                                }
+                            }
+
+                            &.active {
+                                background: @menu2-background-color-light;
+
+                                >a {
+                                    background: @menu2-background-color-light;
+                                }
+                            }
+
+                            &:hover {
+                                background: @menu2-background-color-hover;
+
+                                >a {
+                                    background: @menu2-background-color-hover;
+                                }
+
+                                &.active {
+                                    background: @menu2-background-color-light-hover;
+
+                                    >a {
+                                        background: @menu2-background-color-light-hover;
+                                    }
+                                }
+                            }
+
+                            div.yamm-content {
+                                // yamm content
+                                background: @menu2-background-color;
+
+                                h3 {
+                                    color: white;
+                                    background: @menu2-background-color-hover;
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                    padding: 5px 10px;
+                                }
+
+                                div.sub-links {
+                                    >div.condensed-row {
+
+                                        >div.sub-link,
+                                        .menu-include>div.sub-link {
+                                            >a {
+                                                padding: 3px 5px;
+                                                width: 100%;
+                                                background: @menu2-background-color;
+                                                color: #fff;
+                                                display: block;
+                                                clear: both;
+                                                font-weight: 400;
+                                                filter: none;
+                                                white-space: nowrap;
+
+                                                &:visited {
+                                                    color: #fff;
+                                                }
+                                            }
+
+                                            &.active {
+
+                                                //background: @menu2-background-color-light;
+                                                >a {
+                                                    background: @menu2-background-color-light;
+                                                }
+                                            }
+
+                                            &:hover {
+
+                                                //background: @menu2-background-color-hover;
+                                                >a {
+                                                    background: @menu2-background-color-hover;
+                                                }
+
+                                                &.active {
+
+                                                    //background: @menu2-background-color-light-hover;
+                                                    >a {
+                                                        background: @menu2-background-color-light-hover;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Extra Small Screens Only
+// @media (max-width: @screen-xs-max) {}
+
+// Small Screens Only
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {}
+
+// Small Screens and Up
+@media (min-width: @screen-sm-min) {
+    .navbar.cef-admin-navbar {
+        .navbar-nav>li>a {
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+    }
+}
+
+// Medium Screens Only
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {}
+
+// Medium Screens and Up
+@media (min-width: @screen-md-min) {}
+
+// Large Screens
+@media (min-width: @screen-lg-min) {}

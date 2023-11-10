@@ -1,0 +1,677 @@
+<div class="container-fluid cv-wizard-form full-height">
+    <div class="row wizard-header">
+        <span class="col-md-12 details-title">
+            <span data-translate="ui.admin.common.Order.New"></span><!--
+            --><span ng-if="salesOrderCreateCtrl.salesOrder.CustomKey"
+                     >&nbsp;[<span ng-bind="salesOrderCreateCtrl.salesOrder.CustomKey"></span>]</span><!--
+            --><span ng-if="salesOrderCreateCtrl.accountID"
+                     >&nbsp;<span data-translate="ui.admin.common.ForAccount"
+                     ></span>&nbsp;<span ng-bind="salesOrderCreateCtrl.account.CustomKey"></span></span><!--
+            --><span ng-if="salesOrderCreateCtrl.userID"
+                     >&nbsp;<span data-translate="ui.admin.common.User"
+                     ></span>&nbsp;<span ng-bind="salesOrderCreateCtrl.user.UserName"></span></span>
+        </span>
+    </div>
+    <div class="row wizard-body py-3 form-vertical full-height" style="overflow-y: scroll;">
+        <div class="col-sm-12"
+             ng-form="salesOrderCreateCtrl.forms.UserAndAccount">
+            <h1 class="mb-3"><i class="far fa-users"></i>&nbsp;<!--
+            --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.UserAndAccount"></span></h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.AccountOrUserRequired"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group"
+                         ng-class="{'has-error': salesOrderCreateCtrl.forms.UserAndAccount.taAccount.$invalid}">
+                        <label class="control-label" for="taAccount"
+                               data-translate="ui.admin.common.Account"></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control typeahead"
+                                   id="taAccount" name="taAccount"
+                                   ng-required="!salesOrderCreateCtrl.accountID && !salesOrderCreateCtrl.userID"
+                                   translate-attr="{ placeholder: 'ui.admin.controls.sales.salesOrderNewWizard.SearchAccounts.Ellipses' }"
+                                   uib-typeahead="a.ID as (a.Name + (a.CustomKey && a.CustomKey != '' ? ' [' + a.CustomKey + ']' : ''))
+                                                  for a in salesOrderCreateCtrl.grabAccounts(salesOrderCreateCtrl.accountToGrab)"
+                                   typeahead-wait-ms="500" typeahead-min-length="1" typeahead-no-results="salesOrderCreateCtrl.noAccountResults"
+                                   typeahead-loading="salesOrderCreateCtrl.loadingAccounts"
+                                   typeahead-on-select="salesOrderCreateCtrl.selectAccountFromTypeAhead($item, $model, $label, $event)"
+                                   ng-model="salesOrderCreateCtrl.accountToGrab" />
+                            <div class="input-group-addon">
+                                <i class="far fa-refresh" ng-if="salesOrderCreateCtrl.loadingAccounts"></i>
+                                <i class="far fa-times" ng-if="salesOrderCreateCtrl.noAccountResults"></i>
+                                <i class="far fa-check" ng-if="salesOrderCreateCtrl.accountID"></i>
+                                <i class="far fa-question"
+                                   ng-if="!salesOrderCreateCtrl.loadingAccounts
+                                          && !salesOrderCreateCtrl.noAccountResults
+                                          && !salesOrderCreateCtrl.accountID"></i>
+                            </div>
+                        </div>
+                        <div ng-if="salesOrderCreateCtrl.noAccountResults"
+                             data-translate="ui.admin.controls.sales.salesOrderNewWizard.NoAccountsFound"></div>
+                        <div ng-messages="salesOrderCreateCtrl.forms.UserAndAccount.taAccount.$error">
+                            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="salesOrderCreateCtrl.account">
+                        <b data-translate="ui.admin.common.ID"></b> {{salesOrderCreateCtrl.accountID}}
+                        <b data-translate="ui.admin.common.Key"></b> {{salesOrderCreateCtrl.account.CustomKey}}<br />
+                        <b data-translate="ui.admin.common.Name"></b> {{salesOrderCreateCtrl.account.Name}}<br />
+                        <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (salesOrderCreateCtrl.account.Active ? "Yes" : "No")) | translate}}
+                        <b data-translate="ui.admin.common.OnHold"></b> {{('ui.admin.common.' + (salesOrderCreateCtrl.account.IsOnHold ? "Yes" : "No")) | translate}}<br />
+                        <b data-translate="ui.admin.common.Status"></b> {{salesOrderCreateCtrl.account.StatusDisplayName || salesOrderCreateCtrl.account.StatusName}}<br />
+                        <b data-translate="ui.admin.common.Type"></b> {{salesOrderCreateCtrl.account.TypeDisplayName || salesOrderCreateCtrl.account.TypeName}}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{'has-error': salesOrderCreateCtrl.forms.UserAndAccount.taUser.$invalid}">
+                        <label class="control-label" for="taUser" data-translate="ui.admin.common.User"></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control typeahead"
+                                   id="taUser" name="taUser"
+                                   ng-required="!salesOrderCreateCtrl.accountID && !salesOrderCreateCtrl.userID"
+                                   translate-attr="{ placeholder: 'ui.admin.controls.sales.salesOrderNewWizard.SearchUsers.Ellipses' }"
+                                   uib-typeahead="u.ID as (u.ContactFirstName + ' ' + u.ContactLastName + ' [' + u.UserName + ']')
+                                                  for u in salesOrderCreateCtrl.grabUsers(salesOrderCreateCtrl.userToGrab)"
+                                   typeahead-wait-ms="500" typeahead-min-length="1" typeahead-no-results="salesOrderCreateCtrl.noUserResults"
+                                   typeahead-loading="salesOrderCreateCtrl.loadingUsers"
+                                   typeahead-on-select="salesOrderCreateCtrl.selectUserFromTypeAhead($item, $model, $label, $event)"
+                                   ng-model="salesOrderCreateCtrl.userToGrab" />
+                            <div class="input-group-addon">
+                                <i class="far fa-refresh" ng-if="salesOrderCreateCtrl.loadingUsers"></i>
+                                <i class="far fa-times" ng-if="salesOrderCreateCtrl.noUserResults"></i>
+                                <i class="far fa-check" ng-if="salesOrderCreateCtrl.userID"></i>
+                                <i class="far fa-question"
+                                   ng-if="!salesOrderCreateCtrl.loadingUsers
+                                          && !salesOrderCreateCtrl.noUserResults
+                                          && !salesOrderCreateCtrl.userID"></i>
+                            </div>
+                        </div>
+                        <div ng-if="salesOrderCreateCtrl.noUserResults"
+                             data-translate="ui.admin.controls.sales.salesOrderNewWizard.NoUsersFound"></div>
+                        <div ng-messages="salesOrderCreateCtrl.forms.UserAndAccount.taUser.$error">
+                            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="salesOrderCreateCtrl.user">
+                        <b data-translate="ui.admin.common.ID"></b> {{salesOrderCreateCtrl.userID}}
+                        <b data-translate="ui.admin.common.Key"></b> {{salesOrderCreateCtrl.user.CustomKey}}
+                        <b data-translate="ui.admin.common.Username"></b> {{salesOrderCreateCtrl.user.UserName}}<br />
+                        <b data-translate="ui.admin.common.Name"></b> {{salesOrderCreateCtrl.user.ContactFirstName}} {{salesOrderCreateCtrl.user.ContactLastName}}<br />
+                        <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (salesOrderCreateCtrl.user.Active ? "Yes" : "No")) | translate}}
+                        <b data-translate="ui.admin.common.Status"></b> {{salesOrderCreateCtrl.user.StatusDisplayName || salesOrderCreateCtrl.user.StatusName}}<br />
+                        <b data-translate="ui.admin.common.Type"></b> {{salesOrderCreateCtrl.user.TypeDisplayName || salesOrderCreateCtrl.user.TypeName}}<br />
+                        <b data-translate="ui.admin.common.Account"></b> {{salesOrderCreateCtrl.user.AccountKey || salesOrderCreateCtrl.user.Account.CustomKey || 'Unassigned'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="salesOrderCreateCtrl.userPicked"
+             class="col-sm-12"
+             ng-form="salesOrderCreateCtrl.forms.CartLineItems">
+            <h1 class="mb-3"><i class="far fa-shopping-cart"></i>&nbsp;<!--
+            --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.CartLineItems"></span></h1>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.ChooseUserSpecificCarts"></p>
+                </div>
+                <div class="col-sm-6">
+                    <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.ChangeQuantityWillUpdatePrice"></p>
+                </div>
+            </div>
+            <div class="row" ng-show="salesOrderCreateCtrl.userID">
+                <div class="form-group col-sm-4 col-md-3">
+                    <label class="control-label" for="ddlUserCart"
+                           data-translate="ui.admin.controls.sales.salesOrderNewWizard.CreateANewCartForTheUser"></label>
+                    <div class="input-group">
+                        <button type="button" class="btn btn-info"
+                                translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.CreateNewCart',
+                                                  'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.CreateNewCart' }"
+                                data-translate="ui.admin.controls.sales.salesOrderNewWizard.CreateNewCart"
+                                ng-disabled="salesOrderCreateCtrl.currentCart
+                                             && salesOrderCreateCtrl.currentCart.CustomKey.indexOf('New Cart for User') !== -1"
+                                ng-click="salesOrderCreateCtrl.createNewCart()"></button>
+                    </div>
+                </div>
+                <div class="form-group col-sm-8 col-md-9">
+                    <label class="control-label" for="ddlUserCart"
+                           data-translate="ui.admin.controls.sales.salesOrderNewWizard.SelectACartTheUserHasCreated"></label>
+                    <div class="input-group">
+                        <select class="form-control"
+                                id="ddlUserCart" name="ddlUserCart"
+                                ng-change="salesOrderCreateCtrl.loadUserCart()"
+                                ng-options="cart.ID as (cart.TypeName + ' [' + cart.ItemQuantity + ' items]' + ' [' + cart.SessionID.substring(0,6) + ']')
+                                            for cart in salesOrderCreateCtrl.userCarts
+                                            | orderBy:['-UpdatedDate','-CreatedDate']
+                                            | filter: {'ItemQuantity':'!0'}"
+                                ng-model="salesOrderCreateCtrl.currentCartID">
+                            <option value="" data-translate="ui.admin.controls.sales.salesOrderNewWizard.NewCart"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h3 ng-bind="'Cart: ' + (salesOrderCreateCtrl.currentCart.CustomKey || salesOrderCreateCtrl.currentCart.SessionID || 'No Cart')"></h3>
+                </div>
+            </div>
+            <div class="row" ng-if="salesOrderCreateCtrl.currentCart">
+                <div class="col-md-12 table-responsive" style="overflow-x: visible;">
+                    <table class="table table-striped table-hover">
+                        <colgroup>
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col style="width: 100px;" />
+                            <col style="width: 100px;" />
+                            <col style="width: 100px;" />
+                            <col />
+                            <col style="width: 100px;" />
+                            <col />
+                            <col style="width: 40px;" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th data-translate="ui.admin.common.Number.Symbol"></th>
+                                <th data-translate="ui.admin.common.ID"></th>
+                                <th data-translate="ui.admin.common.Sku"></th>
+                                <th data-translate="ui.admin.common.Name"></th>
+                                <th class="text-center" data-translate="ui.admin.common.Quantity"></th>
+                                <th class="text-center" data-translate="ui.admin.common.QuantityBackordered"></th>
+                                <th class="text-center" data-translate="ui.admin.common.QuantityPreSold"></th>
+                                <th class="text-center" data-translate="ui.admin.controls.sales.salesOrderNewWizard.Core$"></th>
+                                <th data-translate="ui.admin.controls.sales.salesOrderNewWizard.Sold$"></th>
+                                <th class="text-center" data-translate="ui.admin.controls.sales.salesOrderNewWizard.Ext$"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="scroll-over-500">
+                            <tr ng-if="!salesOrderCreateCtrl.currentCart.SalesItems.length">
+                                <td colspan="9"><p>No products have been added</p></td>
+                            </tr>
+                            <tr ng-repeat="item in salesOrderCreateCtrl.currentCart.SalesItems">
+                                <td><label class="form-control-static font-weight-normal" ng-bind="item.ID || '-'"></label></td>
+                                <td><label class="form-control-static font-weight-normal" ng-bind="item.ProductID"></label></td>
+                                <td><label class="form-control-static font-weight-normal" ng-bind="item.ProductKey"></label></td>
+                                <td><label class="form-control-static font-weight-normal" ng-bind="item.ProductName"></label></td>
+                                <td>
+                                    <input type="number" class="form-control text-right"
+                                           id="nudQuantity{{$index}}" name="nudQuantity{{$index}}"
+                                           ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="1" min="0" placeholder="1.0000"
+                                           ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                           ng-model="item.Quantity" />
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control text-right"
+                                           id="nudQuantityBackOrdered{{$index}}" name="nudQuantityBackOrdered{{$index}}"
+                                           ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="1" min="0" placeholder="1.0000"
+                                           ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                           ng-model="item.QuantityBackOrdered" />
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control text-right"
+                                           id="nudQuantityPreSold{{$index}}" name="nudQuantityPreSold{{$index}}"
+                                           ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="1" min="0" placeholder="1.0000"
+                                           ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                           ng-model="item.QuantityPreSold" />
+                                </td>
+                                <td class="text-right">
+                                    <label class="form-control-static font-weight-normal"
+                                           ng-bind="item.UnitCorePrice | currency"></label>
+                                </td>
+                                <td class="text-right">
+                                    <label class="form-control-static font-weight-normal"
+                                           ng-bind="item.UnitSoldPrice | currency"></label>
+                                    <div class="btn-group" uib-dropdown is-open="item.status.open" auto-close="outsideClick">
+                                        <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                        <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                            <div class="input-group">
+                                                <div class="input-group-addon" aria-hidden="true">
+                                                    <i class="fa"
+                                                       ng-class="{'fa-usd':item.UnitSoldPriceModifierMode == 1 || item.UnitSoldPriceModifierMode == 2,
+                                                                  'fa-percent':item.UnitSoldPriceModifierMode == 3}"></i>
+                                                </div>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudUnitSoldPrice{{$index}}Modifier" name="nudUnitSoldPrice{{$index}}Modifier"
+                                                       ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                       min="{{salesOrderCreateCtrl.itemSoldPriceModifierMin(item)}}"
+                                                       max="{{salesOrderCreateCtrl.itemSoldPriceModifierMax(item)}}"
+                                                       ng-class="{'text-red':item.UnitSoldPriceModifier < 0 && item.UnitSoldPriceModifierMode == 2}"
+                                                       ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                       ng-model="item.UnitSoldPriceModifier" />
+                                            </div>
+                                            <select class="form-control"
+                                                    id="nudUnitSoldPrice{{$index}}ModifierMode" name="nudUnitSoldPrice{{$index}}ModifierMode"
+                                                    ng-if="salesOrderCreateCtrl.subtotalModifierModes.length"
+                                                    ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                    ng-options="mode.value as mode.label
+                                                                for mode in salesOrderCreateCtrl.subtotalModifierModes"
+                                                    ng-model="item.UnitSoldPriceModifierMode">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <label class="form-control-static font-weight-normal"
+                                           ng-bind="item.ExtendedPrice | currency"></label>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-narrow btn-danger"
+                                            translate-attr="{ title: 'ui.admin.common.Remove',
+                                                              'aria-label': 'ui.admin.common.Remove' }"
+                                            ng-click="salesOrderCreateCtrl.removeCartItem(item.ID)">
+                                        <i class="far fa-times"></i><!--
+                                        --><span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" ng-if="salesOrderCreateCtrl.currentCart">
+                <div cef-cart-validator class="col-sm-12 mt-3" type="'Cart'" shift="false"></div>
+                <div class="col-md-12 table-responsive" style="overflow-x: visible;">
+                    <table class="table table-striped table-hover">
+                        <colgroup>
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="text-center" data-translate="ui.admin.common.Discount.Plural"></th>
+                                <th class="text-center" data-translate="ui.admin.common.Fee.Plural"></th>
+                                <th class="text-center" data-translate="ui.admin.common.Shipping"></th>
+                                <th class="text-center" data-translate="ui.admin.common.Handling"></th>
+                                <th class="text-center" data-translate="ui.admin.common.Tax.Plural"></th>
+                                <th class="text-center" data-translate="ui.admin.common.Subtotal"></th>
+                                <th class="text-center" data-translate="ui.admin.common.Total"></th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">
+                                    <label class="form-control-static font-weight-normal text-right"
+                                           ng-bind="salesOrderCreateCtrl.getModifiedValueByName('Discounts') | currency"></label>
+                                    <div class="btn-group" uib-dropdown is-open="salesOrderCreateCtrl.discounts.status.open" auto-close="outsideClick">
+                                        <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                        <div class="dropdown-menu p-1" uib-dropdown-menu role="menu">
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                    <td class="w-75 text-right"
+                                                        ng-bind="salesOrderCreateCtrl.currentCart.Totals.Discounts | currency"></td>
+                                                </tr>
+                                            </table>
+                                            <div class="input-group">
+                                                <div class="input-group-addon" aria-hidden="true">
+                                                    <i class="fa"
+                                                       ng-class="{'fa-usd': salesOrderCreateCtrl.currentCart.SubtotalDiscountsModifierMode == 1
+                                                                            || salesOrderCreateCtrl.currentCart.SubtotalDiscountsModifierMode == 2,
+                                                                  'fa-percent': salesOrderCreateCtrl.currentCart.SubtotalDiscountsModifierMode == 3}"></i>
+                                                </div>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudSubtotalDiscountsModifier" name="nudSubtotalDiscountsModifier"
+                                                       ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                       min="{{salesOrderCreateCtrl.getModifierMinByName('Discounts')}}"
+                                                       max="{{salesOrderCreateCtrl.getModifierMaxByName('Discounts')}}"
+                                                       ng-class="{'text-red': salesOrderCreateCtrl.currentCart.SubtotalDiscountsModifier < 0
+                                                                              && salesOrderCreateCtrl.currentCart.SubtotalDiscountsModifierMode == 2}"
+                                                       ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                       ng-model="salesOrderCreateCtrl.currentCart.SubtotalDiscountsModifier" />
+                                            </div>
+                                            <select class="form-control"
+                                                    id="nudSubtotalDiscountsModifierMode" name="nudSubtotalDiscountsModifierMode"
+                                                    ng-if="salesOrderCreateCtrl.subtotalModifierModes.length"
+                                                    ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                    ng-options="mode.value as mode.label for mode in salesOrderCreateCtrl.subtotalModifierModes"
+                                                    ng-model="salesOrderCreateCtrl.currentCart.SubtotalDiscountsModifierMode">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <label class="form-control-static font-weight-normal text-right"
+                                           ng-bind="salesOrderCreateCtrl.getModifiedValueByName('Fees') | currency"></label>
+                                    <div class="btn-group" uib-dropdown is-open="salesOrderCreateCtrl.fees.status.open" auto-close="outsideClick">
+                                        <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                        <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                    <td class="w-75 text-right"
+                                                        ng-bind="salesOrderCreateCtrl.currentCart.Totals.Fees | currency"></td>
+                                                </tr>
+                                            </table>
+                                            <div class="input-group">
+                                                <div class="input-group-addon" aria-hidden="true">
+                                                    <i class="fa"
+                                                       ng-class="{'fa-usd': salesOrderCreateCtrl.currentCart.SubtotalFeesModifierMode == 1
+                                                                            || salesOrderCreateCtrl.currentCart.SubtotalFeesModifierMode == 2,
+                                                                  'fa-percent': salesOrderCreateCtrl.currentCart.SubtotalFeesModifierMode == 3 }"></i>
+                                                </div>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudSubtotalFeesModifier" name="nudSubtotalFeesModifier"
+                                                       ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                       min="{{salesOrderCreateCtrl.getModifierMinByName('Fees')}}"
+                                                       max="{{salesOrderCreateCtrl.getModifierMaxByName('Fees')}}"
+                                                       ng-class="{'text-red': salesOrderCreateCtrl.currentCart.SubtotalFeesModifier < 0
+                                                                              && salesOrderCreateCtrl.currentCart.SubtotalFeesModifierMode == 2}"
+                                                       ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                       ng-model="salesOrderCreateCtrl.currentCart.SubtotalFeesModifier" />
+                                            </div>
+                                            <select class="form-control"
+                                                    id="nudSubtotalFeesModifierMode" name="nudSubtotalFeesModifierMode"
+                                                    ng-if="salesOrderCreateCtrl.subtotalModifierModes.length"
+                                                    ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                    ng-options="mode.value as mode.label for mode in salesOrderCreateCtrl.subtotalModifierModes"
+                                                    ng-model="salesOrderCreateCtrl.currentCart.SubtotalFeesModifierMode">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <label class="form-control-static font-weight-normal text-right"
+                                           ng-bind="salesOrderCreateCtrl.getModifiedValueByName('Shipping') | currency"></label>
+                                    <div class="btn-group" uib-dropdown is-open="salesOrderCreateCtrl.shipping.status.open" auto-close="outsideClick">
+                                        <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                        <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                    <td class="w-75 text-right"
+                                                        ng-bind="salesOrderCreateCtrl.currentCart.Totals.Shipping | currency"></td>
+                                                </tr>
+                                            </table>
+                                            <div class="input-group">
+                                                <div class="input-group-addon" aria-hidden="true">
+                                                    <i class="fa"
+                                                       ng-class="{'fa-usd': salesOrderCreateCtrl.currentCart.SubtotalShippingModifierMode == 1
+                                                                            || salesOrderCreateCtrl.currentCart.SubtotalShippingModifierMode == 2,
+                                                                  'fa-percent': salesOrderCreateCtrl.currentCart.SubtotalShippingModifierMode == 3 }"></i>
+                                                </div>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudSubtotalShippingModifier" name="nudSubtotalShippingModifier"
+                                                       ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                       min="{{salesOrderCreateCtrl.getModifierMinByName('Shipping')}}"
+                                                       max="{{salesOrderCreateCtrl.getModifierMaxByName('Shipping')}}"
+                                                       ng-class="{'text-red': salesOrderCreateCtrl.currentCart.SubtotalShippingModifier < 0
+                                                                              && salesOrderCreateCtrl.currentCart.SubtotalShippingModifierMode == 2}"
+                                                       ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                       ng-model="salesOrderCreateCtrl.currentCart.SubtotalShippingModifier" />
+                                            </div>
+                                            <select class="form-control"
+                                                    id="nudSubtotalShippingModifierMode" name="nudSubtotalShippingModifierMode"
+                                                    ng-if="salesOrderCreateCtrl.subtotalModifierModes.length"
+                                                    ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                    ng-options="mode.value as mode.label for mode in salesOrderCreateCtrl.subtotalModifierModes"
+                                                    ng-model="salesOrderCreateCtrl.currentCart.SubtotalShippingModifierMode">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <label class="form-control-static font-weight-normal text-right"
+                                           ng-bind="salesOrderCreateCtrl.getModifiedValueByName('Handling') | currency"></label>
+                                    <div class="btn-group" uib-dropdown is-open="salesOrderCreateCtrl.handling.status.open" auto-close="outsideClick">
+                                        <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                        <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                    <td class="w-75 text-right"
+                                                        ng-bind="salesOrderCreateCtrl.currentCart.Totals.Handling | currency"></td>
+                                                </tr>
+                                            </table>
+                                            <div class="input-group">
+                                                <div class="input-group-addon" aria-hidden="true">
+                                                    <i class="fa"
+                                                       ng-class="{'fa-usd': salesOrderCreateCtrl.currentCart.SubtotalHandlingModifierMode == 1
+                                                                            || salesOrderCreateCtrl.currentCart.SubtotalHandlingModifierMode == 2,
+                                                                  'fa-percent': salesOrderCreateCtrl.currentCart.SubtotalHandlingModifierMode == 3 }"></i>
+                                                </div>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudSubtotalHandlingModifier" name="nudSubtotalHandlingModifier"
+                                                       ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                       min="{{salesOrderCreateCtrl.getModifierMinByName('Handling')}}"
+                                                       max="{{salesOrderCreateCtrl.getModifierMaxByName('Handling')}}"
+                                                       ng-class="{'text-red':salesOrderCreateCtrl.currentCart.SubtotalHandlingModifier < 0
+                                                                             && salesOrderCreateCtrl.currentCart.SubtotalHandlingModifierMode == 2}"
+                                                       ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                       ng-model="salesOrderCreateCtrl.currentCart.SubtotalHandlingModifier" />
+                                            </div>
+                                            <select class="form-control"
+                                                    id="nudSubtotalHandlingModifierMode" name="nudSubtotalHandlingModifierMode"
+                                                    ng-if="salesOrderCreateCtrl.subtotalModifierModes.length"
+                                                    ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                    ng-options="mode.value as mode.label for mode in salesOrderCreateCtrl.subtotalModifierModes"
+                                                    ng-model="salesOrderCreateCtrl.currentCart.SubtotalHandlingModifierMode">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <label class="form-control-static font-weight-normal text-right"
+                                           ng-bind="salesOrderCreateCtrl.getModifiedValueByName('Tax') | currency"></label>
+                                    <div class="btn-group" uib-dropdown is-open="salesOrderCreateCtrl.tax.status.open" auto-close="outsideClick">
+                                        <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                        <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                    <td class="w-75 text-right"
+                                                        ng-bind="salesOrderCreateCtrl.currentCart.Totals.Tax | currency"></td>
+                                                </tr>
+                                            </table>
+                                            <div class="input-group">
+                                                <div class="input-group-addon" aria-hidden="true">
+                                                    <i class="fa"
+                                                       ng-class="{'fa-usd': salesOrderCreateCtrl.currentCart.SubtotalTaxesModifierMode == 1
+                                                                            || salesOrderCreateCtrl.currentCart.SubtotalTaxesModifierMode == 2,
+                                                                  'fa-percent': salesOrderCreateCtrl.currentCart.SubtotalTaxesModifierMode == 3 }"></i>
+                                                </div>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudSubtotalTaxesModifier" name="nudSubtotalTaxesModifier"
+                                                       ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                       min="{{salesOrderCreateCtrl.getModifierMinByName('Tax')}}"
+                                                       max="{{salesOrderCreateCtrl.getModifierMaxByName('Tax')}}"
+                                                       ng-class="{'text-red': salesOrderCreateCtrl.currentCart.SubtotalTaxesModifier < 0
+                                                                              && salesOrderCreateCtrl.currentCart.SubtotalTaxesModifierMode == 2}"
+                                                       ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                       ng-model="salesOrderCreateCtrl.currentCart.SubtotalTaxesModifier" />
+                                            </div>
+                                            <select class="form-control"
+                                                    id="nudSubtotalTaxesModifierMode" name="nudSubtotalTaxesModifierMode"
+                                                    ng-if="salesOrderCreateCtrl.subtotalModifierModes.length"
+                                                    ng-change="salesOrderCreateCtrl.updateCurrentCartTotals()"
+                                                    ng-options="mode.value as mode.label for mode in salesOrderCreateCtrl.subtotalModifierModes"
+                                                    ng-model="salesOrderCreateCtrl.currentCart.SubtotalTaxesModifierMode">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <label class="form-control-static font-weight-normal text-right"
+                                           ng-bind="salesOrderCreateCtrl.currentCart.Totals.SubTotal | currency"></label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="form-control-static font-weight-normal text-right"
+                                           ng-bind="salesOrderCreateCtrl.currentCart.Totals.Total | currency"></label>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-block btn-info"
+                                            data-translate="ui.admin.controls.sales.salesOrderNewWizard.UpdateCart"
+                                            ng-click="salesOrderCreateCtrl.updateCart()"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" ng-if="salesOrderCreateCtrl.currentCart">
+                <div class="col-md-12">
+                    <uib-tabset justified="true">
+                        <uib-tab heading="{{'Find Products to Add' | translate}}">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-12 pt-3">
+                                        <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectProductsToAdd"></h4>
+                                        <div cef-paging-header paging="salesOrderCreateCtrl.productPaging"></div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover table-condensed mb-1">
+                                                <colgroup>
+                                                    <col class="w-5" />
+                                                    <col class="w-30" />
+                                                    <col class="w-45" />
+                                                    <col class="w-10" />
+                                                    <col class="w-10" />
+                                                    <col style="width:43px;" />
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                        <th data-translate="ui.admin.common.Key"></th>
+                                                        <th data-translate="ui.admin.common.Name"></th>
+                                                        <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.DefaultListBase"></th>
+                                                        <th class="text-center" data-translate="ui.admin.common.SalePrice"></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-show="salesOrderCreateCtrl.productPaging.filteredCount === 0">
+                                                        <td colspan="6" data-translate="No Results"></td>
+                                                    </tr>
+                                                    <tr ng-repeat="p in salesOrderCreateCtrl.productPaging.filteredData[salesOrderCreateCtrl.productPaging.currentPage]
+                                                                   | orderBy: ['Name','CustomKey','ID']
+                                                                   | limitTo: salesOrderCreateCtrl.productPaging.pageSize
+                                                                            : salesOrderCreateCtrl.productPaging.skip()">
+                                                        <td class="p-1"><label class="w-100 font-weight-normal form-control-static text-right"
+                                                                               ng-bind="p.ID"></label></td>
+                                                        <td class="p-1"><label class="w-100 font-weight-normal form-control-static"
+                                                                               ng-bind="p.CustomKey"></label></td>
+                                                        <td class="p-1"><label class="w-100 font-weight-normal form-control-static"
+                                                                               ng-bind="p.Name"></label></td>
+                                                        <td class="p-1"><label class="w-100 font-weight-normal form-control-static text-right"
+                                                                               ng-bind="p.readPrices().base | globalizedCurrency"></label></td>
+                                                        <td class="p-1"><label class="w-100 font-weight-normal form-control-static text-right"
+                                                                               ng-bind="p.readPrices().sale | globalizedCurrency"></label></td>
+                                                        <td class="p-1">
+                                                            <button type="button" class="btn btn-success"
+                                                                    translate-attr="{ title: 'ui.admin.common.AddToCart',
+                                                                                      'aria-label': 'ui.admin.common.AddToCart' }"
+                                                                    ng-click="salesOrderCreateCtrl.addProduct(p.ID)">
+                                                                <i class="far fa-cart-plus"></i>
+                                                                <span class="sr-only" data-translate="ui.admin.common.AddToCart"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="{{'Review Discounts' | translate}}">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-sm-12 pt-3"><h4 data-translate="ui.admin.common.Discount.PluralApplied"></h4></div>
+                                    <div class="form-group col-sm-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control"
+                                                   id="txtDiscountCode" name="txtDiscountCode"
+                                                   translate-attr="{ placeholder: 'Enter a Discount Code...' }"
+                                                   ng-model="salesOrderCreateCtrl.NewDiscountCode" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-info"
+                                                        translate-attr="{ title: 'ui.admin.common.Apply',
+                                                                          'aria-label': 'ui.admin.common.Apply' }"
+                                                        data-translate="ui.admin.common.Apply"
+                                                        ng-click="salesOrderCreateCtrl.applyDiscountCode()"></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" ng-if="!salesOrderCreateCtrl.discountItems.length">
+                                        <p data-translate="ui.admin.common.NoDiscountsApplied"></p>
+                                    </div>
+                                    <div class="col-sm-12" ng-if="salesOrderCreateCtrl.discountItems.length">
+                                        <kendo-grid
+                                            k-data-source="salesOrderCreateCtrl.discountItems"
+                                            k-rebind="salesOrderCreateCtrl.discountItems"
+                                            k-options="salesOrderCreateCtrl.discountGridConfiguration">
+                                        </kendo-grid>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+        </div>
+        <div ng-if="salesOrderCreateCtrl.userPicked && salesOrderCreateCtrl.cartPicked"
+             class="col-sm-12">
+            <div cef-checkout
+                 current-cart-id="salesOrderCreateCtrl.currentCart.ID"
+                 user-id="salesOrderCreateCtrl.userID"
+                 type="salesOrderCreateCtrl.currentCart.TypeName">
+            </div>
+        </div>
+    </div>
+    <div class="row wizard-footer">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-info"
+                    ng-disabled="!salesOrderCreateCtrl.user || salesOrderCreateCtrl.userPicked"
+                    ng-click="salesOrderCreateCtrl.continueWithUser()">
+                Pick this User
+            </button>
+            <button type="button" class="btn btn-info"
+                    ng-disabled="!salesOrderCreateCtrl.currentCart || !salesOrderCreateCtrl.userPicked || salesOrderCreateCtrl.cartPicked"
+                    ng-click="salesOrderCreateCtrl.continueWithCart()">
+                Pick this Cart
+            </button>
+            <!--
+            <button type="button" class="btn btn-info"
+                    translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.PreviousStep',
+                                      'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.PreviousStep' }"
+                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.PreviousStep"
+                    ng-disabled="salesOrderCreateCtrl.viewState.running
+                                 || salesOrderCreateCtrl.currentStep <= 0"
+                    ng-click="salesOrderCreateCtrl.prevStepGo()"></button>
+            <button type="button" class="btn btn-warning"
+                    translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.ResetStep',
+                                      'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.ResetStep' }"
+                    ng-disabled="salesOrderCreateCtrl.viewState.running"
+                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.ResetStep"
+                    ng-click="salesOrderCreateCtrl.resetStep()"></button>
+            <button type="button" class="btn btn-primary"
+                    translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.NextStep',
+                                      'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.NextStep' }"
+                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.NextStep"
+                    ng-disabled="salesOrderCreateCtrl.viewState.running
+                                 || salesOrderCreateCtrl.currentStep >= (salesOrderCreateCtrl.stepDefinitions.length - 1)
+                                 || !salesOrderCreateCtrl.validateCurrentStep()"
+                    ng-click="salesOrderCreateCtrl.nextStepGo()"></button>
+            <div class="inline-block ml-3">
+                <div class="w-100 alert alert-info" role="alert"
+                     ng-if="salesOrderCreateCtrl.viewState.running"
+                     ng-bind="salesOrderCreateCtrl.viewState.waitMessage || 'Running...'"></div>
+                <div class="w-100 alert alert-danger" role="alert"
+                     ng-if="salesOrderCreateCtrl.viewState.hasError
+                            && !salesOrderCreateCtrl.viewState.errorMessages.length"
+                     ng-bind="salesOrderCreateCtrl.viewState.errorMessage || 'There was an error!'"></div>
+                <div class="w-100 alert alert-danger" role="alert"
+                     ng-if="salesOrderCreateCtrl.viewState.hasError"
+                     ng-repeat="s in salesOrderCreateCtrl.viewState.errorMessages"
+                     ng-bind="s || 'There was an error!'"></div>
+            </div>
+            -->
+        </div>
+    </div>
+</div>

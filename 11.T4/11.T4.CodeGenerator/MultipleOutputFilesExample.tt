@@ -1,0 +1,9 @@
+﻿<#@ template debug="true" hostSpecific="true" language="C#" #><#@
+output extension=".cs" #><#@
+include file="TemplateFileManagerV2.1.ttinclude" #><#
+var manager = TemplateFileManager.Create(this);
+#>
+// This file
+<# manager.StartNewFile("Outputfile2.txt"); #>
+// Other file
+<# manager.Process(); #>

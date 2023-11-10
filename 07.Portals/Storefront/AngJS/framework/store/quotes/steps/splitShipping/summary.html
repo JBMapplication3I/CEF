@@ -1,0 +1,20 @@
+<!-- step.splitShipping.summary Template -->
+<div class="row">
+  <div class="col-12 sm-text-right md-text-right lg-text-right"
+    ng-if="sqssssCtrl.sameAsBilling">
+    <h5 class="text-success" data-translate="Same as Billing"></h5>
+  </div>
+  <div class="col-12 sm-text-right md-text-right lg-text-right"
+    ng-if="!sqssssCtrl.sameAsBilling
+      && sqssssCtrl.currentAccountContact.Slave">
+    <div cef-contact-address-block
+      contact="sqssssCtrl.currentAccountContact.Slave"
+      small-text="true"
+      hide-icons="true"
+      hide-phones="true"
+      hide-email="true"
+      hide-fax="true"
+      class="mb-3">
+    </div>
+  </div>
+</div>

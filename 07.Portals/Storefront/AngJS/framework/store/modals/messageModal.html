@@ -1,0 +1,23 @@
+<div class="modal-header bg-dark text-light">
+    <h5 class="modal-title" data-translate="{{messageModalCtrl.headerKey}}"></h5>
+    <button type="button" class="close"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="messageModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body">
+    <div id="messageModalLabel"
+         ng-bind-html="messageModalCtrl.displayMessage">
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary"
+            id="btnMessageModalOk" name="btnMessageModalOk"
+            translate-attr="{ title: messageModalCtrl.okKey,
+                              'aria-label': messageModalCtrl.okKey }"
+            data-translate="{{messageModalCtrl.okKey}}"
+            ng-click="messageModalCtrl.cancel()"></button>
+</div>

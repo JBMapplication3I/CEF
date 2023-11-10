@@ -1,0 +1,735 @@
+﻿<div class="row"
+  ng-if="!productDetailsCtrl.productToDisplay || productDetailsCtrl.viewState.running">
+  <div cef-loading-widget
+    overlay="true"
+    message="productDetailsCtrl.viewState.waitMessage">
+  </div>
+</div>
+<div ng-switch="productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value"
+  id="{{productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value}}_template">
+  <!-- Clothing Template -->
+  <div ng-if="productDetailsCtrl.productToDisplay" ng-switch-when="Clothing" class="mt-5">
+    <div class="row cef-product-view"
+      ng-if="productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value"
+      ng-class="{'template-clothing' : productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value == 'Clothing'}">
+      <div class="col-12 col-md-6 mb-3"
+        cef-product-images>
+      </div>
+      <div class="col-12 col-md-6 mb-3">
+        <div class="row">
+          <div class="col-12">
+            <div cef-product-details-breadcrumb
+              product="productDetailsCtrl.productToDisplay"
+              last-item="{{productDetailsCtrl.productToDisplay.Name}}">
+            </div>
+          </div>
+        </div>
+        <h1 id="productName"
+          class="cef-product-title mt-0"
+          ng-bind="productDetailsCtrl.productToDisplay.Name">
+        </h1>
+        <hr />
+        <div class="row">
+          <div class="col-12 cef-product-info">
+            <div ng-if="productDetailsCtrl.cefConfig.featureSet.reviews.enabled"
+              class="cef-ratings w-100 mb-3">
+              <div cef-rating-summary
+                value="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Value"
+                count="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Count"
+                scale="5">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12"
+                cef-product-price
+                product="productDetailsCtrl.productToDisplay">
+              </div>
+              <div class="col-12"
+                cef-product-stock
+                product="productDetailsCtrl.productToDisplay">
+              </div>
+              <div ng-if="productDetailsCtrl.productVariants.length"
+                class="col-12"
+                cef-product-variants-table
+                master-controller="productDetailsCtrl">
+              </div>
+              <div ng-if="productDetailsCtrl.productVariants.length"
+                class="col-12"
+                cef-product-variant-swatches
+                product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+                product-variants="productDetailsCtrl.productVariants">
+              </div>
+              <div class="col-12"
+                cef-product-short-description
+                product="productDetailsCtrl.productToDisplay">
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <div class="row">
+              <div class="col-12 mb-3"
+                cef-product-buy-block
+                product-to-display="productDetailsCtrl.productToDisplay"
+                product-which-is-the-master="productDetailsCtrl.productWhichIsTheMaster"
+                product-which-is-the-current-variant="productDetailsCtrl.productWhichIsTheCurrentVariant"
+                product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+                product-variants="productDetailsCtrl.productVariants"
+                quantity-for-add-to-cart="productDetailsCtrl.quantityForAddToCart"
+                get-serializable-attributes="productDetailsCtrl.getSerializableAttributes">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12"
+                cef-product-actions-group
+                product="productDetailsCtrl.productToDisplay"
+                store-product="productDetailsCtrl.storeProduct">
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <span>categories: </span>
+            <span ng-repeat="category in productDetailsCtrl.productToDisplay.Categories
+                | orderBy: 'SlaveName'
+                | uniqueArray: 'SlaveName'">
+              {{category.SlaveName}}{{$last ? '' : ', '}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div ng-if="productDetailsCtrl.productToDisplay.TypeKey === 'VARIANT-KIT'
+        || productDetailsCtrl.productToDisplay.TypeKey === 'KIT'"
+        class="col-12 mb-3"
+        cef-product-kit-components>
+      </div>
+      <div class="col-12 mb-3"
+        cef-product-tabs
+        product="productDetailsCtrl.productToDisplay">
+      </div>
+      <div class="col-12"
+        related-products-list
+        ng-if="$parent.$parent.$parent.productDetailsCtrl.productWhichIsTheMaster.ProductAssociations.length"
+        products="$parent.$parent.$parent.productDetailsCtrl.productWhichIsTheMaster.ProductAssociations"
+        type="Related Product"
+        size="4"
+        template="productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value">
+      </div>
+    </div>
+  </div>
+  <!-- RecentlyViewed Template -->
+  <div ng-if="productDetailsCtrl.productToDisplay" ng-switch-when="RecentlyViewed">
+    <div class="row">
+      <div class="col-12">
+        <div cef-product-details-breadcrumb
+          product="productDetailsCtrl.productToDisplay"
+          last-item="{{productDetailsCtrl.productToDisplay.Name}}">
+        </div>
+      </div>
+    </div>
+    <div class="row cef-product-view">
+      <div class="col-12 col-xl-9">
+        <div class="row">
+          <div class="col-12 col-md-4 mb-3 text-center"
+            cef-product-images>
+          </div>
+          <div class="col-12 col-md-8 mb-3">
+            <h1 ng-if="productDetailsCtrl.previewMode"
+              id="isPreview" class="text-danger">
+              This is a Preview of a version of this data and not
+              reflective of what is live on the website.
+            </h1>
+            <h1 id="productName changed"
+              class="cef-product-title mt-0"
+              ng-bind="productDetailsCtrl.productToDisplay.Name">
+            </h1>
+            <hr />
+            <div class="row">
+              <div class="col-md-6 cef-product-info">
+                <div ng-if="productDetailsCtrl.cefConfig.featureSet.reviews.enabled"
+                  class="cef-ratings w-100 mb-3">
+                  <div cef-rating-summary
+                    value="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Value"
+                    count="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Count"
+                    scale="5">
+                  </div>
+                </div>
+                <!--shareThis start
+                <div class="w-100">
+                  <div class="sharethis-inline-share-buttons"></div>
+                  <hr class="mt-3 mb-1" />
+                </div>
+                shareThis end-->
+                <div class="row">
+                  <div class="col-12"
+                    cef-product-price
+                    product="productDetailsCtrl.productToDisplay">
+                  </div>
+                  <div class="col-12"
+                    cef-product-stock
+                    product="productDetailsCtrl.productToDisplay">
+                  </div>
+                  <div class="col-12"
+                    cef-product-common-data
+                    product="productDetailsCtrl.productToDisplay">
+                  </div>
+                  <div ng-if="productDetailsCtrl.productVariants.length"
+                    class="col-12"
+                    cef-product-variants-table
+                    master-controller="productDetailsCtrl">
+                  </div>
+                  <div ng-if="productDetailsCtrl.productVariants.length"
+                    class="col-12"
+                    cef-product-variant-swatches
+                    product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+                    product-variants="productDetailsCtrl.productVariants">
+                  </div>
+                  <div class="col-12">
+                    <hr />
+                  </div>
+                  <div class="col-12"
+                    cef-product-short-description
+                    product="productDetailsCtrl.productToDisplay">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-12 mb-3"
+                    cef-product-buy-block
+                    product-to-display="productDetailsCtrl.productToDisplay"
+                    product-which-is-the-master="productDetailsCtrl.productWhichIsTheMaster"
+                    product-which-is-the-current-variant="productDetailsCtrl.productWhichIsTheCurrentVariant"
+                    product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+                    product-variants="productDetailsCtrl.productVariants"
+                    quantity-for-add-to-cart="productDetailsCtrl.quantityForAddToCart"
+                    get-serializable-attributes="productDetailsCtrl.getSerializableAttributes">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12"
+                    cef-product-actions-group
+                    product="productDetailsCtrl.productToDisplay"
+                    store-product="productDetailsCtrl.storeProduct">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-3"
+            cef-product-tabs
+            product="productDetailsCtrl.productToDisplay">
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-xl-3">
+        <div class="row">
+          <div class="col-12 mb-3 rounded"
+            recently-viewed-products-list
+            size="6"
+            template="{{productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value}}">
+          </div>
+          <div class="col-12 mt-5 mb-3 rounded"
+            cef-featured-products
+            template="{{productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value}}"
+            category-id="productDetailsCtrl.productToDisplay.Categories[0].MasterID"
+            featured-product-name="{{$parent.$parent.$parent.productDetailsCtrl.productToDisplay.ProductCategories[0].CategoryName}}">
+          </div>
+        </div>
+      </div>
+      <div class="col-12"
+        related-products-list
+        ng-if="$parent.$parent.$parent.productDetailsCtrl.productWhichIsTheMaster.ProductAssociations.length"
+        products="$parent.$parent.$parent.productDetailsCtrl.productWhichIsTheMaster.ProductAssociations"
+        type="Related Product"
+        size="4"
+        template="productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value">
+      </div>
+    </div>
+  </div>
+  <!-- Static Headphone Template: TODO Make this Dynamic Information -->
+  <div ng-if="productDetailsCtrl.productToDisplay" ng-switch-when="StaticHeadphone">
+    <link rel="stylesheet" href="/Portals/_default/Skins/SALES/css/bootstrap-static.css" />
+    <link rel="stylesheet" href="/Portals/_default/Skins/SALES/css/style.css" />
+    <div id="wrapper">
+      <main id="main" class="headphone" role="main">
+        <section class="section-jumbotron jumbotron">
+          <div class="container">
+            <div class="jumbotron-box d-lg-flex align-items-start">
+              <div class="slider-box">
+                <div class="slider">
+                  <div class="slide"
+                    ng-repeat="image in $parent.$parent.productDetailsCtrl.productToDisplay.Images">
+                    <img ng-src="{{image.OriginalFileName | corsImageLink : 'products'}}" alt="{{image.Name}}" />
+                  </div>
+                </div>
+              </div>
+              <div class="description-box">
+                <div class="description">
+                  <header class="header-description">
+                    <div class="row">
+                      <div class="col-12 col-md-6">
+                        <h1 class="title mb-0"
+                          ng-bind="productDetailsCtrl.productToDisplay.Name">
+                        </h1>
+                        <span class="subtitle text-uppercase"
+                          ng-bind="productDetailsCtrl.productToDisplay.SerializableAttributes['Model #'].Value">
+                        </span>
+                      </div>
+                      <div class="col-12 col-md-6"
+                        cef-product-buy-block
+                        product-to-display="productDetailsCtrl.productToDisplay"
+                        product-which-is-the-master="productDetailsCtrl.productWhichIsTheMaster"
+                        product-which-is-the-current-variant="productDetailsCtrl.productWhichIsTheCurrentVariant"
+                        product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+                        product-variants="productDetailsCtrl.productVariants"
+                        quantity-for-add-to-cart="productDetailsCtrl.quantityForAddToCart"
+                        get-serializable-attributes="productDetailsCtrl.getSerializableAttributes">
+                      </div>
+                    </div>
+                  </header>
+                  <div class="description-wrap">
+                    <div class="holder d-flex justify-content-between">
+                      <div class="length-box">
+                        <span class="text text-uppercase">Cord Length</span>
+                        <ul class="list-unstyled lenght-list d-flex">
+                          <li class="item"><a href="#">6'</a></li>
+                          <li class="item"><a href="#">8'</a></li>
+                          <li class="item"><a class="active" href="#">12'</a></li>
+                          <li class="item"><a href="#">16'</a></li>
+                          <li class="item"><a href="#">20'</a></li>
+                        </ul>
+                      </div>
+                      <div cef-product-price
+                        product="productDetailsCtrl.productToDisplay"
+                        single="true">
+                      </div>
+                    </div>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section-text">
+          <div class="container">
+            <div class="row flex-md-row-reverse align-items-md-center">
+              <div class="col-12 col-md-6 text-center">
+                <img src="/images/ecommerce/Product/images/img02.png" alt="images deskription" />
+              </div>
+              <div class="col-12 col-md-6">
+                <header class="head-text">
+                  <h1 class="title"><mark>M</mark>usic like you’ve never heard it</h1>
+                </header>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                  aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section-studio"
+          style="background-image: url(/images/ecommerce/Product/images/img-04.png)">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="studio-box" style="background-image: url(/images/ecommerce/Product/images/img03.jpg)">
+                  <div class="position-box d-flex align-items-center">
+                    <div class="play-btn"><a class="icon-icon06" data-fancybox href="https://www.youtube.com/watch?v=_sI_Ps7JSEk"></a></div>
+                    <div class="text"><span class="suptitle">watch</span><strong class="title">In the Studio</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section-similar">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-lg-6">
+                <header class="head-text">
+                  <h1 class="title"><mark>S</mark>imilar Headphones</h1>
+                </header>
+                <div class="text">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
+                  </p>
+                  <a class="arrow-link"
+                    ui-sref-plus uisrp-is-catalog="true"
+                    uisrp-state="searchCatalog.products.results.both"
+                    uisrp-params="{
+                      'category': 'Audio|Electronics_Audio',
+                      'term': null,
+                      'categoriesAny': null,
+                      'categoriesAll': null,
+                      'attributesAny': null,
+                      'attributesAll': null,
+                      'pricingRanges': null
+                    }">
+                    Shop Full Collection<i class="icon-icon05"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="col-12 col-lg-6">
+                <div class="similar-box">
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <a ui-sref-plus uisrp-is-product="true"
+                        uisrp-path="audeze-LCD-X-studio-headphones">
+                      <div class="card">
+                        <div class="card-img-top"><img class="shadow-img" src="/images/ecommerce/Product/images/img05.png" alt="images description" /></div>
+                        <div class="card-body">
+                          <div class="card-header d-flex align-items-center justify-content-between">
+                            <div class="text">
+                              <h5 class="card-title"><span>Doueppler</span></h5>
+                              <span class="similar-description">DPD-20X74</span>
+                            </div>
+                            <div class="arrow"><span class="arrow-link"><i class="icon-icon05"></i></span></div>
+                          </div>
+                        </div>
+                      </div>
+                      </a>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <a ui-sref-plus uisrp-is-product="true"
+                        uisrp-path="strybridge-susvara-audiophile-headphones">
+                        <div class="card">
+                          <div class="card-img-top"><img src="/images/ecommerce/Product/images/img06.png" alt="images description"></div>
+                          <div class="card-body">
+                            <div class="card-header d-flex align-items-center justify-content-between">
+                              <div class="text">
+                                <h5 class="card-title"><span>Susvara</span></h5><span class="similar-description">Strybridge&reg;</span>
+                              </div>
+                              <div class="arrow"><span class="arrow-link"><i class="icon-icon05"></i></span></div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section-look">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="text-box">
+                  <header class="head-text">
+                    <h1 class="title"><mark>T</mark>ake a Closer Look</h1>
+                  </header>
+                  <div class="box-list">
+                    <div class="list">
+                      <div class="item" data-index="0"><a class="opener" href="#">Hand-stiched leather</a>
+                        <div class="box">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                      <div class="item" data-index="1"><a class="opener" href="#">Gold-plated finishes</a>
+                        <div class="box">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                      <div class="item" data-index="2"><a class="opener" href="#">Touch Sensor Technology</a>
+                        <div class="box">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                      <div class="item" data-index="3"><a class="opener" href="#">Custom Multi-Port</a>
+                        <div class="box">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                      <div class="item" data-index="4"><a class="opener" href="#">Noise Cancelling</a>
+                        <div class="box">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                      <div class="item" data-index="5"><a class="opener" href="#">Bluetooth Compatibility</a>
+                        <div class="box">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="img-box w-100 text-center">
+                  <div class="blurred-img"
+                    ng-repeat="image in $parent.$parent.productDetailsCtrl.productToDisplay.Images | limitTo : 1">
+                    <img ng-src="{{image.OriginalFileName | corsImageLink : 'products'}}" alt="{{image.Name}}" />
+                  </div>
+                  <div class="descr-tooltip"
+                    ng-repeat="image in $parent.$parent.productDetailsCtrl.productToDisplay.Images | limitTo : 1">
+                    <img src="/images/ecommerce/Product/images/img01.png" alt="{{image.Name}}">
+                  </div>
+                  <div class="pin" data-index="0"><a href="#"></a></div>
+                  <div class="pin" data-index="1"><a href="#"></a></div>
+                  <div class="pin" data-index="2"><a href="#"></a></div>
+                  <div class="pin" data-index="3"><a href="#"></a></div>
+                  <div class="pin" data-index="4"><a href="#"></a></div>
+                  <div class="pin" data-index="5"><a href="#"></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section-creator">
+          <div class="container">
+            <div class="creator-holder"
+              style="background-image: linear-gradient(153deg, #0e0f1b 0%, #1f2132 100%);">
+              <div class="row justify-content-between align-items-center">
+                <div class="col-12 col-md-5">
+                  <div class="image-box">
+                    <img src="/images/ecommerce/Product/images/img08.jpg" alt="images description" />
+                    <strong class="name-transform">Aubrey<br />Whittingham</strong>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="contain-box">
+                    <header class="head-text">
+                      <h1 class="title"><mark>M</mark>eet The Creator</h1>
+                    </header>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
+                    </p>
+                    <a class="arrow-link" href="#">Watch Interview <i class="icon-icon05"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="/Portals/_default/Skins/SALES/js/jquery.main.static.js"></script>
+  </div>
+  <!-- Shoes Template -->
+  <div ng-if="productDetailsCtrl.productToDisplay" ng-switch-when="Shoes">
+    <div class="row">
+      <div class="col-12">
+        <div cef-product-details-breadcrumb
+          product="productDetailsCtrl.productToDisplay"
+          last-item="{{productDetailsCtrl.productToDisplay.Name}}">
+        </div>
+      </div>
+    </div>
+    <div class="modal fade p-0" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog m-0" role="document" style="width: 100vw; max-width: 100vw; text-align: center;">
+        <div class="modal-content">
+          <div class="row">
+            <div class="col-12"
+              ng-repeat="image in productDetailsCtrl.productToDisplay.Images | filter: { $: 'PRODUCT-IMAGE' }">
+              <image class="img-fluid"
+                data-toggle="modal" data-target="#exampleModal"
+                style="width: 100%;"
+                alt="{{image.Name}}"
+                ng-src="{{image.OriginalFileName | corsImageLink}}"
+                onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both'"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row cef-product-view">
+      <div class="col-12 col-md-8 mb-3">
+        <div class="row">
+          <div class="col-12 col-md-6 p-1"
+            ng-repeat="image in productDetailsCtrl.productToDisplay.Images | filter: { $: 'PRODUCT-IMAGE' }">
+            <image class="img-fluid"
+              data-toggle="modal" data-target="#exampleModal"
+              alt="{{image.Name}}"
+              ng-src="{{image.OriginalFileName | corsImageLink}}"
+              onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both'"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 mb-3">
+        <div class="row">
+          <div class="col-12">
+            <h3 id="productName"
+              class="cef-product-title mt-0"
+              ng-bind="productDetailsCtrl.productToDisplay.Name">
+            </h3>
+          </div>
+          <div class="col-12 my-2"
+            cef-product-price
+            product="productDetailsCtrl.productToDisplay"
+            single="true">
+          </div>
+          <div ng-if="productDetailsCtrl.productVariants.length"
+            class="col-12"
+            cef-product-variant-swatches
+            product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+            product-variants="productDetailsCtrl.productVariants"
+            template="productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value">
+          </div>
+          <div class="col-12">
+            <div class="row">
+              <div class="col-6"
+                ng-repeat="x in productDetailsCtrl.sizeRange track by $index">
+                <input type="radio" name="size" id="size_{{x}}" class="input-hidden d-none" />
+                <label for="size_{{x}}" class="shoe_size_selector">M {{x}} / W {{x + 1.5}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-3"
+            cef-product-buy-block
+            product-to-display="productDetailsCtrl.productToDisplay"
+            product-which-is-the-master="productDetailsCtrl.productWhichIsTheMaster"
+            product-which-is-the-current-variant="productDetailsCtrl.productWhichIsTheCurrentVariant"
+            product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+            product-variants="productDetailsCtrl.productVariants"
+            quantity-for-add-to-cart="productDetailsCtrl.quantityForAddToCart"
+            get-serializable-attributes="productDetailsCtrl.getSerializableAttributes">
+          </div>
+          <div class="col-12 mb-3"
+            cef-product-tabs
+            product="productDetailsCtrl.productToDisplay">
+          </div>
+        </div>
+      </div>
+      <div ng-if="$parent.$parent.$parent.productDetailsCtrl.productWhichIsTheMaster.ProductAssociations.length"
+        class="col-12"
+        related-products-list
+        products="$parent.$parent.$parent.productDetailsCtrl.productWhichIsTheMaster.ProductAssociations"
+        type="Related Product"
+        size="4"
+        template="productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value">
+      </div>
+    </div>
+  </div>
+  <!-- Default -->
+  <div ng-if="productDetailsCtrl.productToDisplay" ng-switch-default>
+    <div class="row">
+      <div class="col-12">
+        <div cef-product-details-breadcrumb
+          product="productDetailsCtrl.productToDisplay"
+          last-item="{{productDetailsCtrl.productToDisplay.Name}}">
+        </div>
+      </div>
+    </div>
+    <div class="row cef-product-view">
+      <div class="col-12 col-md-4 mb-3"
+        cef-product-images>
+      </div>
+      <div class="col-12 col-md-8 mb-3">
+        <h1 ng-if="productDetailsCtrl.previewMode"
+          id="isPreview" class="text-danger">
+          This is a Preview of a version of this data and not
+          reflective of what is live on the website.
+        </h1>
+        <h1 id="productName"
+          class="cef-product-title mt-0"
+          ng-bind="productDetailsCtrl.productToDisplay.Name">
+        </h1>
+        <hr />
+        <div class="row">
+          <div class="col-md-8 cef-product-info">
+            <div ng-if="productDetailsCtrl.cefConfig.featureSet.reviews.enabled"
+              class="cef-ratings w-100 mb-3">
+              <div cef-rating-summary
+                value="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Value"
+                count="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Count"
+                scale="5">
+              </div>
+            </div>
+            <!--shareThis start
+            <div class="w-100">
+              <div class="sharethis-inline-share-buttons"></div>
+              <hr class="mt-3 mb-1" />
+            </div>
+            shareThis end-->
+            <div class="row">
+              <div class="col-12"
+                cef-product-price
+                product="productDetailsCtrl.productToDisplay">
+              </div>
+              <div class="col-12"
+                cef-product-stock
+                product="productDetailsCtrl.productToDisplay">
+              </div>
+              <div class="col-12"
+                cef-product-common-data
+                product="productDetailsCtrl.productToDisplay">
+              </div>
+              <div ng-if="productDetailsCtrl.productVariants.length"
+                class="col-12"
+                cef-product-variants-table
+                master-controller="productDetailsCtrl">
+              </div>
+              <div ng-if="productDetailsCtrl.productVariants.length"
+                class="col-12"
+                cef-product-variant-swatches
+                product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+                product-variants="productDetailsCtrl.productVariants">
+              </div>
+              <div class="col-12">
+                <hr />
+              </div>
+              <div class="col-12"
+                cef-product-short-description
+                product="productDetailsCtrl.productToDisplay">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="row">
+              <div class="col-12 mb-3"
+                cef-product-buy-block
+                product-to-display="productDetailsCtrl.productToDisplay"
+                product-which-is-the-master="productDetailsCtrl.productWhichIsTheMaster"
+                product-which-is-the-current-variant="productDetailsCtrl.productWhichIsTheCurrentVariant"
+                product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+                product-variants="productDetailsCtrl.productVariants"
+                quantity-for-add-to-cart="productDetailsCtrl.quantityForAddToCart"
+                get-serializable-attributes="productDetailsCtrl.getSerializableAttributes">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12"
+                cef-product-actions-group
+                product="productDetailsCtrl.productToDisplay"
+                store-product="productDetailsCtrl.storeProduct">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="productDetailsCtrl.productToDisplay.TypeKey === 'VARIANT-KIT'
+        || productDetailsCtrl.productToDisplay.TypeKey === 'KIT'"
+        class="col-12 mb-3"
+        cef-product-kit-components>
+      </div>
+      <div class="col-12 mb-3"
+        cef-product-tabs
+        product="productDetailsCtrl.productToDisplay">
+      </div>
+      <div class="col-12"
+        ng-if="$parent.$parent.$parent.productDetailsCtrl.productWhichIsTheMaster.ProductAssociations.length"
+        related-products-list
+        products="$parent.$parent.$parent.productDetailsCtrl.productWhichIsTheMaster.ProductAssociations"
+        type="Related Product"
+        size="4"
+        template="productDetailsCtrl.productToDisplay.SerializableAttributes.Template.Value">
+      </div>
+    </div>
+  </div>
+</div>

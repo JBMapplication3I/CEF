@@ -1,0 +1,58 @@
+<div ng-form="createVersionModalCtrl.forms.selector">
+    <div class="modal-header">
+        <span class="h2"
+              data-translate="ui.admin.versioning.DescribeThisVersion">
+        </span>
+    </div>
+    <div class="modal-body form-vertical">
+        <div class="row">
+            <text-input-form-group
+                class="col-sm-12"
+                key="VersionName"
+                ng-model="createVersionModalCtrl.selectedRecordVersion.Name"
+                label-key="ui.admin.common.Name"
+                placeholder-key="ui.admin.common.Name"
+                max-length="256"
+                ng-disabled="createVersionModalCtrl.selectedRecordVersion.ID > 0 || createVersionModalCtrl.viewState.running"
+                ng-required="true">
+            </text-input-form-group>
+            <textarea-form-group
+                class="col-sm-12"
+                key="VersionDescription"
+                ng-model="createVersionModalCtrl.selectedRecordVersion.Description"
+                placeholder-key="ui.admin.common.Description"
+                label-key="ui.admin.common.Description"
+                ng-disabled="createVersionModalCtrl.selectedRecordVersion.ID > 0 || createVersionModalCtrl.viewState.running"
+                ng-required="false">
+            </textarea-form-group>
+            <div class="col-sm-2 col-md-2"
+                 ng-if="createVersionModalCtrl.selectedRecordVersion.RecordID">
+                <div class="form-group">
+                    <label class="control-label"
+                           data-translate="ui.admin.versioning.RecordID"></label><br/>
+                    <label class="form-control-static"
+                           ng-bind="createVersionModalCtrl.selectedRecordVersion.RecordID"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer p-3">
+        <button type="button" class="btn btn-default btn-secondary"
+                translate-attr="{ title: 'ui.admin.common.Cancel',
+                                  'aria-label': 'ui.admin.common.Cancel' }"
+                data-translate="ui.admin.common.Cancel"
+                ng-click="createVersionModalCtrl.cancel()">
+        </button>
+        <button type="button" class="btn btn-info"
+                id="btnCreateVersion" name="btnCreateVersion"
+                translate-attr="{ title: 'ui.admin.common.CreateVersion',
+                                  'aria-label': 'ui.admin.common.CreateVersion' }"
+                ng-disabled="createVersionModalCtrl.forms.selector.$invalid
+                         || !createVersionModalCtrl.selectedRecordVersion
+                         || createVersionModalCtrl.viewState.running"
+                ng-click="createVersionModalCtrl.ok()">
+            <i class="far fa-code-branch"></i>&nbsp;<!--
+            --><span data-translate="ui.admin.common.CreateVersion"></span>
+        </button>
+    </div>
+</div>

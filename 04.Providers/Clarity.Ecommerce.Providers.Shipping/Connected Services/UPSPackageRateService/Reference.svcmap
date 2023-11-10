@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="36686493-c3da-4947-bef4-5a7bb723d7d6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="C:\Data\Projects\2019.3\CEF\packages\UPS\UPS-Rates_Pkg_Gnd\RatingPACKAGE\PACKAGEWebServices\SCHEMA-WSDLs\RateWS.wsdl" Protocol="file" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="common1.xsd" MetadataType="Schema" ID="a1eff2e5-7cf2-4f43-ae64-259a0eb1b097" SourceId="1" SourceUrl="file:///C:/Data/Projects/2019.3/CEF/packages/UPS/UPS-Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/common.xsd" />
+    <MetadataFile FileName="RateWebServiceSchema1.xsd" MetadataType="Schema" ID="71029094-bfbe-439c-9332-b6ef2c182b37" SourceId="1" SourceUrl="file:///C:/Data/Projects/2019.3/CEF/packages/UPS/UPS-Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/RateWebServiceSchema.xsd" />
+    <MetadataFile FileName="Error11.xsd" MetadataType="Schema" ID="2cc6342e-3000-4537-8d57-5d58ab13f1ab" SourceId="1" SourceUrl="file:///C:/Data/Projects/2019.3/CEF/packages/UPS/UPS-Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/Error1.1.xsd" />
+    <MetadataFile FileName="UPSSecurity1.xsd" MetadataType="Schema" ID="064ccb86-ff67-4f5d-8f8c-c32c4ea8585d" SourceId="1" SourceUrl="file:///C:/Data/Projects/2019.3/CEF/packages/UPS/UPS-Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/UPSSecurity.xsd" />
+    <MetadataFile FileName="RateWS1.wsdl" MetadataType="Wsdl" ID="76bbc763-4e27-4032-af30-42a45527aed8" SourceId="1" SourceUrl="file:///C:/Data/Projects/2019.3/CEF/packages/UPS/UPS-Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/RateWS.wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

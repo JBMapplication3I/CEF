@@ -1,0 +1,9 @@
+<dl ng-if="pcawCtrl.product && pcawCtrl.catalogAttrList.length">
+  <dt ng-repeat-start="attr in pcawCtrl.catalogAttrList
+                       | orderBy: ['SortOrder', 'Key', 'Value', 'UofM']"
+    ng-bind="attr.DisplayName || attr.Name || attr.CustomKey"></dt>
+  <dd ng-repeat-end>
+    <span ng-bind="pcawCtrl.productAttr(attr.CustomKey).Value"></span>&nbsp;<!--
+    --><span ng-bind="pcawCtrl.productAttr(attr.CustomKey).UofM"></span>
+  </dd>
+</dl>

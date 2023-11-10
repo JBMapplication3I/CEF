@@ -1,0 +1,60 @@
+<!-- step.payment.summary Template -->
+<div class="row">
+  <div class="col-sm-12 text-right">
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.ach">
+      <div cef-payment-method-ach-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.creditCard">
+      <div cef-payment-method-credit-card-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.custom">
+      <div cef-payment-method-custom-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.echeck">
+      <div cef-payment-method-echeck-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.free">
+      <div cef-payment-method-free-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.invoice">
+      <div cef-payment-method-invoice-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.payoneer">
+      <div cef-payment-method-payoneer-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.payPal">
+      <div cef-payment-method-pay-pal-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.quoteMe">
+      <div cef-payment-method-quote-me-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.storeCredit">
+      <div cef-payment-method-store-credit-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+    <div ng-if="pspsCtrl.paymentMethod === pspsCtrl.paymentMethods.wireTransfer">
+      <div cef-payment-method-wire-transfer-summary
+        lookup-key="pspsCtrl.lookupKey">
+      </div>
+    </div>
+  </div>
+</div>

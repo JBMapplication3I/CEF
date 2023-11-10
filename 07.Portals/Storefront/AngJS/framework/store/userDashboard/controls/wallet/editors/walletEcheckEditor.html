@@ -1,0 +1,115 @@
+﻿<div class="form-vertical" ng-form="weeCtrl.forms.Echeck">
+  <div class="row">
+    <!--edit or create block-->
+    <div class="col-12">
+      <div class="form-group"
+        ng-class="{'has-error': weeCtrl.forms.Echeck.txtCardNickname.$invalid}">
+        <label class="control-label" for="txtCardNickname"
+          ><span data-translate="ui.storefront.common.ECheckAccountNickname"
+          ></span>&nbsp;<span class="text-danger">*</span></label>
+        <div class="input-group">
+          <input type="text" class="form-control"
+            id="txtCardNickname" name="txtCardNickname"
+            translate-attr="{ 'placeholder': 'ui.storefront.common.ECheckAccountNickname' }"
+            ng-required="true"
+            ng-model="weeCtrl.entry.Name" />
+        </div>
+      </div>
+    </div>
+    <!--show block-->
+    <div class="col-12" ng-if="weeCtrl.viewstate.editMode">
+      <p class="bold" ng-bind="weeCtrl.entry.CardHolderName"></p>
+      <div class="w-50 d-inline-block">
+        <p ng-bind-html="'&bull;&bull;&bull;&bull;&bull;&bull;'
+          + (weeCtrl.entry.RoutingNumber | limitTo: -3)">
+        </p>
+      </div>
+      <div class="w-50 d-inline-block">
+        <p ng-bind-html="'&bull;&bull;&bull;&bull;&bull;&bull;'
+          + (weeCtrl.entry.AccountNumber | limitTo: -3)">
+        </p>
+      </div>
+      <p class="mb-0" ng-bind="weeCtrl.entry.BankName"></p>
+    </div>
+    <!--create block-->
+    <div class="col-12" ng-if="weeCtrl.viewstate.createMode">
+      <div class="form-group"
+        ng-class="{'has-error': weeCtrl.forms.Echeck.ddlAccountType.$invalid}">
+        <label class="control-label" for="ddlAccountType"
+          ><span data-translate="ui.storefront.checkout.echeck.AccountType"
+          ></span>&nbsp;<span class="text-danger">*</span></label>
+        <select class="form-control"
+          id="ddlAccountType" name="ddlAccountType"
+          ng-required="true"
+          ng-options="type.Key as type.Value for type in weeCtrl.eCheckAccountTypes"
+          ng-model="weeCtrl.entry.CardType">
+          <option value="" ng-disabled="true"
+            data-translate="ui.storefront.checkout.echeck.SelectAnAccountType">
+          </option>
+        </select>
+      </div>
+      <div class="form-group"
+        ng-class="{'has-error': weeCtrl.forms.Echeck.txtCardHolder.$invalid}">
+        <label class="control-label" for="txtCardHolder"
+          ><span data-translate="ui.storefront.checkout.echeck.AccountHolder"
+          ></span>&nbsp;<span class="text-danger">*</span></label>
+        <input type="text" class="form-control"
+          id="txtCardHolder" name="txtCardHolder"
+          translate-attr="{ placeholder: 'ui.storefront.checkout.echeck.AccountHolder' }"
+          ng-required="true"
+          ng-model="weeCtrl.entry.CardHolderName" />
+      </div>
+      <div class="form-group"
+        ng-class="{'has-error': weeCtrl.forms.Echeck.txtBankName.$invalid}">
+        <label class="control-label" for="txtBankName"
+          ><span data-translate="ui.storefront.checkout.echeck.BankName"
+          ></span>&nbsp;<span class="text-danger">*</span></label>
+        <input type="text" class="form-control"
+          id="txtBankName" name="txtBankName"
+          translate-attr="{ placeholder: 'ui.storefront.checkout.echeck.BankName' }"
+          ng-required="true"
+          ng-model="weeCtrl.entry.BankName" />
+      </div>
+      <div class="form-group"
+        ng-class="{'has-error': weeCtrl.forms.Echeck.txtRoutingNumber.$invalid}">
+        <label class="control-label" for="txtRoutingNumber"
+          ><span data-translate="ui.storefront.checkout.echeck.RoutingNumber"
+          ></span>&nbsp;<span class="text-danger">*</span></label>
+        <input type="text" class="form-control"
+          id="txtRoutingNumber" name="txtRoutingNumber"
+          translate-attr="{ placeholder: 'ui.storefront.checkout.echeck.RoutingNumber' }"
+          ng-pattern="/^\d+$/"
+          ng-required="true"
+          ng-model="weeCtrl.entry.RoutingNumber" />
+      </div>
+      <div class="form-group mb-0"
+        ng-class="{'has-error': weeCtrl.forms.Echeck.txtAccountNumber.$invalid}">
+        <label class="control-label" for="txtRoutingNumber"
+          ><span data-translate="ui.storefront.checkout.echeck.AccountNumber"
+          ></span>&nbsp;<span class="text-danger">*</span></label>
+        <input type="text" class="form-control"
+          id="txtAccountNumber" name="txtAccountNumber"
+          translate-attr="{ placeholder: 'ui.storefront.checkout.echeck.AccountNumber' }"
+          ng-pattern="/^\d+$/"
+          ng-required="true"
+          ng-model="weeCtrl.entry.AccountNumber" />
+      </div>
+    </div>
+  </div>
+  <div ng-if="weeCtrl.forms.Echeck.$error"
+    class="p-0 mt-3">
+    <div ng-messages="weeCtrl.forms.Echeck.$error"
+      role="alert">
+      <div ng-message="required" class="alert alert-danger mb-0">
+        <span data-translate="ui.storefront.userDashboard2.controls.walletCard.AllFieldsAreRequired">
+        </span>
+      </div>
+    </div>
+  </div>
+  <div ng-if="weeCtrl.viewState.errorMessage"
+    class="p-0 mt-3">
+    <div class="alert alert-danger m-0"
+      ng-bind="weeCtrl.viewState.errorMessage">
+    </div>
+  </div>
+</div>

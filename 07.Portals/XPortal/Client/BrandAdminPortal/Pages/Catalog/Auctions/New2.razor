@@ -1,0 +1,701 @@
+﻿@page "/catalog/auctions/creator2"
+@inherits Clarity.Ecommerce.MVC.Core.TemplatedControllerBase
+@inject CEFAPI cvApi
+@inject CEFConfig cefConfig
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+@inject RoutingOptions routingOptions
+
+<Div Class="dashboard-inner">
+  <header class="dashboard-header icon-mod d-md-flex align-items-md-center justify-content-md-between">
+    <Heading Size="HeadingSize.Is1">
+      <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Gavel" Class="mr-1" />
+      Create Auction
+    </Heading>
+    <Div Class="ms-md-2 mt-3 mt-md-0"><Blazorise.Anchor Class="btn btn-outline-success">Actions</Blazorise.Anchor></Div>
+  </header>
+  <nav class="horizontal-nav-wrap pt-2 pt-md-4">
+    <UnorderedList Class="horizontal-nav d-flex flex-wrap text-uppercase list-unstyled mb-0">
+      <UnorderedListItem><Blazorise.Anchor Class="d-inline-block text-decoration-none" To="./affiliate-auction-items.html">Items & Bids</Blazorise.Anchor></UnorderedListItem>
+      <UnorderedListItem Class="active"><Blazorise.Anchor Class="d-inline-block text-decoration-none" To="./affiliate-auction-details.html">Details</Blazorise.Anchor></UnorderedListItem>
+    </UnorderedList>
+  </nav>
+  <Div Class="auction-details-block d-lg-flex">
+    <nav class="anchor-nav-wrap mb-4 mb-lg-0">
+      <UnorderedList Class="anchor-nav list-unstyled mb-0">
+        <UnorderedListItem><Blazorise.Anchor Class="smooth-link anchor-active d-block text-decoration-none text-uppercase position-relative" To="#overview">Overview</Blazorise.Anchor></UnorderedListItem>
+        @*<UnorderedListItem><Blazorise.Anchor Class="smooth-link d-block text-decoration-none text-uppercase position-relative" To="#imagesVideo">Images & Video</Blazorise.Anchor></UnorderedListItem>*@
+        <UnorderedListItem><Blazorise.Anchor Class="smooth-link d-block text-decoration-none text-uppercase position-relative" To="#bidIncrementSettings">Bid Increment Settings</Blazorise.Anchor></UnorderedListItem>
+        <UnorderedListItem><Blazorise.Anchor Class="smooth-link d-block text-decoration-none text-uppercase position-relative" To="#auctionScheduleSettings">Auction Schedule Settings</Blazorise.Anchor></UnorderedListItem>
+        <UnorderedListItem><Blazorise.Anchor Class="smooth-link d-block text-decoration-none text-uppercase position-relative" To="#invoiceTaxSettings">Invoice / Tax Settings</Blazorise.Anchor></UnorderedListItem>
+        <UnorderedListItem><Blazorise.Anchor Class="smooth-link d-block text-decoration-none text-uppercase position-relative" To="#lotClosingSchedule">Lot Closing Schedule</Blazorise.Anchor></UnorderedListItem>
+        <UnorderedListItem><Blazorise.Anchor Class="smooth-link d-block text-decoration-none text-uppercase position-relative" To="#location">Location</Blazorise.Anchor></UnorderedListItem>
+      </UnorderedList>
+    </nav>
+    <Div Class="auction-details-body">
+      @if (editContext != null!)
+      {
+        <Validations
+          EditContext="editContext"
+          Mode="ValidationMode.Manual"
+          ValidateOnLoad="true">
+          <EditForm EditContext="editContext">
+            <DataAnnotationsValidator />
+            <section class="auction-details-section" id="overview">
+              <Heading Size="HeadingSize.Is3">Overview</Heading>
+              <TextFormGroup
+                FormIdentifier="title"
+                LabelText="Title"
+                PlaceholderText="Enter title"
+                @bind-Value=@AuctionName
+                Required="true"
+              />
+              <SelectFormGroup
+                TValue="string"
+                FormIdentifier="auctionStatus"
+                LabelText="Auction Status"
+                @bind-Value="@AuctionStatus"
+                OptionsList="@Statuses"
+                ItemValueFunc="@(x => ((StatusModel)x).Name)"
+                ItemLabelFunc="@(x => ((StatusModel)x).Name!)"
+                Required="true"
+              />
+              <SelectFormGroup
+                TValue="string"
+                FormIdentifier="auctionType"
+                LabelText="Auction Type"
+                @bind-Value="@AuctionType"
+                OptionsList="@Types"
+                ItemValueFunc="@(x => ((TypeModel)x).Name)"
+                ItemLabelFunc="@(x => ((TypeModel)x).Name)"
+                Required="true"
+              />
+              @*
+              <CheckboxFormGroup
+                TValue="bool"
+                OptionsList="@Categories"
+                ItemLabelFunc="@(x => x.Name)"
+                OnToggle="@(x => ToggleCategory((x, false)))"
+                IsOptionToggled=@(cat => SelectedCategories.Contains(cat))
+                LabelText="Categories"
+                Required="true"
+              />
+              *@
+              <TextFormGroup
+                FormIdentifier="passPhrase"
+                LabelText="Pass Phrase"
+                PlaceholderText="Enter Pass Phrase"
+                @bind-Value="PassPhrase"
+                Required="true"
+                Role="TextRole.Password"
+              />
+              <TextAreaFormGroup
+                FormIdentifier="description"
+                LabelText="Description"
+                PlaceholderText="Type description here…"
+                @bind-Value="Description"
+                TooltipText="The description of the auction"
+                ShowValidTooltip="true"
+              />
+              <Span>@AuctionStatus</Span>
+            </section>
+            @*
+            <section class="auction-details-section" id="imagesVideo">
+              <Heading Size="HeadingSize.Is3">Images & Video</Heading>
+              @if (AuctionImages is { Count: > 0 })
+              {
+                <ul
+                  class="upload-pale-list list-unstyled mb-3 mb-md-4 pb-md-2 mx-0"
+                  ondragover="event.preventDefault();"
+                  style="margin:20px">
+                  @foreach (var uploadedImageFile in AuctionImages!)
+                  {
+                    <li
+                      draggable="true"
+                      style="list-style-type:none; height:30px"
+                      @key="uploadedImageFile.ID"
+                      tabindex="1"
+                      @ondrop="@(()=> Drop(uploadedImageFile))"
+                      @ondrag="@(()=> StartDrag(uploadedImageFile))">
+                      <div class="upload-pale d-flex align-items-center rounded bg-white">
+                        <div class="grab flex-shrink-0 text-center">
+                          <svg width="20" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 12">
+                            <path d="M19.101 12H.26C.116 12 0 11.85 0 11.663v-1.348C0 10.128.116 10 .26 10H19.1c.143 0 .26.128.26.315v1.348c0 .186-.117.337-.26.337zm0-5H.26C.116 7 0 6.86 0 6.674V5.326C0 5.14.116 5 .26 5H19.1c.143 0 .26.14.26.326v1.348c0 .186-.117.326-.26.326zm0-5H.26C.116 2 0 1.872 0 1.685V.337C0 .151.116 0 .26 0H19.1c.143 0 .26.15.26.337v1.348c0 .187-.117.315-.26.315z" fill="#191e2a"></path>
+                          </svg>
+                        </div>
+                        <figure class="media overflow-hidden mb-0">
+                          <img src="images/@uploadedImageFile.Name" alt="@(uploadedImageFile.Description ?? uploadedImageFile.Name)">
+                        </figure>
+                        <div class="file-name flex-grow-1">
+                          <span class="d-block text-nowrap overflow-hidden">@uploadedImageFile.Name</span>
+                        </div>
+                        <div class="delete flex-shrink-0 text-center">
+                          <Blazorise.Button
+                            Class="btn"
+                            Clicked="@(() => RemoveImageNew(uploadedImageFile.Name))">
+                            <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                              <path d="M8.125 16.563V5.938c0-.173.14-.313.313-.313h.624c.173 0 .313.14.313.313v10.625c0 .172-.14.312-.313.312h-.624a.312.312 0 0 1-.313-.313zM15 3.75H2.5v14.375c0 .345.28.625.625.625h11.25c.345 0 .625-.28.625-.625zM5.937 2.5h5.625l-.75-1a.629.629 0 0 0-.5-.25H7.188a.642.642 0 0 0-.5.25zm11.563.313v.624c0 .173-.14.313-.313.313h-.937v14.375c0 1.036-.84 1.875-1.875 1.875H3.125a1.875 1.875 0 0 1-1.875-1.875V3.75H.312A.312.312 0 0 1 0 3.437v-.624C0 2.64.14 2.5.313 2.5h4.062L5.688.75C6 .278 6.598 0 7.188 0h3.125c.59 0 1.145.278 1.5.75l1.312 1.75h4.063c.172 0 .312.14.312.313zM5 16.563V5.938c0-.173.14-.313.313-.313h.625c.172 0 .312.14.312.313v10.625c0 .172-.14.312-.313.312h-.625A.312.312 0 0 1 5 16.562zm6.25 0V5.938c0-.173.14-.313.313-.313h.624c.173 0 .313.14.313.313v10.625c0 .172-.14.312-.313.312h-.624a.312.312 0 0 1-.313-.313z" fill="#ff0037"></path>
+                            </svg>
+                          </Button>
+                        </div>
+                      </div>
+                    </li>
+                  }
+                </ul>
+              }
+              <div class="d-sm-flex mb-3">
+                <label class="btn btn-success md-mod mr-3 mb-2 mb-sm-0">
+                  <InputFile
+                    id="fileInput1"
+                    single
+                    class="fileUploadInput d-none"
+                    OnChange="UploadFiles"
+                    @ref="imageInputFileEl"
+                    accept="image/png,image/gif,image/jpeg"
+                  />
+                  Add Image
+                </label>
+                <label class="btn btn-success md-mod mr-3 mb-2 mb-sm-0">
+                  <InputFile
+                    id="fileInput2"
+                    single
+                    class="fileUploadInput d-none"
+                    OnChange="UploadFiles"
+                    @ref="videoInputFileEl"
+                    accept="video/mp4,video/mov"
+                  />
+                  Add Video
+                </label>
+              </div>
+            </section>
+            *@
+            <section class="auction-details-section" id="bidIncrementSettings">
+              <Heading Size="HeadingSize.Is3">Bid Increment Settings</Heading>
+              <TextFormGroup
+                FormIdentifier="defineBidIncrements"
+                LabelText="Define Bid Increments"
+                @bind-Value="BidIncrement"
+                Required="true"
+                Role="TextRole.Text"
+                LeftIcon="far fa-dollar"
+              />
+            </section>
+            <section class="auction-details-section" id="auctionScheduleSettings">
+              <Heading Size="HeadingSize.Is3">Auction Schedule Settings</Heading>
+              <Heading Size="HeadingSize.Is4">Auction Settings</Heading>
+              <TextFormGroup
+                FormIdentifier="startNow"
+                LabelText="Start Now"
+                PlaceholderText="Enter"
+                @bind-Value=@AuctionName
+              />
+              <Div Class="form-row">
+                <Label Class="form-label w-100" For="startDate">Start Date & Time</Label>
+                <Div Class="d-flex flex-column flex-sm-row align-items-sm-center">
+                  <Div Class="datepicker-group d-flex rounded mr-4">
+                    <Label Class="icon d-flex align-items-center justify-content-center p-0 m-0"
+                      ><Span Class="d-none">datepicker</Span>
+                      <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                        <path d="M13.75 15.781V14.22c0-.219-.21-.469-.469-.469H11.72c-.258 0-.469.25-.469.469v1.562c0 .219.21.469.469.469h1.562c.258 0 .469-.25.469-.469zm-7.5 0V14.22c0-.219-.25-.469-.469-.469H4.22c-.219 0-.469.25-.469.469v1.562c0 .219.25.469.469.469H5.78c.219 0 .469-.25.469-.469zm3.75 0V14.22c0-.219-.21-.469-.469-.469H8c-.29 0-.5.25-.5.469v1.562c0 .219.21.469.5.469h1.531c.258 0 .469-.25.469-.469zM13.75 12v-1.531a.47.47 0 0 0-.469-.469H11.72a.47.47 0 0 0-.469.469V12c0 .29.21.5.469.5h1.562c.258 0 .469-.21.469-.5zM10 12v-1.531A.47.47 0 0 0 9.531 10H8c-.29 0-.5.21-.5.469V12c0 .29.21.5.5.5h1.531c.258 0 .469-.21.469-.5zm-3.75 0v-1.531C6.25 10.21 6 10 5.781 10H4.22c-.219 0-.469.21-.469.469V12c0 .29.25.5.469.5H5.78c.219 0 .469-.21.469-.5zm9.375 6.75H1.875a.627.627 0 0 1-.625-.625V7.5h15v10.625c0 .344-.25.625-.625.625zm-13.75-15h13.75c.375 0 .625.25.625.625V6.25h-15V4.375c0-.375.281-.625.625-.625zm13.75-1.25H13.75V.469A.47.47 0 0 0 13.281 0H13c-.29 0-.5.21-.5.469V2.5H5V.469A.47.47 0 0 0 4.531 0H4.22C4 0 3.75.21 3.75.469V2.5H1.875C.84 2.5 0 3.34 0 4.375v13.75C0 19.16.84 20 1.875 20h13.75c1.035 0 1.875-.84 1.875-1.875V4.375c0-1.035-.84-1.875-1.875-1.875z" fill="#191e2a"></path>
+                      </svg>
+                    </Label>
+                    <input class="datepicker md" id="startDate" type="text" data-datepicker="{&quot;dateFormat&quot;: &quot;dd/mm/yy&quot;}" placeholder="00/00/0000">
+                  </Div>
+                  <Div Class="input-group mt-2 mt-sm-0"
+                      ><Span Class="input-group-text" ElementId="basic-addon2"><Span Class="d-none">time</Span>
+                      <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M12.706 13.56c.217.158.52.11.677-.104l.33-.456a.483.483 0 0 0-.104-.677l-2.843-2.069v-5.9a.485.485 0 0 0-.484-.483h-.564a.485.485 0 0 0-.484.484v6.435c0 .154.072.299.197.391zM18.71 10c0 4.786-3.875 8.71-8.71 8.71-4.786 0-8.71-3.875-8.71-8.71 0-4.786 3.875-8.71 8.71-8.71 4.786 0 8.71 3.875 8.71 8.71zM10 0C4.476 0 0 4.476 0 10s4.476 10 10 10 10-4.476 10-10S15.524 0 10 0z" fill="#191e2a"></path>
+                      </svg></Span>
+                    <Select TValue="int?" Class="form-select sm" aria-label="Start Time" aria-describedby="basic-addon2">
+                      <SelectItem TValue="int?" Value="@null" selected>00:00 PM</SelectItem>
+                      <SelectItem TValue="int?" Value="1">One</SelectItem>
+                      <SelectItem TValue="int?" Value="2">Two</SelectItem>
+                      <SelectItem TValue="int?" Value="3">Three</SelectItem>
+                    </Select>
+                  </Div>
+                </Div>
+              </Div>
+              <Div Class="form-row">
+                <Label Class="form-label w-100" For="endDate">End Date & Time</Label>
+                <Div Class="d-flex flex-column flex-sm-row align-items-sm-center">
+                  <Div Class="datepicker-group d-flex rounded mr-4">
+                    <Label Class="icon d-flex align-items-center justify-content-center p-0 m-0"><Span Class="d-none">datepicker</Span>
+                      <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                        <path d="M13.75 15.781V14.22c0-.219-.21-.469-.469-.469H11.72c-.258 0-.469.25-.469.469v1.562c0 .219.21.469.469.469h1.562c.258 0 .469-.25.469-.469zm-7.5 0V14.22c0-.219-.25-.469-.469-.469H4.22c-.219 0-.469.25-.469.469v1.562c0 .219.25.469.469.469H5.78c.219 0 .469-.25.469-.469zm3.75 0V14.22c0-.219-.21-.469-.469-.469H8c-.29 0-.5.25-.5.469v1.562c0 .219.21.469.5.469h1.531c.258 0 .469-.25.469-.469zM13.75 12v-1.531a.47.47 0 0 0-.469-.469H11.72a.47.47 0 0 0-.469.469V12c0 .29.21.5.469.5h1.562c.258 0 .469-.21.469-.5zM10 12v-1.531A.47.47 0 0 0 9.531 10H8c-.29 0-.5.21-.5.469V12c0 .29.21.5.5.5h1.531c.258 0 .469-.21.469-.5zm-3.75 0v-1.531C6.25 10.21 6 10 5.781 10H4.22c-.219 0-.469.21-.469.469V12c0 .29.25.5.469.5H5.78c.219 0 .469-.21.469-.5zm9.375 6.75H1.875a.627.627 0 0 1-.625-.625V7.5h15v10.625c0 .344-.25.625-.625.625zm-13.75-15h13.75c.375 0 .625.25.625.625V6.25h-15V4.375c0-.375.281-.625.625-.625zm13.75-1.25H13.75V.469A.47.47 0 0 0 13.281 0H13c-.29 0-.5.21-.5.469V2.5H5V.469A.47.47 0 0 0 4.531 0H4.22C4 0 3.75.21 3.75.469V2.5H1.875C.84 2.5 0 3.34 0 4.375v13.75C0 19.16.84 20 1.875 20h13.75c1.035 0 1.875-.84 1.875-1.875V4.375c0-1.035-.84-1.875-1.875-1.875z" fill="#191e2a"></path>
+                      </svg>
+                    </Label>
+                    <input class="datepicker md" id="endDate" type="text" data-datepicker="{&quot;dateFormat&quot;: &quot;dd/mm/yy&quot;}" placeholder="00/00/0000" />
+                  </Div>
+                  <Div Class="input-group mt-2 mt-sm-0"><Span Class="input-group-text" ElementId="basic-addon3"><Span Class="d-none">time</Span>
+                      <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M12.706 13.56c.217.158.52.11.677-.104l.33-.456a.483.483 0 0 0-.104-.677l-2.843-2.069v-5.9a.485.485 0 0 0-.484-.483h-.564a.485.485 0 0 0-.484.484v6.435c0 .154.072.299.197.391zM18.71 10c0 4.786-3.875 8.71-8.71 8.71-4.786 0-8.71-3.875-8.71-8.71 0-4.786 3.875-8.71 8.71-8.71 4.786 0 8.71 3.875 8.71 8.71zM10 0C4.476 0 0 4.476 0 10s4.476 10 10 10 10-4.476 10-10S15.524 0 10 0z" fill="#191e2a"></path>
+                      </svg></Span>
+                    <Select TValue="int?" Class="form-select sm" aria-label="Start Time" aria-describedby="basic-addon3">
+                      <SelectItem TValue="int?" Value="@null" selected>00:00 PM</SelectItem>
+                      <SelectItem TValue="int?" Value="1">One</SelectItem>
+                      <SelectItem TValue="int?" Value="2">Two</SelectItem>
+                      <SelectItem TValue="int?" Value="3">Three</SelectItem>
+                    </Select>
+                  </Div>
+                </Div>
+              </Div>
+              <Heading Size="HeadingSize.Is4">Inspection Settings</Heading>
+              <TextFormGroup
+                FormIdentifier="ByAppointmentOnly"
+                LabelText="By Appointment Only"
+                PlaceholderText="Enter"
+                @bind-Value="@ByAppointmentOnly"
+              />
+              <DateFormGroup
+                TValue="DateTime"
+                FormIdentifier="StartDateAndTime"
+                LabelText="Start Date & Time"
+                @bind-Date="@ByAppointmentOnly"
+                @bind-Time="@ByAppointmentOnly"
+              />
+              <div class="form-row">
+                <label class="form-label w-100" for="endDate2">End Date & Time</label>
+                <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                  <div class="datepicker-group d-flex rounded mr-4">
+                    <label class="icon d-flex align-items-center justify-content-center p-0 m-0"><span class="d-none">datepicker</span>
+                      <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                        <path d="M13.75 15.781V14.22c0-.219-.21-.469-.469-.469H11.72c-.258 0-.469.25-.469.469v1.562c0 .219.21.469.469.469h1.562c.258 0 .469-.25.469-.469zm-7.5 0V14.22c0-.219-.25-.469-.469-.469H4.22c-.219 0-.469.25-.469.469v1.562c0 .219.25.469.469.469H5.78c.219 0 .469-.25.469-.469zm3.75 0V14.22c0-.219-.21-.469-.469-.469H8c-.29 0-.5.25-.5.469v1.562c0 .219.21.469.5.469h1.531c.258 0 .469-.25.469-.469zM13.75 12v-1.531a.47.47 0 0 0-.469-.469H11.72a.47.47 0 0 0-.469.469V12c0 .29.21.5.469.5h1.562c.258 0 .469-.21.469-.5zM10 12v-1.531A.47.47 0 0 0 9.531 10H8c-.29 0-.5.21-.5.469V12c0 .29.21.5.5.5h1.531c.258 0 .469-.21.469-.5zm-3.75 0v-1.531C6.25 10.21 6 10 5.781 10H4.22c-.219 0-.469.21-.469.469V12c0 .29.25.5.469.5H5.78c.219 0 .469-.21.469-.5zm9.375 6.75H1.875a.627.627 0 0 1-.625-.625V7.5h15v10.625c0 .344-.25.625-.625.625zm-13.75-15h13.75c.375 0 .625.25.625.625V6.25h-15V4.375c0-.375.281-.625.625-.625zm13.75-1.25H13.75V.469A.47.47 0 0 0 13.281 0H13c-.29 0-.5.21-.5.469V2.5H5V.469A.47.47 0 0 0 4.531 0H4.22C4 0 3.75.21 3.75.469V2.5H1.875C.84 2.5 0 3.34 0 4.375v13.75C0 19.16.84 20 1.875 20h13.75c1.035 0 1.875-.84 1.875-1.875V4.375c0-1.035-.84-1.875-1.875-1.875z" fill="#191e2a"></path>
+                      </svg>
+                    </label>
+                    <input class="datepicker md" id="endDate2" type="text" data-datepicker="{&quot;dateFormat&quot;: &quot;dd/mm/yy&quot;}" placeholder="00/00/0000">
+                  </div>
+                  <div class="input-group mt-2 mt-sm-0"><span class="input-group-text" id="basic-addon5"><span class="d-none">time</span>
+                      <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M12.706 13.56c.217.158.52.11.677-.104l.33-.456a.483.483 0 0 0-.104-.677l-2.843-2.069v-5.9a.485.485 0 0 0-.484-.483h-.564a.485.485 0 0 0-.484.484v6.435c0 .154.072.299.197.391zM18.71 10c0 4.786-3.875 8.71-8.71 8.71-4.786 0-8.71-3.875-8.71-8.71 0-4.786 3.875-8.71 8.71-8.71 4.786 0 8.71 3.875 8.71 8.71zM10 0C4.476 0 0 4.476 0 10s4.476 10 10 10 10-4.476 10-10S15.524 0 10 0z" fill="#191e2a"></path>
+                      </svg></span>
+                    <select class="form-select sm" aria-label="Start Time" aria-describedby="basic-addon5">
+                      <option selected="">00:00 PM</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <Heading Size="HeadingSize.Is3">Removal Settings</Heading>
+              <div class="form-row">
+                <label class="form-label" for="ByAppointmentOnly2">By Appointment Only</label>
+                <input class="form-control" id="ByAppointmentOnly2" type="text" placeholder="Enter">
+              </div>
+              <div class="form-row">
+                <label class="form-label w-100" for="startDate3">Start Date & Time</label>
+                <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                  <div class="datepicker-group d-flex rounded mr-4">
+                    <label class="icon d-flex align-items-center justify-content-center p-0 m-0"><span class="d-none">datepicker</span>
+                      <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                        <path d="M13.75 15.781V14.22c0-.219-.21-.469-.469-.469H11.72c-.258 0-.469.25-.469.469v1.562c0 .219.21.469.469.469h1.562c.258 0 .469-.25.469-.469zm-7.5 0V14.22c0-.219-.25-.469-.469-.469H4.22c-.219 0-.469.25-.469.469v1.562c0 .219.25.469.469.469H5.78c.219 0 .469-.25.469-.469zm3.75 0V14.22c0-.219-.21-.469-.469-.469H8c-.29 0-.5.25-.5.469v1.562c0 .219.21.469.5.469h1.531c.258 0 .469-.25.469-.469zM13.75 12v-1.531a.47.47 0 0 0-.469-.469H11.72a.47.47 0 0 0-.469.469V12c0 .29.21.5.469.5h1.562c.258 0 .469-.21.469-.5zM10 12v-1.531A.47.47 0 0 0 9.531 10H8c-.29 0-.5.21-.5.469V12c0 .29.21.5.5.5h1.531c.258 0 .469-.21.469-.5zm-3.75 0v-1.531C6.25 10.21 6 10 5.781 10H4.22c-.219 0-.469.21-.469.469V12c0 .29.25.5.469.5H5.78c.219 0 .469-.21.469-.5zm9.375 6.75H1.875a.627.627 0 0 1-.625-.625V7.5h15v10.625c0 .344-.25.625-.625.625zm-13.75-15h13.75c.375 0 .625.25.625.625V6.25h-15V4.375c0-.375.281-.625.625-.625zm13.75-1.25H13.75V.469A.47.47 0 0 0 13.281 0H13c-.29 0-.5.21-.5.469V2.5H5V.469A.47.47 0 0 0 4.531 0H4.22C4 0 3.75.21 3.75.469V2.5H1.875C.84 2.5 0 3.34 0 4.375v13.75C0 19.16.84 20 1.875 20h13.75c1.035 0 1.875-.84 1.875-1.875V4.375c0-1.035-.84-1.875-1.875-1.875z" fill="#191e2a"></path>
+                      </svg>
+                    </label>
+                    <input class="datepicker md" id="startDate3" type="text" data-datepicker="{&quot;dateFormat&quot;: &quot;dd/mm/yy&quot;}" placeholder="00/00/0000">
+                  </div>
+                  <div class="input-group mt-2 mt-sm-0"><span class="input-group-text" id="basic-addon5"><span class="d-none">time</span>
+                      <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M12.706 13.56c.217.158.52.11.677-.104l.33-.456a.483.483 0 0 0-.104-.677l-2.843-2.069v-5.9a.485.485 0 0 0-.484-.483h-.564a.485.485 0 0 0-.484.484v6.435c0 .154.072.299.197.391zM18.71 10c0 4.786-3.875 8.71-8.71 8.71-4.786 0-8.71-3.875-8.71-8.71 0-4.786 3.875-8.71 8.71-8.71 4.786 0 8.71 3.875 8.71 8.71zM10 0C4.476 0 0 4.476 0 10s4.476 10 10 10 10-4.476 10-10S15.524 0 10 0z" fill="#191e2a"></path>
+                      </svg></span>
+                    <select class="form-select sm" aria-label="Start Time" aria-describedby="basic-addon5">
+                      <option selected="">00:00 PM</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label w-100" for="endDate2">End Date & Time</label>
+                <div class="d-flex flex-column flex-sm-row align-items-sm-center">
+                  <div class="datepicker-group d-flex rounded mr-4">
+                    <label class="icon d-flex align-items-center justify-content-center p-0 m-0"><span class="d-none">datepicker</span>
+                      <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                        <path d="M13.75 15.781V14.22c0-.219-.21-.469-.469-.469H11.72c-.258 0-.469.25-.469.469v1.562c0 .219.21.469.469.469h1.562c.258 0 .469-.25.469-.469zm-7.5 0V14.22c0-.219-.25-.469-.469-.469H4.22c-.219 0-.469.25-.469.469v1.562c0 .219.25.469.469.469H5.78c.219 0 .469-.25.469-.469zm3.75 0V14.22c0-.219-.21-.469-.469-.469H8c-.29 0-.5.25-.5.469v1.562c0 .219.21.469.5.469h1.531c.258 0 .469-.25.469-.469zM13.75 12v-1.531a.47.47 0 0 0-.469-.469H11.72a.47.47 0 0 0-.469.469V12c0 .29.21.5.469.5h1.562c.258 0 .469-.21.469-.5zM10 12v-1.531A.47.47 0 0 0 9.531 10H8c-.29 0-.5.21-.5.469V12c0 .29.21.5.5.5h1.531c.258 0 .469-.21.469-.5zm-3.75 0v-1.531C6.25 10.21 6 10 5.781 10H4.22c-.219 0-.469.21-.469.469V12c0 .29.25.5.469.5H5.78c.219 0 .469-.21.469-.5zm9.375 6.75H1.875a.627.627 0 0 1-.625-.625V7.5h15v10.625c0 .344-.25.625-.625.625zm-13.75-15h13.75c.375 0 .625.25.625.625V6.25h-15V4.375c0-.375.281-.625.625-.625zm13.75-1.25H13.75V.469A.47.47 0 0 0 13.281 0H13c-.29 0-.5.21-.5.469V2.5H5V.469A.47.47 0 0 0 4.531 0H4.22C4 0 3.75.21 3.75.469V2.5H1.875C.84 2.5 0 3.34 0 4.375v13.75C0 19.16.84 20 1.875 20h13.75c1.035 0 1.875-.84 1.875-1.875V4.375c0-1.035-.84-1.875-1.875-1.875z" fill="#191e2a"></path>
+                      </svg>
+                    </label>
+                    <input class="datepicker md" id="endDate2" type="text" data-datepicker="{&quot;dateFormat&quot;: &quot;dd/mm/yy&quot;}" placeholder="00/00/0000">
+                  </div>
+                  <div class="input-group mt-2 mt-sm-0"><span class="input-group-text" id="basic-addon6"><span class="d-none">time</span>
+                      <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M12.706 13.56c.217.158.52.11.677-.104l.33-.456a.483.483 0 0 0-.104-.677l-2.843-2.069v-5.9a.485.485 0 0 0-.484-.483h-.564a.485.485 0 0 0-.484.484v6.435c0 .154.072.299.197.391zM18.71 10c0 4.786-3.875 8.71-8.71 8.71-4.786 0-8.71-3.875-8.71-8.71 0-4.786 3.875-8.71 8.71-8.71 4.786 0 8.71 3.875 8.71 8.71zM10 0C4.476 0 0 4.476 0 10s4.476 10 10 10 10-4.476 10-10S15.524 0 10 0z" fill="#191e2a"></path>
+                      </svg></span>
+                    <select class="form-select sm" aria-label="Start Time" aria-describedby="basic-addon6">
+                      <option selected="">00:00 PM</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row ps-2"><span class="form-label d-block mb-2">Add Removal?</span>
+                <div class="form-check ms-1">
+                  <input class="form-check-input" id="AddRemoval" type="checkbox">
+                  <label class="form-check-label" for="AddRemoval">Yes</label>
+                </div>
+              </div>
+            </section>
+            <section class="auction-details-section" id="invoiceTaxSettings">
+              <Heading Size="HeadingSize.Is3">Invoice / Tax Settings</Heading>
+              <div class="form-row"><span class="form-label d-block mb-2">Automate Invoices?</span>
+                <div class="form-check ms-1">
+                  <input class="form-check-input" id="automateInvoices" type="checkbox">
+                  <label class="form-check-label" for="automateInvoices">Yes</label>
+                </div>
+              </div>
+              <div class="form-row"><span class="form-label d-block mb-2">Disable Online Payment?</span>
+                <div class="form-check ms-1">
+                  <input class="form-check-input" id="disableOnlinePayment" type="checkbox">
+                  <label class="form-check-label" for="disableOnlinePayment">Yes</label>
+                </div>
+              </div>
+              <div class="form-row"><span class="form-label d-block mb-2">Disable Shipping?</span>
+                <div class="form-check ms-1">
+                  <input class="form-check-input" id="disableShipping" type="checkbox">
+                  <label class="form-check-label" for="disableShipping">Yes</label>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="invoiceFooter">Invoice Footer</label>
+                <textarea class="form-control" id="invoiceFooter" type="password" placeholder="WYSIWYG Editor"></textarea>
+              </div>
+              <div class="form-row"><span class="form-label d-block mb-2">Default Invoice Footer?</span>
+                <div class="form-check ms-1">
+                  <input class="form-check-input" id="defaultInvoiceFooter" type="checkbox">
+                  <label class="form-check-label" for="defaultInvoiceFooter">Yes</label>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="stateTaxRate">State Tax Rate</label>
+                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon7"><span class="d-none">%</span>
+                    <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                      <path d="M15.354.107.095 19.572C0 19.746.086 20 .31 20h1.349c.084 0 .165 0 .214-.107L17.13.428A.267.267 0 0 0 16.917 0h-1.349c-.084 0-.165 0-.214.107zM12.9 18.393a2.68 2.68 0 0 1-2.679-2.679C10.22 14.237 11.421 13 12.9 13c1.477 0 2.678 1.237 2.678 2.714a2.68 2.68 0 0 1-2.678 2.679zm0-6.965a4.287 4.287 0 0 0 0 8.572 4.287 4.287 0 0 0 0-8.572zm-8.572-9.82C5.805 1.607 7 2.807 7 4.285 7 5.763 5.805 7 4.327 7 2.85 7 1.65 5.763 1.65 4.286a2.68 2.68 0 0 1 2.678-2.679zm0 6.964a4.287 4.287 0 0 0 0-8.572C2 0 0 1.92 0 4.286c0 2.366 2 4.286 4.327 4.286z" fill="#191e2a"></path>
+                    </svg></span>
+                  <input class="form-control" id="stateTaxRate" type="text" aria-label="Define Bid Increments" aria-describedby="basic-addon7" value="0">
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="countyTaxRate">County Tax Rate</label>
+                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon8"><span class="d-none">%</span>
+                    <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                      <path d="M15.354.107.095 19.572C0 19.746.086 20 .31 20h1.349c.084 0 .165 0 .214-.107L17.13.428A.267.267 0 0 0 16.917 0h-1.349c-.084 0-.165 0-.214.107zM12.9 18.393a2.68 2.68 0 0 1-2.679-2.679C10.22 14.237 11.421 13 12.9 13c1.477 0 2.678 1.237 2.678 2.714a2.68 2.68 0 0 1-2.678 2.679zm0-6.965a4.287 4.287 0 0 0 0 8.572 4.287 4.287 0 0 0 0-8.572zm-8.572-9.82C5.805 1.607 7 2.807 7 4.285 7 5.763 5.805 7 4.327 7 2.85 7 1.65 5.763 1.65 4.286a2.68 2.68 0 0 1 2.678-2.679zm0 6.964a4.287 4.287 0 0 0 0-8.572C2 0 0 1.92 0 4.286c0 2.366 2 4.286 4.327 4.286z" fill="#191e2a"></path>
+                    </svg></span>
+                  <input class="form-control" id="countyTaxRate" type="text" aria-label="Define Bid Increments" aria-describedby="basic-addon8" value="0">
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="cityTaxRate">City Tax Rate</label>
+                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon9"><span class="d-none">%</span>
+                    <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                      <path d="M15.354.107.095 19.572C0 19.746.086 20 .31 20h1.349c.084 0 .165 0 .214-.107L17.13.428A.267.267 0 0 0 16.917 0h-1.349c-.084 0-.165 0-.214.107zM12.9 18.393a2.68 2.68 0 0 1-2.679-2.679C10.22 14.237 11.421 13 12.9 13c1.477 0 2.678 1.237 2.678 2.714a2.68 2.68 0 0 1-2.678 2.679zm0-6.965a4.287 4.287 0 0 0 0 8.572 4.287 4.287 0 0 0 0-8.572zm-8.572-9.82C5.805 1.607 7 2.807 7 4.285 7 5.763 5.805 7 4.327 7 2.85 7 1.65 5.763 1.65 4.286a2.68 2.68 0 0 1 2.678-2.679zm0 6.964a4.287 4.287 0 0 0 0-8.572C2 0 0 1.92 0 4.286c0 2.366 2 4.286 4.327 4.286z" fill="#191e2a"></path>
+                    </svg></span>
+                  <input class="form-control" id="cityTaxRate" type="text" aria-label="Define Bid Increments" aria-describedby="basic-addon9" value="0">
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="transportExciseTaxRate">Transport / Excise Tax Rate</label>
+                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon10"><span class="d-none">%</span>
+                    <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                      <path d="M15.354.107.095 19.572C0 19.746.086 20 .31 20h1.349c.084 0 .165 0 .214-.107L17.13.428A.267.267 0 0 0 16.917 0h-1.349c-.084 0-.165 0-.214.107zM12.9 18.393a2.68 2.68 0 0 1-2.679-2.679C10.22 14.237 11.421 13 12.9 13c1.477 0 2.678 1.237 2.678 2.714a2.68 2.68 0 0 1-2.678 2.679zm0-6.965a4.287 4.287 0 0 0 0 8.572 4.287 4.287 0 0 0 0-8.572zm-8.572-9.82C5.805 1.607 7 2.807 7 4.285 7 5.763 5.805 7 4.327 7 2.85 7 1.65 5.763 1.65 4.286a2.68 2.68 0 0 1 2.678-2.679zm0 6.964a4.287 4.287 0 0 0 0-8.572C2 0 0 1.92 0 4.286c0 2.366 2 4.286 4.327 4.286z" fill="#191e2a"></path>
+                    </svg></span>
+                  <input class="form-control" id="transportExciseTaxRate" type="text" aria-label="Define Bid Increments" aria-describedby="basic-addon10" value="0">
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="miscTaxRate">Misc. Tax Rate</label>
+                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon11"><span class="d-none">%</span>
+                    <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                      <path d="M15.354.107.095 19.572C0 19.746.086 20 .31 20h1.349c.084 0 .165 0 .214-.107L17.13.428A.267.267 0 0 0 16.917 0h-1.349c-.084 0-.165 0-.214.107zM12.9 18.393a2.68 2.68 0 0 1-2.679-2.679C10.22 14.237 11.421 13 12.9 13c1.477 0 2.678 1.237 2.678 2.714a2.68 2.68 0 0 1-2.678 2.679zm0-6.965a4.287 4.287 0 0 0 0 8.572 4.287 4.287 0 0 0 0-8.572zm-8.572-9.82C5.805 1.607 7 2.807 7 4.285 7 5.763 5.805 7 4.327 7 2.85 7 1.65 5.763 1.65 4.286a2.68 2.68 0 0 1 2.678-2.679zm0 6.964a4.287 4.287 0 0 0 0-8.572C2 0 0 1.92 0 4.286c0 2.366 2 4.286 4.327 4.286z" fill="#191e2a"></path>
+                    </svg></span>
+                  <input class="form-control" id="miscTaxRate" type="text" aria-label="Define Bid Increments" aria-describedby="basic-addon11" value="0">
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="totalTaxPercentage">Total Tax Percentage (Aggregate of All)</label>
+                <div class="input-group mb-3"><span class="input-group-text" id="basic-addon12"><span class="d-none">%</span>
+                    <svg width="18" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20">
+                      <path d="M15.354.107.095 19.572C0 19.746.086 20 .31 20h1.349c.084 0 .165 0 .214-.107L17.13.428A.267.267 0 0 0 16.917 0h-1.349c-.084 0-.165 0-.214.107zM12.9 18.393a2.68 2.68 0 0 1-2.679-2.679C10.22 14.237 11.421 13 12.9 13c1.477 0 2.678 1.237 2.678 2.714a2.68 2.68 0 0 1-2.678 2.679zm0-6.965a4.287 4.287 0 0 0 0 8.572 4.287 4.287 0 0 0 0-8.572zm-8.572-9.82C5.805 1.607 7 2.807 7 4.285 7 5.763 5.805 7 4.327 7 2.85 7 1.65 5.763 1.65 4.286a2.68 2.68 0 0 1 2.678-2.679zm0 6.964a4.287 4.287 0 0 0 0-8.572C2 0 0 1.92 0 4.286c0 2.366 2 4.286 4.327 4.286z" fill="#191e2a"></path>
+                    </svg></span>
+                  <input class="form-control" id="totalTaxPercentage" type="text" aria-label="Define Bid Increments" aria-describedby="basic-addon12" value="0">
+                </div>
+              </div>
+            </section>
+            <section class="auction-details-section" id="lotClosingSchedule">
+              <Heading Size="HeadingSize.Is3">Lot Closing Schedule</Heading>
+              <div class="form-row"><span class="form-label d-block mb-2">Per Minute</span>
+                <div class="form-check ms-1">
+                  <input class="form-check-input" id="perMinute" type="checkbox">
+                  <label class="form-check-label" for="perMinute">Yes</label>
+                </div>
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="Interval">Interval</label>
+                <input class="form-control" id="Interval" type="text" placeholder="Enter">
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="Interval">Sequential</label>
+                <input class="form-control" id="Sequential" type="text" placeholder="Enter">
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="itemsPerMinute">Items Per Minute</label>
+                <input class="form-control" id="itemsPerMinute" type="text" placeholder="Enter">
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="forFirstItems">For First # Items</label>
+                <input class="form-control" id="forFirstItems" type="text" placeholder="Enter">
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="thenItemsPerMinute">Then Items Per Minute</label>
+                <input class="form-control" id="thenItemsPerMinute" type="text" placeholder="Enter">
+              </div>
+              <div class="form-row">
+                <label class="form-label" for="autoExtendedTime">Auto-Extended Time</label>
+                <input class="form-control" id="autoExtendedTime" type="text" placeholder="Enter">
+              </div>
+            </section>
+            <section class="auction-details-section" id="location">
+              <Heading Size="HeadingSize.Is3">Location</Heading>
+              <div class="form-row">
+                <label class="form-label" for="selectAddress">Select Address</label>
+                <select class="form-select" id="selectAddress" aria-label="Select Address">
+                  <option selected="">Choose Address</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </section>
+            <div class="auction-details-section border-bottom-0">
+              <div class="btn-wrap d-sm-flex justify-content-sm-end pt-3">
+                <Blazorise.Button
+                  Type="ButtonType.Button"
+                  Color="Color.Secondary"
+                  Class="me-3 mb-2 mb-sm-0">
+                  Cancel & Close
+                </Blazorise.Button>
+                <Blazorise.Button
+                  Type="ButtonType.Submit"
+                  Color="Color.Primary"
+                  Class="mb-2 mb-sm-0">
+                  Save Changes
+                </Blazorise.Button>
+              </div>
+            </div>
+          </EditForm>
+        </Validations>
+      }
+    </Div>
+  </Div>
+</Div>
+
+@code
+{
+  ////int currentIndex;
+  ////private bool isLoading = false;
+  ////private DateTime? StartDate;
+  ////private DateTime? StartTime;
+  ////private InputFile? imageInputFileEl;
+  ////private InputFile? videoInputFileEl;
+  ////private int maxAllowedFiles = 3;
+  ////private int MaxFileSize = 1024;
+  ////private int progressPercent;
+  ////private int total;
+  ////private string StartNow = "";
+  private AuctionModel Record { get; } = new MVC.Api.Endpoints.CreateAuction();
+  private bool BClearInputFile { get; set; } = false;
+  private EditContext editContext = null!;
+  private HashSet<ProductCategorySelectorModel> SelectedCategories { get; set; } = new();
+  private List<IBrowserFile> loadedFiles = new();
+  private List<ProductCategorySelectorModel> Categories { get; set; } = new();
+  private List<ProductImageModel>? AuctionImages { get; set; } = new();
+  private List<StatusModel>? Statuses { get; set; }
+  private List<TypeModel>? Types { get; set; }
+  private string AuctionName = "";
+  private string AuctionStatus { get; set; } = "";
+  private string AuctionType { get; set; } = "";
+  private string BidIncrement = "5.00";
+  private string ByAppointmentOnly = "";
+  private string Description = "";
+  private string PassPhrase = "";
+
+  /*
+  void StartDrag(AuctionImageModel item)
+  {
+    DebugBeginMethod();
+    currentIndex = GetIndex(item);
+  }
+  */
+
+  /*
+  void ClickItem(AuctionImageModel item)
+  {
+    DebugBeginMethod();
+    currentIndex = GetIndex(item);
+  }
+  */
+
+  /*
+  int GetIndex(AuctionImageModel item)
+  {
+    return AuctionImages!.FindIndex(a => a.ID == item.ID);
+  }
+  */
+
+  /*
+  void Drop(AuctionImageModel? item)
+  {
+    DebugBeginMethod();
+    if (item is null)
+    {
+      DebugEndMethod();
+      return;
+    }
+    Console.WriteLine($"Drop item {item.Name} ({item.ID})");
+    var index = GetIndex(item);
+    Console.WriteLine($"Drop index is {index}, move from {currentIndex}");
+    // get current item
+    var current = AuctionImages![currentIndex];
+    // remove game from current index
+    AuctionImages!.RemoveAt(currentIndex);
+    AuctionImages!.Insert(index, current);
+    // update current selection
+    currentIndex = index;
+    StateHasChanged();
+    DebugEndMethod();
+  }
+  */
+
+  /*
+  private async Task UploadFiles(InputFileChangeEventArgs e)
+  {
+    DebugBeginMethod();
+    isLoading = true;
+    StateHasChanged();
+    loadedFiles.Clear();
+    await using var stream = new MemoryStream();
+    await e.File.OpenReadStream().CopyToAsync(stream);
+    foreach (var image in e.GetMultipleFiles(maxAllowedFiles))
+    {
+      try
+      {
+        var toAdd = new MVC.Api.Endpoints.CreateAuctionImage
+        {
+          ID = 0,
+          Name = e.File.Name,
+          TypeID = 1,
+          Active = true,
+          ////IsPrimary = Product.Images.All(i => !i.IsPrimary),
+          IsPrimary = false,
+          OriginalIsStoredInDB = false,
+          MasterID = 1,
+          OriginalBytes = stream.GetBuffer(),
+          OriginalFileName = e.File.Name,
+        };
+        toAdd.ID = (await cvApi.CreateAuctionImage(toAdd)).data?.Result ?? 0;
+        AuctionImages!.Add(toAdd);
+      }
+      catch (Exception ex)
+      {
+        ConsoleDebug($"File: {e.File.Name} Error: {ex.Message}");
+      }
+    }
+    isLoading = false;
+    ClearInputFile();
+    StateHasChanged();
+    DebugEndMethod();
+  }
+  */
+
+  /*
+  private void ClearInputFile()
+  {
+    DebugBeginMethod();
+    BClearInputFile = true;
+    StateHasChanged();
+    BClearInputFile = false;
+    StateHasChanged();
+    DebugEndMethod();
+  }
+  */
+
+  /*
+  private List<AuctionImageModel> RemoveImageNew(string name)
+  {
+    DebugBeginMethod();
+    var images = AuctionImages;
+    images!.RemoveAll(x => x.Name == name);
+    StateHasChanged();
+    DebugEndMethod();
+    return images;
+  }
+  */
+
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    DebugBeginMethod();
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    editContext = new(Record);
+    await SetRunningAsync().ConfigureAwait(false);
+    PortalRoute = routingOptions.GetRouteByPath("/catalog/auctions/creator2");
+    await Task.WhenAll(
+        LoadStatusesAsync(),
+        LoadTypesAsync(),
+        LoadCategoriesAsync())
+      .ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+    DebugEndMethod();
+  }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetAuctionStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetAuctionTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+
+  private async Task LoadCategoriesAsync()
+  {
+    DebugBeginMethod();
+    ////var result = await cvApi.GetAuctionCategories(new() { Active = true, TypeKey = "Auction" }).ConfigureAwait(false);
+    var result = await cvApi.GetCategoryTree(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Categories = result.data;
+    }
+    DebugEndMethod();
+  }
+
+  private void ToggleCategory((ProductCategorySelectorModel category, bool isChecked) args)
+  {
+    DebugBeginMethod();
+    if (args.isChecked)
+    {
+      SelectedCategories.Add(args.category);
+    }
+    else
+    {
+      SelectedCategories.Remove(args.category);
+    }
+    DebugEndMethod();
+  }
+}

@@ -1,0 +1,965 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-standard-detail-header-widget
+       record="brandDetailCtrl.record"
+       new-kind-key="ui.admin.common.Brand.New"
+       existing-kind-key="ui.admin.common.Brand">
+  </div>
+  <div class="row details-body">
+    <div class="col-sm-12 brand-editor">
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Details">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                <text-input-form-group
+                  key="Name"
+                  ng-model="brandDetailCtrl.record.Name"
+                  label-key="ui.admin.common.Name"
+                  tooltip-text="The name of the record."
+                  placeholder-key="ui.admin.common.Name"
+                  max-length="256"
+                  ng-required="true">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="CustomKey"
+                  ng-model="brandDetailCtrl.record.CustomKey"
+                  label-key="ui.admin.common.Key"
+                  tooltip-text="The key of the record. In most cases, this is provided by a third party system. This record specifically requires a unique value even if not integrated with a 3rd party system."
+                  placeholder-key="ui.admin.common.Key"
+                  max-length="128"
+                  ng-required="false">
+                </text-input-form-group>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.MinOrders.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.categoryDetail.MinimumOrders.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.MinOrders">
+            <div class="row">
+              <div cef-order-minimums-editor
+                   master="brandDetailCtrl.record"
+                   class="col-sm-12"></div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.MinFreeShip.$invalid}"><i class="far fa-lg fa-truck"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.categoryDetail.FreeShipping"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.MinFreeShip">
+            <div class="row">
+              <div cef-free-shipping-minimums-editor
+                   master="brandDetailCtrl.record"
+                   class="col-sm-12"></div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Images.$invalid}"><i class="far fa-lg fa-picture-o"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Image.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Images">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Image.Plural"></h3>
+                <!-- Uploader -->
+                <div cef-upload-image-widget
+                     master="brandDetailCtrl.record"
+                     upload-type="ImageBrand"
+                     type-key="General"
+                     allow-multiple="true"
+                     is-primary="false">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <!-- Thumbnails -->
+                <div class="form-group">
+                  <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                  <div class="input-group">
+                    <div ng-if="!brandDetailCtrl.record.Images.length"
+                         data-translate="ui.admin.common.NoImagesHaveBeenUploaded"></div>
+                    <div ng-repeat="image in brandDetailCtrl.record.Images" class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                      <div class="form-vertical">
+                        <div class="form-group">
+                          <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                               ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                         | corsImageLink : 'brands' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                               onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Admin/framework/store/img/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                        </div>
+                        <text-input-form-group
+                          key="ImageName{{$index}}"
+                          ng-model="image.Name"
+                          label-key="ui.admin.common.Name"
+                          max-length="128"
+                          ng-required="true">
+                        </text-input-form-group>
+                        <select-form-group
+                          key="ImageTypeID{{$index}}"
+                          ng-model="image.TypeID"
+                          selections="brandDetailCtrl.imageTypes"
+                          label-key="ui.admin.common.Type"
+                          tooltip-text="The type of the record."
+                          placeholder-key="ui.admin.common.Type"
+                          ng-required="true">
+                        </select-form-group>
+                        <toggle-form-group
+                          key="ImageIsPrimary{{$index}}"
+                          ng-change="brandDetailCtrl.clearOtherPrimaryImagesNew($index)"
+                          ng-model="image.IsPrimary"
+                          label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                          tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                          tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                          ng-required="false">
+                        </toggle-form-group>
+                        <button type="button" class="btn btn-danger btn-block"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeImageNew($index)">
+                          <i class="far fa-trash-o"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.SiteDomains.$invalid}"><i class="far fa-lg fa-globe"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.SiteDomain.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.SiteDomains">
+            <div class="row">
+              <div class="col-sm-12"><h3 data-translate="ui.admin.controls.accounts.brandDetail.SiteDomainsThatFollowThisBrand"></h3></div>
+              <div class="col-sm-12 col-md-6 col-lg-8">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectSiteDomainsToAdd"></h4>
+                <div cef-paging-header paging="brandDetailCtrl.siteDomainPaging"></div>
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                        <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                        <th data-translate="ui.admin.common.VisitDomain"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-show="brandDetailCtrl.siteDomainPaging.filteredCount === 0">
+                        <td colspan="5" data-translate="ui.admin.common.NoSiteDomainsHaveBeenAdded"></td>
+                      </tr>
+                      <tr ng-repeat="d in brandDetailCtrl.siteDomainPaging.filteredData[brandDetailCtrl.siteDomainPaging.currentPage]
+                                     | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                     | limitTo: brandDetailCtrl.siteDomainPaging.pageSize
+                                              : brandDetailCtrl.siteDomainPaging.skip()">
+                        <td><label class="font-weight-normal form-control-static" ng-bind="d.ID"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="d.CustomKey"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="d.Name"></label></td>
+                        <td>
+                          <a class="btn btn-link"
+                             ng-if="d.Url"
+                             ng-href="{{d.Url}}"
+                             target="_blank">
+                            <i class="far fa-external-link"></i>&nbsp;<!--
+                            --><span data-translate="ui.admin.common.VisitDomain"></span></a>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-success"
+                                  translate-attr="{ title: 'ui.admin.common.Add',
+                                                    'aria-label': 'ui.admin.common.Add' }"
+                                  ng-click="brandDetailCtrl.addSiteDomain(d.ID)">
+                            <i class="far fa-plus"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-4 scroll-over-500">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedSiteDomains"></h4>
+                <label class="control-label" data-translate="ui.admin.common.QuickFilter"></label>
+                <input type="text" class="form-control mb-3"
+                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                       ng-model="brandDetailCtrl.addedSiteDomainsQuickFilter" />
+                <table class="table table-striped table-hover table-condensed mb-0">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.SiteDomain"></th>
+                      <th data-translate="ui.admin.common.VisitDomain"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!(brandDetailCtrl.record.BrandSiteDomains | filter: { $: brandDetailCtrl.addedSiteDomainsQuickFilter }).length">
+                      <td colspan="3" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                    </tr>
+                    <tr ng-repeat="ssd in brandDetailCtrl.record.BrandSiteDomains
+                                   | filter: { $: brandDetailCtrl.addedSiteDomainsQuickFilter }
+                                   | orderBy: ['SlaveName || Slave.Name || SiteDomainName || SiteDomain.Name']">
+                      <td>
+                        <label class="font-weight-normal form-control-static"
+                               uib-tooltip="{{'#' + (ssd.SlaveID | zeroPadNumber: 6)
+                                              + ' ' + (ssd.SlaveName || ssd.Slave.Name)
+                                              + ' [' + (ssd.SlaveKey || ssd.Slave.CustomKey) + ']'}}"
+                               tooltip-placement="auto top-left"
+                               ng-bind="ssd.SlaveName || ssd.Slave.Name"></label>
+                      </td>
+                      <td>
+                        <a class="btn btn-link"
+                           ng-if="ssd.Slave.Url"
+                           ng-href="{{ssd.Slave.Url}}"
+                           target="_blank">
+                          <i class="far fa-external-link"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.common.VisitDomain"></span></a>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeSiteDomain(ssd)">
+                          <i class="far fa-times" aria-hidden="true"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Stores.$invalid}"><i class="far fa-lg fa-building"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Store.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Stores">
+            <div class="row">
+              <div class="col-sm-12"><h3 data-translate="ui.admin.controls.accounts.brandDetail.StoresThatOperateUnderThisBrand"></h3></div>
+              <div class="col-sm-12 col-md-6 col-lg-8">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectStoresToAdd"></h4>
+                <div cef-paging-header paging="brandDetailCtrl.storePaging"></div>
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                        <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-show="!brandDetailCtrl.storePaging.filteredCount">
+                        <td colspan="4" data-translate="ui.admin.common.None"></td>
+                      </tr>
+                      <tr ng-repeat="s in brandDetailCtrl.storePaging.filteredData[brandDetailCtrl.storePaging.currentPage]
+                                     | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                     | limitTo: brandDetailCtrl.storePaging.pageSize
+                                              : brandDetailCtrl.storePaging.skip()">
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.ID"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.CustomKey"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.Name"></label></td>
+                        <td>
+                          <button type="button" class="btn btn-success"
+                                  translate-attr="{ title: 'ui.admin.common.Add',
+                                                    'aria-label': 'ui.admin.common.Add' }"
+                                  ng-click="brandDetailCtrl.addStore(s.ID)">
+                            <i class="far fa-plus"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-4 scroll-over-500">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedStores"></h4>
+                <label class="control-label" data-translate="ui.admin.common.QuickFilter"></label>
+                <input type="text" class="form-control mb-3"
+                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                       ng-model="brandDetailCtrl.addedStoresQuickFilter" />
+                <table class="table table-striped table-hover table-condensed mb-0">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.Store"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!(brandDetailCtrl.record.Stores | filter: { $: brandDetailCtrl.addedStoresQuickFilter }).length">
+                      <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                    </tr>
+                    <tr ng-repeat="s in brandDetailCtrl.record.Stores
+                                   | filter: { $: brandDetailCtrl.addedStoresQuickFilter }
+                                   | orderBy: ['SlaveName || Slave.Name || StoreName || Store.Name']">
+                      <td>
+                        <label class="font-weight-normal form-control-static"
+                               uib-tooltip="{{'#' + ((s.SlaveID) | zeroPadNumber: 6)
+                                              + ' ' + (s.SlaveName || s.Slave.Name)
+                                              + ' [' + (s.SlaveKey || s.Slave.CustomKey) + ']'}}"
+                               tooltip-placement="auto top-left"
+                               ng-bind="s.SlaveName || s.Slave.Name"></label>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeStore(s)">
+                          <i class="far fa-times" aria-hidden="true"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Products.$invalid}"><i class="far fa-lg fa-object-group"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Product.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Products">
+            <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.controls.accounts.brandDetail.ProductsThatThisBrandSells"></h3></div></div>
+            <div class="row" ng-hide="brandDetailCtrl.display.ShowAddProductsPanel">
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-primary"
+                        data-translate="ui.admin.common.AddProduct"
+                        ng-click="brandDetailCtrl.showAddProductsPanel()"></button>
+                <button type="button" class="btn btn-info"
+                        ng-click="storeDetailCtrl.cloneProducts()">
+                  <i class="far fa-fw fa-object-group"></i>&nbsp<!--
+                  -->Clone Products
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12" ng-hide="brandDetailCtrl.display.ShowAddProductsPanel">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="width:15%;" data-translate="ui.admin.controls.accounts.brandDetail.VisibleInBrand"></th>
+                      <th style="width:50px;" data-translate="ui.admin.common.Number.Symbol"></th>
+                      <th style="width:20%;" data-translate="ui.admin.common.Key"></th>
+                      <th style="width:60%;" data-translate="ui.admin.common.Name"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!brandDetailCtrl.record.Products.length">
+                      <td colspan="5" data-translate="ui.admin.common.NoProductsHaveBeenAdded"></td>
+                    </tr>
+                    <tr ng-repeat="p in brandDetailCtrl.record.Products">
+                      <td>
+                        <toggle class="btn btn-block"
+                                id="ckIsVisibleIn{{$index}}" name="ckIsVisibleIn{{$index}}"
+                                ng-model="p.IsVisibleIn"
+                                data-on="{{'ui.admin.common.Visible' | translate}}" data-truestyle="btn-success"
+                                data-off="{{'ui.admin.common.Hidden' | translate}}" data-offstyle="btn-danger"></toggle>
+                      </td>
+                      <td><label class="form-control-static" ng-bind="p.SlaveID"></label></td>
+                      <td><label class="form-control-static" ng-bind="p.SlaveKey"></label></td>
+                      <td><label class="form-control-static" ng-bind="p.SlaveName"></label></td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeProduct(p)">
+                          <i class="far fa-times"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-12" ng-show="brandDetailCtrl.display.ShowAddProductsPanel">
+                <div class="separator bottom"></div>
+                <div class="filter-bar">
+                  <div class="margin-none form-inline">
+                    <div class="form-group col-sm-3">
+                      <label data-translate="ui.admin.common.Key"></label>
+                      <div class="input-group">
+                        <input type="text" class="form-control"
+                               ng-model="brandDetailCtrl.productSearchParams.ProductCode" />
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                      <label data-translate="ui.admin.common.Name"></label>
+                      <div class="input-group">
+                        <input type="text" class="form-control"
+                               ng-model="brandDetailCtrl.productSearchParams.ProductName" />
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                      <label>&nbsp;</label>
+                      <div class="input-group">
+                        <button type="button" class="btn btn-info"
+                                ng-click="brandDetailCtrl.searchProducts()">
+                          <i class="far fa-fw fa-filter"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.controls.accounts.storeDetail.SearchProduct.Plural"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                ng-click="brandDetailCtrl.addProducts()">
+                          <i class="far fa-fw fa-plus"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plural"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.Select"></th>
+                      <th data-translate="ui.admin.common.Key"></th>
+                      <th data-translate="ui.admin.common.Name"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-hide="brandDetailCtrl.products.length">
+                      <td colspan="3" data-translate="ui.admin.controls.accounts.storeDetail.NoProductsWereFoundWithThisSearchCriteria"></td>
+                    </tr>
+                    <tr ng-repeat="product in brandDetailCtrl.products">
+                      <td><input type="checkbox" ng-model="product.Selected" /></td>
+                      <td ng-bind="product.CustomKey"></td>
+                      <td ng-bind="product.Name"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="form-actions m-0">
+                  <button type="button" class="btn btn-primary"
+                          ng-click="brandDetailCtrl.addProducts()">
+                    <i class="far fa-fw fa-plus"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plural"></span>
+                  </button>
+                  <button type="button" class="btn btn-info"
+                          ng-click="brandDetailCtrl.hideAddProductsPanel()">
+                    <i class="far fa-fw fa-undo"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Cancel"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="false && brandDetailCtrl.cefConfig.featureSet.categories.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Categories.$invalid}"><i class="far fa-lg fa-tags"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Category.Plural"></span></span></uib-tab-heading>
+          <div class="container-fluid" ng-form="brandDetailCtrl.forms.Categories">
+            <div class="row"><div class="col-sm-12"><h3 class="mb-3" data-translate="ui.admin.common.Category.Plural"></h3></div></div>
+            <div class="row">
+              <div class="col-md-5 col-lg-4">
+                <h4 data-translate="ui.admin.controls.inventory.productDetail.AddCategoriesUsingThePlusButton"></h4>
+                <div kendo-treeview="brandDetailCtrl.categoryTree"
+                     k-data-source="brandDetailCtrl.categoryTreeData"
+                     k-options="brandDetailCtrl.categoryTreeOptions"
+                     k-on-change="brandDetailCtrl.selectedCategory = dataItem"
+                     ng-model="brandDetailCtrl.record.Categories"></div>
+              </div>
+              <div class="col-md-7 col-lg-8">
+                <h4 data-translate="ui.admin.controls.inventory.productDetail.AppliedCategory.Plural"></h4>
+                <table class="table table-striped table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="w-15" data-translate="ui.admin.common.ID"></th>
+                      <th class="w-35" data-translate="ui.admin.common.Name"></th>
+                      <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                      <!-- <th class="w-10" data-translate="ui.admin.common.SortOrder"></th> -->
+                      <th style="width: 43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!brandDetailCtrl.record.Categories.length">
+                      <td colspan="4" data-translate="No categories have been added"></td>
+                    </tr>
+                    <tr ng-repeat="bc in brandDetailCtrl.record.Categories">
+                      <td><label class="form-control-static font-weight-normal" ng-bind="bc.SlaveID | zeroPadNumber: 6"></label></td>
+                      <td><label class="form-control-static font-weight-normal" ng-bind="bc.Slave.Name || bc.SlaveName"></label></td>
+                      <td><label class="form-control-static font-weight-normal" ng-bind="bc.Slave.CustomKey || bc.SlaveKey"></label></td>
+                      <!-- <td><input type="number" step="1" ng-model="bc.SortOrder" placeholder="0" class="form-control input-sm text-right" /></td> -->
+                      <td class="nowrap">
+                        <button type="button" class="btn btn-sm btn-danger"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeCategory(bc)">
+                          <i class="far fa-fw fa-times"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="col-md-12" ng-show="brandDetailCtrl.editCategory">
+                  <span class="h4"><span data-translate="ui.admin.controls.inventory.productDetail.AppliedCategoryAttribute.Plural"></span>&nbsp;<!--
+                  --><span ng-bind="brandDetailCtrl.editCategory.Category.Name"></span></span>
+                  <p data-translate="ui.admin.controls.inventory.brandDetail.TheseAttributesExistBetweenTheBrandAndTheCategoryAndNotDirectlyOnEither"></p>
+                  <div cef-json-attributes-editor
+                       master="brandDetailCtrl.editCategory"
+                       type="Brand Category"
+                       ng-if="brandDetailCtrl.editCategory"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="brandDetailCtrl.cefConfig.featureSet.inventory.advanced.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Warehouses.$invalid}"><i class="far fa-lg fa-truck"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Warehouse.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Warehouses">
+            <div class="row">
+              <div class="col-sm-12"><h3 class="mb-3" data-translate="ui.admin.controls.accounts.brandDetail.WarehousesThatCoverThisBrand"></h3></div>
+              <div class="col-sm-12 col-md-6 col-lg-8">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectWarehousesToAdd"></h4>
+                <div cef-paging-header paging="brandDetailCtrl.inventoryLocationPaging"></div>
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover table-condensed mb-0">
+                    <thead>
+                      <tr>
+                        <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                        <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-show="brandDetailCtrl.inventoryLocationPaging.filteredCount === 0">
+                        <td colspan="4" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                      </tr>
+                      <tr ng-repeat="p in brandDetailCtrl.inventoryLocationPaging.filteredData[brandDetailCtrl.inventoryLocationPaging.currentPage]
+                                     | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                     | limitTo: brandDetailCtrl.inventoryLocationPaging.pageSize
+                                              : brandDetailCtrl.inventoryLocationPaging.skip()">
+                        <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                        <td>
+                          <button type="button" class="btn btn-success"
+                                  translate-attr="{ title: 'ui.admin.common.Add',
+                                                    'aria-label': 'ui.admin.common.Add' }"
+                                  ng-click="brandDetailCtrl.addInventoryLocation(p.ID)">
+                            <i class="far fa-plus"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-4 scroll-over-500">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedWarehouses"></h4>
+                <label class="control-label" data-translate="ui.admin.common.QuickFilter"></label>
+                <input type="text" class="form-control mb-3"
+                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                       ng-model="brandDetailCtrl.addedInventoryLocationsQuickFilter" />
+                <table class="table table-striped table-hover table-condensed mb-0">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.Warehouse"></th>
+                      <th class="w-40" data-translate="ui.admin.common.Type"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!(brandDetailCtrl.record.BrandInventoryLocations | filter: { $: brandDetailCtrl.addedInventoryLocationsQuickFilter }).length">
+                      <td colspan="3" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                    </tr>
+                    <tr ng-repeat="sil in brandDetailCtrl.record.BrandInventoryLocations
+                                   | filter: { $: brandDetailCtrl.addedInventoryLocationsQuickFilter }
+                                   | orderBy: ['SlaveName || Slave.Name || InventoryLocationName || InventoryLocation.Name']">
+                      <td>
+                        <label class="font-weight-normal form-control-static"
+                               uib-tooltip="{{'#' + (sil.SlaveID | zeroPadNumber: 6)
+                                              + ' ' + (sil.SlaveName || sil.Slave.Name)
+                                              + ' [' + (sil.SlaveKey || sil.Slave.CustomKey) + ']'}}"
+                               tooltip-placement="auto top-left"
+                               ng-bind="sil.SlaveName || sil.Slave.Name"></label>
+                      </td>
+                      <td>
+                        <select class="form-control"
+                                id="ddlWarehouseType{{$index}}" name="ddlWarehouseType{{$index}}"
+                                ng-required="false"
+                                ng-options="t.ID as ((t.DisplayName || t.Name) + (t.CustomKey ? ' [' + t.CustomKey + ']' : ''))
+                                            for t in brandDetailCtrl.brandInventoryLocationTypes
+                                            | orderBy: ['SortOrder','DisplayName || Name']"
+                                ng-model="sil.TypeID"></select>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeInventoryLocation(sil)">
+                          <i class="far fa-times"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Accounts.$invalid}"><i class="far fa-lg fa-address-card"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Account.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Accounts">
+            <div class="row">
+              <div class="col-sm-12">
+                <div cef-associator-widget
+                     title-key="ui.admin.common.Account.Plural"
+                     select-key="ui.admin.controls.accounts.discountDetail.SelectAccountsToAdd"
+                     added-key="ui.admin.controls.accounts.discountDetail.AddedAccounts"
+                     added-sub-key="ui.admin.common.Account"
+                     name="accounts"
+                     master="brandDetailCtrl.record"
+                     api-call="brandDetailCtrl.cvApi.accounts.GetAccounts"
+                     collection="Accounts"
+                     defaults="{ HasAccessToBrand: true }">
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Users.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.User.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Users">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 class="mb-3" data-translate="ui.admin.controls.accounts.brandDetail.UsersAssociatedToThisBrand"></h3>
+                <button type="button" class="btn btn-info mb-3"
+                        translate-attr="{ title: 'ui.admin.controls.accounts.accountDetail.AddNewUser',
+                                          'aria-label': 'ui.admin.controls.accounts.accountDetail.AddNewUser' }"
+                        ng-click="brandDetailCtrl.openAddNewUserModal()"
+                        data-translate="ui.admin.controls.accounts.accountDetail.AddNewUser"></button>
+                <!--
+                <button type="button" class="btn btn-info mb-3 ml-1"
+                        transalte-attr="{ title: 'ui.admin.controls.accounts.accountDetail.AddExistingUser',
+                                          'aria-label': 'ui.admin.controls.accounts.accountDetail.AddExistingUser' }"
+                        ng-click="brandDetailCtrl.openAddExistingUserModal()"
+                        data-translate="ui.admin.controls.accounts.accountDetail.AddExistingUser"></button>
+                -->
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-8">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectUsersToAdd"></h4>
+                <div cef-paging-header paging="brandDetailCtrl.userPaging"></div>
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover table-condensed mb-0">
+                    <thead>
+                      <tr>
+                        <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                        <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-show="brandDetailCtrl.userPaging.filteredCount === 0">
+                        <td colspan="4" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                      </tr>
+                      <tr ng-repeat="p in brandDetailCtrl.userPaging.filteredData[brandDetailCtrl.userPaging.currentPage]
+                                     | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                     | limitTo: brandDetailCtrl.userPaging.pageSize
+                                              : brandDetailCtrl.userPaging.skip()">
+                        <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="p.UserName || p.CustomKey"></label></td>
+                        <td><label class="font-weight-normal form-control-static"
+                                   ng-bind="p.DisplayName || (p.ContactFirstName + ' ' + p.ContactLastName)"></label></td>
+                        <td>
+                          <button type="button" class="btn btn-success"
+                                  translate-attr="{ title: 'ui.admin.common.Add',
+                                                    'aria-label': 'ui.admin.common.Add' }"
+                                  ng-click="brandDetailCtrl.addUser(p.ID)">
+                            <i class="far fa-plus"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-4 scroll-over-500">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedUsers"></h4>
+                <label class="control-label" data-translate="ui.admin.common.QuickFilter"></label>
+                <input type="text" class="form-control mb-3"
+                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                       ng-model="brandDetailCtrl.addedUsersQuickFilter" />
+                <table class="table table-striped table-hover table-condensed mb-0">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.User"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!(brandDetailCtrl.record.Users | filter: { $: brandDetailCtrl.addedUsersQuickFilter }).length">
+                      <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                    </tr>
+                    <tr ng-repeat="su in brandDetailCtrl.record.Users
+                                   | filter: { $: brandDetailCtrl.addedUsersQuickFilter }
+                                   | orderBy: ['UserName','User.Name']">
+                      <td>
+                        <label class="font-weight-normal form-control-static"
+                               uib-tooltip="{{'#' + (su.SlaveID | zeroPadNumber: 6)
+                                              + ' ' + (su.SlaveName || su.Slave.Name)
+                                              + ' [' + (su.SlaveKey || su.Slave.CustomKey) + ']'}}"
+                               tooltip-placement="auto top-left"
+                               ng-bind="su.SlaveKey || su.Slave.CustomKey"></label>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeUser(su)">
+                          <i class="far fa-times"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Currencies.$invalid}"><i class="far fa-lg fa-usd"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Currency.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Currencies">
+            <div class="row">
+              <div class="col-sm-12"><h3 data-translate="ui.admin.controls.accounts.brandDetail.CurrenciesThatOperateUnderThisBrand"></h3></div>
+              <div class="col-sm-12 col-md-6 col-lg-8">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectCurrenciesToAdd"></h4>
+                <div cef-paging-header paging="brandDetailCtrl.currencyPaging"></div>
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                        <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-show="!brandDetailCtrl.currencyPaging.filteredCount">
+                        <td colspan="4" data-translate="ui.admin.common.None"></td>
+                      </tr>
+                      <tr ng-repeat="s in brandDetailCtrl.currencyPaging.filteredData[brandDetailCtrl.currencyPaging.currentPage]
+                                     | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                     | limitTo: brandDetailCtrl.currencyPaging.pageSize
+                                              : brandDetailCtrl.currencyPaging.skip()">
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.ID"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.CustomKey"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.Name"></label></td>
+                        <td>
+                          <button type="button" class="btn btn-success"
+                                  translate-attr="{ title: 'ui.admin.common.Add',
+                                                    'aria-label': 'ui.admin.common.Add' }"
+                                  ng-click="brandDetailCtrl.addCurrency(s.ID)">
+                            <i class="far fa-plus"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-4 scroll-over-500">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedCurrencies"></h4>
+                <label class="control-label" data-translate="ui.admin.common.QuickFilter"></label>
+                <input type="text" class="form-control mb-3"
+                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                       ng-model="brandDetailCtrl.addedCurrenciesQuickFilter" />
+                <table class="table table-striped table-hover table-condensed mb-0">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.Currency"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!(brandDetailCtrl.record.BrandCurrencies | filter: { $: brandDetailCtrl.addedCurrenciesQuickFilter }).length">
+                      <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                    </tr>
+                    <tr ng-repeat="s in brandDetailCtrl.record.BrandCurrencies
+                                   | filter: { $: brandDetailCtrl.addedCurrenciesQuickFilter }
+                                   | orderBy: ['SlaveName || Slave.Name || CurrencyName || Currency.Name']">
+                      <td>
+                        <label class="font-weight-normal form-control-static"
+                               uib-tooltip="{{'#' + (s.SlaveID | zeroPadNumber: 6)
+                                              + ' ' + (s.SlaveName || s.Slave.Name)
+                                              + ' [' + (s.SlaveKey || s.Slave.CustomKey) + ']'}}"
+                               tooltip-placement="auto top-left"
+                               ng-bind="s.SlaveName || s.Slave.Name"></label>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeCurrency(s)">
+                          <i class="far fa-times" aria-hidden="true"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Languages.$invalid}"><i class="far fa-lg fa-language"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Language.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Languages">
+            <div class="row">
+              <div class="col-sm-12"><h3 data-translate="ui.admin.controls.accounts.brandDetail.LanguagesThatOperateUnderThisBrand"></h3></div>
+              <div class="col-sm-12 col-md-6 col-lg-8">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectLanguagesToAdd"></h4>
+                <div cef-paging-header paging="brandDetailCtrl.languagePaging"></div>
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                        <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-show="!brandDetailCtrl.languagePaging.filteredCount">
+                        <td colspan="4" data-translate="ui.admin.common.None"></td>
+                      </tr>
+                      <tr ng-repeat="s in brandDetailCtrl.languagePaging.filteredData[brandDetailCtrl.languagePaging.currentPage]
+                                     | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                     | limitTo: brandDetailCtrl.languagePaging.pageSize
+                                              : brandDetailCtrl.languagePaging.skip()">
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.ID"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.CustomKey"></label></td>
+                        <td><label class="font-weight-normal form-control-static" ng-bind="s.Name"></label></td>
+                        <td>
+                          <button type="button" class="btn btn-success"
+                                  translate-attr="{ title: 'ui.admin.common.Add',
+                                                    'aria-label': 'ui.admin.common.Add' }"
+                                  ng-click="brandDetailCtrl.addLanguage(s.ID)">
+                            <i class="far fa-plus"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-4 scroll-over-500">
+                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedLanguages"></h4>
+                <label class="control-label" data-translate="ui.admin.common.QuickFilter"></label>
+                <input type="text" class="form-control mb-3"
+                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                       ng-model="brandDetailCtrl.addedLanguagesQuickFilter" />
+                <table class="table table-striped table-hover table-condensed mb-0">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.Language"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!(brandDetailCtrl.record.BrandLanguages | filter: { $: brandDetailCtrl.addedLanguagesQuickFilter }).length">
+                      <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                    </tr>
+                    <tr ng-repeat="s in brandDetailCtrl.record.BrandLanguages
+                                   | filter: { $: brandDetailCtrl.addedLanguagesQuickFilter }
+                                   | orderBy: ['SlaveName || Slave.Name || LanguageName || Language.Name']">
+                      <td>
+                        <label class="font-weight-normal form-control-static"
+                               uib-tooltip="{{'#' + (s.SlaveID | zeroPadNumber: 6)
+                                              + ' ' + (s.SlaveName || s.Slave.Name)
+                                              + ' [' + (s.SlaveKey || s.Slave.CustomKey) + ']'}}"
+                               tooltip-placement="auto top-left"
+                               ng-bind="s.SlaveName || s.Slave.Name"></label>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                                translate-attr="{ title: 'ui.admin.common.Remove',
+                                                  'aria-label': 'ui.admin.common.Remove' }"
+                                ng-click="brandDetailCtrl.removeLanguage(s)">
+                          <i class="far fa-times" aria-hidden="true"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Notes.$invalid}"><i class="far fa-lg fa-sticky-note-o"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Note.Plural"></span></span></uib-tab-heading>
+          <div class="container-fluid" ng-form="brandDetailCtrl.forms.Notes">
+            <div class="row">
+              <div class="col-sm-12"><h3 data-translate="ui.admin.common.Note.Plural"></h3></div>
+              <div cef-notes-editor
+                   class="col-sm-12"
+                   notes="brandDetailCtrl.record.Notes"
+                   note-type-name="'Private'">
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': brandDetailCtrl.forms.Attributes.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Attribute.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="brandDetailCtrl.forms.Attributes">
+            <div cef-json-attributes-editor
+                 master="brandDetailCtrl.record"
+                 type="Brand"
+                 ng-if="brandDetailCtrl.record">
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <!-- Form actions -->
+  <div class="row details-footer">
+    <div class="col-md-12">
+      <cef-standard-detail-footer-buttons
+        master-controller="brandDetailCtrl"
+        return-state="accounts.brands.list"
+        permissions-base="Brands.Brand">
+      </cef-standard-detail-footer-buttons>
+      <button type="button" class="btn btn-info pull-right"
+              translate-attr="{ title: 'ui.admin.controls.accounts.brandDetail.CloneBrand',
+                                'aria-label': 'ui.admin.controls.accounts.brandDetail.CloneBrand' }"
+              ng-click="brandDetailCtrl.cloneBrand()">
+        <i class="far fa-fw fa-copy"></i>&nbsp;<!--
+        --><span data-translate="ui.admin.controls.accounts.brandDetail.CloneBrand"></span>
+      </button>
+      <a class="btn btn-info pull-right"
+         ng-if="brandDetailCtrl.record.BrandSiteDomains[0].SiteDomain.Url"
+         ng-href="{{brandDetailCtrl.record.BrandSiteDomains[0].SiteDomain.Url}}"
+         target="_blank">
+        <i class="far fa-external-link"></i>&nbsp;<!--
+        --><span data-translate="ui.admin.common.VisitDomain"></span>
+      </a>
+    </div>
+  </div>
+</div>

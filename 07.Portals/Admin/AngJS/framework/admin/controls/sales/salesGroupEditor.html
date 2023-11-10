@@ -1,0 +1,219 @@
+<div class="container-fluid cv-details-form full-height">
+  <div cef-sales-header-widget
+    record="sgeCtrl.record"
+    new-kind-key="ui.admin.controls.sales.salesGroupDetail.NewSalesGroup"
+    existing-kind-key="ui.admin.common.SalesGroup">
+  </div>
+  <div class="row details-body">
+    <div class="col-sm-12 order-tabs no-tab-pad">
+      <uib-tabset justified="true">
+        <uib-tab heading="{{'ui.admin.common.BasicInformation' | translate}}">
+          <div class="container-fluid full-height v-scroll-overflow with-shadow">
+            <div class="row">
+              <div class="col-md-4">
+                <h3 data-translate="ui.admin.common.AccountInformation"></h3>
+                <div class="form-group col-sm-12" ng-if="sgeCtrl.record.Account">
+                  <b data-translate="ui.admin.common.Account"></b>&nbsp;<!--
+                  --><a ui-sref="accounts.accounts.detail({ 'ID': sgeCtrl.record.AccountID })"
+                    target="_blank"
+                    ><span data-translate="ui.admin.common.Number.Symbol"
+                    ></span>{{sgeCtrl.record.AccountID}}&nbsp;<!--
+                  -->[{{sgeCtrl.record.Account.CustomKey}}]&nbsp;<!--
+                  -->{{sgeCtrl.record.Account.Name}}</a><br />
+                  <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (sgeCtrl.record.Account.Active ? "Yes" : "No")) | translate}}
+                  <b data-translate="ui.admin.common.OnHold"></b> {{('ui.admin.common.' + (sgeCtrl.record.Account.IsOnHold ? "Yes" : "No")) | translate}}
+                  <b data-translate="ui.admin.common.Status"></b> {{sgeCtrl.record.Account.StatusDisplayName || sgeCtrl.record.Account.StatusName}}
+                  <b data-translate="ui.admin.common.Type"></b> {{sgeCtrl.record.Account.TypeDisplayName || sgeCtrl.record.Account.TypeName}}
+                </div>
+                <h3 data-translate="ui.admin.common.BillingInformation"></h3>
+                <div cef-contact-editor-widget
+                  title-key="ui.admin.common.BillingInformation"
+                  contact="sgeCtrl.record.BillingContact"
+                  account="sgeCtrl.record.Account"
+                  is-editable="true"
+                  one-col="true"
+                  id-suffix="groupBilling"
+                  hide-key="false">
+                </div>
+              </div>
+              <div class="col-md-8">
+                <h3 ng-if="sgeCtrl.cefConfig.featureSet.quotes.enabled"
+                  data-translate="ui.admin.controls.sales.salesGroupDetail.MasterSalesQuote">
+                </h3>
+                <!--
+                <div class="form-group">
+                  <select class="form-control"
+                    id="ddlMasterSalesQuoteID" name="ddlMasterSalesQuoteID"
+                    ng-disabled="!sgeCtrl.salesQuotes.length"
+                    ng-options="q.ID as (q.ID + (q.CustomKey ? ' [' + q.CustomKey + ']' : ''))
+                                for q in sgeCtrl.salesQuotes"
+                    ng-model="sgeCtrl.record.MasterSalesQuoteID">
+                    <option value=""
+                      data-translate="ui.admin.controls.sales.salesGroupDetail.SelectTheMasterSalesQuote">
+                    </option>
+                  </select>
+                </div>
+                -->
+                <div class="row" ng-if="sgeCtrl.cefConfig.featureSet.quotes.enabled">
+                  <div class="col-sm-12 mb-3">
+                    {{sgeCtrl.masterSalesQuote.ID || '-'}}<br/>
+                    {{sgeCtrl.masterSalesQuote.CustomKey || '-'}}<br/>
+                    {{sgeCtrl.masterSalesQuote.HasChildren}}<br/>
+                    {{sgeCtrl.masterSalesQuote.ItemQuantity}}<br/>
+                    {{sgeCtrl.masterSalesQuote.TypeName}}<br/>
+                    {{sgeCtrl.masterSalesQuote.StateName}}<br/>
+                    {{sgeCtrl.masterSalesQuote.StatusName}}<br/>
+                    {{sgeCtrl.masterSalesQuote.Totals.SubTotal | globalizedCurrency}}<br/>
+                    {{sgeCtrl.masterSalesQuote.Totals.Shipping | globalizedCurrency}}<br/>
+                    {{sgeCtrl.masterSalesQuote.Totals.Handling | globalizedCurrency}}<br/>
+                    {{sgeCtrl.masterSalesQuote.Totals.Fees | globalizedCurrency}}<br/>
+                    {{sgeCtrl.masterSalesQuote.Totals.Tax | globalizedCurrency}}<br/>
+                    {{sgeCtrl.masterSalesQuote.Totals.Discounts | globalizedCurrency}}<br/>
+                    {{sgeCtrl.masterSalesQuote.Totals.Total | globalizedCurrency}}
+                  </div>
+                </div>
+                <!--
+                <div class="form-group">
+                  <select class="form-control"
+                    id="ddlMasterSalesOrderID" name="ddlMasterSalesOrderID"
+                    ng-disabled="!sgeCtrl.salesOrders.length"
+                    ng-options="o.ID as (o.ID + (o.CustomKey ? ' [' + o.CustomKey + ']' : ''))
+                                for o in sgeCtrl.salesOrders"
+                    ng-model="sgeCtrl.record.MasterSalesOrderID">
+                    <option value=""
+                      data-translate="ui.admin.controls.sales.salesGroupDetail.SelectTheMasterSalesOrder">
+                    </option>
+                  </select>
+                </div>
+                -->
+                <div class="row">
+                  <div class="col-sm-12 mb-3">
+                    <div class="table-responsive">
+                      <table class="table table-hover table-condensed table-striped">
+                        <thead>
+                          <tr>
+                            <th data-translate="ID"></th>
+                            <th data-translate="CustomKey"></th>
+                            <th data-translate="StateName"></th>
+                            <th data-translate="StatusName"></th>
+                            <th data-translate="SubTotal"></th>
+                            <th data-translate="Shipping"></th>
+                            <th data-translate="Handling"></th>
+                            <th data-translate="Fees"></th>
+                            <th data-translate="Tax"></th>
+                            <th data-translate="Discounts"></th>
+                            <th data-translate="Total"></th>
+                          </tr>
+                        </thead>
+                        <thead>
+                          <tr>
+                            <th colspan="11" data-translate="ui.admin.controls.sales.salesGroupDetail.MasterSalesOrder">
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="masterOrder in sgeCtrl.record.SalesOrderMasters">
+                            <td ng-if="masterOrder.ID">
+                              <a ui-sref="sales.salesOrders.detail({ 'ID': masterOrder.ID })"
+                                target="_blank"
+                                ng-bind="masterOrder.ID">
+                              </a>
+                            </td>
+                            <td ng-if="!masterOrder.ID">-</td>
+                            <td ng-bind="masterOrder.CustomKey || '-'"></td>
+                            <td ng-bind="masterOrder.StateName"></td>
+                            <td ng-bind="masterOrder.StatusName"></td>
+                            <td class="text-right" ng-bind="masterOrder.Totals.SubTotal | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="masterOrder.Totals.Shipping | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="masterOrder.Totals.Handling | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="masterOrder.Totals.Fees | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="masterOrder.Totals.Tax | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="masterOrder.Totals.Discounts | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="masterOrder.Totals.Total | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                          </tr>
+                        </tbody>
+                        <thead>
+                          <tr>
+                            <th colspan="11" data-translate="Sub-Sales Order(s)">
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="subOrder in sgeCtrl.record.SubSalesOrders">
+                            <td ng-if=" subOrder.ID">
+                              <a ui-sref="sales.salesOrders.detail({ 'ID': subOrder.ID })"
+                                target="_blank"
+                                ng-bind="subOrder.ID">
+                              </a>
+                            </td>
+                            <td ng-if="!subOrder.ID">-</td>
+                            <td ng-bind="subOrder.CustomKey || '-'"></td>
+                            <td ng-bind="subOrder.StateName"></td>
+                            <td ng-bind="subOrder.StatusName"></td>
+                            <td class="text-right" ng-bind="subOrder.Totals.SubTotal | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="subOrder.Totals.Shipping | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="subOrder.Totals.Handling | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="subOrder.Totals.Fees | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="subOrder.Totals.Tax | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="subOrder.Totals.Discounts | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                            <td class="text-right" ng-bind="subOrder.Totals.Total | globalizedCurrency : masterOrder.SerializableAttributes.SellingCurrencyKey.Value"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab heading="{{'ui.admin.common.Note.Plural' | translate}}">
+          <div class="container-fluid full-height v-scroll-overflow with-shadow">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.common.PrivateNote.Plural"></h3>
+                <div cef-notes-editor
+                  notes="sgeCtrl.record.Notes"
+                  note-type-name="'Private'">
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab heading="{{'ui.admin.common.Attribute.Plural' | translate}}">
+          <div class="container-fluid full-height v-scroll-overflow with-shadow">
+            <div cef-json-attributes-editor
+              master="sgeCtrl.record"
+              type="Sales Group"
+              ng-if="sgeCtrl.record != null">
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <div class="row details-footer">
+    <div class="col-sm-12" ng-cloak="sgeCtrl.record">
+      <button ng-if="!sgeCtrl.recordIsNew()"
+        type="button" class="btn btn-primary"
+        translate-attr="{ title: 'ui.admin.common.SaveChange.Plural',
+                          'aria-label': 'ui.admin.common.SaveChange.Plural' }"
+        data-translate="ui.admin.common.SaveChange.Plural"
+        ng-click="sgeCtrl.saveRecord()">
+      </button>
+      <button ng-if="sgeCtrl.recordIsNew()"
+        type="button" class="btn btn-primary"
+        translate-attr="{ title: 'ui.admin.controls.sales.salesGroupDetail.CreateNewGroup',
+                          'aria-label': 'ui.admin.controls.sales.salesGroupDetail.CreateNewGroup' }"
+        data-translate="ui.admin.controls.sales.salesGroupDetail.CreateNewGroup"
+        ng-click="sgeCtrl.saveRecord()">
+      </button>
+      <button type="button" class="btn btn-warning"
+        translate-attr="{ title: 'ui.admin.common.BackCancel',
+                    'aria-label': 'ui.admin.common.BackCancel' }"
+        ui-sref="sales.salesGroups.list">
+        <span data-translate="ui.admin.common.BackCancel"></span>
+      </button>
+    </div>
+  </div>
+</div>

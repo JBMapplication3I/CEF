@@ -1,0 +1,10 @@
+﻿<button type="button" class="btn btn-link {{shoppingListsAddToProductCtrl.classes}}"
+        id="btnShoppingListAddToProduct{{shoppingListsAddToProductCtrl.index}}"
+        name="btnShoppingListAddToProduct{{shoppingListsAddToProductCtrl.index}}"
+        translate-cloak
+        translate-attr="{ title: shoppingListsAddToProductCtrl.text,
+                          'aria-label': shoppingListsAddToProductCtrl.text }"
+        ng-click="shoppingListsAddToProductCtrl.onClick()">
+    <span ng-bind="shoppingListsAddToProductCtrl.text"></span>&nbsp;<!--
+    --><i class="far fa-plus-square fa-fw ml-1" aria-hidden="true"></i>
+</button>

@@ -1,0 +1,208 @@
+﻿<div id="seller-sidebar">
+    <div class="row no-gutter">
+        <div class="col-sm-6 col-md-12">
+            <p class="text-center">
+                <img alt="{{storeDetail.store.Name}}"
+                     ng-src="{{storeDetail.companyLogoFilename
+                               | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                     ng-if="storeDetail.companyLogoFilename.length > 0" />
+                <span class="sr-only" ng-bind="storeDetail.store.Name"></span>
+            </p>
+            <!--<p class="text-center"><a class="btn btn-primary btn-lg">Shop Products</a></p>-->
+        </div>
+        <div class="col-sm-6 col-md-12">
+            <ul id="seller-nav" class="list-unstyled hidden-sm hidden-xs">
+                <li><a href="#sellerProfile" class="active" data-translate="ui.storefront.stores.storeDetail.SellerProfile"></a></li>
+                <li><a href="#aboutUs" data-translate="ui.storefront.common.AboutUs"></a></li>
+                <li><a href="#companyOverview" data-translate="ui.storefront.common.CompanyOverview"></a></li>
+            </ul>
+            <ul id="seller-info" class="list-unstyled">
+                <li><h5 data-translate="ui.storefront.common.HoursOfOperation"></h5></li>
+                <li ng-if="storeDetail.store.OperatingHoursMondayStart"><strong>M-F:</strong> {{storeDetail.weekdayStart | date:'HH:mm'}} - {{storeDetail.weekdayEnd | date:'HH:mm'}}</li>
+                <li ng-if="storeDetail.store.OperatingHoursSaturdayStart"><strong>Sat-Sun:</strong> {{storeDetail.weekendStart | date:'HH:mm'}} - {{storeDetail.weekendEnd | date:'HH:mm'}}</li>
+                <li class="spacer"></li>
+                <li ng-if="storeDetail.store.Contact.Phone1"><strong data-translate="ui.storefront.common.PhoneNumber"></strong> +{{storeDetail.store.Contact.Phone1}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row no-gutter">
+    <div id="seller-body" class="col-12">
+        <div class="row no-gutter">
+            <a name="sellerProfile"></a>
+            <div id="seller-profile-image" class="seller-overlay-wrapper col-12">
+                <div id="seller-profile-image-overlay" class="seller-overlay">
+                    <h1 class="hidden-xs hidden-sm">{{storeDetail.store.Name}}</h1>
+                    <br class="hidden-xs hidden-sm" />
+                    <h2>{{storeDetail.store.Slogan}}</h2>
+                </div>
+                <!-- image should be at least 1200x400, or at a 3:1 ratio -->
+                <img ng-if="storeDetail.Images.length"
+                     class="hidden-xs"
+                     alt="{{storeDetail.store.Name}}"
+                     ng-src="{{(storeDetail.Images[0].ThumbnailFileName || storeDetail.Images[0].OriginalFilename)
+                               | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+            </div>
+        </div>
+        <div class="row no-gutters">
+            <div class="col-md-6" id="seller-about-us">
+                <a name="aboutUs"></a>
+                <h3 data-translate="ui.storefront.common.AboutUs"></h3>
+                <div ng-bind-html="storeDetail.store.About | filter: trustedHtml"></div>
+            </div>
+            <div id="seller-map" class="col-md-6">
+                <style>
+                    /* Temporary location? Can't lose these rules. */
+                    .cef-google-store-location {
+                        height:100%;
+                        width:100%;
+                        position:relative;
+                    }
+                    .angular-google-map-container {
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        right: 0;
+                        left: 0;
+                    }
+                </style>
+                <div class="cef-google-store-location">
+                    <ui-gmap-google-map
+                        zoom="10"
+                        center="{latitude: 30.39009249999999, longitude: -97.74880259999998}">
+                        <ui-gmap-marker idKey="123" coords="{latitude: 30.39009249999999, longitude: -97.74880259999998}"></ui-gmap-marker>
+                    </ui-gmap-google-map>
+                </div>
+            </div>
+            <div class="row no-gutter">
+                <div id="seller-promo-image" class="seller-overlay-wrapper col-md-6">
+                    <div id="seller-promo-image-overlay" class="seller-overlay">
+                        <h1>{{storeDetail.store.Contact.FirstName}} {{storeDetail.store.Contact.LastName}}</h1>
+                        <br />
+                        <h2 ng-if="storeDetail.store.Contact.Website3">{{storeDetail.store.Contact.Website3}}</h2>
+                    </div>
+                    <!-- this should be a square image that is at least 768x768 -->
+                    <img ng-if="(storeDetail.Images[1].ThumbnailFileName || storeDetail.Images[1].OriginalFileName).length > 0"
+                         class="store-detail-768"
+                         alt="{{storeDetail.store.Contact.FirstName}} {{storeDetail.store.Contact.LastName}} - {{storeDetail.store.Contact.Title}}"
+                         ng-src="{{(storeDetail.Images[1].ThumbnailFileName || storeDetail.Images[1].OriginalFileName)
+                                   | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+                </div>
+                <div class="col-md-6">
+                    <div class="row no-gutter">
+                        <div class="col-sm-6">
+                            <!-- this should be a square image that is at least 384x384 -->
+                            <img ng-if="(storeDetail.Images[2].ThumbnailFileName || storeDetail.Images[2].OriginalFileName).length > 0"
+                                 class="store-detail-384"
+                                 alt="{{storeDetail.store.Name}}"
+                                 ng-src="{{(storeDetail.Images[2].ThumbnailFileName || storeDetail.Images[2].OriginalFileName)
+                                           | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+                            <img ng-if="(storeDetail.Images[3].ThumbnailFileName || storeDetail.Images[3].OriginalFileName).length > 0"
+                                 class="store-detail-384"
+                                 alt="{{storeDetail.store.Name}}"
+                                 ng-src="{{(storeDetail.Images[3].ThumbnailFileName || storeDetail.Images[3].OriginalFileName)
+                                           | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- this should be a square image that is at least 384x384 -->
+                            <img ng-if="(storeDetail.Images[4].ThumbnailFileName || storeDetail.Images[4].OriginalFileName).length > 0"
+                                 class="store-detail-384"
+                                 alt="{{storeDetail.store.Name}}"
+                                 ng-src="{{(storeDetail.Images[4].ThumbnailFileName || storeDetail.Images[4].OriginalFileName)
+                                           | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+                            <img ng-if="(storeDetail.Images[5].ThumbnailFileName || storeDetail.Images[5].OriginalFileName).length > 0"
+                                 class="store-detail-384"
+                                 alt="{{storeDetail.store.Name}}"
+                                 ng-src="{{(storeDetail.Images[5].ThumbnailFileName || storeDetail.Images[5].OriginalFileName)
+                                           | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row no-gutter">
+                <div class="col-12" id="seller-additional-info">
+                    <a name="companyOverview"></a>
+                    <h3 data-translate="ui.storefront.common.CompanyOverview"></h3>
+                    <div ng-bind-html="storeDetail.store.Overview | filter: trustedHtml"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="contact-info-expander">
+    <input id="contact-info-toggle" type="checkbox" checked>
+    <img ng-if="storeDetail.salesRepFilename.length > 0"
+         alt="{{storeDetail.store.Contact.Fullname}}"
+         class="contact-info-icon"
+         ng-src="{{(storeDetail.salesRepFilename)
+                   | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+
+    <!--
+      The below div is what to use when they have not uploaded an image yet
+    -->
+    <!--
+    <div class="contact-info-icon btn btn-grey btn-round">
+        <i class="far fa-question-circle" aria-hidden="true"></i><span class="sr-only">Contact Us</span>
+    </div>
+    -->
+
+    <div id="contact-info-content" class="text-center">
+        <a ng-href="mailto:{{storeDetail.store.Contact.Email1}}" class="btn btn-grey btn-round"><i class="far fa-at" aria-hidden="true"></i><span class="sr-only" data-translate="ui.storefront.common.Email"></span></a> <!--data-toggle="modal" data-target="#sellerEmailModal"-->
+        <a ng-href="tel:{{storeDetail.store.Contact.Phone1}}" class="btn btn-success btn-round hidden-md hidden-lg hidden-xl"><i class="far fa-phone-rotary" aria-hidden="true"></i><span class="sr-only" data-translate="ui.storefront.stores.storeDetail.Call"></span></a>
+        <!--<a class="btn btn-grey btn-round" data-toggle="modal" data-target="#sellerLiveChatModal"><i class="far fa-comments" aria-hidden="true"></i><span class="sr-only">Live Chat</span></a>-->
+        <button type="button" class="btn btn-danger btn-round"><i class="far fa-times" aria-hidden="true"></i></button>
+    </div>
+</div>
+
+<div class="modal fade" id="sellerEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-outer-header text-center">
+            <button type="button" class="btn btn-link" data-dismiss="modal">
+                <span data-translate="ui.storefront.common.Close"></span><br /><svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><polygon id="path-1" points="0 25.0001 25 25.0001 25 0.0001 0 0.0001"></polygon></defs><g id="Shopping" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Login-prompt" transform="translate(-788.000000, -137.000000)"><g id="Page-1" transform="translate(788.000000, 137.000000)"><mask id="mask-2" fill="white"><use xlink:href="#path-1"></use></mask><g id="Clip-2"></g><path d="M13.9265,12.5001 L24.7045,1.7221 C25.0985,1.3281 25.0985,0.6881 24.7045,0.2951 C24.3115,-0.0989 23.6715,-0.0989 23.2785,0.2951 L12.5005,11.0741 L1.7215,0.2951 C1.3285,-0.0989 0.6885,-0.0989 0.2955,0.2951 C-0.0985,0.6881 -0.0985,1.3281 0.2955,1.7221 L11.0735,12.5001 L0.2955,23.2781 C-0.0985,23.6721 -0.0985,24.3121 0.2955,24.7051 C0.4915,24.9011 0.7505,25.0001 1.0085,25.0001 C1.2675,25.0001 1.5255,24.9011 1.7215,24.7051 L12.5005,13.9261 L23.2785,24.7051 C23.4755,24.9011 23.7345,25.0001 23.9915,25.0001 C24.2495,25.0001 24.5085,24.9011 24.7045,24.7051 C25.0985,24.3121 25.0985,23.6721 24.7045,23.2781 L13.9265,12.5001 Z" id="Fill-1" fill="#FAFAF9" mask="url(#mask-2)"></path></g></g></g></svg>
+            </button>
+
+            <h3 data-translate="ui.storefront.stores.storeDetail.EmailCompanyName"></h3>
+        </div>
+
+        <div class="color-bar-1"></div><div class="color-bar-2"></div><div class="color-bar-3"></div><div class="color-bar-4"></div><div class="color-bar-5"></div><div class="color-bar-6"></div>
+
+        <div class="modal-content">
+            <div class="modal-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-lg" data-translate="ui.storefront.common.Send"></button>
+                <br />
+                <button type="button" class="btn btn-link" data-dismiss="modal" data-translate="ui.storefront.common.Cancel"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="sellerLiveChatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-outer-header text-center">
+            <button type="button" class="btn btn-link" data-dismiss="modal">
+                <span data-translate="ui.storefront.common.Close"></span><br /><svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><polygon id="path-12" points="0 25.0001 25 25.0001 25 0.0001 0 0.0001"></polygon></defs><g id="Shopping2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Login-prompt2" transform="translate(-788.000000, -137.000000)"><g id="Page-12" transform="translate(788.000000, 137.000000)"><mask id="mask-22" fill="white"><use xlink:href="#path-1"></use></mask><g id="Clip-22"></g><path d="M13.9265,12.5001 L24.7045,1.7221 C25.0985,1.3281 25.0985,0.6881 24.7045,0.2951 C24.3115,-0.0989 23.6715,-0.0989 23.2785,0.2951 L12.5005,11.0741 L1.7215,0.2951 C1.3285,-0.0989 0.6885,-0.0989 0.2955,0.2951 C-0.0985,0.6881 -0.0985,1.3281 0.2955,1.7221 L11.0735,12.5001 L0.2955,23.2781 C-0.0985,23.6721 -0.0985,24.3121 0.2955,24.7051 C0.4915,24.9011 0.7505,25.0001 1.0085,25.0001 C1.2675,25.0001 1.5255,24.9011 1.7215,24.7051 L12.5005,13.9261 L23.2785,24.7051 C23.4755,24.9011 23.7345,25.0001 23.9915,25.0001 C24.2495,25.0001 24.5085,24.9011 24.7045,24.7051 C25.0985,24.3121 25.0985,23.6721 24.7045,23.2781 L13.9265,12.5001 Z" id="Fill-12" fill="#FAFAF9" mask="url(#mask-2)"></path></g></g></g></svg>
+            </button>
+
+            <h3 data-translate="ui.storefront.stores.storeDetail.LiveChatWithCompanyNames"></h3>
+        </div>
+
+        <div class="color-bar-1"></div><div class="color-bar-2"></div><div class="color-bar-3"></div><div class="color-bar-4"></div><div class="color-bar-5"></div><div class="color-bar-6"></div>
+
+        <div class="modal-content">
+            <div class="modal-body">
+                <p data-translate="ui.storefront.stores.storeDetail.LiveChatStuffHere"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" data-dismiss="modal" data-translate="ui.storefront.common.Cancel"></button>
+            </div>
+        </div>
+    </div>
+</div>

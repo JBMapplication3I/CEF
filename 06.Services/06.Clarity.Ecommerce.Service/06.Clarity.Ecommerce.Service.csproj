@@ -1,0 +1,1787 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\StyleCop.CSharp.Async.Rules.6.1.41\build\StyleCop.CSharp.Async.Rules.props" Condition="Exists('..\..\packages\StyleCop.CSharp.Async.Rules.6.1.41\build\StyleCop.CSharp.Async.Rules.props')" />
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BE57C4D4-9372-4DA8-B05D-BEE9C4B44F30}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Clarity.Ecommerce.Service</RootNamespace>
+    <AssemblyName>Clarity.Ecommerce.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
+    <LangVersion>latestmajor</LangVersion>
+    <Nullable>enable</Nullable>
+    <NoWarn>CS8632</NoWarn>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <!--
+    <WarningsAsErrors Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+      CS8600,CS8601,CS8602,CS8603,CS8604,CS8609,CS8613,CS8614,CS8618,CS8619,CS8620,CS8621,CS8625,CS8629,CS8631,CS8632,CS8634,CS8669,CS8764,CS8765,CS8766,CS8767,CS8768,CS8769
+    </WarningsAsErrors>
+    <TreatWarningsAsErrors Condition="'$(BuildingInsideVisualStudio)' != 'true'">true</TreatWarningsAsErrors>
+    -->
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DocumentationFile>bin\Clarity.Ecommerce.Service.xml</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.GData.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.GData.Extensions.2.2.0.0\lib\Google.GData.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.GData.Spreadsheets, Version=2.2.0.0, Culture=neutral, PublicKeyToken=3f77feb76ff0d9a1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Google.GData.Spreadsheets.2.2.0.0\lib\Google.GData.Spreadsheets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.Core, Version=1.7.27.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Hangfire.Core.1.7.27\lib\net46\Hangfire.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JetBrains.Annotations, Version=4242.42.42.42, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JetBrains.Annotations.2022.3.1\lib\net20\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqToExcel, Version=1.11.0.0, Culture=neutral, PublicKeyToken=9c8ea65a58f03f1f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LinqToExcel.1.11.0\lib\LinqToExcel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Framework, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Build.Framework.17.7.2\lib\net472\Microsoft.Build.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.Redist, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IO.Redist.6.0.0\lib\net472\Microsoft.IO.Redist.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.NET.StringTools, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.NET.StringTools.17.7.2\lib\net472\Microsoft.NET.StringTools.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Setup.Configuration.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.3.2.2146\lib\net35\Microsoft.VisualStudio.Setup.Configuration.Interop.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPalCoreSDK, Version=1.7.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PayPalCoreSDK.1.7.1\lib\net451\PayPalCoreSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPalMerchantSDK, Version=2.16.250.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PayPalMerchantSDK.2.16.250\lib\net20\PayPalMerchantSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LinqToExcel.1.11.0\lib\Remotion.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Remotion.Data.Linq, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LinqToExcel.1.11.0\lib\Remotion.Data.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Remotion.Interfaces, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LinqToExcel.1.11.0\lib\Remotion.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServiceStack, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack\bin\Debug\net472\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Client\bin\Debug\net472\ServiceStack.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Common\bin\Debug\net472\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Interfaces\bin\Debug\net472\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Logging.Log4Net, Version=4.5.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Logging.Log4Net\bin\Debug\net472\ServiceStack.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Redis\bin\Debug\net472\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.0.0.0, Culture=neutral, PublicKeyToken=e06fbc6124f57c43, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Text\bin\Debug\net472\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StructureMap.4.7.1\lib\net45\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.7.0.0\lib\net462\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Configuration.ConfigurationManager.7.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reflection.Metadata.7.0.0\lib\net462\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.MetadataLoadContext, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Reflection.MetadataLoadContext.7.0.0\lib\net462\System.Reflection.MetadataLoadContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Permissions.7.0.0\lib\net462\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Json.7.0.0\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Dataflow.7.0.0\lib\net462\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Telerik.Web.UI, Version=2013.2.717.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Telerik\Telerik.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="_T4\Services.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Services.cstxt</LastGenOutput>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounts\AccountContactService.cs" />
+    <Compile Include="Accounts\AccountPricePointsService.cs" />
+    <Compile Include="Accounts\AccountService.cs" />
+    <Compile Include="Accounts\CurrentAccountService.cs" />
+    <Compile Include="Attributes\GeneralAttributeService.cs" />
+    <Compile Include="Auctions\AuctionRoutes.cs" />
+    <Compile Include="Auctions\AuctionService.cs" />
+    <Compile Include="Brands\BrandProductService.cs" />
+    <Compile Include="Contacts\CurrentUserService.cs" />
+    <Compile Include="Franchises\FranchiseService.cs" />
+    <Compile Include="Inventory\InventoryLocationRegionService.cs" />
+    <Compile Include="Ordering\SalesOrderService.StateChanges.cs" />
+    <Compile Include="Scheduling\AppointmentService.cs" />
+    <Compile Include="Scheduling\CalendarService.cs" />
+    <Compile Include="Stores\StoreRegionService.cs" />
+    <Compile Include="Vendors\VendorService.cs" />
+    <Compile Include="Advertising\AdZoneAccessService.cs" />
+    <Compile Include="Brands\BrandService.cs" />
+    <Compile Include="Brands\BrandSiteDomainService.cs" />
+    <Compile Include="CalendarEvents\CalendarEventService.cs" />
+    <Compile Include="CalendarEvents\UserEventAttendanceService.cs" />
+    <Compile Include="Categories\CategoryService.cs" />
+    <Compile Include="Contacts\UserService.cs" />
+    <Compile Include="Currencies\CurrencyService.cs" />
+    <Compile Include="Discounts\DiscountCodeService.cs" />
+    <Compile Include="Discounts\DiscountService.cs" />
+    <Compile Include="Geography\AddressService.cs" />
+    <Compile Include="Geography\CountryService.cs" />
+    <Compile Include="Geography\PhonePrefixLookupService.cs" />
+    <Compile Include="Geography\RegionService.cs" />
+    <Compile Include="Globalization\LanguageService.cs" />
+    <Compile Include="Globalization\UiTranslationService.cs" />
+    <Compile Include="Group\GroupService.cs" />
+    <Compile Include="Inventory\ProductInventoryLocationService.cs" />
+    <Compile Include="Manufacturers\ManufacturerProductService.cs" />
+    <Compile Include="Media\UploadFileService.cs" />
+    <Compile Include="Messaging\ConversationService.cs" />
+    <Compile Include="Messaging\ConversationUserService.cs" />
+    <Compile Include="Messaging\EmailQueueService.cs" />
+    <Compile Include="Messaging\MessageService.cs" />
+    <Compile Include="Ordering\SalesOrderService.cs" />
+    <Compile Include="Payments\PaymentService.cs" />
+    <Compile Include="Payments\SubscriptionService.cs" />
+    <Compile Include="Payments\WalletService.cs" />
+    <Compile Include="Pricing\PricingService.cs" />
+    <Compile Include="Products\ProductKitsService.cs" />
+    <Compile Include="Products\ProductPricePointsService.cs" />
+    <Compile Include="Products\ProductRoutes.cs" />
+    <Compile Include="Products\ProductService.cs" />
+    <Compile Include="Purchasing\PurchaseOrderService.cs" />
+    <Compile Include="Questionnaire\AnswerService.cs" />
+    <Compile Include="Reviews\ProductReviewService.cs" />
+    <Compile Include="Reviews\ReviewService.cs" />
+    <Compile Include="Sales\SalesGroupService.cs" />
+    <Compile Include="Shipping\ShipmentService.cs" />
+    <Compile Include="Shopping\CartItemService.Admin.cs" />
+    <Compile Include="Shopping\CartItemService.cs" />
+    <Compile Include="Shopping\CartService.Admin.cs" />
+    <Compile Include="Shopping\CartService.Compare.cs" />
+    <Compile Include="Shopping\CartService.Session.cs" />
+    <Compile Include="Shopping\CartService.Static.cs" />
+    <Compile Include="Shopping\CartTypeService.cs" />
+    <Compile Include="Stores\SiteDomainSocialProviderService.cs" />
+    <Compile Include="Stores\StoreAccountService.cs" />
+    <Compile Include="Stores\StoreManufacturerService.cs" />
+    <Compile Include="Stores\StoreProductService.cs" />
+    <Compile Include="Stores\StoreService.cs" />
+    <Compile Include="Stores\StoreSubscriptionService.cs" />
+    <Compile Include="Structure\SettingGroupService.cs" />
+    <Compile Include="Structure\SettingService.cs" />
+    <Compile Include="Taxes\TaxService.cs" />
+    <Compile Include="Tracking\EventService.cs" />
+    <Compile Include="Tracking\PageViewEventService.cs" />
+    <Compile Include="Tracking\PageViewService.cs" />
+    <Compile Include="Tracking\VisitService.cs" />
+    <Compile Include="Tracking\VisitorService.cs" />
+    <Compile Include="Vendors\VendorProductService.cs" />
+    <Compile Include="_JSConfigs\JSConfigsService.FranchiseAdmin.cs" />
+    <Compile Include="_JSConfigs\JSConfigsService.ManufacturerAdmin.cs" />
+    <Compile Include="_JSConfigs\JSConfigsService.VendorAdmin.cs" />
+    <Compile Include="_JSConfigs\JSConfigsService.BrandAdmin.cs" />
+    <Compile Include="_JSConfigs\JSConfigsService.StoreAdmin.cs" />
+    <Compile Include="_JSConfigs\JSConfigsService.Storefront.cs" />
+    <Compile Include="_JSConfigs\JSConfigsService.Admin.cs" />
+    <Compile Include="_Shared\CEFSharedServiceBase.cs" />
+    <Compile Include="ServiceRegistry.cs" />
+    <Compile Include="_Shared\DownloadFileResult.cs" />
+    <Compile Include="_Shared\ErrorService.cs" />
+    <Compile Include="_Shared\GenericServiceBase.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceApplication.cs" />
+    <Compile Include="StructureMapContainerAdapter.cs" />
+    <Compile Include="_T4\Services.Accounts.Account.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountAssociation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountAssociationType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountCurrency.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountPricePoint.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountProductType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.AccountUsageBalance.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.Contractor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Accounts.ServiceArea.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.Ad.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdAccount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdBrand.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdFranchise.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdStore.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdZone.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.AdZoneAccess.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.Zone.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.ZoneStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Advertising.ZoneType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Attributes.AttributeGroup.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Attributes.AttributeTab.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Attributes.AttributeType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Attributes.GeneralAttribute.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Attributes.GeneralAttributePredefinedOption.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.Auction.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.AuctionCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.AuctionStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.AuctionType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.Bid.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.BidStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.BrandAuction.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.FranchiseAuction.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.Lot.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.LotCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.LotGroup.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.LotStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.LotType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Auctions.StoreAuction.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Badges.Badge.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Badges.BadgeImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Badges.BadgeImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Badges.BadgeType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.Brand.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandAccount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandCurrency.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandFranchise.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandInventoryLocation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandInventoryLocationType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandLanguage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandManufacturer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandSiteDomain.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandStore.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandUser.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Brands.BrandVendor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.CalendarEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.CalendarEventDetail.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.CalendarEventFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.CalendarEventImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.CalendarEventImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.CalendarEventProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.CalendarEventStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.CalendarEventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.UserEventAttendance.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.CalendarEvents.UserEventAttendanceType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Categories.Category.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Categories.CategoryFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Categories.CategoryImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Categories.CategoryImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Categories.CategoryType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.Contact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.ContactImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.ContactImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.ContactType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.ProfanityFilter.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.ReferralCode.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.ReferralCodeStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.ReferralCodeType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.User.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.UserFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.UserImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.UserImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.UserOnlineStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.UserProductType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.UserStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Contacts.UserType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Counters.Counter.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Counters.CounterLog.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Counters.CounterLogType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Counters.CounterType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Currencies.Currency.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Currencies.CurrencyConversion.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Currencies.CurrencyImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Currencies.CurrencyImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Currencies.HistoricalCurrencyRate.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedCartDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedCartItemDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedPurchaseOrderDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedPurchaseOrderItemDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSalesInvoiceDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSalesInvoiceItemDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSalesOrderDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSalesOrderItemDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSalesQuoteDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSalesQuoteItemDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSalesReturnDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSalesReturnItemDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSampleRequestDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.AppliedSampleRequestItemDiscount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.Discount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountAccount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountAccountType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountBrand.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountCode.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountCountry.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountFranchise.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountManufacturer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountProductType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountShipCarrierMethod.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountStore.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountUser.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountUserRole.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Discounts.DiscountVendor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Favorites.FavoriteCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Favorites.FavoriteManufacturer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Favorites.FavoriteShipCarrier.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Favorites.FavoriteStore.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Favorites.FavoriteVendor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.Franchise.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseAccount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseCountry.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseCurrency.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseDistrict.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseInventoryLocation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseInventoryLocationType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseLanguage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseManufacturer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseRegion.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseSiteDomain.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseStore.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseUser.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Franchises.FranchiseVendor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.Address.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.Country.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.CountryCurrency.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.CountryImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.CountryImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.CountryLanguage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.District.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.DistrictCurrency.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.DistrictImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.DistrictImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.DistrictLanguage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.HistoricalAddressValidation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.PhonePrefixLookup.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.Region.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.RegionCurrency.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.RegionImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.RegionImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.RegionLanguage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Geography.ZipCode.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Globalization.Language.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Globalization.LanguageImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Globalization.LanguageImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Globalization.UiKey.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Globalization.UiTranslation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Groups.Group.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Groups.GroupStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Groups.GroupType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Groups.GroupUser.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Hangfire.ScheduledJobConfiguration.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Hangfire.ScheduledJobConfigurationSetting.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Inventory.InventoryLocation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Inventory.InventoryLocationRegion.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Inventory.InventoryLocationSection.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoice.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceEventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceItem.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceItemTarget.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceState.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesInvoiceType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Invoicing.SalesOrderSalesInvoice.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Manufacturers.Manufacturer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Manufacturers.ManufacturerImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Manufacturers.ManufacturerImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Manufacturers.ManufacturerProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Manufacturers.ManufacturerType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Media.StoredFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.Conversation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.ConversationUser.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.EmailQueue.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.EmailQueueAttachment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.EmailStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.EmailTemplate.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.EmailType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.Message.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.MessageAttachment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.MessageRecipient.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Messaging.ProductNotification.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrder.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderEventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderItem.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderItemTarget.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderState.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Ordering.SalesOrderType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.Membership.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.MembershipAdZoneAccess.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.MembershipAdZoneAccessByLevel.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.MembershipLevel.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.MembershipRepeatType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.Payment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.PaymentMethod.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.PaymentStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.PaymentType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.RepeatType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.SalesInvoicePayment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.SalesOrderPayment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.SalesReturnPayment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.Subscription.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.SubscriptionHistory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.SubscriptionStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.SubscriptionType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Inventory.InventoryLocationUser.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.SubscriptionTypeRepeatType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleFranchise.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Questionnaire.Answer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Questionnaire.Question.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Questionnaire.QuestionOption.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Questionnaire.QuestionType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Payments.Wallet.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PricePoint.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRounding.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRule.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleAccount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleAccountType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleBrand.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleCountry.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleManufacturer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleProductType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleStore.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleUserRole.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Pricing.PriceRuleVendor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.FutureImport.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.FutureImportStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.Product.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductAssociation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductAssociationType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductDownload.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductDownloadType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductInventoryLocationSection.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductMembershipLevel.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductPricePoint.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductRestriction.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductShipCarrierMethod.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductSubscriptionType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Products.ProductType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrder.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderEventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderItem.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderItemTarget.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderState.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.PurchaseOrderType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Purchasing.SalesOrderPurchaseOrder.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuote.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteEventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteItem.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteItemTarget.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteSalesOrder.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteState.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Quoting.SalesQuoteType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Reporting.ReportType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturn.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnEventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnItem.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnItemTarget.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnReason.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnSalesOrder.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnState.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Returning.SalesReturnType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Reviews.Review.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Reviews.ReviewType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sales.SalesGroup.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sales.SalesItemTargetType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequest.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestEventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestItem.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestItemTarget.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestState.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Sampling.SampleRequestType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Scheduling.Appointment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Scheduling.AppointmentStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Scheduling.AppointmentType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Scheduling.Calendar.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Scheduling.CalendarAppointment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Scouting.Scout.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Scouting.ScoutCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Scouting.ScoutCategoryType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.Package.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.PackageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.RateQuote.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.ShipCarrier.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.ShipCarrierMethod.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.Shipment.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.ShipmentEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.ShipmentStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shipping.ShipmentType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.Cart.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartEventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartFile.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartItem.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartItemTarget.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartState.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Shopping.CartType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.SiteDomain.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.SiteDomainSocialProvider.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.SocialProvider.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.Store.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreAccount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreBadge.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreCategory.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreContact.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreCountry.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreDistrict.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreInventoryLocation.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreInventoryLocationType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreManufacturer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreRegion.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreSubscription.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreUser.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Stores.StoreVendor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.EventLog.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.ImportExportMapping.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.Note.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.NoteType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.RecordVersion.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.RecordVersionType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.Setting.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.SettingGroup.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.System.SettingType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tax.HistoricalTaxRate.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tax.TaxCountry.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tax.TaxDistrict.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tax.TaxRegion.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.Campaign.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.CampaignAd.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.CampaignStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.CampaignType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.Event.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.EventStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.EventType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.IPOrganization.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.IPOrganizationStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.PageView.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.PageViewEvent.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.PageViewStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.PageViewType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.Visit.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.Visitor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Tracking.VisitStatus.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Vendors.Vendor.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Vendors.VendorAccount.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Vendors.VendorImage.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Vendors.VendorImageType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Vendors.VendorManufacturer.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Vendors.VendorProduct.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\Services.Vendors.VendorType.cs">
+      <DependentUpon>Services.tt</DependentUpon>
+    </Compile>
+    <Compile Include="_T4\UsedInAddendums.Authenticate.cs" />
+    <Compile Include="_T4\UsedInAddendums.ManufacturerAdmin.cs" />
+    <Compile Include="_T4\UsedInAddendums.FranchiseAdmin.cs" />
+    <Compile Include="_T4\UsedInAddendums.StoreAdmin.cs" />
+    <Compile Include="_T4\UsedInAddendums.BrandAdmin.cs" />
+    <Compile Include="_T4\UsedInAddendums.VendorAdmin.cs" />
+    <Compile Include="_T4\UsedInAddendums.Storefront.cs" />
+    <Compile Include="_T4\UsedInAddendums.Admin.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="_T4\Services.ttinclude" />
+    <AdditionalFiles Include="..\..\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+    <None Include="packages.config" />
+    <None Include="..\..\Solution Items\connectionStrings.config">
+      <Link>connectionStrings.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Solution Items\log4net.config">
+      <Link>log4net.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Solution Items\mailSettings.config">
+      <Link>mailSettings.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="bin\connectionStrings.config" />
+    <Content Include="bin\mailSettings.config" />
+    <Content Include="bin\log4net.config" />
+    <Content Include="_T4\Services.cstxt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Services.tt</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj">
+      <Project>{C7250754-0453-49B4-9C61-408C6DA25DC4}</Project>
+      <Name>00.Clarity.Ecommerce.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj">
+      <Project>{43de0904-b73b-4893-a3f6-ec53a78b4635}</Project>
+      <Name>01.Clarity.Ecommerce.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj">
+      <Project>{84670384-4810-4082-911B-0BB47958EECD}</Project>
+      <Name>01.Clarity.Ecommerce.Searching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj">
+      <Project>{d2dc6ceb-1c99-430c-a124-e7555654f368}</Project>
+      <Name>02.Clarity.Ecommerce.Interfaces.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj">
+      <Project>{6b148ac1-f2f2-4aeb-aa0a-99f9b575cfcb}</Project>
+      <Name>02.Clarity.Ecommerce.Interfaces.Workflows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj">
+      <Project>{57E8C6EA-ABC2-4775-9352-2DBA1F2F401C}</Project>
+      <Name>00.Clarity.Ecommerce.RegistryLoader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Utilities\00.Clarity.Ecommerce.Utilities.csproj">
+      <Project>{47B9BBAF-4668-4B6F-953E-CAE1C7AB3935}</Project>
+      <Name>00.Clarity.Ecommerce.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models.Mapping\03.Clarity.Ecommerce.Models.Mapping.csproj">
+      <Project>{e775460a-62b1-4868-823e-f2e28215e07a}</Project>
+      <Name>03.Clarity.Ecommerce.Models.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj">
+      <Project>{ee6d2b76-fb73-4642-a74a-38289c32aa1d}</Project>
+      <Name>03.Clarity.Ecommerce.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.CartValidation\Clarity.Ecommerce.Providers.CartValidation.csproj">
+      <Project>{7091ff4e-bee9-4196-a6e4-30ec8c9f109a}</Project>
+      <Name>Clarity.Ecommerce.Providers.CartValidation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\05.BusinessLogic\05.Clarity.Ecommerce.Workflow\05.Clarity.Ecommerce.Workflow.csproj">
+      <Project>{fa143352-14d8-4360-ad49-3547203fcfce}</Project>
+      <Name>05.Clarity.Ecommerce.Workflow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\06.Clarity.Ecommerce.Service.Core\06.Clarity.Ecommerce.Service.Core.csproj">
+      <Project>{1a30cc61-7a08-43c9-974f-3524b31e7b87}</Project>
+      <Name>06.Clarity.Ecommerce.Service.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\04.Providers\ServiceStack.Authentication.AspNetIdentity\Clarity.Ecommerce.Providers.Authentication.csproj">
+      <Project>{97ff8a32-a0bc-40da-94c0-0b2f854b2039}</Project>
+      <Name>Clarity.Ecommerce.Providers.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Emails\Clarity.Ecommerce.Providers.Emails.csproj">
+      <Project>{EFEF934C-E114-4007-AB38-BD4AAA63AF20}</Project>
+      <Name>Clarity.Ecommerce.Providers.Emails</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\04.Providers\Clarity.Ecommerce.Providers.Pricing\Clarity.Ecommerce.Providers.Pricing.csproj">
+      <Project>{9555eddb-0209-43b1-b203-a2fd4714da51}</Project>
+      <Name>Clarity.Ecommerce.Providers.Pricing</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.2.0.435\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.2.0.435\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties _UserPromptedForCS6Upgrade="true" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterCompile" Condition="Exists('Web.$(Configuration).config')">
+    <TransformXml Source="Web.config" Destination="$(IntermediateOutputPath)$(TargetFileName).config" Transform="Web.$(Configuration).config" />
+    <ItemGroup>
+      <AppConfigWithTargetPath Remove="Web.config" />
+      <AppConfigWithTargetPath Include="$(IntermediateOutputPath)$(TargetFileName).config">
+        <TargetPath>$(TargetFileName).config</TargetPath>
+      </AppConfigWithTargetPath>
+    </ItemGroup>
+  </Target>
+  <Target Name="AfterPublish">
+    <PropertyGroup>
+      <DeployedConfig>$(_DeploymentApplicationDir)$(TargetName)$(TargetExt).config$(_DeploymentFileMappingExtension)</DeployedConfig>
+    </PropertyGroup>
+    <Copy Condition="Exists('$(DeployedConfig)')" SourceFiles="$(IntermediateOutputPath)$(TargetFileName).config" DestinationFiles="$(DeployedConfig)" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\..\packages\StyleCop.CSharp.Async.Rules.6.1.41\build\StyleCop.CSharp.Async.Rules.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.CSharp.Async.Rules.6.1.41\build\StyleCop.CSharp.Async.Rules.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.3.2.2146\build\Microsoft.VisualStudio.Setup.Configuration.Interop.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.3.2.2146\build\Microsoft.VisualStudio.Setup.Configuration.Interop.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.3.2.2146\build\Microsoft.VisualStudio.Setup.Configuration.Interop.targets" Condition="Exists('..\..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.3.2.2146\build\Microsoft.VisualStudio.Setup.Configuration.Interop.targets')" />
+</Project>

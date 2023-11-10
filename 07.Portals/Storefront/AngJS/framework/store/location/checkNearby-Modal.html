@@ -1,0 +1,86 @@
+﻿<div class="row" ng-show="checkNearbyCtrl.storeList.length">
+    <div class="col-12">
+        <div class="alert alert-danger"
+             ng-if="(checkNearbyCtrl.Inventory === 0)"
+             role="alert">
+            <p>
+                <span data-translate="ui.storefront.location.checkInventory-modal.itAppearsThatTheLocationDoesNot.Part1"></span>&nbsp;<!--
+                --><span ng-bind="$parent.checkNearbyCtrl.selectedStore.Name"></span>&nbsp;<!--
+                --><span data-translate="ui.storefront.location.checkInventory-modal.itAppearsThatTheLocationDoesNot.Part2"></span>
+            </p>
+        </div>
+        <div class="form-inline check-other-stores">
+            <p>
+                <button class="btn btn-link float-right"
+                        ng-click="checkNearbyCtrl.centerMapOnUser()"
+                        data-translate="ui.storefront.location.checkNearby-Modal.useMyLocation"></button>
+            </p>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="col-12"
+             style="height: 250px; max-height: 250px; min-height: 250px">
+            <location-store-map map-control="checkNearbyCtrl.mapControl" show-toolbar="true"></location-store-map>
+        </div>
+    </div>
+    <div class="available-today col-sm-5 col-md-4">
+        <h5 class="text-right plain-text" data-translate="ui.storefront.common.AvailableToday"></h5>
+        <div class="radio"
+                ng-repeat="store in checkNearbyCtrl.storeList | limitTo:3">
+            <div ng-click="checkNearbyCtrl.viewStore(store)">
+                <label>
+                    <input type="radio" name="storeDetail" id="{{store.Name}}"
+                           ng-model="checkNearbyCtrl.radioModel"
+                           uib-btn-radio="store.Name"
+                           value="{{store.Name}}" />
+                    <span class="selected-bg"></span>
+                    <big ng-bind="store.Name"></big><br />
+                    {{store.Distance | number : 1}} <span data-translate="ui.storefront.common.Mile.Plural"></span>
+                </label>
+                <h6 class="float-right store-inventory" ng-bind="store.Inventory"></h6>
+            </div>
+        </div>
+    </div>
+    <div class="store-info col-sm-7 col-md-8">
+        <h5 class="plain-text" data-translate="ui.storefront.location.checkNearby-Modal.storeInfo"></h5>
+        <div class="store-info-detail">
+            <div class="col-ss-12 col-sm-6">
+                <address class="mb-0">
+                    {{checkNearbyCtrl.selectedStore.Contact.Address.Street1}}<br />
+                    {{checkNearbyCtrl.selectedStore.Contact.Address.City}},&nbsp;<!--
+                    -->{{checkNearbyCtrl.selectedStore.Contact.Address.RegionCode || checkNearbyCtrl.selectedStore.Contact.Address.RegionName}}&nbsp;<!--
+                    -->{{checkNearbyCtrl.selectedStore.Contact.Address.PostalCode}}
+                </address>
+                <p>
+                    <span data-translate="ui.storefront.common.Telephone.Abbreviation"></span>&nbsp;<!--
+                    --><a ng-href="tel:{{checkNearbyCtrl.selectedStore.Contact.Phone1}}"
+                          class="tel"
+                          ng-bind="checkNearbyCtrl.selectedStore.Contact.Phone1"></a>
+                </p>
+                <location-store-hours store="checkNearbyCtrl.selectedStore"
+                                      short-format="true"
+                                      small-text="true"></location-store-hours>
+            </div>
+            <div class="col-ss-12 col-sm-6">
+                <label for="quantity" class="sr-only"
+                       data-translate="ui.storefront.common.Quantity"></label>
+                <input type="number" class="form-control error"
+                       id="quantity"
+                       ng-model="checkNearbyCtrl.quantity" />
+                <button type="button" class="btn btn-primary btn-block"
+                        ng-disabled="checkNearbyCtrl.inventory < checkNearbyCtrl.quantity
+                                     || checkNearbyCtrl.selectedStore.inventory < checkNearbyCtrl.quantity
+                                     || checkNearbyCtrl.quantity == 0"
+                        ng-click="checkNearbyCtrl.buy(checkNearbyCtrl.product.id, 'Cart', checkNearbyCtrl.quantity)"
+                        data-translate="ui.storefront.cart.addToCart"></button>
+            </div>
+        </div>
+        </div>
+</div>
+<div class="row" ng-show="!checkNearbyCtrl.storeList.length">
+    <div class="col-12">
+        <h4 class="text-center" ng-show="checkNearbyCtrl.product.name"
+            >{{checkNearbyCtrl.product.name}}&nbsp;<!--
+            --><span data-translate="ui.storefront.location.checkInventory-modal.IsCurrentlyUnavailalbeInStores"></span></h4>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row details-header">
+        <h2 ng-hide="socialProviderDetailCtrl.record.ID > 0" class="col-md-12 details-title"><span data-translate="ui.admin.controls.accounts.socialProviderDetail.SocialProvider.New"></span> {{socialProviderDetailCtrl.record.Name}} [{{socialProviderDetailCtrl.record.CustomKey}}]</h2>
+        <h2 ng-show="socialProviderDetailCtrl.record.ID > 0" class="col-md-12 details-title"><span data-translate="ui.admin.common.SocialProvider"></span> #{{socialProviderDetailCtrl.record.ID}}: {{socialProviderDetailCtrl.record.Name}} [{{socialProviderDetailCtrl.record.CustomKey}}]</h2>
+    </div>
+    <div class="row details-body">
+        <div class="col-sm-12 store-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': socialProviderDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="socialProviderDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                                <div class="form-group" ng-class="{'has-error': socialProviderDetailCtrl.forms.Details.txtName.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtName" name="txtName"
+                                                placeholder="The name of the Social Provider..."
+                                                ng-required="true" maxlength="256"
+                                                ng-model="socialProviderDetailCtrl.record.Name" />
+                                    </div>
+                                    <div ng-messages="socialProviderDetailCtrl.forms.Details.txtName.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': socialProviderDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtCustomKey" name="txtCustomKey"
+                                               placeholder="The Key for the Social Provider..."
+                                               ng-required="false" maxlength="128"
+                                               ng-model="socialProviderDetailCtrl.record.CustomKey" />
+                                    </div>
+                                    <div ng-messages="socialProviderDetailCtrl.forms.Details.txtCustomKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': socialProviderDetailCtrl.forms.SiteDomains.$invalid}"><i class="far fa-lg fa-globe"></i>&nbsp;<span data-translate="ui.admin.common.SiteDomain.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="socialProviderDetailCtrl.forms.SiteDomains">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.controls.accounts.socialProviderDetail.SiteDomainsThatUseThisSocialProvider"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary" ng-click="socialProviderDetailCtrl.addSiteDomain()" data-translate="ui.admin.common.SiteDomain.Add"></button>
+                                <b data-translate="ui.admin.common.Note"></b>&nbsp;<span data-translate="ui.admin.common.TheseCanBeManagedFromTheSiteDomainEditorAsWell"></span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:50px;">#</th>
+                                                <th data-translate="ui.admin.common.SiteDomain"></th>
+                                                <th data-translate="ui.admin.common.Script"></th>
+                                                <th data-translate="ui.admin.common.UrlValue.Plural"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="socialProviderDetailCtrl.record.SiteDomainSocialProviders.length <= 0">
+                                                <td colspan="3" data-translate="ui.admin.common.NoSiteDomainsHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="ssd in socialProviderDetailCtrl.record.SiteDomainSocialProviders">
+                                                <td>
+                                                    <label class="form-control-static">{{ssd.ID}}</label>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" id="ddlSiteDomain{{$index}}" name="ddlSiteDomain{{$index}}"
+                                                            ng-required="true"
+                                                            ng-options="sd.ID as ((sd.DisplayName || sd.Name) + (sd.CustomKey && sd.CustomKey != '' ? ' [' + sd.CustomKey + ']' : '') + ': ' + sd.Url)
+                                                                        for sd in socialProviderDetailCtrl.siteDomains
+                                                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                                                            ng-model="ssd.MasterID">
+                                                        <option value="" ng-disabled="true" data-translate="ui.admin.common.SiteDomain.SelectA"></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="txtScript{{$index}}" name="txtScript{{$index}}"
+                                                        ng-model="ssd.Script" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="txtUrlValues{{$index}}" name="txtUrlValues{{$index}}"
+                                                        ng-model="ssd.UrlValues" />
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            ng-click="socialProviderDetailCtrl.removeSiteDomain($index)"
+                                                            ><i class="far fa-times"></i><span class="sr-only" data-translate="ui.admin.common.Delete"></span></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="socialProviderDetailCtrl"
+                return-state="accounts.socialProviders.list"
+                permissions-base="Stores.SocialProvider">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

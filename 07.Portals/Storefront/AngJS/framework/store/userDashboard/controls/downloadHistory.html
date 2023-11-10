@@ -1,0 +1,47 @@
+﻿<div class="download-history row">
+    <div ng-if="downloadHistoryDashboard.filters"
+         class="col-sm-12 download-filters">
+        <div class="download-id">
+            <span data-translate="ui.storefront.userDashboard.downloadHistory.SearchByID"></span>
+            <input type="text" ng-model="downloadHistoryDashboard.filterID" />
+        </div>
+        <div class="download-date">
+            <span data-translate="ui.storefront.userDashboard.downloadHistory.ShowDataRange"></span>
+            <input type="date" ng-model="downloadHistoryDashboard.startDate" />
+            <input type="date" ng-model="downloadHistoryDashboard.endDate" />
+        </div>
+    </div>
+    <div class="col-12">
+        <kendo-grid class="downloads"
+                    k-columns="downloadHistory.gridFields"
+                    k-data-source="downloadHistory.downloads"></kendo-grid>
+    </div>
+    <div ng-if="downloadHistory.paginates && downloadHistory.status == 'results'"
+         class="col-sm-12 paginator">
+        <div class="page-range">
+            <a ng-if="downloadHistory.hasPrevious()"
+               ng-click="downloadHistory.previous()">&lt;&lt;</a>
+            <a ng-repeat="page in downloadHistory.pageRange()"
+               ng-click="downloadHistory.page = page"
+               ng-class="{active: downloadHistory.page == page}">{{page}}</a>
+            <a ng-if="downloadHistory.hasNext()"
+               ng-click="downloadHistory.next()">&gt;&gt;</a>
+        </div>
+    </div>
+    <div class="col-sm-12 page-metadata" ng-switch="downloadHistory.status">
+        <p class="form-control-static" ng-switch-when="searching"
+           data-translate="ui.storefront.userDashboard.downloadHistory.LoadingDownloads">
+        </p>
+        <p class="form-control-static" ng-switch-when="noResults"
+           data-translate="ui.storefront.userDashboard.downloadHistory.NoDownloadsWereFound">
+        </p>
+        <span class="form-control-static" ng-switch-when="results">
+            <span data-translate="ui.storefront.common.ShowingItem.Plural"></span>&nbsp;<!--
+            -->{{downloadHistory.firstInPage()}}&nbsp;<!--
+            --><span data-translate="ui.storefront.common.Through"></span>&nbsp;<!--
+            -->{{downloadHistory.lastInPage()}}&nbsp;<!--
+            --><span data-translate="ui.storefront.common.Of.Lowercase"></span>&nbsp;<!--
+            -->{{downloadHistory.totalItems()}}.
+        </span>
+    </div>
+</div>

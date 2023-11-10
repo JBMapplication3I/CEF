@@ -1,0 +1,294 @@
+﻿var _CookieName_Google = "CEF_ProductImporter_GoogleSheets";
+var _VisualizationApi_ = "http://schemas.google.com/visualization/2008#visualizationApi";
+
+/*declare module google.visualization {
+    class Query {
+        constructor(url);
+        send(callback: Function);
+    }
+}*/
+
+module cef.admin.controls.inventory {
+    export interface GoogleSheetsImporterScope extends ng.IScope {
+        isLoading: boolean;
+        isImporting: boolean;
+        showAuth2Button: boolean;
+        importButtonEnabled: boolean;
+        importLog: api.ImportResponse;
+        documents;
+        selectedDocument;
+        sheets;
+        selectedSheet;
+
+        rowFeed;
+        selectedDocument_change: () => void;
+        selectedSheet_change: () => void;
+        importSheet: () => void;
+        selectedMapping_change: (label: string) => void;
+        saveCookie: () => void;
+        cookie: SheetsImporterCookie;
+
+        getSelectedDocumentViewHref: () => string;
+        showVisualizationGrid: boolean;
+
+        mapping: core.ProductImportFieldMapping;
+        productImportFields: core.ProductImportField[];
+        mappingColumnOrder: string[];
+        defaultMappingImportFields: core.ProductImportField[];
+
+        clearMappings();
+        resetMappings();
+
+        afterLoad: () => void;
+    }
+
+    export interface SheetsImporterCookie {
+        selectedSheetId?: string;
+        selectedDocumentId?: string;
+        productImportMappings: {
+            [sheetId: string]: {
+                mappings: { [field: string]: number };
+            }
+        }
+    }
+
+    export class GoogleSheetsImporterController {
+        private table: google.visualization.Table;
+        private dataTable: google.visualization.DataTable;
+
+        constructor(
+            private cvApi: api.ICEFAPI,
+            private $element: ng.IAugmentedJQuery,
+            private $scope: GoogleSheetsImporterScope,
+            private googleLogin: GoogleLoginService,
+            private $cookieStore: ng.cookies.ICookieStoreService,
+            private ngDialog: ng.dialog.IDialogService,
+            private $window: ng.IWindowService)
+        {
+            $scope.isLoading = true;
+            $scope.isImporting = false;
+            $scope.sheets = [];
+            $scope.mappingColumnOrder = [];
+            $scope.mapping = {};
+            $scope.showAuth2Button = false;
+            $scope.importButtonEnabled = false;
+            $scope.cookie = $cookieStore.get(_CookieName_Google);
+            if ($scope.cookie == null) {
+                $scope.cookie = { productImportMappings: {} };
+            }
+            if (!$scope.cookie.productImportMappings) {
+                $scope.cookie.productImportMappings = {};
+            }
+            $scope.productImportFields = [];
+            var loadGoogleSpreadsheetDocuments = () => {
+                this.$scope.isLoading = true;
+                this.$scope.documents = [];
+                $.getJSON("https://spreadsheets.google.com/feeds/spreadsheets/private/full?alt=json&access_token=" + this.googleLogin.google_access_token,
+                    data => {
+                        var docs = [];
+                        for (let i = 0; i < data.feed.entry.length; i++) {
+                            const entry = data.feed.entry[i];
+                            docs.push({ name: entry.title.$t, entry: entry });
+                        }
+                        this.$scope.documents = docs;
+                        var selectedIndex = 0;
+                        if ($scope.cookie && $scope.cookie.selectedDocumentId) {
+                            selectedIndex = _.max([0, _.findIndex(docs, (item) => _.isEqual(item.entry.id.$t, $scope.cookie.selectedDocumentId))]);
+                        }
+                        if (docs.length > 0) {
+                            this.$scope.selectedDocument = docs[selectedIndex];
+                        }
+                        this.$scope.isLoading = false;
+                        this.$scope.selectedDocument_change();
+                        this.$scope.$apply();
+                    });
+            };
+
+            // Note: Added code here to make sure the two Google API libraries are loaded before we call google.load()
+            const afterLoad = () => {
+                if (($window as any).google === undefined) {
+                    const script1 = document.createElement("script");
+                    script1["src"] = "https://www.google.com/jsapi?callback=GoogleSheetsImporter_afterLoad";  // This one has google
+                    document.head.appendChild(script1);
+                    return;
+                }
+                if (($window as any).gapi === undefined) {
+                    const script2 = document.createElement("script");
+                    script2["src"] = "https://apis.google.com/js/client.js?onload=GoogleSheetsImporter_afterLoad";  // This one has gapi
+                    document.head.appendChild(script2);
+                    return;
+                }
+                // If we get to this point, we have both google and gapi..... YAY! =D
+                delete $window["GoogleSheetsImporter_afterLoad"]; // Don't need this anymore
+                google.load("visualization", "1.0",
+                {
+                    'packages': ["corechart", "table"],
+                    callback: () => {
+                        // The google.visualization.Table is not available until this point
+                        this.table = new google.visualization.Table($element.find("#gtable")[0]);
+                        google.visualization.events.addListener(this.table, "ready", () => {
+                            $(".google-visualization-table-table").find("*").each((i, e) => {
+                                var classList = e["className"] ? e["className"].split(/\s+/) : [];
+                                angular.forEach(classList, item => {
+                                    if (item.indexOf("google-visualization") === 0) {
+                                        $(e).removeClass(item);
+                                    }
+                                });
+                            });
+                            $(".google-visualization-table-table")
+                                .removeClass("google-visualization-table-table")
+                                .addClass("table table-bordered table-striped table-condensed table-hover text-info")
+                                .css("width", "");
+                        });
+                        googleLogin.registerAuthCallback((result: ng.IPromise<any>) => {
+                            result.then(
+                                // Success
+                                () => {
+                                    $scope.showAuth2Button = false;
+                                    loadGoogleSpreadsheetDocuments();
+                                },
+                                // Fail
+                                () => {
+                                    $scope.showAuth2Button = true;
+                                });
+                        });
+                        googleLogin.checkAuth();
+                    }
+                });
+            }
+            $scope.afterLoad = afterLoad;
+            $window["GoogleSheetsImporter_afterLoad"] = afterLoad;
+            afterLoad();
+
+            $scope.getSelectedDocumentViewHref = () => {
+                if (this.$scope.selectedDocument && this.$scope.selectedSheet) {
+                    return this.$scope.selectedDocument.entry.link[1].href;
+                }
+                return "";
+            }
+
+            $scope.selectedDocument_change = () => {
+                this.$scope.isLoading = true;
+                this.$scope.importLog = <api.ImportResponse>(null as any);
+                if (this.$scope.selectedDocument == null) { return; }
+                $scope.cookie.selectedDocumentId = this.$scope.selectedDocument.entry.id.$t;
+                this.$scope.saveCookie();
+                $.getJSON(this.$scope.selectedDocument.entry.link[0].href + "?alt=json&access_token=" + this.googleLogin.google_access_token,
+                    data => {
+                        var sheets = [];
+                        for (let i = 0; i < data.feed.entry.length; i++) {
+                            const entry = data.feed.entry[i];
+                            sheets.push({ name: entry.title.$t, entry: entry });
+                        }
+                        this.$scope.sheets = sheets;
+                        var selectedIndex = 0;
+                        if ($scope.cookie && $scope.cookie.selectedSheetId) {
+                            selectedIndex = _.max([0, _.findIndex(sheets, (item) => _.isEqual(item.entry.id.$t, $scope.cookie.selectedSheetId))]);
+                        }
+                        if (sheets.length > 0) {
+                            this.$scope.selectedSheet = sheets[selectedIndex];
+                        }
+                        this.$scope.isLoading = false;
+                        $scope.selectedSheet_change();
+                        this.$scope.$apply();
+                    });
+            };
+
+            /*
+                This is the actual sheet within the google document
+             */
+            $scope.selectedSheet_change = () => {
+                this.$scope.isLoading = true;
+                $scope.cookie.selectedSheetId = this.$scope.selectedSheet.entry.id.$t;
+                if (!$scope.cookie.productImportMappings[$scope.cookie.selectedSheetId]) {
+                    $scope.cookie.productImportMappings[$scope.cookie.selectedSheetId] = {
+                        mappings: {}
+                    };
+                }
+                this.$scope.saveCookie();
+                this.updateDataTable();
+                $.getJSON(this.$scope.selectedSheet.entry.link[0].href + "?alt=json&access_token=" + this.googleLogin.google_access_token,
+                    data => {
+                        this.$scope.rowFeed = data;
+                        this.$scope.isLoading = false;
+                        this.$scope.importButtonEnabled = true;
+                        this.$scope.$apply();
+                    });
+            };
+
+            $scope.importSheet = () => {
+                this.ngDialog.openConfirm({
+                    plain: true,
+                    template:
+`<p>Import '${this.$scope.selectedSheet.name}' into the database?</p>
+<div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()">Cancel</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="confirm()">OK</button>
+</div>`
+                }).then(() => {
+                    this.$scope.importButtonEnabled = false;
+                    this.$scope.isImporting = true;
+                    this.$scope.importLog = <api.ImportResponse>(null as any);
+                    this.googleLogin.checkAuth().then(() => {
+                        this.cvApi.providers.ImportProductsFromGoogleSheet(<api.ImportProductsFromGoogleSheetDto>{
+                            google_client_id: this.googleLogin.config.clientId,
+                            google_access_token: this.googleLogin.google_access_token,
+                            sheet_id: this.$scope.selectedSheet.entry.id.$t,
+                            UseCustomKeyForLookups: false
+                        }).success(data => {
+                            this.$scope.importLog = data;
+                            this.$scope.isImporting = false;
+                            this.$scope.importButtonEnabled = true;
+                        }).error(() => {
+                            this.$scope.isImporting = false;
+                            this.$scope.importButtonEnabled = true;
+                        });
+                    });
+                });
+            };
+
+            $scope.saveCookie = () => { this.$cookieStore.put(_CookieName_Google, $scope.cookie); };
+        }
+
+        private updateDataTable = () => {
+            var visualizationHref = <any> _.find(this.$scope.selectedSheet.entry.link, { rel: _VisualizationApi_ });
+            var queryString = visualizationHref.href + "&access_token=" + this.googleLogin.google_access_token ;
+            var query = new google.visualization.Query(queryString);
+            query.send((response) => {
+                this.dataTable = response.getDataTable();
+                var mapping: core.ProductImportFieldMapping = {};
+                var mappingColumnOrder = [];
+                for (let col = 0; col < this.dataTable.getNumberOfColumns(); col++) {
+                    const colLabel = this.dataTable.getColumnLabel(col);
+                    if (colLabel.length <= 0) { continue; }
+                    mappingColumnOrder.push(colLabel);
+                }
+                this.$scope.mapping = mapping;
+                this.$scope.mappingColumnOrder = mappingColumnOrder;
+                this.$scope.cookie.productImportMappings[this.$scope.cookie.selectedSheetId].mappings = mapping;
+                this.$scope.saveCookie();
+                this.table.draw(this.dataTable, {
+                    showRowNumber: true,
+                    width: "100%"
+                });
+                this.$scope.$apply();
+            });
+        }
+    }
+
+    adminApp.directive("cefGapiSheetsImporter", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        scope: true,
+        templateUrl: $filter("corsLink")("/framework/admin/controls/inventory/googleSheetsImporter.html", "ui"),
+        controller: GoogleSheetsImporterController,
+        require: "^googleAuth"
+    }));
+
+    adminApp.filter("productImportFieldLabel", () => {
+        return (item: string) => {
+            return item.replace(/([A-Z])/g, " $1");
+        }
+    });
+
+    adminApp.filter("chunk", () => { return _.memoize(_.chunk); });
+}

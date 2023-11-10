@@ -1,0 +1,52 @@
+<div ng-form="taFGCtrl.forms.{{taFGCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="[{'has-error': taFGCtrl.formInvalid},taFGCtrl.formClasses]">
+  <label class="control-label" for="{{taFGCtrl.inputName}}"
+    uib-tooltip="{{taFGCtrl.tooltip}}" tooltip-is-open="taFGCtrl.tooltipIsOpen" tooltip-placement="auto top-left">
+    <span data-translate="{{taFGCtrl.labelKey}}">{{taFGCtrl.labelText}}</span><!--
+    --><span ng-if="taFGCtrl.required" class="text-danger">&nbsp;*</span><!--
+    --><span ng-if="taFGCtrl.tooltip" class="text-info">&nbsp;<i class="far fa-question-circle"></i></span>
+  </label>
+  <textarea
+    class="w-100 p-1 form-control"
+    ng-class="[{'is-valid': taFGCtrl.applyIsValidClass,
+                'is-invalid': taFGCtrl.applyIsInvalidClass },
+                taFGCtrl.inputClass]"
+    style="max-width: 100%;"
+    ng-style="{ 'min-height': (24 * (taFGCtrl.rows || 4)) + 'px' }"
+    id="{{taFGCtrl.inputName}}"
+    name="{{taFGCtrl.inputName}}"
+    rows="{{taFGCtrl.rows || 4}}"
+    translate-attr="{ placeholder: taFGCtrl.placeholderKey }"
+    placeholder="{{taFGCtrl.placeholderText}}"
+    ng-minlength="taFGCtrl.minLength || ''"
+    ng-maxlength="taFGCtrl.maxLength || ''"
+    ng-blur="taFGCtrl.extraOnBlur($event)"
+    ng-focus="taFGCtrl.extraOnFocus($event)"
+    ng-keydown="taFGCtrl.extraOnKeydown($event)"
+    ng-keypress="taFGCtrl.extraOnKeypress($event)"
+    ng-keyup="taFGCtrl.extraOnKeyup($event)"
+    ng-mousedown="taFGCtrl.extraOnMousedown($event)"
+    ng-mouseenter="taFGCtrl.extraOnMouseenter($event)"
+    ng-mouseleave="taFGCtrl.extraOnMouseleave($event)"
+    ng-mousemove="taFGCtrl.extraOnMousemove($event)"
+    ng-mouseover="taFGCtrl.extraOnMouseover($event)"
+    ng-mouseup="taFGCtrl.extraOnMouseup($event)"
+    ng-change="taFGCtrl.extraOnChange($event)"
+    ng-disabled="taFGCtrl.disabled"
+    ng-required="taFGCtrl.required"
+    ng-model-options="taFGCtrl.options"
+    ng-model="taFGCtrl.property">
+  </textarea>
+  <div ng-if="taFGCtrl.maxLength > 0 && taFGCtrl.showCharacterCounter"
+    ng-bind="(taFGCtrl.property || '').length + ' of ' + taFGCtrl.maxLength">
+  </div>
+  <div ng-messages-multiple ng-messages="taFGCtrl.formError"
+    role="alert" class="invalid-feedback" ng-hide="taFGCtrl.hideInvalidTooltip">
+    <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+  <div ng-messages-multiple ng-messages="taFGCtrl.formSuccess"
+    role="alert" class="valid-feedback" ng-hide="!taFGCtrl.showValidTooltip">
+    <div ng-messages-include="{{'/framework/store/widgets/forms/_successMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+</div>

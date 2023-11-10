@@ -1,0 +1,19 @@
+﻿<div class="row">
+    <div class="col-12 text-center">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="file" name="upload" kendo-upload
+                       k-multiple="false"
+                       k-upload="cefUploadMappingCtrl.uploadFile"
+                       k-success="cefUploadMappingCtrl.uploadedFile"
+                       k-async="{ saveUrl:  '{{'/Media/StoredFiles/Upload/.json' | corsLink: 'api'}}', autoUpload: true }"
+                       k-localization="{ select: 'Upload' }" />
+            </div>
+        </div>
+    </div>
+    <div ng-if="cefUploadMappingCtrl.viewState.running"
+         cef-loading-widget
+         overlay="true"
+         message="cefUploadMappingCtrl.viewState.waitMessage">
+    </div>
+</div>

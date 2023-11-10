@@ -1,0 +1,644 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+<Heading Size="HeadingSize.Is2">Purchasing</Heading>
+<Row>
+  @if (CEFConfig.featureSet?.purchasing?.minMax?.enabled == true
+    || CEFConfig.featureSet?.purchasing?.minMax_after?.enabled == true
+    || CEFConfig.featureSet?.purchasing?.minMax?.enabled == true
+    || CEFConfig.featureSet?.purchasing?.minMax_after?.enabled == true
+    || CEFConfig.featureSet?.inventory?.backOrder?.enabled == true
+    || CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductGlobal?.enabled == true
+    || CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductPerAccount?.enabled == true
+    || CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductPerAccount?.after?.enabled == true
+    || CEFConfig.featureSet?.inventory?.preSale?.enabled == true
+    || CEFConfig.featureSet?.inventory?.preSale?.maxPerProductGlobal?.enabled == true
+    || CEFConfig.featureSet?.inventory?.preSale?.maxPerProductPerAccount?.enabled == true
+    || CEFConfig.featureSet?.inventory?.preSale?.maxPerProductPerAccount?.after?.enabled == true)
+  {
+    <Column>
+      @if (CEFConfig.featureSet?.purchasing?.minMax?.enabled == true
+        || CEFConfig.featureSet?.purchasing?.minMax_after?.enabled == true)
+      {
+        <Row>
+          @if (CEFConfig.featureSet?.purchasing?.minMax?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MinimumPurchaseQuantity"
+                @bind-Value="Record.MinimumPurchaseQuantity"
+                LabelText="MinPurchaseQuantity"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.purchasing?.minMax_after?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MinimumPurchaseQuantityIfPastPurchased"
+                @bind-Value="Record.MinimumPurchaseQuantityIfPastPurchased"
+                LabelText="MinIfPreviousMinIsMet"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+        </Row>
+      }
+      @if (CEFConfig.featureSet?.purchasing?.minMax?.enabled == true
+        || CEFConfig.featureSet?.purchasing?.minMax_after?.enabled == true)
+      {
+        <Row>
+          @if (CEFConfig.featureSet?.purchasing?.minMax?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MaximumPurchaseQuantity"
+                @bind-Value="Record.MaximumPurchaseQuantity"
+                LabelText="MaxPurchaseQuantity"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.purchasing?.minMax_after?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MaximumPurchaseQuantityIfPastPurchased"
+                @bind-Value="Record.MaximumPurchaseQuantityIfPastPurchased"
+                LabelText="MaxIfPreviousMaxIsMet"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+        </Row>
+      }
+      @if (CEFConfig.featureSet?.inventory?.backOrder?.enabled == true
+        || CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductGlobal?.enabled == true
+        || CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductPerAccount?.enabled == true
+        || CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductPerAccount?.after?.enabled == true)
+      {
+        <Row>
+          @if (CEFConfig.featureSet?.inventory?.backOrder?.enabled == true)
+          {
+            <Column>
+              <ToggleFormGroup
+                TValue="bool"
+                FormIdentifier="AllowBackOrder"
+                @bind-Value="Record.AllowBackOrder"
+                IsOptionToggled="@(_ => Record.AllowBackOrder)"
+                LabelText="Allow Backorder"
+                SwitchColor="Color.Info"
+                ToggleOnText="Allowed"
+                ToggleOffText="Not Allowed"
+                Disabled="Record.IsUnlimitedStock"
+                Required="false"
+                TooltipText="The product is still allowed to be ordered when there is no remaining inventory available."
+              />
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductGlobal?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MaximumBackOrderPurchaseQuantityGlobal"
+                Disabled="Record.IsUnlimitedStock || !Record.AllowBackOrder"
+                @bind-Value="Record.MaximumBackOrderPurchaseQuantityGlobal"
+                LabelText="MaximumBackOrderPurchaseQuantityGlobal"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductPerAccount?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MaximumBackOrderPurchaseQuantity"
+                Disabled="Record.IsUnlimitedStock || !Record.AllowBackOrder"
+                @bind-Value="Record.MaximumBackOrderPurchaseQuantity"
+                LabelText="MaximumBackOrderPurchaseQuantity"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.inventory?.backOrder?.maxPerProductPerAccount?.after?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MaximumBackOrderPurchaseQuantityIfPastPurchased"
+                Disabled="@(Record.IsUnlimitedStock || !Record.AllowBackOrder)"
+                @bind-Value="Record.MaximumBackOrderPurchaseQuantityIfPastPurchased"
+                LabelText="MaximumBackOrderPurchaseQuantityIfPastPurchased"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+        </Row>
+      }
+      @if (CEFConfig.featureSet?.inventory?.preSale?.enabled == true
+        || CEFConfig.featureSet?.inventory?.preSale?.maxPerProductGlobal?.enabled == true
+        || CEFConfig.featureSet?.inventory?.preSale?.maxPerProductPerAccount?.enabled == true
+        || CEFConfig.featureSet?.inventory?.preSale?.maxPerProductPerAccount?.after?.enabled == true)
+      {
+        <Row>
+          @if (CEFConfig.featureSet?.inventory?.preSale?.enabled == true)
+          {
+            <Column>
+              <ToggleFormGroup
+                FormIdentifier="AllowPreSale"
+                Disabled="@Record.IsUnlimitedStock"
+                @bind-Value="Record.AllowPreSale"
+                IsOptionToggled="@(_ => Record.AllowPreSale)"
+                LabelText="AllowPreSale"
+                ToggleOnText="Allowed"
+                ToggleOffText="NotAllowed"
+                SwitchColor="Color.Warning"
+                Required="false"
+              />
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.inventory?.preSale?.maxPerProductGlobal?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MaximumPrePurchaseQuantityGlobal"
+                Disabled="Record.IsUnlimitedStock || !Record.AllowPreSale"
+                @bind-Value="Record.MaximumPrePurchaseQuantityGlobal"
+                LabelText="MaximumPrePurchaseQuantityGlobal"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.inventory?.preSale?.maxPerProductPerAccount?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MaximumPrePurchaseQuantity"
+                Disabled="@(Record.IsUnlimitedStock || !Record.AllowPreSale)"
+                @bind-Value="Record.MaximumPrePurchaseQuantity"
+                LabelText="MaximumPrePurchaseQuantity"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.inventory?.preSale?.maxPerProductPerAccount?.after?.enabled == true)
+          {
+            <Column>
+              <NumericFormGroup
+                FormIdentifier="MaximumPrePurchaseQuantityIfPastPurchased"
+                Disabled="@(Record.IsUnlimitedStock || !Record.AllowPreSale)"
+                @bind-Value="Record.MaximumPrePurchaseQuantityIfPastPurchased"
+                LabelText="MaximumPrePurchaseQuantityIfPastPurchased"
+                Step="0.01m"
+                Min="0"
+                PlaceholderText="1.00"
+                InputClasses="text-right"
+                Required="false"
+              />
+            </Column>
+          }
+        </Row>
+      }
+    </Column>
+  }
+  <Column>
+    <Row>
+      <Column>
+        <ToggleFormGroup
+          FormIdentifier="IsDiscontinued"
+          @bind-Value="Record.IsDiscontinued"
+          IsOptionToggled="@(_ => Record.IsDiscontinued)"
+          LabelText="Is Discontinued"
+          ToggleOnText="Discontinued"
+          ToggleOffText="Available"
+          SwitchColor="Color.Danger"
+          Required="false"
+          TooltipText="@("Discontinued items do not show up in the catalog and can no longer be purchased, but are still accessible in a read-only view to users which have a sales history with the item. Useful to show products which are no longer available but link to newer versions of products that are (like the latest version of software or device).")"
+        />
+      </Column>
+      @if (CEFConfig.featureSet?.purchasing?.availabilityDates?.enabled == true
+        || CEFConfig.featureSet?.inventory?.preSale?.enabled == true)
+      {
+        <Column>
+          @if (CEFConfig.featureSet?.purchasing?.availabilityDates?.enabled == true)
+          {
+            <DateFormGroup
+              FormIdentifier="Start Date"
+              @bind-Value="Record.AvailableStartDate"
+              LabelText="Start Date"
+              PlaceholderText="Start Date"
+              Max="Record.AvailableEndDate"
+              IncludeTime="true"
+              Required="false"
+            />
+          }
+          @if (CEFConfig.featureSet?.purchasing?.availabilityDates?.enabled == true)
+          {
+            <DateFormGroup
+              FormIdentifier="EndDate"
+              @bind-Value="Record.AvailableEndDate"
+              LabelText="End Date"
+              PlaceholderText="End Date"
+              Min="Record.AvailableStartDate"
+              IncludeTime="true"
+              Required="false"
+            />
+          }
+          @if (CEFConfig.featureSet?.inventory?.preSale?.enabled == true)
+          {
+            <DateFormGroup
+              FormIdentifier="PreSellEndDate"
+              Disabled="Record.IsUnlimitedStock || !Record.AllowPreSale"
+              @bind-Value="Record.PreSellEndDate"
+              LabelText="Pre-Sell End Date"
+              PlaceholderText="Pre-Sell End Date"
+              IncludeTime="true"
+              Required="false"
+            />
+          }
+        </Column>
+      }
+    </Row>
+  </Column>
+</Row>
+@if (CEFConfig.featureSet?.purchasing?.roleRequiredToSee?.enabled == true)
+{
+  <Row>
+    <Column>
+      <TextFormGroup
+        FormIdentifier="RequiresRoles"
+        @bind-Value="Record.RequiresRoles"
+        LabelText="RequiresRole.VisibilityRestrictedRole"
+        TooltipText="OnlyQualifiedCanSee.Tooltip"
+        MaxLength="512"
+        Required="false"
+      />
+    </Column>
+  </Row>
+}
+@if (CEFConfig.featureSet?.purchasing?.roleRequiredToPurchase?.enabled == true)
+{
+  <Row>
+    <Column>
+      <TextFormGroup
+        FormIdentifier="RequiresRolesAlt"
+        @bind-Value="Record.RequiresRolesAlt"
+        LabelText="RequiresRole.VisibilityNotRestrictedRole"
+        TooltipText="AllCanSeeOnlyQualifiedCanPurchase.Tooltip"
+        MaxLength="512"
+        Required="false"
+      />
+    </Column>
+  </Row>
+}
+@if (CEFConfig.featureSet?.purchasing?.documentRequired?.enabled == true
+  || CEFConfig.featureSet?.purchasing?.mustPurchaseInMultiplesOf?.enabled == true)
+{
+  <Row>
+    @if (CEFConfig.featureSet?.purchasing?.documentRequired?.enabled == true)
+    {
+      <Column ColumnSize="ColumnSize.Is6">
+        <Row>
+          <Column ColumnSize="ColumnSize.Is12">
+            <TextFormGroup
+              FormIdentifier="DocumentRequiredForPurchase"
+              @bind-Value="Record.DocumentRequiredForPurchase"
+              LabelText="DocumentRequiredForPurchaseRole"
+              MaxLength="128"
+              Required="false"
+            />
+          </Column>
+          <Column ColumnSize="ColumnSize.Is12">
+            <TextAreaFormGroup
+              FormIdentifier="DocumentRequiredForPurchaseMissingWarningMessage"
+              @bind-Value="Record.DocumentRequiredForPurchaseMissingWarningMessage"
+              Disabled="@(!Contract.CheckValidKey(Record.DocumentRequiredForPurchase))"
+              LabelText="DocumentRequiredForPurchaseMissingWarningMessage"
+              PlaceholderText="DocumentRequiredForPurchaseMissingWarningMessage"
+              MaxLength="1024"
+              ShowCharacterCounter="true"
+              Required="false"
+            />
+          </Column>
+          @if (Contract.CheckValidKey(Record.DocumentRequiredForPurchaseMissingWarningMessage))
+          {
+            <Column ColumnSize="ColumnSize.Is12">
+              <Paragraph Class="bold">Preview</Paragraph>
+              <Div Class="my-2">
+                Tokens: {{ownerID}}, {{ownerName}},
+                {{requiredAmount}}, {{missingAmount}},
+                {{overrideFee}}, {{overrideFeeWarningMessage}},
+                {{relatedStoreID}}, {{relatedStoreName}},
+                {{checkbox}}, {{attrKey}}
+              </Div>
+              <Div Class="mb-3 well well-sm">
+                @Record.DocumentRequiredForPurchaseMissingWarningMessage.Replace("{{checkbox}}", string.Empty))
+              </Div>
+            </Column>
+          }
+          <Column ColumnSize="ColumnSize.Is12">
+            <TextAreaFormGroup
+              FormIdentifier="DocumentRequiredForPurchaseExpiredWarningMessage"
+              @bind-Value="Record.DocumentRequiredForPurchaseExpiredWarningMessage"
+              Disabled="@(!Contract.CheckValidKey(Record.DocumentRequiredForPurchase))"
+              LabelText="DocumentRequiredForPurchaseExpiredWarningMessage"
+              PlaceholderText="DocumentRequiredForPurchaseExpiredWarningMessage"
+              MaxLength="1024"
+              ShowCharacterCounter="true"
+              Required="false"
+            />
+          </Column>
+          @if (Contract.CheckValidKey(Record.DocumentRequiredForPurchaseExpiredWarningMessage))
+          {
+            <Column ColumnSize="ColumnSize.Is12">
+              <Paragraph Class="bold">Preview</Paragraph>
+              <Div Class="my-2">
+                Tokens: {{ownerID}}, {{ownerName}},
+                {{requiredAmount}}, {{missingAmount}},
+                {{overrideFee}}, {{overrideFeeWarningMessage}},
+                {{relatedStoreID}}, {{relatedStoreName}},
+                {{checkbox}}, {{attrKey}}
+              </Div>
+              <Div Class="mb-3 well well-sm">
+                @(Record.DocumentRequiredForPurchaseExpiredWarningMessage.Replace("{{checkbox}}", string.Empty))
+              </Div>
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.purchasing?.documentRequired_override?.enabled == true)
+          {
+            <Column ColumnSize="ColumnSize.Is6.OnTablet">
+              <NumericFormGroup
+                FormIdentifier="DocumentRequiredForPurchaseOverrideFee"
+                @bind-Value="Record.DocumentRequiredForPurchaseOverrideFee"
+                Disabled="@(!Contract.CheckValidKey(Record.DocumentRequiredForPurchase))"
+                LabelText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFee"
+                InputClasses="text-right"
+                PlaceholderText="0.00"
+                Step="0.01m"
+                Required="false"
+                IsCurrency="@(!Record.DocumentRequiredForPurchaseOverrideFeeIsPercent)"
+                IsPercent="@Record.DocumentRequiredForPurchaseOverrideFeeIsPercent"
+              />
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6.OnTablet">
+              <ToggleFormGroup
+                FormIdentifier="DocumentRequiredForPurchaseOverrideFeeIsPercent"
+                @bind-Value="Record.DocumentRequiredForPurchaseOverrideFeeIsPercent"
+                IsOptionToggled="@(_ => Record.DocumentRequiredForPurchaseOverrideFeeIsPercent)"
+                Disabled="@(!Contract.CheckValidKey(Record.DocumentRequiredForPurchase) || !Contract.CheckValidID(Record.DocumentRequiredForPurchaseOverrideFee))"
+                LabelText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeIsPercent"
+                ToggleOnText="Yes"
+                ToggleOffText="No"
+                SwitchColor="Color.Primary"
+              />
+            </Column>
+            <Column ColumnSize="ColumnSize.Is12">
+              <TextAreaFormGroup
+                FormIdentifier="DocumentRequiredForPurchaseOverrideFeeWarningMessage"
+                @bind-Value="Record.DocumentRequiredForPurchaseOverrideFeeWarningMessage"
+                Disabled="@(!Contract.CheckValidKey(Record.DocumentRequiredForPurchase) || !Contract.CheckValidID(Record.DocumentRequiredForPurchaseOverrideFee))"
+                LabelText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+                PlaceholderText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+                MaxLength="1024"
+                ShowCharacterCounter="true"
+                Required="false"
+              />
+            </Column>
+            @if (Contract.CheckValidKey(Record.DocumentRequiredForPurchaseOverrideFeeWarningMessage))
+            {
+              <Column ColumnSize="ColumnSize.Is12">
+                <Paragraph Class="bold">Preview</Paragraph>
+                <Div Class="my-2">
+                  Tokens: {{ownerID}}, {{ownerName}},
+                  {{requiredAmount}}, {{missingAmount}},
+                  {{overrideFee}}, {{overrideFeeWarningMessage}},
+                  {{relatedStoreID}}, {{relatedStoreName}},
+                  {{checkbox}}, {{attrKey}}
+                </Div>
+                <Div Class="mb-3 well well-sm">
+                  @(Record.DocumentRequiredForPurchaseOverrideFeeWarningMessage.Replace("{{checkbox}}", string.Empty))
+                </Div>
+              </Column>
+            }
+            <Column ColumnSize="ColumnSize.Is12">
+              <TextAreaFormGroup
+                FormIdentifier="DocumentRequiredForPurchaseOverrideFeeAcceptedMessage"
+                @bind-Value="Record.DocumentRequiredForPurchaseOverrideFeeAcceptedMessage"
+                Disabled="@(!Contract.CheckValidKey(Record.DocumentRequiredForPurchase) || !Contract.CheckValidID(Record.DocumentRequiredForPurchaseOverrideFee))"
+                LabelText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+                PlaceholderText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+                MaxLength="1024"
+                ShowCharacterCounter="true"
+                Required="false"
+              />
+            </Column>
+            @if (Contract.CheckValidKey(Record.DocumentRequiredForPurchaseOverrideFeeAcceptedMessage))
+            {
+              <Column ColumnSize="ColumnSize.Is12">
+                <Paragraph Class="bold">Preview</Paragraph>
+                <Div Class="my-2">
+                  Tokens: {{ownerID}}, {{ownerName}},
+                  {{requiredAmount}}, {{missingAmount}},
+                  {{overrideFee}}, {{overrideFeeWarningMessage}},
+                  {{relatedStoreID}}, {{relatedStoreName}},
+                  {{checkbox}}, {{attrKey}}
+                </Div>
+                <Div Class="mb-3 well well-sm">
+                  @(Record.DocumentRequiredForPurchaseOverrideFeeAcceptedMessage.Replace("{{checkbox}}", string.Empty))
+                </Div>
+              </Column>
+            }
+          }
+        </Row>
+      </Column>
+    }
+    @if (CEFConfig.featureSet?.purchasing?.mustPurchaseInMultiplesOf?.enabled == true)
+    {
+      <Column ColumnSize="ColumnSize.Is6">
+        <Row>
+          <Column ColumnSize="ColumnSize.Is12">
+            <NumericFormGroup
+              FormIdentifier="MustPurchaseInMultiplesOfAmount"
+              @bind-Value="Record.MustPurchaseInMultiplesOfAmount"
+              LabelText="MustPurchaseInMultiplesOfAmount"
+              TooltipText="A user will not be able to check out their cart until they meet this minimum requirement if set."
+              InputClasses="text-right"
+              PlaceholderText="1.00"
+              Step="0.01m"
+              Required="false"
+            />
+          </Column>
+          <Column ColumnSize="ColumnSize.Is12">
+            <TextAreaFormGroup
+              FormIdentifier="MustPurchaseInMultiplesOfAmountWarningMessage"
+              @bind-Value="Record.MustPurchaseInMultiplesOfAmountWarningMessage"
+              Disabled="@(!Contract.CheckValidID(Record.MustPurchaseInMultiplesOfAmount))"
+              LabelText="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+              PlaceholderText="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+              MaxLength="1024"
+              ShowCharacterCounter="true"
+              Required="false"
+            />
+          </Column>
+          @if (Contract.CheckValidKey(Record.MustPurchaseInMultiplesOfAmountWarningMessage))
+          {
+            <Column ColumnSize="ColumnSize.Is12">
+              <Paragraph Class="bold">Preview</Paragraph>
+              <Div Class="my-2">
+                Tokens: {{ownerID}}, {{ownerName}},
+                {{requiredAmount}}, {{missingAmount}},
+                {{overrideFee}}, {{overrideFeeWarningMessage}},
+                {{relatedStoreID}}, {{relatedStoreName}},
+                {{checkbox}}, {{attrKey}}
+              </Div>
+              <Div Class="mb-3 well well-sm">
+                @Record.MustPurchaseInMultiplesOfAmountWarningMessage.Replace("{{checkbox}}", string.Empty))
+              </Div>
+            </Column>
+          }
+          @if (CEFConfig.featureSet?.purchasing?.mustPurchaseInMultiplesOf_override?.enabled == true)
+          {
+            <Column ColumnSize="ColumnSize.Is6">
+              <NumericFormGroup
+                FormIdentifier="MustPurchaseInMultiplesOfAmountOverrideFee"
+                @bind-Value="Record.MustPurchaseInMultiplesOfAmountOverrideFee"
+                Disabled="@(!Contract.CheckValidID(Record.MustPurchaseInMultiplesOfAmount))"
+                LabelText="MustPurchaseInMultiplesOfAmountOverrideFee"
+                InputClasses="text-right"
+                PlaceholderText="1.00"
+                Step="0.01m"
+                Required="false"
+                IsCurrency="@(!Record.MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent)"
+                IsPercent="@Record.MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent"
+              />
+            </Column>
+            <Column ColumnSize="ColumnSize.Is6">
+              <ToggleFormGroup
+                FormIdentifier="MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent"
+                Disabled="@(!Contract.CheckValidID(Record.MustPurchaseInMultiplesOfAmount) || !Contract.CheckValidID(Record.MustPurchaseInMultiplesOfAmountOverrideFee))"
+                @bind-Value="Record.MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent"
+                IsOptionToggled="@(_ => Record.MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent)"
+                LabelText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeIsPercent"
+                ToggleOnText="Yes"
+                ToggleOffText="No"
+                SwitchColor="Color.Primary"
+              />
+            </Column>
+            <Column ColumnSize="ColumnSize.Is12">
+              <TextAreaFormGroup
+                FormIdentifier="MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage"
+                @bind-Value="Record.MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage"
+                Disabled="@(!Contract.CheckValidID(Record.MustPurchaseInMultiplesOfAmount) || !Contract.CheckValidID(Record.MustPurchaseInMultiplesOfAmountOverrideFee))"
+                LabelText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+                PlaceholderText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+                MaxLength="1024"
+                ShowCharacterCounter="true"
+                Required="false"
+              />
+            </Column>
+            @if (Contract.CheckValidKey(Record.MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage))
+            {
+              <Column ColumnSize="ColumnSize.Is12">
+                <Paragraph Class="bold">Preview</Paragraph>
+                <Div Class="my-2">
+                  Tokens: {{ownerID}}, {{ownerName}},
+                  {{requiredAmount}}, {{missingAmount}},
+                  {{overrideFee}}, {{overrideFeeWarningMessage}},
+                  {{relatedStoreID}}, {{relatedStoreName}},
+                  {{checkbox}}, {{attrKey}}
+                </Div>
+                <Div Class="mb-3 well well-sm">
+                  @Record.MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage.Replace("{{checkbox}}", string.Empty))
+                </Div>
+              </Column>
+            }
+            <Column ColumnSize="ColumnSize.Is12">
+              <TextAreaFormGroup
+                FormIdentifier="MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage"
+                @bind-Value="Record.MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage"
+                Disabled="@(!Contract.CheckValidID(Record.MustPurchaseInMultiplesOfAmount) || !Contract.CheckValidID(Record.MustPurchaseInMultiplesOfAmountOverrideFee))"
+                LabelText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+                PlaceholderText="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+                MaxLength="1024"
+                ShowCharacterCounter="true"
+                Required="false"
+              />
+            </Column>
+            @if (Contract.CheckValidKey(Record.MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage))
+            {
+              <Column ColumnSize="ColumnSize.Is12">
+                <Paragraph Class="bold">Preview</Paragraph>
+                <Div Class="my-2">
+                  Tokens: {{ownerID}}, {{ownerName}},
+                  {{requiredAmount}}, {{missingAmount}},
+                  {{overrideFee}}, {{overrideFeeWarningMessage}},
+                  {{relatedStoreID}}, {{relatedStoreName}},
+                  {{checkbox}}, {{attrKey}}
+                </Div>
+                <Div Class="mb-3 well well-sm">
+                  @(Record.MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage.Replace("{{checkbox}}", string.Empty))
+                </Div>
+              </Column>
+            }
+          }
+        </Row>
+      </Column>
+    }
+  </Row>
+}
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    return Task.CompletedTask;
+  }
+}

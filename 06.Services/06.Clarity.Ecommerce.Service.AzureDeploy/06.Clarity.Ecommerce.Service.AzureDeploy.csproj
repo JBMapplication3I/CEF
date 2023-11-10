@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\StyleCop.CSharp.Async.Rules.6.1.41\build\StyleCop.CSharp.Async.Rules.props" Condition="Exists('..\..\packages\StyleCop.CSharp.Async.Rules.6.1.41\build\StyleCop.CSharp.Async.Rules.props')" />
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion />
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{400F6C39-6157-4E73-A587-34E52AF6FF95}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CEFAzureAPI</RootNamespace>
+    <AssemblyName>CEFAzureAPI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\CEFAzureAPI.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="bin\appSettings.config" />
+    <Content Include="bin\CEFAzureAPI.dll" />
+    <Content Include="bin\CEFAzureAPI.dll.config" />
+    <Content Include="bin\CEFAzureAPI.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Cache.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Cache.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.Cache.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Core.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Core.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.DataModel.dll" />
+    <Content Include="bin\Clarity.Ecommerce.DataModel.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.DataModel.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Encryption.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Encryption.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Encryption.xml" />
+    <Content Include="bin\Clarity.Ecommerce.Interfaces.Models.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Interfaces.Models.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Interfaces.Workflows.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Interfaces.Workflows.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.Interfaces.Workflows.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Logger.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Logger.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.Logger.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Mapping.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Mapping.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.Mapping.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Models.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Models.pdb" />
+    <Content Include="bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="bin\Clarity.Ecommerce.RegistryLoader.dll" />
+    <Content Include="bin\Clarity.Ecommerce.RegistryLoader.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.RegistryLoader.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Searching.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Searching.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.Searching.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Service.Core.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Service.Core.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.Service.Core.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Service.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Service.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.Service.pdb" />
+    <Content Include="bin\Clarity.Ecommerce.Utilities.dll" />
+    <Content Include="bin\Clarity.Ecommerce.Utilities.dll.config" />
+    <Content Include="bin\Clarity.Ecommerce.Utilities.pdb" />
+    <Content Include="bin\connectionStrings.config" />
+    <Content Include="bin\DocumentFormat.OpenXml.dll" />
+    <Content Include="bin\EFAttributeConfig.dll" />
+    <Content Include="bin\EntityFramework.dll" />
+    <Content Include="bin\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\es\Hangfire.Core.resources.dll" />
+    <Content Include="bin\Hangfire.Core.dll" />
+    <Content Include="bin\Hangfire.Core.xml" />
+    <Content Include="bin\IdentityModel.dll" />
+    <Content Include="bin\IdentityModel.pdb" />
+    <Content Include="bin\LinqKit.dll" />
+    <Content Include="bin\LinqToExcel.dll" />
+    <Content Include="bin\LinqToExcel.xml" />
+    <Content Include="bin\log4net.config" />
+    <Content Include="bin\log4net.dll" />
+    <Content Include="bin\log4net.xml" />
+    <Content Include="bin\mailSettings.config" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Core.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.EntityFramework.dll" />
+    <Content Include="bin\Microsoft.AspNet.Identity.Owin.dll" />
+    <Content Include="bin\Microsoft.IdentityModel.Protocols.dll" />
+    <Content Include="bin\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" />
+    <Content Include="bin\Microsoft.Owin.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.Cookies.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.dll" />
+    <Content Include="bin\Microsoft.Owin.Security.OAuth.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\Owin.dll" />
+    <Content Include="bin\Pipelines.Sockets.Unofficial.dll" />
+    <Content Include="bin\Remotion.Data.Linq.dll" />
+    <Content Include="bin\ServiceStack.Client.dll" />
+    <Content Include="bin\ServiceStack.Client.xml" />
+    <Content Include="bin\ServiceStack.Common.dll" />
+    <Content Include="bin\ServiceStack.Common.xml" />
+    <Content Include="bin\ServiceStack.dll" />
+    <Content Include="bin\ServiceStack.Interfaces.dll" />
+    <Content Include="bin\ServiceStack.Interfaces.xml" />
+    <Content Include="bin\ServiceStack.Logging.Log4Net.dll" />
+    <Content Include="bin\ServiceStack.Logging.Log4Net.xml" />
+    <Content Include="bin\ServiceStack.Redis.dll" />
+    <Content Include="bin\ServiceStack.Redis.xml" />
+    <Content Include="bin\ServiceStack.Text.dll" />
+    <Content Include="bin\ServiceStack.Text.xml" />
+    <Content Include="bin\ServiceStack.xml" />
+    <Content Include="bin\StackExchange.Redis.dll" />
+    <Content Include="bin\StackExchange.Redis.Extensions.Core.dll" />
+    <Content Include="bin\StackExchange.Redis.Extensions.Newtonsoft.dll" />
+    <Content Include="bin\StructureMap.dll" />
+    <Content Include="bin\System.Buffers.dll" />
+    <Content Include="bin\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Content Include="bin\System.Text.Encodings.Web.dll" />
+    <Content Include="bin\System.Threading.Channels.dll" />
+    <Content Include="bin\System.Threading.Tasks.Extensions.dll" />
+    <Content Include="bin\zh-TW\Hangfire.Core.resources.dll" />
+    <Content Include="bin\zh\Hangfire.Core.resources.dll" />
+    <Content Include="Plugins\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\mailSettings.config" />
+    <Content Include="bin\Clarity.Ecommerce.Mapping.dll.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\ClarityCEFAzure - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ClarityCEFAzure - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\DevCEFHomeAgain - Web Deploy.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Solution Items\appSettings.config">
+      <Link>appSettings.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Solution Items\connectionStrings.config">
+      <Link>connectionStrings.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Solution Items\mailSettings.config">
+      <Link>mailSettings.config</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\06.Clarity.Ecommerce.Service\06.Clarity.Ecommerce.Service.csproj">
+      <Project>{be57c4d4-9372-4da8-b05d-bee9c4b44f30}</Project>
+      <Name>06.Clarity.Ecommerce.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.4.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.4.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.Cookies.4.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Owin.Security.OAuth.4.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.2.0.205\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.2.0.205\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58778</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:58778/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\..\packages\StyleCop.CSharp.Async.Rules.6.1.41\build\StyleCop.CSharp.Async.Rules.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\StyleCop.CSharp.Async.Rules.6.1.41\build\StyleCop.CSharp.Async.Rules.props'))" />
+  </Target>
+  <PropertyGroup>
+    <PreBuildEvent>del /q /f "$(ProjectDir)Plugins\*.dll"
+del /q /f "$(ProjectDir)Plugins\*.pdb"
+del /q /f "$(ProjectDir)Plugins\*.xml"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(SolutionDir)Plugins\*.* $(ProjectDir)Plugins /Y /C /R /I /S</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

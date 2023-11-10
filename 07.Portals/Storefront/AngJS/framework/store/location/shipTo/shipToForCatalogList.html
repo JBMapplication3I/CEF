@@ -1,0 +1,18 @@
+﻿<div class="row">
+    <div class="col-12" ng-if="cefShipToCtrl.viewstate.productIsProcessing">
+        <i class="far fa-spinner fa-spin fa-2x"></i>&nbsp;<!--
+        --><span data-translate="ui.storefront.product.detail.productDetails.Loading.Ellipses"></span>
+    </div>
+    <div class="col-12" ng-if="!cefShipToCtrl.viewstate.productIsProcessing">
+        <div cef-ship-to-for-catalog-name-link-block></div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div cef-ship-to-for-catalog-model-sku-block></div>
+                <div cef-ship-to-for-catalog-radios-block></div>
+            </div>
+            <div class="col-sm-6" ng-if="cefShipToCtrl.includeBuyBlock">
+                <div cef-ship-to-for-catalog-buy-block></div>
+            </div>
+        </div>
+    </div>
+</div>

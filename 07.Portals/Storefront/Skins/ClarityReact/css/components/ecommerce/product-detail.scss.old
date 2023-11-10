@@ -1,0 +1,237 @@
+
+@import 'image-slider';
+
+//.cef-product-view {
+//    .product-slider a:first-child {
+//        width: 100%;
+//    }
+//
+//    .cef-sku-num {
+//        margin-bottom: 0;
+//    }
+//
+//    @media(max-width: 990px) {
+//        .clarity-panels ul.nav.nav-tabs li {
+//            width: 100%;
+//        }
+//
+//        .product-actions button {
+//            text-align: left;
+//            width: 100%;
+//        }
+//
+//        .product-actions i {
+//            float: left;
+//            margin-right: 5px;
+//            top: 3px;
+//            position: relative;
+//        }
+//    }
+//}
+
+.cef-product-title {
+}
+// wrapper around the photo gallery and placeholder photo
+.cef-product-photo { }
+// wrapper around the product description area containing
+.cef-product-info { }
+.cef-ratings { }
+.cef-product-price { }
+.cef-in-out-stock { }
+.cef-sku-num { }
+.cef-uofm { }
+
+.cef-quick-description { }
+.cef-kit-component { }
+
+// right sidebar area with buy controls
+.cef-buy-product {
+    //background: #f5f5f5;
+    //padding: 15px;
+    //margin-bottom: 20px;
+    .btn-success {
+        //background-color: $success;
+    }
+}
+
+.cef-add-to-cart {
+    .btn.btn-default, .btn.form-button {
+        //height: 34px;
+        &:disabled:hover {
+            //color: inherit;
+        }
+    }
+    .form-control {
+        //height: 34px;
+        //border: solid 1px #ccc;
+    }
+}
+
+.cef-product-restrictions { }
+.cef-product-social { }
+.cef-contact-seller { }
+
+.product-actions {
+    button {
+        //color: #838383;
+    }
+    button:hover {
+        //text-decoration: none;
+    }
+    i {
+        //margin-left: 10px;
+    }
+}
+// styles for the product detail page
+.clarity-panels {
+    ul.nav.nav-tabs {
+        //margin-left: 0px;
+        //margin-bottom: 0;
+        //border-bottom: 2px solid #ddd;
+
+        li {
+            //font-weight: bold;
+            //border: none;
+
+            span {
+                //color: $primary;
+            }
+
+            a {
+                //color: $primary;
+                //padding: 5px 25px;
+            }
+
+            a:hover {
+                //background: none;
+                //border: none;
+            }
+        }
+
+        li.active {
+            span {
+                //color: $link-color;
+            }
+
+            a,
+            a:hover,
+            a:focus {
+                //border: none;
+                //border-bottom: 2px solid $link-color !important;
+                /*border-top: none;
+                border-right: none;
+                border-left: none;*/
+                //color: $link-color !important;
+                //position: relative;
+                //bottom: -1px;
+            }
+        }
+    }
+}
+
+.tab-content {
+    //min-height: 275px;
+    //margin-bottom: 20px;
+}
+
+.tabs-below > .nav-tabs,
+.tabs-right > .nav-tabs,
+.tabs-left > .nav-tabs {
+    //border-bottom: 0;
+}
+
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+    //display: none;
+    &.active {
+        //display: block;
+    }
+}
+
+.tabs-below {
+    > .nav-tabs {
+        //border-top: 1px solid #ddd;
+        > li {
+            //margin-top: -1px;
+            //margin-bottom: 0;
+            > a {
+                //border-radius: 0 0 4px 4px;
+                &:hover, &:focus {
+                    //border-top-color: #ddd;
+                    //border-bottom-color: transparent;
+                }
+            }
+        }
+        .active {
+            > a {
+                //border-color: transparent #ddd #ddd #ddd;
+                &:hover, &:focus {
+                    //border-color: transparent #ddd #ddd #ddd;
+                }
+            }
+        }
+    }
+}
+
+.tabs-left, .tabs-right {
+    > .nav-tabs {
+        > li {
+            //float: none;
+            > a {
+                //min-width: 74px;
+                //margin-right: 0;
+                //margin-bottom: 3px;
+            }
+        }
+    }
+}
+
+.tabs-left {
+    > .nav-tabs {
+        //float: left;
+        //margin-right: 19px;
+        //border-right: 1px solid #ddd;
+        > li {
+            > a {
+                //margin-right: -1px;
+                //border-radius: 4px 0 0 4px;
+                &:hover, &:focus {
+                    //border-color: #eee #ddd #eee #eee;
+                }
+            }
+        }
+        .active > a {
+            //border-color: #ddd transparent #ddd #ddd;
+            //*border-right-color: #fff;
+            &:hover, &:focus {
+                //border-color: #ddd transparent #ddd #ddd;
+                //*border-right-color: #fff;
+            }
+        }
+    }
+}
+
+.tabs-right {
+    > .nav-tabs {
+        //float: right;
+        //margin-left: 19px;
+        //border-left: 1px solid #ddd;
+        > li {
+            > a {
+                //margin-left: -1px;
+                //border-radius: 0 4px 4px 0;
+                &:hover, &:focus {
+                    //border-color: #eee #eee #eee #ddd;
+                }
+            }
+        }
+        .active > a {
+            //border-color: #ddd #ddd #ddd transparent;
+            //*border-left-color: #fff;
+            &:hover, &:focus {
+                //border-color: #ddd #ddd #ddd transparent;
+                //*border-left-color: #fff;
+            }
+        }
+    }
+}

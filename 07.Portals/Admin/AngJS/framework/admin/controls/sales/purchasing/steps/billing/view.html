@@ -1,0 +1,66 @@
+<!-- step.billing.view Template -->
+<div class="row">
+  <div class="col-xs-12 col-sm-9">
+    <div cef-purchase-step-view-title></div>
+  </div>
+  <div class="col-xs-12 col-sm-3"
+     ng-show="step.complete">
+    <div cef-purchase-step-billing-summary
+      lookup-key="pCtrl.lookupKey">
+    </div>
+  </div>
+  <hr class="w-100 my-2 mx-3" />
+  <div ng-show="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()]"
+    class="col-xs-12"
+    ng-form="pCtrl.forms.billing">
+    <div cef-purchase-step-billing-body
+      lookup-key="pCtrl.lookupKey"
+      id-suffix="Billing">
+    </div>
+  </div>
+  <div ng-show="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()]"
+    class="col-xs-12">
+    <div class="row">
+      <div class="col-sm-12">
+        <button type="button" class="btn btn-primary mb-3"
+          id="btnSubmit_{{step.name}}" name="btnSubmit_{{step.name}}"
+          translate-attr="{ title: pCtrl.service.steps[pCtrl.lookupKey.toString()][$index + 1].continueTextKey || 'Continue',
+                            'aria-label': pCtrl.service.steps[pCtrl.lookupKey.toString()][$index + 1].continueTextKey || 'Continue' }"
+          data-translate="{{pCtrl.service.steps[pCtrl.lookupKey.toString()][$index + 1].continueTextKey || 'Continue'}}"
+          ng-disabled="pCtrl.viewState.running || pCtrl.forms.billing.$invalid || step.invalid"
+          ng-click="pCtrl.submit(pCtrl.lookupKey, step)">
+        </button>
+      </div>
+      <div class="col-xs-12" ng-if="pCtrl.cefConfig.debug">
+        <div class="alert alert-dark">
+          <h4 class="alert-heading">Debug Info for this step</h4>
+          <table class="table table-borderless table-hover table-sm mb-0">
+            <tr>
+              <th>pCtrl.viewState.running</th>
+              <td>{{pCtrl.viewState.running}}</td>
+            </tr>
+            <tr>
+              <th>pCtrl.forms.billing.$invalid</th>
+              <td>{{pCtrl.forms.billing.$invalid}}</td>
+            </tr>
+            <tr>
+              <th>step.invalid</th>
+              <td>{{step.invalid}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr ng-show="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()]"
+   class="w-100 my-2 mx-3" />
+  <!--
+  <div ng-if="pCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true"
+    size="3"
+    pad-in="true"
+    message="pCtrl.viewState.waitMessage">
+  </div>
+  -->
+</div>

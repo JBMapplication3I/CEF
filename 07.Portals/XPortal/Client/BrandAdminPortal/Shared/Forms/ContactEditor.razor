@@ -1,0 +1,408 @@
+﻿@inherits MVC.Core.TemplatedControllerBase
+@inject CEFAPI cvApi
+
+<Validations
+  EditContext="editContext"
+  Mode="ValidationMode.Manual"
+  ValidateOnLoad="false">
+  <EditForm EditContext="@editContext">
+    <DataAnnotationsValidator />
+    <Row>
+      <Column>
+        <Row>
+          <Column>
+            <TextFormGroup
+              FormIdentifier="FirstName"
+              LabelText="First Name"
+              PlaceholderText="John"
+              @bind-Value="BoundContact.FirstName"
+              Required="true"
+              Disabled="@ViewState.InputDisable"
+              ShowValidTooltip="true"
+              StartTouched="true"
+            />
+          </Column>
+          <Column>
+            <TextFormGroup
+              FormIdentifier="LastName"
+              LabelText="Last Name"
+              PlaceholderText="Smith"
+              @bind-Value="BoundContact.LastName"
+              Required="true"
+              Disabled="@ViewState.InputDisable"
+              ShowValidTooltip="true"
+              StartTouched="true"
+            />
+          </Column>
+        </Row>
+        <TextFormGroup
+          Role="@TextRole.Email"
+          FormIdentifier="Email"
+          LabelText="Email"
+          PlaceholderText="john.smith@email.com"
+          @bind-Value="BoundContact.Email1"
+          Required="true"
+          Disabled="@ViewState.InputDisable"
+          ShowValidTooltip="true"
+          StartTouched="true"
+        />
+        <TextFormGroup
+          IsPhone="true"
+          FormIdentifier="Phone1"
+          LabelText="Phone 1"
+          PlaceholderText="555-555-5555 x5555"
+          @bind-Value="BoundContact.Phone1"
+          Required="true"
+          Disabled="@ViewState.InputDisable"
+          ShowValidTooltip="true"
+          StartTouched="true"
+        />
+        @if (showPhone2)
+        {
+          <TextFormGroup
+            IsFax="true"
+            FormIdentifier="Phone2"
+            LabelText="Phone 2"
+            PlaceholderText="555-555-5555 x5555"
+            @bind-Value="BoundContact.Phone2"
+            Required="false"
+            Disabled="@ViewState.InputDisable"
+            ShowValidTooltip="true"
+            StartTouched="true"
+          />
+        }
+        else
+        {
+          <Blazorise.Button
+            Color="Color.Link"
+            Block="true"
+            Clicked="@(() => showPhone2 = true)">
+            Enter an Additional Phone Number
+          </Blazorise.Button>
+        }
+        @if (showPhone3)
+        {
+          <TextFormGroup
+            IsPhone="true"
+            FormIdentifier="Phone3"
+            LabelText="Phone 3"
+            PlaceholderText="555-555-5555 x5555"
+            @bind-Value="BoundContact.Phone3"
+            Required="false"
+            Disabled="@ViewState.InputDisable"
+            ShowValidTooltip="true"
+            StartTouched="true"
+          />
+        }
+        else if (showPhone2)
+        {
+          <Blazorise.Button
+            Color="Color.Link"
+            Block="true"
+            Clicked="@(() => showPhone3 = true)">
+            Enter an Additional Phone Number
+          </Blazorise.Button>
+        }
+        <TextFormGroup
+          IsFax="true"
+          FormIdentifier="Fax1"
+          LabelText="Fax"
+          PlaceholderText="555-555-5555 x5555"
+          @bind-Value="BoundContact.Fax1"
+          Required="false"
+          Disabled="@ViewState.InputDisable"
+          ShowValidTooltip="true"
+          StartTouched="true"
+        />
+        @if (BoundContact.Address is null)
+        {
+          <Blazorise.Button
+            Color="Color.Secondary"
+            Class="mb-3 d-block"
+            Clicked="@AddAddress">
+            Add Address
+          </Blazorise.Button>
+        }
+        else
+        {
+          <TextFormGroup
+            FormIdentifier="Company"
+            LabelText="Company"
+            PlaceholderText="Someplace, Inc."
+            @bind-Value="BoundContact.Address.Company"
+            Required="false"
+            Disabled="@ViewState.InputDisable"
+            ShowValidTooltip="true"
+            StartTouched="true"
+            LeftIcon="far fa-suitcase"
+          />
+          <SelectFormGroup
+            TValue="int?"
+            FormIdentifier="Country"
+            LabelText="Country"
+            @bind-Value="BoundContact.Address.CountryID"
+            OptionsList="@(countries?.ToList<object>())"
+            ItemValueFunc="@(x => ((CountryModel)x).ID)"
+            ItemLabelFunc="@(x => ((CountryModel)x).Name)"
+            Disabled="@ViewState.InputDisable"
+            Required="true"
+            DontAllowNull="true"
+            ShowValidTooltip="true"
+            StartTouched="true"
+            LeftIcon="far fa-globe-americas"
+          />
+          <TextFormGroup
+            FormIdentifier="Street1"
+            LabelText="Street 1"
+            PlaceholderText="111 Main St"
+            @bind-Value="BoundContact.Address.Street1"
+            Required="true"
+            Disabled="@ViewState.InputDisable"
+            ShowValidTooltip="true"
+            StartTouched="true"
+            LeftIcon="far fa-road"
+          />
+          @if (showStreet2)
+          {
+            <TextFormGroup
+              FormIdentifier="Street2"
+              LabelText="Street 2"
+              PlaceholderText="Suite 123"
+              @bind-Value="BoundContact.Address.Street2"
+              Required="false"
+              Disabled="@ViewState.InputDisable"
+              ShowValidTooltip="true"
+              StartTouched="true"
+              LeftIcon="far fa-road"
+            />
+          }
+          else
+          {
+            <Blazorise.Button
+              Color="Color.Link"
+              Block="true"
+              Clicked="@(() => showStreet2 = true)">
+              Enter an Additional Street Line
+            </Blazorise.Button>
+          }
+          @if (showStreet3)
+          {
+            <TextFormGroup
+              FormIdentifier="Street3"
+              LabelText="Street 3"
+              @bind-Value="BoundContact.Address.Street3"
+              Required="false"
+              Disabled="@ViewState.InputDisable"
+              ShowValidTooltip="true"
+              StartTouched="true"
+              LeftIcon="far fa-road"
+            />
+          }
+          else if (showStreet2)
+          {
+            <Blazorise.Button
+              Color="Color.Link"
+              Block="true"
+              Clicked="@(() => showStreet3 = true)">
+              Enter an Additional Street Line
+            </Blazorise.Button>
+          }
+          <TextFormGroup
+            FormIdentifier="City"
+            LabelText="City"
+            PlaceholderText="Someplace"
+            @bind-Value="BoundContact.Address.City"
+            Required="true"
+            Disabled="@ViewState.InputDisable"
+            ShowValidTooltip="true"
+            StartTouched="true"
+            LeftIcon="far fa-city"
+          />
+          <Row>
+            @if (regions?.Where(x => x.CountryID == BoundContact.Address.CountryID).Any() == true)
+            {
+              <Column ColumnSize="ColumnSize.Is7">
+                <SelectFormGroup
+                  TValue="int?"
+                  FormIdentifier="State"
+                  LabelText="State"
+                  @bind-Value="BoundContact.Address.RegionID"
+                  OptionsList="@(regions?.Where(x => x.CountryID == BoundContact.Address.CountryID).ToList<object>())"
+                  ItemValueFunc="@(x => ((RegionModel)x).ID)"
+                  ItemLabelFunc="@(x => ((RegionModel)x).Name)"
+                  Disabled="@ViewState.InputDisable"
+                  Required="true"
+                  DontAllowNull="true"
+                  ShowValidTooltip="true"
+                  StartTouched="true"
+                />
+              </Column>
+            }
+            <Div Class="@(regions?.Where(x => x.CountryID == BoundContact.Address.CountryID).Any() == true ? "col-5" : "col-12")">
+              <TextFormGroup
+                FormIdentifier="PostalCode"
+                LabelText="Zip"
+                PlaceholderText="12345-6789"
+                @bind-Value="BoundContact.Address.PostalCode"
+                Required="true"
+                Disabled="@ViewState.InputDisable"
+                ShowValidTooltip="true"
+                StartTouched="true"
+              />
+            </Div>
+          </Row>
+          @*
+          <Row>
+            <Column>
+              <div class="form-group">
+                <label class="control-label" for="latitude">
+                  Latitude
+                </label>
+                <div class="input-group">
+                  <InputNumber
+                    Class="form-control rounded-right"
+                    id="latitude"
+                    Disabled="@ViewState.InputDisable"
+                    @bind-Value="BoundContact.Address.Latitude"
+                    Minimum="-90"
+                    Maximum="90"
+                    step="0.0000001"
+                    DisplayName="Latitude"
+                    placeholder="Latitude"
+                    8
+                  />
+                  <div class="valid-feedback">Looks good!</div>
+                  <div class="invalid-feedback">Looks bad!</div>
+                </div>
+              </div>
+            </Column>
+            <Column>
+              <div class="form-group">
+                <label class="control-label" for="longitude">
+                  Longitude
+                </label>
+                <div class="input-group">
+                  <InputNumber class="form-control rounded-right"
+                    id="longitude"
+                    disabled="@ViewState.InputDisable"
+                    @bind-Value="BoundContact.Address.Longitude"
+                    min="-180"
+                    max="180"
+                    step="0.0000001"
+                    DisplayName="Longitude"
+                    placeholder="Longitude" />
+                  <div class="valid-feedback">Looks good!</div>
+                  <div class="invalid-feedback">Looks bad!</div>
+                </div>
+              </div>
+            </Column>
+          </Row>
+          *@
+        }
+      </Column>
+    </Row>
+    <Blazorise.ValidationSummary />
+  </EditForm>
+</Validations>
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // Ignored: Set by Parameter
+  /// <summary>Gets or sets the contact.</summary>
+  /// <value>The contact.</value>
+  [Parameter/*, EditorRequired NOTE: Causes RZ2012 when using @bind-Value */]
+  public ContactModel Contact { get; set; }
+
+  /// <summary>Gets or sets the contact changed.</summary>
+  /// <value>The contact changed.</value>
+  [Parameter]
+  public EventCallback<ContactModel> ContactChanged { get; set; }
+#pragma warning restore CS8618 // Ignored: Set by Parameter
+  #endregion
+
+  private List<CountryModel>? countries;
+  private List<RegionModel>? regions;
+  private EditContext? editContext;
+  private bool formInvalid;
+  private bool showPhone2;
+  private bool showPhone3;
+  private bool showStreet2;
+  private bool showStreet3;
+
+  private ContactModel BoundContact
+  {
+    get => Contact;
+    // ReSharper disable once UnusedMember.Local
+    set => ContactChanged.InvokeAsync(value);
+  }
+
+  /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+  /// resources.</summary>
+  public void Dispose()
+  {
+    if (editContext is null)
+    {
+      return;
+    }
+    editContext.OnFieldChanged -= HandleFieldChanged;
+  }
+
+  /// <inheritdoc/>
+  public override async Task MakeDirty(ChangeEventArgs e, string caller)
+  {
+    await base.MakeDirty(e, caller).ConfigureAwait(false);
+    await ContactChanged.InvokeAsync(Contact).ConfigureAwait(false);
+    StateHasChanged();
+  }
+
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    editContext = new(BoundContact);
+    editContext.SetFieldCssClassProvider(new MVC.Core.Bootstrap4FieldClassProvider());
+    editContext.OnFieldChanged += HandleFieldChanged;
+    await SetRunningAsync().ConfigureAwait(false);
+    await Task.WhenAll(
+        LoadCountries(),
+        LoadRegions())
+      .ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+  }
+
+  private async void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+  {
+    if (editContext is null)
+    {
+      return;
+    }
+    formInvalid = !editContext.Validate();
+    await ContactChanged.InvokeAsync(BoundContact).ConfigureAwait(false);
+    StateHasChanged();
+  }
+
+  private async Task LoadCountries()
+  {
+    countries = await LoadCollection<MVC.Api.Endpoints.GetCountries, CountryPagedResults, CountryModel>(
+        cvApi.GetCountries,
+        new() { Active = true, AsListing = true })
+      .ConfigureAwait(false);
+  }
+
+  private async Task LoadRegions()
+  {
+    regions = await LoadCollection<MVC.Api.Endpoints.GetRegions, RegionPagedResults, RegionModel>(
+        cvApi.GetRegions,
+        new() { Active = true, AsListing = true })
+      .ConfigureAwait(false);
+  }
+
+  private Task AddAddress()
+  {
+    Contact.Address ??= new();
+    return Task.CompletedTask;
+  }
+}

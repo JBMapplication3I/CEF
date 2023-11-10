@@ -1,0 +1,81 @@
+﻿<div class="container-fluid">
+    <div class="row d-print-none">
+        <div class="col-12">
+            <h5 class="d-inline-block"
+                sid="PrintThisFormHrd"
+                data-translate="ui.storefront.userDashboard2.controls.salesReturnCreatePrint.PrintThisForm.Message"></h5>
+            <button type="button" class="btn btn-secondary float-right"
+                    onclick="window.print()"
+                    ><i class="far fa-print"></i>&nbsp;<!--
+                    --><span data-translate="ui.storefront.common.Print"></span></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 d-print-none">
+            <h2 class="text-center"
+                sid="ReturnRequestHdr"
+                data-translate="ui.storefront.userDashboard2.controls.salesReturnCreate.ReturnRequestOfPurchasedItems"></h2>
+        </div>
+        <div ng-class="salesReturnCreatePrintCtrl.shippingContact ? 'col-sm-4' : 'col-sm-6'">
+            <h3 sid="BillingInformationHdr"
+                data-translate="ui.storefront.storeDashboard.storeOrderDetail.BillingInformation"></h3>
+            <div cef-contact-address-block
+                 contact="salesReturnCreatePrintCtrl.billingContact"
+                 hide-icons="true"
+                 hide-phones="true"
+                 hide-fax="true"
+                 hide-email="true"
+                 class="mb-3"></div>
+        </div>
+        <div class="col-sm-6" ng-if="salesReturnCreatePrintCtrl.shippingContact">
+            <h3 sid="ShippingInformationHdr"
+                data-translate="ui.storefront.common.ShippingInformation"></h3>
+            <div cef-contact-address-block
+                 contact="salesReturnCreatePrintCtrl.shippingContact"
+                 hide-icons="true"
+                 hide-phones="true"
+                 hide-fax="true"
+                 hide-email="true"
+                 class="mb-3"></div>
+        </div>
+        <div ng-class="salesReturnCreatePrintCtrl.shippingContact ? 'col-sm-4' : 'col-sm-6'">
+            <h3 sid="ReturnsDestinationHdr"
+                data-translate="ui.storefront.userDashboard2.salesReturnCreatePrint.ReturnsDestination"></h3>
+            <p>
+                RMA: {{salesReturnCreatePrintCtrl.salesReturn.CustomKey}}
+            </p>
+            <div cef-contact-address-block
+                 contact="salesReturnCreatePrintCtrl.returnContact"
+                 hide-icons="true"
+                 hide-phones="true"
+                 hide-fax="true"
+                 hide-email="true"
+                 class="mb-3"></div>
+        </div>
+    </div>
+    <h3 sid="ItemsReturnedHdr"
+        class="d-inline-block"
+        data-translate="ui.storefront.userDashboard2.controls.salesReturnCreatePrint.ItemsBeingReturned"></h3>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th class="w-16 col-3 col-sm-2"
+                    data-translate="ui.storefront.cart.SKU"></th>
+                <th class="w-64 col-sm-8 col-md-8 col-lg-8"
+                    data-translate="ui.storefront.common.Name"></th>
+                <th class="w-8 col-sm-1 text-center"
+                    data-translate="ui.storefront.userDashboard2.controls.salesReturnCreatePrint.ReturningQuantity"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in salesReturnCreatePrintCtrl.salesReturn.SalesItems">
+                <td><label class="form-control-static text-weight-normal" ng-bind="item.ProductKey"></label></td>
+                <td><label class="form-control-static text-weight-normal" ng-bind="item.ProductName"></label></td>
+                <td class="text-center">
+                    <label class="form-control-static text-weight-normal text-right"
+                           ng-bind="item.Quantity + (item.QuantityBackOrdered || 0) + (item.QuantityPreSold || 0)"></label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

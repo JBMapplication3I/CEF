@@ -1,0 +1,17 @@
+<div>
+  <div ng-if="pcnwCtrl.product.SeoUrl">
+    <a class="h6 mb-2"
+      id="productCatalogDetailsLinkFor_{{pcnwCtrl.index}}"
+      name="productCatalogDetailsLinkFor_{{pcnwCtrl.index}}"
+      title="{{pcnwCtrl.product.Name}}"
+      aria-label="{{pcnwCtrl.product.Name}}"
+      ui-sref-plus uisrp-is-product="true"
+      uisrp-path="{{pcnwCtrl.product.SeoUrl}}">
+      <span class="rows-{{pcnwCtrl.nameR}}"
+        id="cardProductName_{{pcnwCtrl.index}}"
+        name="cardProductName_{{pcnwCtrl.index}}"
+        ng-bind="pcnwCtrl.product.Name">
+      </span>
+    </a>
+  </div>
+</div>

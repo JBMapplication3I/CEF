@@ -1,0 +1,438 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="categoryDetailCtrl.record"
+         new-kind-key="ui.admin.common.Category.New"
+         existing-kind-key="ui.admin.common.Category">
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 category-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid form-vertical" ng-form="categoryDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 data-translate="ui.admin.common.GeneralInformation"></h3>
+                                <text-input-form-group
+                                    key="Name"
+                                    ng-model="categoryDetailCtrl.record.Name"
+                                    label-key="ui.admin.common.Name"
+                                    tooltip-text="The name of the record. When Display Name is not set, this value is displayed to the UI to show which record this is."
+                                    placeholder-key="ui.admin.common.Name"
+                                    max-length="128"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <text-input-form-group
+                                    key="DisplayName"
+                                    ng-model="categoryDetailCtrl.record.DisplayName"
+                                    label-key="ui.admin.common.DisplayName"
+                                    tooltip-text="The display name of the record. When Display Name is set, this value is displayed to the UI to show which record this is (instead of Name)."
+                                    placeholder-key="ui.admin.common.DisplayName"
+                                    max-length="128"
+                                    ng-required="false">
+                                </text-input-form-group>
+                                <text-input-form-group
+                                    key="CustomKey"
+                                    ng-model="categoryDetailCtrl.record.CustomKey"
+                                    label-key="ui.admin.common.Key"
+                                    tooltip-text="The key of the record. In most cases, this is provided by a third party system. This record specifically requires a unique value even if not integrated with a 3rd party system."
+                                    placeholder-key="ui.admin.common.Key"
+                                    max-length="128"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <select-form-group
+                                    key="TypeID"
+                                    ng-model="categoryDetailCtrl.record.TypeID"
+                                    selections="categoryDetailCtrl.types"
+                                    label-key="ui.admin.common.Type"
+                                    tooltip-text="The type of the record."
+                                    placeholder-key="ui.admin.common.Type"
+                                    ng-required="true">
+                                </select-form-group>
+                                <div class="row">
+                                    <toggle-form-group
+                                        class="col-xs-6"
+                                        key="IsVisible"
+                                        ng-model="categoryDetailCtrl.record.IsVisible"
+                                        label-key="ui.admin.controls.inventory.categoryDetail.IsVisible"
+                                        tog-on-key="ui.admin.common.Visible" tog-on-style="btn-success"
+                                        tog-off-key="ui.admin.common.Hidden" tog-off-style="btn-danger"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                    <toggle-form-group
+                                        class="col-xs-6"
+                                        key="IncludeInMenu"
+                                        ng-model="categoryDetailCtrl.record.IncludeInMenu"
+                                        label-key="ui.admin.controls.inventory.categoryDetail.IncludeInMenu"
+                                        tog-on-key="ui.admin.common.Included" tog-on-style="btn-success"
+                                        tog-off-key="ui.admin.common.NotIncluded" tog-off-style="btn-warning"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                </div>
+                                <div class="row">
+                                    <number-input-form-group
+                                        class="col-sm-6"
+                                        key="SortOrder"
+                                        ng-model="categoryDetailCtrl.record.SortOrder"
+                                        label-key="ui.admin.common.SortOrder"
+                                        tooltip-text="The sort order for the record. This controls where in the layout of Select controls and paging, etc. the record will lie when sorted via Sort Order."
+                                        placeholder-key="ui.admin.common.SortOrder"
+                                        step="1"
+                                        precision="0"
+                                        ng-required="false">
+                                    </number-input-form-group>
+                                    <!--
+                                    <div class="col-sm-6" ng-class="{'has-error': categoryDetailCtrl.forms.Details.nudHandlingCharge.$invalid}">
+                                        <label class="control-label" data-translate="ui.admin.controls.inventory.categoryDetail.HandlingCharge"></label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" aria-hidden="true"><i class="far fa-usd"></i></div>
+                                            <input type="number" class="form-control text-right" step="0.01" placeholder="0.00"
+                                                   id="nudHandlingCharge" name="nudHandlingCharge"
+                                                   ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                                                   ng-model="categoryDetailCtrl.record.HandlingCharge" />
+                                        </div>
+                                        <div ng-messages="categoryDetailCtrl.forms.Details.nudHandlingCharge.$error">
+                                            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                        </div>
+                                    </div>
+                                    -->
+                                </div>
+                                <textarea-wysiwyg-form-group
+                                    key="Description"
+                                    ng-model="categoryDetailCtrl.record.Description"
+                                    label-key="ui.admin.common.Description"
+                                    tooltip-text="The description of the record. These are usually not displayed anywhere."
+                                    placeholder-key="ui.admin.common.Description"
+                                    ng-required="false">
+                                </textarea-wysiwyg-form-group>
+                            </div>
+                            <div class="col-md-6">
+                                <div cef-seo-editor master="categoryDetailCtrl.record" ng-if="categoryDetailCtrl.record != null"></div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab ng-if="categoryDetailCtrl.cefConfig.featureSet.categories.minMax">
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.MinOrders.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.categoryDetail.MinimumOrders.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid form-vertical" ng-form="categoryDetailCtrl.forms.MinOrders">
+                        <div class="row">
+                            <div cef-order-minimums-editor
+                                 master="categoryDetailCtrl.record"
+                                 class="col-sm-12"></div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab ng-if="categoryDetailCtrl.cefConfig.featureSet.categories.minMax && categoryDetailCtrl.cefConfig.featureSet.shipping.enabled">
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.MinFreeShip.$invalid}"><i class="far fa-lg fa-truck"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.categoryDetail.FreeShipping"></span></span></uib-tab-heading>
+                    <div class="container-fluid form-vertical" ng-form="categoryDetailCtrl.forms.MinFreeShip">
+                        <div class="row">
+                            <div cef-free-shipping-minimums-editor
+                                 master="categoryDetailCtrl.record"
+                                 class="col-sm-12"></div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.Attributes.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Attribute.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="categoryDetailCtrl.forms.Attributes">
+                        <div cef-json-attributes-editor
+                             master="categoryDetailCtrl.record"
+                             type="Category"
+                             ng-if="categoryDetailCtrl.record != null"></div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.ParentCategory.$invalid}"><i class="far fa-lg fa-user"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.categoryDetail.ParentCategory"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="categoryDetailCtrl.forms.ParentCategory">
+                        <div class="row">
+                            <h3 class="col-md-12" data-translate="ui.admin.controls.inventory.categoryDetail.ParentCategory"></h3>
+                            <div class="col-md-6">
+                                <h4 data-translate="ui.admin.controls.inventory.categoryDetail.CategoryTree"></h4>
+                                <div id="treeCategories" name="treeCategories"
+                                     kendo-treeview="categoryDetailCtrl.categoryTree"
+                                     k-data-source="categoryDetailCtrl.categoryTreeData"
+                                     k-options="categoryDetailCtrl.categoryTreeOptions"
+                                     k-on-change="categoryDetailCtrl.selectedCategory = dataItem"
+                                     ng-model="categoryDetailCtrl.record.ParentID"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 data-translate="ui.admin.controls.inventory.categoryDetail.CurrentParentCategory"></h4>
+                                <div ng-show="!categoryDetailCtrl.record.ParentID" class="mb-3">
+                                    <p data-translate="ui.admin.controls.inventory.categoryDetail.NoParentSetThisCategoryIsAtTheTopLevel"></p>
+                                </div>
+                                <div ng-show="categoryDetailCtrl.record.ParentID" class="mb-3">
+                                    <button type="button" class="btn btn-xs btn-danger"
+                                            translate-attr="{ 'title': 'ui.admin.common.Delete',
+                                                              'aria-label': 'ui.admin.common.Delete' }"
+                                            ng-click="categoryDetailCtrl.removeParent()">
+                                        <i class="far fa-fw fa-times"></i>
+                                        <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                                    </button>
+                                    {{categoryDetailCtrl.record.ParentID | zeroPadNumber: 6}}: {{categoryDetailCtrl.parent.Name}}&nbsp<!--
+                                    --><span ng-if="categoryDetailCtrl.record.Parent.CustomKey">[{{categoryDetailCtrl.parent.CustomKey}}]</span>
+                                </div>
+                                <div class="alert alert-info" role="alert">
+                                    <p><b data-translate="ui.admin.controls.shared.jsonAttributesEditor.Note.Colon"></b>&nbsp;<!--
+                                    --><span data-translate="ui.admin.controls.inventory.categoryDetail.CategoriesOnlySevenLevels.Message"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.Images.$invalid}"><i class="far fa-lg fa-picture-o"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Image.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="categoryDetailCtrl.forms.Images">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.Image.Plural"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Uploader -->
+                                <div cef-upload-image-widget
+                                     master="categoryDetailCtrl.record"
+                                     upload-type="ImageCategory"
+                                     type-key="General"
+                                     allow-multiple="true"
+                                     is-primary="false">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Thumbnails -->
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                                    <div class="input-group">
+                                        <div ng-if="!categoryDetailCtrl.record.Images.length"
+                                             data-translate="ui.admin.common.NoImagesHaveBeenUploaded"></div>
+                                        <div ng-repeat="image in categoryDetailCtrl.record.Images"
+                                             class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                                            <div class="form-vertical">
+                                                <div class="form-group">
+                                                    <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                                                         ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                                                   | corsImageLink : 'categories' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}" />
+                                                </div>
+                                                <text-input-form-group
+                                                    key="ImageName{{$index}}"
+                                                    ng-model="image.Name"
+                                                    label-key="ui.admin.common.Name"
+                                                    max-length="128"
+                                                    ng-required="true">
+                                                </text-input-form-group>
+                                                <select-form-group
+                                                    key="ImageTypeID{{$index}}"
+                                                    ng-model="image.TypeID"
+                                                    selections="categoryDetailCtrl.imageTypes"
+                                                    label-key="ui.admin.common.Type"
+                                                    tooltip-text="The type of the record."
+                                                    placeholder-key="ui.admin.common.Type"
+                                                    ng-required="true">
+                                                </select-form-group>
+                                                <toggle-form-group
+                                                    key="ImageIsPrimary{{$index}}"
+                                                    ng-change="categoryDetailCtrl.clearOtherPrimaryImagesNew($index)"
+                                                    ng-model="image.IsPrimary"
+                                                    label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                                                    tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                                                    tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                                                    ng-required="false">
+                                                </toggle-form-group>
+                                                <button type="button" class="btn btn-danger btn-block"
+                                                        translate-attr="{ title: 'ui.admin.common.Delete',
+                                                                          'aria-label': 'ui.admin.common.Delete' }"
+                                                        ng-click="categoryDetailCtrl.removeImageNew($index)"
+                                                        ><i class="far fa-trash-o"></i>&nbsp;<!--
+                                                        --><span data-translate="ui.admin.common.Delete"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab ng-if="categoryDetailCtrl.cefConfig.featureSet.categories.storedFiles.enabled">
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.StoredFiles.$invalid}"><i class="far fa-lg fa-file"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.StoredFile.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid form-vertical" ng-form="categoryDetailCtrl.forms.StoredFiles">
+                        <div class="row">
+                            <div class="col-md-12"><h3 data-translate="ui.admin.common.StoredFile.Plural"></h3></div>
+                            <div class="col-md-12 mb-3">
+                                <!-- Uploader -->
+                                <div cef-upload-file-widget
+                                     master="categoryDetailCtrl.record"
+                                     upload-type="StoredFileCategory"
+                                     type-key="General"
+                                     allow-multiple="true"
+                                     form="categoryDetailCtrl.forms.StoredFiles">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th data-translate="ui.admin.common.Name"></th>
+                                                <th data-translate="ui.admin.common.FileName"></th>
+                                                <th style="width: 43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="!categoryDetailCtrl.record.StoredFiles.length">
+                                                <td colspan="3"
+                                                    data-translate="ui.admin.common.NoStoredFilesHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="storedFile in categoryDetailCtrl.record.StoredFiles">
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                           id="txtStoredFileName{{$index}}" name="txtStoredFileName{{$index}}"
+                                                           ng-required="true"
+                                                           max-length="128"
+                                                           ng-model="storedFile.Name" />
+                                                </td>
+                                                <td>
+                                                    <a class="form-control-static" target="_blank"
+                                                       ng-src="{{(storedFile.StoredFileName || storedFile.Slave.FileName) | corsStoredFilesLink: 'categories'}}"
+                                                       ng-bind="storedFile.StoredFileName"></a>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                                                              'aria-label': 'ui.admin.common.Delete' }"
+                                                            ng-click="categoryDetailCtrl.removeFileNew($index)">
+                                                        <i class="far fa-trash-o"></i><!--
+                                                        --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.Content.$invalid}"><i class="far fa-lg fa-code"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Content"></span></span></uib-tab-heading>
+                    <div class="container-fluid form-vertical" ng-form="categoryDetailCtrl.forms.Content">
+                        <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.controls.inventory.categoryDetail.CategoryContentsForLandingPages"></h3></div></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" ng-class="{'has-error': categoryDetailCtrl.forms.Content.txtaHeader.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Header"></label>
+                                    <div class="input-group">
+                                        <textarea kendo-editor k-encoded="false" style="width: 100%; height: 300px;"
+                                                  id="txtaHeader" name="txtaHeader"
+                                                  k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  ng-required="false"
+                                                  ng-model="categoryDetailCtrl.record.HeaderContent"></textarea>
+                                    </div>
+                                    <div ng-messages="categoryDetailCtrl.forms.Details.txtaHeader.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': categoryDetailCtrl.forms.Content.txtaSidebar.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Sidebar"></label>
+                                    <div class="input-group">
+                                        <textarea kendo-editor k-encoded="false" style="width: 100%; height: 300px;"
+                                                  id="txtaSidebar" name="txtaSidebar"
+                                                  k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  ng-required="false"
+                                                  ng-model="categoryDetailCtrl.record.SidebarContent"></textarea>
+                                    </div>
+                                    <div ng-messages="categoryDetailCtrl.forms.Details.txtaSidebar.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': categoryDetailCtrl.forms.Content.txtaFooter.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Footer"></label>
+                                    <div class="input-group">
+                                        <textarea kendo-editor k-encoded="false" style="width: 100%; height: 300px;"
+                                                  id="txtaFooter" name="txtaFooter"
+                                                  k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  ng-required="false"
+                                                  ng-model="categoryDetailCtrl.record.FooterContent"></textarea>
+                                    </div>
+                                    <div ng-messages="categoryDetailCtrl.forms.Details.txtaFooter.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab ng-if="categoryDetailCtrl.cefConfig.featureSet.brands.enabled">
+                    <uib-tab-heading><span ng-class="{'text-danger': categoryDetailCtrl.forms.Brands.$invalid}"><i class="far fa-lg fa-building"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Brand.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="categoryDetailCtrl.forms.Brands">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 data-translate="ui.admin.controls.inventory.productDetail.BrandsThatCarryThisProduct"></h3>
+                                <button type="button" class="btn btn-primary mb-3"
+                                        ng-click="categoryDetailCtrl.addBrand()"
+                                        data-translate="ui.admin.common.AddBrand">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th class="hidden text-center" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th style="min-width:125px;" data-translate="ui.admin.common.Brand"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="!categoryDetailCtrl.record.Brands.length">
+                                                <td colspan="3" data-translate="ui.admin.common.NoBrandsHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="brandProduct in categoryDetailCtrl.record.Brands">
+                                                <td class="hidden" ng-bind="brandProduct.ID"></td>
+                                                <td>
+                                                    <select class="form-control"
+                                                            id="ddlBrand{{$index}}" name="ddlBrand{{$index}}"
+                                                            ng-required="true"
+                                                            ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' + s.CustomKey + ']' : ''))
+                                                                        for s in categoryDetailCtrl.brands
+                                                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                                                            ng-model="brandProduct.MasterID"></select>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                                                              'aria-label': 'ui.admin.common.Delete' }"
+                                                            ng-click="categoryDetailCtrl.removeBrand($index)"
+                                                            ><i class="far fa-times"></i><!--
+                                                            --><span class="sr-only" data-translate="ui.admin.common.Delete"></span></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="categoryDetailCtrl"
+                return-state="inventory.categories.list"
+                permissions-base="Categories.Category">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

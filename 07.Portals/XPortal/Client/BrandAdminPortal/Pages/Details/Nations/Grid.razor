@@ -1,0 +1,330 @@
+﻿@page "/details/nations"
+@inherits MVC.Core.GridViewTemplatedControllerBase<StoredFilePagedResults, StoredFileModel, MVC.Api.Endpoints.GetStoredFiles>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="nationDetailsPage">
+    @if (ViewState.loading || CurrentDataCollection is null && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (CurrentDataCollection is not null)
+    {
+      <Div Class="page-content w-100">
+        <Container Fluid="true">
+          <Row>
+            <Column>
+              <Div class="d-flex justify-content-between align-items-center">
+                <Heading Size="HeadingSize.Is1" Class="my-3">
+                  <Blazorise.Icons.FontAwesome.Icon Name="@("fa-arrow-circle-down")" Class="mr-2" />
+                  @(PortalRoute?.HeaderText ?? PortalRoute?.Title ?? "Nation")
+                </Heading>
+                <Div>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Primary"
+                    Clicked="@(() => NavigationManager.NavigateTo(CreatorRouteBase))">
+                    Add Nation
+                  </Blazorise.Button>
+                </Div>
+              </Div>
+              <Validations
+                EditContext="EditContext"
+                Mode="ValidationMode.Manual"
+                ValidateOnLoad="true">
+                <DataGrid
+                  TItem="StoredFileModel"
+                  Data="@CurrentDataCollection.Results"
+                  Responsive="Responsive"
+                  Narrow="Narrow"
+                  Hoverable="Hoverable"
+                  Striped="Striped"
+                  Bordered="Bordered"
+                  Borderless="Borderless"
+                  Filterable="Filterable"
+                  ShowCaptions="ShowCaptions"
+                  Sortable="Sortable"
+                  Resizable="Resizable"
+                  ShowPageSizes="ShowPageSizes"
+                  ShowPager="ShowPager"
+                  PageSizes="PageSizes"
+                  PageSize="CurrentPageSize"
+                  PageSizeChanged="@(i => { CurrentPageSize = i; StateHasChanged(); })"
+                  CurrentPage="CurrentPage"
+                  PageChanged="@(e => { CurrentPage = e.Page; StateHasChanged(); })"
+                  MaxPaginationLinks="MaxPaginationLinks"
+                  TotalItems="@CurrentDataCollection.TotalCount"
+                  ReadData="@OnReadData"
+                  SelectedRowChanged="@OnSelectedRowChanged"
+                  CommandMode="DataGridCommandMode.Default"
+                  SelectionMode="DataGridSelectionMode.Single"
+                  SortMode="DataGridSortMode.Multiple"
+                  PagerPosition="DataGridPagerPosition.Bottom"
+                  FixedHeader="true"
+                  FixedHeaderDataGridHeight="100%"
+                  FixedHeaderDataGridMaxHeight="100%"
+                  ResizeMode="TableResizeMode.Header">
+                  <DataGridColumns>
+                    <DataGridNumericColumn
+                      TItem="StoredFileModel"
+                      Field="@nameof(BaseModel.ID)"
+                      Caption="#"
+                      Sortable="true"
+                      Filterable="true"
+                      FilterCellClass="text-right"
+                      DisplayFormat="{0:00000}"
+                      Width="5%">
+                      <FilterTemplate>
+                        <NumericEdit
+                          TValue="int"
+                          Value="@(dto.ID ?? 0)"
+                          ValueChanged="@(val => { dto.ID = val; context.TriggerFilterChange(val); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridNumericColumn>
+                    <DataGridColumn
+                      TItem="StoredFileModel"
+                      Field="@nameof(BaseModel.CustomKey)"
+                      Caption="Key"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="10%">
+                      <FilterTemplate>
+                        <TextEdit
+                          Text="@dto.CustomKey"
+                          TextChanged="@(val => { dto.CustomKey = val; context.TriggerFilterChange(val); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="StoredFileModel"
+                      Field="@nameof(StoredFileModel.Name)"
+                      Caption="Document Name"
+                      Sortable="false"
+                      Filterable="false">
+                      <DisplayTemplate>@(System.IO.Path.GetFileNameWithoutExtension(context.Name!))</DisplayTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="StoredFileModel"
+                      Field="@nameof(StoredFileModel.FileFormat)"
+                      Caption="TYPE"
+                      Sortable="false"
+                      Filterable="false">
+                      <DisplayTemplate>@(System.IO.Path.GetExtension(context.Name!).Replace(".", string.Empty))</DisplayTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="StoredFileModel"
+                      Field="@nameof(StoredFileModel.Name)"
+                      Caption=""
+                      Sortable="false"
+                      Filterable="false"
+                      Width="5%">
+                      <DisplayTemplate>
+                        <a
+                          class="btn btn-primary"
+                          href="@(NavigationManager.BaseUri)images/ecommerce/account/files/@context.Name"
+                          target="_blank">
+                          Download
+                        </a>
+                      </DisplayTemplate>
+                    </DataGridColumn>
+                  </DataGridColumns>
+                  <EmptyTemplate><Div Class="box p-3">No documents found.</Div></EmptyTemplate>
+                  <LoadingTemplate><Div Class="box p-3"><Progress Size="Size.Small" Color="Color.Primary" Value="35"></Progress></Div></LoadingTemplate>
+                  <FirstPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="@("fa-angle-double-left")" /></Span></FirstPageButtonTemplate>
+                  <PreviousPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="IconName.AngleLeft" /></Span></PreviousPageButtonTemplate>
+                  <NextPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="IconName.AngleRight" /></Span></NextPageButtonTemplate>
+                  <LastPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="@("fa-angle-double-right")" /></Span></LastPageButtonTemplate>
+                </DataGrid>
+              </Validations>
+            </Column>
+          </Row>
+        </Container>
+      </Div>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridViewRouteBase => "/sales/nations";
+
+  /// <inheritdoc />
+  protected override string EditorRouteBase => GridViewRouteBase + "/editor/";
+
+  /// <inheritdoc />
+  protected override string CreatorRouteBase => GridViewRouteBase + "/creator/";
+
+  private CategoryFilePagedResults? CategoryFiles { get; set; }
+  private List<StatusModel>? Statuses { get; set; }
+  private List<StoredFileModel>? StoredFiles { get; set; }
+  private List<CategoryModel>? Categories { get; set; }
+  #endregion
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedInitialDataAsync()
+  {
+    return Task.WhenAll(LoadCategoriesAsync(), LoadCategoriesFilesAsync());
+  }
+
+  /// <inheritdoc />
+  protected override async Task<MVC.Core.IHttpPromiseCallbackArg<StoredFilePagedResults?>> FilteredDataLoadCallAsync(
+    DataGridReadDataEventArgs<StoredFileModel>? e)
+  {
+    DebugBeginMethod();
+    var dto = new MVC.Api.Endpoints.GetStoredFiles
+    {
+      Active = true,
+      Paging = new() { Size = CurrentPageSize, StartIndex = CurrentPage },
+      // NOTE: Appropriate MasterID check is enforced api-side
+    };
+    dto = await ExtenddtoAsync(e, dto).ConfigureAwait(false);
+    DebugEndMethod();
+    return await cvApi.GetStoredFiles(dto).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  protected override Task<MVC.Core.IHttpPromiseCallbackArg<StoredFilePagedResults?>> InitialDataLoadCallAsync()
+  {
+    return FilteredDataLoadCallAsync(null);
+  }
+
+  /// <inheritdoc />
+  protected override bool CustomFilterCheck(StoredFileModel model)
+  {
+    return true;
+  }
+
+  /// <summary>Extend search data transfer object.</summary>
+  /// <typeparam name="TDTO">Type of the data transfer object model.</typeparam>
+  /// <param name="e">  The DataGridReadDataEventArgs{ProductModel}? to process.</param>
+  /// <param name="dto">The data transfer object.</param>
+  /// <returns>A Task.</returns>
+  protected /*override*/ Task<TDTO> ExtenddtoAsync<TDTO>(
+      DataGridReadDataEventArgs<StoredFileModel>? e,
+      TDTO dto)
+    where TDTO : NameableBaseSearchModel
+  {
+    DebugBeginMethod();
+    if (e is null)
+    {
+      return Task.FromResult(dto);
+    }
+    var sorts = (
+      from dataGridColumnInfo in e.Columns
+      where dataGridColumnInfo.SortDirection != SortDirection.None
+      select new Sort
+      {
+        Dir = dataGridColumnInfo.SortDirection == SortDirection.Ascending ? "asc" : "desc",
+        Order = dataGridColumnInfo.SortIndex,
+        Field = dataGridColumnInfo.Field,
+      })
+      .ToList();
+    dto.Sorts = Contract.CheckEmpty(sorts) ? null : sorts.ToArray();
+    // NOTE: MasterID, Active, AsListing are enforced on api-side
+    // Copy from AdminGet model to SearchModel
+    dto.ID = dto.ID;
+    dto.CustomKey = dto.CustomKey;
+    dto.Name = dto.Name;
+    DebugEndMethod();
+    return Task.FromResult(dto);
+  }
+
+  private async Task LoadCategoriesAsync()
+  {
+    DebugBeginMethod();
+    var result =  await cvApi.GetCategoriesThreeLevels(new() { Active = true, }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+        Categories = result.data;
+    }
+    DebugEndMethod();
+  }
+
+  private async Task LoadCategoriesFilesAsync()
+  {
+    DebugBeginMethod();
+    var result =  await cvApi.GetCategoryFiles(
+      new()
+      {
+        Active = true,
+        Paging = new() { Size = 10, StartIndex = 1 },
+      })
+      .ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      CategoryFiles = result.data;
+    }
+    DebugEndMethod();
+  }
+
+  /// <summary>Gets the categories.</summary>
+  /// <param name="id">   The identifier.</param>
+  /// <param name="level">The level.</param>
+  /// <returns>The categories.</returns>
+  private string GetCategories(int id, string level)
+  {
+    DebugBeginMethod();
+    if (CategoryFiles?.Results is null || Categories is null)
+    {
+      return string.Empty;
+    }
+    foreach (var stringArray in
+      from catFile in CategoryFiles?.Results!
+      where catFile.SlaveID == id
+      from cat in Categories
+      where catFile.SlaveID == cat.ID && cat.CustomKey is not null
+      select cat.CustomKey!.Split('_'))
+    {
+      switch (level)
+      {
+        case "parent":
+        {
+          DebugEndMethod();
+          return stringArray[0];
+        }
+        case "sub":
+        {
+          DebugEndMethod();
+          return stringArray[1];
+        }
+      }
+    }
+    DebugEndMethod();
+    return string.Empty;
+  }
+
+  /// <summary>Status identifier to display name.</summary>
+  /// <param name="id">The identifier.</param>
+  /// <returns>A string.</returns>
+  private string StatusIDToDisplayName(int id)
+  {
+    DebugBeginMethod();
+    if (!Contract.CheckValidID(id) || Contract.CheckEmpty(Statuses))
+    {
+      DebugEndMethod();
+      return "Unknown";
+    }
+    var found = Statuses!.SingleOrDefault(x => x.ID == id);
+    if (found is not null)
+    {
+      DebugEndMethod();
+      return found.DisplayName ?? found.Name ?? "Unknown";
+    }
+    DebugEndMethod();
+    return "Unknown";
+  }
+}

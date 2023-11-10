@@ -1,0 +1,162 @@
+﻿<div class="form-group mb-0 table-content" ng-if="atcqsCtrl.item" ng-form="atcqsCtrl.forms.qtySelector">
+  <div class="jcf-number w-100">
+    <input type="number" class="jcf-number form-control"
+      style="min-width:60px;"
+      id="nudItemQuantity{{atcqsCtrl.index}}"
+      name="nudItemQuantity{{atcqsCtrl.index}}"
+      ng-disabled="atcqsCtrl.isDisabled"
+      ng-required="atcqsCtrl.isRequired"
+      translate-attr="{ placeholder: 'ui.storefront.common.Quantity' }"
+      min="{{atcqsCtrl.minimum}}"
+      max="{{atcqsCtrl.maximum}}"
+      step="{{atcqsCtrl.step}}"
+      ng-change="atcqsCtrl.doOnStep($event)"
+      ng-model-options="atcqsCtrl.debounce500"
+      ng-model="atcqsCtrl.currentValueEditable" />
+      <div class="jcf-btn-inc">
+        <button type="button" class="w-100 h-100 border-0"
+          id="btnIncreaseItemQuantity{{atcqsCtrl.index}}"
+          name="btnIncreaseItemQuantity{{atcqsCtrl.index}}"
+          translate-attr="{ title: 'ui.storefront.cart.controls.addToCartQuantitySelector.IncreaseItemQuantity',
+                            'aria-label': 'ui.storefront.cart.controls.addToCartQuantitySelector.IncreaseItemQuantity' }"
+          ng-disabled="atcqsCtrl.isDisabledIncrease"
+          ng-click="atcqsCtrl.increase($event)">
+          <i class="far fa-plus fa-fw"></i>
+          <span class="sr-only"
+            data-translate="ui.storefront.cart.controls.addToCartQuantitySelector.IncreaseItemQuantity">
+          </span>
+        </button>
+      </div>
+    <div class="jcf-btn-dec">
+      <button type="button" class="w-100 h-100 border-0"
+        id="btnReduceItemQuantity{{atcqsCtrl.index}}"
+        name="btnReduceItemQuantity{{atcqsCtrl.index}}"
+        translate-attr="{ title: 'ui.storefront.cart.controls.addToCartQuantitySelector.ReduceItemQuantity',
+                          'aria-label': 'ui.storefront.cart.controls.addToCartQuantitySelector.ReduceItemQuantity' }"
+        ng-disabled="atcqsCtrl.isDisabledReduce"
+        ng-click="atcqsCtrl.reduce($event)">
+        <i class="far fa-minus fa-fw"></i>
+        <span class="sr-only"
+          data-translate="ui.storefront.cart.controls.addToCartQuantitySelector.ReduceItemQuantity">
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+<div ng-if="atcqsCtrl.debug">
+  <table class="table table-hover table-sm table-striped">
+    <tr>
+      <td colspan="4">This table is for debugging the control only</td>
+    </tr>
+    <tr>
+      <td>Item Inner / item</td>
+      <td ng-bind="atcqsCtrl.itemInner"></td>
+      <td ng-bind="atcqsCtrl.item"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Item Id / extractProductId</td>
+      <td ng-bind="atcqsCtrl.itemId"></td>
+      <td ng-bind="atcqsCtrl.extractProductId()"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Cannot Load / Is Getting / Index</td>
+      <td ng-bind="atcqsCtrl.cannotLoad"></td>
+      <td ng-bind="atcqsCtrl.isGetting"></td>
+      <td ng-bind="atcqsCtrl.index"></td>
+    </tr>
+    <tr>
+      <td>Is Req / AAI</td>
+      <td ng-bind="atcqsCtrl.isRequired"></td>
+      <td ng-bind="atcqsCtrl.alwaysAllowInput"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Def / Cur Value</td>
+      <td ng-bind="atcqsCtrl.defaultValue"></td>
+      <td ng-bind="atcqsCtrl.currentValueEditable"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>OOS / ABO / APS</td>
+      <td ng-bind="atcqsCtrl.readInventory().IsOutOfStock"></td>
+      <td ng-bind="atcqsCtrl.readInventory().AllowBackOrder"></td>
+      <td ng-bind="atcqsCtrl.readInventory().AllowPreSale"></td>
+    </tr>
+    <tr>
+      <td>Ext Dis / Is Dis</td>
+      <td ng-bind="atcqsCtrl.externalDisabled"></td>
+      <td ng-bind="atcqsCtrl.isDisabled"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Red / Inc Dis</td>
+      <td ng-bind="atcqsCtrl.isDisabledReduce"></td>
+      <td ng-bind="atcqsCtrl.isDisabledIncrease"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>Can Red / Inc / Step</td>
+      <td ng-bind="atcqsCtrl.canReduce()"></td>
+      <td ng-bind="atcqsCtrl.canIncrease()"></td>
+      <td ng-bind="atcqsCtrl.step"></td>
+    </tr>
+    <tr>
+      <td>Min / Max</td>
+      <td ng-bind="atcqsCtrl.minimum"></td>
+      <td ng-bind="atcqsCtrl.maximum"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th></th>
+      <th>Value</th>
+      <th>If Past</th>
+      <th>Global</th>
+    </tr>
+    <tr>
+      <td rowspan="2">Min Pur Qty</td>
+      <td ng-bind="atcqsCtrl.hasMinimumPurchaseQuantity()"></td>
+      <td ng-bind="atcqsCtrl.hasMinimumPurchaseQuantityIfPastPurchased()"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td ng-bind="atcqsCtrl.getMinimumPurchaseQuantity()"></td>
+      <td ng-bind="atcqsCtrl.getMinimumPurchaseQuantityIfPastPurchased()"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Max Pur Qty</td>
+      <td ng-bind="atcqsCtrl.hasMaximumPurchaseQuantity()"></td>
+      <td ng-bind="atcqsCtrl.hasMaximumPurchaseQuantityIfPastPurchased()"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td ng-bind="atcqsCtrl.getMaximumPurchaseQuantity()"></td>
+      <td ng-bind="atcqsCtrl.getMaximumPurchaseQuantityIfPastPurchased()"></td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Max PrePur Qty</td>
+      <td ng-bind="atcqsCtrl.hasMaximumPrePurchaseQuantity()"></td>
+      <td ng-bind="atcqsCtrl.hasMaximumPrePurchaseQuantityIfPastPurchased()"></td>
+      <td ng-bind="atcqsCtrl.hasMaximumPrePurchaseQuantityGlobal()"></td>
+    </tr>
+    <tr>
+      <td ng-bind="atcqsCtrl.getMaximumPrePurchaseQuantity()"></td>
+      <td ng-bind="atcqsCtrl.getMaximumPrePurchaseQuantityIfPastPurchased()"></td>
+      <td ng-bind="atcqsCtrl.getMaximumPrePurchaseQuantityGlobal()"></td>
+    </tr>
+    <tr>
+      <td rowspan="2">Max BackOrder Pur Qty</td>
+      <td ng-bind="atcqsCtrl.hasMaximumBackOrderPurchaseQuantity()"></td>
+      <td ng-bind="atcqsCtrl.hasMaximumBackOrderPurchaseQuantityIfPastPurchased()"></td>
+      <td ng-bind="atcqsCtrl.hasMaximumBackOrderPurchaseQuantityGlobal()"></td>
+    </tr>
+    <tr>
+      <td ng-bind="atcqsCtrl.getMaximumBackOrderPurchaseQuantity()"></td>
+      <td ng-bind="atcqsCtrl.getMaximumBackOrderPurchaseQuantityIfPastPurchased()"></td>
+      <td ng-bind="atcqsCtrl.getMaximumBackOrderPurchaseQuantityGlobal()"></td>
+    </tr>
+  </table>
+</div>

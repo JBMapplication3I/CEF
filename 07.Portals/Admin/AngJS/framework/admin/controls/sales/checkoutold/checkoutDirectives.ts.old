@@ -1,0 +1,168 @@
+﻿module cef.admin.controls.sales.checkout {
+    const checkoutRoot = "/framework/admin/controls/sales/checkout/";
+    const checkoutRootViews = checkoutRoot + "views/";
+    const checkoutRootViewsPaymentMethods = checkoutRootViews + "paymentMethods/";
+    const checkoutRootViewSummary = checkoutRootViews + "summaries/";
+
+    adminApp.directive("cefCheckout", ($filter: ng.IFilterService): ng.IDirective => ({
+        scope: {
+            currentCartId: "=",
+            userId: "=",
+            cartItems: "@"
+        },
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRoot}checkout.html`, "ui"),
+        controller: CheckoutController,
+        controllerAs: "cefCheckoutCtrl",
+        bindToController: true
+    }));
+    adminApp.directive("cefCheckoutCartEmpty", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}cartEmpty.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    // Cart
+    adminApp.directive("cefCheckoutCart", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        scope: {
+            currentCartId: "=",
+            userId: "=",
+            type: "=?"
+        },
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}cart.html`, "ui"),
+        controller: splitShipping.CartController,
+        controllerAs: "checkoutCartCtrl",
+        require: "^cefCheckout",
+        bindToController: true
+    }));
+    // Billing Info
+    adminApp.directive("cefCheckoutBilling", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}billing.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    // Shipping Info 
+    adminApp.directive("cefCheckoutShipping", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}shipping.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    // Shipping Info 
+    adminApp.directive("cefCheckoutShippingEstimates", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}shippingEstimates.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    adminApp.directive("cefCheckoutSplitShipping2", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        scope: {
+            // Inherited
+            type: "=?",
+            currentCartId: "=",
+            userId: "=",
+            apply: "=",
+            // This directive specific
+            contacts: "=",
+            /* TODO: Restore In Store Pickup and Ship to Store options
+            showShipToStoreOption: "=?",
+            showInStorePickupOption: "=?",
+            */
+            hideAddAddressOption: "=?",
+            usePhonePrefixLookups: "=?"
+        },
+        templateUrl: $filter("corsLink")("/framework/admin/controls/sales/checkout/splitShipping/splitShipping.html", "ui"),
+        controller: splitShipping.SplitShippingController,
+        controllerAs: "splitShipCtrl",
+        bindToController: true
+    }));
+    // Payment
+    adminApp.directive("cefCheckoutPayment", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}payment.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    // Payment methods
+    adminApp.directive("cefCheckoutPayPal", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewsPaymentMethods}payPal.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutPayoneer", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewsPaymentMethods}payoneer.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutInvoice", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewsPaymentMethods}invoice.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutNewCreditCard", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewsPaymentMethods}newCreditCard.html`, "ui")
+    }));
+        adminApp.directive("cefCheckoutWalletCreditCard", ($filter: ng.IFilterService): ng.IDirective => ({
+            restrict: "EA",
+            templateUrl: $filter("corsLink")(`${checkoutRootViewsPaymentMethods}walletCreditCard.html`, "ui")
+        }));
+    adminApp.directive("cefCheckoutNewEcheck", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewsPaymentMethods}newEcheck.html`, "ui")
+    }));
+        adminApp.directive("cefCheckoutWalletEcheck", ($filter: ng.IFilterService): ng.IDirective => ({
+            restrict: "EA",
+            templateUrl: $filter("corsLink")(`${checkoutRootViewsPaymentMethods}walletEcheck.html`, "ui")
+        }));
+    adminApp.directive("cefCheckoutTaxExemptions", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}taxExemptions.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    // Step 6: Review Order
+    adminApp.directive("cefCheckoutCreateAccount", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}createAccount.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    adminApp.directive("cefCheckoutTerms", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}termsAgreement.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    // Step 7: Confirmation
+    adminApp.directive("cefCheckoutConfirmation", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViews}confirmation.html`, "ui"),
+        require: "^cefCheckout"
+    }));
+    // Summaries
+    adminApp.directive("cefCheckoutBillingSummary", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewSummary}billingSummary.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutShippingSummary", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewSummary}shippingSummary.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutPaymentSummary", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewSummary}paymentSummary.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutPayPalSummary", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewSummary}payPalSummary.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutInvoiceSummary", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewSummary}invoiceSummary.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutCreditCardSummary", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewSummary}creditCardSummary.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutCartSummary", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewSummary}cartSummary.html`, "ui")
+    }));
+    adminApp.directive("cefCheckoutReviewSummary", ($filter: ng.IFilterService): ng.IDirective => ({
+        restrict: "EA",
+        templateUrl: $filter("corsLink")(`${checkoutRootViewSummary}reviewSummary.html`, "ui")
+    }));
+}

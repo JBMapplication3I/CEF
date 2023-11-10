@@ -1,0 +1,147 @@
+﻿@using Newtonsoft.Json
+@inherits MVC.Core.ModalEditAssociationBase<VendorProductModel>
+
+<Modal @ref="ModalRef">
+  <ModalContent Centered="true">
+    <ModalHeader
+      Background="Background.Dark"
+      TextColor="TextColor.Light"
+      Padding="Padding.Is2.OnY">
+      <ModalTitle>Edit Vendor Product #@(Association?.ID)</ModalTitle>
+      <CloseButton
+        TextColor="TextColor.Light"
+        Clicked="@(() => HideAsync(false))"
+      />
+    </ModalHeader>
+    <ModalBody Padding="Padding.Is0.FromBottom">
+      @if (Association is not null)
+      {
+        <Row>
+          <Column>
+            <Heading Size="HeadingSize.Is4">Pricing</Heading>
+            <Row>
+              <Column ColumnSize="ColumnSize.IsHalf">
+                <NumericFormGroup
+                  TValue="decimal?"
+                  FormIdentifier="ActualCost"
+                  LabelText="Actual Cost"
+                  @bind-Value="Association.ActualCost"
+                  Autocomplete="off"
+                  Disabled="false"
+                  Min="0"
+                  Step="0.01m"
+                  PlaceholderText="1.00"
+                  Required="false"
+                  IsCurrency="true"
+                  InputClasses="text-right"
+                />
+              </Column>
+              <Column ColumnSize="ColumnSize.IsHalf">
+                <NumericFormGroup
+                  TValue="decimal?"
+                  FormIdentifier="CostMultiplier"
+                  LabelText="Cost Multilplier"
+                  @bind-Value="Association.CostMultiplier"
+                  Autocomplete="off"
+                  Autofocus="true"
+                  Disabled="false"
+                  Min="0"
+                  Step="0.01m"
+                  PlaceholderText="1.00"
+                  Required="false"
+                  InputClasses="text-right"
+                />
+              </Column>
+            </Row>
+            <NumericFormGroup
+              FormIdentifier="ListedPrice"
+              LabelText="Listed Price"
+              @bind-Value="Association.ListedPrice"
+              Autocomplete="off"
+              Disabled="false"
+              PlaceholderText="0"
+              Required="false"
+              Min="0"
+              Step="0.01m"
+              IsCurrency="true"
+              InputClasses="text-right"
+            />
+            <Heading Size="HeadingSize.Is4">Inventory</Heading>
+            <Row>
+              <Column ColumnSize="ColumnSize.IsHalf">
+                <TextFormGroup
+                  FormIdentifier="Bin"
+                  LabelText="Bin"
+                  @bind-Value="Association.Bin"
+                  Autocomplete="off"
+                  Disabled="false"
+                  PlaceholderText=""
+                  Required="false"
+                />
+              </Column>
+              <Column ColumnSize="ColumnSize.IsHalf">
+                <NumericFormGroup
+                  FormIdentifier="InventoryCount"
+                  LabelText="Inventory Count"
+                  @bind-Value="Association.InventoryCount"
+                  Autocomplete="off"
+                  Disabled="false"
+                  PlaceholderText="0"
+                  Required="false"
+                  Min="0"
+                  Step="1"
+                  InputClasses="text-right"
+                />
+              </Column>
+            </Row>
+            <Row>
+              <Column ColumnSize="ColumnSize.IsHalf">
+                <NumericFormGroup
+                  FormIdentifier="MinimumInventory"
+                  LabelText="Min Inventory"
+                  @bind-Value="Association.MinimumInventory"
+                  Autocomplete="off"
+                  Disabled="false"
+                  PlaceholderText="0"
+                  Required="false"
+                  Min="0"
+                  Max="Association.MaximumInventory"
+                  Step="1m"
+                  InputClasses="text-right"
+                />
+              </Column>
+              <Column ColumnSize="ColumnSize.IsHalf">
+                <NumericFormGroup
+                  FormIdentifier="MaximumInventory"
+                  LabelText="Max Inventory"
+                  @bind-Value="Association.MaximumInventory"
+                  Autocomplete="off"
+                  Disabled="false"
+                  PlaceholderText="0"
+                  Required="false"
+                  Min="Association.MinimumInventory ?? 0"
+                  Step="1m"
+                  InputClasses="text-right"
+                />
+              </Column>
+            </Row>
+          </Column>
+        </Row>
+      }
+    </ModalBody>
+    <ModalFooter
+      Background="Background.Dark"
+      Padding="Padding.Is2.OnY">
+      <Blazorise.Button
+        Color="Color.Secondary"
+        Clicked="@(() => HideAsync(false))">
+        Cancel
+      </Blazorise.Button>
+      <Blazorise.Button
+        Color="Color.Primary"
+        Clicked="@(() => HideAsync(true))">
+        Save
+      </Blazorise.Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>

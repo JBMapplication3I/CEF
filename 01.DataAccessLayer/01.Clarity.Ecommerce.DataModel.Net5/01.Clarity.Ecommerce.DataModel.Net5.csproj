@@ -1,0 +1,94 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net5.0</TargetFrameworks>
+    <AssemblyName>Clarity.Ecommerce.DataModel.Net5</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.DataModel (NET5)</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.DataModel</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\Solution Items\appSettings.ConnectionStrings.json" Link="appSettings.ConnectionStrings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DataSets\DefaultData.Identity.Permissions.tt">
+      <Generator>TextTemplatingFileGeneratorCore</Generator>
+      <LastGenOutput>DefaultData.Identity.Permissions.cs</LastGenOutput>
+    </None>
+    <None Update="DataModelRegistry.tt">
+      <Generator>TextTemplatingFileGeneratorCore</Generator>
+      <LastGenOutput>DataModelRegistry.cs</LastGenOutput>
+    </None>
+    <None Update="DataModelContext.tt">
+      <Generator>TextTemplatingFileGeneratorCore</Generator>
+      <LastGenOutput>DataModelContext.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DataModelContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModelContext.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DataModelRegistry.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModelRegistry.tt</DependentUpon>
+    </Compile>
+    <Compile Update="DataSets\DefaultData.Identity.Permissions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DefaultData.Identity.Permissions.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EFAttributeConfig">
+      <HintPath>..\..\ThirdParty\EFAttributeConfig\bin\Debug\net5.0\EFAttributeConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.Core\bin\Debug\net5.0\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.EntityFramework\bin\Debug\net5.0\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\..\ThirdParty\Microsoft.AspNet.Identity.Owin\bin\Debug\net5.0\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\..\ThirdParty\Microsoft.Owin\bin\Debug\net5.0\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\..\ThirdParty\Microsoft.Owin.Security\bin\Debug\net5.0\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\..\ThirdParty\Microsoft.Owin.Security.Cookies\bin\Debug\net5.0\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\..\ThirdParty\Microsoft.Owin.Security.OAuth\bin\Debug\net5.0\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\..\ThirdParty\Owin\bin\Debug\net5.0\Owin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Extensions" Version="5.0.10" />
+    <PackageReference Include="Twilio" Version="5.68.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\01.Clarity.Ecommerce.DataModel.Shared\01.Clarity.Ecommerce.DataModel.Shared.projitems" Label="Shared" />
+</Project>

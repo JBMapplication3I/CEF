@@ -1,0 +1,21 @@
+﻿@using Clarity.Ecommerce.MVC.Core
+@using Clarity.Ecommerce.MVC.Api.Endpoints
+
+@inherits Clarity.Ecommerce.UI.XPortal.SharedLibrary.Pages.Catalog.Products.EditParts.TabAssociationBase<
+  UserModel,
+  StoreModel,
+  StorePagedResults,
+  GetStores,
+  StoreUserModel,
+  StoreUserPagedResults,
+  GetStoreUsers,
+  CreateStoreUser,
+  DeactivateStoreUserByID,
+  ModalEditStoreUser>
+
+@{
+  /* Write the base component content here */
+  base.BuildRenderTree(__builder);
+}
+
+<ModalEditStoreUser @ref="modalEdit" />

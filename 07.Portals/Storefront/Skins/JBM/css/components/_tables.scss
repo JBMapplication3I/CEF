@@ -1,0 +1,279 @@
+.table {
+	tr {
+		&:last-child {
+			td {
+				border: $border-width solid $border-color;
+				border-width: $border-width 0;
+			}
+		}
+	}
+
+	td {
+		padding-top: rem-calc(15);
+		padding-bottom: rem-calc(15);
+	}
+
+	td,
+	th {
+		vertical-align: middle;
+
+		&:last-child {
+			padding-right: 1rem;
+		}
+	}
+
+	select {
+		padding: 0;
+		border: none;
+		min-width: rem-calc(100);
+		width: auto;
+	}
+}
+
+.info-table {
+	@include media-breakpoint-down(md) {
+		display: block;
+	}
+
+	thead {
+		@include media-breakpoint-down(md) {
+			display: none;
+		}
+	}
+
+	tbody,
+	tr,
+	td {
+		@include media-breakpoint-down(md) {
+			display: block;
+		}
+	}
+
+	td {
+		@include media-breakpoint-down(md) {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			overflow: hidden;
+			padding: rem-calc(5 10);
+			min-height: rem-calc(65);
+		}
+	}
+
+	.table-heading {
+		width: rem-calc(120);
+		position: relative;
+		display: block;
+		font-weight: 700;
+		padding-right: $table-cell-padding*2;
+
+		@include media-breakpoint-up(sm) {
+			width: rem-calc(180);
+		}
+
+		@include media-breakpoint-up(lg) {
+			display: none;
+		}
+
+		&:after {
+			position: absolute;
+			content:'';
+			width: $border-width;
+			top: rem-calc(-999);
+			bottom: rem-calc(-999);
+			right: $table-cell-padding;
+			background: $border-color;
+		}
+	}
+
+	.table-content {
+		@include media-breakpoint-down(md) {
+			flex: 1 0;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+		}
+	}
+
+	.btn {
+		min-width: auto !important;
+		padding-right: rem-calc(16);
+	}
+}
+
+.table {
+	tr {
+		&:last-child {
+			td {
+				border: $border-width solid $border-color;
+				border-width: $border-width 0;
+			}
+		}
+	}
+
+	td {
+		padding-top: rem-calc(15);
+		padding-bottom: rem-calc(15);
+	}
+
+	td,
+	th {
+		vertical-align: middle;
+
+		&:last-child {
+			padding-right: 1rem;
+		}
+	}
+}
+
+.info-table {
+	@include media-breakpoint-down(md) {
+		display: block;
+	}
+
+	thead {
+		@include media-breakpoint-down(md) {
+			display: none;
+		}
+	}
+
+	tbody,
+	tr,
+	td {
+		@include media-breakpoint-down(md) {
+			display: block;
+		}
+	}
+
+	td {
+		@include media-breakpoint-down(md) {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			overflow: hidden;
+			padding: rem-calc(5 10);
+			min-height: rem-calc(65);
+		}
+
+		&:last-child {
+			@include media-breakpoint-up(lg) {
+				text-align: right;
+			}
+
+			@include media-breakpoint-up(xl) {
+				width: 14%;
+			}
+		}
+	}
+
+	select {
+		padding: 0;
+		border: none;
+		min-width: rem-calc(100);
+		width: auto;
+
+		&:focus {
+			outline: auto;
+			box-shadow: none;
+		}
+	}
+
+	.table-heading {
+		width: rem-calc(120);
+		position: relative;
+		display: block;
+		font-weight: 700;
+		padding-right: $table-cell-padding*2;
+
+		@include media-breakpoint-up(sm) {
+			width: rem-calc(180);
+		}
+
+		@include media-breakpoint-up(lg) {
+			display: none;
+		}
+
+		&:after {
+			position: absolute;
+			content:'';
+			width: $border-width;
+			top: rem-calc(-999);
+			bottom: rem-calc(-999);
+			right: $table-cell-padding;
+			background: $border-color;
+		}
+	}
+
+	.table-content {
+		@include media-breakpoint-down(md) {
+			flex: 1 0;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			text-align: right;
+		}
+	}
+
+	.btn {
+		min-width: rem-calc(118);
+		box-shadow: none;
+
+		&:focus,
+		&:hover {
+			box-shadow: $btn-focus-box-shadow;
+		}
+	}
+}
+
+.product-name {
+	td {
+		padding: rem-calc(0 2.5 16);
+
+		&:first-child {
+			padding-left: 0;
+			padding-right: rem-calc(10);
+		}
+
+		&:last-child {
+			padding-right: 0;
+		}
+	}
+}
+
+.total-table {
+	font-weight: 700;
+	margin: rem-calc(0 0 16);
+
+	td {
+		padding: rem-calc(3 27);
+
+		&:first-child {
+			text-align: left;
+			padding-left: 0;
+		}
+
+		&:last-child {
+			text-align: right;
+			padding-right: 0;
+		}
+	}
+
+	tfoot {
+		font-size: rem-calc(20);
+
+		td {
+			position: relative;
+			padding-top: rem-calc(13);
+
+			&:after {
+				position: absolute;
+				content:'';
+				top: rem-calc(5);
+				left: 0;
+				right: 0;
+				height: rem-calc(3);
+				background: $border-color;
+			}
+		}
+	}
+}

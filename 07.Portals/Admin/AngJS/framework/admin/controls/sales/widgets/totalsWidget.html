@@ -1,0 +1,131 @@
+<table class="table table-borderless table-condensed margin-none m-0 totals"
+  ng-cloak="twCtrl.totals">
+  <tbody>
+    <tr>
+      <td class="right {{twCtrl.labelColumnWidthClass}}"
+        data-translate="ui.admin.common.Subtotal">
+      </td>
+      <td class="right {{twCtrl.valueColumnWidthClass}} bold"
+        ng-bind="twCtrl.totals.SubTotal | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}">
+        <!--
+        <a ng-click="twCtrl.editValue('SubTotal')">
+          <i class="far fa-pencil"></i>
+          <span class="sr-only" data-translate="ui.admin.common.Edit"></span>
+        </a>
+        -->
+      </td>
+    </tr>
+    <tr ng-if="twCtrl.cefConfig.featureSet.shipping.enabled">
+      <td class="right {{twCtrl.labelColumnWidthClass}}"
+        data-translate="ui.admin.common.Shipping">
+      </td>
+      <td class="right {{twCtrl.valueColumnWidthClass}} bold"
+        ng-bind="twCtrl.totals.Shipping | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"
+        ng-if="!twCtrl.isOneOfTheseStatuses(['Paid'])">
+        <a ng-click="twCtrl.editValue('Shipping')">
+          <i class="far fa-pencil"></i>
+          <span class="sr-only" data-translate="ui.admin.common.Edit"></span>
+        </a>
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"
+        ng-if="twCtrl.isOneOfTheseStatuses(['Paid'])">
+      </td>
+    </tr>
+    <tr>
+      <td class="right {{twCtrl.labelColumnWidthClass}}"
+        data-translate="ui.admin.common.Handling">
+      </td>
+      <td class="right {{twCtrl.valueColumnWidthClass}} bold"
+        ng-bind="twCtrl.totals.Handling | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"
+        ng-if="!twCtrl.isOneOfTheseStatuses(['Paid'])">
+        <a ng-click="twCtrl.editValue('Handling')">
+          <i class="far fa-pencil"></i>
+          <span class="sr-only" data-translate="ui.admin.common.Edit">
+        </span>
+        </a>
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"
+        ng-if="twCtrl.isOneOfTheseStatuses(['Paid'])">
+      </td>
+    </tr>
+    <tr>
+      <td class="right {{twCtrl.labelColumnWidthClass}}"
+        data-translate="ui.admin.common.Fee.Plural">
+      </td>
+      <td class="right {{twCtrl.valueColumnWidthClass}} bold"
+        ng-bind="twCtrl.totals.Fees | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"
+        ng-if="!twCtrl.isOneOfTheseStatuses(['Paid'])">
+        <a ng-click="twCtrl.editValue('Fees')">
+          <i class="far fa-pencil"></i>
+          <span class="sr-only" data-translate="ui.admin.common.Edit"></span>
+        </a>
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"
+        ng-if="twCtrl.isOneOfTheseStatuses(['Paid'])">
+      </td>
+    </tr>
+    <tr ng-if="twCtrl.cefConfig.featureSet.discounts.enabled">
+      <td ng-if="!twCtrl.isEditable"
+        class="right {{twCtrl.labelColumnWidthClass}}"
+        data-translate="ui.admin.common.Discount.Plural">
+      </td>
+      <td ng-if="twCtrl.isEditable"
+        class="right {{twCtrl.labelColumnWidthClass}}"
+        data-translate="ui.admin.common.Discount.Plural">
+        <!--
+        <a ng-click="twCtrl.openDiscountsModal()"
+          class="pointer"
+          data-translate="ui.admin.common.Discount.Plural">
+        </a>
+      -->
+      </td>
+      <td class="right {{twCtrl.valueColumnWidthClass}} bold"
+        ng-bind="twCtrl.totals.Discounts | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}">
+        <!--
+        <a ng-click="twCtrl.editValue('Discounts')">
+          <i class="far fa-pencil"></i>
+          <span class="sr-only" data-translate="ui.admin.common.Edit"></span>
+        </a>
+      -->
+      </td>
+    </tr>
+
+    <tr ng-if="twCtrl.cefConfig.featureSet.taxes.enabled">
+      <td class="right {{twCtrl.labelColumnWidthClass}}"
+        data-translate="ui.admin.common.Tax">
+      </td>
+      <td class="right {{twCtrl.valueColumnWidthClass}} bold"
+        ng-bind="twCtrl.totals.Tax | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"
+        ng-if="!twCtrl.isOneOfTheseStatuses(['Paid'])">
+        <a ng-click="twCtrl.editValue('Tax')">
+          <i class="far fa-pencil"></i>
+          <span class="sr-only" data-translate="ui.admin.common.Edit"></span>
+        </a>
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"
+        ng-if="twCtrl.isOneOfTheseStatuses(['Paid'])">
+      </td>
+    </tr>
+    <tr>
+      <td class="right {{twCtrl.labelColumnWidthClass}} bold big"
+        data-translate="ui.admin.common.Total">
+      </td>
+      <td class="right {{twCtrl.valueColumnWidthClass}} bold big"
+        ng-bind="twCtrl.totals.Total | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+      <td class="center {{twCtrl.editColumnWidthClass}}"></td>
+    </tr>
+  </tbody>
+</table>

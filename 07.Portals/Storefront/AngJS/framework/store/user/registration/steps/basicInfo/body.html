@@ -1,0 +1,51 @@
+<div class="row" ng-form="regStepBasicInfoBodyCtrl.forms.basicInfo">
+  <div class="col-12"
+    cef-contact-widget
+    contact="regStepBasicInfoBodyCtrl.basicInfoContact"
+    hide-key="true"
+    hide-fax="true"
+    hide-address="true"
+    hide-more-phones="true"
+    address-title="regStepBasicInfoBodyCtrl.addressTitle"
+    use-phone-prefix-lookups="regStepBasicInfoBodyCtrl.usePhonePrefixLookups"
+    restricted-shipping="regStepBasicInfoBodyCtrl.restrictedShipping"
+    username="regStepBasicInfoBodyCtrl.username"
+    username-is-email="regStepBasicInfoBodyCtrl.usernameIsEmail"
+    enforce-unique-email="true"
+    on-input-change="regStepBasicInfoBodyCtrl.onChange()"
+    id-suffix="regStepBasicInfoBodyCtrl.idSuffix">
+  </div>
+  <div class="col-12">
+    <hr />
+    <div class="row">
+      <text-input-form-group
+        class="col-md-6"
+        key="Username"
+        ng-model="regStepBasicInfoBodyCtrl.username"
+        label-key="ui.storefront.common.Username"
+        placeholder-key="ui.storefront.common.Username"
+        tooltip-key="ui.storefront.user.registration.YourUsernameCouldByYourEmailAddress"
+        when-changed="regStepBasicInfoBodyCtrl.usernameChanged()"
+        ng-required="true"
+        force-tooltip-with-focus="true"
+        ng-disabled="regStepBasicInfoBodyCtrl.usernameIsEmail"
+        is-email="regStepBasicInfoBodyCtrl.usernameIsEmail"
+        is-username="true"
+        fails-on="regStepBasicInfoBodyCtrl.usernameValidityState == 'Invalid'">
+      </text-input-form-group>
+      <password-input-form-group
+        class="col-md-6"
+        key="Password"
+        ng-model="regStepBasicInfoBodyCtrl.password"
+        label-key="ui.storefront.common.Password"
+        placeholder-text="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+        tooltip-key="ui.storefront.user.registration.PasswordRequirements.Message"
+        when-changed="regStepBasicInfoBodyCtrl.onChange()"
+        ng-required="true"
+        force-tooltip-with-focus="true"
+        is-new="true"
+        show-valid-tooltip="true">
+      </password-input-form-group>
+    </div>
+  </div>
+</div>

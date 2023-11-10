@@ -1,0 +1,202 @@
+﻿<div class="dnn-persona-bar-page show">
+    <div class="dnn-persona-bar-page-header">
+        <span class="title">
+            <h4>DNN Extensions for Clarity eCommerce</h4>
+            <h3>Settings</h3>
+        </span>
+        <div class="children"></div>
+    </div>
+    <div class="dnn-grid-cell dnn-persona-bar-page-body" style="width: 100%;">
+        <div class="cefdnnextensions-container">
+            <div class="cefdnnextensions-row">
+                Welcome to the Clarity Ecommerce Framework (CEF) DNN Setup. You can enable CEF at the Portal level.
+            </div>
+            <div id="cefdnnextensions-message" class="cefdnnextensions-message" style="display:none"></div>
+            <p><select id="cefdnnextensions-portal-select" onchange="PortalChanged();"></select></p>
+            <div id="cefdnnextensions-disabled" class="cefdnnextensions-row" style="display:none">
+                <button id="cefdnnextensions-disabled-button" class="dnn-ui-common-button large" role="button" disabled="disabled" onclick="EnablePortal();">
+                    <div class="dnn-text-overflow-wrapper" title="Enable CEF" style="max-width: 120px;">Enable CEF</div>
+                </button>
+            </div>
+            <div id="cefdnnextensions-enabled" class="cefdnnextensions-row" style="display: none">
+                <p>
+                    <label>Use CEF as Service?:</label>
+                    <input id="cefdnnextensions-cef-as-service-input" type="checkbox" value="true" onchange="ShowCefService()" />
+                </p>
+                <p id="cefdnnextensions-service-endpoint">
+                    <label>Service Endpoint:</label>
+                    <input id="cefdnnextensions-service-endpoint-input" type="url" value="" width="400" onblur="ShowCefService()" />
+                </p>
+                <p>
+                    API: <span id="cefdnnextensions-api-endpoint"></span><br />
+                    UI: <span id="cefdnnextensions-ui-endpoint"></span>
+                </p>
+                <hr />
+                <button id="cefdnnextensions-save-button" class="dnn-ui-common-button large" role="button" onclick="SaveSettings();">
+                    <div class="dnn-text-overflow-wrapper" title="Save Settings" style="max-width: 120px;">Save</div>
+                </button>
+                <button id="cefdnnextensions-enabled-button" class="dnn-ui-common-button large" role="button" onclick="DisablePortal();">
+                    <div class="dnn-text-overflow-wrapper" title="Disable CEF" style="max-width: 120px;">Disable CEF</div>
+                </button>
+                <div id="cefdnnextensions-success-message" class="dnnFormSuccess" style="display: none;">Saved successfully!</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var portals = null;
+    var portalSettings = null;
+    $(function () {
+        // console.log("Ready!");
+        LoadPortalSelect();
+        PortalSettings();
+    });
+
+    function LoadPortalSelect() {
+        // console.log("CEFSetup Load Portal Select");
+        $.get("/api/ClarityEcommerceDNN/cefportal/portals")
+            .done(function (response) {
+                // console.log(response);
+                if (response.Success) {
+                    portals = response.Data;
+                    var first = true;
+                    $.each(portals, function (key, value) {
+                        var selected = first ? ' selected' : '';
+                        // console.log(key + selected);
+                        $("#cefdnnextensions-portal-select").append('<option value=' + key + selected + '>' + key + ' : ' + value + '</option>');
+                        first = false;
+                    });
+                } else {
+                    showError(response.Message);
+                }
+            })
+            .fail(function (response) {
+                showError(response);
+            });
+    }
+
+    function PortalChanged() {
+        PortalSettings();
+    }
+
+    function GetSelectedPortalId() {
+        return $("#cefdnnextensions-portal-select").children("option:selected").val();
+    }
+
+    function PortalSettings() {
+        // console.log("CEFSetup Portal Settings");
+        var portalId = GetSelectedPortalId();
+        // console.log("Portal ID: " + portalId);
+        $.get("/api/ClarityEcommerceDNN/cefportal/settings/" + portalId)
+            .done(function (response) {
+                // console.log(response);
+                if (response.Success) {
+                    portalSettings = response.Data;
+                } else {
+                    showError(response.Message);
+                }
+            })
+            .fail(function (response) {
+                showError(response);
+            })
+            .always(function () {
+                ShowPage();
+            });
+    }
+
+    function EnablePortal() {
+        // console.log("Enable Portal");
+        var portalId = GetSelectedPortalId();
+        $.get("/api/ClarityEcommerceDNN/cefportal/enable/" + portalId)
+            .done(function (response) {
+                // console.log(response);
+                if (response.Success) {
+                    portalSettings = response.Data;
+                } else {
+                    showError(response.Message);
+                }
+            })
+            .fail(function (response) {
+                showError(response);
+            })
+            .always(function () {
+                ShowPage();
+            });
+    }
+
+    function DisablePortal() {
+        // console.log("Disable Portal");
+        var portalId = GetSelectedPortalId();
+        $.get("/api/ClarityEcommerceDNN/cefportal/disable/" + portalId)
+            .done(function (response) {
+                // console.log(response);
+                if (response.Success) {
+                    portalSettings = response.Data;
+                } else {
+                    showError(response.Message);
+                }
+            })
+            .fail(function (response) {
+                showError(response);
+            })
+            .always(function () {
+                ShowPage();
+            });
+    }
+
+    function ShowCefService() {
+        var asService = $("#cefdnnextensions-cef-as-service-input").prop("checked");
+        $("#cefdnnextensions-service-endpoint").toggle(asService);
+        var serviceBase = asService ? $("#cefdnnextensions-service-endpoint-input").val() : "/DesktopModules/ClarityEcommerce";
+        $("#cefdnnextensions-api-endpoint").text(serviceBase + "/api/");
+        $("#cefdnnextensions-ui-endpoint").text(serviceBase + "/ui/");
+    }
+
+    function SaveSettings() {
+        // console.log("Save Settings");
+        var portalId = GetSelectedPortalId();
+        var asService = $("#cefdnnextensions-cef-as-service-input").prop("checked");
+        var serviceEndpoint = $("#cefdnnextensions-service-endpoint-input").val();
+        $.post("/api/ClarityEcommerceDNN/cefportal/SaveSettings", { PortalId: portalId, AsService: asService, ServiceEndpoint: serviceEndpoint })
+            .done(function (response) {
+                // console.log(response);
+                if (response.Success) {
+                    $("#cefdnnextensions-success-message").show();
+                    setTimeout(function () {
+                        $("#cefdnnextensions-success-message").hide()
+                    }, 5000);
+                } else {
+                    showError(response.Message);
+                }
+            })
+            .fail(function (response) {
+                showError(response);
+            })
+            .always(function () {
+                PortalSettings();
+            });
+    }
+
+    function ShowPage() {
+        // console.log("Show Page");
+        // console.log(portalSettings);
+        var valid = hasValue(portalSettings);
+        var enabled = valid && portalSettings.Enabled;
+        $("#cefdnnextensions-enabled").toggle(enabled);
+        $("#cefdnnextensions-disabled").toggle(!enabled);
+        // console.log("CEF Setup is Enabled: " + enabled);
+        $("#cefdnnextensions-disabled-button").prop('disabled', !valid);
+        $("#cefdnnextensions-cef-as-service-input").prop('checked', portalSettings.AsService);
+        $("#cefdnnextensions-service-endpoint-input").val(portalSettings.ServiceEndpoint);
+        ShowCefService();
+    }
+
+    function showError(message) {
+        $("#cefdnnextensions-message").html(message);
+        $("#cefdnnextensions-message").show();
+    }
+
+    function hasValue(obj) {
+        return obj !== null && obj !== 'undefined';
+    }
+</script>

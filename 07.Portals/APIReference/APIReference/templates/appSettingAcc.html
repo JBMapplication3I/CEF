@@ -1,0 +1,16 @@
+<div class="row">
+	<div class="col-sm-12">
+		<input type="text" class="form-control" style="margin-bottom: 15px;"
+			placeholder="Quick filter..."
+			ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+			ng-model="appSettingAccCtrl.quickFilter" />
+	</div>
+	<div class="col-sm-12">
+		<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+			<app-setting-accordion-body
+				ng-repeat="property in appSettingAccCtrl.properties | filter: { $: (appSettingAccCtrl.quickFilter || '') }"
+				property="property">
+			</app-setting-accordion-body>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,93 @@
+<!-- step.billing.body Template -->
+<div class="row" ng-form="psbbCtrl.forms.billing">
+  <div class="col-xs-12">
+    <h4 class="mt-2"><span sid="CheckoutBillingStageText"
+      data-translate="ui.admin.checkout.billingInfo.whichAddy"></span>&nbsp;<!--
+    --><span class="text-danger">*</span></h4>
+  </div>
+  <div ng-if="psbbCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true" pad-in="true"
+    message="psbbCtrl.viewState.waitMessage">
+  </div>
+  <div ng-if="psbbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group"
+          ng-class="{ 'has-error': psbbCtrl.forms.billing.ddlBillingSelection.$invalid }">
+          <div class="input-group">
+            <select class="form-control custom-select"
+              sid="BillingAddressDropDownText"
+              ng-class="{ 'is-valid': psbbCtrl.forms.billing.ddlBillingSelection.$valid,
+                          'is-invalid': psbbCtrl.forms.billing.ddlBillingSelection.$invalid }"
+              id="ddlBillingSelection" name="ddlBillingSelection"
+              ng-change="psbbCtrl.onChange()"
+              ng-required="true"
+              ng-options="ac as (ac | acToDropdownItem)
+                          for ac in psbbCtrl.book
+                          | orderBy: ['Slave.Address.CustomKey','Slave.CustomKey','CustomKey']"
+              ng-model="psbbCtrl.currentAccountContact">
+              <option ng-disabled="true" value=""
+                data-translate="ui.admin.controls.accounts.accountDetail.PleaseSelectABillingAddress">
+              </option>
+            </select>
+            <div class="input-group-append input-group-btn">
+              <button type="button" class="btn btn-secondary rounded-right"
+                id="btnAddBilling" name="btnAddBilling"
+                translate-attr="{ title: 'ui.admin.common.Add',
+                                  'aria-label': 'ui.admin.common.Add' }"
+                data-translate="ui.admin.common.Add"
+                ng-click="psbbCtrl.add()">
+              </button>
+            </div>
+            <div ng-messages-multiple ng-messages="psbbCtrl.forms.billing.ddlBillingSelection.$error"
+              role="alert" class="invalid-feedback">
+              <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="!psbbCtrl.currentAccountContact.Slave.Address.CountryID"
+        class="col-xs-12">
+        <div class="alert alert-info mb-3 py-2">
+          <span data-translate="ui.admin.purchasing.PleaseSelectAnAddress.Message">
+          </span>
+        </div>
+      </div>
+      <div ng-if="psbbCtrl.currentAccountContact.Slave
+        && psbbCtrl.currentAccountContact.Slave.Address.Street1"
+        class="col-xs-12 col-lg-9">
+        <div cef-contact-address-block
+          contact="psbbCtrl.currentAccountContact.Slave"
+          no-links="true"
+          two-col="true"
+          class="mb-3">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="!psbbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-xs-12">
+    <div cef-contact-widget
+      contact="psbbCtrl.currentAccountContact.Slave"
+      hide-key="!psbbCtrl.cefConfig.featureSet.addressBook.enabled
+             || !psbbCtrl.cvAuthenticationService.isAuthenticated()"
+      address-title="psbbCtrl.addressTitle"
+      id-suffix="psbbCtrl.idSuffix"
+      on-input-change="psbbCtrl.onChange()"
+      is-billing="true">
+    </div>
+  </div>
+  <div ng-if="psbbCtrl.smtmd"
+    class="col-xs-12">
+    <div class="form-group checkbox">
+      <label class="control-label">
+        <input type="checkbox"
+          ng-required="false"
+          ng-model="psbbCtrl.makeThisNewDefaultBilling" />&nbsp;<!--
+        --><span data-translate="ui.admin.purchasing.MakeThisMyNewDefaultBillingAddress"></span>
+      </label>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div ng-controller="StoreSearchController as search">
+    <cv-grid show-pager="true" page-sizes="10" server-paging="true"
+             id-field="Name"
+             on-search="search.getCurrentUserCartTypes({FilterCartsByOrderRequest: true})"
+             detail-state="userDashboard.orderRequests.detail,[Name]"
+             refresh-event="updateOrderRequests">
+        <cv-query-param field="IncludeNotCreated" value="False" />
+        <cv-column field="Name" title="Request Name" sid="idChange" width="40%" />
+        <cv-column field="CreatedDate"
+                   title="Request Date"
+                   format="convertJSONDate | date:'yyyy-MM-dd'"
+                   width="40%" />
+    </cv-grid>
+</div>

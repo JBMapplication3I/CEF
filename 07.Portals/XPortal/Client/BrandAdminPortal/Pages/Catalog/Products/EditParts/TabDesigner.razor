@@ -1,0 +1,30 @@
+@using Microsoft.Extensions.Configuration
+@inject APIOptions apiOptions
+
+<Heading Size="HeadingSize.Is2">Designer</Heading>
+<Row Class="flex-lg-row flex-sm-column-reverse h-100">
+  <Column Class="h-100">
+    <iframe
+      class="w-100 h-100"
+      src="https://athlt-qa.clarityclient.com/designer/&output=embed"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+  </Column>
+</Row>
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; }
+
+  /// <summary>Gets URL of the base.</summary>
+  /// <value>The base URL.</value>
+  private string? BaseUrl => apiOptions.BaseAddress;
+#pragma warning restore CS8618 // Ignored: Parameters set by implementer
+  #endregion
+}

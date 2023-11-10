@@ -1,0 +1,56 @@
+﻿<div class="row" ng-form="noteEditorWidgetCtrl.forms.notes">
+  <div class="col-md-6 mb-3">
+    <div class="form-group">
+      <label class="control-label"
+        data-translate="ui.admin.controls.shared.notesEditor.EnterANewNoteBelow">
+      </label>
+      <textarea class="form-control" rows="3"
+        ng-model="noteEditorWidgetCtrl.comment">
+      </textarea>
+    </div>
+    <button type="button" class="btn btn-primary cvAddNote"
+      ng-disabled="!noteEditorWidgetCtrl.comment"
+      ng-click="noteEditorWidgetCtrl.add()">
+      <span data-translate="ui.admin.common.Add"></span>&nbsp;<!--
+      --><span ng-bind="noteEditorWidgetCtrl.noteTypeName"></span>&nbsp;<!--
+      --><span data-translate="ui.admin.common.Note"></span>
+    </button>
+  </div>
+  <div class="col-md-6 scroll-over-500">
+    <div class="table-responsive">
+      <table class="table table-condensed table-striped table-hover">
+        <thead>
+          <tr>
+            <th width="30%">
+              <span data-translate="ui.admin.common.Date"></span><br/>
+              <span data-translate="ui.admin.common.CreatedByUser"></span>
+            </th>
+            <th data-translate="ui.admin.common.Note"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-hide="(noteEditorWidgetCtrl.notes | filter: { $: noteEditorWidgetCtrl.noteTypeName }).length">
+            <td colspan="2">
+              <span data-translate="ui.admin.common.No"></span>&nbsp;<!--
+              -->{{noteEditorWidgetCtrl.noteTypeName}}s&nbsp;<!--
+              --><span data-translate="ui.admin.controls.shared.notesEditor.HaveBeenAdded"></span>
+            </td>
+          </tr>
+          <tr ng-repeat="note in noteEditorWidgetCtrl.notes
+                        | filter: { $: noteEditorWidgetCtrl.noteTypeName }
+                        | orderBy: ['!CreatedDate','!ID']">
+            <td>
+              <span ng-bind="note.CreatedDate | convertJSONDate | date:'yyyy MMM dd hh:mm a'"></span><br/>
+              <span ng-if="note.CreatedByUserID">
+                {{note.CreatedByUserContactFirstName}} {{note.CreatedByUserContactLastName}}
+                [#{{note.CreatedByUserID}}: {{note.CreatedByUserKey}}]
+              </span>
+              <span ng-if="!note.CreatedByUserID" data-translate="ui.admin.common.System"></span>
+            </td>
+            <td ng-bind="note.Note1"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

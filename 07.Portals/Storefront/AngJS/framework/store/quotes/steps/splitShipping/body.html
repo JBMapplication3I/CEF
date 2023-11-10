@@ -1,0 +1,14 @@
+<!-- step.splitShipping.body Template -->
+<div class="row" ng-form="sqsssbCtrl.forms.splitShipping">
+  <div cef-submit-quote-split-shipping
+    class="col-12"
+    type="sqsssbCtrl.cartType"
+    apply="true"
+    contacts="sqsssbCtrl.book">
+  </div>
+  <div ng-if="sqsssbCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true" size="3" pad-in="true"
+    message="sqsssbCtrl.viewState.waitMessage">
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<div ng-if="scpcpCtrl.loading || scpcpCtrl.viewState.running"
+  ng-class="translate-cloak" translate-cloak
+  data-translate="ui.storefront.common.Loading.Ellipses">
+</div>
+<div ng-if="scpcpCtrl.showLoginRequired"
+  cef-login-for-pricing>
+</div>
+<div ng-if="!scpcpCtrl.showLoginRequired && !scpcpCtrl.loading && !scpcpCtrl.viewState.running"
+  ng-switch="scpcpCtrl.pds">
+  <div ng-switch-when="multiLevel"
+    class="row product-pricing"
+    sid="multiLevelPriceTextWrapper">
+    <!-- List/MSRP Price -->
+    <div ng-if="scpcpCtrl.prices.haveMsrp"
+      class="col-12 mb-1">
+      <div class="w-49 d-inline-block"
+        data-translate="ui.storefront.product.detail.featuredProducts.listPrice">
+      </div>
+      <div class="w-49 d-inline-block text-right"
+        ng-bind="scpcpCtrl.prices.msrp | globalizedCurrency">
+      </div>
+    </div>
+    <!-- Reduction Price (Shaved off of MSRP) -->
+    <div ng-if="scpcpCtrl.prices.haveReduc"
+      class="col-12 mb-1">
+      <div class="w-49 d-inline-block"
+        data-translate="ui.storefront.product.detail.featuredProducts.ReductionPrice">
+      </div>
+      <div class="w-49 d-inline-block text-right"
+        ng-bind="scpcpCtrl.prices.reduc | globalizedCurrency">
+      </div>
+    </div>
+    <!-- Store's normal selling price -->
+    <div ng-if="scpcpCtrl.prices.haveBase"
+      class="col-12 mb-1">
+      <div class="bold w-49 d-inline-block"
+        ng-class="{'strike-through':scpcpCtrl.prices.isSale}"
+        data-translate="ui.storefront.product.detail.featuredProducts.ourPrice">
+      </div>
+      <div class="bold w-49 d-inline-block text-right"
+        ng-class="{'strike-through':scpcpCtrl.prices.isSale}"
+        ng-bind="scpcpCtrl.prices.base | globalizedCurrency">
+      </div>
+    </div>
+    <!-- Sale Price when on sale, or the normal selling price when not on sale -->
+    <div ng-if="scpcpCtrl.prices.haveSale"
+      class="col-12 mb-1">
+      <div class="bold big w-49 d-inline-block"
+        ng-class="{'text-danger':scpcpCtrl.prices.isSale}"
+        data-translate="{{scpcpCtrl.prices.isSale
+          ? 'ui.storefront.common.SalePrice'
+          : 'ui.storefront.catalog.YourPrice'}}">
+      </div>
+      <div class="bold big w-49 d-inline-block text-right"
+        ng-class="{'text-danger':scpcpCtrl.prices.isSale}"
+        ng-bind="(scpcpCtrl.prices.isSale
+          ? scpcpCtrl.prices.sale
+          : scpcpCtrl.prices.base) | globalizedCurrency">
+      </div>
+    </div>
+    <!-- Savings amount from normal selling price (or list if set) -->
+    <div class="col-12 mb-1">
+      <div class="w-49 d-inline-block italic"
+        data-translate="ui.storefront.common.Saving.Plural">
+      </div>
+      <div ng-if="!scpcpCtrl.prices.isSale"
+        class="w-49 d-inline-block italic text-right">
+        -
+      </div>
+      <div ng-if="scpcpCtrl.prices.isSale"
+        class="w-49 d-inline-block italic text-right">
+        <span ng-bind="scpcpCtrl.prices.amountOff | globalizedCurrency"></span>&nbsp;<!--
+        -->(<span ng-bind="scpcpCtrl.prices.percentOff | number:0"></span>%)
+      </div>
+    </div>
+  </div>
+  <div ng-switch-when="sideBySide"
+    class="row product-pricing"
+    sid="sideBySidePriceTextWrapper">
+    <!-- Display Free, when no price is returned -->
+    <span ng-if="!scpcpCtrl.prices.haveBase && !scpcpCtrl.prices.haveSale"
+      class="col-12 bold very-big"
+      data-translate="ui.storefront.common.Free">
+    </span>
+    <span class="italic small text-muted col-12 text-right"
+      ng-if="!scpcpCtrl.prices.isSale"
+      >&nbsp;</span>
+    <!-- Store's normal selling price -->
+    <span ng-if="scpcpCtrl.prices.haveBase"
+      sid="ProductCardPrice"
+      ng-class="scpcpCtrl.prices.isSale
+        ? 'col-12 strike-through text-muted small text-right'
+        : 'col-12 bold very-big text-right'"
+      ng-bind="scpcpCtrl.prices.base | globalizedCurrency">
+    </span>
+    <!-- Sale Price when on sale, hidden if not -->
+    <span ng-if="scpcpCtrl.prices.isSale"
+      sid="ProductCardSalePrice"
+      ng-bind="scpcpCtrl.prices.sale | globalizedCurrency"
+      class="bold very-big text-danger col-12 text-right">
+    </span>
+    <!-- Savings amount from normal selling price (or list if set) -->
+    <span ng-if="scpcpCtrl.prices.isSale"
+      class="italic small text-muted col-12">
+      <span ng-bind="scpcpCtrl.prices.amountOff | globalizedCurrency"></span>&nbsp;/&nbsp;<!--
+      --><span ng-bind="scpcpCtrl.prices.percentOff | number:0"></span>% off
+    </span>
+    <span class="italic small text-muted col-12 text-right"
+      ng-if="!scpcpCtrl.prices.isSale"
+      >&nbsp;</span>
+  </div>
+</div>

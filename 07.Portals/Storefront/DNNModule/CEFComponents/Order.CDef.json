@@ -1,0 +1,16 @@
+{
+  "Name": "Order",
+  "FriendlyName": "Order",
+  "Description": "CEF Order",
+  "ComponentType": "UserControl",
+  "Parameters": {
+    "OrderType": {
+      "Name": "OrderType",
+      "FriendlyName": "Order Type",
+      "Description": "Enter a valid Order Type ['Order', ???/] (Include single quotes)",
+      "Type": "System.String",
+      "Value": "'sales-order'",
+      "Order": 1
+    }
+  }
+}

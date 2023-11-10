@@ -1,0 +1,73 @@
+<div ng-form="tIFGCtrl.forms.{{tIFGCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="[{'has-error': tIFGCtrl.formInvalid},tIFGCtrl.formClasses]">
+  <label class="control-label" for="{{tIFGCtrl.inputName}}"
+    uib-tooltip="{{tIFGCtrl.tooltip}}"
+    tooltip-is-open="tIFGCtrl.tooltipIsOpen"
+    tooltip-placement="auto top-left">
+    <span sid={{tIFGCtrl.inputName}}
+      data-translate="{{tIFGCtrl.labelKey}}">{{tIFGCtrl.labelText}}</span><!--
+    --><span ng-if="tIFGCtrl.required" class="text-danger">&nbsp;*</span><!--
+    --><span ng-if="tIFGCtrl.tooltip" class="text-info">&nbsp;<i class="far fa-question-circle"></i></span>
+  </label>
+  <div class="input-group">
+    <div class="input-group-prepend input-group-text"
+      ng-if="tIFGCtrl.isEmail">
+      <i class="far fa-at fa-fw"></i>
+    </div>
+    <div class="input-group-prepend input-group-text"
+      ng-if="tIFGCtrl.isPhone">
+      <i class="far fa-phone-rotary fa-fw"></i>
+    </div>
+    <div class="input-group-prepend input-group-text"
+      ng-if="tIFGCtrl.isFax">
+      <i class="far fa-fax fa-fw"></i>
+    </div>
+    <div class="input-group-prepend input-group-text"
+      ng-if="tIFGCtrl.leftIcon">
+      <i class="{{tIFGCtrl.leftIcon}} fa-fw"></i>
+    </div>
+    <input type="{{tIFGCtrl.inputType}}" class="form-control"
+      ng-class="[{ 'is-valid': tIFGCtrl.applyIsValidClass,
+        'is-invalid': tIFGCtrl.applyIsInvalidClass,
+        'rounded-right': !tIFGCtrl.rightIcon },
+        tIFGCtrl.inputClass]"
+      id="{{tIFGCtrl.inputName}}"
+      name="{{tIFGCtrl.inputName}}"
+      translate-attr="{ placeholder: tIFGCtrl.placeholderKey }"
+      placeholder="{{tIFGCtrl.placeholderText}}"
+      ng-minlength="tIFGCtrl.minLength || ''"
+      ng-maxlength="tIFGCtrl.maxLength || ''"
+      ng-blur="tIFGCtrl.extraOnBlur($event)"
+      ng-focus="tIFGCtrl.extraOnFocus($event)"
+      ng-keydown="tIFGCtrl.extraOnKeydown($event)"
+      ng-keypress="tIFGCtrl.extraOnKeypress($event)"
+      ng-keyup="tIFGCtrl.extraOnKeyup($event)"
+      ng-mousedown="tIFGCtrl.extraOnMousedown($event)"
+      ng-mouseenter="tIFGCtrl.extraOnMouseenter($event)"
+      ng-mouseleave="tIFGCtrl.extraOnMouseleave($event)"
+      ng-mousemove="tIFGCtrl.extraOnMousemove($event)"
+      ng-mouseover="tIFGCtrl.extraOnMouseover($event)"
+      ng-mouseup="tIFGCtrl.extraOnMouseup($event)"
+      ng-change="tIFGCtrl.extraOnChange($event)"
+      ng-disabled="tIFGCtrl.disabled"
+      ng-required="tIFGCtrl.required"
+      ng-model-options="tIFGCtrl.options"
+      ng-model="tIFGCtrl.property"
+      ng-autocomplete
+      ng-autofocus
+    />
+    <div class="input-group-append input-group-text rounded-right"
+      ng-if="tIFGCtrl.rightIcon">
+      <i class="{{tIFGCtrl.rightIcon}} fa-fw"></i>
+    </div>
+    <div ng-messages-multiple ng-messages="tIFGCtrl.formError"
+       role="alert" class="invalid-feedback" ng-hide="tIFGCtrl.hideInvalidTooltip">
+      <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+    </div>
+    <div ng-messages-multiple ng-messages="tIFGCtrl.formSuccess"
+       role="alert" class="valid-feedback" ng-hide="!tIFGCtrl.showValidTooltip">
+      <div ng-messages-include="{{'/framework/store/widgets/forms/_successMessages.html' | corsLink: 'ui'}}"></div>
+    </div>
+  </div>
+</div>

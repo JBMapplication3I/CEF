@@ -1,0 +1,6 @@
+<%@ Master Language="C#" MasterPageFile="~/Root.master" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="Clarity.Ecommerce.Service.Reporting.MainMaster" %>
+<asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">
+    <div class="contentPane">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+    </div>
+</asp:Content>

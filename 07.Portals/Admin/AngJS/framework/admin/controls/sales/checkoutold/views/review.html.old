@@ -1,0 +1,160 @@
+﻿<!--<div class="row">
+    <div class="col-md-6">
+        <div ng-hide="cefCheckoutCtrl.paypal.error">
+            <h2 class="nomargin-top"
+                data-translate="ui.admin.checkout.views.orderConfirmation.thankYouForYouPurchase"></h2>
+            <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourPurchaseWasSuccessfulAndIsInTheProcessOfBeing"></p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4 ng-hide="cefCheckoutCtrl.paypal.success"
+            ng-if="!cefCheckoutCtrl.checkoutResult.OrderIDs || cefCheckoutCtrl.checkoutResult.OrderIDs.length <= 0"
+            ><span data-translate="ui.admin.checkout.views.orderConfirmation.orderNumber"></span>&nbsp;<!--
+            --><!--<b>{{cefCheckoutCtrl.checkoutResult.OrderID}}</b></h4>
+        <h4 ng-hide="cefCheckoutCtrl.paypal.success"
+            ng-if="cefCheckoutCtrl.checkoutResult.OrderIDs && cefCheckoutCtrl.checkoutResult.OrderIDs.length > 0"
+            ><span data-translate="ui.admin.checkout.views.orderConfirmation.orderNumber.Plural"></span>&nbsp;<!--
+            --><!--<b ng-repeat="orderID in cefCheckoutCtrl.checkoutResult.OrderIDs"
+                  >{{orderID}}{{ !$index == $last ? ", " : "" }}</b></h4>
+        <p class="alert alert-warning" role="alert"
+           ng-show="cefCheckoutCtrl.checkoutResult.WarningMessage"
+           >{{cefCheckoutCtrl.checkoutResult.WarningMessage}}</p>
+    </div>
+</div>-->
+<div class="row">
+    <div class="container-fluid" ng-form="cefCheckoutCtrl.forms.review">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="mt-0" data-translate="ui.admin.checkout.views.reviewOrderInformation.YourOrderHasNotBeenPlacedYet"></h3>
+                <p class="mb-3" data-translate="ui.admin.checkout.views.reviewOrderInformation.PleaseReviewYourOrder.Summary"></p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4" ng-if="cefCheckoutCtrl.viewstate.isShippingSameAsBilling">
+                <b data-translate="ui.admin.checkout.views.reviewOrderInformation.ShipTo"></b><br />
+                <!-- TODO: Replace with contact address block widget -->
+                {{cefCheckoutCtrl.selectedBilling.FirstName}} {{cefCheckoutCtrl.selectedBilling.LastName}}<br />
+                {{cefCheckoutCtrl.selectedBilling.Address.Street1}}<br />
+                {{cefCheckoutCtrl.selectedBilling.Address.Street2}}<br ng-if="cefCheckoutCtrl.selectedBilling.Address.Street2" />
+                {{cefCheckoutCtrl.selectedBilling.Address.City}}, {{cefCheckoutCtrl.selectedBilling.Address.Region.Name}} {{cefCheckoutCtrl.selectedBilling.Address.PostalCode}}
+                {{cefCheckoutCtrl.selectedBilling.Address.Country.Name}}
+            </div>
+            <div class="col-md-4" ng-if="!cefCheckoutCtrl.viewstate.isShippingSameAsBilling">
+                <b data-translate="ui.admin.checkout.views.reviewOrderInformation.ShipTo"></b><br />
+                <!-- TODO: Replace with contact address block widget -->
+                {{cefCheckoutCtrl.selectedShipping.FirstName}} {{cefCheckoutCtrl.selectedShipping.LastName}}<br />
+                {{cefCheckoutCtrl.selectedShipping.Address.Street1}}<br />
+                {{cefCheckoutCtrl.selectedShipping.Address.Street2}}<br ng-if="cefCheckoutCtrl.selectedShipping.Address.Street2" />
+                {{cefCheckoutCtrl.selectedShipping.Address.City}}, {{cefCheckoutCtrl.selectedShipping.Address.Region.Name}} {{cefCheckoutCtrl.selectedShipping.Address.PostalCode}}<br />
+                {{cefCheckoutCtrl.selectedShipping.Address.Country.Name}}
+            </div>
+            <div class="col-md-4">
+                <b data-translate="ui.admin.checkout.views.reviewOrderInformation.BillTo"></b><br />
+                <!-- TODO: Replace with contact address block widget -->
+                {{cefCheckoutCtrl.selectedBilling.FirstName}} {{cefCheckoutCtrl.selectedBilling.LastName}}<br />
+                {{cefCheckoutCtrl.selectedBilling.Address.Street1}}<br />
+                {{cefCheckoutCtrl.selectedBilling.Address.Street2}}<br ng-if="cefCheckoutCtrl.selectedBilling.Address.Street2" />
+                {{cefCheckoutCtrl.selectedBilling.Address.City}}, {{cefCheckoutCtrl.selectedBilling.Address.Region.Name}} {{cefCheckoutCtrl.selectedBilling.Address.PostalCode}}<br />
+                {{cefCheckoutCtrl.selectedBilling.Address.Country.Name}}
+            </div>
+            <div class="col-md-4">
+                <b data-translate="ui.admin.checkout.views.reviewOrderInformation.PreferredPaymentMethod"></b><br />
+                <span ng-switch="cefCheckoutCtrl.paymentStyle">
+                    <span ng-switch-when="Credit" data-translate="ui.admin.common.PaymentMethods.CreditCard"></span>
+                    <span ng-switch-when="BillMeLater" data-translate="ui.admin.common.PurchaseOrder"></span>
+                    <span ng-switch-when="BankTransfer" data-translate="ui.admin.checkout.views.paymentInformation.BankTransfer"></span>
+                    <span ng-switch-when="PayPal">PayPal&reg;</span>
+                    <span ng-switch-when="Payoneer">Payoneer&reg;</span>
+                    <span ng-switch-default>INVALID!!!</span>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover table-condensed mb-3">
+                        <thead>
+                            <tr>
+                                <th class="text-center" data-translate="ui.admin.cart.Item"></th>
+                                <th class="text-center" data-translate="ui.admin.cart.ProductID"></th>
+                                <th class="text-center" data-translate="ui.admin.cart.PricePerUnit"></th>
+                                <th class="text-center" data-translate="ui.admin.common.Quantity"></th>
+                                <th class="text-center" data-translate="ui.admin.cart.Subtotal"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in cefCheckoutCtrl.cvCartService.carts['Cart'].SalesItems">
+                            <td>
+                                    <div cef-product-card-thumbnail-widget
+                                        product="item.Product"
+                                        product-id="item.ProductID"
+                                        product-seo-url="item.ProductSeoUrl"
+                                        product-name="item.ProductName"
+                                        product-image="item.ProductPrimaryImage"
+                                        width="50" height="50"></div>
+                                    <a ui-sref-plus uisrp-is-product="true" uisrp-path="{{item.ProductSeoUrl}}"
+                                    target="_blank" ng-bind="item.ProductName"></a>
+                                </td>
+                                <td class="text-center" ng-bind="item.ProductID"></td>
+                                <td class="text-right" ng-bind="(item.UnitSoldPrice || item.UnitCorePrice) | globalizedCurrency">{{}}</td>
+                                <td class="text-right" ng-bind="(item.Quantity + (item.QuantityBackOrdered || 0) + (item.QuantityPreSold || 0)) | number:0"></td>
+                                <td class="text-right" ng-bind="item.ExtendedPrice | globalizedCurrency"></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" rowspan="7"></td>
+                                <td class="text-right" data-translate="ui.admin.common.Subtotal"></td>
+                                <td class="text-right" ng-bind="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.SubTotal | globalizedCurrency"></td>
+                            </tr>
+                            <tr ng-if="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Discounts != 0">
+                                <td class="text-right" data-translate="ui.admin.checkout.checkoutPanels.Discounts"></td>
+                                <td class="text-right" ng-bind="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Discounts | globalizedCurrency"></td>
+                            </tr>
+                            <tr ng-if="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Fees != 0">
+                                <td class="text-right" data-translate="ui.admin.common.Fee.Plural"></td>
+                                <td class="text-right" ng-bind="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Fees | globalizedCurrency"></td>
+                            </tr>
+                            <tr ng-if="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Shipping != 0">
+                                <td class="text-right" data-translate="ui.admin.common.Shipping"></td>
+                                <td class="text-right" ng-bind="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Shipping | globalizedCurrency"></td>
+                            </tr>
+                            <tr ng-if="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Handling != 0">
+                                <td class="text-right" data-translate="ui.admin.checkout.checkoutPanels.Handling"></td>
+                                <td class="text-right" ng-bind="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Handling | globalizedCurrency"></td>
+                            </tr>
+                            <tr ng-if="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Tax != 0">
+                                <td class="text-right" data-translate="ui.admin.checkout.checkoutPanels.EstimatedSalesTax"></td>
+                                <td class="text-right" ng-bind="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Tax | globalizedCurrency"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right text-larger" data-translate="ui.admin.common.Total"></td>
+                                <td class="text-right text-larger" ng-bind="cefCheckoutCtrl.cvCartService.carts['Cart'].Totals.Total | globalizedCurrency"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-12 text-right">
+                ** <span data-translate="ui.admin.checkout.views.reviewOrderInformation.YouWillBeChargedLater"></span><br/><!--
+                --><input type="checkbox" class="termsAgreed"
+                          id="termsAgreedCC" name="termsAgreedCC"
+                          ng-required="true"
+                          ng-model="agreed" />&nbsp;<!--
+                --><label class="form-control-static text-weight-normal"
+                          for="termsAgreedCC"
+                          data-translate="ui.admin.checkout.terms1"
+                          ></label>&nbsp;<!--
+                --><a ui-sref-plus uisrp-root="/Terms" target="_blank"
+                      ><label class="form-control-static text-weight-normal"
+                              data-translate="ui.admin.checkout.terms2"></label></a><br/><!--
+                --><button type="button" class="btn btn-success btn-lg"
+                           ng-disabled="!agreed || cefCheckoutCtrl.forms.review.$invalid || cefCheckoutCtrl.viewstate.checkoutIsProcessing"
+                           ng-click="cefCheckoutCtrl.showNextPane()"
+                            data-translate="ui.admin.checkout.views.reviewOrderInformation.ConfirmAndPlaceOrder"></button>
+            </div>
+        </div>
+    </div>
+</div>

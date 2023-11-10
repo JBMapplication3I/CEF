@@ -1,0 +1,351 @@
+// prevents the navbar from stacking underneath the DNN nav bar
+.UPR_Administrators .navbar {
+    // margin-top: 53px;
+}
+
+// fix for admin menu overlapping the navigation
+body>form #ControlBar_ControlPanel {
+    z-index: 1150 !important;
+}
+
+.CommandButton {
+    font-size: 13px;
+    color: #3d3d3d;
+    font-weight: bold;
+}
+
+.CommandButton:hover {
+    color: #007cae;
+}
+
+a.CommandButton:link {
+    font-size: 13px;
+    text-decoration: none;
+    color: #3d3d3d;
+    font-weight: bold;
+}
+
+a.CommandButton:hover {
+    text-decoration: underline;
+    color: #007cae;
+}
+
+body span.controlBar_editPageTxt,
+body #ControlNav>li>a,
+body #ControlBar_CustomMenuItems>li>a,
+body #ControlActionMenu>li>a {
+    height: 53px;
+    cursor: pointer
+}
+
+body span.controlBar_editPageTxt {
+    height: 35px;
+}
+
+#ControlEditPageMenu .dnnCheckbox .mark {
+    background: #3d3d3d
+}
+
+#ControlBar .subNav {
+    top: 53px;
+}
+
+#ControlBar #ControlEditPageMenu>li>a {
+    height: 55px;
+}
+
+#ControlBar #ControlEditPageMenu>li ul {
+    top: 53px;
+}
+
+body ul#ControlBar_Module_ModulePosition li {
+    height: 30px;
+}
+
+body .jspContainer {
+    min-height: 150px !important;
+}
+
+body .dnn_mact>li.actionMenuMove>ul li {
+    height: 30px;
+}
+
+div.RadWindow.RadWindow_Default table.rwTitlebarControls em {
+    font: normal bold 16px SegoeUI, Arial, Verdana, sans-serif !important;
+    color: #fff;
+    margin-left: 5px;
+    margin-top: -1px;
+}
+
+// Language
+.language .language-object {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.language .language-object span {
+    float: left;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    margin: 0;
+}
+
+.language .language-object span:first-child {
+    padding-left: 8px;
+}
+
+.language .language-object span img {
+    height: 12px;
+    width: 17px;
+    opacity: 0.3;
+}
+
+.language .language-object span:hover img {
+    opacity: 1;
+}
+
+.language .language-object .Language.selected img {
+    opacity: 1;
+    border-color: #222;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.8);
+}
+
+// Empty Panes
+.DNNEmptyPane {
+    width: 0;
+    margin: 0;
+}
+
+.DNNEmptyPane.rightTwoCol+div {
+    width: 100%;
+}
+
+// DNN buttons
+.dnnPrimaryAction,
+.dnnSecondaryAction {
+    display: inline-block;
+    margin-bottom: 0; // For input.btn
+    font-weight: $btn-font-weight;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+    border: 1px solid transparent;
+    white-space: nowrap;
+    @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $line-height-base, $btn-border-radius);
+    //@include user-select(none);
+    //&,
+    //&:active,
+    //&.active {
+    //    &:focus,
+    //    &.focus {
+    //        //@include tab-focus;
+    //    }
+    //}
+    &:hover,
+    &:focus,
+    &.focus {
+        color: $input-btn-focus-color;
+        text-decoration: none;
+    }
+    &:active,
+    &.active {
+        outline: 0;
+        background-image: none;
+        @include box-shadow(inset 0 3px 5px rgba(0, 0, 0, .125));
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        // cursor: $cursor-disabled;
+        //@include opacity(.65);
+        @include box-shadow(none);
+    }
+    // [converter] extracted a& to a.btn
+}
+
+/*
+a.btn {
+    &.disabled,
+    fieldset[disabled] & {
+        pointer-events: none; // Future-proof disabling of clicks on `<a>` elements
+    }
+}
+*/
+
+// Alternate buttons
+// --------------------------------------------------
+.dnnPrimaryAction {
+    @include button-variant($primary, $primary, $border-color);
+}
+
+.dnnSecondaryAction {
+    @include button-variant($secondary, $secondary, $border-color);
+}
+
+// DNN login
+ul.dnnActions {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+        display: inline-block;
+    }
+}
+
+// POPUP
+.ui-widget-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 9999;
+}
+.dnnFormPopup {
+    position: absolute;
+    padding: 18px;
+    background: #fff;
+    -webkit-box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.75);
+    z-index: 100000;
+}
+
+// Popup header
+.dnnFormPopup .ui-dialog-titlebar {
+    position: relative;
+    padding: 0 0 18px 0;
+    border-bottom: 1px solid #ddd;
+    cursor: move;
+    font-size: 18px;
+    font-weight: bold;
+}
+.dnnFormPopup .dnnModalCtrl {
+    display: block;
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 69px;
+    height: 26px;
+    border-radius: 10px;
+    background-color: #fff;
+    -webkit-border-radius: 10px;
+    box-shadow: 0px 0px 5px #666;
+}
+.dnnFormPopup .dnnModalCtrl .ui-dialog-titlebar-close {
+    float: right;
+    display: block;
+    height: 18px;
+    width: 30px;
+    margin: 4px 4px 0 1px;
+    overflow: hidden;
+    -webkit-border-top-right-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    border: none;
+    outline: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background: #585858 url(/images/closeBtn.png) no-repeat;
+    background-position: 8px 4px;
+    text-indent: -9999em;
+    min-width: 0 !important;
+}
+.dnnFormPopup .dnnModalCtrl .ui-dialog-titlebar-close:hover {
+    background: $primary url(/images/closeBtn.png) no-repeat;
+    background-position: 8px 4px;
+    cursor: pointer;
+}
+.dnnFormPopup .dnnModalCtrl a.dnnToggleMax {
+    float: left;
+    display: block;
+    height: 18px;
+    width: 30px;
+    margin: 4px 0 0 4px;
+    overflow: hidden;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background: #585858 url(/images/resizeBtn.png) no-repeat;
+    background-position: 10px 2px;
+    text-indent: -9999em;
+}
+.dnnFormPopup .dnnModalCtrl a.dnnToggleMax:hover {
+    background: $primary url(/images/resizeBtn.png) no-repeat;
+    background-position: 10px 2px;
+}
+div.ui-dialog-titlebar>.ui-dialog-titlebar-close {
+    display: block;
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    height: 24px;
+    width: 24px;
+    margin: 0px;
+    overflow: hidden;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+    background: #585858 url(/images/closeBtn.png) no-repeat;
+    background-position: 4px 4px;
+    border: 3px solid #fff;
+    text-indent: -9999em;
+    min-width: 0 !important;
+}
+
+// Poup Iframe styles
+.dnnFormPopup #iPopUp {
+    width: 100% !important; // to overwrite inline javscript styles
+    padding-top: 10px;
+}
+.dnnFormPopup .ui-dialog-content,
+#iPopUp .ui-dialog-content {
+    position: relative;
+    border: 0;
+    padding: 0px;
+    overflow: auto;
+    background: #fff;
+    zoom: 1;
+}
+.dnnFormPopup .ui-dialog-buttonpane {
+    margin: .5em 0 0 0;
+    padding: .3em 1em 0em 0em;
+    overflow: hidden;
+    border-width: 1px 0 0 0;
+    background-image: none;
+    text-align: left;
+    border-top: 1px solid #ddd;
+}
+.dnnFormPopup .ui-dialog-buttonpane button {
+    margin: 0.5em 0.4em 0.5em 0em;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+.dnnFormPopup .ui-resizable-se {
+    float: right;
+    height: 24px;
+    width: 24px;
+    background: url(/images/modal-resize-icn.png) no-repeat bottom;
+}
+.dnnFormPopup .dnnDialog {
+    padding: 10px;
+}
+.dnnLoading {
+    background: #fff url(/images/loading.gif) no-repeat center center;
+    position: absolute;
+    z-index: 9999;
+}
+.dnnPanelLoading {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    -ms-opacity: 0.7;
+    opacity: 0.7;
+}

@@ -1,0 +1,18 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Message"]</h1>
+    <form method="post" asp-page="Index">
+        User ID: <input asp-for="StandardBid.UserID" />
+        Lot ID: <input asp-for="StandardBid.LotID" />
+        Bid Increment: <input asp-for="StandardBid.BidIncrement" />
+        Max Bid: <input asp-for="StandardBid.MaxBid" />
+
+        <input type="submit" value="Max Bid" asp-page-handler="MaxBid" />        
+        <input type="submit" value="Quick Bid" asp-page-handler="QuickBid" />
+    </form>
+</div>

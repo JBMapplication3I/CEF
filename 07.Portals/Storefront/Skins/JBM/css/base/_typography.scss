@@ -1,0 +1,51 @@
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6,
+.h {
+	a {
+		text-decoration: none;
+
+		&:hover {
+			color: $primary;
+		}
+	}
+}
+
+h1,
+.h1 {
+	@include media-breakpoint-up(md) {
+		font-size: rem-calc(40);
+	}
+}
+
+h2,
+.h2 {
+	@include media-breakpoint-up(md) {
+		font-size: rem-calc(32);
+	}
+}
+
+
+a {
+	@include animate(color background border opacity transform box-shadow);
+}
+
+hr {
+	&.hr-secondary {
+		border-width: rem-calc(4 0 0);
+		margin: rem-calc(29 0);
+	}
+}
+
+small {
+	font-size: rem-calc(12);
+}

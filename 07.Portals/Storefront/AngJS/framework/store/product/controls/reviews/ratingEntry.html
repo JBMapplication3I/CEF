@@ -1,0 +1,12 @@
+<div class="product-rating m-0">
+  <i ng-repeat="v in reCtrl.scaleArray() track by $index" class="fa-lg"
+    id="productDetailsRatingStar{{$index + 1}}"
+    ng-mouseenter="reCtrl.updateHoveredRating(v)"
+    ng-mouseleave="reCtrl.resetHoveredRating()"
+    ng-class="((reCtrl.value >= v && reCtrl.currentHoveredRating == 0)
+      || reCtrl.currentHoveredRating >= v) ? 'fas fa-star' : 'far fa-star'"
+    ng-click="reCtrl.rate(v)"></i>&nbsp;&nbsp;<!--
+    --><span sid="SelectYourRatingText"
+      data-translate="ui.storefront.product.reviews.ratingEntry.selectYourRating">
+    </span>
+</div>

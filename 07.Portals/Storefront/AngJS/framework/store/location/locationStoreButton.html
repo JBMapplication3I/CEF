@@ -1,0 +1,68 @@
+<div class="btn-group right"
+     uib-dropdown
+     is-open="locationButtonCtrl.isOpen">
+    <button type="button" class="btn btn-primary dropdown-toggle"
+            uib-dropdown-toggle
+            ng-disabled="locationButtonCtrl.disabled">
+        <i class="far fa-map-marker float-left" aria-hidden="true"></i>
+        <span data-translate="ui.storefront.location.locationStoreButton.moreStoreHoursAndLocation"></span><br />
+        <b ng-if="!locationButtonCtrl.selectedStore" data-translate="ui.storefront.location.locationStoreButton.chooseYourStore"></b>
+        <!--<b ng-if="locationButtonCtrl.selectedStore">{{ locationButtonCtrl.selectedStore.Name }}</b>-->
+        <b ng-if="locationButtonCtrl.selectedStore" ng-bind="locationButtonCtrl.cvStoreLocationService.getUsersSelectedStore()"></b>
+        <span class="caret"></span>
+    </button>
+    <ul class="float-right dropdown-menu" role="menu">
+        <li style="width:350px" ng-if="!locationButtonCtrl.viewstate.hasSelectedStore">
+            <div class="row-fluid">
+                <div class="col-12">
+                    <location-store-selector store-list="locationButtonCtrl.storeList" selected-store="locationButtonCtrl.selectedStore"></location-store-selector>
+                </div>
+            </div>
+        </li>
+        <li style="width: 700px" ng-if="locationButtonCtrl.viewstate.hasSelectedStore">
+            <div class="row-fluid">
+                <div class="col-md-6">
+                    <h2 data-translate="ui.storefront.location.locationStoreButton.otherStoreLocations"></h2>
+                    <div class="row">
+                        <div class="col-12" ng-repeat="store in locationButtonCtrl.storeList | limitTo:3"
+                             location-store-details="store" show-select="true"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p><a class="btn btn-small btn-secondary btn-block"
+                                  ui-sref-plus uisrp-area="storeLocator"
+                                  ><span data-translate="ui.storefront.location.locationStoreButton.findMoreStores"></span></a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 ng-bind="locationButtonCtrl.selectedStore.Name"></h2>
+                            <address>
+                                {{locationButtonCtrl.selectedStore.Contact.Address.Street1}}<br/>
+                                {{locationButtonCtrl.selectedStore.Contact.Address.City}}, {{locationButtonCtrl.selectedStore.Contact.Address.RegionCode}} {{locationButtonCtrl.selectedStore.Contact.Address.PostalCode}}<br/>
+                                <span data-translate="ui.storefront.common.Phone"></span>&nbsp;<!--
+                                --><a ng-href="tel:{{locationButtonCtrl.selectedStore.Contact.Phone1}}"
+                                      ng-bind="locationButtonCtrl.selectedStore.Contact.Phone1"></a>
+                                <span ng-if="::locationButtonCtrl.selectedStore.Website"><br />
+                                <a ng-href="{{locationButtonCtrl.selectedStore.Website}}" target="_blank"
+                                   ng-bind="locationButtonCtrl.selectedStore.Website"></a></span>
+                            </address>
+                        </div>
+                        <div class="col-12">
+                            <p><a ng-href="{{locationButtonCtrl.selectedStore.mapUrl}}" target="_blank">
+                                <img class="img-fluid rounded" alt=""
+                                     ng-src="{{locationButtonCtrl.selectedStore.getMapImageUrl(locationButtonCtrl.imageParams)}}">
+                            </a></p>
+                            <a class="btn btn-block btn-primary"
+                               target="_blank"
+                               ng-href="{{locationButtonCtrl.selectedStore.mapUrl}}"
+                               data-translate="ui.storefront.common.GetDirection.Plural"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

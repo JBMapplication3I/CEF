@@ -1,0 +1,166 @@
+﻿<style>
+    #import-mapping {
+        text-align: center;
+        /*width: auto;*/
+        -moz-min-width: 474px;
+        -ms-min-width: 474px;
+        -o-min-width: 474px;
+        -webkit-min-width: 474px;
+        min-width: 474px;
+        /*float:none;
+        margin:0 auto;*/
+    }
+
+    #import-mapping th {
+        -moz-min-width: 100px;
+        -ms-min-width: 100px;
+        -o-min-width: 100px;
+        -webkit-min-width: 100px;
+        min-width: 100px;
+    }
+
+    #import-mapping table, #import-mapping table tr, #import-mapping table td {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        vertical-align: middle;
+        line-height: 1;
+    }
+
+    .importLog > div {
+        max-height: 300px;
+        overflow: scroll;
+    }
+</style>
+<div class="form-inline">
+    <div class="form-group">
+        <label class="control-label">{{!showAuth2Button ? "Google Document:" : ""}}</label>
+        <div class="input-group">
+            <google-auth-button ng-show="showAuth2Button"
+                                data-translate="ui.admin.controls.inventory.googlesheetsimporter.AuthenticateWithGoogle"></google-auth-button>
+            <select class="form-control"
+                    ng-show="!showAuth2Button" ng-model="selectedDocument" ng-change="selectedDocument_change()"
+                    ng-disabled="isLoading || isImporting || documents.length==0"
+                    ng-options="doc.name for doc in documents | orderBy: 'name'">
+                <option value="" ng-hide="documents.length > 0">
+                    {{isLoading ? "-- Loading Spreadsheet Documents from Google --" : documents.length == 0 ? "-- No Documents Found --" : "-- Choose a document --"}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group" ng-hide="showAuth2Button">
+        <label class="control-label" data-translate="ui.admin.controls.inventory.googlesheetsimporter.Sheet"></label>
+        <div class="input-group">
+            <select class="form-control"
+                    ng-model="selectedSheet" ng-change="selectedSheet_change()"
+                    ng-disabled="isLoading || isImporting || sheets.length == 0 || !selectedSheet || sheets.length==0"
+                    ng-options="sheet.name for sheet in sheets">
+                <option value="" ng-hide="sheets.length > 0">
+                    {{sheets.length == 0 || !selectedSheet ? "-- Choose from above --" : isLoading ? "-- Loading Sheets --" : sheets.length == 0 ? "-- No Sheets Found --" : "-- Choose a Sheet --"}}
+                </option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label class="control-label" style="margin-left: 15px" ng-show="importing" data-translate="ui.admin.controls.inventory.googlesheetsimporter.Importing"></label>
+        </div>
+        <div class="input-group">
+            <a ng-show="rowFeed" class="btn btn-info" ng-href="{{getSelectedDocumentViewHref()}}" target="_blank" data-translate="ui.admin.controls.inventory.googlesheetsimporter.ViewInGoogle"></a>
+        </div>
+        <div class="input-group">
+            <label class="control-label"><input ng-model="showDataTable" type="checkbox" /><span data-translate="ui.admin.controls.inventory.googlesheetsimporter.ShowDataTable"></span></label>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row importLog" ng-show="selectedSheet != null && showDataTable">
+        <div class="col-md-12">
+            <label class="control-label" data-translate="ui.admin.controls.inventory.googlesheetsimporter.DataTable"></label>
+            <div id="gtable"></div>
+        </div>
+    </div>
+    <div class="row importLog" ng-show="importLog">
+        <div class="col-md-12">
+            <label class="control-label" data-translate="ui.admin.controls.inventory.googlesheetsimporter.ImportLog"></label>
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default" ng-if="importLog.ErrorMessages">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><span data-translate="ui.admin.controls.inventory.googlesheetsimporter.Errors"></span> ({{importLog.ErrorMessages.length}})</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body scroll-over-500">
+                            <span ng-repeat="message in importLog.ErrorMessages track by $index" ng-bind-html="message"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-if="importLog.InfoMessages">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><span data-translate="ui.admin.controls.inventory.googlesheetsimporter.InformationMessages"></span> ({{importLog.InfoMessages.length}})</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body scroll-over-500">
+                            <span ng-repeat="message in importLog.InfoMessages track by $index" ng-bind-html="message"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-if="importLog.DebugMessages">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><span data-translate="ui.admin.controls.inventory.googlesheetsimporter.DebugMessages"></span> ({{importLog.DebugMessages.length}})</a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body scroll-over-500">
+                            <span ng-repeat="message in importLog.DebugMessages track by $index" ng-bind-html="message"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="selectedSheet">
+         <!--
+        <div class="col-md-12"><h3 data-translate="ui.admin.controls.inventory.googlesheetsimporter.Mappings"></h3></div>
+        <div class="col-md-12 form-inline mb-3">
+            <div class="form-group">
+                <label class="control-label" ng-hide="isImporting" for="defaultMapping" data-translate="ui.admin.controls.inventory.googlesheetsimporter.WhenNoMatchIsFoundDefaultTo"></label>
+                <select class="form-control" id="defaultMapping" ng-hide="isImporting"
+                        ng-model="defaultMapping"
+                        ng-options="field.value as field.name | productImportFieldLabel for field in defaultMappingImportFields">
+                    <option value="DoNotImport" data-translate="ui.admin.controls.inventory.googlesheetsimporter.DoNotImport"></option>
+                    <option value="Attribute" data-translate="ui.admin.controls.inventory.googlesheetsimporter.Attribute"></option>
+                </select>
+            </div>
+            <div ng-hide="isImporting" class="pull-right">
+                <button type="button" class="btn" ng-click="resetMappings()" data-translate="ui.admin.controls.inventory.googlesheetsimporter.ResetMappings"></button>
+                <button type="button" class="btn" ng-click="clearMappings()" data-translate="ui.admin.controls.inventory.googlesheetsimporter.ClearAllMappings"></button>
+            </div>
+        </div>
+        <div class="col-md-12" ng-hide="isImporting">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="label in mappingColumnOrder">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <label class="control-label" style="width: 100px; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0;" for="select_{{label}}" title="{{label}}">{{label}}</label>
+                        <i class="far fa-arrow-right" aria-hidden="true"></i>
+                    </div>
+                    <select class="form-control" id="select_{{label}}" style="min-width: 100px;"
+                            ng-model="mapping[label]" ng-change="selectedMapping_change(label)"
+                            ng-disabled="isLoading || sheets.length == 0 || !selectedSheet || sheets.length==0"
+                            ng-options="field.value as field.name | productImportFieldLabel for field in productImportFields | orderBy: 'toString()'">
+                        <option value="-1" data-translate="ui.admin.controls.inventory.googlesheetsimporter.DoNotImport"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        -->
+        <div class="col-md-12 form-inline">
+            <label class="control-label center-text" ng-show="isImporting" data-translate="ui.admin.controls.inventory.googlesheetsimporter.ImportingFromGoogleSheetsPleaseWaitDoNotNavigateFromThisWindow"></label>
+            <div ng-hide="isImporting" class="pull-right">
+                <button type="button" class="btn btn-primary" ng-disabled="!importButtonEnabled" ng-show="rowFeed" ng-click="importSheet()" data-translate="ui.admin.controls.inventory.googlesheetsimporter.ImportData"></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,204 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="carrierAccountDetailCtrl.record"
+         new-kind-key="ui.admin.controls.shipments.carrierAccountDetail.newCarrierAccount"
+         existing-kind-key="ui.admin.controls.shipments.carrierAccountDetail.carrierAccount">
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 carrier-account-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': carrierAccountDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="carrierAccountDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                                <div class="form-group" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Details.txtName.$invalid}">
+                                    <label class="control-label" for="txtName"
+                                           data-translate="ui.admin.common.Name"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtName" name="txtName"
+                                               maxlength="256"
+                                               ng-required="true"
+                                               ng-model="carrierAccountDetailCtrl.record.Name" />
+                                    </div>
+                                    <div ng-messages="carrierAccountDetailCtrl.forms.Details.txtName.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                                    <label class="control-label" for="txtCustomKey"
+                                           data-translate="ui.admin.common.Key"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtCustomKey" name="txtCustomKey"
+                                               maxlength="128"
+                                               ng-required="false"
+                                               ng-model="carrierAccountDetailCtrl.record.CustomKey" />
+                                    </div>
+                                    <div ng-messages="carrierAccountDetailCtrl.forms.Details.txtCustomKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Details.txtPointOfContact.$invalid}">
+                                        <label class="control-label" data-translate="ui.admin.controls.shipments.carrierAccountDetail.pointOfContact"></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="txtPointOfContact" name="txtPointOfContact"
+                                                   maxlength="128"
+                                                   ng-required="false"
+                                                   ng-model="carrierAccountDetailCtrl.record.PointOfContact" />
+                                        </div>
+                                        <div ng-messages="carrierAccountDetailCtrl.forms.Details.txtPointOfContact.$error">
+                                            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-6" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Details.txtSalesRep.$invalid}">
+                                        <label class="control-label" data-translate="ui.admin.controls.shipments.carrierAccountDetail.salesRep"></label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="txtSalesRep" name="txtSalesRep"
+                                                   maxlength="128"
+                                                   ng-required="false"
+                                                   ng-model="carrierAccountDetailCtrl.record.SalesRep" />
+                                        </div>
+                                        <div ng-messages="carrierAccountDetailCtrl.forms.Details.txtPointOfContact.$error">
+                                            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Details.txtDescription.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.shipments.carrierAccountDetail.Description"></label>
+                                    <div class="input-group">
+                                        <textarea kendo-editor k-encoded="false" k-paste="carrierAccountDetailCtrl.sanitizeMarkup"
+                                                  id="txtDescription" name="txtDescription"
+                                                  k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  ng-model="carrierAccountDetailCtrl.record.Description"
+                                                  style="width: 100%; height: 300px;"></textarea>
+                                    </div>
+                                    <div ng-messages="carrierAccountDetailCtrl.forms.Details.txtDescription.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" ng-if="carrierAccountDetailCtrl.record">
+                                <div cef-contact-editor-widget
+                                    class="mb-3"
+                                    contact="carrierAccountDetailCtrl.record.Contact"
+                                    is-editable="true"
+                                    id-suffix="carrier"
+                                    hide-key="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': carrierAccountDetailCtrl.forms.Shipping.$invalid}"><i class="far fa-lg fa-truck"></i>&nbsp;<span data-translate="ui.admin.common.Shipping"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="carrierAccountDetailCtrl.forms.Shipping">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3 data-translate="ui.admin.common.ShippingData"></h3>
+                                <div class="form-group" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Shipping.txtAccountNumber.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.AccountNumber"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtAccountNumber" name="txtAccountNumber"
+                                               maxlength="128"
+                                               ng-required="false"
+                                               ng-model="carrierAccountDetailCtrl.record.AccountNumber" />
+                                    </div>
+                                    <div ng-messages="carrierAccountDetailCtrl.forms.Shipping.txtAccountNumber.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Shipping.txtAuthentication.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.shipments.carrierAccountDetail.Authentication"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtAuthentication" name="txtAuthentication"
+                                               maxlength="128"
+                                               ng-required="false"
+                                               ng-model="carrierAccountDetailCtrl.record.Authentication" />
+                                    </div>
+                                    <div ng-messages="carrierAccountDetailCtrl.forms.Shipping.txtAuthentication.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Shipping.txtUsername.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Username"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtUsername" name="txtUsername"
+                                               maxlength="128"
+                                               ng-required="false"
+                                               ng-model="carrierAccountDetailCtrl.record.Username" />
+                                    </div>
+                                    <div ng-messages="carrierAccountDetailCtrl.forms.Shipping.txtUsername.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Shipping.pwPassword.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Password"></label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="pwPassword" name="pwPassword"
+                                               maxlength="128"
+                                               ng-required="false"
+                                               ng-model="carrierAccountDetailCtrl.record.Password" />
+                                    </div>
+                                    <div ng-messages="carrierAccountDetailCtrl.forms.Shipping.pwPassword.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-6" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Shipping.ckIsInbound.$invalid}">
+                                        <label class="control-label" data-translate="ui.admin.controls.shipments.carrierAccountDetail.Inbound"></label>
+                                        <div class="input-group">
+                                            <toggle id="ckIsInbound" name="ckIsInbound" class="btn-block"
+                                                    ng-model="carrierAccountDetailCtrl.record.IsInbound"
+                                                    data-on="Yes" data-truestyle="btn-primary"
+                                                    data-off="No" data-offstyle="btn-info"></toggle>
+                                        </div>
+                                        <div ng-messages="carrierAccountDetailCtrl.forms.Shipping.ckIsInbound.$error">
+                                            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-6" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Shipping.ckIsOutbound.$invalid}">
+                                        <label class="control-label" data-translate="ui.admin.controls.shipments.carrierAccountDetail.Outbound"></label>
+                                        <div class="input-group">
+                                            <toggle id="ckIsOutbound" name="ckIsOutbound" class="btn-block"
+                                                    ng-model="carrierAccountDetailCtrl.record.IsOutbound"
+                                                    data-on="Yes" data-truestyle="btn-primary"
+                                                    data-off="No" data-offstyle="btn-info"></toggle>
+                                        </div>
+                                        <div ng-messages="carrierAccountDetailCtrl.forms.Shipping.ckIsOutbound.$error">
+                                            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': carrierAccountDetailCtrl.forms.Shipping.timePickupTime.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.shipments.carrierAccountDetail.pickupTime"></label>
+                                    <div class="input-group">
+                                        <input type="time" class="form-control text-right" id="timePickupTime" name="timePickupTime"
+                                               ng-required="false"
+                                               ng-model="carrierAccountDetailCtrl.record.PickupTime" />
+                                    </div>
+                                    <div ng-messages="carrierAccountDetailCtrl.forms.Shipping.timePickupTime.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="carrierAccountDetailCtrl"
+                return-state="shipments.carrierAccounts.list"
+                permissions-base="Shipping.ShipCarrier">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

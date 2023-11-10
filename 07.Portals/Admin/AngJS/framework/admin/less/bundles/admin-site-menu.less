@@ -1,0 +1,254 @@
+﻿@menu-top-height: 42px;
+@menu-bottom-height: 43px;
+
+.cvAdminSiteMenu {
+    background: #21262C;
+    position: fixed;
+    height: calc(@menu-top-height + @menu-bottom-height);
+    width: 100%;
+    z-index: 5;
+
+    >div.cvMainMenu {
+        z-index: 6;
+        height: @menu-top-height;
+        width: 100%;
+        font-family: proxima-nova, sans-serif;
+
+        >ul {
+            display: block;
+            height: @menu-top-height;
+            width: 100%;
+            list-style-type: none;
+            list-style-position: inside;
+
+            >li {
+                display: list-item;
+                height: @menu-top-height;
+                float: left;
+                text-align: center;
+                padding: 8px 14px;
+
+                &:hover:not(.no-select) {
+                    background: #555757;
+                    color: #FFF;
+                    padding-bottom: 12px;
+
+                    &,
+                    a {
+                        cursor: pointer;
+                    }
+                }
+
+                &.no-select {
+                    color: white;
+                    padding-top: 13px;
+                }
+
+                &.active {
+                    /*box-shadow: inset 0 0 10px #555757;*/
+                    background-color: #49C0E0;
+
+                    /*>a {
+                        color: black;
+                    }*/
+                }
+
+                >a {
+                    display: inline-block;
+                    vertical-align: middle;
+
+                    img {
+                        display: inline;
+                    }
+
+                    >i {
+                        display: inline-block;
+                        line-height: 25px;
+                        vertical-align: text-top;
+                        margin-top: -1px;
+                        width: 25px;
+                        height: 25px;
+                        margin-right: 7px;
+
+                        >img {
+                            width: 25px;
+                            height: 25px;
+                        }
+                    }
+                }
+            }
+        }
+
+        >ul li a,
+        >ul a:visited {
+            font-size: 18px;
+            text-decoration: none;
+            color: white;
+            /*cursor: default;*/
+            cursor: default;
+        }
+
+        >ul li a[href] {
+            cursor: pointer;
+        }
+
+        >ul li:hover ul,
+        >ul a:hover ul {
+            display: block;
+        }
+
+        >ul ul {
+            display: none;
+            position: absolute;
+            z-index: 100;
+            list-style-type: none;
+            padding: 10px 0;
+            background-color: #555757;
+            -webkit-box-shadow: 3px 3px 15px 0 rgba(0, 0, 0, 0.25);
+            box-shadow: 3px 3px 15px 0 rgba(0, 0, 0, 0.25);
+            margin-left: -20px;
+            margin-top: 8px;
+        }
+
+        >ul.list-inline {
+            white-space: nowrap;
+        }
+
+        >ul ul li a {
+            cursor: pointer;
+        }
+
+        >ul ul li {
+            display: inline-block;
+            text-align: left;
+        }
+
+        >ul ul a {
+            display: block;
+            padding: 5px 15px;
+            font-size: 16px;
+        }
+
+        /*>ul ul a:hover {
+            background: #797c7c;
+        }*/
+
+        >ul ul hr {
+            margin: 0;
+        }
+    }
+
+    >.cvSiteSubMenu-container {
+        z-index: 6;
+
+        >.scroller {
+            z-index: 7;
+            text-align: center;
+            cursor: pointer;
+            padding: 13px 8px;
+            white-space: nowrap;
+            vertical-align: middle;
+            background-color: #32373B;
+            color: #27B9DD;
+            height: @menu-bottom-height;
+
+            &:hover {
+                color: @cef-btn-primary-color;
+                background-color: @cef-btn-primary-bg;
+                border-color: @cef-btn-primary-border;
+            }
+
+            &.scroller-left {
+                float: left;
+                border-right: solid 1px black;
+            }
+
+            &.scroller-right {
+                float: right;
+                border-left: solid 1px black;
+            }
+        }
+
+        >.cvSiteSubMenu.wrapper {
+            z-index: 7;
+            height: @menu-bottom-height;
+            background-color: #32373B;
+            text-align: center;
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+
+            >ul.list {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                min-width: 3000px;
+                margin: 0 auto;
+                border-bottom: black;
+
+                >li {
+                    position: relative;
+                    text-align: center;
+                    cursor: grab;
+                    cursor: -webkit-grab;
+                    color: #efefef;
+                    vertical-align: middle;
+                    display: inline-block;
+                    border-right: none;
+
+                    >a {
+                        color: #fff;
+                        font-size: 18px;
+                        padding: 8px 14px;
+
+                        &:hover {
+                            background-color: rgba(39, 185, 221, 50);
+                            border-color: transparent;
+                            border-radius: 0;
+                        }
+                    }
+
+                    &.active {
+                        >a {
+                            background-color: #49C0E0 !important;
+                            border-radius: 0;
+                            border: solid 1px transparent;
+                            -webkit-box-shadow: none;
+                            box-shadow: none;
+                            text-shadow: none;
+                            color: #fff;
+
+                            &:hover {
+                                background-color: rgba(39, 185, 221, 50);
+                                border-color: transparent;
+                                border-radius: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* NOTE: These media queries make the menu more responsive until the new menu can be implemented */
+@media(min-width:999px) {
+    /* Full screen Width, no menu wrap mods needed */
+}
+
+@media(max-width:998px) {
+
+    /* First Menu Wrap Point, collapse the Header Text out */
+    .cvAdminSiteMenu>div>ul>li>a>span.headerText {
+        display: none !important;
+    }
+}
+
+.nav>li>a:focus,
+.nav>li>a:hover {
+    background-color: transparent;
+}
+
+.k-tool-text {
+    display: none;
+}

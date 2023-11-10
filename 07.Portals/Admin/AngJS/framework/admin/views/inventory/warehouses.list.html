@@ -1,0 +1,23 @@
+﻿<cv-page caption="Manage Warehouses" head-icon="fa-check-square-o"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Inventory.Warehouses')">
+    <cv-widget>
+        <widget-menu-item caption="Add Warehouse" icon-class="fa-plus-circle"
+                          click="$root.$state.go('inventory.warehouses.detail',{ID:'New'})"
+                          permission="'Inventory.InventoryLocation.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     on-search="search.getInventoryLocations"
+                     on-deactivate="search.deactivateInventoryLocation"
+                     on-reactivate="search.reactivateInventoryLocation"
+                     on-delete="search.deleteInventoryLocation"
+                     edit-state="inventory.warehouses.detail,[ID]"
+                     permissions-base="Inventory.InventoryLocation">
+                <cv-column field="ID" title="#" width="50px" />
+                <cv-column filter field="CustomKey" title="Key" width="100px" />
+                <cv-column filter field="Name" width="200px" />
+                <cv-column filter field="Phone" width="150px" />
+                <cv-column filter field="Email" width="200px" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

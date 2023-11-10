@@ -1,0 +1,226 @@
+﻿@inject CEFAPI cvApi
+
+<Modal @ref="modalRef">
+  <ModalContent Centered>
+      @if (Contract.CheckNotEmpty(Roles))
+      {
+        <ModalHeader Background="Background.Dark" Padding="Padding.Is2.OnY">
+          <h2>@TitleKey</h2>
+        </ModalHeader>
+        <ModalBody Padding="Padding.Is0.FromBottom">
+          @if (DGType == "Remove")
+          {
+            <Div Class="form-group">Are You Sure You Want To Remove This Role This Action Cannot Be Undone</Div>
+          }
+          <SelectFormGroup
+            FormIdentifier="ddlDGRole"
+            @bind-Value="Role.RoleId"
+            OptionsList="@Roles"
+            ItemValueFunc="@(x => ((RoleForUserModel)x).RoleId)"
+            ItemLabelFunc="@(x => ((RoleForUserModel)x).Name)"
+            LabelText="Role"
+            PlaceholderText="Select A Role"
+            Disabled="@(DGType != "Add")"
+            Required="@(DGType == "Add")"
+            DontAllowNull="false">
+          </SelectFormGroup>
+          <DateFormGroup
+            TValue="DateTime?"
+            FormIdentifier="StartDateAndTime"
+            LabelText="Start Optional"
+            @bind-Value="Role.StartDate"
+            Required="false"
+            IncludeTime="true"
+            Disabled="@(DGType == "Remove")"
+          />
+          <DateFormGroup
+            TValue="DateTime?"
+            FormIdentifier="EndDateAndTime"
+            LabelText="End Optional"
+            @bind-Value="Role.EndDate"
+            Required="false"
+            IncludeTime="true"
+            Min="@Role.StartDate"
+            Disabled="@(DGType == "Remove")"
+          />
+        </ModalBody>
+      }
+      <ModalFooter Background="Background.Dark" Padding="Padding.Is2.OnY">
+        <Blazorise.Button
+          Color="@(DGType == "Remove" ? Color.Danger : Color.Success)"
+          Clicked="@(() => Save())">
+          @AddText
+        </Blazorise.Button>
+        <Blazorise.Button
+          Color="Color.Primary"
+          Clicked="@(() => OnClose())">
+          @CancelText
+        </Blazorise.Button>
+      </ModalFooter>
+  </ModalContent>
+</Modal>
+
+@code
+{
+  private Action<bool>? Callback { get; set; }
+
+  private Func<bool, Task>? CallbackAsync { get; set; }
+
+  private Modal? modalRef;
+
+  /// <summary>Shows.</summary>
+  /// <param name="dgType">The type.</param>
+  /// <param name="titleKey">The title key.</param>
+  /// <param name="userID">The user id.</param>
+  /// <returns>A Task.</returns>
+  public async Task ShowAsync(
+    string dgType,
+    string titleKey,
+    int userID,
+    int roleID,
+    string addText = "OK",
+    string cancelText = "Cancel",
+    Action<bool>? callback = null)
+  {
+    CreateRole();
+    await LoadRolesAsync().ConfigureAwait(false);
+    DGType = dgType;
+    TitleKey = titleKey;
+    UserID = userID;
+    RoleID = roleID;
+    AddText = addText;
+    CancelText = cancelText;
+    Callback = callback;
+    Result = false;
+    await modalRef!.Show().ConfigureAwait(false);
+  }
+
+  /// <summary>Gets or sets the type.</summary>
+  /// <value>The type.</value>
+  public string DGType { get; set; } = "Add";
+
+  /// <summary>Gets or sets the title key.</summary>
+  /// <value>The title key.</value>
+  public string TitleKey { get; set; } = string.Empty;
+
+  /// <summary>Gets or sets the user id.</summary>
+  /// <value>The user id.</value>
+  public int UserID { get; set; } = 0;
+
+  /// <summary>Gets or sets the role id.</summary>
+  /// <value>The role id.</value>
+  public int RoleID { get; set; } = 0;
+
+  /// <summary>Gets or sets the add text.</summary>
+  /// <value>The add text.</value>
+  public string AddText { get; set; } = "Add";
+
+  /// <summary>Gets or sets the cancel text.</summary>
+  /// <value>The cancel text.</value>
+  public string CancelText { get; set; } = "Cancel";
+
+  /// <summary>Gets a value indicating whether the result was true or false.</summary>
+  /// <value>True if result, false if not.</value>
+  public bool Result { get; private set; }
+
+  #region CreateNewRole
+  private RoleForUserModel Role { get; set; } = null!;
+
+  #endregion
+
+  private void CreateRole()
+  {
+    Role = new();
+  }
+
+  #region Handle Close
+  private async Task OnClose()
+  {
+    CreateRole();
+    await HideModalAsync(false).ConfigureAwait(false);
+  }
+  #endregion
+
+  #region Save Role
+  private async Task Save()
+  {
+    switch (DGType)
+    {
+      case "Add":
+        var assignDTO = new Clarity.Ecommerce.MVC.Api.Endpoints.AssignRoleToUser
+        {
+          UserId = UserID,
+          RoleId = Role.RoleId,
+          StartDate = Role.StartDate,
+          EndDate = Role.EndDate
+        };
+        await cvApi.AssignRoleToUser(assignDTO).ConfigureAwait(false);
+        break;
+      case "Update":
+        var updateDTO = new Clarity.Ecommerce.MVC.Api.Endpoints.UpdateRoleForUser
+        {
+          UserId = UserID,
+          RoleId = RoleID,
+          StartDate = Role.StartDate,
+          EndDate = Role.EndDate
+        };
+        await cvApi.UpdateRoleForUser(updateDTO).ConfigureAwait(false);
+        break;
+      case "Remove":
+        var removeDTO = new Clarity.Ecommerce.MVC.Api.Endpoints.RemoveRoleFromUser
+        {
+          UserId = UserID,
+          RoleId = RoleID,
+        };
+        await cvApi.RemoveRoleFromUser(removeDTO).ConfigureAwait(false);
+        break;
+      default:
+        throw new InvalidOperationException();
+    }
+    await HideModalAsync(false);
+  }
+  #endregion
+
+  #region IHaveARoleModel Handlers
+  private List<RoleForUserModel> Roles { get; set; } = new();
+
+  private async Task LoadRolesAsync()
+  {
+    var result = await cvApi.GetRoles().ConfigureAwait(false);
+    var roles = new Dictionary<string, int>();
+    if (result.data is not null)
+    {
+      roles = result.data;
+    }
+    if (Contract.CheckNotEmpty(roles))
+    {
+      Roles = new();
+      foreach (var role in roles)
+      {
+        Roles.Add(new()
+        {
+          Name = role.Key,
+          RoleId = role.Value,
+          UserId = UserID,
+          StartDate = null,
+          EndDate = null,
+        });
+      }
+    }
+  }
+  #endregion
+
+  private async Task HideModalAsync(bool result)
+  {
+    Result = result;
+    await modalRef!.Hide();
+    if (Callback is not null)
+    {
+      Callback(result);
+    }
+    else if (CallbackAsync is not null)
+    {
+      await CallbackAsync(result).ConfigureAwait(false);
+    }
+  }
+}

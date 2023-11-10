@@ -1,0 +1,1 @@
+cd /d "%~dp0" && npm i -g gulp && npm install

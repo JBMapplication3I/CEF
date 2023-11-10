@@ -1,0 +1,66 @@
+﻿<div ng-form="productVariantsTableCtrl.forms.variantTable">
+  <cv-grid ng-if="!productVariantsTableCtrl.buildingGrid"
+       on-search="productVariantsTableCtrl.fullProductVariants"
+       row-class="text-center">
+    <!-- SKU/CustomKey -->
+    <cv-column field="CustomKey" title="SKU"></cv-column>
+    <!-- Repeated Attribute Columns -->
+    <cv-column type="attribute" filter filter-type="attribute" repeat="$parent.productVariantsTableCtrl.kDataAttributeColumns"></cv-column>
+    <!-- Cost/Price -->
+    <cv-column title="Cost">
+      <cv-column-template>
+        <script id="priceTemplate" type="text/kendo-template">
+          <span cef-product-price product="dataItem" with-styles="false"></span>
+        </script>
+      </cv-column-template>
+    </cv-column>
+    <cv-column title="Choose Quantity" width="20%">
+      <cv-column-template>
+        <script id="choosePackSizeTemplate" type="text/kendo-template">
+          <div class="d-inline-flex">
+            <div cef-add-to-cart-quantity-selector
+              item="dataItem"
+              default-value="1"
+              current-value="$parent.productVariantsTableCtrl.forms.variantTable[dataItem.CustomKey].quantity"
+              ng-model="$parent.productVariantsTableCtrl.forms.variantTable[dataItem.CustomKey].quantity"
+              step="1"
+              with-styles="false"
+              index="dataItem.ID">
+            </div>
+          </div>
+        </script>
+      </cv-column-template>
+    </cv-column>
+    <!-- // Total -->
+    <cv-column title="Total">
+      <cv-column-template>
+        <script id="priceTemplate" type="text/kendo-template">
+          <span class="price"
+              ng-bind="($parent.productVariantsTableCtrl.forms.variantTable[dataItem.CustomKey].quantity
+                  * (dataItem.readPrices().isSale ? dataItem.readPrices().sale : dataItem.readPrices().base)) | globalizedCurrency"></span>
+        </script>
+      </cv-column-template>
+    </cv-column>
+    <!-- // Add to cart -->
+    <cv-column>
+      <cv-column-template>
+        <script id="addToCartButton" type="text/kendo-template">
+          <button ng-if="!(dataItem.readInventory().IsOutOfStock && !dataItem.readInventory().AllowBackOrder)"
+              type="button" class="btn btn-success"
+              id="btnDetailsAddToCartProduct{{dataItem.ID}}"
+              name="btnDetailsAddToCartProduct{{dataItem.ID}}"
+              translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                      'aria-label': 'ui.storefront.cart.addToCart' }"
+              ng-disabled="$parent.$parent.$parent.$root.productDetailsCtrl.viewstate.running
+                  || $parent.productVariantsTableCtrl.forms.variantTable.forms.variantTable.$invalid
+                  || dataItem.IsDiscontinued"
+              ng-click="$parent.$parent.$parent.$root.productDetailsCtrl.addCurrentItemToCart(
+                $parent.productVariantsTableCtrl.forms.variantTable[dataItem.CustomKey].quantity, null, dataItem)">
+            <i class="far fa-cart-plus" aria-hidden="true"></i>&nbsp;<!--
+            --><span data-translate="ui.storefront.cart.addToCart"></span>
+          </button>
+        </script>
+      </cv-column-template>
+    </cv-column>
+  </cv-grid>
+</div>

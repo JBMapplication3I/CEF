@@ -1,0 +1,36 @@
+﻿<!--breadcrumb (hard-coded)-->
+<div class="row">
+    <div class="col-md-12 text-left">
+        <p><span data-translate="ui.storefront.product.catalog.productCatalog.youAreHere"></span>&nbsp;<!--
+        --><a ui-sref-plus uisrp-area="site" uisrp-is-home="true"><!--
+        --><span data-translate="ui.storefront.common.Home"></span></a>&nbsp;/&nbsp;<!--
+        --><a ui-sref-plus uisrp-root="/Bulk-Upload"><!--
+        --><span data-translate="ui.storefront.bulkUpload.bulkUploadLanding.BulkOrderForm"></span></a></p>
+    </div>
+</div>
+<!--main selection-->
+<div class="row"
+     ng-hide="cefBulkUploadCtrl.viewstate.manual || cefBulkUploadCtrl.viewstate.upload">
+    <div class="col-md-12 text-center">
+        <h1 data-translate="ui.storefront.bulkUpload.bulkUploadLanding.BulkOrderForm"></h1>
+        <p data-translate="ui.storefront.bulkUpload.bulkUploadLanding.PleaseChooseOneOptionForCreatingYourBulkOrder"></p>
+    </div>
+    <div class="col-md-12 text-center">
+        <button type="button" class="btn btn-secondary"
+                ng-click="cefBulkUploadCtrl.viewstate.upload = true">
+            <i class="far fa-cloud-upload fa-5x" aria-hidden="true"></i><br />
+            <span data-translate="ui.storefront.bulkUpload.bulkUploadLanding.UploadYourBulkOrderDocument"></span>
+        </button>
+        <button type="button" class="btn btn-secondary"
+                ng-click="cefBulkUploadCtrl.viewstate.manual = true">
+            <i class="far fa-table fa-5x" aria-hidden="true"></i><br />
+            <span data-translate="ui.storefront.bulkUpload.bulkUploadLanding.ManuallyEnterNumbersAndQuantity"></span>
+        </button>
+    </div>
+</div>
+<!--upload flow-->
+<cef-bulk-upload-widget ng-show="cefBulkUploadCtrl.viewstate.upload"></cef-bulk-upload-widget>
+<!--manual flow-->
+<cef-bulk-upload-form ng-show="cefBulkUploadCtrl.viewstate.manual"></cef-bulk-upload-form>
+<!--loading widget-->
+<div cef-loading-widget ng-show="cefBulkUploadCtrl.viewstate.processing"></div>

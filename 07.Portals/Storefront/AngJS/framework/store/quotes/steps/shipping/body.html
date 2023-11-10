@@ -1,0 +1,217 @@
+<!-- step.shipping.body Template -->
+<div class="row">
+  <div class="col-12">
+    <h4 data-translate="ui.storefront.checkout.shippingTitle"></h4>
+  </div>
+  <div ng-if="sqssbCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true" pad-in="true"
+    message="sqssbCtrl.viewState.waitMessage">
+  </div>
+  <div class="col-12" ng-form="sqssbCtrl.forms.shipping">
+    <div class="row">
+      <div ng-if="sqssbCtrl.billingContact.Slave"
+        class="col-12">
+        <div class="form-group checkbox mb-0">
+          <label class="mb-0">
+            <input type="checkbox"
+              ng-change="sqssbCtrl.onChangeWithRatesReset()"
+              ng-model="sqssbCtrl.sameAsBilling" />&nbsp;<!--
+            --><span data-translate="ui.storefront.common.SameAsBilling"></span>
+          </label>
+        </div>
+        <hr class="w-100 my-3 mx-0" />
+        <div ng-if="sqssbCtrl.sameAsBilling"
+          class="row">
+          <div class="col-12">
+            <div cef-contact-address-block
+              contact="sqssbCtrl.billingContact.Slave"
+              no-links="true"
+              class="mb-3">
+            </div>
+            <hr class="w-100 my-3 mx-0" />
+          </div>
+        </div>
+      </div>
+      <div ng-if="sqssbCtrl.internalShowAddressBookSelector"
+        class="col-12">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group"
+              ng-class="{ 'has-error': sqssbCtrl.forms.shipping.ddlShippingSelection.$invalid }">
+              <div class="input-group">
+                <select class="form-control custom-select"
+                  ng-class="{ 'is-valid': sqssbCtrl.forms.shipping.ddlShippingSelection.$valid,
+                              'is-invalid': sqssbCtrl.forms.shipping.ddlShippingSelection.$invalid }"
+                  id="ddlShippingSelection" name="ddlShippingSelection"
+                  ng-change="sqssbCtrl.onChangeWithRatesReset()"
+                  ng-required="true"
+                  ng-options="ac as (ac | acToDropdownItem)
+                              for ac in sqssbCtrl.book
+                              | orderBy: ['Slave.Address.CustomKey','Slave.CustomKey','CustomKey']"
+                  ng-model="sqssbCtrl.currentAccountContact">
+                  <option ng-disabled="true" value=""
+                    data-translate="ui.storefront.userDashboard2.controls.addressBook.PleaseSelectAShippingAddress">
+                  </option>
+                </select>
+                <div class="input-group-append input-group-btn">
+                  <button type="button" class="btn btn-primary"
+                    translate-attr="{ title: 'ui.storefront.cart.Add',
+                                      'aria-label': 'ui.storefront.cart.Add' }"
+                    data-translate="ui.storefront.cart.Add"
+                    ng-click="sqssbCtrl.add()">
+                  </button>
+                </div>
+                <div ng-messages-multiple ng-messages="sqssbCtrl.forms.shipping.ddlShippingSelection.$error"
+                  role="alert" class="invalid-feedback">
+                  <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-if="!sqssbCtrl.currentAccountContact.Slave.Address.CountryID"
+            class="col-12">
+            <div class="alert alert-info mb-3 py-2">
+              <p data-translate="ui.storefront.purchasing.PleaseSelectAnAddress.Message"></p>
+            </div>
+          </div>
+          <div ng-if="sqssbCtrl.currentAccountContact.Slave"
+            class="col-12">
+            <div cef-contact-address-block
+              contact="sqssbCtrl.currentAccountContact.Slave"
+              no-links="true"
+              class="mb-3">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="sqssbCtrl.internalShowContactWidget"
+        class="col-12">
+        <div cef-contact-widget
+          contact="sqssbCtrl.currentAccountContact.Slave"
+          hide-key="!sqssbCtrl.cefConfig.featureSet.addressBook.enabled
+            || !sqssbCtrl.cvAuthenticationService.isAuthenticated()"
+          address-title="sqssbCtrl.addressTitle"
+          id-suffix="sqssbCtrl.idSuffix"
+          on-input-change="sqssbCtrl.onChangeWithRatesReset()">
+        </div>
+      </div>
+      <div ng-if="sqssbCtrl.internalShowMakeThisMyDefault"
+         class="col-12">
+        <div class="form-group checkbox">
+          <label class="control-label">
+            <input type="checkbox"
+              ng-required="false"
+              ng-model="sqssbCtrl.makeThisNewDefaultShipping" />&nbsp;<!--
+            --><span data-translate="ui.storefront.purchasing.MakeThisMyNewDefaultShippingAddress"></span>
+          </label>
+        </div>
+      </div>
+      <div ng-if="sqssbCtrl.cefConfig.submitQuote.showSpecialInstructions"
+         class="col-12">
+        <div class="form-group">
+          <label for="txtSpecialInstructions"
+            data-translate="ui.storefront.common.SpecialInstructions">
+          </label>
+          <div class="input-group">
+            <textarea class="form-control" rows="5"
+              id="txtSpecialInstructions" name="txtSpecialInstructions"
+              translate-attr="{ placeholder: 'Enter instructions for the delivery company' }"
+              ng-model="sqssbCtrl.specialInstructions">
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="sqssbCtrl.internalShowEstimator"
+    class="col-12"
+    ng-form="sqssbCtrl.forms.estimating">
+    <div class="row mb-3">
+      <div class="col-12 col-md-auto">
+        <button type="button" class="btn btn-primary"
+          id="btnReestimateShipping" name="btnReestimateShipping"
+          ng-disabled="sqssbCtrl.forms.shipping.$invalid"
+          translate-attr="{ title: sqssbCtrl.internalEstimateTranslationKey,
+                            'aria-label': sqssbCtrl.internalEstimateTranslationKey }"
+          data-translate="{{sqssbCtrl.internalEstimateTranslationKey}}"
+          ng-click="sqssbCtrl.submitAddress()">
+        </button>
+      </div>
+      <div class="col-12 col-md" ng-if="sqssbCtrl.viewState.running">
+        <p class="alert alert-info text-center p-1"
+          data-translate="ui.storefront.cart.cartShippingEstimator.wereSearchingForRatesForTheAddressInformationProvided">
+        </p>
+      </div>
+      <div class="col-12 col-md" ng-if="sqssbCtrl.showDeliveryFail">
+        <p class="alert alert-danger text-center"
+          data-translate="ui.storefront.checkout.views.shippingInformation.pleaseEnterAValidAddress">
+        </p>
+      </div>
+      <div class="col-12 mt-3" ng-if="sqssbCtrl.cefConfig.debug">
+        <div class="alert alert-dark">
+          <h4 class="alert-heading">Debug Info for this step (internal)</h4>
+          <table class="table table-borderless table-hover table-sm mb-0">
+            <tr>
+              <th>sqssbCtrl.viewState.running</th>
+              <td>{{sqssbCtrl.viewState.running}}</td>
+            </tr>
+            <tr>
+              <th>sqssbCtrl.forms.shipping.$invalid</th>
+              <td>{{sqssbCtrl.forms.shipping.$invalid}}</td>
+            </tr>
+            <tr>
+              <th>sqssbCtrl.forms.estimating.$invalid</th>
+              <td>{{sqssbCtrl.forms.estimating.$invalid}}</td>
+            </tr>
+            <tr>
+              <th>sqssbCtrl.invalidAddress</th>
+              <td>{{sqssbCtrl.invalidAddress}}</td>
+            </tr>
+            <tr>
+              <th>sqssbCtrl.step.invalidByAddress</th>
+              <td>{{sqssbCtrl.step.invalidByAddress}}</td>
+            </tr>
+            <tr>
+              <th>sqssbCtrl.step.invalidByRates</th>
+              <td>{{sqssbCtrl.step.invalidByRates}}</td>
+            </tr>
+            <tr>
+              <th>sqssbCtrl.haveRateQuotes</th>
+              <td>{{sqssbCtrl.haveRateQuotes}}</td>
+            </tr>
+            <tr>
+              <th>sqssbCtrl.haveShippingOrEquivalentForRates</th>
+              <td>{{sqssbCtrl.haveShippingOrEquivalentForRates}}</td>
+            </tr>
+            <tr>
+              <th>sqssbCtrl.isGettingRates</th>
+              <td>{{sqssbCtrl.isGettingRates}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div ng-if="sqssbCtrl.isGettingRates == 'undefined' ? false : sqssbCtrl.isGettingRates"
+      cef-loading-widget
+      overlay="true" pad-in="true"
+      message="sqssbCtrl.viewState.waitMessage">
+    </div>
+    <div class="row"
+      ng-form="sqssbCtrl.forms.rates"
+      ng-show="sqssbCtrl.haveRateQuotes && sqssbCtrl.haveShippingOrEquivalentForRates">
+      <!--
+      <div class="col-12">
+        <h4 data-translate="ui.storefront.checkout.views.shippingInformation.reestimateShippingCost">
+        </h4>
+      </div>
+      -->
+      <div class="col-12"
+        ng-hide="sqssbCtrl.viewState.running">
+        <div cef-submit-quote-rate-quotes-manager-widget
+          type="sqssbCtrl.cartType">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

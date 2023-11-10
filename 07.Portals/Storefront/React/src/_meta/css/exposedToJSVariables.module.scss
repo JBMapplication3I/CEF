@@ -1,0 +1,32 @@
+@import "./bootstrapVariables";
+
+// NOTE: This effects performance, so don't include ALL variables
+:export {
+  // export all colors
+  primary: $primary;
+  secondary: $secondary;
+  success: $success;
+  info: $info;
+  warning: $warning;
+  danger: $danger;
+  light: $light;
+  medium: $medium;
+  dark: $dark;
+  white: $white;
+  blue: $blue;
+  indigo: $indigo;
+  purple: $purple;
+  pink: $pink;
+  red: $red;
+  orange: $orange;
+  yellow: $yellow;
+  green: $green;
+  teal: $teal;
+  cyan: $cyan;
+  greenFade: $green-fade;
+  darkBlue: $dark-blue;
+  tableBorderColor: $table-border-color;
+  @each $key, $value in $grid-breakpoints {
+    gridBreakpoint#{unquote($key)}: $value;
+  }
+}

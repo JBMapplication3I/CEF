@@ -1,0 +1,30 @@
+<div ng-form="editATotalModalCtrl.forms.edit">
+    <div class="modal-header">
+        <span class="h2"><span data-translate="ui.admin.common.Edit"></span>&nbsp;{{editATotalModalCtrl.property}}</span>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <input type="number" class="form-control mb-3 text-center"
+                       id="nudTotalsPoint" name="nudTotalsPoint"
+                       min="0" max="9999999" step="0.0001"
+                       placeholder="0.0000"
+                       ng-model="editATotalModalCtrl.newValue" />
+            </div>
+            <div class="col-sm-12">
+                <p data-translate="ui.admin.controls.modals.editATotalModal.TheTotalWillRecalculate.Message"></p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer p-3">
+        <button type="button" class="btn btn-primary"
+                ng-disabled="editATotalModalCtrl.forms.edit.$invalid"
+                ng-click="editATotalModalCtrl.ok()"
+                translate-attr="{ title: 'ui.admin.common.Save', 'aria-label': 'ui.admin.common.Save' }"
+                data-translate="ui.admin.common.Save"></button>
+        <button type="button" class="btn btn-warning"
+                ng-click="editATotalModalCtrl.cancel()"
+                translate-attr="{ title: 'ui.admin.common.Cancel', 'aria-label': 'ui.admin.common.Cancel' }"
+                data-translate="ui.admin.common.Cancel"></button>
+    </div>
+</div>

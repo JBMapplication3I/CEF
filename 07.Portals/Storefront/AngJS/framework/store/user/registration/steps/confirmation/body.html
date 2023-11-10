@@ -1,0 +1,37 @@
+<div class="row" ng-form="rscbCtrl.forms.confirmation">
+  <!--
+  <div class="col-12" style="max-height: 500px; overflow-y: auto;">
+    &lt;Body contents of the website terms content&gt;
+  </div>
+  -->
+  <div class="col-12">
+    <div class="custom-control custom-checkbox mb-3">
+      <input type="checkbox" class="custom-control-input"
+        ng-class="{
+          'is-invalid': rscbCtrl.forms.confirmation.ckAgreed.$invalid
+                && (rscbCtrl.forms.confirmation.ckAgreed.$dirty
+                    || rscbCtrl.forms.confirmation.ckAgreed.$touched
+                    || rscbCtrl.forms.confirmation.$submitted),
+          'is-valid': rscbCtrl.forms.confirmation.ckAgreed.$valid
+                && (rscbCtrl.forms.confirmation.ckAgreed.$dirty
+                    || rscbCtrl.forms.confirmation.ckAgreed.$touched
+                    || rscbCtrl.forms.confirmation.$submitted) }"
+        id="ckAgreed" name="ckAgreed"
+        ng-required="true"
+        ng-change="rscbCtrl.onChange()"
+        ng-model="rscbCtrl.termsAgreementAgreed" />
+      <label class="custom-control-label" for="ckAgreed"
+        data-translate="ui.storefront.user.registration.IAgreeToTheTermsOfUseForThisWebsite">
+      </label>
+      <a ui-sref-plus uisrp-area="terms" target="_blank"
+        translate-attr="{ title: 'ui.storefront.user.registration.TermsOfUse',
+                          'aria-label': 'ui.storefront.user.registration.TermsOfUse' }">
+        <span data-translate="ui.storefront.user.registration.TermsOfUse"></span>
+      </a>
+      <div ng-messages-multiple ng-messages="rscbCtrl.forms.confirmation.ckAgreed.$error"
+        role="alert" class="invalid-feedback">
+        <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+      </div>
+    </div>
+  </div>
+</div>

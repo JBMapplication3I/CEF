@@ -1,0 +1,33 @@
+<ul id="nav" class="d-lg-flex justify-content-lg-center list-unstyled" ng-controller="genericCtrl as genericCtrl">
+    <li cef-price-list-menu-bar
+        behavior="['toggle']"
+        class="dropdown"></li>
+    <li cef-categories-menu-bar
+        render="mega"
+        render-inner="mega-tabs"
+        behavior="['toggle']"
+        class="dropdown"></li>
+    [*>NODE]
+    <li class="nav-item" ng-if="genericCtrl.cefConfig.featureSet.stores.enabled && false">
+        <div location-store-modal-button
+            title-key="ui.storefront.common.Location.Plural">
+        </div>
+    </li>
+</ul>
+[>NODE]
+    [?NODE]
+    <li class="pl-2 [?NODE]nav-item dropdown[?ELSE]dropdown-item[/?]">
+        <a href="[=URL]" class="nav-link dropdown-toggle">[=TEXT]</a>
+    [?NODE]
+        <a href="#" class="nav-link dropdown-toggle d-inline-block" data-toggle="dropdown"></a>
+        <ul class="dropdown-menu">
+        [*>NODE]
+        </ul>
+    [/?]
+    </li>
+    [?ELSE]
+    <li class="nav-item">
+        <a href="[=URL]" class="nav-link">[=TEXT]</a>
+    </li>
+    [/?]
+[/>]

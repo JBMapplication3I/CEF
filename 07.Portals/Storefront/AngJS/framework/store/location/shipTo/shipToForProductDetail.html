@@ -1,0 +1,271 @@
+﻿<div class="cef-ship-home-store" ng-if="cefShipToCtrl.viewstate.productIsProcessing">
+    <i class="far fa-spinner fa-spin fa-3x"></i>&nbsp;<!--
+    --><span data-translate="ui.storefront.product.detail.productDetails.Loading.Ellipses"></span>>
+</div>
+<div class="cef-ship-home-store" ng-if="!cefShipToCtrl.viewstate.productIsProcessing">
+    <div class="row" ng-if="cefShipToCtrl.includeModelSkuBlock">
+        <div class="col-12">
+            <div>
+                <div class="float-right">
+                    <p class="skuNum">
+                        <b data-translate="ui.storefront.product.widgets.recentlyViewed.Model.Pound"></b> {{cefShipToCtrl.displayModel}}
+                        <div class="clear"></div>
+                        <b data-translate="ui.storefront.product.detail.productDetails.StoreSKU"></b> {{cefShipToCtrl.displaySKU}}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="product-price">
+                        <span class="the-price" ng-bind="cefShipToCtrl.displayPrice | globalizedCurrency"></span>&nbsp;<!--
+                        --><small ng-bind="cefShipToCtrl.displayUofM"></small>
+                    </h3>
+                </div>
+            </div>
+            <hr ng-if="cefShipToCtrl.separateSkuFromRadios" />
+        </div>
+    </div>
+    <div class="cef-ship-home-store-radio">
+        <!-- Radios: pick up in store or none -->
+        <div class="radio" ng-class="{'mb':cefShipToCtrl.condenseRadios}" ng-show="cefShipToCtrl.showInStorePickup()">
+            <label class="control-label">
+                <input type="radio"
+                       id="shipToSelection{{cefShipToCtrl.productID}}Pickup"
+                       name="shipToSelection{{cefShipToCtrl.productID}}{{cefShipToCtrl.unique}}"
+                       ng-disabled="!cefShipToCtrl.haveInStorePickupStock"
+                       ng-value="'InStorePickup'"
+                       ng-model="cefShipToCtrl.shipToValue" />
+                <span class="selected-bg"></span>
+                <span data-translate="ui.storefront.location.shipTo.shipToSelect.storePickup"></span>
+                <span ng-if="cefShipToCtrl.showInStorePickupAsChooseStoreLinkWhenNoStore && !cefShipToCtrl.hasStore"
+                      >&nbsp;<a ui-sref-plus uisrp-area="storeLocator"
+                                ><span data-translate="ui.storefront.product.detail.productDetails.ChooseAStore"></span></a></span>
+                <span ng-if="cefShipToCtrl.showInStorePickupStock && cefShipToCtrl.hasStore"
+                      >&nbsp;({{cefShipToCtrl.inStorePickupStock() | number:0}})</span>
+                <span class="ship-free">
+                    <i class="far fa-check" aria-hidden="true"></i>
+                    <span data-translate="ui.storefront.common.Free"></span>
+                </span>
+            </label>
+        </div>
+        <!-- Radios: ship to store if no store inv -->
+        <div class="radio" ng-class="{'mb':cefShipToCtrl.condenseRadios}" ng-show="cefShipToCtrl.showShipToStore()">
+            <label class="control-label">
+                <input type="radio"
+                       id="shipToSelection{{cefShipToCtrl.productID}}Store"
+                       name="shipToSelection{{cefShipToCtrl.productID}}{{cefShipToCtrl.unique}}"
+                       ng-disabled="!cefShipToCtrl.haveShipToStoreStock"
+                       ng-value="'ShipToStore'"
+                       ng-model="cefShipToCtrl.shipToValue" />
+                <span class="selected-bg"></span>
+                <span data-translate="ui.storefront.location.shipTo.shipToSelect.shipToStore"></span><!--
+                --><span ng-if="cefShipToCtrl.showShipToStoreStock"
+                         >&nbsp;({{cefShipToCtrl.shipToStoreStock() | number:0}})</span>
+                <span class="ship-free">
+                    <i class="far fa-check" aria-hidden="true"></i>
+                    <span data-translate="ui.storefront.common.Free"></span>
+                </span>
+            </label>
+        </div>
+        <!-- Radios: ship to home or none -->
+        <div class="radio" ng-class="{'mb':cefShipToCtrl.condenseRadios}" ng-show="cefShipToCtrl.showShipToHome()">
+            <label class="control-label">
+                <input type="radio"
+                       id="shipToSelection{{cefShipToCtrl.productID}}Home"
+                       name="shipToSelection{{cefShipToCtrl.productID}}{{cefShipToCtrl.unique}}"
+                       ng-disabled="cefShipToCtrl.isShippingRestricted || !cefShipToCtrl.haveShipToHomeStock"
+                       ng-value="'ShipToHome'"
+                       ng-model="cefShipToCtrl.shipToValue" />
+                <span class="selected-bg"></span>
+                <span data-translate="ui.storefront.common.ShipToHome"></span><!--
+                --><span ng-if="cefShipToCtrl.isShippingRestricted || !cefShipToCtrl.haveShipToHomeStock"></span>&nbsp;<!--
+                --><span data-translate="ui.storefront.product.detail.productDetails.Unavailable"></span><!--
+                --><span ng-if="cefShipToCtrl.showShipToHomeStock && !cefShipToCtrl.isShippingRestricted && cefShipToCtrl.haveShipToHomeStock"
+                      >&nbsp;({{cefShipToCtrl.shipToHomeStock() | number:0}})</span>
+            </label>
+        </div>
+        <p ng-if="cefShipToCtrl.debug">
+            <small>Home: {{cefShipToCtrl.shipToHomeStock() | number:0}}<span ng-show="cefShipToCtrl.isShippingRestricted"> [R]</span></small>
+            <small>Pickup: {{cefShipToCtrl.inStorePickupStock() | number:0}}</small>
+            <small>Store: {{cefShipToCtrl.shipToStoreStock() | number:0}}</small><br/>
+            <small>
+                <span data-translate="ui.storefront.product.detail.productDetails.CaseCode"></span>
+                {{cefShipToCtrl.haveInStorePickupStock ? 'Y' : 'N'}}<!--
+                -->{{cefShipToCtrl.haveShipToStoreStock ? 'Y' : 'N'}}<!--
+                -->{{cefShipToCtrl.haveShipToHomeStock ? 'Y' : 'N'}}<!--
+                -->{{cefShipToCtrl.packProduct ? 'Y' : 'N'}}<!--
+                -->{{cefShipToCtrl.breakablePack || '-'}}<!--
+                -->{{cefShipToCtrl.isShippingRestricted ? 'N' : 'Y'}}<!--
+                -->Y<!-- Non-Web Items { {cefShipToCtrl. ? 'Y' : 'N'}}-->
+            </small>
+        </p>
+    </div>
+    <div class="cef-ship-home-store-box mb-3" ng-if="cefShipToCtrl.includeAddressBlock">
+        <div class="box-ship-home transition open"
+             ng-show="cefShipToCtrl.isShipToHome && cefShipToCtrl.showShipToHome()"
+             ng-if="!cefShipToCtrl.authenticated">
+            <p class="text-center">
+                <button type="button" class="btn btn-link text-danger serif wrap"
+                        login-modal ng-click="loginModalCtrl.open(null, null, true)"
+                        ><span data-translate="ui.storefront.location.shipTo.shipToDetails.signInToSelectYourShippingAddress"></span></button>
+            </p>
+        </div>
+        <div class="box-ship-home transition open"
+             ng-show="cefShipToCtrl.isShipToHome && cefShipToCtrl.authenticated">
+            <p ng-show="!cefShipToCtrl.address">
+                <span data-translate="ui.storefront.location.shipTo.shipToDetails.addToYour"></span>
+                <a ui-sref-plus uisrp-is-dashboard="true" uisrp-state="userDashboard.addressBook"
+                   ><span data-translate="ui.storefront.common.AddressBook"></span></a>
+                <span data-translate="ui.storefront.location.shipTo.shipToDetails.fromYourUserDashboardToSelectAnAddressToShipTo"></span>
+            </p>
+            <div ng-show="cefShipToCtrl.address">
+                <p class="h4 serif mt-0 bold" ng-bind="cefShipToCtrl.address.Company || cefShipToCtrl.address.Slave.CustomKey"></p>
+                <address class="mb-0">
+                    {{cefShipToCtrl.address.Slave.Address.Street1}}<br ng-show="cefShipToCtrl.address.Slave.Address.Street2" />
+                    {{cefShipToCtrl.address.Slave.Address.Street2}}<br ng-show="cefShipToCtrl.address.Slave.Address.Street3" />
+                    {{cefShipToCtrl.address.Slave.Address.Street3}}<br />
+                    {{cefShipToCtrl.address.Slave.Address.City}},
+                    {{cefShipToCtrl.address.Slave.Address.Region.Code}}
+                    {{cefShipToCtrl.address.Slave.Address.PostalCode}}
+                </address>
+                <p ng-if="!cefShipToCtrl.phonesAreNotLinks">
+                    <span data-translate="ui.storefront.common.Telephone.Abbreviation"></span>
+                    <a class="btn-plain-link"
+                       ng-href="tel:{{cefShipToCtrl.address.Slave.Phone1}}"
+                       ng-bind="cefShipToCtrl.address.Slave.Phone1 | tel"></a>
+                </p>
+                <p ng-if="cefShipToCtrl.phonesAreNotLinks">
+                    <span data-translate="ui.storefront.common.Phone"></span>&nbsp;<!--
+                    --><span ng-bind="cefShipToCtrl.address.Slave.Phone1 | tel"></span>
+                </p>
+                <a class="btn btn-tertiary btn-sm mt-3"
+                   ui-sref-plus uisrp-is-dashboard="true" uisrp-state="userDashboard.addressBook"
+                   data-translate="ui.storefront.location.shipTo.shipToDetails.changeAddress"></a>
+            </div>
+        </div>
+        <div class="box-ship-home transition open"
+             ng-show="!cefShipToCtrl.isShipToHome">
+            <div ng-if="cefShipToCtrl.hasStore">
+                <p ng-show="cefShipToCtrl.isInStorePickup && cefShipToCtrl.haveInStorePickupStock">
+                    <span class="product-stock-quantity serif" ng-bind="cefShipToCtrl.inStorePickupStock() | number:0"></span><!--
+                    -->&nbsp;<span data-translate="ui.storefront.location.shipTo.shipToDetails.inStockAt"></span>
+                </p>
+                <p ng-show="(cefShipToCtrl.isInStorePickup && !cefShipToCtrl.haveInStorePickupStock) || (cefShipToCtrl.isShipToStore && !cefShipToCtrl.haveShipToStoreStock)"
+                   data-translate="ui.storefront.common.OutOfStock"></p>
+                <p class="h3 serif mt bold" ng-bind="cefShipToCtrl.store.Name || cefShipToCtrl.store.CustomKey"></p>
+                <address class="mb-0">
+                    {{cefShipToCtrl.store.Slave.Address.Street1}}<br ng-show="cefShipToCtrl.store.Slave.Address.Street2" />
+                    {{cefShipToCtrl.store.Slave.Address.Street2}}<br ng-show="cefShipToCtrl.store.Slave.Address.Street3" />
+                    {{cefShipToCtrl.store.Slave.Address.Street3}}<br />
+                    {{cefShipToCtrl.store.Slave.Address.City}},
+                    {{cefShipToCtrl.store.Slave.Address.Region.Code}}
+                    {{cefShipToCtrl.store.Slave.Address.PostalCode}}
+                </address>
+                <p ng-if="!cefShipToCtrl.phonesAreNotLinks">
+                    <span data-translate="ui.storefront.common.Telephone.Abbreviation"></span>
+                    <a class="btn-plain-link"
+                       ng-href="tel:{{cefShipToCtrl.store.Slave.Phone1}}"
+                       ng-bind="cefShipToCtrl.store.Slave.Phone1 | tel"></a>
+                </p>
+                <p ng-if="cefShipToCtrl.phonesAreNotLinks">
+                    <span data-translate="ui.storefront.common.Phone"></span>&nbsp;<!--
+                    --><span ng-bind="cefShipToCtrl.store.Slave.Phone1 | tel"></span>
+                </p>
+                <location-store-hours store="cefShipToCtrl.store"
+                                      short-format="true"
+                                      small-text="true"></location-store-hours>
+                <p><a class="btn btn-tertiary btn-sm"
+                    ui-sref-plus uisrp-area="storeLocator"
+                    ><span data-translate="ui.storefront.location.shipTo.shipToDetails.changeStore"></span></a></p>
+            </div>
+            <div ng-if="!cefShipToCtrl.store">
+                <p><a class="btn btn-tertiary btn-sm"
+                      ui-sref-plus uisrp-area="storeLocator"
+                      ><span data-translate="ui.storefront.location.shipTo.shipToDetails.selectAStore"></span></a></p>
+            </div>
+        </div>
+    </div>
+    <div ng-if="cefShipToCtrl.includeBuyBlock">
+        <div class="row">
+            <div class="col-12">
+                <p ng-show="cefShipToCtrl.isShipToHome && cefShipToCtrl.quantity > cefShipToCtrl.shipToHomeStock()
+                    || cefShipToCtrl.isInStorePickup && cefShipToCtrl.quantity > cefShipToCtrl.inStorePickupStock()
+                    || cefShipToCtrl.isShipToStore && cefShipToCtrl.quantity > cefShipToCtrl.shipToStoreStock()"
+                   class="alert alert-danger" role="alert">
+                    <b ng-bind="cefShipToCtrl.product.Name"></b>&nbsp;<!--
+                    --><span data-translate="ui.storefront.product.detail.productDetails.NotEnoughStock.Message"></span>
+                </p>
+                <!--<p ng-show="cefShipToCtrl.isShippingRestricted">Ship to Home is Unavailable</p>-->
+                <div class="row add-to-box">
+                    <div class="col-6 col-sm-3 col-md-4 col-lg-3">
+                        <style>
+                            #productQtyInputShipTo.ng-invalid { border: solid 1px #c71016; }
+                            #productQtyInputShipTo.ng-invalid:focus { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(199, 16, 22, 0.22); }
+                        </style>
+                        <div class="input-group">
+                            <div class="input-group-prepend input-group-btn">
+                                <button type="button" class="btn btn-info btn-cart-up-down"
+                                        ng-disabled="cefShipToCtrl.quantity <= cefShipToCtrl.calculateMinAllowedPurchase()"
+                                        ng-click="cefShipToCtrl.decreaseQuantity()">
+                                    <i class="far fa-minus"></i>
+                                    <span class="sr-only"
+                                          data-translate="ui.storefront.product.detail.productDetails.decreaseProductQuantity"></span>
+                                </button>
+                            </div>
+                            <input type="number" class="form-control text-right"
+                                   id="productQtyInputShipTo" name="productQtyInputShipTo"
+                                   step="1"
+                                   min="{{cefShipToCtrl.calculateMinAllowedPurchase()}}"
+                                   max="{{cefShipToCtrl.calculateMaxAllowedPurchase()}}"
+                                   ng-required
+                                   ng-model="cefShipToCtrl.quantity" />
+                            <div class="input-group-append input-group-btn">
+                                <button type="button" class="btn btn-info btn-cart-up-down"
+                                        ng-disabled="cefShipToCtrl.quantity >= cefShipToCtrl.calculateMaxAllowedPurchase()"
+                                        ng-click="cefShipToCtrl.increaseQuantity()">
+                                    <i class="far fa-plus"></i>
+                                    <span class="sr-only"
+                                          data-translate="ui.storefront.product.detail.productDetails.increaseProductQuantity"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-3 col-md-4 col-lg-5">
+                        <button type="button" class="btn btn-primary btn-block btn-add-to-cart"
+                                title="Add to Cart"
+                                ng-hide="cefShipToCtrl.showOutOfStockButton"
+                                ng-disabled="cefShipToCtrl.disableAddToCartButton"
+                                ng-click="cefShipToCtrl.addCartItem()"
+                                data-translate="ui.storefront.cart.addToCart"></button>
+                        <button type="button" class="btn btn-primary btn-block btn-add-to-cart mt-0"
+                                title="Out of Stock"
+                                ng-show="cefShipToCtrl.showOutOfStockButton"
+                                disabled
+                                data-translate="ui.storefront.common.OutOfStock"></button>
+                    </div>
+                    <div cef-shopping-list-button
+                         type="addToShoppingList"
+                         text="{{'ui.storefront.product.detail.productDetails.addToShoppingList' | translate}}"
+                         product="{{cefShipToCtrl.product.ID}}"
+                         name="{{cefShipToCtrl.product.Name}}"
+                         class="col-md-4 col-lg-4" classes="btn-block">
+                    </div>
+                </div>
+                <hr class="hidden-sm" />
+                <div class="row social">
+                    <div class="col-sm-6 ratings">
+                        <cef-rating scale="5"
+                                    read-write="'read'"
+                                    product-id="cefShipToCtrl.product.ID"
+                                    class="float-right"></cef-rating>
+                        <!--<rating-ummary value="" scale="" count=""></rating-ummary>-->
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <span class="st_facebook_large" displayText="Facebook"></span>
+                        <!--<span class="st_pinterest_large" displayText="Pinterest"></span>-->
+                        <span class="st_sharethis_large" displayText="ShareThis"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

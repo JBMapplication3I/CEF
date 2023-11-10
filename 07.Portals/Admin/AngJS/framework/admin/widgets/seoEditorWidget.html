@@ -1,0 +1,72 @@
+﻿<script type="text/ng-template" id="seoValidationMessages"><div
+        ng-message="required" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only" data-translate="ui.admin.common.Error"></span>&nbsp;<!--
+        --><span data-translate="ui.admin.controls.shared.adminEditorValidationMessages.ThisFieldIsRequired"></div>
+    <div ng-message="pattern" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only" data-translate="ui.admin.common.Error"></span>
+        <b data-translate="ui.admin.controls.shared.seoEditor.ImproperFormat"></b>&nbsp;<!--
+        --><span data-translate="ui.admin.controls.shared.seoEditor.SEOUrlsShouldOnlyConsistOfLettersNumbersAndDashes"></span></div>
+</script>
+<div class="row" ng-form="seoEditorCtrl.forms.seo">
+    <div class="col-sm-12"><h3 data-translate="ui.admin.controls.shared.seoEditor.SEOInformation"></h3></div>
+    <div class="form-group col-md-12"
+         ng-class="{'has-error': seoEditorCtrl.forms.seo.$dirty && seoEditorCtrl.forms.seo.txtSeoUrl.$invalid}">
+        <label class="control-label" for="txtSeoUrl"
+               ><span data-translate="ui.admin.common.Url"></span>&nbsp;<!--
+               --><span data-translate="ui.admin.controls.shared.seoEditor.HowToGetToTheDetailsPageKeepItUnique"></span></label>
+        <div class="input-group">
+            <input type="text" class="form-control"
+                   id="txtSeoUrl" name="txtSeoUrl"
+                   placeholder="The-SEO-URL-For-The-Object"
+                   ng-required="false" maxlength="512"
+                   ng-pattern="seoEditorCtrl.seoUrlRegex"
+                   ng-model="seoEditorCtrl.master.SeoUrl" />
+        </div>
+        <div ng-messages="seoEditorCtrl.forms.seo.$dirty && seoEditorCtrl.forms.seo.txtSeoUrl.$error">
+            <div ng-messages-include="seoValidationMessages"></div>
+        </div>
+    </div>
+    <text-input-form-group
+        class="col-sm-12"
+        key="SeoPageTitle"
+        ng-model="seoEditorCtrl.master.SeoPageTitle"
+        label-key="{{('ui.admin.common.PageTitle' | translate) + ' ' + ('ui.admin.controls.shared.seoEditor.UsedByTheBrowserTabAndSearchEngines' | translate)}}"
+        placeholder-key="The Page Title | Company Name"
+        max-length="75"
+        ng-required="false">
+    </text-input-form-group>
+    <div class="form-group col-sm-12"
+         ng-class="{'has-error': seoEditorCtrl.forms.seo.$dirty && seoEditorCtrl.forms.seo.txtSeoKeywords.$invalid}">
+        <label class="control-label" for="txtSeoKeywords"
+               ><span data-translate="ui.admin.common.Keyword.Plural"></span>&nbsp;<!--
+               --><span data-translate="ui.admin.controls.shared.seoEditor.UsedBySearchEnginesKeepItUnique"></span></label>
+        <div class="input-group">
+            <textarea class="form-control"
+                      id="txtSeoKeywords" name="txtSeoKeywords"
+                      placeholder="The, keywords, for, indexing"
+                      rows="3" maxlength="512"
+                      ng-model="seoEditorCtrl.master.SeoKeywords"></textarea>
+        </div>
+        <div ng-messages="seoEditorCtrl.forms.seo.$dirty && seoEditorCtrl.forms.seo.txtSeoKeywords.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+    </div>
+    <div class="form-group col-sm-12"
+         ng-class="{'has-error': seoEditorCtrl.forms.seo.$dirty && seoEditorCtrl.forms.seo.txtSeoDescription.$invalid}">
+        <label class="control-label" for="txtSeoDescription"
+               ><span data-translate="ui.admin.common.Description"></span>&nbsp;<!--
+               --><span data-translate="ui.admin.controls.shared.seoEditor.UsedBySearchEnginesKeepItUnique"></span></label>
+        <div class="input-group">
+            <textarea class="form-control"
+                      id="txtSeoDescription" name="txtSeoDescription"
+                      placeholder="The description for Indexing"
+                      rows="3" maxlength="256"
+                      ng-model="seoEditorCtrl.master.SeoDescription"></textarea>
+        </div>
+        <div ng-messages="seoEditorCtrl.forms.seo.$dirty && seoEditorCtrl.forms.seo.txtSeoDescription.$error">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+        </div>
+    </div>
+</div>

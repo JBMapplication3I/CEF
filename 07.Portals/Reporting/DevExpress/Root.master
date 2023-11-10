@@ -1,0 +1,50 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Root.master.cs" Inherits="Clarity.Ecommerce.Service.Reporting.RootMaster" %>
+<%-- DXCOMMENT: Page Root.master is a master page that contains the root layout (it includes Header, Cental Area, and Footer) --%>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    <title>Reporting Dashboard | Clarity eCommerce Framework</title>
+    <%--<link rel="stylesheet" href="../UI/lib/cef/css/admin-dnn-bundle.css" />--%>
+    <link rel="stylesheet" href="Content/bootstrap.css"/>
+    <link rel="stylesheet" href="Content/Site.css" />
+    <script defer src="Content/bootstrap.min.js"></script>
+</head>
+<body runat="server" id="Body">
+    <form id="form1" runat="server">
+        <%--<dx:ASPxPanel ID="HeaderPane" runat="server" FixedPosition="WindowTop" ClientInstanceName="headerPane" CssClass="headerPane" Collapsible="true">
+            <SettingsAdaptivity CollapseAtWindowInnerWidth="500" />
+            <Styles>
+                <Panel CssClass="panel"></Panel>
+                <ExpandedPanel CssClass="expandedPanel"></ExpandedPanel>
+                <ExpandBar CssClass="bar"></ExpandBar>
+            </Styles>
+            <PanelCollection>
+                <dx:PanelContent runat="server" SupportsDisabledAttribute="True">
+                    <div class="headerTop">
+                        <div class="templateTitle">
+                            <a id="TitleLink" href="/Admin/Clarity-Ecommerce-Admin" runat="server">Clarity eCommerce Framework Reporting Dashboard</a>
+                        </div>
+                    </div>
+                </dx:PanelContent>
+            </PanelCollection>
+            <ExpandBarTemplate>
+                <div class="templateTitle">
+                    <a id="TitleLink" href="/Admin/Clarity-Ecommerce-Admin" runat="server">Clarity eCommerce Framework Reporting Dashboard</a>
+                </div>
+            </ExpandBarTemplate>
+        </dx:ASPxPanel>--%>
+        <dx:ASPxGlobalEvents runat="server">
+            <ClientSideEvents />
+        </dx:ASPxGlobalEvents>
+        <dx:ASPxPanel ID="MainPane" runat="server" CssClass="mainContentPane">
+            <PanelCollection>
+                <dx:PanelContent runat="server" SupportsDisabledAttribute="True">
+                    <asp:ContentPlaceHolder ID="Content" runat="server" />
+                </dx:PanelContent>
+            </PanelCollection>
+        </dx:ASPxPanel>
+    </form>
+</body>
+</html>

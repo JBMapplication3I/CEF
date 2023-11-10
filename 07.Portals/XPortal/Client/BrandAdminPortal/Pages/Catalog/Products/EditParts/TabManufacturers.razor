@@ -1,0 +1,363 @@
+﻿@using Clarity.Ecommerce.MVC.Core
+@using Clarity.Ecommerce.MVC.Api.Endpoints
+
+@inherits TabAssociationBase<
+  ProductModel,
+  ManufacturerModel,
+  ManufacturerPagedResults,
+  GetManufacturers,
+  ManufacturerProductModel,
+  ManufacturerProductPagedResults,
+  GetManufacturerProducts,
+  CreateManufacturerProduct,
+  DeactivateManufacturerProductByID,
+  ModalEditManufacturerProduct>
+
+@{
+  /* Write the base component content here */
+  base.BuildRenderTree(__builder);
+}
+
+<ModalEditManufacturerProduct @ref="modalEdit" />
+
+@*
+@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+@inject IMapper mapper
+
+<Heading Size="HeadingSize.Is2">Manufacturers</Heading>
+<Row>
+  <Column ColumnSize="ColumnSize.Is8.OnTablet">
+    <Heading Size="HeadingSize.Is3">Available</Heading>
+    @if (available is not null)
+    {
+      <ServerSidePagingHeader
+        TRecord="ManufacturerModel"
+        TPagedRecord="ManufacturerPagedResults"
+        TEndpoint="MVC.Api.Endpoints.GetManufacturers"
+        Paging="available"
+        Disabled="ViewState.InputDisable"
+        Narrow="true"
+        @bind-QuickFilter="quickFilter"
+      />
+    }
+    <Blazorise.Table
+      Striped="true"
+      Narrow="true"
+      Hoverable="true"
+      Responsive="true"
+      Class="mb-3 table-cells-valign-middle">
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell Class="w-5">#</TableHeaderCell>
+          <TableHeaderCell Class="w-35">Key</TableHeaderCell>
+          <TableHeaderCell Class="w-60">Name</TableHeaderCell>
+          <TableHeaderCell Style="width:43px;"></TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        @if (available is not null)
+        {
+          @if (available.FilteredCount <= 0)
+          {
+            <TableRow>
+              <TableRowCell ColumnSpan="4">No results found.</TableRowCell>
+            </TableRow>
+          }
+          else
+          {
+            <Repeater Items="available.FilteredData[available.CurrentPage]">
+              <TableRow>
+                <TableRowCell>@context.ID</TableRowCell>
+                <TableRowCell>@context.CustomKey</TableRowCell>
+                <TableRowCell>@context.Name</TableRowCell>
+                <TableRowCell>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Success"
+                    ElementId="@("btnAdd_productToManufacturers_" + context.ID)"
+                    Disabled="ViewState.InputDisable"
+                    Clicked="() => AddAssociationAsync(context.ID)">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Plus" />
+                    <Span Class="sr-only">Add</Span>
+                  </Blazorise.Button>
+                </TableRowCell>
+              </TableRow>
+            </Repeater>
+          }
+        }
+      </TableBody>
+    </Blazorise.Table>
+  </Column>
+  <Column ColumnSize="ColumnSize.Is4.OnTablet">
+    <Heading Size="HeadingSize.Is3">Assigned</Heading>
+    @if (assigned is not null)
+    {
+      <ServerSidePagingHeader
+        TRecord="ManufacturerProductModel"
+        TPagedRecord="ManufacturerProductPagedResults"
+        TEndpoint="MVC.Api.Endpoints.GetManufacturerProducts"
+        Paging="assigned"
+        Disabled="ViewState.InputDisable"
+        Narrow="true"
+      />
+    }
+    <Blazorise.Table
+      Striped="true"
+      Hoverable="true"
+      Narrow="true"
+      Responsive="true"
+      Class="mb-3 table-cells-valign-middle">
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell>Name</TableHeaderCell>
+          <TableHeaderCell Style="width:43px;"></TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody Style="min-height: 200px;">
+        @if (assigned is not null)
+        {
+          @if (assigned.FilteredCount <= 0)
+          {
+            <TableRow>
+              <TableRowCell ColumnSpan="2">No Results Found</TableRowCell>
+            </TableRow>
+          }
+          else
+          {
+            <Repeater Items="assigned.FilteredData[assigned.CurrentPage]">
+              <TableRow>
+                <TableRowCell>
+                  <Tooltip
+                    Text="@(context.MasterID + " " + (context.MasterKey ?? context.Master?.CustomKey) + " " + (context.MasterName ?? context.Master?.Name))">
+                    <Span>@(context.MasterName ?? context.Master?.Name)</Span>
+                  </Tooltip>
+                </TableRowCell>
+                <TableRowCell>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Danger"
+                    ElementId="@("btnRemove_productToManufacturers_" + context.ID)"
+                    Disabled="ViewState.InputDisable"
+                    Clicked="() => RemoveAssociationAsync(context)">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Trash" />
+                    <Span Class="sr-only">Remove</Span>
+                  </Blazorise.Button>
+                </TableRowCell>
+              </TableRow>
+            </Repeater>
+          }
+        }
+      </TableBody>
+    </Blazorise.Table>
+  </Column>
+</Row>
+<MessageModalFactory @ref="messageModalFactory" />
+<ConfirmModalFactory @ref="confirmModalFactory" />
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+
+  /// <summary>Gets or sets the mapper.</summary>
+  /// <value>The mapper.</value>
+  [Inject]
+  public IMapper Mapper { get; set; } = null!;
+  #endregion
+
+  private string? quickFilter;
+  private ServerSidePaging<ManufacturerModel, ManufacturerPagedResults, MVC.Api.Endpoints.GetManufacturers>? available;
+  private ServerSidePaging<ManufacturerProductModel, ManufacturerProductPagedResults, MVC.Api.Endpoints.GetManufacturerProducts>? assigned;
+  private MessageModalFactory? messageModalFactory;
+  private ConfirmModalFactory? confirmModalFactory;
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    DebugBeginMethod();
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    available = new(
+      searchCall: cvApi.GetManufacturers,
+      size: 8,
+      name: $"product-{Record.ID}.to.Manufacturers.available",
+      searchParameterName: null,
+      searchParamsToMerge: () => new MVC.Api.Endpoints.GetManufacturers
+      {
+        Active = true,
+        AsListing = true,
+        Sorts = new[]
+        {
+          new Sort { Field = "Name", Order = 0, Dir = "asc" },
+          new Sort { Field = "CustomKey", Order = 1, Dir = "asc" },
+          new Sort { Field = "ID", Order = 2, Dir = "asc" }
+        },
+      },
+      waitCondition: () => !Contract.CheckValidID(Record.ID),
+      callback: StateHasChanged);
+    assigned = new(
+      searchCall: cvApi.GetManufacturerProducts,
+      size: 8,
+      name: $"product-{Record.ID}.to.Manufacturers.assigned",
+      searchParameterName: null,
+      searchParamsToMerge: () => new MVC.Api.Endpoints.GetManufacturerProducts
+      {
+        Active = true,
+        AsListing = true,
+        SlaveID = Record.ID,
+        Sorts = new[]
+        {
+          new Sort { Field = "CustomKey", Order = 0, Dir = "asc" },
+          new Sort { Field = "ID", Order = 1, Dir = "asc" }
+        },
+      },
+      waitCondition: () => !Contract.CheckValidID(Record.ID),
+      callback: StateHasChanged);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+    DebugEndMethod();
+  }
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    DebugBeginMethod();
+    DebugEndMethod();
+    return Task.CompletedTask;
+  }
+
+  /// <summary>Extended record data calls on after save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataCallsOnAfterSaveAsync(DateTime timestamp)
+  {
+    DebugBeginMethod();
+    DebugEndMethod();
+    return Task.CompletedTask;
+  }
+
+  private async Task AddAssociationAsync(int idToAssociate)
+  {
+    DebugBeginMethod();
+    if (!Contract.CheckValidID(idToAssociate))
+    {
+      DebugEndMethod();
+      return;
+    }
+    /* This check isn't necessary
+    if (!record || !record.ID)
+    {
+      cvMessageModalFactory.show("You must save the record first");
+      DebugEndMethod();
+      return;
+    }
+    */
+    // Ensure the data is loaded
+    var model = available!.DataUnpaged.SingleOrDefault(x => x.ID == idToAssociate);
+    if (model is null)
+    {
+      DebugEndMethod();
+      return;
+    }
+    // Ensure it's not already in the collection
+    if (assigned!.DataUnpaged.Any(x => x.Active && x.MasterID == model.ID))
+    {
+      // cvMessageModalFactory.show("This is already associated");
+      DebugEndMethod();
+      return;
+    }
+    await SetRunningAsync().ConfigureAwait(false);
+    MVC.Api.Endpoints.GetManufacturerProducts dupeCheckDto = new()
+    {
+      Active = true,
+      AsListing = true,
+      MasterID = idToAssociate,
+      SlaveID = Record.ID,
+    };
+    var r = await cvApi.GetManufacturerProducts(dupeCheckDto).ConfigureAwait(false);
+    if (r?.data?.Results is null)
+    {
+      await messageModalFactory!.ShowAsync(
+          message: "Could not retrieve data from duplicate check",
+          callback: () => FinishRunningAsync(true, "Could not retrieve data from duplicate check"))
+        .ConfigureAwait(false);
+      DebugEndMethod();
+      return;
+    }
+    if (Contract.CheckNotEmpty(r.data.Results))
+    {
+      await messageModalFactory!.ShowAsync(
+          message: "This is already in the collection.",
+          callback: () => FinishRunningAsync(true, "This is already in the collection."))
+        .ConfigureAwait(false);
+      DebugEndMethod();
+      return;
+    }
+    // Add it
+    var rc = await cvApi.CreateManufacturerProduct(
+      new()
+      {
+        Active = true,
+        CreatedDate = DateTime.Now,
+        MasterID = model.ID,
+        SlaveID = Record.ID,
+      })
+      .ConfigureAwait(false);
+    if (rc?.data is null)
+    {
+      await FinishRunningAsync(true, "ERROR! Failed to create the association in the server").ConfigureAwait(false);
+      DebugEndMethod();
+      return;
+    }
+    // Ensure we are only setting the new way
+    Record.Manufacturers = null;
+    assigned.ResetAll(); // Pull updated data
+    assigned.Search(); // Pull updated data
+    ViewState.MakeDirty();
+    await FinishRunningAsync().ConfigureAwait(false);
+    StateHasChanged();
+    DebugEndMethod();
+  }
+
+  private Task RemoveAssociationAsync(ManufacturerProductModel toRemove)
+  {
+    DebugBeginMethod();
+    DebugEndMethod();
+    return confirmModalFactory!.ShowAsync(
+      message: "Are you sure you want to remove this association?",
+      callback: async result =>
+      {
+        DebugBeginMethod();
+        if (!result)
+        {
+          DebugEndMethod();
+          return;
+        }
+        var r = await cvApi.DeactivateManufacturerProductByID(new() { ID = toRemove.ID }).ConfigureAwait(false);
+        if (r?.data is not { ActionSucceeded: true })
+        {
+          await FinishRunningAsync(true, "ERROR! Failed to disassociate the record in the server.").ConfigureAwait(false);
+          DebugEndMethod();
+          return;
+        }
+        // Ensure we are only setting the new way
+        Record.Manufacturers = null;
+        assigned!.ResetAll(); // Pull updated data
+        assigned.Search(); // Pull updated data
+        await messageModalFactory!.ShowAsync(
+            message: "The record has been disassociated on the server",
+            callback: () => FinishRunningAsync())
+          .ConfigureAwait(false);
+        StateHasChanged();
+        DebugEndMethod();
+      });
+  }
+}
+*@

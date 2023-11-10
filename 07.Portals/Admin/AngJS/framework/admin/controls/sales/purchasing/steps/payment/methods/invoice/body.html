@@ -1,0 +1,36 @@
+<!-- step.payment.method.invoice.body -->
+<div class="row mb-3" ng-form="pmibCtrl.forms.invoice">
+  <div class="col-xs-12">
+    <div class="form-group"
+      ng-class="{'has-error': pmibCtrl.forms.invoice.$dirty
+        && pmibCtrl.forms.invoice.txtPONumber.$invalid}">
+      <label class="control-label" for="txtPONumber"
+        ><span data-translate="ui.admin.checkout.views.paymentInformation.poNumber"
+        ></span>&nbsp;<span class="text-danger">*</span></label>
+      <input type="text" class="form-control"
+        ng-class="{ 'is-valid': pmibCtrl.forms.invoice.txtPONumber.$valid
+          && (pmibCtrl.forms.invoice.txtPONumber.$dirty
+            || pmibCtrl.forms.invoice.txtPONumber.$touched),
+          'is-invalid': pmibCtrl.forms.invoice.txtPONumber.$invalid
+            && (pmibCtrl.forms.invoice.txtPONumber.$dirty
+              || pmibCtrl.forms.invoice.txtPONumber.$touched) }"
+        id="txtPONumber" name="txtPONumber"
+        translate-attr="{ placeholder: 'ui.admin.checkout.views.paymentInformation.enterYourPurchaseOrderOrReferenceNumber' }"
+        ng-required="true"
+        ng-change="pmibCtrl.onChange()"
+        ng-model="pmibCtrl.paymentData.PayByBillMeLater.CustomerPurchaseOrderNumber" />
+      <div ng-messages-multiple ng-messages="pmibCtrl.forms.invoice.txtPONumber.$error"
+        role="alert" class="invalid-feedback">
+        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}">
+        </div>
+      </div>
+    </div>
+    <div cef-upload-file-widget
+      master="pmibCtrl.paymentData.PayByBillMeLater"
+      upload-type="StoredFileSalesOrder"
+      type-key="General"
+      allow-multiple="true"
+      upload-callback="pmibCtrl.onChange">
+    </div>
+  </div>
+</div>

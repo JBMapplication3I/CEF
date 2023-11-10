@@ -1,0 +1,312 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+<Heading Size="HeadingSize.Is2">Details</Heading>
+<Row>
+  <Column ColumnSize="ColumnSize.IsHalf.OnTablet.IsHalf.OnDesktop.Is12.OnMobile">
+    <Heading Size="HeadingSize.Is3">Basic Information</Heading>
+    <TextFormGroup
+      FormIdentifier="Name"
+      LabelText="Name"
+      PlaceholderText="Name"
+      @bind-Value="@Record.Name"
+      Required="true"
+      Disabled="@ViewState.InputDisable"
+      TooltipText="The name of the product"
+      ShowValidTooltip="true"
+      StartTouched="true"
+    />
+    <TextFormGroup
+      FormIdentifier="CustomKey"
+      LabelText="Product Key/SKU"
+      PlaceholderText="Product Key/SKU"
+      @bind-Value="Record.CustomKey"
+      Required="true"
+      Disabled="@ViewState.InputDisable"
+      TooltipText="The unique product key"
+      ShowValidTooltip="true"
+      StartTouched="true"
+    />
+    <Row>
+      <Column ColumnSize="ColumnSize.IsHalf.OnTablet.Is12.OnMobile">
+        <SelectFormGroup
+          TValue="int"
+          FormIdentifier="recordType"
+          LabelText="Type"
+          @bind-Value="@Record.TypeID"
+          OptionsList="@Types"
+          ItemValueFunc="@(x => ((TypeModel)x).ID)"
+          ItemLabelFunc="@(x => ((TypeModel)x).DisplayName ?? ((TypeModel)x).Name)"
+          Required="true"
+        />
+      </Column>
+      <Column ColumnSize="ColumnSize.IsHalf.OnTablet.Is12.OnMobile">
+        <SelectFormGroup
+          TValue="int"
+          FormIdentifier="recordStatus"
+          LabelText="Status"
+          @bind-Value="@Record.StatusID"
+          OptionsList="@Statuses"
+          ItemValueFunc="@(x => ((StatusModel)x).ID)"
+          ItemLabelFunc="@(x => ((StatusModel)x).DisplayName ?? ((StatusModel)x).Name)"
+          Required="true"
+        />
+      </Column>
+    </Row>
+    <Row>
+      <Column ColumnSize="ColumnSize.Is4.OnTablet.Is12.OnMobile">
+        <NumericFormGroup
+          TValue="int?"
+          FormIdentifier="SortOrder"
+          IsHorizontal="false"
+          LabelText="Sort Order"
+          PlaceholderText="Sort Order"
+          @bind-Value="@Record.SortOrder"
+          Step="1"
+          Required="false"
+          Disabled="@ViewState.InputDisable"
+          ShowValidTooltip="false"
+          StartTouched="true"
+        />
+      </Column>
+      <Column ColumnSize="ColumnSize.Is8.OnTablet.Is12.OnMobile">
+        <TextFormGroup
+          FormIdentifier="ManufacturerPartNumber"
+          LabelText="Manufacturer Part Number"
+          PlaceholderText=""
+          @bind-Value="Record.ManufacturerPartNumber"
+          Required="false"
+          Disabled="@ViewState.InputDisable"
+          ShowValidTooltip="false"
+          StartTouched="true"
+        />
+      </Column>
+    </Row>
+    <Row>
+      <Column ColumnSize="ColumnSize.Is4.OnTablet.Is12.OnMobile">
+        <ToggleFormGroup
+          TValue="bool"
+          @bind-Value="@Record.IsVisible"
+          IsOptionToggled="@(_ => Record.IsVisible)"
+          ToggleOnText="Visible"
+          ToggleOffText="Hidden"
+          Disabled="@ViewState.InputDisable"
+          SwitchColor="Color.Success"
+          FormIdentifier="IsVisible"
+          LabelText="Is Visible"
+          Required="false"
+        />
+      </Column>
+      <Column ColumnSize="ColumnSize.Is8.OnTablet.Is12.OnMobile">
+        <TextFormGroup
+          FormIdentifier="BrandName"
+          LabelText="Brand Name"
+          PlaceholderText=""
+          @bind-Value="Record.BrandName"
+          Required="false"
+          Disabled="@ViewState.InputDisable"
+          ShowValidTooltip="false"
+          StartTouched="true"
+        />
+      </Column>
+    </Row>
+  </Column>
+  <Column ColumnSize="ColumnSize.IsHalf.OnTablet.IsHalf.OnDesktop.Is12.OnMobile">
+    <Heading Size="HeadingSize.Is3">SEO Information</Heading>
+    <TextFormGroup
+      FormIdentifier="SeoUrl"
+      LabelText="URL Fragment"
+      PlaceholderText="product-name-here"
+      @bind-Value="Record.SeoUrl"
+      Required="true"
+      Disabled="@ViewState.InputDisable"
+      TooltipText="How to get to the details page, keep it unique"
+      MaskingType="MaskType.RegEx"
+      MaskEdit="^[A-Za-z][A-Za-z0-9]*$"
+      ShowValidTooltip="true"
+      StartTouched="true"
+    />
+    <TextFormGroup
+      FormIdentifier="SeoPageTitle"
+      LabelText="Page Title"
+      PlaceholderText="The page title for the browser window and indexing"
+      @bind-Value="Record.SeoPageTitle"
+      Required="true"
+      Disabled="@ViewState.InputDisable"
+      TooltipText="Used by the browser tab and search engines"
+      ShowValidTooltip="true"
+      StartTouched="true"
+    />
+    <TextAreaFormGroup
+      FormIdentifier="SeoKeywords"
+      LabelText="Keywords"
+      PlaceholderText="Enter keywords..."
+      @bind-Value="Record.SeoKeywords"
+      Required="true"
+      Disabled="@ViewState.InputDisable"
+      TooltipText="Used by search engines, keep it unique"
+      ShowValidTooltip="true"
+      StartTouched="true"
+    />
+    <TextAreaFormGroup
+      FormIdentifier="SeoDescription"
+      LabelText="Description"
+      PlaceholderText="Description for indexing..."
+      @bind-Value="Record.SeoDescription"
+      Required="true"
+      Disabled="@ViewState.InputDisable"
+      TooltipText="Used by search engines, keep it unique"
+      ShowValidTooltip="true"
+      StartTouched="true"
+    />
+  </Column>
+</Row>
+<Row>
+  <Column ColumnSize="ColumnSize.IsFull">
+    <Heading Size="HeadingSize.Is3">Descriptions</Heading>
+    <Row>
+      <Column ColumnSize="ColumnSize.Is4.OnDesktop.Is12.OnTablet">
+        <TextAreaFormGroup
+          FormIdentifier="ShortDescription"
+          LabelText="Short Description"
+          PlaceholderText="Short Description"
+          @bind-Value="Record.ShortDescription"
+          Required="true"
+          Disabled="@ViewState.InputDisable"
+          TooltipText="The short description of the product (non-HTML)"
+          ShowValidTooltip="true"
+          StartTouched="true"
+        />
+      </Column>
+      <Column ColumnSize="ColumnSize.Is8.OnDesktop.Is12.OnTablet">
+        @*
+        <Label>
+          <Span>
+            Long Description<Span TextColor="TextColor.Danger">&nbsp;*</Span>
+            <Blazorise.Icons.FontAwesome.Icon
+              Name="FontAwesomeIcons.QuestionCircle"
+              TextColor="TextColor.Info"
+              Class="ml-1"
+            />
+          </Span>
+        </Label>
+        <Tabs
+          Mode="TabsMode.Default"
+          SelectedTab="html"
+          Shadow="Shadow.Small"
+          TabPosition="TabPosition.Top"
+          FullWidth="true"
+          Justified="true">
+          <Items>
+            <Tab Name="html">HTML</Tab>
+            <Tab Name="text">Text</Tab>
+          </Items>
+          <Content>
+            <TabPanel Name="html">
+              <RichTextEditorFormGroup
+                FormIdentifier="DescriptionHTML"
+                NoLabel="true"
+                LabelText="Long Description"
+                PlaceholderText="Long Description"
+                Value="@Record.Description"
+                ValueChanged="s => Record.Description = s"
+                ValueExpression="() => Record.Description"
+                Required="true"
+                Disabled="@ViewState.InputDisable"
+                TooltipText="The long description of the product (HTML compatible)"
+                ReadOnly="false"
+                ShowValidTooltip="true"
+                StartTouched="true"
+                Debug="true"
+              />
+            </TabPanel>
+            <TabPanel Name="text">
+        *@
+              <TextAreaFormGroup
+                FormIdentifier="DescriptionText"
+                NoLabel="false"
+                LabelText="Long Description"
+                PlaceholderText="Long Description"
+                @bind-Value="Record.Description"
+                Required="true"
+                Disabled="@ViewState.InputDisable"
+                TooltipText="The long description of the product (HTML compatible)"
+                ShowValidTooltip="true"
+                StartTouched="true"
+              />
+        @*
+            </TabPanel>
+          </Content>
+        </Tabs>
+        *@
+      </Column>
+    </Row>
+  </Column>
+</Row>
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  #region IHaveATypeBaseModel Handlers
+  private List<TypeModel>? Types { get; set; }
+
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetProductTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveAStatusBaseModel Handling
+  private List<StatusModel>? Statuses { get; set; }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetProductStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await Task.WhenAll(LoadTypesAsync(), LoadStatusesAsync()).ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+  }
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    if (!Contract.CheckValidID(Record.TypeID))
+    {
+      Record.TypeID = Types?.First().ID ?? 1;
+    }
+    if (!Contract.CheckValidID(Record.StatusID))
+    {
+      Record.StatusID = Statuses?.First().ID ?? 1;
+    }
+    return Task.CompletedTask;
+  }
+}

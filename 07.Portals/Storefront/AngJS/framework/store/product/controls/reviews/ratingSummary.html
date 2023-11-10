@@ -1,0 +1,13 @@
+<div class="product-rating">
+  <i ng-repeat="v in rsCtrl.scaleArray()"
+    class="fa-lg"
+    ng-class="{
+      'fas fa-star': rsCtrl.value >= v,
+      'fas fa-star-half-alt': rsCtrl.value > v && rsCtrl.value < v + 1,
+      'far fa-star': rsCtrl.value < v}">
+  </i>
+  <span>&nbsp;&nbsp;{{rsCtrl.value | number: 1}}&nbsp;/&nbsp;{{rsCtrl.scale}}&nbsp;<!--
+  --><span sid="UserRatingsText" ng-hide="rsCtrl.hideCount">({{rsCtrl.count}}&nbsp;<!--
+  --><span data-translate="ui.storefront.product.reviews.ratingSummary.userRating{{
+    rsCtrl.count == 1 ? '' : '.Plural'}}"></span>)</span></span>
+</div>

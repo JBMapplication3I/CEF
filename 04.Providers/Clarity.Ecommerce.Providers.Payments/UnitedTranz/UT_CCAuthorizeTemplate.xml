@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<UTA>
+  <USERINFO>
+    <USERNAME>{UserName}</USERNAME>
+    <PASSWORD>{Password}</PASSWORD>
+    <MERCHANTNO>{MerchantNo}</MERCHANTNO>
+  </USERINFO>
+  <CREDITCARDS>
+    <ACTION>PREAUTH</ACTION>
+    <CREDITCARD>
+      <CUSTOMERID>{CustomerID}</CUSTOMERID>
+      <TRANSACTIONDATE>{TransactionDate}</TRANSACTIONDATE>
+      <CC>{CreditCardNumber}</CC>
+      <EXPMM>{ExpMonth}</EXPMM>
+      <EXPYY>{ExpYear}</EXPYY>
+      <CVV>{CVV}</CVV>
+      <VERIFY>N</VERIFY>
+      <AMOUNT>{Amount}</AMOUNT>
+      <NAMEONCARD>{CardHolderName}</NAMEONCARD>
+      <CCTYPE>{CCType}</CCTYPE>
+      <TRANSACTIONTYPE>1</TRANSACTIONTYPE>
+      <INVOICENO>{InvoiceNo}</INVOICENO>
+      <MEMO></MEMO>
+      <ADDRESS TYPE="CC">
+        <STREET1>{BillingStreet1}</STREET1>
+        <CITY>{BillingCity}</CITY>
+        <STATE>{BillingStateCode}</STATE>
+        <ZIPCODE>{BillingZipCode}</ZIPCODE>
+      </ADDRESS>
+      <PIN>{Pin}</PIN>
+      <ENCRYPTEDTRACK>{EncryptedTrack}</ENCRYPTEDTRACK>
+    </CREDITCARD>
+  </CREDITCARDS>
+</UTA>

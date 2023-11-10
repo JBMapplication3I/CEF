@@ -1,0 +1,302 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{97347526-B67C-4120-AF7C-129D777C4523}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ClassLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latestmajor</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>latestmajor</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bootstrap\fonts\bootstrap\glyphicons-halflings-regular.eot" />
+    <None Include="bootstrap\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
+    <None Include="bootstrap\fonts\bootstrap\glyphicons-halflings-regular.woff" />
+    <None Include="bootstrap\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <None Include="bootstrap\images\.keep" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_alerts.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_background-variant.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_border-radius.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_buttons.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_center-block.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_clearfix.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_forms.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_gradients.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_grid-framework.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_grid.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_hide-text.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_image.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_labels.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_list-group.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_nav-divider.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_nav-vertical-align.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_opacity.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_pagination.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_panels.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_progress-bar.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_reset-filter.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_reset-text.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_resize.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_responsive-visibility.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_size.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_tab-focus.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_table-row.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_text-emphasis.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_text-overflow.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\mixins\_vendor-prefixes.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_alerts.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_badges.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_breadcrumbs.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_button-groups.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_buttons.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_carousel.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_close.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_code.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_component-animations.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_dropdowns.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_forms.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_glyphicons.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_grid.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_input-groups.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_jumbotron.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_labels.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_list-group.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_media.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_mixins.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_modals.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_navbar.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_navs.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_normalize.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_pager.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_pagination.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_panels.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_popovers.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_print.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_progress-bars.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_responsive-embed.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_responsive-utilities.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_scaffolding.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_tables.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_theme.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_thumbnails.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_tooltip.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_type.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_utilities.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_variables.scss" />
+    <None Include="bootstrap\stylesheets\bootstrap\_wells.scss" />
+    <None Include="bootstrap\stylesheets\_bootstrap-compass.scss" />
+    <None Include="bootstrap\stylesheets\_bootstrap-mincer.scss" />
+    <None Include="bootstrap\stylesheets\_bootstrap-sprockets.scss" />
+    <None Include="bootstrap\stylesheets\_bootstrap.scss" />
+    <None Include="css\clarity.scss" />
+    <None Include="css\components\ecommerce\catalog.scss" />
+    <None Include="css\components\ecommerce\checkout.scss" />
+    <None Include="css\components\ecommerce\cv-grid.scss" />
+    <None Include="css\components\ecommerce\dashboard\address-book.scss" />
+    <None Include="css\components\ecommerce\dashboard\dashboard.scss" />
+    <None Include="css\components\ecommerce\dashboard\toggle.scss" />
+    <None Include="css\components\ecommerce\dashboard\wallet.scss" />
+    <None Include="css\components\ecommerce\image-slider.scss" />
+    <None Include="css\components\ecommerce\product-detail.scss" />
+    <None Include="css\components\ecommerce\user.scss" />
+    <None Include="css\components\header.scss" />
+    <None Include="css\components\home.scss" />
+    <None Include="css\components\nav.scss" />
+    <None Include="css\components\navigation-mega-menu.scss" />
+    <None Include="css\components\_navigation.scss" />
+    <None Include="css\components\_tabs-horizontal.scss" />
+    <None Include="css\package.json" />
+    <None Include="css\_bootstrapVariables.scss" />
+    <None Include="css\_dnn.scss" />
+    <None Include="Ecommerce\framework\store\product\widgets\relatedProducts.html.bak" />
+    <None Include="Ecommerce\framework\store\searchCatalog\controls\filterByCategoriesTree.html.bak" />
+    <None Include="fonts\bootstrap\glyphicons-halflings-regular.eot" />
+    <None Include="fonts\bootstrap\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\bootstrap\glyphicons-halflings-regular.woff" />
+    <None Include="fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <None Include="fonts\fontawesome-webfont.eot" />
+    <None Include="fonts\fontawesome-webfont.ttf" />
+    <None Include="fonts\fontawesome-webfont.woff" />
+    <None Include="fonts\fontawesome-webfont.woff2" />
+    <None Include="fonts\FontAwesome.otf" />
+    <None Include="img\Tab.psd" />
+    <None Include="img\TabOutline.psd" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="404Skin.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="bootstrapMobileNav\menudef.xml" />
+    <Content Include="bootstrapMobileNav\SimpleTokens.txt" />
+    <Content Include="bootstrapNav\menudef.xml" />
+    <Content Include="bootstrapNav\SimpleTokens.txt" />
+    <Content Include="bootstrap\fonts\bootstrap\glyphicons-halflings-regular.svg" />
+    <Content Include="bootstrap\javascripts\bootstrap-sprockets.js" />
+    <Content Include="bootstrap\javascripts\bootstrap.js" />
+    <Content Include="bootstrap\javascripts\bootstrap.min.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\affix.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\alert.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\button.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\carousel.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\collapse.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\dropdown.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\modal.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\popover.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\scrollspy.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\tab.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\tooltip.js" />
+    <Content Include="bootstrap\javascripts\bootstrap\transition.js" />
+    <Content Include="BulkOrder.ascx" />
+    <Content Include="Cart.ascx" />
+    <Content Include="Catalog.ascx" />
+    <Content Include="CefNav\CefNav.js" />
+    <Content Include="CefNav\CefNav.txt" />
+    <Content Include="CefNav\menu.css" />
+    <Content Include="CefNav\menudef.xml" />
+    <Content Include="Checkout.ascx" />
+    <Content Include="Compare.ascx" />
+    <Content Include="css\clarity.css" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Account settings.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\add-icon.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Dashboard.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Downloads.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\In stock alerts.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Inbox.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Sales invoices.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Sales orders.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Sales quotes.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Samples.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Shopping list.svg" />
+    <Content Include="css\components\ecommerce\dashboard\dashboard-icons\Wishlist.svg" />
+    <Content Include="css\gulpfile.js" />
+    <Content Include="Dashboard.ascx" />
+    <Content Include="Docs.ascx" />
+    <Content Include="Download.ascx" />
+    <Content Include="Ecommerce\Email\BackOfficeOrderNotification.html" />
+    <Content Include="Ecommerce\Email\BackOfficeStoreOrderNotification.html" />
+    <Content Include="Ecommerce\Email\CustomerOrderNotification.html" />
+    <Content Include="Ecommerce\Email\EmailVerification.html" />
+    <Content Include="Ecommerce\Email\ForgotPassword.html" />
+    <Content Include="Ecommerce\Email\ForgotUsername.html" />
+    <Content Include="Ecommerce\Email\img-01.jpg" />
+    <Content Include="Ecommerce\Email\Invitation.html" />
+    <Content Include="Ecommerce\Email\logo.png" />
+    <Content Include="Ecommerce\Email\Personalization.RecommendByCategory.html" />
+    <Content Include="Ecommerce\Email\Personalization.RecommendByCategory.Repeater.html" />
+    <Content Include="Ecommerce\Email\ProductNowInStock.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.Backordered.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.Completed.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.Confirmed.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.DropShipped.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.FullPayment.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.InvoiceCreated.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.PartialPayment.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.Processing.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.ReadyForPickup.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.Shipped.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.Split.html" />
+    <Content Include="Ecommerce\Email\SalesOrders.Voided.html" />
+    <Content Include="Ecommerce\framework\core\cefCustomizations.js" />
+    <Content Include="Ecommerce\framework\store\cart\cart.html" />
+    <Content Include="Ecommerce\framework\store\navigation\catalogCategoryLink.html" />
+    <Content Include="Ecommerce\framework\store\navigation\categoriesMenuBar.html" />
+    <Content Include="Ecommerce\framework\store\navigation\categoriesMenuInner.html" />
+    <Content Include="Ecommerce\framework\store\navigation\css\menu.css" />
+    <Content Include="Ecommerce\framework\store\navigation\css\yamm.css" />
+    <Content Include="Ecommerce\framework\store\photos\magicImageCarousel\magicImageCarousel.html" />
+    <Content Include="Ecommerce\framework\store\product\detail\productDetails.html" />
+    <Content Include="Ecommerce\framework\store\searchCatalog\controls\externalSearchBox.html" />
+    <Content Include="fonts\bootstrap\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="ForgotPassword.ascx" />
+    <Content Include="ForgotPasswordReturn.ascx" />
+    <Content Include="ForgotUsername.ascx" />
+    <Content Include="General.ascx" />
+    <Content Include="Home.ascx" />
+    <Content Include="Images\arrow.png" />
+    <Content Include="Images\breadcrumb.png" />
+    <Content Include="Images\copyright-background.png" />
+    <Content Include="Images\down-arrow.png" />
+    <Content Include="Images\icon-btn-sm-circle-arrow.png" />
+    <Content Include="Images\icon_bin.png" />
+    <Content Include="Images\icon_message.png" />
+    <Content Include="Images\icon_notification.png" />
+    <Content Include="Images\left-arrow.png" />
+    <Content Include="Images\pagination.png" />
+    <Content Include="Images\right-arrow.png" />
+    <Content Include="Images\search.png" />
+    <Content Include="img\Tab.png" />
+    <Content Include="img\TabOutline.png" />
+    <Content Include="img\TabOutlineL.png" />
+    <Content Include="img\TabOutlineR.png" />
+    <Content Include="Includes\footer.ascx" />
+    <Content Include="Includes\header.ascx" />
+    <Content Include="Invoice.ascx" />
+    <Content Include="js\custom.js" />
+    <Content Include="js\doubletaptogo.js" />
+    <Content Include="js\doubletaptogo.min.js" />
+    <Content Include="js\scripts.js" />
+    <Content Include="Login.ascx" />
+    <Content Include="MyStore.ascx" />
+    <Content Include="Order.ascx" />
+    <Content Include="Product.ascx" />
+    <Content Include="Quote.ascx" />
+    <Content Include="Registration.ascx" />
+    <Content Include="SearchResults.ascx" />
+    <Content Include="Simple\menudef.xml" />
+    <Content Include="Simple\simple.css" />
+    <Content Include="Simple\SimpleTokens.txt" />
+    <Content Include="skin.css" />
+    <Content Include="skin.doctype.xml" />
+    <Content Include="Superfish\arrows-ffffff.png" />
+    <Content Include="Superfish\hoverIntent.js" />
+    <Content Include="Superfish\jquery.bgiframe.min.js" />
+    <Content Include="Superfish\menudef.xml" />
+    <Content Include="Superfish\shadow.png" />
+    <Content Include="Superfish\superfish-navbar.css" />
+    <Content Include="Superfish\superfish-vertical.css" />
+    <Content Include="Superfish\superfish.css" />
+    <Content Include="Superfish\superfish.js" />
+    <Content Include="Superfish\Superfish.xslt" />
+    <Content Include="Superfish\supersubs.js" />
+    <Content Include="ThemeTestPage.ascx" />
+    <Content Include="verticalTabsNav\menudef.xml" />
+    <Content Include="verticalTabsNav\VerticalTabsNav.js" />
+    <Content Include="verticalTabsNav\VerticalTabsNav.txt" />
+    <Content Include="WishList.ascx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

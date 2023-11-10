@@ -1,0 +1,205 @@
+<div ng-switch="categoriesMenuInnerCtrl.config.render" class="w-100">
+  <div ng-switch-when="dropdown"
+    ng-repeat="(catIndex, cat) in categoriesMenuInnerCtrl.menuData
+              | orderBy: ['SortOrder','DisplayName || Name','Name','CustomKey']">
+    <a ng-if="!cat.HasChildren"
+      cef-catalog-category-link
+      category-id="cat.ID"
+      level="1"
+      index="{{catIndex + '.item'}}"
+      class="dropdown-item"
+      classes="d-block py-1 px-2 nowrap">
+    </a>
+    <a ng-if="cat.HasChildren"
+      class="dropdown-item dropdown-toggle"
+      classes="d-block py-1 px-2 nowrap"
+      data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+      ng-class="{'text-capitalize':!cat.DisplayName}"
+      ng-bind="cat.DisplayName || (cat.Name | lowercase)">
+    </a>
+    <div ng-if="cat.HasChildren" class="dropdown-menu">
+      <!--cef-categories-menu-inner render="dropdown" behavior="dropdown" menu-data="cat.Children"-->
+      <a ng-repeat="(childIndex, child) in cat.Children
+                    | orderBy: ['SortOrder','DisplayName || Name','Name','CustomKey']"
+        cef-catalog-category-link
+        category-id="child.ID"
+        class="dropdown-item d-block py-1 px-2 nowrap"
+        level="2"
+        index="{{catIndex + '.' + childIndex + '.item'}}">
+      </a>
+    </div>
+  </div>
+  <div ng-switch-when="mega-tabs" class="grid-demo">
+    <uib-tabset vertical="true" class="mega-menu-tabset w-100 d-flex" id="mega-menu-tabset">
+      <li class="nav-item">
+        <!--
+        <a class="p-0 small"
+          id="btnMenuItemBrowseAllCategories" name="btnMenuItemBrowseAllCategories"
+          ui-sref-plus uisrp-is-catalog="true"
+          uisrp-state="searchCatalog.products.categories.level1"
+          uisrp-params="{ 'category': '', 'term': null }">
+          <span class="p-3 text-dark"
+            data-translate="ui.storefront.menu.menuRenderProductVerticalTab.BrowseCategories.Upper">
+          </span>
+        </a>
+        -->
+        <a ng-if="categoriesMenuInnerCtrl.cefConfig.catalog.showCategoriesForLevelsUpTo < 1"
+          id="btnMenuItemBrowseAllCategories"
+          name="btnMenuItemBrowseAllCategories"
+          ui-sref-plus uisrp-is-catalog="true"
+          uisrp-state="searchCatalog.products.results.both"
+          uisrp-params="{ 'category': null, 'term': null  }"
+          class="p-0 small text-dark">
+          <span class="p-3"
+            data-translate="ui.storefront.menu.menuRenderProductVerticalTab.BrowseCategories.Upper">
+          </span>
+        </a>
+        <a ng-if="categoriesMenuInnerCtrl.cefConfig.catalog.showCategoriesForLevelsUpTo >= 1"
+          id="btnMenuItemBrowseAllCategories"
+          name="btnMenuItemBrowseAllCategories"
+          ui-sref-plus uisrp-is-catalog="true"
+          uisrp-state="searchCatalog.products.categories.level1"
+          uisrp-params="{ 'category': null, 'term': null  }"
+          class="p-0 small text-dark">
+          <span class="p-3"
+            data-translate="ui.storefront.menu.menuRenderProductVerticalTab.BrowseCategories.Upper">
+          </span>
+        </a>
+      </li>
+      <hr class="m-2" />
+      <!-- Empty and hidden tab to fix styling and indexing of tabs -->
+      <uib-tab class="ng-hide"></uib-tab>
+      <uib-tab ng-repeat="(itemIndex, item) in categoriesMenuInnerCtrl.menuData
+                          | orderBy: ['SortOrder','DisplayName || Name','Name','CustomKey']"
+        active="item.activeTab"
+        ng-mouseenter="$parent.$parent.tabset.select(itemIndex+1, $event)"
+        ng-click="categoriesMenuInnerCtrl.navigate(item, $event)"
+        select="">
+        <uib-tab-heading
+          id="menuItem_{{itemIndex}}" name="menuItem_{{itemIndex}}"
+          class="dropdown-item cef-nav-item"
+          ng-class="{'text-capitalize':!item.DisplayName,
+                    'active':$parent.$parent.tabset.active === itemIndex+1}"
+          ng-bind="item.DisplayName || (item.Name | lowercase)">
+        </uib-tab-heading>
+        <!-- tab-body -->
+        <div>
+          <div class="row">
+            <div class="col-12">
+              <p>
+                <span class="h2 dropdown-secondary-header mb-2"
+                  sid="FirstLevelCategoryText"
+                  ng-class="{'text-capitalize':!item.DisplayName}"
+                  ng-bind="item.DisplayName || (item.Name | lowercase)"></span>&nbsp;<!--
+                --><a cef-catalog-category-link
+                  category-id="item.ID"
+                  legacy="{{categoriesMenuInnerCtrl.legacy}}"
+                  classes="btn btn-link mb-2 pb-0 text-primary"
+                  hide-name="true"
+                  show-see-all="true"
+                  show-angles="true"
+                  level="1"
+                  index="{{itemIndex + '.item'}}">
+                </a>
+              </p>
+            </div>
+            <div class="col-12" ng-if="!item.Children.length">
+              <p class="h5 mb-2"
+                data-translate="ui.storefront.menu.menuRenderVerticalTabPane.noAdditionalCategories">
+              </p>
+            </div>
+            <div ng-if="item.Children.length"
+              ng-repeat="(childIndex, child) in item.Children
+                        | orderBy: ['SortOrder','DisplayName || Name','Name','CustomKey']
+                        | limitTo: categoriesMenuInnerCtrl.config.limitChildren"
+              class="col-sm-4 col-md-3 dropdown-tertiary-container">
+              <p class="h5 dropdown-tertiary-header mb-2 text-center">
+                <a cef-catalog-category-link
+                  category-id="child.ID"
+                  bold="true"
+                  level="2"
+                  index="{{itemIndex + '.' + childIndex + '.header'}}">
+                </a>
+              </p>
+              <hr class="my-2" />
+              <ul class="dropdown-tertiary-list ml-0 mb-2 list-unstyled">
+                <li ng-if="!child.HasChildren" class="dropdown-tertiary-item"
+                  sid="NoAdditionalCategoriesText_{{$index}}"
+                  data-translate="ui.storefront.menu.menuRenderVerticalTabPane.noAdditionalCategories">
+                </li>
+                <li ng-repeat="(subchildIndex, subchild) in child.Children
+                              | orderBy: ['SortOrder','DisplayName','Name','CustomKey']
+                              | limitTo: categoriesMenuInnerCtrl.config.limitGrandChildren"
+                  class="dropdown-tertiary-item">
+                  <a cef-catalog-category-link
+                    category-id="subchild.ID"
+                    level="3"
+                    index="{{itemIndex + '.' + childIndex + '.' + subchildIndex + '.item'}}">
+                  </a>
+                </li>
+                <li class="dropdown-tertiary-item mt-2">
+                  <a cef-catalog-category-link
+                    category-id="child.ID"
+                    bold="true"
+                    hide-name="true"
+                    show-see-all="true"
+                    show-angles="true"
+                    level="2"
+                    index="{{itemIndex + '.' + childIndex + '.item'}}">
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+  <div ng-switch-when="category-grid" class="grid-demo">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row">
+          <ul class="dropdown-secondary-list">
+            <li class="dropdown-secondary-item col-sm-6 col-md-3"
+              ng-repeat="(itemIndex, item) in categoriesMenuInnerCtrl.menuData
+                        | orderBy: ['SortOrder','DisplayName || Name','Name','CustomKey']"
+              render="'cef-menu-render-pane'"
+              behavior="'cef-menu-hover-toggle'"
+              menu-data="item.Children"
+              cef-menu-root="{
+                group: group,
+                paneId: 'verticalTabPane' + categoriesMenuInnerCtrl.config.identifier,
+                paneTemplate: 'DesktopModules/ClarityEcommerce/UI/framework/store/menu/menuRenderVerticalTabPane.html',
+                catTitle: item.Name
+              }">
+              <a cef-catalog-category-link
+                category-id="item.ID"
+                level="1"
+                index="{{itemIndex + '.item'}}">
+              </a>
+              <div class="row" ng-if="categoriesMenuInnerCtrl.menuData.length">
+                <div class="col-12"
+                  ng-repeat="(childIndex, child) in item.Children
+                            | orderBy: ['SortOrder','DisplayName || Name','Name','CustomKey']
+                            | limitTo: categoriesMenuInnerCtrl.config.limitChildren">
+                  <a cef-catalog-category-link
+                    category-id="child.ID"
+                    level="2"
+                    index="{{itemIndex + '.' + childIndex + '.item'}}"
+                    class="d-block mb-3">
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <img class="img-fluid"
+          src="/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both"
+          onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';"
+        />
+      </div>
+    </div>
+  </div>
+</div>

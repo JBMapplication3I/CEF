@@ -1,0 +1,41 @@
+<div ng-if="pcswCtrl.product.TypeName.toLowerCase() !== 'variant master'
+  && !pcswCtrl.hideS && !pcswCtrl.viewState.running && pcswCtrl.product.readInventory()"
+  ng-switch="pcswCtrl.product.readInventory().IsUnlimitedStock">
+  <small ng-switch-when="true" class="alert alert-success p-1"
+    sid="InventoryUnlimitedStatusText_{{pcswCtrl.product.CustomKey}}"
+    data-translate="ui.storefront.common.Unlimited">
+  </small>
+  <span ng-switch-default>
+    <span ng-switch="pcswCtrl.readIfUOMInventoryIsOutOfStock()">
+      <span ng-switch-when="false" class="alert alert-success p-1">
+        <small ng-if="pcswCtrl.countStoreStockOnly"
+          ng-bind="pcswCtrl.product.inventoryObject.storeQty | number"></small><!--
+        --><small ng-if="!pcswCtrl.countStoreStockOnly && pcswCtrl.uomStockQty"
+          ng-bind="pcswCtrl.uomStockQty | roundDown"></small>&nbsp;<!--
+        --><small sid="InventoryInStockStatusText_{{pcswCtrl.product.CustomKey}}"
+          data-translate="ui.storefront.common.InStock">
+        </small>
+      </span>
+      <span ng-switch-when="true">
+        <span ng-switch="pcswCtrl.product.readInventory().AllowBackOrder">
+          <small ng-switch-when="true" class="alert alert-warning p-1 d-none"
+            sid="InventoryBackorderStatusText_{{pcswCtrl.product.CustomKey}}"
+            data-translate="ui.storefront.common.OnBackorder">
+          </small>
+          <small ng-switch-when="false" class="alert alert-danger p-1"
+            sid="InventoryOutOfStockStatusText_{{pcswCtrl.product.CustomKey}}"
+            data-translate="ui.storefront.common.OutOfStock">
+          </small>
+        </span>
+      </span>
+    </span>
+  </span>
+</div>
+<i class="mx-1 fa fa-solid fa-prescription very-big"
+  ng-if="pcswCtrl.productIsRX()"
+  uib-tooltip="{{'ui.storefront.catalog.rxInformationTooltip'}}"></i>
+<div ng-if="pcswCtrl.viewState.running || pcswCtrl.product.readInventory().loading"
+  cef-loading-widget
+  overlay="true"
+  message="pcswCtrl.viewState.waitMessage">
+</div>

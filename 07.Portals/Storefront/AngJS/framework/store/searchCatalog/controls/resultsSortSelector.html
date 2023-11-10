@@ -1,0 +1,50 @@
+﻿<div class="items-scrsCtrl-option"
+  ng-cloak="scrsCtrl.choices">
+  <div class="form-group"
+    ng-class="{'col-12':$parent.scrcbCtrl.layoutMode == 'hug-right'}"
+    ng-switch="scrsCtrl.sortViewType">
+    <label class="control-label"
+      ng-hide="scrsCtrl.hideLabel == 'true'"
+      for="resultsSortPicker"
+    ><span sid="SortbyText"
+      data-translate="ui.storefront.product.catalog.controls.sorter.sortBy"
+    ></span>&nbsp;</label>
+    <div class="input-group">
+      <select ng-switch-when="dropdown"
+        class="form-control d-inline-block" style="width: 165px;"
+        id="resultsSortPicker" name="resultsSortPicker"
+        ng-disabled="scrsCtrl.service.searchIsRunning"
+        ng-options="choice as (choice | camelCaseToHuman : true) for choice in scrsCtrl.choices"
+        ng-model="scrsCtrl.currentChoice">
+      </select>
+      <button ng-switch-when="buttons"
+        ng-repeat="choice in scrsCtrl.choices"
+        type="button" class="btn"
+        ng-disabled="scrsCtrl.service.searchIsRunning"
+        ng-class="scrsCtrl.currentChoice == choice ? 'btn-outline-primary' : 'btn-text-light'"
+        ng-click="scrsCtrl.currentChoice = choice;"
+        ng-bind="choice | camelCaseToHuman : true">
+      </button>
+      <div ng-switch-when="split-button">
+        <div class="btn-group" uib-dropdown
+          ng-class="{'float-right':$parent.$parent.scrcbCtrl.layoutMode == 'hug-right'}">
+          <button type="button" class="btn btn-secondary"
+            uib-dropdown-toggle
+            ng-disabled="scrsCtrl.service.searchIsRunning"
+            data-translate="ui.storefront.product.catalog.controls.sorter.sortBy">
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="choice in scrsCtrl.choices"
+              ng-class="{'active': scrsCtrl.currentChoice == choice}">
+              <a ng-class="{'disabled':scrsCtrl.service.searchIsRunning}"
+                ng-click="!scrsCtrl.service.searchIsRunning
+                  && (scrsCtrl.currentChoice = choice)"
+                ng-bind="choice | camelCaseToHuman : true">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

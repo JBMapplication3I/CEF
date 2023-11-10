@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-12">
+        <h1 data-translate="ui.storefront.common.ImportUser.Plural"></h1>
+        <p data-translate="ui.storefront.userDashboard2.controls.users.ImportUsers.Subheader"></p>
+    </div>
+    <div class="col-12">
+        <p>
+            <a ng-href="{{'Bulk.User.Import.Template.xlsx' | corsImportsLink: 'users' }}"
+               target="_blank">
+                <span data-translate="ui.storefront.userDashboard2.controls.users.DownloadBulkUserImportTemplate"></span>&nbsp;<!--
+                --><i class="far fa-download"></i>
+            </a>
+        </p>
+    </div>
+    <div class="col-12">
+        <div cef-upload-file-widget
+             class="mb-3"
+             master="importUsersCtrl"
+             upload-type="ImportUser"
+             type-key="General"
+             allow-multiple="false">
+        </div>
+    </div>
+    <div class="col-sm-12 text-right xs-text-left">
+        <button type="button" class="btn btn-primary mb-3"
+                translate-attr="{ title: 'ui.storefront.userDashboard2.controls.users.Import',
+                                  'aria-label': 'ui.storefront.userDashboard2.controls.users.Import'}"
+                data-translate="ui.storefront.userDashboard2.controls.users.Import"
+                ng-disabled="importUsersCtrl.viewState.running
+                             || !importUsersCtrl.StoredFiles.length"
+                ng-click="importUsersCtrl.import()"></button>
+        <button type="button" class="btn btn-secondary mb-3"
+                translate-attr="{ title: 'ui.storefront.common.Cancel',
+                                  'aria-label': 'ui.storefront.common.Cancel'}"
+                ng-if="!importUsersCtrl.dontRedirect"
+                ng-disabled="importUsersCtrl.viewState.running"
+                ui-sref="userDashboard.users.list">
+            <span data-translate="ui.storefront.common.Cancel"></span>
+        </button>
+    </div>
+    <div ng-if="importUsersCtrl.viewState.running"
+         class="col-12">
+        <div class="w-100 alert alert-info" role="alert">
+            <p data-translate="ui.storefront.common.Running.Ellipses"></p>
+        </div>
+    </div>
+    <div ng-if="!importUsersCtrl.viewState.running && importUsersCtrl.viewState.hasError"
+         class="col-12">
+        <div class="w-100 alert alert-warning" role="alert">
+            <h3 class="mt-0"
+                data-translate="ui.storefront.userDashboard2.controls.users.errors.ThisImportNeedsYourAttention"></h3>
+            <p class="mb-3"
+               data-translate="ui.storefront.userDashboard2.controls.users.errors.Message"></p>
+            <table class="d-block">
+                <tr ng-if="!importUsersCtrl.viewState.errorMessages.length">
+                    <td>
+                        <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+                        --><span data-translate="ui.storefront.userDashboard2.controls.users.errors.MissingRequiredField"></span>
+                    </td>
+                </tr>
+                <tr ng-repeat="msg in importUsersCtrl.viewState.errorMessages">
+                    <td>
+                        <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+                        --><span ng-bind="msg"></span>
+                    </td>
+                </tr>
+            </table>
+            <hr/>
+            <button type="button" class="btn btn-warning"
+                    translate-attr="{ title: 'ui.storefront.userDashboard2.controls.users.TryImportAgain',
+                                      'aria-label': 'ui.storefront.userDashboard2.controls.users.TryImportAgain' }"
+                    data-translate="ui.storefront.userDashboard2.controls.users.TryImportAgain"
+                    ng-click="importUsersCtrl.import()"></button>
+        </div>
+    </div>
+    <div ng-if="!importUsersCtrl.viewState.running && importUsersCtrl.viewState.success"
+         class="col-12">
+        <div class="w-100 alert alert-success" role="alert">
+            <p data-translate="ui.storefront.common.Success.Exclamation"></p>
+        </div>
+    </div>
+</div>

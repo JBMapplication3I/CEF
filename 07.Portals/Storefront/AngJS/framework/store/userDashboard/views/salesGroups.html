@@ -1,0 +1,70 @@
+﻿<div ng-controller="StoreSearchController as search">
+  <cv-grid
+    show-pager="true" page-sizes="8,16,32,64" default-page-size="8" server-paging="true"
+    sortable="false" server-sorting="true"
+    force-show-labels="true" labels-on-top="true"
+    dont-use-full-height="true"
+    on-search="search.getCurrentAccountSalesGroups"
+    detail-state="userDashboard.salesGroups.detail,[ID]"
+    button-index="groups">
+    <!--
+    <cv-column
+      hidden
+      field="StatusID"
+      title="Status"
+      filter
+      filter-type="select"
+      on-option-repeat="$parent.search.getSalesGroupStatuses">
+      <option value=""
+        selected data-translate="ui.storefront.userDashboard2.views.salesGroups.Any">
+      </option>
+    </cv-column>
+    -->
+    <cv-column
+      field="ID"
+      title-key="ui.storefront.storeDashboard.storeProductEditor.ID"
+      filter
+      filter-type="id"
+      width="13%"
+      cell-class="text-right" />
+    <cv-column
+      if="$root.cefConfig.featureSet.salesOrders.hasIntegratedKeys"
+      field="CustomKey"
+      title-key="ui.storefront.common.Key"
+      filter
+      width="26%" />
+    <!--
+    <cv-column
+      field="ItemQuantity"
+      title="Quantity"
+      format="number:0"
+      cell-class="text-right"
+      width="80px" />
+    -->
+    <!--
+    <cv-column
+      field="Totals.Total"
+      title="Total"
+      format="currency"
+      cell-class="text-right"
+      width="100px" />
+    -->
+    <cv-column
+      field="CreatedDate"
+      title-key="ui.storefront.common.Date"
+      width="26%"
+      format="yyyy MMM dd hh:mm a"
+      type="date"
+      filter
+      filter-type="minMaxDate"
+      filter-colspan="5"
+      sort-by="1"
+      sort-by-direction="desc" />
+    <!--
+    <cv-column
+      field="StatusName"
+      title="Status"
+      width="200px" />
+    -->
+  </cv-grid>
+</div>

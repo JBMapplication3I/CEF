@@ -1,0 +1,21 @@
+﻿@using Clarity.Ecommerce.MVC.Core
+@using Clarity.Ecommerce.MVC.Api.Endpoints
+
+@inherits Clarity.Ecommerce.UI.XPortal.SharedLibrary.Pages.Catalog.Products.EditParts.TabAssociationBase<
+  UserModel,
+  FranchiseModel,
+  FranchisePagedResults,
+  GetFranchises,
+  FranchiseUserModel,
+  FranchiseUserPagedResults,
+  GetFranchiseUsers,
+  CreateFranchiseUser,
+  DeactivateFranchiseUserByID,
+  ModalEditFranchiseUser>
+
+@{
+  /* Write the base component content here */
+  base.BuildRenderTree(__builder);
+}
+
+<ModalEditFranchiseUser @ref="modalEdit" />

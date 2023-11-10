@@ -1,0 +1,233 @@
+﻿<div class="cef-address-book col-12 mb-3" ng-form="addressBookCtrl.forms.Addresses">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+    <div class="col mb-3" ng-if="addressBookCtrl.cefConfig.featureSet.addressBook.dashboardCanAddAddresses">
+      <div class="card h-100">
+        <div class="card-header"
+          sid="AddAddressText"
+          data-translate="ui.storefront.checkout.splitShipping.addressModal.AddAddress">
+        </div>
+        <div class="card-body p-2">
+          <button type="button" class="btn btn-outline-secondary p-3 h-100"
+            id="btnAddAddress" name="btnAddAddress"
+            ng-click="addressBookCtrl.newContact()">
+            <svg width="30px" height="31px" viewBox="0 0 30 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g transform="translate(-847.000000, -260.000000)" fill="#B6B6B6">
+                  <path d="M862,260.370117 C853.720465,260.370117 847,267.090582 847,275.370117 C847,283.649652 853.720465,290.370117 862,290.370117 C870.279535,290.370117 877,283.649652 877,275.370117 C877,267.090582 870.279535,260.370117 862,260.370117 Z M862,261.067792 C869.903256,261.067792 876.302326,267.466861 876.302326,275.370117 C876.302326,283.273373 869.903256,289.672443 862,289.672443 C854.096744,289.672443 847.697674,283.273373 847.697674,275.370117 C847.697674,267.466861 854.096744,261.067792 862,261.067792 Z M861.956279,267.336164 L861.956279,267.336164 C861.776744,267.357559 861.643721,267.513838 861.651163,267.695699 L861.651163,275.02128 L854.325581,275.02128 C854.303721,275.01942 854.28186,275.01942 854.26,275.02128 C853.794884,275.065001 853.860465,275.762675 854.325581,275.718954 L861.651163,275.718954 L861.651163,283.044536 C861.647442,283.238954 861.805581,283.398954 862,283.398954 C862.194419,283.398954 862.352558,283.238954 862.348837,283.044536 L862.348837,275.718954 L869.674419,275.718954 C869.868837,275.722675 870.028837,275.564536 870.028837,275.370117 C870.028837,275.175699 869.868837,275.017559 869.674419,275.02128 L862.348837,275.02128 L862.348837,267.695699 C862.35814,267.47942 862.170698,267.308722 861.956279,267.336164 Z"></path>
+                </g>
+              </g>
+            </svg><br/>
+            <span data-translate="ui.storefront.userDashboard2.controls.addressBook2.AddAddress"></span><br/><br/>
+            <p class="mb-0"><em><b data-translate="ui.storefront.common.Note"></b><br/><!--
+            --><span class="wrap" data-translate="ui.storefront.userDashboard2.controls.addressBook2.OnlyOneAddressShouldBeSetAs.Message"></span></em></p>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col mb-3">
+      <div class="card h-100">
+        <div class="card-header"
+           sid="AddressBookDefaultShippingText"
+           data-translate="ui.storefront.userDashboard2.controls.addressBook2.DefaultShipping">
+        </div>
+        <div class="card-body p-2">
+          <label ng-if="!ssCtrl.cefConfig.featureSet.shipping.splitShipping.onlyAllowOneDestination"
+            class="control-label" for="ddlPreselect">
+            Search by Street, City, or Zip Code and Select an address
+          </label>
+          <input type="text" ng-model="addressBookCtrl.selectedFullNameAndStreet1"
+            placeholder="Enter 4 or more characters..."
+            uib-typeahead="(sug.Slave.FullName + ' ' + sug.Slave.Address.Street1 + ' ' + (sug.Slave.Address.Street2 ? (sug.Slave.Address.Street2 + ' ') : '') + sug.Slave.Address.City + ', ' + sug.Slave.Address.RegionName + ', ' + sug.Slave.Address.PostalCode) as (sug.Slave.FullName + ' ' + sug.Slave.Address.Street1 + ' '+ (sug.Slave.Address.Street2 ? (sug.Slave.Address.Street2 + ' ') : '') + sug.Slave.Address.City + ', ' + sug.Slave.Address.RegionName + ', ' + sug.Slave.Address.PostalCode)
+                      for sug in addressBookCtrl.cvAddressBookService.getSuggestionsPromise($viewValue)"
+            typeahead-editable="false"
+            typeahead-on-select="addressBookCtrl.preselectValues($item)"
+            typeahead-min-length="0"
+            typeahead-loading="loadingSuggestions"
+            typeahead-wait-ms="500"
+            class="form-control" 
+            id="ddlPreselect" name="ddlPreselect"
+            ng-disabled="addressBookCtrl.viewState.running"
+            ng-required="addressBookCtrl.cefConfig.featureSet.shipping.splitShipping.onlyAllowOneDestination" />
+          <!--
+          <select class="form-control custom-select text-uppercase"
+            id="ddlPrimaryShipping"
+            name="ddlPrimaryShipping"
+            ng-required="true"
+            ng-change="addressBookCtrl.setContactAsIsPrimary()"
+            ng-disabled="addressBookCtrl.readOnlyAddress"
+            ng-options="ac.ID as (ac.Slave.Address.CustomKey || ac.CustomKey || ac.Slave.CustomKey || ac.Slave.Address.Street1)
+                        for ac in addressBookCtrl.addressBook"
+            ng-model="addressBookCtrl.defaultShippingID">
+            <option value="" ng-disabled="true"
+              data-translate="ui.storefront.userDashboard2.controls.addressBook.PleaseSelectAShippingAddress">
+            </option>
+          </select>
+          -->
+        </div>
+        <div class="card-body p-2" ng-if="addressBookCtrl.defaultShippingID">
+          <div cef-contact-address-block
+            contact="addressBookCtrl.defaultShipping.Slave">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col mb-3">
+      <div class="card h-100">
+        <div class="card-header"
+          sid="AddressBookDefaultBillingText"
+          data-translate="ui.storefront.userDashboard2.controls.addressBook2.DefaultBilling">
+        </div>
+        <div class="card-body p-2">
+          <select class="form-control custom-select text-uppercase"
+            id="ddlDefaultBilling"
+            name="ddlDefaultBilling"
+            ng-required="true"
+            ng-change="addressBookCtrl.setContactAsIsBilling()"
+            ng-options="ac.ID as (ac.Slave.Address.CustomKey || ac.CustomKey || ac.Slave.CustomKey || ac.Slave.Address.Street1)
+                    for ac in addressBookCtrl.bllingAddressBook"
+            ng-model="addressBookCtrl.defaultBillingID">
+            <option value="" ng-disabled="true"
+              data-translate="ui.storefront.userDashboard2.controls.addressBook.PleaseSelectABillingAddress">
+            </option>
+          </select>
+        </div>
+        <div class="card-body p-2" ng-if="addressBookCtrl.defaultBillingID">
+          <div cef-contact-address-block
+            contact="addressBookCtrl.defaultBilling.Slave">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="!addressBookCtrl.viewState.running">
+    <div class="alert alert-danger" role="alert" ng-if="addressBookCtrl.noBillingContactFound">
+      <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+      --><b sid="DefaultBillingWarningMessage"
+        data-translate="ui.storefront.userDashboard2.controls.addressBook2.YouDontHaveABillingAddress"></b>&nbsp;<!--
+      --><span data-translate="ui.storefront.userDashboard2.controls.addressBook2.PleaseClickSetAsBilling"></span>&nbsp;<!--
+      --><i class="far fa-dollar-sign"></i>&nbsp;<!--
+      --><span data-translate="ui.storefront.userDashboard2.controls.addressBook2.OnAnAddressBelowOrAddAddressFirstAndThenSelectOneNote"></span>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-if="addressBookCtrl.noPrimaryContactFound">
+      <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+      --><b sid="DefaultShippingWarningMessage"
+        data-translate="ui.storefront.userDashboard2.controls.addressBook2.YouDontHaveADefaultShippingAddress"></b>&nbsp;<!--
+      --><span data-translate="ui.storefront.userDashboard2.controls.addressBook2.PleaseClickSetAsDefault"></span>&nbsp;<!--
+      --><i class="far fa-truck"></i>&nbsp;<!--
+      --><span data-translate="ui.storefront.userDashboard2.controls.addressBook2.OnAnAddressBelowOrAddAddressFirstAndThenSelectOneNote"></span>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-if="addressBookCtrl.primaryAndBillingAreSameContact">
+      <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+      --><b data-translate="ui.storefront.userDashboard2.controls.addressBook2.YourBillingAndPrimaryAddressAreTheSameRecord"></b>&nbsp;<!--
+      --><span data-translate="ui.storefront.userDashboard2.controls.addressBook2.PleaseClickSetAsDefault"></span>&nbsp;<!--
+      --><i class="far fa-truck"></i>&nbsp;<!--
+      --><span data-translate="ui.storefront.userDashboard2.controls.addressBook2.OrBilling"></span>&nbsp;<!--
+      --><i class="far fa-dollar-sign"></i>&nbsp;<!--
+      --><span data-translate="ui.storefront.userDashboard2.controls.addressBook2.OnADifferentAddressBelowOrAddAddressFirstAndThenSelect"></span>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+    <div ng-repeat="ac in addressBookCtrl.addressBook
+      | filter: addressBookCtrl.typeIdFilter
+      | orderBy: ['!IsBilling','!IsPrimary','CustomKey']
+      track by $index"
+      class="col mb-3">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between">
+          <div sid="AddressEntryKeyText_{{$index}}"
+            ng-class="{ 'text-uppercase': ac.Slave.Address.CustomKey }"
+            ng-bind="ac.Slave.Address.CustomKey
+              || ('ui.storefront.userDashboard2.controls.addressBook.NoAddressNicknameSet' | translate)">
+          </div>
+          <span style="font-weight: 700;" ng-if="ac.Slave.TypeDisplayName" ng-bind="ac.Slave.TypeDisplayName"></span>
+        </div>
+        <div class="card-body p-2" ng-if="ac.Slave">
+          <div cef-contact-address-block
+             contact="ac.Slave"></div>
+        </div>
+        <div class="card-footer btn-group p-0" ng-if="ac.Slave.TypeID !== 4 && addressBookCtrl.isSupervisor">
+          <button type="button" class="btn btn-link"
+            id="addressBook-edit-{{$index}}"
+            name="addressBook-edit-{{$index}}"
+            translate-attr="{ title: 'ui.storefront.common.Edit',
+                              'aria-label': 'ui.storefront.common.Edit' }"
+            ng-click="addressBookCtrl.editContact(ac.ID, $index)">
+            <i class="far fa-pencil fa-lg"></i>&nbsp;<!--
+            --><span data-translate="ui.storefront.common.Edit"></span>
+          </button>
+          <div cef-address-book-delete-button
+            account-contact="ac"
+            index="ac.ID">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="input-group d-flex justify-content-center" ng-if="addressBookCtrl.pagedResultsTotal">
+    <div class="btn-group btn-group-justified" role="group" aria-label="Paging">
+      <button type="button" class="btn btn-outline-secondary"
+        sid="btnFirstPage"
+        translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToFirstPage',
+                          'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToFirstPage' }"
+        ng-click="addressBookCtrl.goToFirstPage()">
+        <i class="far fa-angle-double-left"></i><!--
+        --><span class="sr-only"
+          data-translate="ui.storefront.searchCatalog.pageSelector.GoToFirstPage">
+        </span>
+      </button>
+      <button type="button" class="btn btn-outline-secondary"
+        sid="btnPreviousPage"
+        translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToPreviousPage',
+                          'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToPreviousPage' }"
+        ng-click="addressBookCtrl.goToPreviousPage()">
+        <i class="far fa-angle-left"></i><!--
+        --><span class="sr-only"
+          data-translate="ui.storefront.searchCatalog.pageSelector.GoToPreviousPage">
+        </span>
+      </button>
+      <!-- When there are no pages, show a disabled dummy button -->
+      <button ng-if="!addressBookCtrl.pagesInSets.length"
+        type="button" class="btn d-none d-sm-block btn-primary"
+        ng-disabled="true">
+        1
+      </button>
+      <button ng-repeat="p in addressBookCtrl.pagesInSets[addressBookCtrl.currentPageSet]"
+        type="button" class="btn d-none d-sm-block"
+        id="btnPageNumber_{{$index}}" name="btnPageNumber_{{$index}}"
+        title="{{'ui.storefront.searchCatalog.pageSelector.GoToPage' | translate}} {{p+1}}"
+        aria-label="{{'ui.storefront.searchCatalog.pageSelector.GoToPage' | translate}} {{p+1}}"
+        ng-class="addressBookCtrl.currentPage == p ? 'btn-primary' : 'btn-outline-secondary'"
+        ng-disabled="addressBookCtrl.service.searchIsRunning
+          || p == addressBookCtrl.currentPage"
+        ng-click="addressBookCtrl.currentPage = p;"
+        ng-bind="p+1">
+      </button>
+      <button type="button" class="btn btn-outline-secondary"
+        sid="btnNextPage"
+        translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToNextPage',
+                          'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToNextPage' }"
+        ng-click="addressBookCtrl.goToNextPage()">
+        <i class="far fa-angle-right"></i><!--
+        --><span class="sr-only"
+          data-translate="ui.storefront.searchCatalog.pageSelector.GoToNextPage">
+        </span>
+      </button>
+      <button type="button" class="btn btn-outline-secondary"
+        sid="btnLastPage"
+        translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToLastPage',
+                          'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToLastPage' }"
+        ng-click="addressBookCtrl.goToLastPage()">
+        <i class="far fa-angle-double-right"></i><!--
+        --><span class="sr-only"
+          data-translate="ui.storefront.searchCatalog.pageSelector.GoToLastPage">
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+<div ng-if="addressBookCtrl.viewState.running
+  || addressBookCtrl.cvAddressBookService.runningContactChecks"
+  cef-loading-widget
+  overlay="true" pad-in="true"
+  message="addressBookCtrl.viewState.waitMessage">
+</div>

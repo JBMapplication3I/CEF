@@ -1,0 +1,21 @@
+﻿<div>
+    <span class="name" ng-bind="productDetailsStoreCtrl.store.Name"></span>
+    <span class="place"><span ng-bind="productDetailsStoreCtrl.store.Contact.Address.CountryName"></span><!--
+    -->&nbsp;|&nbsp;<span ng-bind="productDetailsStoreCtrl.store.Contact.TypeName"></span></span>
+    <!--<dl>
+        <dt>Transaction Level:</dt>
+        <dd>45 (6 months)</dd>
+        <dt>Supplier Assessments:</dt>
+        <dd>Confirmed</dd>
+        <dt>Response Time:</dt>
+        <dd>48h - 72h</dd>
+        <dt>Response Rate:</dt>
+        <dd>87.2%</dd>
+    </dl>-->
+    <div class="bottom d-flex justify-content-between">
+        <a ui-sref-plus uisrp-is-store="true" uisrp-path="{{productDetailsStoreCtrl.store.SeoUrl}}"
+           ><span data-translate="ui.storefront.common.StoreProfile"></span></a>
+        <a ui-sref-plus uisrp-is-store="true" uisrp-path="{{productDetailsStoreCtrl.store.SeoUrl}}"
+           ><span data-translate="ui.storefront.product.detail.controls.storeDetail.ContactDetails"></span></a>
+    </div>
+</div>

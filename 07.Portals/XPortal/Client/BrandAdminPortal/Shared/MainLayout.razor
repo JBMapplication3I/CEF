@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime jsRuntime
+@inject CEFAPI cvApi
+
+<Layout Sider="true">
+  <LayoutSider>
+    <LayoutSiderContent>
+      <NavMenu />
+    </LayoutSiderContent>
+  </LayoutSider>
+  <Layout>
+    <LayoutContent>
+      @Body
+    </LayoutContent>
+    <LayoutFooter
+      Fixed="true"
+      Background="Background.Dark"
+      TextColor="TextColor.Light"
+      TextAlignment="TextAlignment.Center"
+      Padding="Padding.Is2.OnY.Is3.OnX">
+      <Blazorise.Small>
+        Copyright &copy; 2021-@DateTime.Today.Year Clarity Ventures, Inc. All rights reserved.
+      </Blazorise.Small> |
+      <Blazorise.Small>
+        <Blazorise.Anchor To="https://clarity-ventures.com/">
+          Enterprise eCommerce powered by Clarity Ventures
+        </Blazorise.Anchor>
+      </Blazorise.Small>
+    </LayoutFooter>
+  </Layout>
+</Layout>
+
+@code
+{
+}

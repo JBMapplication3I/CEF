@@ -1,0 +1,10 @@
+﻿<button type="button" class="btn btn-link wrap {{shoppingListAddToButtonCatalogCtrl.classes}}"
+        id="btnShoppingListAddToCatalog{{shoppingListAddToButtonCatalogCtrl.index}}"
+        name="btnShoppingListAddToCatalog{{shoppingListAddToButtonCatalogCtrl.index}}"
+        translate-cloak
+        translate-attr="{ title: shoppingListAddToButtonCatalogCtrl.text,
+                          'aria-label': shoppingListAddToButtonCatalogCtrl.text }"
+        ng-click="shoppingListAddToButtonCatalogCtrl.onClick()">
+    <i class="far fa-list" aria-hidden="true"></i>
+    <span class="sr-only" ng-bind="shoppingListAddToButtonCatalogCtrl.text"></span>
+</button>

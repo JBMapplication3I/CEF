@@ -1,0 +1,276 @@
+﻿<div ng-if="!gridCtrl.buildingGrid"
+  class="cvGrid container-fluid"
+  ng-class="gridCtrl.filterSide ? 'vertical-filter' : 'top-filter'">
+  <div class="row"
+    ng-class="{'full-height': !gridCtrl.dontUseFullHeight}"
+    ng-form="gridCtrl.cvGridForm">
+    <div class="filter-bar"
+      ng-class="{'vertical col-sm-4 col-md-3 col-lg-2': gridCtrl.filterSide && gridCtrl.filterColumns.length,
+                 'top col-sm-12': !gridCtrl.filterSide || !gridCtrl.filterColumns.length }">
+      <div class="row"
+        ng-class="gridCtrl.filterSide ? 'form-vertical' : 'form-inline'">
+        <div class="d-flex condensed-row">
+          <div ng-repeat="col in gridCtrl.filterColumns | filter:{filterType:'!value'} | orderBy: ['filterOrder']"
+            class="form-group"
+            ng-class="{'col-sm-6 col-md-2 col-lg-1': !gridCtrl.filterSide && (col.filterType.toLowerCase() == 'id' || col.filterType.toLowerCase() == 'boolean'),
+                       'col-sm-6 col-md-3 col-lg-2': !gridCtrl.filterSide && (col.filterType.toLowerCase() == 'input' || col.filterType.toLowerCase() == 'autocomplete' || col.filterType.toLowerCase() == 'select'),
+                       'col-sm-7 col-md-6 col-lg-5': !gridCtrl.filterSide && (col.filterType.toLowerCase() == 'minmaxnumber' || col.filterType.toLowerCase() == 'minmaxdate'),
+                       'col-sm-12': gridCtrl.filterSide}"
+            ng-switch="col.filterType.toLowerCase()">
+            <!-- Simple Text Input Filter -->
+            <label ng-switch-when="input" ng-if="gridCtrl.forceShowLabels || gridCtrl.filterSide"
+              class="control-label" for="txtFilter{{$index}}_{{col.filterField}}"
+              ng-bind="(col.titleKey | translate) || col.title || ' '">
+            </label>
+            <div ng-switch-when="input"
+              class="input-group">
+              <input type="text" class="form-control {{col.filterClass}}"
+                id="txtFilter{{$index}}_{{col.filterField}}"
+                name="txtFilter{{$index}}_{{col.filterField}}"
+                translate-attr="{ placeholder: (col.titleKey | translate) || col.title }"
+                ng-keypress="gridCtrl.search($event, 'txtFilter' + $index + '_' + col.filterField + ' ng-keypress', col.filterField)"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams[col.filterField]" />
+            </div>
+            <!-- Auto-completing Text Input Filter -->
+            <label ng-switch-when="autocomplete" ng-if="gridCtrl.forceShowLabels || gridCtrl.filterSide"
+              class="control-label" for="autoFilter{{$index}}_{{col.filterField}}"
+              ng-bind="(col.titleKey | translate) || col.title || ' '">
+            </label>
+            <div class="input-group" ng-switch-when="autocomplete">
+              <input type="text" class="form-control {{col.filterClass}}"
+                id="autoFilter{{$index}}_{{col.filterField}}"
+                name="autoFilter{{$index}}_{{col.filterField}}"
+                translate-attr="{ placeholder: (col.titleKey | translate) || col.title }"
+                ng-keypress="gridCtrl.search($event, 'autoFilter' + $index + '_' + col.filterField + ' ng-keypress')"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams[col.filterField]"
+                uib-typeahead="o.value as o.text for o in col.updateAutoCompleteList($viewValue, col.$q) | orderBy: sortOrder"
+                typeahead-loading="col.loadingProducts"
+                typeahead-wait-ms="500"
+                typeahead-min-length="1"
+                typeahead-focus-first="false"
+                typeahead-on-select="col.onAutoCompleteSelect($item, $model, $label, $event)"
+                typeahead-no-results="col.noResults" />
+              <div ng-show="col.loadingProducts && gridCtrl.searchParams[col.filterField]"
+                class="input-group-addon">
+                <i class="far fa-spinner fa-spin"></i>
+              </div>
+              <div ng-show="col.noResults && gridCtrl.searchParams[col.filterField]"
+                class="input-group-addon">
+                <i class="far fa-times"></i><!--
+                --><span class="sr-only"
+                  data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound">
+                </span>
+              </div>
+            </div>
+            <!-- JSON Attribute Filters -->
+            <label ng-switch-when="attribute" ng-if="gridCtrl.forceShowLabels || gridCtrl.filterSide"
+              class="control-label" for="txtAttrFilter_{{$index}}_0_{{col.filterField}}"
+              ng-bind="(col.titleKey | translate) || col.title || ' '">
+            </label>
+            <button ng-switch-when="attribute"
+              type="button" class="btn btn-info btn-block"
+              translate-attr="{ title: 'Add Filter Value',
+                                'aria-label': 'Add Filter Value' }"
+              data-translate="Add Filter Value"
+              ng-click="col.addValue()">
+            </button>
+            <div ng-switch-when="attribute"
+              class="input-group"
+              ng-repeat="value in gridCtrl.searchParams.JsonAttributes[col.filterField] track by $index">
+              <input type="text" class="form-control {{col.filterClass}}"
+                id="txtAttrFilter_{{$parent.$index}}_{{$index}}_{{col.filterField}}"
+                name="txtAttrFilter_{{$parent.$index}}_{{$index}}_{{col.filterField}}"
+                translate-attr="{ placeholder: (col.titleKey | translate) || col.title }"
+                ng-keypress="gridCtrl.search($event, 'txtAttrFilter_' + $parent.$index + '_' + $index + '_' + col.filterField + ' ng-keypress')"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams.JsonAttributes[col.filterField][$index]" />
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-danger"
+                  translate-attr="{ title: 'ui.admin.common.Delete',
+                                    'aria-label': 'ui.admin.common.Delete' }"
+                  ng-click="col.removeValue($index)">
+                  <i class="far fa-trash-alt"></i>
+                  <span class="sr-only"
+                    data-translate="ui.admin.common.Delete">
+                  </span>
+                </button>
+              </div>
+            </div>
+            <!-- Database Identifier (Valid from 1 to int.MaxValue-1) -->
+            <label ng-switch-when="id" ng-if="gridCtrl.forceShowLabels || gridCtrl.filterSide"
+              class="control-label" for="nudFilter{{$index}}_{{col.filterField}}"
+              ng-bind="(col.titleKey | translate) || col.title || ' '">
+            </label>
+            <div ng-switch-when="id"
+              class="input-group">
+              <input type="number" class="form-control {{col.filterClass}}"
+                id="nudFilter{{$index}}_{{col.filterField}}"
+                name="nudFilter{{$index}}_{{col.filterField}}"
+                translate-attr="{ placeholder: (col.titleKey | translate) || col.title }"
+                min="1" max="2147483646" step="1"
+                ng-keypress="gridCtrl.search($event, 'nudFilter' + $index + '_' + col.filterField + ' ng-keypress')"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams[col.filterField]" />
+            </div>
+            <!-- Select Filter (single selection of list of values) -->
+            <label ng-switch-when="select"
+              class="control-label" for="ddlFilter{{$index}}_{{col.filterField}}"
+              ng-bind="(col.titleKey | translate) || col.title || ' '">
+            </label>
+            <div ng-switch-when="select"
+              class="input-group">
+              <select class="form-control {{col.filterClass}}"
+              id="ddlFilter{{$index}}_{{col.filterField}}"
+              name="ddlFilter{{$index}}_{{col.filterField}}"
+              ng-change="gridCtrl.doEmit(col.emitName, col.filterField)"
+              ng-options="o.value as (((o.SerializableAttributes && o.SerializableAttributes['TranslationKey'] && o.SerializableAttributes['TranslationKey'].Value) | translate) || o.text)
+                          for o in col.filterOptions
+                          | orderBy: ['sortOrder','text','value','']"
+              ng-model-options="gridCtrl.debounce500"
+              ng-model="gridCtrl.searchParams[col.filterField]"></select>
+            </div>
+            <!-- Boolean Filter (tri-state: [don't filter, true, false]) -->
+            <label ng-switch-when="boolean"
+              class="control-label" for="ddlBoolFilter{{$index}}_{{col.filterField}}"
+              ng-bind="(col.titleKey | translate) || col.title || ' '">
+            </label>
+            <div ng-switch-when="boolean"
+              class="input-group">
+              <select class="form-control {{col.filterClass}}"
+                id="ddlBoolFilter{{$index}}_{{col.filterField}}"
+                name="ddlBoolFilter{{$index}}_{{col.filterField}}"
+                ng-change="gridCtrl.doEmit(col.emitName, col.filterField)"
+                ng-options="o.value as o.text for o in col.filterOptions | orderBy: ['sortOrder','']"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams[col.filterField]">
+              </select>
+            </div>
+            <!-- Numeric Range Filter --->
+            <label ng-switch-when="minmaxnumber"
+              class="control-label" for="nudMinFilter{{$index}}_{{col.filterField}}"
+              ng-bind="'Min ' + ((col.titleKey | translate) || col.title || ' ')">
+            </label>
+            <div ng-switch-when="minmaxnumber"
+              class="input-group"
+              ng-style="{ display: gridCtrl.filterSide ? 'block' : 'table-caption' }">
+              <input type="number" class="form-control px-1 {{col.filterClass}}"
+                id="nudMinFilter{{$index}}_{{col.filterField}}"
+                name="nudMinFilter{{$index}}_{{col.filterField}}"
+                translate-attr="{ placeholder: 'Min' }"
+                min="{{col.filterMin}}"
+                max="{{gridCtrl.searchParams['Max' + col.filterField] || col.filterMax}}"
+                step="{{col.filterStep}}"
+                ng-keypress="gridCtrl.search($event, 'nudMinFilter' + $index + '_' + col.filterField + ' ng-keypress')"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams['Min' + col.filterField]" />
+            </div>
+            <label ng-switch-when="minmaxnumber"
+              class="control-label" for="nudMinFilter{{$index}}_{{col.filterField}}"
+              ng-bind="'Max ' + ((col.titleKey | translate) || col.title || ' ')"></label>
+            <div ng-switch-when="minmaxnumber"
+              class="input-group"
+              ng-style="{ display: gridCtrl.filterSide ? 'block' : 'table-caption' }">
+              <input type="number" class="form-control px-1 {{col.filterClass}}"
+                id="nudMaxFilter{{$index}}_{{col.filterField}}"
+                name="nudMaxFilter{{$index}}_{{col.filterField}}"
+                translate-attr="{ placeholder: 'Max' }"
+                min="{{gridCtrl.searchParams['Min' + col.filterField] || col.filterMin}}"
+                max="{{col.filterMax}}"
+                step="{{col.filterStep}}"
+                ng-keypress="gridCtrl.search($event, 'nudMaxFilter' + $index + '_' + col.filterField + ' ng-keypress')"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams['Max' + col.filterField]" />
+            </div>
+            <!-- Date Range Filter --->
+            <label ng-switch-when="minmaxdate"
+              class="control-label" for="dateMinFilter{{$index}}_{{col.filterField}}"
+              ng-bind="'Min ' + ((col.titleKey | translate) || col.title || ' ')">
+            </label>
+            <div ng-switch-when="minmaxdate"
+              class="input-group"
+              ng-style="{ display: gridCtrl.filterSide ? 'block' : 'table-caption' }">
+              <input type="date" class="form-control pl-1 pr-0 {{col.filterClass}}"
+                id="dateMinFilter{{$index}}_{{col.filterField}}"
+                name="dateMinFilter{{$index}}_{{col.filterField}}"
+                translate-attr="{ placeholder: 'Min' }"
+                min="{{col.filterMin}}"
+                max="{{gridCtrl.searchParams['MaxDate'] || col.filterMax}}"
+                step="{{col.filterStep}}"
+                ng-keypress="gridCtrl.search($event, 'dateMinFilter' + $index + '_' + col.filterField + ' ng-keypress')"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams['MinDate']" />
+            </div>
+            <label ng-switch-when="minmaxdate"
+              class="control-label" for="dateMinFilter{{$index}}_{{col.filterField}}"
+              ng-bind="'Max ' + ((col.titleKey | translate) || col.title || ' ')"></label>
+            <div ng-switch-when="minmaxdate"
+              class="input-group"
+              ng-style="{ display: gridCtrl.filterSide ? 'block' : 'table-caption' }">
+              <input type="date" class="form-control pl-1 pr-0 {{col.filterClass}}"
+                id="dateMaxFilter{{$index}}_{{col.filterField}}"
+                name="dateMaxFilter{{$index}}_{{col.filterField}}"
+                translate-attr="{ placeholder: 'Max' }"
+                min="{{gridCtrl.searchParams['MinDate'] || col.filterMin}}"
+                max="{{col.filterMax}}"
+                step="{{col.filterStep}}"
+                ng-keypress="gridCtrl.search($event, 'dateMaxFilter' + $index + '_' + col.filterField + ' ng-keypress')"
+                ng-model-options="gridCtrl.debounce500"
+                ng-model="gridCtrl.searchParams['MaxDate']" />
+            </div>
+          </div>
+          <div class="form-group search-bar" ng-if="gridCtrl.filterColumns.length">
+            <label class="control-label" ng-if="!gridCtrl.filterSide">&nbsp;</label>
+            <div class="input-group">
+              <button type="button" class="btn btn-info"
+                id="btnGridFilter" name="btnGridFilter"
+                translate-attr="{ title: 'ui.admin.common.Filter',
+                                  'aria-label': 'ui.admin.common.Filter' }"
+                ng-class="{'col-xs-6': gridCtrl.filterSide}"
+                ng-click="gridCtrl.search()">
+                <i class="far fa-fw fa-filter" aria-hidden="true"></i>
+                <span ng-class="{'sr-only':!gridCtrl.filterSide}"
+                  data-translate="ui.admin.common.Filter">
+                </span>
+              </button>
+              <button type="button" class="btn btn-warning"
+                id="btnGridReset" name="btnGridReset"
+                ng-class="{'col-xs-6': gridCtrl.filterSide}"
+                translate-attr="{ title: 'ui.admin.common.Reset',
+                                  'aria-label': 'ui.admin.common.Reset' }"
+                ng-click="gridCtrl.resetSearch()">
+                <i class="far fa-fw fa-undo" aria-hidden="true"></i>
+                <span ng-class="{'sr-only':!gridCtrl.filterSide}"
+                  data-translate="ui.admin.common.Reset">
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+    <div ng-if="!gridCtrl.buildingGrid"
+      class="grid-area"
+      ng-class="{ 'col-sm-8 col-md-9 col-lg-10': gridCtrl.filterSide && gridCtrl.filterColumns.length,
+                  'col-sm-12': !gridCtrl.filterSide || !gridCtrl.filterColumns.length,
+                  'loading': gridCtrl.gettingData }">
+      <kendo-grid
+        class="row"
+        ng-class="{'groupable':groupable}"
+        k-columns="gridCtrl.gridColumns"
+        k-data-source="gridCtrl.gridDataSource"
+        k-options="gridCtrl.gridOptions">
+      </kendo-grid>
+      <div class="loading-cover" ng-if="gridCtrl.gettingData">
+        <div>
+          <i class="far fa-spinner fa-spin fa-5x fa-fw"></i>
+          <p data-translate="ui.admin.common.Loading.Ellipses" translate-cloak></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-transclude></ng-transclude>

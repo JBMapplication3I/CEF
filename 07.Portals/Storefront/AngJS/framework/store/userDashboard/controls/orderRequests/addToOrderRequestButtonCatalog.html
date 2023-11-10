@@ -1,0 +1,10 @@
+﻿<button type="button" class="btn btn-link wrap {{orderRequestAddToButtonCatalogCtrl.classes}}"
+        id="btnOrderRequestAddToCatalog{{orderRequestAddToButtonCatalogCtrl.index}}"
+        name="btnOrderRequestAddToCatalog{{orderRequestAddToButtonCatalogCtrl.index}}"
+        translate-cloak
+        translate-attr="{ title: orderRequestAddToButtonCatalogCtrl.text,
+                          'aria-label': orderRequestAddToButtonCatalogCtrl.text }"
+        ng-click="orderRequestAddToButtonCatalogCtrl.onClick()">
+    <i class="far fa-list" aria-hidden="true"></i>
+    <span class="sr-only" ng-bind="orderRequestAddToButtonCatalogCtrl.text"></span>
+</button>

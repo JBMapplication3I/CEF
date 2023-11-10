@@ -1,0 +1,136 @@
+<div class="row full-height">
+  <div class="col-sm-12">
+    <h3 class="inline-block"
+      data-translate="ui.admin.common.LineItems">
+    </h3>
+    <button ng-if="liwCtrl.isEditable"
+      type="button" class="btn btn-primary pull-right"
+      translate-attr="{ title: 'ui.admin.common.AddLineItem',
+                        'aria-label': 'ui.admin.common.AddLineItem' }"
+      data-translate="ui.admin.common.AddLineItem"
+      ng-click="liwCtrl.addLineItem()">
+    </button>
+    <h3 ng-if="liwCtrl.viewState.running"
+      class="inline-block pull-right text-info"
+      data-translate="ui.admin.common.Loading.Ellipses">
+    </h3>
+  </div>
+  <div cef-paging-header
+    paging="liwCtrl.paging"
+    class="col-sm-12">
+  </div>
+  <!-- The Table itself -->
+  <div class="col-sm-12 table-outer">
+    <div class="table-responsive line-items full-height">
+      <p ng-if="liwCtrl.viewState.running" data-translate="">Loading...</p>
+      <table class="table table-bordered table-hover table-condensed mb-0" ng-if="!liwCtrl.viewState.running">
+        <thead>
+          <tr>
+            <th class="w-15" data-translate="ui.admin.common.Key"></th>
+            <th colspan="{{(liwCtrl.isEditable ? 4 : 5) + (liwCtrl.cefConfig.featureSet.shipping.enabled ? 1 : 0)}}"
+              ng-class="liwCtrl.isEditable ? 'w-60' : 'w-70'"
+              data-translate="ui.admin.common.ProductName">
+            </th>
+            <th class="w-10 text-center"
+              ng-if="liwCtrl.isEditable"
+              data-translate="ui.admin.common.Action.Plural">
+            </th>
+          </tr>
+          <tr>
+            <th class="w-15" data-translate="ui.admin.common.Sku"></th>
+            <th class="w-30" data-translate="ui.admin.controls.widgets.lineItemsWidget.ShippingMethod"
+              ng-if="liwCtrl.cefConfig.featureSet.shipping.enabled">
+            </th>
+            <th class="w-15 text-center" data-translate="ui.admin.common.CorePrice"></th>
+            <th class="w-15 text-center" data-translate="ui.admin.common.SellingPrice"></th>
+            <th class="w-15 text-center" data-translate="ui.admin.common.Quantity"></th>
+            <th class="w-15 text-center" data-translate="ui.admin.common.QuantityBackordered"
+              ng-if="liwCtrl.cefConfig.featureSet.inventory.backOrder.enabled">
+            </th>
+            <th class="w-15 text-center" data-translate="ui.admin.common.QuantityPreSold"
+              ng-if="liwCtrl.cefConfig.featureSet.inventory.preSale.enabled">
+            </th>
+            <th class="w-10 text-center" data-translate="ui.admin.common.Subtotal"></th>
+          </tr>
+        </thead>
+        <tbody ng-if="!liwCtrl.record.SalesItems || !liwCtrl.paging.filteredCount">
+          <tr>
+            <td colspan="6"
+              data-translate="ui.admin.controls.widgets.lineItemsWidget.NoLineItemsHaveBeenAdded">
+            </td>
+          </tr>
+        </tbody>
+        <tbody role="row"
+          ng-repeat="item in liwCtrl.paging.filteredData
+                     | orderBy: ['CustomKey','ID']
+                     | limitTo: liwCtrl.paging.pageSize
+                              : liwCtrl.paging.skip()">
+          <tr class="dataID dataID{{item.ID}}">
+            <td class="p-1" ng-bind="item.CustomKey || '-'"></td>
+            <td class="p-1"
+              colspan="{{(liwCtrl.isEditable ? 4 : 5)
+                + (liwCtrl.cefConfig.featureSet.shipping.enabled ? 1 : 0)}}"
+              ng-bind="item.Name || item.ProductName">
+            </td>
+            <td class="p-0" id="commandCellLineItem{{item.ID}}"
+              ng-if="liwCtrl.isEditable"
+              ng-init="liwCtrl.setCommandCell(item.ID)">
+              <a class="btn btn-block btn-info"
+                id="btnLineItemActions{{item.ID}}" name="btnLineItemActions{{item.ID}}"
+                translate-attr="{ title: 'ui.admin.controls.widgets.lineItemsWidget.LineItemActionsMenu',
+                                  'aria-label': 'ui.admin.controls.widgets.lineItemsWidget.LineItemActionsMenu' }"
+                data-translate="ui.admin.common.Action.Plural"
+                ng-click="liwCtrl.openMenu(item.ID || ($index * -1), item)"></a>
+              <ul id="menuActionsLineItem{{item.ID}}" aria-id="menuActionsLineItem{{item.ID}}"
+                kendo-context-menu
+                k-filter="'tr.dataID{{item.ID}} > td'"
+                k-anchor="'\\#commandCellLineItem{{item.ID}}'"
+                k-open-on-click="true"
+                k-close-on-click="true"
+                k-on-open="liwCtrl.onMenuOpen(item.ID, item)"
+                k-on-close="liwCtrl.closeMenu(item.ID)">
+                <li role="presentation" class="p-0" disabled>
+                  #{{item.ID}} - SKU {{item.Sku}}
+                </li>
+                <li role="menuitem" class="p-0">
+                  <a class="p-1 text-regular block"
+                    translate-attr="{ title: 'ui.admin.common.Edit',
+                                      'aria-label': 'ui.admin.common.Edit' }"
+                    ng-click="liwCtrl.editLineItem(item)">
+                    <i class="far fa-fw fa-pencil"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Edit"></span>
+                  </a>
+                </li>
+                <li role="menuitem" class="p-0">
+                  <a class="p-1 text-regular block"
+                    translate-attr="{ title: 'ui.admin.common.Remove',
+                                      'aria-label': 'ui.admin.common.Remove' }"
+                    ng-click="liwCtrl.removeLineItem(item)">
+                    <i class="far fa-fw fa-remove"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Remove"></span>
+                  </a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+          <tr class="dataID dataID{{item.ID}}">
+            <td class="w-20" ng-bind="item.Sku || '-'"></td>
+            <td class="w-25" ng-bind="item.ShippingCarrierMethodName || 'Not Set'"
+              ng-if="liwCtrl.cefConfig.featureSet.shipping.enabled">
+            </td>
+            <td class="w-15 text-right" ng-bind="item.UnitCorePrice | globalizedCurrency"></td>
+            <td class="w-15 text-right" ng-bind="(item.UnitSoldPrice || item.UnitCorePrice) | globalizedCurrency"></td>
+            <td class="w-15 text-right" ng-bind="item.Quantity | number:4"></td>
+            <td class="w-15 text-right" ng-bind="item.QuantityBackOrdered | number:4"
+              ng-if="liwCtrl.cefConfig.featureSet.inventory.backOrder.enabled">
+            </td>
+            <td class="w-15 text-right" ng-bind="item.QuantityPreSold | number:4"
+              ng-if="liwCtrl.cefConfig.featureSet.inventory.preSale.enabled">
+            </td>
+            <td class="w-10 text-right" ng-bind="item.ExtendedPrice | globalizedCurrency"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

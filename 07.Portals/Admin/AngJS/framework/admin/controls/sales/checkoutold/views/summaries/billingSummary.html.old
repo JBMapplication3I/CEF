@@ -1,0 +1,28 @@
+﻿<div class="row">
+    <div class="col-md-6">
+        <!-- TODO: Replace with contact address block widget -->
+        <p>
+            <small>
+                <span class="block bold" ng-show="cefCheckoutCtrl.selectedAddressBilling.Address.CustomKey" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Address.CustomKey"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Email1" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Email1"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Phone1" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Phone1"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Phone2" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Phone2"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Phone3" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Phone3"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Fax1" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Fax1"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Company" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Name"></span>
+            </small>
+        </p>
+    </div>
+    <div class="col-md-6">
+        <p>
+            <small>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.FirstName" ng-bind="cefCheckoutCtrl.selectedAddressBilling.FirstName + ' ' + cefCheckoutCtrl.selectedAddressBilling.LastName"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Address.Street1" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Address.Street1"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Address.Street2" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Address.Street2"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Address.Street3" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Address.Street3"></span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Address.City">{{cefCheckoutCtrl.selectedAddressBilling.Address.City}}, {{cefCheckoutCtrl.selectedAddressBilling.Address.RegionCode || cefCheckoutCtrl.selectedAddressBilling.Address.Region.Code}} {{cefCheckoutCtrl.selectedAddressBilling.Address.PostalCode}}</span>
+                <span class="block" ng-show="cefCheckoutCtrl.selectedAddressBilling.Address.CountryName" ng-bind="cefCheckoutCtrl.selectedAddressBilling.Address.CountryName"></span>
+            </small>
+        </p>
+    </div>
+</div>

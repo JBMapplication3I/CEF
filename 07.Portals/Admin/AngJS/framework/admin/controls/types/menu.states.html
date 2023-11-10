@@ -1,0 +1,50 @@
+<!-- States -->
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('states.salesInvoiceStates')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('states.salesInvoiceStates').requiresPermission + '')">
+<a ui-sref="states.salesInvoiceStates.list" ng-click="toggleDropdown($event)">
+Invoice States
+<span ng-if="$root.$state.includes('states.salesInvoiceStates')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('states.salesOrderStates')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('states.salesOrderStates').requiresPermission + '')">
+<a ui-sref="states.salesOrderStates.list" ng-click="toggleDropdown($event)">
+Order States
+<span ng-if="$root.$state.includes('states.salesOrderStates')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('states.purchaseOrderStates')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('states.purchaseOrderStates').requiresPermission + '')">
+<a ui-sref="states.purchaseOrderStates.list" ng-click="toggleDropdown($event)">
+Purchase Order States
+<span ng-if="$root.$state.includes('states.purchaseOrderStates')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('states.salesQuoteStates')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('states.salesQuoteStates').requiresPermission + '')">
+<a ui-sref="states.salesQuoteStates.list" ng-click="toggleDropdown($event)">
+Quote States
+<span ng-if="$root.$state.includes('states.salesQuoteStates')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('states.salesReturnStates')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('states.salesReturnStates').requiresPermission + '')">
+<a ui-sref="states.salesReturnStates.list" ng-click="toggleDropdown($event)">
+Return States
+<span ng-if="$root.$state.includes('states.salesReturnStates')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('states.sampleRequestStates')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('states.sampleRequestStates').requiresPermission + '')">
+<a ui-sref="states.sampleRequestStates.list" ng-click="toggleDropdown($event)">
+Sample Request States
+<span ng-if="$root.$state.includes('states.sampleRequestStates')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('states.cartStates')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('states.cartStates').requiresPermission + '')">
+<a ui-sref="states.cartStates.list" ng-click="toggleDropdown($event)">
+Cart States
+<span ng-if="$root.$state.includes('states.cartStates')" class="sr-only">(current)</span>
+</a>
+</div>

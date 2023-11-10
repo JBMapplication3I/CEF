@@ -1,0 +1,22 @@
+﻿<div class="row"
+     ng-if="!cefBulkUploadCtrl.viewstate.manual">
+    <div class="col-md-12 text-center">
+        <h1 data-translate="ui.storefront.bulkUpload.bulkUploadLanding.BulkOrderForm"></h1>
+        <p data-translate="ui.storefront.bulkUpload.bulkUploadLanding.FollowTheStepsToQuicklyCreateABulkOrder"></p>
+        <div cef-upload-mapping-widget
+             mapping-object="cefBulkUploadCtrl.uploadData">
+        </div>
+        <p>
+            <a target="_self" ui-sref-plus uisrp-path="/images/Product/Imports/LatestDataMapping.xlsx">
+                <i class="far fa-download" aria-hidden="true"
+                   download="LatestDataMapping"></i>&nbsp;<!--
+                --><span data-translate="ui.storefront.bulkUpload.bulkUploadLanding.DownloadOurBulkOrderTemplate"></span>
+            </a>
+        </p>
+    </div>
+    <div class="col-md-12 text-center">
+        <button type="button" class="btn btn-primary"
+                data-translate="ui.storefront.bulkUpload.bulkUploadLanding.ConfirmMapping"
+                ng-click="cefBulkUploadCtrl.uploadFile(cefBulkUploadCtrl.uploadData)"></button>
+    </div>
+</div>

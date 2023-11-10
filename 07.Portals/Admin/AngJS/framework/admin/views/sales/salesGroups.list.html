@@ -1,0 +1,82 @@
+﻿<cv-page
+  ng-if="$root.cvSecurityService.hasPermission('Admin.Sales.SalesGroups')"
+  caption="Manage Sales Groups"
+  head-icon="fa-list">
+  <cv-widget>
+    <!--
+    <widget-menu-item
+      caption="Add Sales Group"
+      icon-class="fa-plus-circle"
+      click="$root.$state.go('sales.salesGroups.new')"
+      permission="'Sales.SalesGroup.Create'">
+    </widget-menu-item>
+    -->
+    <!--
+    <widget-menu-item
+      caption="Import"
+      icon-class="fa-cloud-upload"
+      click="$root.$state.go('sales.salesGroups.import')"
+      permission="'Sales.SalesGroup.Create'">
+    </widget-menu-item>
+    -->
+    <widget-body ng-controller="SearchController as search">
+      <cv-grid
+        show-pager="true"
+        page-sizes="8,16,32,64,128"
+        server-paging="true"
+        filter-side="true"
+        force-show-labels="true"
+        on-search="search.getSalesGroups"
+        partial-reset="false"
+        on-deactivate="search.deactivateSalesGroup"
+        on-reactivate="search.reactivateSalesGroup"
+        on-delete="search.deleteSalesGroup"
+        edit-state="sales.salesGroups.detail,[ID]"
+        permissions-base="Sales.SalesGroup">
+        <cv-column
+          title="#"
+          field="ID"
+          width="75px"
+          filter
+          filter-order="3" />
+        <cv-column
+          if="$parent.search.cefConfig.featureSet.salesGroups.hasIntegratedKeys"
+          title="Key"
+          field="CustomKey"
+          filter
+          filter-order="4" />
+        <cv-column
+          title="Account"
+          field="AccountName"
+          filter
+          filter-field="AccountIDOrCustomKeyOrName"
+          filter-order="5"
+          filter-type="input">
+        </cv-column>
+        <!--
+        <cv-column
+          title="Account"
+          field="AccountName"
+          filter
+          filter-field="AccountKey"
+          filter-order="5"
+          filter-type="autocomplete"
+          on-autocomplete="$parent.search.getAccounts"
+          on-option-repeat="$parent.search.getAccounts">
+          <autocomplete-parameter listen="true">AccountKey</autocomplete-parameter>
+        </cv-column>
+        -->
+        <cv-column
+          title-key="ui.admin.common.Date"
+          field="CreatedDate"
+          type="date"
+          width="30%"
+          filter
+          filter-type="minmaxdate"
+          format="yyyy MMM dd hh:mm a"
+          sort-by="1"
+          sort-by-direction="desc" />
+      </cv-grid>
+    </widget-body>
+  </cv-widget>
+</cv-page>

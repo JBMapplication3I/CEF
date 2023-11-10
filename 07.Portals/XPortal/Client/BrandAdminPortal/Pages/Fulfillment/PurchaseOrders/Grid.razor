@@ -1,0 +1,489 @@
+﻿@page "/fulfillment/purchase-orders"
+@using System.Linq
+@inherits MVC.Core.GridViewTemplatedControllerBase<PurchaseOrderPagedResults, PurchaseOrderModel, MVC.Api.Endpoints.AdminGetPurchaseOrdersForPortal>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="purchaseOrdersPage">
+    <Div Class="page-content w-100">
+      @if (ViewState.loading || Data is null && !ViewState.hasError)
+      {
+        <Div Class="page-content p-3">
+          <LoadingBlock />
+        </Div>
+      }
+      else if (ViewState.hasError)
+      {
+        <Div Class="page-content p-3 w-100">
+          <ErrorBlock />
+        </Div>
+      }
+      else if (CurrentDataCollection is not null)
+      {
+        <Div Class="page-content-with-footer">
+          <Container Fluid="true">
+            <Row>
+              <Column>
+                <Heading Size="HeadingSize.Is1" Class="my-3">
+                  <Blazorise.Icons.FontAwesome.Icon Name="IconName.Receipt" Class="mr-2" />
+                  @(PortalRoute?.HeaderText ?? PortalRoute?.Title ?? "Purchase Orders")
+                </Heading>
+                <Validations
+                  EditContext="EditContext"
+                  Mode="ValidationMode.Manual"
+                  ValidateOnLoad="true">
+                  <DataGrid
+                    TItem="PurchaseOrderModel"
+                    Data="@CurrentDataCollection.Results"
+                    Responsive="Responsive"
+                    Narrow="Narrow"
+                    Hoverable="Hoverable"
+                    Striped="Striped"
+                    Bordered="Bordered"
+                    Borderless="Borderless"
+                    Filterable="Filterable"
+                    ShowCaptions="ShowCaptions"
+                    Sortable="Sortable"
+                    Resizable="Resizable"
+                    ShowPageSizes="ShowPageSizes"
+                    ShowPager="ShowPager"
+                    PageSizes="PageSizes"
+                    PageSize="CurrentPageSize"
+                    PageSizeChanged="i => { CurrentPageSize = i; StateHasChanged(); }"
+                    CurrentPage="CurrentPage"
+                    PageChanged="e => { CurrentPage = e.Page; StateHasChanged(); }"
+                    MaxPaginationLinks="MaxPaginationLinks"
+                    TotalItems="@CurrentDataCollection.TotalCount"
+                    ReadData="@OnReadData"
+                    CustomFilter="@OnCustomFilter"
+                    SelectedRowChanged="@OnSelectedRowChanged"
+                    FilterMethod="DataGridFilterMethod.Contains"
+                    CommandMode="DataGridCommandMode.Default"
+                    SelectionMode="DataGridSelectionMode.Single"
+                    SortMode="DataGridSortMode.Multiple"
+                    PagerPosition="DataGridPagerPosition.Bottom">
+                    <DataGridColumns>
+                      <DataGridNumericColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.ID)"
+                        Caption=""
+                        Sortable="true"
+                        Filterable="true"
+                        FilterCellClass="text-right"
+                        Context="curr"
+                        Width="5%"
+                        DisplayFormat="{0:00000}"
+                        CellClass="@(_ => "text-right")">
+                        <FilterTemplate></FilterTemplate>
+                        <DisplayTemplate>
+                          <Check
+                            TValue="bool"
+                            Disabled="@(curr.StatusKey != "Approved")"
+                            Checked="@(selectedPurchaseOrderModels.ContainsKey(curr.ID))"
+                            CheckedChanged="@(e => PurchaseOrderChecked(curr, e))"
+                          />
+                        </DisplayTemplate>
+                      </DataGridNumericColumn>
+                      <DataGridNumericColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.ID)"
+                        Caption="ID"
+                        Sortable="true"
+                        Filterable="true"
+                        FilterCellClass="text-right"
+                        Width="5%"
+                        DisplayFormat="{0:00000}"
+                        CellClass="@(_ => "text-right")">
+                        <FilterTemplate>
+                          <NumericFormGroup
+                            TValue="int?"
+                            FormClasses="m-0"
+                            Value="@IDFilterValue"
+                            ValueExpression="@(() => IDFilterValue)"
+                            ValueChanged="@(value => { IDFilterValue = value ; })"
+                          />
+                        </FilterTemplate>
+                      </DataGridNumericColumn>
+                      <DataGridColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.CustomKey)"
+                        Caption="Key"
+                        Sortable="true" Filterable="true">
+                        <FilterTemplate>
+                          <TextEdit TextChanged="@(args => { CustomFilterValue = args;})" />
+                        </FilterTemplate>
+                      </DataGridColumn>
+                      <DataGridColumn
+                        TItem="PurchaseOrderModel"
+                        Field="Totals.Total"
+                        Caption="Total"
+                        DisplayFormat="{0:C}"
+                        Sortable="false"
+                        Filterable="false">
+                      </DataGridColumn>
+                      <DataGridDateColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.CreatedDate)"
+                        Caption="Date"
+                        Sortable="true"
+                        Filterable="true"
+                        DisplayFormat="{0:MMM dd, yyyy hh:mm a}">
+                        <FilterTemplate>
+                          <DateEdit
+                            Class="w-45 d-inline"
+                            TValue="DateTime?"
+                            DisplayFormat="MMM dd, yyyy hh:mm a"
+                            Placeholder="Select a date"
+                            DateChanged="@(value => { MinDateFilterValue = value; })"
+                          />
+                          <span class="px-2">to</span>
+                          <DateEdit
+                            Class="w-45 d-inline"
+                            TValue="DateTime?"
+                            DisplayFormat="MMM dd, yyyy hh:mm a"
+                            Placeholder="Select a date"
+                            DateChanged="@(value => { MaxDateFilterValue = value; })"
+                          />
+                        </FilterTemplate>
+                      </DataGridDateColumn>
+                      <DataGridColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.StatusID)"
+                        Caption="Status"
+                        Sortable="true"
+                        Filterable="true">
+                        <DisplayTemplate>@StatusIDToDisplayName(context.StatusID)</DisplayTemplate>
+                        <FilterTemplate>
+                          <Select
+                            TValue="int?"
+                            SelectedValue="@SelectedStatusFilter"
+                            SelectedValueChanged="@(value => { SelectedStatusFilter = value; context.TriggerFilterChange(SelectedStatusFilter); })">
+                            <SelectItem TValue="int" Value="@(0)">Any</SelectItem>
+                            @if (Contract.CheckNotEmpty(Statuses))
+                            {
+                              @foreach(var status in Statuses!)
+                              {
+                                <SelectItem TValue="int" Value="@status.ID">@StatusIDToDisplayName(status.ID)</SelectItem>
+                              }
+                            }
+                          </Select>
+                        </FilterTemplate>
+                      </DataGridColumn>
+                      <DataGridColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.ID)"
+                        Caption=""
+                        Width="48px"
+                        Sortable="false"
+                        Filterable="false">
+                        <DisplayTemplate>
+                          <Button
+                            Color="Color.Link"
+                            Class="btn-link-primary rounded-0"
+                            Clicked="@(() => OnItemViewClicked(context.ID))">
+                            View
+                          </Button>
+                        </DisplayTemplate>
+                      </DataGridColumn>
+                    </DataGridColumns>
+                    <EmptyTemplate><div class="box p-3">No records found.</div></EmptyTemplate>
+                    <LoadingTemplate><div class="box p-3"><Progress Size="Size.Small" Color="Color.Primary" Value="35"></Progress></div></LoadingTemplate>
+                    <FirstPageButtonTemplate><span><Blazorise.Icons.FontAwesome.Icon Name="@("fa-angle-double-left")" /></span></FirstPageButtonTemplate>
+                    <PreviousPageButtonTemplate><span><Blazorise.Icons.FontAwesome.Icon Name="IconName.AngleLeft" /></span></PreviousPageButtonTemplate>
+                    <NextPageButtonTemplate><span><Blazorise.Icons.FontAwesome.Icon Name="IconName.AngleRight" /></span></NextPageButtonTemplate>
+                    <LastPageButtonTemplate><span><Blazorise.Icons.FontAwesome.Icon Name="@("fa-angle-double-right")" /></span></LastPageButtonTemplate>
+                  </DataGrid>
+                  <hr />
+                  <div class="row justify-content-between m-0 my-3">
+                    <h2 class="my-3">Selected Purchase Orders</h2>
+                    @*
+                    <Button
+                      Color="Color.Primary"
+                      Block="false"
+                      Disabled="@(selectedPurchaseOrderModels.Count == 0 ? true : false)"
+                      Class="mb-3 float-right"
+                      Clicked="CreateInvoice">
+                      Create Invoice
+                    </Button>
+                    *@
+                  </div>
+                  <DataGrid
+                    TItem="PurchaseOrderModel"
+                    @ref="selectedGrid"
+                    Data="@selectedPurchaseOrderModels.Values"
+                    Responsive="Responsive"
+                    Narrow="Narrow"
+                    Hoverable="Hoverable"
+                    Striped="Striped"
+                    Bordered="Bordered"
+                    Borderless="Borderless"
+                    Filterable="Filterable"
+                    ShowCaptions="ShowCaptions"
+                    Sortable="Sortable"
+                    Resizable="Resizable"
+                    ShowPageSizes="ShowPageSizes"
+                    ShowPager="ShowPager"
+                    PageSizes="PageSizes"
+                    PageSize="CurrentPageSize"
+                    PageSizeChanged="i => { CurrentPageSize = i; StateHasChanged(); }"
+                    CurrentPage="CurrentPage"
+                    PageChanged="e => { CurrentPage = e.Page; StateHasChanged(); }"
+                    MaxPaginationLinks="MaxPaginationLinks"
+                    TotalItems="@selectedPurchaseOrderModels.Count"
+                    FilterMethod="DataGridFilterMethod.Contains"
+                    CommandMode="DataGridCommandMode.Default"
+                    SelectionMode="DataGridSelectionMode.Single"
+                    SortMode="DataGridSortMode.Multiple"
+                    PagerPosition="DataGridPagerPosition.Bottom">
+                    <DataGridColumns>
+                      <DataGridNumericColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.ID)"
+                        Caption=""
+                        Sortable="true"
+                        Filterable="true"
+                        FilterCellClass="text-right"
+                        Context="curr"
+                        Width="5%"
+                        DisplayFormat="{0:00000}"
+                        CellClass="@(_ => "text-right")">
+                        <DisplayTemplate>
+                          <Check
+                            TValue="bool"
+                            Checked="@(selectedPurchaseOrderModels.ContainsKey(curr.ID))"
+                            CheckedChanged="@(e => PurchaseOrderChecked(curr, e))"
+                          />
+                        </DisplayTemplate>
+                      </DataGridNumericColumn>
+                      <DataGridNumericColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.ID)"
+                        Caption="ID"
+                        Sortable="true"
+                        Filterable="true"
+                        FilterCellClass="text-right"
+                        Width="5%"
+                        DisplayFormat="{0:00000}"
+                        CellClass="@(_ => "text-right")"
+                      />
+                      <DataGridColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.CustomKey)"
+                        Caption="Key"
+                        Sortable="true"
+                        Filterable="true"
+                      />
+                      <DataGridColumn
+                        TItem="PurchaseOrderModel"
+                        Field="Totals.Total"
+                        Caption="Total"
+                        DisplayFormat="{0:C}"
+                        Sortable="false"
+                        Filterable="false">
+                      </DataGridColumn>
+                      <DataGridDateColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.CreatedDate)"
+                        Caption="Date"
+                        Sortable="true"
+                        Filterable="true"
+                        DisplayFormat="{0:MMM dd, yyyy hh:mm a}"
+                      />
+                      <DataGridColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.StatusID)"
+                        Caption="Status"
+                        Sortable="true"
+                        Filterable="true">
+                        <DisplayTemplate>@StatusIDToDisplayName(context.StatusID)</DisplayTemplate>
+                      </DataGridColumn>
+                      <DataGridColumn
+                        TItem="PurchaseOrderModel"
+                        Field="@nameof(PurchaseOrderModel.ID)"
+                        Caption=""
+                        Width="48px"
+                        Sortable="false"
+                        Filterable="false">
+                        <DisplayTemplate>
+                          <Button
+                            Color="Color.Link"
+                            Class="btn-link-primary rounded-0"
+                            Clicked="@(() => OnItemViewClicked(context.ID))">
+                            View
+                          </Button>
+                        </DisplayTemplate>
+                      </DataGridColumn>
+                    </DataGridColumns>
+                    <EmptyTemplate><div class="box p-3">No records checked.</div></EmptyTemplate>
+                    <LoadingTemplate><div class="box p-3"><Progress Size="Size.Small" Color="Color.Primary" Value="35"></Progress></div></LoadingTemplate>
+                    <FirstPageButtonTemplate><span><Blazorise.Icons.FontAwesome.Icon Name="@("fa-angle-double-left")" /></span></FirstPageButtonTemplate>
+                    <PreviousPageButtonTemplate><span><Blazorise.Icons.FontAwesome.Icon Name="IconName.AngleLeft" /></span></PreviousPageButtonTemplate>
+                    <NextPageButtonTemplate><span><Blazorise.Icons.FontAwesome.Icon Name="IconName.AngleRight" /></span></NextPageButtonTemplate>
+                    <LastPageButtonTemplate><span><Blazorise.Icons.FontAwesome.Icon Name="@("fa-angle-double-right")" /></span></LastPageButtonTemplate>
+                  </DataGrid>
+                </Validations>
+              </Column>
+            </Row>
+          </Container>
+        </Div>
+      }
+    </Div>
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridViewRouteBase => "/fulfillment/purchase-orders";
+
+  /// <inheritdoc />
+  protected override string EditorRouteBase => GridViewRouteBase + "/editor/";
+
+  /// <inheritdoc />
+  protected override string CreatorRouteBase => GridViewRouteBase + "/creator/";
+
+  #region Dynamic Properties for UI
+  private DataGrid<PurchaseOrderModel>? selectedGrid;
+  private DateTime? MaxDateFilterValue { get; set; }
+  private DateTime? MinDateFilterValue { get; set; }
+  private int? IDFilterValue { get; set; }
+  private int? SelectedStatusFilter { get; set; }
+  private List<StatusModel>? Statuses { get; set; }
+  private PagedResultsBase<PurchaseOrderModel>? Data { get; set; }
+  private readonly Dictionary<int, PurchaseOrderModel> selectedPurchaseOrderModels = new();
+  #endregion
+  #endregion
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedInitialDataAsync()
+  {
+    return Task.WhenAll(LoadStatusesAsync());
+  }
+
+  /// <inheritdoc />
+  protected override async Task<MVC.Core.IHttpPromiseCallbackArg<PurchaseOrderPagedResults?>> FilteredDataLoadCallAsync(
+    DataGridReadDataEventArgs<PurchaseOrderModel>? e)
+  {
+    DebugBeginMethod();
+    var dto = new MVC.Api.Endpoints.AdminGetPurchaseOrdersForPortal
+    {
+      Active = true,
+      Paging = new() { Size = CurrentPageSize, StartIndex = CurrentPage },
+    };
+    await ExtendSearchDTOAsync(e, dto).ConfigureAwait(false);
+    DebugEndMethod();
+    return await cvApi.AdminGetPurchaseOrdersForPortal(dto).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  protected override Task<MVC.Core.IHttpPromiseCallbackArg<PurchaseOrderPagedResults?>> InitialDataLoadCallAsync()
+  {
+    return FilteredDataLoadCallAsync(null);
+  }
+
+  /// <inheritdoc />
+  protected override bool CustomFilterCheck(PurchaseOrderModel model)
+  {
+    return model.CustomKey?.Contains(CustomFilterValue!, StringComparison.OrdinalIgnoreCase) == true;
+  }
+
+  private /*override*/ Task ExtendSearchDTOAsync<TDTO>(
+      DataGridReadDataEventArgs<PurchaseOrderModel>? e,
+      TDTO dto)
+    where TDTO : PurchaseOrderSearchModel
+  {
+    DebugBeginMethod();
+    if (e is null)
+    {
+      return Task.CompletedTask;
+    }
+    var sorts = (
+      from dataGridColumnInfo in e.Columns
+      where dataGridColumnInfo.SortDirection != SortDirection.None
+      select new Sort
+      {
+        Dir = dataGridColumnInfo.SortDirection == SortDirection.Ascending ? "asc" : "desc",
+        Order = dataGridColumnInfo.SortIndex,
+        Field = dataGridColumnInfo.Field,
+      })
+      .ToList();
+    foreach(var dataGridColumnInfo in e.Columns.Where(x => x.SearchValue is not null))
+    {
+      switch(dataGridColumnInfo.Field)
+      {
+        case nameof(BaseModel.ID):
+        {
+          dto.ID = dataGridColumnInfo.SearchValue as int?;
+          break;
+        }
+        case nameof(BaseModel.CustomKey):
+        {
+          dto.CustomKey = dataGridColumnInfo.SearchValue as string;
+          break;
+        }
+        case nameof(PurchaseOrderModel.StatusID) when dataGridColumnInfo.SearchValue is int asInt and > 0:
+        {
+          dto.StatusID = asInt;
+          break;
+        }
+      }
+    }
+  // NOTE: MasterID, Active, AsListing are enforced on api-side
+    dto.ID = IDFilterValue;
+    dto.CustomKey = CustomFilterValue;
+    dto.MinDate = MinDateFilterValue;
+    dto.MaxDate = MaxDateFilterValue;
+    DebugEndMethod();
+    return Task.CompletedTask;
+  }
+
+  private void OnItemViewClickedCreator(PurchaseOrderModel product)
+  {
+    NavigationManager.NavigateTo("/fulfillment/purchase-orders/creator");
+  }
+
+  private Task PurchaseOrderChecked(PurchaseOrderModel curr, bool val)
+  {
+    if (val! && curr.StatusKey == "Approved")
+    {
+      selectedPurchaseOrderModels[curr.ID] = curr;
+    }
+    else
+    {
+      selectedPurchaseOrderModels.Remove(curr.ID);
+    }
+    StateHasChanged();
+    return Task.CompletedTask;
+    @*.Where(p => !selectedPurchaseOrderModels.ContainsKey(p.ID))*@
+  }
+
+  private string StatusIDToDisplayName(int id)
+  {
+    if (!Contract.CheckValidID(id) || Contract.CheckEmpty(Statuses))
+    {
+      return "Unknown";
+    }
+    var found = Statuses!.SingleOrDefault(x => x.ID == id);
+    if (found is not null)
+    {
+      return found.DisplayName ?? found.Name ?? "Unknown";
+    }
+    return "Unknown";
+  }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetPurchaseOrderStatuses(new() { Active = true }).ConfigureAwait(false);
+    ////ConsoleDebug(result.data);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+}

@@ -1,0 +1,19 @@
+<div class="text-right mb-3">
+    <div cef-shopping-list-create-button
+         text="Create a New List">
+    </div>
+</div>
+<div ng-controller="StoreSearchController as search">
+    <cv-grid show-pager="true" page-sizes="10" server-paging="true"
+             id-field="Name"
+             on-search="search.getCurrentUserCartTypes"
+             detail-state="userDashboard.shoppingLists.detail,[Name]"
+             refresh-event="updateShoppingLists">
+        <cv-query-param field="IncludeNotCreated" value="False" />
+        <cv-column field="DisplayName" title="List Name" sid="idChange" width="40%" />
+        <cv-column field="CreatedDate"
+                   title="List Date"
+                   format="convertJSONDate | date:'yyyy-MM-dd'"
+                   width="40%" />
+    </cv-grid>
+</div>

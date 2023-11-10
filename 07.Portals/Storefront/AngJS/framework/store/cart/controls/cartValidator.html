@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-12">
+        <div class="alerts" id="alertCartValidationMessages">
+            <div ng-repeat="em in cartValidatorCtrl.errorMessages | filter: cartValidatorCtrl.errorMessages.includes('WARNING! Total Sales Quantity of')">
+                <p ng-repeat="m in em"
+                   class="alert {{m.cssclass}}" role="alert"
+                   bind-html-compile="m.message"></p>
+            </div>
+        </div>
+    </div>
+</div>

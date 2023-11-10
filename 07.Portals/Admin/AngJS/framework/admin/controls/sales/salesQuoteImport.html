@@ -1,0 +1,23 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div ng-show="salesQuoteImportCtrl.importers.length > 1"
+             class="col-sm-12"
+             ng-init="ShowPanel = 'Details'">
+            <div class="form-inline mt-3 mb-3">
+                <div class="form-group">
+                    <label class="control-label"
+                           data-translate="ui.admin.controls.inventory.productImport.ImportSource"></label>
+                    <div class="input-group">
+                        <select class="form-control ml-1"
+                                ng-change="salesQuoteImportCtrl.onImporterChange()"
+                                ng-options="x.name for x in salesQuoteImportCtrl.importers"
+                                ng-model="salesQuoteImportCtrl.selected"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div cef-sales-quote-importer-excel ng-show="salesQuoteImportCtrl.selected.name === 'Excel'"></div>
+        </div>
+    </div>
+</div>

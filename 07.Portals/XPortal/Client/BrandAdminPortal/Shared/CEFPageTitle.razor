@@ -1,0 +1,18 @@
+﻿@* This component changes the browser document title *@
+@inject IJSRuntime jsRuntime
+
+@code
+{
+  /// <summary>Gets or sets the value.</summary>
+  /// <value>The value.</value>
+  [Parameter, EditorRequired]
+  public string Value { get; set; } = null!;
+
+  /// <summary>Executes the after render action.</summary>
+  /// <param name="firstRender">True to first render.</param>
+  /// <returns>A Task.</returns>
+  protected override Task OnAfterRenderAsync(bool firstRender)
+  {
+    return jsRuntime.SetTitleInBrowserAsync(Value);
+  }
+}

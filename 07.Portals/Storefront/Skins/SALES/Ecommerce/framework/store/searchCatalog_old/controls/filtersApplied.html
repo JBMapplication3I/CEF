@@ -1,0 +1,129 @@
+﻿<div class="card applied-filters mb-3">
+    <div class="card-header pb-0">
+        <!-- <i class="fa fa-fw fa-filter mr-2"></i> -->
+        <span data-translate="ui.storefront.searchCatalog.filers.YourAppliedFilters"></span>
+    </div>
+    <ul class="list-group list-group-flush bg-light"
+        style="max-height: 50vh; overflow-y: auto;">
+        <li class="list-group-item py-0"
+            ng-if="!searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Query
+                && !searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Category
+                && !searchCatalogFiltersAppliedCtrl.categoriesAllHasValues()
+                && !searchCatalogFiltersAppliedCtrl.categoriesAnyHasValues()
+                && !searchCatalogFiltersAppliedCtrl.pricingRangesHasValues()
+                && !searchCatalogFiltersAppliedCtrl.attributesAnyHasValues()
+                && !searchCatalogFiltersAppliedCtrl.attributesAllHasValues()"
+            data-translate="ui.storefront.searchCatalog.filters.None">
+        </li>
+        <li class="list-group-item py-0"
+            ng-if="searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Query"
+            ng-hide="searchCatalogFiltersAppliedCtrl.hideQuery">
+            <!-- <h5 class="card-title mb-1"
+                data-translate="ui.storefront.searchCatalog.filters.SearchTerm"></h5> -->
+            <a ng-class="{'disabled':searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning}"
+               ng-click="!searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning
+                         && (searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Query = null)"
+               class="pointer"
+               ><small style="position: relative; top: -1px;"><i class="fa fa-times text-danger"
+                 ></i></small>&nbsp;{{searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Query}}</a>
+        </li>
+        <li class="list-group-item py-0"
+            ng-if="searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Category
+                || searchCatalogFiltersAppliedCtrl.categoriesAnyHasValues()
+                || searchCatalogFiltersAppliedCtrl.categoriesAllHasValues()"
+            ng-hide="searchCatalogFiltersAppliedCtrl.hideCategories">
+            <!-- <h5 class="card-title mb-1"
+                data-translate="ui.storefront.common.Category.Plural"></h5> -->
+            <a ng-if="searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Category"
+               ng-class="{'disabled':searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning}"
+               ng-click="!searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning
+                         && searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.popCategory(
+                             searchCatalogFiltersAppliedCtrl.categoriesMode,
+                             searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Category);"
+               class="pointer"
+               ><small style="position: relative; top: -1px;"><i class="fa fa-times text-danger"
+                 ></i></small>&nbsp;{{searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.currentCategoryName}}</a>
+            <a ng-repeat="cat in searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.CategoriesAny"
+               ng-class="{'disabled':searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning, 'text-capitalize':!cat.DisplayName}"
+               ng-click="!searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning
+                         && searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.popCategory(
+                             searchCatalogFiltersAppliedCtrl.categoriesMode,
+                             cat);"
+               ><small style="position: relative; top: -1px;"><i class="fa fa-times text-danger"
+                 ></i></small>&nbsp;{{cat | cleanSearchCategoryName}}</a>
+            <a ng-repeat="cat in searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.CategoriesAll"
+               ng-class="{'disabled':searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning, 'text-capitalize':!cat.DisplayName}"
+               ng-click="!searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning
+                         && searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.popCategory(
+                             searchCatalogFiltersAppliedCtrl.categoriesMode,
+                             cat);"
+               class="pointer"
+               ><small style="position: relative; top: -1px;"><i class="fa fa-times text-danger"
+                 ></i></small>&nbsp;{{cat | cleanSearchCategoryName}}</a>
+        </li>
+        <li class="list-group-item py-0"
+            ng-if="searchCatalogFiltersAppliedCtrl.pricingRangesHasValues()"
+            ng-hide="searchCatalogFiltersAppliedCtrl.hidePricingRanges">
+            <!-- <h5 class="card-title mb-1"
+                data-translate="ui.storefront.searchCatalog.filters.PriceRange.Plural"></h5> -->
+            <a ng-repeat="range in searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.PricingRanges"
+               ng-class="{'disabled':searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning}"
+               ng-click="!searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning
+                         && searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.popRangeKey(
+                             searchCatalogFiltersAppliedCtrl.pricingRangesMode,
+                             range);"
+               class="pointer"
+               ><small style="position: relative; top: -1px;"><i class="fa fa-times text-danger"
+                 ></i></small>&nbsp;{{range}}</a>
+        </li>
+        <li class="list-group-item py-0"
+            ng-if="searchCatalogFiltersAppliedCtrl.attributesAnyHasValues() || searchCatalogFiltersAppliedCtrl.attributesAllHasValues()"
+            ng-hide="searchCatalogFiltersAppliedCtrl.hideAttributes">
+            <!-- <h5 class="card-title mb-1"
+                data-translate="ui.storefront.common.Attribute.Plural"></h5> -->
+            <div ng-repeat="(attr, options) in searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.AttributesAny">
+                <span ng-bind="attr | camelCaseToHuman : true"></span>
+                <div ng-repeat="option in options track by $index">
+                    <a ng-class="{'disabled':searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning}"
+                       ng-click="!searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning
+                                 && searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.popAttributeOptionKey(
+                                     searchCatalogFiltersAppliedCtrl.attributesMode,
+                                     attr,
+                                     option);"
+                       class="pointer"
+                       ><small style="position: relative; top: -1px;"><i class="fa fa-times text-danger"
+                         ></i></small>&nbsp;{{option}}</a>
+                </div>
+            </div>
+            <div ng-repeat="(attr, options) in searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.AttributesAll">
+                <span ng-bind="attr | camelCaseToHuman : true"></span>
+                <div ng-repeat="option in options track by $index">
+                    <a ng-class="{'disabled':searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning}"
+                       ng-click="!searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning
+                                 && searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.popAttributeOptionKey(
+                                     searchCatalogFiltersAppliedCtrl.attributesMode,
+                                     attr,
+                                     option);"
+                       class="pointer"
+                       ><small style="position: relative; top: -1px;"><i class="fa fa-times text-danger"
+                         ></i></small>&nbsp;{{option}}</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="card-footer pt-2">
+        <button type="button" class="btn btn-secondary btn-sm w-100"
+                id="btnClearAllFilters"
+                ng-disabled="searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.searchIsRunning
+                         || !searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Query
+                         && !searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.activeSearchViewModel.Form.Category
+                         && !searchCatalogFiltersAppliedCtrl.categoriesAllHasValues()
+                         && !searchCatalogFiltersAppliedCtrl.categoriesAnyHasValues()
+                         && !searchCatalogFiltersAppliedCtrl.pricingRangesHasValues()
+                         && !searchCatalogFiltersAppliedCtrl.attributesAnyHasValues()
+                         && !searchCatalogFiltersAppliedCtrl.attributesAllHasValues()"
+                ng-click="searchCatalogFiltersAppliedCtrl.cvSearchCatalogService.clearAllFilters()">
+            <span data-translate="ui.storefront.searchCatalog.filters.ClearAllFilters"></span>
+        </button>
+    </div>
+</div>

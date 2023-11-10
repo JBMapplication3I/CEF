@@ -1,0 +1,19 @@
+﻿<div class="modal-header bg-dark text-light animated" ng-class="{ 'shake': loginModalWrapperCtrl.isShaking }">
+    <h5 class="modal-title" data-translate="ui.storefront.user.login.SignIn"></h5>
+    <button type="button" class="close"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="loginModalWrapperCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body p-0" ng-class="{ 'shake': loginModalWrapperCtrl.isShaking }">
+    <div cef-login
+         login-callback="loginModalWrapperCtrl.confirm(loginSuccessful)"
+         return-url="userDashboard.dashboard"
+         after-login-action-mode="3"
+         modal="true"
+         class="container-fluid">
+    </div>
+</div>

@@ -1,0 +1,102 @@
+﻿<div class="row" id="results-table" ng-init="kind = 'stores'">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped table-hover mb-0">
+        <thead>
+          <tr>
+            <th class="w-16" data-translate="ui.storefront.common.Name"></th>
+            <th class="w-16" ng-if="!scsttCtrl.hideK"
+              data-translate="ui.storefront.cart.SKU">
+            </th>
+            <th class="w-auto" ng-if="!scsttCtrl.hideS"
+              data-translate="ui.storefront.searchCatalog.compare.Stock">
+            </th>
+            <th class="w-8" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-auto" data-translate="ui.storefront.cart.addToCart"></th>
+            <th class="w-auto" ng-if="!scsttCtrl.hideI"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="recordID in scsttCtrl.service.activeSearchViewModel.ResultIDs
+                         | orderBy: scsttCtrl.service.getSorter()"
+            class="store catalog-result-card"
+            id="storeTableBlock{{recordID}}"
+            name="storeTableBlock{{recordID}}">
+            <!-- Name -->
+            <td class="w-16">
+              <div cef-store-card-name-widget
+                store="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                store-id="recordID"
+                store-seo-url="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                store-name="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                rows="scsttCtrl.nameR"
+                index="$index">
+              </div>
+            </td>
+            <!-- SKU -->
+            <td class="w-16" ng-if="!scsttCtrl.hideK">
+              <div style="overflow-wrap: break-word;"
+                cef-store-card-sku-widget
+                store="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                store-id="recordID"
+                store-seo-url="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                store-name="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                hide-sku="scsttCtrl.hideK">
+              </div>
+            </td>
+            <!-- Stock -->
+            <td class="w-auto" ng-if="!scsttCtrl.hideS">
+              <div style="overflow-wrap: break-word;"
+                cef-store-card-stock-widget
+                store="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                store-id="recordID"
+                store-seo-url="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                store-name="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                left="true"
+                hide-stock="scsttCtrl.hideS">
+              </div>
+            </td>
+            <!-- Price -->
+            <td class="w-8">
+              <div cef-store-card-pricing-widget
+                store="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                store-id="recordID"
+                store-seo-url="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                store-name="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                display-style="scsttCtrl.pds">
+              </div>
+            </td>
+            <!-- Action -->
+            <td class="w-auto">
+              <div cef-store-card-action-button-widget
+                store="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                store-id="recordID"
+                store-seo-url="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                store-name="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                as-icon="true"
+                quick-add="scsttCtrl.quickA"
+                button-view="scsttCtrl.abv">
+              </div>
+            </td>
+            <!-- Controls -->
+            <td class="w-auto" ng-if="!scsttCtrl.hideI">
+              <div cef-store-card-controls-widget
+                store="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                store-id="recordID"
+                store-seo-url="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                store-name="scsttCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-favorites-list="scsttCtrl.hideFL"
+                hide-wish-list="scsttCtrl.hideWL"
+                hide-notify-me="scsttCtrl.hideNM"
+                hide-compare="scsttCtrl.hideC"
+                hide-icons="scsttCtrl.hideI">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

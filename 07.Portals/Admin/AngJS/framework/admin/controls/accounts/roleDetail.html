@@ -1,0 +1,88 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-standard-detail-header-widget
+    record="roleDetailCtrl.record"
+    new-kind-key="ui.admin.controls.accounts.roleDetail.Role.New"
+    existing-kind-key="ui.admin.controls.accounts.roleDetail.Role">
+  </div>
+  <div class="row details-body">
+    <div class="col-md-12 role-editor">
+      <style>.tab-pane.active { height: calc(100% - 92px); }</style>
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': roleDetailCtrl.forms.Details.$invalid}"
+            ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"
+            ></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid full-height" ng-form="roleDetailCtrl.forms.Details">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                <div class="form-group" ng-class="{'has-error': roleDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                  <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                  <div class="input-group">
+                    <input type="text" class="form-control"
+                      id="txtCustomKey" name="txtCustomKey"
+                      ng-required="true" maxlength="128"
+                      ng-model="roleDetailCtrl.record.CustomKey" />
+                  </div>
+                  <div ng-messages="roleDetailCtrl.forms.Details.txtCustomKey.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.accounts.roleDetail.AssignedPermission.Plural"></h3>
+              </div>
+            </div>
+            <div class="row full-height">
+              <div class="col-sm-6 full-height">
+                <select class="form-control" multiple style="height: calc(100% - 91px) !important;"
+                  ng-options="p as p.Name for p in roleDetailCtrl.notIncludedPermissions | orderBy: 'Name'"
+                  ng-model="roleDetailCtrl.selectedNotIncludedPermissions">
+                </select>
+                <div class="btn-block btn-group-justified">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-success btn-block"
+                      translate-attr="{ title: 'ui.admin.common.Add',
+                                        'aria-label': 'ui.admin.common.Add' }"
+                      data-translate="ui.admin.common.Add"
+                      ng-click="roleDetailCtrl.includeMorePermissions()">
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 full-height">
+                <select class="form-control" multiple style="height: calc(100% - 91px) !important;"
+                  ng-options="p as p.Name for p in roleDetailCtrl.includedPermissions | orderBy: 'Name'"
+                  ng-model="roleDetailCtrl.selectedIncludedPermissions">
+                </select>
+                <div class="btn-block btn-group-justified">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-danger btn-block"
+                      translate-attr="{ title: 'ui.admin.common.Remove',
+                                        'aria-label': 'ui.admin.common.Remove' }"
+                      data-translate="ui.admin.common.Remove"
+                      ng-click="roleDetailCtrl.includeLessPermissions()">
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <!-- Form actions -->
+  <div class="row details-footer">
+    <div class="col-md-12">
+      <cef-standard-detail-footer-buttons
+        master-controller="roleDetailCtrl"
+        return-state="accounts.roles.list"
+        permissions-base="Contacts.UserRole"
+        hide-recycle="true">
+      </cef-standard-detail-footer-buttons>
+    </div>
+  </div>
+</div>

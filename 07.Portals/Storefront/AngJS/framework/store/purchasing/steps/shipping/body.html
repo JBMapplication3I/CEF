@@ -1,0 +1,242 @@
+<!-- step.shipping.body Template -->
+<div class="row">
+  <div class="col-12">
+    <h4 data-translate="ui.storefront.checkout.shippingTitle"></h4>
+  </div>
+  <div ng-if="pssbCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true" pad-in="true"
+    message="pssbCtrl.viewState.waitMessage">
+  </div>
+  <div class="col-12" ng-form="pssbCtrl.forms.shipping">
+    <div class="row">
+      <div ng-if="pssbCtrl.checkIfShipToTeam">
+        <p data-translate="ui.storefront.checkout.shipToTeam"></p>
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex align-items-center mb-30">
+              <input type="checkbox" class="mr-3"
+              ng-required="true"
+              ng-change="pssbCtrl.onChangeWithRatesReset()"
+              ng-model="pssbCtrl.shipToTeam"/>
+              <p class="mb-0" data-translate="ui.storefront.cart.proceedToCheckout"></p>
+            </div>
+            <div cef-contact-address-block
+              contact="pssbCtrl.store.Contact"
+              no-links="true"
+              class="mb-3"
+              index="shipping1">
+            </div>
+            <hr class="w-100 my-3 mx-0" />
+          </div>
+        </div>
+      </div>
+      <div ng-if="pssbCtrl.billingContact.Slave && !pssbCtrl.checkIfShipToTeam"
+        class="col-12">
+        <div class="form-group checkbox mb-0">
+          <label class="mb-0">
+            <input type="checkbox"
+              ng-change="pssbCtrl.onChangeWithRatesReset()"
+              ng-model="pssbCtrl.sameAsBilling" />&nbsp;<!--
+            --><span data-translate="ui.storefront.common.SameAsBilling"></span>
+          </label>
+        </div>
+        <hr class="w-100 my-3 mx-0" />
+        <div ng-if="pssbCtrl.sameAsBilling"
+          class="row">
+          <div class="col-12">
+            <div cef-contact-address-block
+              contact="pssbCtrl.billingContact.Slave"
+              no-links="true"
+              class="mb-3"
+              index="shipping1">
+            </div>
+            <hr class="w-100 my-3 mx-0" />
+          </div>
+        </div>
+      </div>
+      <div ng-if="pssbCtrl.internalShowAddressBookSelector"
+        class="col-12">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group"
+              ng-class="{ 'has-error': pssbCtrl.forms.shipping.ddlShippingSelection.$invalid }">
+              <div class="input-group">
+                <select class="form-control custom-select"
+                  ng-class="{ 'is-valid': pssbCtrl.forms.shipping.ddlShippingSelection.$valid,
+                              'is-invalid': pssbCtrl.forms.shipping.ddlShippingSelection.$invalid }"
+                  id="ddlShippingSelection" name="ddlShippingSelection"
+                  ng-change="pssbCtrl.onChangeWithRatesReset()"
+                  ng-required="true"
+                  ng-options="ac as (ac | acToDropdownItem)
+                              for ac in pssbCtrl.book
+                              | orderBy: ['Slave.Address.CustomKey','Slave.CustomKey','CustomKey']"
+                  ng-model="pssbCtrl.currentAccountContact">
+                  <option ng-disabled="true" value=""
+                    data-translate="ui.storefront.userDashboard2.controls.addressBook.PleaseSelectAShippingAddress">
+                  </option>
+                </select>
+                <div class="input-group-append input-group-btn">
+                  <button type="button" class="btn btn-primary"
+                    translate-attr="{ title: 'ui.storefront.cart.Add',
+                                      'aria-label': 'ui.storefront.cart.Add' }"
+                    data-translate="ui.storefront.cart.Add"
+                    ng-click="pssbCtrl.add()">
+                  </button>
+                </div>
+                <div ng-messages-multiple ng-messages="pssbCtrl.forms.shipping.ddlShippingSelection.$error"
+                  role="alert" class="invalid-feedback">
+                  <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div ng-if="!pssbCtrl.currentAccountContact.Slave.Address.CountryID"
+            class="col-12">
+            <div class="alert alert-info mb-3 py-2">
+              <p data-translate="ui.storefront.purchasing.PleaseSelectAnAddress.Message"></p>
+            </div>
+          </div>
+          <div ng-if="pssbCtrl.currentAccountContact.Slave"
+            class="col-12">
+            <div cef-contact-address-block
+              contact="pssbCtrl.currentAccountContact.Slave"
+              no-links="true"
+              class="mb-3"
+              index="shipping2">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="pssbCtrl.internalShowContactWidget"
+        class="col-12">
+        <div cef-contact-widget
+          contact="pssbCtrl.currentAccountContact.Slave"
+          hide-key="!pssbCtrl.cefConfig.featureSet.addressBook.enabled
+            || !pssbCtrl.cvAuthenticationService.isAuthenticated()"
+          address-title="pssbCtrl.addressTitle"
+          id-suffix="pssbCtrl.idSuffix"
+          on-input-change="pssbCtrl.onChangeWithRatesReset()">
+        </div>
+      </div>
+      <div ng-if="pssbCtrl.internalShowMakeThisMyDefault"
+        class="col-12">
+        <div class="form-group checkbox">
+          <label class="control-label">
+            <input type="checkbox"
+              ng-required="false"
+              ng-model="pssbCtrl.makeThisNewDefaultShipping" />&nbsp;<!--
+            --><span data-translate="ui.storefront.purchasing.MakeThisMyNewDefaultShippingAddress"></span>
+          </label>
+        </div>
+      </div>
+      <div ng-if="pssbCtrl.cefConfig.purchase.showSpecialInstructions"
+        class="col-12">
+        <div class="form-group">
+          <label for="txtSpecialInstructions"
+            data-translate="ui.storefront.common.SpecialInstructions">
+          </label>
+          <div class="input-group">
+            <textarea class="form-control" rows="5"
+              id="txtSpecialInstructions" name="txtSpecialInstructions"
+              translate-attr="{ placeholder: 'Enter instructions for the delivery company' }"
+              ng-model="pssbCtrl.specialInstructions">
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="pssbCtrl.internalShowEstimator"
+     class="col-12"
+     ng-form="pssbCtrl.forms.estimating">
+    <div class="row mb-3">
+      <div class="col-12 col-md-auto">
+        <button type="button" class="btn btn-primary"
+          id="btnReestimateShipping" name="btnReestimateShipping"
+          ng-disabled="pssbCtrl.forms.shipping.$invalid"
+          translate-attr="{ title: pssbCtrl.internalEstimateTranslationKey,
+                            'aria-label': pssbCtrl.internalEstimateTranslationKey }"
+          data-translate="{{pssbCtrl.internalEstimateTranslationKey}}"
+          ng-click="pssbCtrl.submitAddress()">
+        </button>
+      </div>
+      <div class="col-12 col-md" ng-if="pssbCtrl.viewState.running">
+        <p class="alert alert-info text-center p-1"
+          data-translate="ui.storefront.cart.cartShippingEstimator.wereSearchingForRatesForTheAddressInformationProvided">
+        </p>
+      </div>
+      <div class="col-12 col-md" ng-if="pssbCtrl.showDeliveryFail">
+        <p class="alert alert-danger text-center"
+          data-translate="ui.storefront.checkout.views.shippingInformation.pleaseEnterAValidAddress">
+        </p>
+      </div>
+      <div class="col-12 mt-3" ng-if="pssbCtrl.cefConfig.debug">
+        <div class="alert alert-dark">
+          <h4 class="alert-heading">Debug Info for this step (internal)</h4>
+          <table class="table table-borderless table-hover table-sm mb-0">
+            <tr>
+              <th>pssbCtrl.viewState.running</th>
+              <td>{{pssbCtrl.viewState.running}}</td>
+            </tr>
+            <tr>
+              <th>pssbCtrl.forms.shipping.$invalid</th>
+              <td>{{pssbCtrl.forms.shipping.$invalid}}</td>
+            </tr>
+            <tr>
+              <th>pssbCtrl.forms.estimating.$invalid</th>
+              <td>{{pssbCtrl.forms.estimating.$invalid}}</td>
+            </tr>
+            <tr>
+              <th>pssbCtrl.invalidAddress</th>
+              <td>{{pssbCtrl.invalidAddress}}</td>
+            </tr>
+            <tr>
+              <th>pssbCtrl.step.invalidByAddress</th>
+              <td>{{pssbCtrl.step.invalidByAddress}}</td>
+            </tr>
+            <tr>
+              <th>pssbCtrl.step.invalidByRates</th>
+              <td>{{pssbCtrl.step.invalidByRates}}</td>
+            </tr>
+            <tr>
+              <th>pssbCtrl.haveRateQuotes</th>
+              <td>{{pssbCtrl.haveRateQuotes}}</td>
+            </tr>
+            <tr>
+              <th>pssbCtrl.haveShippingOrEquivalentForRates</th>
+              <td>{{pssbCtrl.haveShippingOrEquivalentForRates}}</td>
+            </tr>
+            <tr>
+              <th>pssbCtrl.isGettingRates</th>
+              <td>{{pssbCtrl.isGettingRates}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div ng-if="pssbCtrl.isGettingRates == 'undefined' ? false : pssbCtrl.isGettingRates"
+      cef-loading-widget
+      overlay="true" pad-in="true"
+      message="pssbCtrl.viewState.waitMessage">
+    </div>
+    <div class="row"
+      ng-form="pssbCtrl.forms.rates"
+      ng-show="pssbCtrl.haveRateQuotes && pssbCtrl.haveShippingOrEquivalentForRates">
+      <!--
+      <div class="col-12">
+        <h4 data-translate="ui.storefront.checkout.views.shippingInformation.reestimateShippingCost">
+        </h4>
+      </div>
+      -->
+      <div class="col-12"
+        ng-hide="pssbCtrl.viewState.running">
+        <div cef-purchase-rate-quotes-manager-widget
+          type="pssbCtrl.cartType"
+          contact="pssbCtrl.currentAccountContact"
+          apply="true">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+﻿<cv-page caption="Manage Social Providers" head-icon="fa-globe"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.SocialProviders')">
+    <cv-widget>
+        <widget-menu-item caption="Add Social Provider" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.socialProviders.detail',{ID:'New'})"
+                          permission="'Stores.SocialProvider.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     on-search="search.getSocialProviders"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateSocialProvider"
+                     on-reactivate="search.reactivateSocialProvider"
+                     on-delete="search.deleteSocialProvider"
+                     edit-state="accounts.socialProviders.detail,[ID]"
+                     permissions-base="Stores.SocialProvider">
+                <cv-column filter field="ID" title="#" width="50px" />
+                <cv-column filter field="Name" width="45%" />
+                <cv-column filter field="CustomKey" title="Key" width="45%" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

@@ -1,0 +1,96 @@
+﻿<div ng-cloak="scrcbCtrl.service.activeSearchViewModel"
+  class="results-control-bar row">
+  <div ng-if="scrcbCtrl.hrPosition == 'top'
+    || scrcbCtrl.hrPosition == 'both'"
+    class="col-12">
+    <hr class="mt-0" />
+  </div>
+  <div class="col-12">
+    <div class="row"
+      ng-class="{'justify-content-between': scrcbCtrl.layoutMode == 'standard',
+        'justify-content-center': scrcbCtrl.layoutMode == 'centered',
+        'justify-content-end': scrcbCtrl.layoutMode == 'hug-right'}">
+      <div ng-if="scrcbCtrl.formatViewType !== 'none'"
+        ng-class="{'col': scrcbCtrl.layoutMode == 'hug-right',
+          'col-6 xs-text-left col-sm-4 sm-text-left col-md-4 md-text-left col-lg-auto lg-text-left':
+            scrcbCtrl.layoutMode == 'standard'}">
+        <div cef-search-catalog-results-page-format
+          page-format-view-type="{{scrcbCtrl.formatViewType}}"
+          default-value="{{scrcbCtrl.formatDefaultValue}}"
+          hide-text="{{scrcbCtrl.formatHideText}}"
+          hide-label="{{scrcbCtrl.formatHideLabel}}"
+          layout-mode="{{scrcbCtrl.layoutMode}}">
+        </div>
+      </div>
+      <div ng-if="scrcbCtrl.formatViewType !== 'none'"
+        ng-class="{'col': scrcbCtrl.layoutMode == 'hug-right',
+          'col-6 xs-text-left col-sm-4 sm-text-left col-md-4 md-text-left col-lg-auto lg-text-left':
+            scrcbCtrl.layoutMode == 'standard'}"
+        class="d-flex flex-column align-items-center x">
+        <label data-translate="ui.storefront.catalog.filterByAvailable"></label>
+        <label class="switch">
+          <input type="checkbox"
+            id="ckOnHand"
+            name="ckOnHand"
+            ng-required="false"
+            ng-model="scrcbCtrl.onHandEnabled"
+            ng-change="scrcbCtrl.onHandEnabledOnChange()" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <!--
+      <div ng-if="scrcbCtrl.cefConfig.featureSet.products.filterByAccountRoles && scrcbCtrl.cvAuthenticationService.isAuthenticated() && scrcbCtrl.formatViewType !== 'none'"
+        ng-class="{'col': scrcbCtrl.layoutMode == 'hug-right',
+          'col-6 xs-text-left col-sm-4 sm-text-left col-md-4 md-text-left col-lg-auto lg-text-left':
+            scrcbCtrl.layoutMode == 'standard'}"
+        class="d-flex flex-column align-items-center x">
+            <label data-translate="ui.storefront.catalog.filterByPriceLists"></label>
+            <label class="switch">
+              <input type="checkbox"
+                id="ckPricelist"
+                name="ckPricelist"
+                ng-required="false"
+                ng-model="scrcbCtrl.pricelistEnabled"
+                ng-change="scrcbCtrl.pricelistEnabledOnChange()" />
+              <span class="slider round"></span>
+            </label>
+      </div>
+      -->
+      <div ng-if="scrcbCtrl.perPageViewType !== 'none'"
+        ng-class="{'col': scrcbCtrl.layoutMode == 'hug-right',
+          'col-6 xs-text-right col-sm-4 sm-text-center col-md-4 md-text-center col-lg-2 lg-text-left':
+            scrcbCtrl.layoutMode == 'standard'}">
+        <div cef-search-catalog-results-per-page
+          per-page-view-type="{{scrcbCtrl.perPageViewType}}"
+          hide-label="{{scrcbCtrl.perPageHideLabel}}"
+          default-value="scrcbCtrl.perPageDefaultValue"
+          per-page-choices="scrcbCtrl.perPageChoices">
+        </div>
+      </div>
+      <div ng-if="scrcbCtrl.sortViewType !== 'none'"
+        ng-class="{'col-auto': scrcbCtrl.layoutMode == 'hug-right',
+          'col-12 xs-text-center col-sm-4 sm-text-right col-md-4 md-text-right col-lg-3 lg-text-left':
+            scrcbCtrl.layoutMode == 'standard'}">
+        <div cef-search-catalog-results-sort
+          sort-view-type="{{scrcbCtrl.sortViewType}}"
+          default-value="{{scrcbCtrl.sortDefaultValue}}"
+          hide-label="{{scrcbCtrl.sortHideLabel}}">
+        </div>
+      </div>
+      <div ng-if="scrcbCtrl.pageViewType !== 'none'"
+        ng-class="{'col-auto': scrcbCtrl.layoutMode == 'hug-right',
+          'col-12 xs-text-center sm-text-center md-text-center col-lg-5 lg-text-right':
+            scrcbCtrl.layoutMode == 'standard'}">
+        <div cef-search-catalog-results-page
+          page-view-type="{{scrcbCtrl.pageViewType}}"
+          default-value="{{scrcbCtrl.pageDefaultValue}}"
+          hide-label="{{scrcbCtrl.pageHideLabel}}">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="scrcbCtrl.hrPosition == 'bottom' || scrcbCtrl.hrPosition == 'both'"
+    class="col-12">
+    <hr class="mt-0" />
+  </div>
+</div>

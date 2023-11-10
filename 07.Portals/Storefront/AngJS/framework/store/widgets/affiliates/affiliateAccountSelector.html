@@ -1,0 +1,9 @@
+<select class="form-control custom-select"
+id="ddlSelectedAccountKeySolo" name="ddlSelectedAccountKeySolo"
+ng-if="affiliateAccountSelectorCtrl.accessibleAccounts.length"
+ng-change="affiliateAccountSelectorCtrl.saveSelectedAccountKey()"
+ng-model-options="{ updateOn: 'default', debounce: 500 }"
+ng-options="a.value as a.label
+for a in affiliateAccountSelectorCtrl.accessibleAccounts"
+ng-model="affiliateAccountSelectorCtrl.selectedAccountKey">
+</select>

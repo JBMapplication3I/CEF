@@ -1,0 +1,55 @@
+<div id="top" class="row">
+    <div class="col-sm-9">
+        <h4 class="store-name mt-0" ng-bind="locationStoreCtrl.storeData.Name"></h4>
+    </div>
+    <div class="col-sm-3">
+        <b ng-if="locationStoreCtrl.storeData.Distance">
+            <span ng-bind="locationStoreCtrl.storeData.Distance | number: 0"></span>&nbsp;<!--
+            --><span data-translate="ui.storefront.common.miles.abbr"></span>
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-5">
+        <div cef-contact-address-block
+             contact="locationStoreCtrl.storeData.Contact"
+             small-text="true"
+             hide-name="true"
+             hide-email="true"
+             hide-icons="true">
+        </div>
+    </div>
+    <div class="col-sm-7">
+        <div location-store-hours
+             store="locationStoreCtrl.storeData"
+             small-text="true"
+             class="mb-3"
+             short-format="true">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <p>
+            <a ng-href="{{locationStoreCtrl.storeData.mapUrl}}"
+               target="_blank"
+               class="btn btn-block btn-secondary"
+               data-translate="ui.storefront.common.GetDirection.Plural"></a>
+        </p>
+    </div>
+    <div class="col-12 col-sm-6">
+        <p>
+            <a ng-if="locationStoreCtrl.selectedStoreTrue"
+               ng-click="locationStoreCtrl.storeAction()"
+               class="btn btn-primary btn-block"
+               data-translate="ui.storefront.common.Shop">
+            </a>
+            <a ng-if="!locationStoreCtrl.selectedStoreTrue"
+               class="btn btn-primary"
+               scroll-to="top"
+               ng-click="locationStoreCtrl.storeData.selectAsMine(); "
+               data-translate="ui.storefront.location.locationMapInfoWindow.makeThisMyStore"></a>
+        </p>
+    </div>
+</div>
+<hr ng-hide="locationStoreCtrl.selectedStoreTrue" />

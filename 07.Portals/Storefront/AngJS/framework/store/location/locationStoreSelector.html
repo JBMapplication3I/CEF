@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-12">
+        <h1 class="mt-0" data-translate="ui.storefront.location.customerLocationEntry.findStores"></h1>
+    </div>
+    <div class="col-12">
+        <customer-location-entry-simple
+            publish-location="locationStoreSelectorCtrl.userLocation">
+        </customer-location-entry-simple>
+    </div>
+</div>
+<div class="row store-locator-menu">
+    <div class="">
+        <div class="card"
+             ng-if="locationStoreSelectorCtrl.selectedStore"
+             location-store-details="locationStoreSelectorCtrl.selectedStore"
+             store-action="$parent.locationStoreSelectorCtrl.storeAction"
+             selected-store-true="true"
+             show-select="true">
+        </div>
+    </div>
+    <div class="col-12"
+         ng-repeat="store in locationStoreSelectorCtrl.storeList"
+         store-action="$parent.locationStoreSelectorCtrl.storeAction"
+         location-store-details="store"
+         show-select="true">
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Title: @ViewData["Title"]</title>
+    <script src="~/UI/lib/cef/framework/compressions/0-jQuery.js"></script>
+    <script src="~/UI/lib/cef/framework/compressions/1-angular.js"></script>
+    <script src="~/UI/lib/cef/framework/compressions/2-kendo.js"></script>
+    <link rel="stylesheet" href="~/UI/lib/cef/css/admin-dnn-bundle.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/e1eefd7c43.css" />
+</head>
+<body>
+    @RenderBody()
+
+    <script defer src="~/UI/lib/cef/framework/compressions/3-cef-admin-base.js"></script>
+    <script defer src="~/UI/lib/cef/framework/compressions/4-cef-admin-main.js"></script>
+    <script defer src="~/UI/lib/cef/framework/compressions/5-cef-core-templates.js"></script>
+    <script defer src="~/UI/lib/cef/framework/compressions/5-cef-admin-templates.js"></script>
+    <script defer src="~/API/JSConfigs/Admin"></script>
+    <script defer src="~/UI/lib/cef/framework/compressions/6-cef-admin-init.js"></script>
+</body>
+</html>

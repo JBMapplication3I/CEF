@@ -1,0 +1,104 @@
+﻿
+@inherits MVC.Core.TemplatedControllerBase
+@inject CEFAPI cvApi
+
+<Div>
+  @if (BoundContact is null)
+    {
+      <Div Class="page-content p-3">
+        No Contact Address Information 
+      </Div>
+    }
+    <Div>
+      <Row>
+        <Column>
+          <Row>
+            <Column>
+             <Span 
+              Margin="Margin.Is3">@(BoundContact?.FirstName)
+             </Span>
+            </Column>
+            <Column>
+             <Span 
+              Margin="Margin.Is3">@(BoundContact?.LastName)
+             </Span>
+            </Column>
+          </Row>
+          <Column>
+          <Row>
+            <Column>
+              <Span>@(BoundContact?.Email1)</Span>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Span>@BoundContact?.Phone1</Span>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Span>@(BoundContact?.Fax1)</Span>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Span>@(BoundContact?.Address.Company)</Span>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Span>@(BoundContact?.Address.Street1)</Span>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Span>@(BoundContact?.Address.Street2)</Span>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Span>@(BoundContact?.Address.City)</Span>
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Span>@(BoundContact?.Address.Region.Name)</Span>
+            </Column>
+            <Column>
+              <Span>@(BoundContact?.Address.PostalCode)</Span>
+            </Column>
+          </Row>
+          </Column>
+        </Column>
+      </Row>
+    </Div>
+</Div>
+
+@code
+{
+  #region Parameters
+  #pragma warning disable CS8618 // Ignored: Set by Parameter
+    /// <summary>Gets or sets the contact.</summary>
+    /// <value>The contact.</value>
+    [Parameter/*, EditorRequired NOTE: Causes RZ2012 when using @bind-Value */]
+    public ContactModel? Contact { get; set; }
+
+    /// <summary>Gets or sets the contact changed.</summary>
+    /// <value>The contact changed.</value>
+    [Parameter]
+    public EventCallback<ContactModel> ContactChanged { get; set; }
+  #pragma warning restore CS8618 // Ignored: Set by Parameter
+  #endregion
+
+  //private bool showPhone2;
+  //private bool showPhone3;
+  //private bool showStreet2;
+  //private bool showStreet3;
+
+  private ContactModel? BoundContact
+  {
+    get => Contact;
+    // ReSharper disable once UnusedMember.Local
+    set => ContactChanged.InvokeAsync(value);
+  }
+}

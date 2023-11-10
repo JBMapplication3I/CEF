@@ -1,0 +1,55 @@
+﻿<!-- <div cef-subscriptions></div> -->
+<!-- Disabled until verified for core
+<div class="row" ng-if="$root.cvSecurityService.hasRole('CEF Affiliate Administrator')">
+    <div class="col-sm-12 md-text-right lg-text-right">
+        <button type="button" class="btn btn-info mb-3"
+                id="btnCreateBulkOrder" name="btnCreateBulkOrder"
+                translate-attr="{ title: 'ui.storefront.userDashboard2.views.users.StartANewBulkOrder',
+                                  'aria-label': 'ui.storefront.userDashboard2.views.users.StartANewBulkOrder' }"
+                data-translate="ui.storefront.userDashboard2.views.users.StartANewBulkOrder"
+                ui-sref="userDashboard.users.createBulkOrder">
+        </button>
+    </div>
+</div>
+-->
+<div ng-controller="StoreSearchController as search" class="row">
+    <cv-grid class="col-12"
+             show-pager="true" page-sizes="8,16,32,64" default-page-size="8" server-paging="true"
+             sortable="false" server-sorting="true"
+             force-show-labels="true" labels-on-top="true"
+             dont-use-full-height="true"
+             on-search="search.getCurrentUserSubscriptions"
+             detail-state="userDashboard.subscriptions.detail,[ID]"
+             button-index="orders">
+        <cv-query-controller-param
+            field="HasSalesGroupAsMaster"
+            value="$root.cefConfig.featureSet.shipping.splitShipping.enabled" />
+        <cv-column hidden
+                   field="StatusID" title-key="ui.storefront.userDashboard2.controls.salesDetail.Status"
+                   filter filter-type="select"
+                   on-option-repeat="$parent.search.getSubscriptionStatuses">
+            <option value="" selected
+                    data-translate="ui.storefront.userDashboard2.views.salesOrders.Any"></option>
+        </cv-column>
+        <cv-column field="ID" title-key="ui.storefront.storeDashboard.storeProductEditor.ID"
+                   filter filter-type="id"
+                   width="13%" cell-class="text-right" />
+        <cv-column if="$root.cefConfig.featureSet.salesOrders.hasIntegratedKeys"
+                   filter field="CustomKey"
+                   title-key="ui.storefront.userDashboard2.controls.salesDetail.Key"
+                   width="26%" />
+        <cv-column field="Totals.Total"
+                   title-key="ui.storefront.cart.Total"
+                   width="20%" cell-class="text-right"
+                   format="globalizedCurrency : dataItem.SerializableAttributes.SellingCurrencyKey.Value" />
+        <cv-column field="CreatedDate"
+                   title-key="ui.storefront.userDashboard2.controls.salesDetail.Date"
+                   width="26%" format="yyyy MMM dd hh:mm a" type="date"
+                   filter filter-type="minMaxDate" filter-colspan="5"
+                   sort-by="1" sort-by-direction="desc" />
+        <cv-column field="StatusID" type="statusID"
+                   title-key="ui.storefront.userDashboard2.controls.salesDetail.Status"
+                   preload-statuses-kind="SalesOrder"
+                   width="40%" />
+    </cv-grid>
+</div>

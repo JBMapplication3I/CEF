@@ -1,0 +1,40 @@
+﻿<cv-page caption="{{'ui.admin.views.system.currenciesList.ManageCurrencies' | translate}}" head-icon="fa-gear"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.System.Currencies')">
+    <cv-widget>
+        <widget-menu-item caption="{{'ui.admin.views.system.currenciesList.AddCurrency' | translate}}"
+            icon-class="fa-plus-circle"
+            click="$root.$state.go('system.currencies.detail',{ID:'New'})"
+            permission="'Currencies.Currency.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     sortable="false" server-sorting="true"
+                     on-search="search.getCurrencies"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateCurrency"
+                     on-reactivate="search.reactivateCurrency"
+                     on-delete="search.deleteCurrency"
+                     edit-state="system.currencies.detail,[ID]"
+                     permissions-base="Currencies.Currency">
+                <cv-column field="ID" title="#"
+                           width="5%" header-class="text-center" cell-class="text-right"
+                           filter filter-type="id"
+                           sort-by="4" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="CustomKey" title="Key"
+                           width="15%"
+                           filter
+                           sort-by="1" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="Name"
+                           width="20%"
+                           filter
+                           sort-by="2" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="Active" title="Active" type="boolean"
+                           hidden
+                           filter filter-type="boolean" filter-value="true" />
+                <!-- TODO: UnicodeSymbolValue: 24 -->
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

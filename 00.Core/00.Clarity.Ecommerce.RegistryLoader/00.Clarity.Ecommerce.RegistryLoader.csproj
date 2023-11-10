@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.RegistryLoader</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.RegistryLoader</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.RegistryLoader</RootNamespace>
+    <ProjectGuid>57E8C6EA-ABC2-4775-9352-2DBA1F2F401C</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="StructureMap" Version="4.7.1" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <PackageReference Include="Lamar" Version="6.0.0" />
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel.Net5\01.Clarity.Ecommerce.DataModel.Net5.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj" />
+    <ProjectReference Include="..\00.Clarity.Ecommerce.Utilities\00.Clarity.Ecommerce.Utilities.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj" />
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\ThirdParty\ServiceStack\ServiceStack.Text\bin\Debug\net472\ServiceStack.Text.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

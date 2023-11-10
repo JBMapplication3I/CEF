@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8CA79ACE-ACC2-445B-BB42-3E3DFE1062E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Clarity.Ecommerce.Providers.Searching</RootNamespace>
+    <AssemblyName>Clarity.Ecommerce.Providers.Searching</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <LangVersion>latestmajor</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Clarity.Ecommerce.Providers.Searching.xml</DocumentationFile>
+    <Nullable>enable</Nullable>
+    <LangVersion>latestmajor</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Nullable>enable</Nullable>
+    <LangVersion>latestmajor</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ElasticSearch\Domain\Data\AttrModel.cs" />
+    <Compile Include="ElasticSearch\Domain\Data\ProductDumpReader.cs" />
+    <Compile Include="ElasticSearch\Domain\Extensions\PartitionExtension.cs" />
+    <Compile Include="ElasticSearch\ElasticSearchClientFactory.cs" />
+    <Compile Include="ElasticSearch\ElasticSearchingProvider.Stores.cs" />
+    <Compile Include="ElasticSearch\ElasticSearchingProvider.Products.cs" />
+    <Compile Include="ElasticSearch\ElasticSearchingProviderConfig.cs" />
+    <Compile Include="ElasticSearch\ElasticSearchService.cs" />
+    <Compile Include="ElasticSearch\Indexer\ProductIndexer.cs" />
+    <Compile Include="ElasticSearch\Queries\Search\ProductSearchModule.cs" />
+    <Compile Include="ElasticSearch\Queries\Search\SearchModuleBase.cs" />
+    <Compile Include="ElasticSearch\Queries\Suggest\ProductSuggestModule.cs" />
+    <Compile Include="ElasticSearch\Queries\Suggest\SuggestModuleBase.cs" />
+    <Compile Include="SearchingProviderRegistry.cs" />
+    <Compile Include="SearchingProviderBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.csproj">
+      <Project>{c7250754-0453-49b4-9c61-408c6da25dc4}</Project>
+      <Name>00.Clarity.Ecommerce.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.csproj">
+      <Project>{57E8C6EA-ABC2-4775-9352-2DBA1F2F401C}</Project>
+      <Name>00.Clarity.Ecommerce.RegistryLoader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\00.Core\00.Clarity.Ecommerce.Utilities\00.Clarity.Ecommerce.Utilities.csproj">
+      <Project>{47B9BBAF-4668-4B6F-953E-CAE1C7AB3935}</Project>
+      <Name>00.Clarity.Ecommerce.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\01.Clarity.Ecommerce.DataModel.csproj">
+      <Project>{43de0904-b73b-4893-a3f6-ec53a78b4635}</Project>
+      <Name>01.Clarity.Ecommerce.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\01.DataAccessLayer\01.Clarity.Ecommerce.Searching\01.Clarity.Ecommerce.Searching.csproj">
+      <Project>{84670384-4810-4082-911b-0bb47958eecd}</Project>
+      <Name>01.Clarity.Ecommerce.Searching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\02.Clarity.Ecommerce.Interfaces.Models.csproj">
+      <Project>{d2dc6ceb-1c99-430c-a124-e7555654f368}</Project>
+      <Name>02.Clarity.Ecommerce.Interfaces.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.csproj">
+      <Project>{6B148AC1-F2F2-4AEB-AA0A-99F9B575CFCB}</Project>
+      <Name>02.Clarity.Ecommerce.Interfaces.Workflows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\06.Services\06.Clarity.Ecommerce.Service.Core\06.Clarity.Ecommerce.Service.Core.csproj">
+      <Project>{1a30cc61-7a08-43c9-974f-3524b31e7b87}</Project>
+      <Name>06.Clarity.Ecommerce.Service.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations">
+      <Version>2021.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="morelinq">
+      <Version>3.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="NEST">
+      <Version>7.13.2</Version>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers.Unstable">
+      <Version>1.2.0.354</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.CSharp.Async.Rules">
+      <Version>6.1.41</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Plugins\" /Y /C /R /I
+
+xcopy "$(TargetDir)Nest.dll" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)Elasticsearch.Net.dll" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)System.Buffers.dll" "$(SolutionDir)Plugins\" /Y /C /R /I
+xcopy "$(TargetDir)System.Diagnostics.DiagnosticSource.dll" "$(SolutionDir)Plugins\" /Y /C /R /I</PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,91 @@
+.contact-list {
+	@extend %listreset;
+	margin: rem-calc(0 0 30);
+
+	&.columns-list {
+		@include media-breakpoint-up(sm) {
+			column-count: 2;
+		}
+
+		@include media-breakpoint-up(md) {
+			column-count: 3;
+		}
+
+		@include media-breakpoint-up(xl) {
+			column-gap: 0;
+		}
+
+		li {
+			@include media-breakpoint-up(sm) {
+				page-break-inside: avoid;
+				break-inside: avoid;
+			}
+		}
+	}
+
+	li {
+		display: flex;
+		padding: rem-calc(0 0 14);
+		margin: rem-calc(0 0 1);
+
+		&:last-child {
+			padding: 0;
+		}
+
+		address {
+			margin-bottom: 0;
+		}
+	}
+
+	a {
+		position: relative;
+		display: inline-block;
+		vertical-align: top;
+		text-decoration: none;
+		z-index: 1;
+		color: inherit;
+
+		&:after {
+			content: "";
+			position: absolute;
+			z-index: -1;
+			left: 51%;
+			right: 51%;
+			bottom: 0;
+			background: currentColor;
+			height: rem-calc(1);
+			transition-property: left, right;
+			transition-duration: 0.3s;
+			transition-timing-function: ease-out;
+		}
+
+		&:hover,
+		&:focus {
+			outline: none;
+
+			&:after {
+				left: 0;
+				right: 0;
+			}
+		}
+	}
+
+	i {
+		margin: rem-calc(3 15 0 0);
+		font-size: .9em;
+	}
+}
+
+.contact-title {
+	display: flex;
+	margin: rem-calc(0 0 15);
+
+	&:last-child {
+		margin: 0;
+	}
+
+	i {
+		margin: rem-calc(3 15 0 0);
+		font-size: .9em;
+	}
+}

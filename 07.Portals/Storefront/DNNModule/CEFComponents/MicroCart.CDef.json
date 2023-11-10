@@ -1,0 +1,24 @@
+{
+  "Name": "MicroCart",
+  "FriendlyName": "Micro Cart",
+  "Description": "CEF Micro Cart",
+  "ComponentType": "UserControl",
+  "Parameters": {
+    "CssClass": {
+      "Name": "CssClass",
+      "FriendlyName": "CSS Class",
+      "Description": "Enter the CSS Class for the Micro Cart control.",
+      "Type": "System.String",
+      "Value": "",
+      "Order": 1
+    },
+    "CartType": {
+      "Name": "CartType",
+      "FriendlyName": "Cart Type",
+      "Description": "Enter a valid Cart Type ['Cart', ???/] (Include single quotes)",
+      "Type": "System.String",
+      "Value": "'Cart'",
+      "Order": 2
+    }
+  }
+}

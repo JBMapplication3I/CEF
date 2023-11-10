@@ -1,0 +1,18 @@
+﻿<cv-page caption="Manage Roles" head-icon="fa-th-list"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.Roles')">
+    <cv-widget>
+        <widget-menu-item caption="Add Role" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.roles.detail',{ID:'New'})"
+                          permission="'Contacts.UserRole.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid on-search="search.getRoles"
+                     partial-reset="false"
+                     on-delete="search.deleteRole"
+                     edit-state="accounts.roles.detail,[ID]"
+                     permissions-base="Contacts.UserRole">
+                <cv-column filter field="ID" title="#" width="65px" />
+                <cv-column filter field="CustomKey" title="Name" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

@@ -1,0 +1,274 @@
+﻿@using System.Linq;
+@implements IDisposable
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+@inject CEFAPI cvApi
+@inject RoutingOptions routingOptions
+@inject PortalOptions portalOptions
+@inject StaticMenuState menuState
+
+@if (loading)
+{
+  <LoadingBar />
+}
+else
+{
+  <Bar
+    @ref="sideBar"
+    Breakpoint="Breakpoint.Desktop"
+    NavigationBreakpoint="Breakpoint.Tablet"
+    ThemeContrast="portalOptions.BarThemeContrast ?? ThemeContrast.Dark"
+    @bind-Mode="menuState.CurrentBarMode"
+    CollapseMode="BarCollapseMode.Small"
+    @bind-IsVisible="menuState.CollapseNavMenu">
+    <BarBrand>
+      <BarItem>
+        <BarLink To="" Padding="Padding.Is2.OnX">
+          <BarIcon IconName="SiteLogo" Display="Display.InlineBlock" />
+        </BarLink>
+      </BarItem>
+    </BarBrand>
+    <BarMenu>
+      <BarStart>
+        <BarItem>
+          <BarLink To="">
+            <BarIcon IconName="FontAwesomeIcons.Home" Class="fa-fw" />
+            Home
+          </BarLink>
+          @if (!IsAuthenticated && !navigationManager.ToBaseRelativePath(navigationManager.Uri).ToLower().StartsWith("login"))
+          {
+            <BarLink To="@LoginUrl">
+              <BarIcon IconName="FontAwesomeIcons.SignInAlt" Class="fa-fw" />
+              Login
+            </BarLink>
+          }
+          else if (IsAuthenticated && Contract.CheckEmpty(menuState.Pages.Where(x => Contract.CheckValidKey(x.group))))
+          {
+            <Repeater Items="menuState.Pages">
+              <ChildContent Context="pg">
+                <BarLink To="@pg.href" Title="@pg.title">
+                  <Blazorise.Icons.FontAwesome.Icon Name="@pg.icon" Class="fa-fw" />
+                  @pg.title
+                </BarLink>
+              </ChildContent>
+            </Repeater>
+          }
+        </BarItem>
+        @if (IsAuthenticated && Contract.CheckNotEmpty(menuState.Pages.Where(x => Contract.CheckValidKey(x.group))))
+        {
+          <Repeater Items="menuState.Pages.GroupBy(x => x.group)">
+            <ChildContent Context="grp">
+              <BarItem>
+                <BarDropdown @bind-Visible="@menuState.SideBarMenuVisible[grp.Key]">
+                  <BarDropdownToggle>
+                    <BarIcon IconName="@(menuState.Groups?.SingleOrDefault(x => x?.title == grp.Key)?.icon ?? FontAwesomeIcons.Spinner)" Class="fa-fw" />
+                    @(grp.Key ?? "Ungrouped")
+                  </BarDropdownToggle>
+                  <BarDropdownMenu>
+                    <Repeater Items="grp">
+                      <ChildContent Context="pg">
+                        <BarDropdownItem To="@pg.href" Title="@pg.title">
+                          <Blazorise.Icons.FontAwesome.Icon Name="@pg.icon" Class="fa-fw" />
+                          @pg.title
+                        </BarDropdownItem>
+                      </ChildContent>
+                    </Repeater>
+                  </BarDropdownMenu>
+                </BarDropdown>
+              </BarItem>
+            </ChildContent>
+          </Repeater>
+        }
+      </BarStart>
+      <BarEnd>
+        <BarItem>
+          @if (IsAuthenticated)
+          {
+            <BarLink Clicked="LogoutAsync" Title="Logout">
+              <BarIcon IconName="FontAwesomeIcons.SignOutAlt" Class="fa-fw" />
+              Logout
+            </BarLink>
+          }
+          @switch (menuState.CurrentBarMode)
+          {
+            case BarMode.VerticalInline:
+            {
+              <BarLink
+                Title="Show less information"
+                Class="text-right"
+                Clicked="SideBarExpandCollapseClickedAsync">
+                <BarIcon IconName="FontAwesomeIcons.AngleDoubleLeft" Class="fa-fw" />
+              </BarLink>
+              break;
+            }
+            case BarMode.VerticalSmall:
+            {
+              <BarLink
+                Title="Show more information"
+                Clicked="SideBarExpandCollapseClickedAsync">
+                <BarIcon IconName="FontAwesomeIcons.AngleDoubleRight" Class="fa-fw" />
+              </BarLink>
+              break;
+            }
+          }
+        </BarItem>
+      </BarEnd>
+    </BarMenu>
+  </Bar>
+}
+
+@code
+{
+  #region Properties
+  private bool loading = true;
+  private bool IsAuthenticated { get; set; }
+  private string? LoginUrl { get; set; }
+  private bool disposed;
+  private Bar? sideBar;
+  #endregion
+
+  private RenderFragment SiteLogo => menuState.CurrentBarMode == BarMode.VerticalInline
+    ? @<img src="@(portalOptions.BrandLogoImagePath ?? "images/Clarity-eCommerce-Light.svg")" width="182" height="40" alt="@portalOptions.Title" />
+    : @<img src="@(portalOptions.BrandLogoImageAsIconPath ?? "images/cef-icon.svg")" width="40" height="40" alt="@portalOptions.Title" />;
+
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    navigationManager.LocationChanged += OnLocationChanged;
+    IsAuthenticated = await cvApi.CEFService.IsAuthenticatedAsync(jsRuntime).ConfigureAwait(false);
+    LoginUrl = navigationManager.ToBaseRelativePath(navigationManager.Uri).ToLower() is "login" or "/" or ""
+      ? "/login"
+      : $"/login?return={navigationManager.ToBaseRelativePath(navigationManager.Uri)}";
+    GenerateRoutesForUI();
+    loading = false;
+  }
+
+  private void GenerateRoutesForUI()
+  {
+    if (Contract.CheckNotEmpty(menuState.Pages))
+    {
+      // We've already built this content and don't need to repeat it
+      return;
+    }
+    var routeGroups = routingOptions.BuildFinalRouteGroups().OrderBy(x => x.Sort);
+    var routes = routingOptions.BuildFinalRoutes().OrderBy(x => x.Sort);
+    List<(string name, string title, string? icon)?> tempGroups = new();
+    List<(string group, string title, string href, string icon)> tempPages = new();
+    foreach (var routeGroup in routeGroups)
+    {
+      if (!menuState.SideBarMenuVisible.ContainsKey(routeGroup.Title ?? "Ungrouped"))
+      {
+        menuState.SideBarMenuVisible[routeGroup.Title ?? "Ungrouped"] = false;
+      }
+      tempGroups.Add((
+        routeGroup.Name ?? string.Empty,
+          routeGroup.Title ?? string.Empty,
+          routeGroup.Icon ?? string.Empty));
+    }
+    foreach (var route in routes)
+    {
+      if (route.Hide == true)
+      {
+        continue;
+      }
+      var grp = route.NavGroup?.SplitCamelCase().ToTitleCase() ?? string.Empty;
+      if (!menuState.SideBarMenuVisible.ContainsKey(grp))
+      {
+        menuState.SideBarMenuVisible[grp] = true;
+      }
+      tempPages.Add((
+        grp,
+          route.Title ?? string.Empty,
+          route.Path ?? string.Empty,
+          route.Icon ?? string.Empty));
+    }
+    menuState.Groups = tempGroups;
+    menuState.Pages = tempPages;
+  }
+
+  private string ProvideActiveClass(string url)
+  {
+    return navigationManager.Uri.Contains(url)
+      ? "active text-success"
+      : string.Empty;
+  }
+
+  private Task SideBarToggleClickedAsync()
+  {
+    menuState.CollapseNavMenu = !menuState.CollapseNavMenu;
+    return Task.CompletedTask;
+  }
+
+  private Task SideBarExpandCollapseClickedAsync()
+  {
+    switch (menuState.CurrentBarMode)
+    {
+      case BarMode.VerticalInline:
+      {
+        menuState.CurrentBarMode = BarMode.VerticalSmall;
+        break;
+      }
+      case BarMode.VerticalSmall:
+      {
+        menuState.CurrentBarMode = BarMode.VerticalInline;
+        break;
+      }
+      case BarMode.Horizontal:
+      case BarMode.VerticalPopout:
+      {
+        throw new InvalidOperationException();
+      }
+      default:
+      {
+        throw new ArgumentOutOfRangeException();
+      }
+    }
+    return Task.CompletedTask;
+  }
+
+  private async Task LogoutAsync()
+  {
+    await jsRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", new object?[] { "ss-pid", null, -10, null }).ConfigureAwait(false);
+    await jsRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", new object?[] { "X-UAId", null, -10, null }).ConfigureAwait(false);
+    await jsRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", new object?[] { "ss-opt", null, -10, null }).ConfigureAwait(false);
+    IsAuthenticated = false;
+    await cvApi.LogoutAsync(jsRuntime).ConfigureAwait(false);
+    await jsRuntime.InvokeVoidAsync("blazorExtensions.RedirectPage").ConfigureAwait(false);
+  }
+
+  private async void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+  {
+    try
+    {
+      await jsRuntime.InvokeVoidAsync("blazoriseDocs.navigation.scrollToTop").ConfigureAwait(false);
+    }
+    catch
+    {
+      // Do Nothing
+    }
+  }
+
+  /// <summary>Releases the unmanaged resources used by the NavMenu and optionally releases the managed resources.</summary>
+  /// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged
+  ///                         resources.</param>
+  protected virtual void Dispose(bool disposing)
+  {
+    if (!disposed)
+    {
+      if (disposing)
+      {
+        navigationManager.LocationChanged -= OnLocationChanged;
+      }
+      disposed = true;
+    }
+  }
+
+  /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+  /// resources.</summary>
+  public void Dispose()
+  {
+    Dispose(true);
+    GC.SuppressFinalize(this);
+  }
+}

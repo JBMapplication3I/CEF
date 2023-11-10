@@ -1,0 +1,3207 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-standard-detail-header-widget
+     record="ipeCtrl.record"
+     new-kind-key="ui.admin.common.Product.New"
+     existing-kind-key="ui.admin.common.Product">
+  </div>
+  <div class="row details-body">
+    <div class="col-md-12 product-editor">
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Details">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                <text-input-form-group
+                  key="Name"
+                  ng-model="ipeCtrl.record.Name"
+                  label-key="ui.admin.common.Name"
+                  placeholder-key="ui.admin.common.Name"
+                  max-length="256"
+                  ng-required="true">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="CustomKey"
+                  ng-model="ipeCtrl.record.CustomKey"
+                  label-key="ui.admin.controls.inventory.productDetail.ProductKeySku"
+                  tooltip-key="ui.admin.controls.inventory.productDetail.ProductKeySku.Tooltip"
+                  placeholder-key="ui.admin.controls.inventory.productDetail.TheCustomKeyOrSKUOfTheProduct.Ellipses"
+                  max-length="128"
+                  ng-required="true">
+                </text-input-form-group>
+                <div class="row">
+                  <select-form-group
+                    class="col-sm-6"
+                    key="TypeID"
+                    ng-model="ipeCtrl.record.TypeID"
+                    selections="ipeCtrl.types"
+                    label-key="ui.admin.common.Type"
+                    tooltip-text="The type of the record."
+                    placeholder-key="ui.admin.common.Type"
+                    ng-required="true">
+                  </select-form-group>
+                  <select-form-group
+                    class="col-sm-6"
+                    key="StatusID"
+                    ng-model="ipeCtrl.record.StatusID"
+                    selections="ipeCtrl.statuses"
+                    label-key="ui.admin.common.Status"
+                    tooltip-text="The status of the record."
+                    placeholder-key="ui.admin.common.Status"
+                    ng-required="true">
+                  </select-form-group>
+                </div>
+                <div class="row">
+                  <number-input-form-group
+                    class="col-sm-4"
+                    key="SortOrder"
+                    ng-model="ipeCtrl.record.SortOrder"
+                    label-key="ui.admin.common.SortOrder"
+                    tooltip-text="The sort order for the record. This controls where in the layout of Select controls and paging, etc. the record will lie when sorted via Sort Order."
+                    placeholder-key="ui.admin.common.SortOrder"
+                    step="1"
+                    precision="0"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <text-input-form-group
+                    class="col-sm-8"
+                    key="ManufacturerPartNumber"
+                    ng-model="ipeCtrl.record.ManufacturerPartNumber"
+                    label-key="ui.admin.controls.inventory.productDetail.ManufacturerPartNumber"
+                    max-length="64"
+                    ng-required="false">
+                  </text-input-form-group>
+                  <toggle-form-group
+                    class="col-sm-4"
+                    key="IsVisible"
+                    ng-model="ipeCtrl.record.IsVisible"
+                    label-key="ui.admin.controls.inventory.productDetail.IsVisible"
+                    tog-on-key="ui.admin.common.Visible" tog-on-style="btn-success"
+                    tog-off-key="ui.admin.common.Hidden" tog-off-style="btn-danger"
+                    ng-required="false">
+                  </toggle-form-group>
+                  <text-input-form-group
+                    class="col-sm-8"
+                    key="BrandName"
+                    ng-model="ipeCtrl.record.BrandName"
+                    label-key="ui.admin.controls.inventory.productDetail.BrandName"
+                    max-length="128"
+                    ng-required="false">
+                  </text-input-form-group>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div cef-seo-editor master="ipeCtrl.record" ng-if="ipeCtrl.record"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Description.Plural"></h3>
+                <div class="row">
+                  <textarea-form-group
+                    class="col-md-4"
+                    key="ShortDescription"
+                    ng-model="ipeCtrl.record.ShortDescription"
+                    placeholder-key="ui.admin.controls.inventory.productDetail.ShortDescription"
+                    label-key="ui.admin.controls.inventory.productDetail.ShortDescription"
+                    tooltip-key="ui.admin.controls.inventory.productDetail.ShortDescription.Tooltip"
+                    max-length="255"
+                    ng-required="true">
+                  </textarea-form-group>
+                  <textarea-wysiwyg-form-group
+                    class="col-md-8"
+                    key="Description"
+                    ng-model="ipeCtrl.record.Description"
+                    placeholder-key="ui.admin.controls.inventory.productDetail.LongDescription"
+                    label-key="ui.admin.controls.inventory.productDetail.LongDescription"
+                    tooltip-key="ui.admin.controls.inventory.productDetail.LongDescription.Tooltip"
+                    ng-required="true">
+                  </textarea-wysiwyg-form-group>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.pricing.enabled || ipeCtrl.cefConfig.featureSet.taxes.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Pricing.$invalid}"><i class="far fa-lg fa-dollar-sign"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Pricing"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Pricing">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.controls.inventory.productDetail.PricingInformation"></h3>
+                <div class="row">
+                  <toggle-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.taxes.enabled"
+                    class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                    key="IsTaxable"
+                    ng-model="ipeCtrl.record.IsTaxable"
+                    label-key="ui.admin.common.IsTaxable"
+                    tog-on-key="ui.admin.common.IsTaxable" tog-on-style="btn-success"
+                    tog-off-key="ui.admin.common.TaxExempt" tog-off-style="btn-warning"
+                    ng-required="false">
+                  </toggle-form-group>
+                  <text-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.taxes.enabled"
+                    class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                    key="TaxCode"
+                    ng-model="ipeCtrl.record.TaxCode"
+                    label-key="ui.admin.common.TaxCode"
+                    max-length="64"
+                    ng-required="false">
+                  </text-input-form-group>
+                </div>
+                <div class="row">
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.pricing.msrp.enabled"
+                    class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                    key="PriceMsrp"
+                    ng-model="ipeCtrl.rawPrices.PriceMsrp"
+                    label-key="ui.admin.controls.inventory.productDetail.MSRP"
+                    input-class="text-right"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    ng-required="false"
+                    is-currency="true">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                    ng-if="ipeCtrl.cefConfig.featureSet.pricing.reduction.enabled"
+                    key="PriceReduction"
+                    ng-model="ipeCtrl.rawPrices.PriceReduction"
+                    label-key="ui.admin.controls.inventory.productDetail.Reduction"
+                    input-class="text-right"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    ng-required="false"
+                    is-currency="true">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.pricing.enabled"
+                    class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                    key="PriceBase"
+                    ng-model="ipeCtrl.rawPrices.PriceBase"
+                    label-key="ui.admin.controls.inventory.productDetail.DefaultListBase"
+                    input-class="text-right"
+                    step="0.01"
+                    precision="4"
+                    min="ipeCtrl.rawPrices.PriceSale || 0"
+                    placeholder-text="1.00"
+                    ng-required="true"
+                    is-currency="true">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.pricing.enabled"
+                    class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                    key="PriceSale"
+                    ng-model="ipeCtrl.rawPrices.PriceSale"
+                    label-key="ui.admin.common.SalePrice"
+                    input-class="text-right"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    max="ipeCtrl.rawPrices.PriceBase || 0"
+                    ng-disabled="!ipeCtrl.rawPrices.PriceBase"
+                    placeholder-text="1.00"
+                    ng-required="false"
+                    is-currency="true">
+                  </number-input-form-group>
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="ipeCtrl.cefConfig.featureSet.pricing.pricePoints.enabled">
+              <div class="col-md-12"><h3 data-translate="ui.admin.common.PricePoint.Plural"></h3></div>
+              <div class="col-md-12"><p><b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+              --><span data-translate="ui.admin.controls.inventory.productDetail.IfTieredPricing.Message"></span></p></div>
+              <div class="col-md-12 mb-3">
+                <button type="button" class="btn btn-primary"
+                  data-translate="ui.admin.controls.inventory.productDetail.AddPricePoint"
+                  ng-click="ipeCtrl.addPricePoint()">
+                </button>
+                <button type="button" class="btn btn-primary"
+                  data-translate="ui.admin.controls.inventory.productDetail.AddAllPricePoints"
+                  ng-click="ipeCtrl.addAllPricePoints()">
+                </button>
+                <input type="text" class="form-control inline-block sm-w-100 md-w-50 lg-w-75"
+                  translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                  ng-required="false"
+                  ng-model="ipeCtrl.pricePointFilter" />
+              </div>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="center" data-translate="ui.admin.common.Number.Symbol"></th>
+                      <th class="center" data-translate="ui.admin.controls.inventory.productDetail.Point"></th>
+                      <th class="center" data-translate="ui.admin.common.Currency"></th>
+                        <th class="center"><i class="far fa-fw fa-hourglass-start"></i>&nbsp;<span data-translate="ui.admin.common.StartDate"></span></th>
+                        <th class="center"><i class="far fa-fw fa-step-forward fa-rotate-270"></i>&nbsp;<span data-translate="ui.admin.controls.inventory.productDetail.MinQuantity"></span></th>
+                        <th class="center"><i class="far fa-fw fa-usd"></i>&nbsp;<span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Override$"></span></th>
+                    </tr>
+                    <tr>
+                      <th class="center"></th>
+                      <th class="center" data-translate="ui.admin.common.UofM.abbr"></th>
+                      <th class="center" data-translate="ui.admin.common.Store"></th>
+                        <th class="center"><i class="far fa-fw fa-hourglass-end"></i>&nbsp;<span data-translate="ui.admin.common.EndDate"></span></th>
+                        <th class="center"><i class="far fa-fw fa-step-forward fa-rotate-90"></i>&nbsp;<span data-translate="ui.admin.controls.inventory.productDetail.MaxQuantity"></span></th>
+                        <th class="center"><i class="far fa-fw fa-percent"></i>&nbsp;<span data-translate="ui.admin.controls.inventory.productDetail.PercentageModifier"></span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat-start="ppp in ipeCtrl.productPricePoints
+                                         | filter: { $: ipeCtrl.pricePointFilter }
+                                         | orderBy: ['StoreKey','PricePointKey','UnitOfMeasure','From','To','MinQuantity','MaxQuantity']
+                                         | limitTo: 8"
+                      class="table-vertical-center"
+                      ng-class="{'danger': ppp.To < ipeCtrl.now,
+                                 'warning': ppp.From > ipeCtrl.now,
+                                 'success': (!ppp.From || ppp.From < ipeCtrl.now)
+                                            && (!ppp.To || ppp.To > ipeCtrl.now) }">
+                      <th class="center p-1" ng-bind="ppp.ID"></th>
+                      <td class="p-1">
+                        <select class="form-control form-control-table-cell"
+                          id="nudPP{{$index}}Point" name="nudPP{{$index}}Point"
+                          ng-required="true"
+                          ng-options="pp.ID as ((pp.DisplayName || pp.Name) + (pp.CustomKey && pp.CustomKey != (pp.DisplayName || pp.Name) ? ' [' +  pp.CustomKey + ']' : ''))
+                                      for pp in ipeCtrl.pricePoints
+                                      | orderBy: ['SortOrder','DisplayName || Name']
+                                      | limitTo: 50"
+                          ng-model="ppp.SlaveID">
+                          <option value="" data-translate="ui.admin.controls.inventory.productDetail.SelectAPricePoint"></option>
+                        </select>
+                      </td>
+                      <td class="p-1">
+                        <select class="form-control form-control-table-cell"
+                          id="nudPP{{$index}}Currency" name="nudPP{{$index}}Currency"
+                          ng-required="false"
+                          ng-options="c.ID as ((c.DisplayName || c.Name) + (c.CustomKey && c.CustomKey != (c.DisplayName || c.Name) ? ' [' +  c.CustomKey + ']' : ''))
+                                      for c in ipeCtrl.currencies
+                                      | orderBy: ['SortOrder','DisplayName || Name']"
+                          ng-model="ppp.CurrencyID">
+                          <option value="" data-translate="ui.admin.controls.inventory.productDetail.SelectACurrency"></option>
+                        </select>
+                      </td>
+                      <td class="p-1">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-fw fa-hourglass-start"></i></span>
+                          <input type="date" class="form-control form-control-table-cell text-right"
+                            id="dtPP{{$index}}From" name="dtPP{{$index}}From"
+                            ng-required="false"
+                            ng-model="ppp.From" />
+                        </div>
+                      </td>
+                      <td class="p-1">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-fw fa-step-forward fa-rotate-270"></i></span>
+                          <input type="number" class="form-control form-control-table-cell text-right"
+                            id="nudPP{{$index}}Min" name="nudPP{{$index}}Min"
+                            min="1" max="{{ppp.MaxQuantity}}"
+                            ng-required="true"
+                            ng-model="ppp.MinQuantity" />
+                        </div>
+                      </td>
+                      <td class="p-1">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-fw fa-usd"></i></span>
+                          <input type="text" class="form-control form-control-table-cell text-right"
+                            id="nudPP{{$index}}Price" name="nudPP{{$index}}Price"
+                            translate-attr="{ placeholder: 'ui.admin.controls.sales.salesOrderNewWizard.Override$' }"
+                            step="0.01" min="0"
+                            ng-disabled="ppp.PercentDiscount"
+                            ng-required="(!ppp.Price || ppp.Price < 0) && (!ppp.PercentDiscount || ppp.PercentDiscount < 0)"
+                            ng-model="ppp.Price" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr ng-repeat-end
+                      class="table-vertical-center"
+                      ng-class="{'danger': ppp.To < ipeCtrl.now,
+                                 'warning': ppp.From > ipeCtrl.now,
+                                 'success': (!ppp.From || ppp.From < ipeCtrl.now)
+                                            && (!ppp.To || ppp.To > ipeCtrl.now) }">
+                      <td class="center p-1">
+                        <button type="button" class="btn btn-danger"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="ipeCtrl.removePricePoint($index)">
+                            <i class="far fa-times"></i><!--
+                          --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </td>
+                      <td class="p-1">
+                        <input type="text" class="form-control form-control-table-cell"
+                          id="txtPP{{$index}}UofM" name="txtPP{{$index}}UofM"
+                          maxlength="128"
+                          ng-required="true"
+                          ng-model="ppp.UnitOfMeasure" />
+                      </td>
+                      <td class="p-1">
+                        <select class="form-control form-control-table-cell"
+                          id="nudPP{{$index}}Store" name="nudPP{{$index}}Store"
+                          ng-required="false"
+                          ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' +  s.CustomKey + ']' : ''))
+                                      for s in ipeCtrl.stores
+                                      | orderBy: ['SortOrder','DisplayName || Name']"
+                          ng-model="ppp.StoreID">
+                          <option value="" data-translate="ui.admin.common.SelectAStore"></option>
+                        </select>
+                      </td>
+                      <td class="p-1">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-fw fa-hourglass-end"></i></span>
+                          <input type="date" class="form-control form-control-table-cell text-right"
+                            id="dtPP{{$index}}To" name="dtPP{{$index}}To"
+                            ng-required="false"
+                            ng-model="ppp.To" />
+                        </div>
+                      </td>
+                      <td class="p-1">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-fw fa-step-forward fa-rotate-90"></i></span>
+                          <input type="number"class="form-control form-control-table-cell text-right"
+                            id="nudPP{{$index}}Max" name="nudPP{{$index}}Max"
+                            min="{{ppp.MinQuantity}}" max="2147483647"
+                            ng-required="true"
+                            ng-model="ppp.MaxQuantity" />
+                        </div>
+                      </td>
+                      <td class="p-1">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-fw fa-percent"></i></span>
+                          <input type="text" class="form-control form-control-table-cell text-right"
+                            id="nudPP{{$index}}Percent" name="nudPP{{$index}}Percent"
+                            translate-attr="{ placeholder: 'ui.admin.controls.inventory.productDetail.PercentageModifier' }"
+                            step="0.0100" min="-1.0000"
+                            ng-disabled="ppp.Price > 0"
+                            ng-required="(!ppp.Price || ppp.Price < 0) && (!ppp.PercentDiscount || ppp.PercentDiscount < 0)"
+                            ng-model="ppp.PercentDiscount" />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger':ipeCtrl.forms.Purchasing.$invalid}"><i class="far fa-lg fa-cash-register"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Purchasing"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Purchasing">
+            <div class="row">
+              <div class="col-md-6 col-lg-8">
+                <div class="row">
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.minMax.enabled"
+                    class="col-xs-6 col-lg-4"
+                    key="MinimumPurchaseQuantity"
+                    ng-model="ipeCtrl.record.MinimumPurchaseQuantity"
+                    label-key="ui.admin.controls.inventory.productDetail.MinPurchaseQuantity"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.minMax.after.enabled"
+                    class="col-xs-6 col-lg-4"
+                    key="MinimumPurchaseQuantityIfPastPurchased"
+                    ng-model="ipeCtrl.record.MinimumPurchaseQuantityIfPastPurchased"
+                    label-key="ui.admin.controls.inventory.productDetail.MinIfPreviousMinIsMet"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                </div>
+                <div class="row">
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.minMax.enabled"
+                    class="col-xs-6 col-lg-4"
+                    key="MaximumPurchaseQuantity"
+                    ng-model="ipeCtrl.record.MaximumPurchaseQuantity"
+                    label-key="ui.admin.controls.inventory.productDetail.MaxPurchaseQuantity"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.minMax.after.enabled"
+                    class="col-xs-6 col-lg-4"
+                    key="MaximumPurchaseQuantityIfPastPurchased"
+                    ng-model="ipeCtrl.record.MaximumPurchaseQuantityIfPastPurchased"
+                    label-key="ui.admin.controls.inventory.productDetail.MaxIfPreviousMaxIsMet"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                </div>
+                <div class="row">
+                  <toggle-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.inventory.backOrder.enabled"
+                    class="col-xs-6 col-lg-3"
+                    key="AllowBackOrder"
+                    ng-disabled="ipeCtrl.record.IsUnlimitedStock"
+                    ng-model="ipeCtrl.record.AllowBackOrder"
+                    label-key="ui.admin.controls.inventory.productDetail.AllowBackOrder"
+                    tog-on-key="ui.admin.controls.inventory.productDetail.Allowed" tog-on-style="btn-info"
+                    tog-off-key="ui.admin.controls.inventory.productDetail.NotAllowed" tog-off-style="btn-warning"
+                    ng-required="false">
+                  </toggle-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.inventory.backOrder.maxPerProductGlobal.enabled"
+                    class="col-xs-6 col-lg-3"
+                    key="MaximumBackOrderPurchaseQuantityGlobal"
+                    ng-disabled="ipeCtrl.record.IsUnlimitedStock || !ipeCtrl.record.AllowBackOrder"
+                    ng-model="ipeCtrl.record.MaximumBackOrderPurchaseQuantityGlobal"
+                    label-key="ui.admin.controls.inventory.productDetail.MaximumBackOrderPurchaseQuantityGlobal"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.inventory.backOrder.maxPerProductAccount.enabled"
+                    class="col-xs-6 col-lg-3"
+                    key="MaximumBackOrderPurchaseQuantity"
+                    ng-disabled="ipeCtrl.record.IsUnlimitedStock || !ipeCtrl.record.AllowBackOrder"
+                    ng-model="ipeCtrl.record.MaximumBackOrderPurchaseQuantity"
+                    label-key="ui.admin.controls.inventory.productDetail.MaximumBackOrderPurchaseQuantity"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.inventory.backOrder.maxPerProductAccount.after.enabled"
+                    class="col-xs-6 col-lg-3"
+                    key="MaximumBackOrderPurchaseQuantityIfPastPurchased"
+                    ng-disabled="ipeCtrl.record.IsUnlimitedStock || !ipeCtrl.record.AllowBackOrder"
+                    ng-model="ipeCtrl.record.MaximumBackOrderPurchaseQuantityIfPastPurchased"
+                    label-key="ui.admin.controls.inventory.productDetail.MaximumBackOrderPurchaseQuantityIfPastPurchased"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                </div>
+                <div class="row">
+                  <toggle-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.inventory.preSale.enabled"
+                    class="col-xs-6 col-lg-3"
+                    key="AllowPreSale"
+                    ng-disabled="ipeCtrl.record.IsUnlimitedStock"
+                    ng-model="ipeCtrl.record.AllowPreSale"
+                    label-key="ui.admin.controls.inventory.productDetail.AllowPreSale"
+                    tog-on-key="ui.admin.controls.inventory.productDetail.Allowed" tog-on-style="btn-warning"
+                    tog-off-key="ui.admin.controls.inventory.productDetail.NotAllowed" tog-off-style="btn-info"
+                    ng-required="false">
+                  </toggle-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.inventory.preSale.maxPerProductGlobal.enabled"
+                    class="col-xs-6 col-lg-3"
+                    key="MaximumPrePurchaseQuantityGlobal"
+                    ng-disabled="ipeCtrl.record.IsUnlimitedStock || !ipeCtrl.record.AllowPreSale"
+                    ng-model="ipeCtrl.record.MaximumPrePurchaseQuantityGlobal"
+                    label-key="ui.admin.controls.inventory.productDetail.MaximumPrePurchaseQuantityGlobal"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.inventory.preSale.maxPerProductAccount.enabled"
+                    class="col-xs-6 col-lg-3"
+                    key="MaximumPrePurchaseQuantity"
+                    ng-disabled="ipeCtrl.record.IsUnlimitedStock || !ipeCtrl.record.AllowPreSale"
+                    ng-model="ipeCtrl.record.MaximumPrePurchaseQuantity"
+                    label-key="ui.admin.controls.inventory.productDetail.MaximumPrePurchaseQuantity"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.inventory.preSale.maxPerProductAccount.after.enabled"
+                    class="col-xs-6 col-lg-3"
+                    key="MaximumPrePurchaseQuantityIfPastPurchased"
+                    ng-disabled="ipeCtrl.record.IsUnlimitedStock || !ipeCtrl.record.AllowPreSale"
+                    ng-model="ipeCtrl.record.MaximumPrePurchaseQuantityIfPastPurchased"
+                    label-key="ui.admin.controls.inventory.productDetail.MaximumPrePurchaseQuantityIfPastPurchased"
+                    step="0.01"
+                    precision="4"
+                    min="0"
+                    placeholder-text="1.00"
+                    input-class="text-right"
+                    ng-required="false">
+                  </number-input-form-group>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="row">
+                  <div class="col-md-4 col-lg-12">
+                    <toggle-form-group
+                      key="IsDiscontinued"
+                      ng-model="ipeCtrl.record.IsDiscontinued"
+                      label-key="ui.admin.controls.inventory.productDetail.IsDiscontinued"
+                      tog-on-key="ui.admin.common.Discontinued" tog-on-style="btn-danger"
+                      tog-off-key="ui.admin.common.Available" tog-off-style="btn-success"
+                      ng-required="false">
+                    </toggle-form-group>
+                    <number-input-form-group
+                      input-class="text-right"
+                      key="KitBaseQuantityPriceMultiplier"
+                      ng-model="ipeCtrl.record.KitBaseQuantityPriceMultiplier"
+                      label-key="ui.admin.controls.inventory.productDetail.KitBaseQuantityPriceMultiplier"
+                      tooltip-key="ui.admin.controls.inventory.productDetail.KitBaseQuantityPriceMultiplier.Tooltip"
+                      placeholder-text="1.00"
+                      step="0.01"
+                      precision="5"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-required="false">
+                    </number-input-form-group>
+                  </div>
+                  <div class="col-md-8 col-lg-12">
+                    <date-input-form-group
+                      ng-if="ipeCtrl.cefConfig.featureSet.purchasing.availabilityDates.enabled"
+                      key="StartDate"
+                      ng-model="ipeCtrl.record.AvailableStartDate"
+                      label-key="ui.admin.common.StartDate"
+                      placeholder-key="ui.admin.common.StartDate"
+                      max="ipeCtrl.record.EndDate"
+                      include-time="true"
+                      ng-required="false">
+                    </date-input-form-group>
+                    <date-input-form-group
+                      ng-if="ipeCtrl.cefConfig.featureSet.purchasing.availabilityDates.enabled"
+                      key="EndDate"
+                      ng-model="ipeCtrl.record.AvailableEndDate"
+                      label-key="ui.admin.common.EndDate"
+                      placeholder-key="ui.admin.common.EndDate"
+                      min="ipeCtrl.record.StartDate"
+                      include-time="true"
+                      ng-required="false">
+                    </date-input-form-group>
+                    <date-input-form-group
+                      ng-if="ipeCtrl.cefConfig.featureSet.inventory.preSale.enabled"
+                      key="PreSellEndDate"
+                      ng-disabled="ipeCtrl.record.IsUnlimitedStock || !ipeCtrl.record.AllowPreSale"
+                      ng-model="ipeCtrl.record.PreSellEndDate"
+                      label-key="ui.admin.common.PreSellEndDate"
+                      placeholder-key="ui.admin.common.PreSellEndDate"
+                      include-time="true"
+                      ng-required="false">
+                    </date-input-form-group>
+                  </div>
+                </div>
+              </div>
+              <text-input-form-group
+                ng-if="ipeCtrl.cefConfig.featureSet.purchasing.roleRequiredToSee.enabled"
+                class="col-sm-12"
+                key="RequiresRoles"
+                ng-model="ipeCtrl.record.RequiresRoles"
+                label-key="ui.admin.common.RequiresRole.VisibilityRestrictedRole"
+                tooltip-key="ui.admin.controls.inventory.productDetail.OnlyQualifiedCanSee.Tooltip"
+                max-length="512"
+                ng-required="false">
+              </text-input-form-group>
+              <text-input-form-group
+                ng-if="ipeCtrl.cefConfig.featureSet.purchasing.roleRequiredToPurchase.enabled"
+                class="col-sm-12"
+                key="RequiresRolesAlt"
+                ng-model="ipeCtrl.record.RequiresRolesAlt"
+                label-key="ui.admin.common.RequiresRole.VisibilityNotRestrictedRole"
+                tooltip-key="ui.admin.controls.inventory.productDetail.AllCanSeeOnlyQualifiedCanPurchase.Tooltip"
+                max-length="512"
+                ng-required="false">
+              </text-input-form-group>
+            </div>
+            <div class="row">
+              <div class="col-md-6"
+                 ng-if="ipeCtrl.cefConfig.featureSet.purchasing.documentRequired.enabled">
+                <div class="row">
+                  <text-input-form-group
+                    class="col-sm-12"
+                    key="DocumentRequiredForPurchase"
+                    ng-model="ipeCtrl.record.DocumentRequiredForPurchase"
+                    label-key="ui.admin.controls.inventory.productDetail.DocumentRequiredForPurchaseRole"
+                    max-length="128"
+                    ng-required="false">
+                  </text-input-form-group>
+                  <textarea-form-group
+                    class="col-sm-12"
+                    key="DocumentRequiredForPurchaseMissingWarningMessage"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.DocumentRequiredForPurchaseMissingWarningMessage"
+                    ng-disabled="!ipeCtrl.record.DocumentRequiredForPurchase"
+                    label-key="ui.admin.controls.inventory.productDetail.DocumentRequiredForPurchaseMissingWarningMessage"
+                    placeholder-key="ui.admin.controls.inventory.productDetail.DocumentRequiredForPurchaseMissingWarningMessage"
+                    max-length="1024"
+                    show-character-counter="true"
+                    ng-required="false">
+                  </textarea-form-group>
+                  <div class="col-sm-12" ng-if="ipeCtrl.record.DocumentRequiredForPurchaseMissingWarningMessage">
+                    <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                    <div class="my-2" ng-non-bindable>
+                      Tokens: {{ownerID}}, {{ownerName}},
+                      {{requiredAmount}}, {{missingAmount}},
+                      {{overrideFee}}, {{overrideFeeWarningMessage}},
+                      {{relatedStoreID}}, {{relatedStoreName}},
+                      {{checkbox}}, {{attrKey}}
+                    </div>
+                    <div class="mb-3 well well-sm"
+                      ng-bind-html="ipeCtrl.record.DocumentRequiredForPurchaseMissingWarningMessage.replace('{{checkbox}}', '') | trustedHtml">
+                    </div>
+                  </div>
+                  <textarea-form-group
+                    class="col-sm-12"
+                    key="DocumentRequiredForPurchaseExpiredWarningMessage"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.DocumentRequiredForPurchaseExpiredWarningMessage"
+                    ng-disabled="!ipeCtrl.record.DocumentRequiredForPurchase"
+                    label-key="ui.admin.controls.inventory.productDetail.DocumentRequiredForPurchaseExpiredWarningMessage"
+                    placeholder-key="ui.admin.controls.inventory.productDetail.DocumentRequiredForPurchaseExpiredWarningMessage"
+                    max-length="1024"
+                    show-character-counter="true"
+                    ng-required="false">
+                  </textarea-form-group>
+                  <div class="col-sm-12" ng-if="ipeCtrl.record.DocumentRequiredForPurchaseExpiredWarningMessage">
+                    <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                    <div class="my-2" ng-non-bindable>
+                      Tokens: {{ownerID}}, {{ownerName}},
+                      {{requiredAmount}}, {{missingAmount}},
+                      {{overrideFee}}, {{overrideFeeWarningMessage}},
+                      {{relatedStoreID}}, {{relatedStoreName}},
+                      {{checkbox}}, {{attrKey}}
+                    </div>
+                    <div class="mb-3 well well-sm"
+                      ng-bind-html="ipeCtrl.record.DocumentRequiredForPurchaseExpiredWarningMessage.replace('{{checkbox}}', '') | trustedHtml">
+                    </div>
+                  </div>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.documentRequired.override.enabled"
+                    class="col-sm-6"
+                    input-class="text-right"
+                    key="DocumentRequiredForPurchaseOverrideFee"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFee"
+                    ng-disabled="!ipeCtrl.record.DocumentRequiredForPurchase"
+                    label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFee"
+                    input-class="text-right"
+                    placeholder-text="0.00"
+                    step="0.01"
+                    precision="4"
+                    ng-required="false"
+                    is-currency="!ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeIsPercent"
+                    is-percent="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeIsPercent">
+                  </number-input-form-group>
+                  <toggle-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.documentRequired.override.enabled"
+                    class="col-sm-6"
+                    key="DocumentRequiredForPurchaseOverrideFeeIsPercent"
+                    ng-model="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeIsPercent"
+                    ng-disabled="!ipeCtrl.record.DocumentRequiredForPurchase
+                      || ipeCtrl.record.DocumentRequiredForPurchaseOverrideFee === undefined
+                      || ipeCtrl.record.DocumentRequiredForPurchaseOverrideFee === null"
+                    label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeIsPercent"
+                    tog-on-key="ui.admin.common.Yes" tog-on-style="btn-primary"
+                    tog-off-key="ui.admin.common.No" tog-off-style="btn-info">
+                  </toggle-form-group>
+                  <textarea-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.documentRequired.override.enabled"
+                    class="col-sm-12"
+                    key="DocumentRequiredForPurchaseOverrideFeeWarningMessage"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeWarningMessage"
+                    ng-disabled="!ipeCtrl.record.DocumentRequiredForPurchase
+                      || ipeCtrl.record.DocumentRequiredForPurchaseOverrideFee === undefined
+                      || ipeCtrl.record.DocumentRequiredForPurchaseOverrideFee === null"
+                    label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+                    placeholder-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+                    max-length="1024"
+                    show-character-counter="true"
+                    ng-required="false">
+                  </textarea-form-group>
+                  <div class="col-sm-12" ng-if="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeWarningMessage">
+                    <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                    <div class="my-2" ng-non-bindable>
+                      Tokens: {{ownerID}}, {{ownerName}},
+                      {{requiredAmount}}, {{missingAmount}},
+                      {{overrideFee}}, {{overrideFeeWarningMessage}},
+                      {{relatedStoreID}}, {{relatedStoreName}},
+                      {{checkbox}}, {{attrKey}}
+                    </div>
+                    <div class="mb-3 well well-sm"
+                      ng-bind-html="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeWarningMessage.replace('{{checkbox}}', '') | trustedHtml">
+                    </div>
+                  </div>
+                  <textarea-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.documentRequired.override.enabled"
+                    class="col-sm-12"
+                    key="DocumentRequiredForPurchaseOverrideFeeAcceptedMessage"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeAcceptedMessage"
+                    ng-disabled="!ipeCtrl.record.DocumentRequiredForPurchase
+                      || ipeCtrl.record.DocumentRequiredForPurchaseOverrideFee === undefined
+                      || ipeCtrl.record.DocumentRequiredForPurchaseOverrideFee === null"
+                    label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+                    placeholder-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+                    max-length="1024"
+                    show-character-counter="true"
+                    ng-required="false">
+                  </textarea-form-group>
+                  <div class="col-sm-12" ng-if="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeAcceptedMessage">
+                    <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                    <div class="my-2" ng-non-bindable>
+                      Tokens: {{ownerID}}, {{ownerName}},
+                      {{requiredAmount}}, {{missingAmount}},
+                      {{overrideFee}}, {{overrideFeeWarningMessage}},
+                      {{relatedStoreID}}, {{relatedStoreName}},
+                      {{checkbox}}, {{attrKey}}
+                    </div>
+                    <div class="mb-3 well well-sm"
+                      ng-bind-html="ipeCtrl.record.DocumentRequiredForPurchaseOverrideFeeAcceptedMessage.replace('{{checkbox}}', '') | trustedHtml">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6"
+                 ng-if="ipeCtrl.cefConfig.featureSet.purchasing.mustPurchaseInMultiplesOf.enabled">
+                <div class="row">
+                  <number-input-form-group
+                    class="col-sm-12"
+                    input-class="text-right"
+                    key="MustPurchaseInMultiplesOfAmount"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.MustPurchaseInMultiplesOfAmount"
+                    label-key="ui.admin.controls.inventory.productDetail.MustPurchaseInMultiplesOfAmount"
+                    tooltip-text="A user will not be able to check out their cart until they meet this minimum requirement if set."
+                    input-class="text-right"
+                    placeholder-text="1.00"
+                    step="0.01"
+                    precision="4"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <textarea-form-group
+                    class="col-sm-12"
+                    key="MustPurchaseInMultiplesOfAmountWarningMessage"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.MustPurchaseInMultiplesOfAmountWarningMessage"
+                    ng-disabled="!ipeCtrl.record.MustPurchaseInMultiplesOfAmount"
+                    label-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+                    placeholder-key="ui.admin.controls.widgets.WarningMessageWhenMinimumIsntMet"
+                    max-length="1024"
+                    show-character-counter="true"
+                    ng-required="false">
+                  </textarea-form-group>
+                  <div class="col-sm-12" ng-if="ipeCtrl.record.MustPurchaseInMultiplesOfAmountWarningMessage">
+                    <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                    <div class="my-2" ng-non-bindable>
+                      Tokens: {{ownerID}}, {{ownerName}},
+                      {{requiredAmount}}, {{missingAmount}},
+                      {{overrideFee}}, {{overrideFeeWarningMessage}},
+                      {{relatedStoreID}}, {{relatedStoreName}},
+                      {{checkbox}}, {{attrKey}}
+                    </div>
+                    <div class="mb-3 well well-sm"
+                      ng-bind-html="ipeCtrl.record.MustPurchaseInMultiplesOfAmountWarningMessage.replace('{{checkbox}}', '') | trustedHtml">
+                    </div>
+                  </div>
+                  <number-input-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.mustPurchaseInMultiplesOf.override.enabled"
+                    class="col-sm-6"
+                    input-class="text-right"
+                    key="MustPurchaseInMultiplesOfAmountOverrideFee"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFee"
+                    ng-disabled="!ipeCtrl.record.MustPurchaseInMultiplesOfAmount"
+                    label-key="ui.admin.controls.inventory.productDetail.MustPurchaseInMultiplesOfAmountOverrideFee"
+                    input-class="text-right"
+                    placeholder-text="1.00"
+                    step="0.01"
+                    precision="4"
+                    ng-required="false"
+                    is-currency="!ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent"
+                    is-percent="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent">
+                  </number-input-form-group>
+                  <toggle-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.mustPurchaseInMultiplesOf.override.enabled"
+                    class="col-sm-6"
+                    key="MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent"
+                    ng-disabled="!ipeCtrl.record.MustPurchaseInMultiplesOfAmount
+                      || ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFee === undefined
+                      || ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFee === null"
+                    ng-model="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeIsPercent"
+                    label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeIsPercent"
+                    tog-on-key="ui.admin.common.Yes" tog-on-style="btn-primary"
+                    tog-off-key="ui.admin.common.No" tog-off-style="btn-info">
+                  </toggle-form-group>
+                  <textarea-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.mustPurchaseInMultiplesOf.override.enabled"
+                    class="col-sm-12"
+                    key="MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage"
+                    ng-disabled="!ipeCtrl.record.MustPurchaseInMultiplesOfAmount
+                      || ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFee === undefined
+                      || ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFee === null"
+                    label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+                    placeholder-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeWarningMessage"
+                    max-length="1024"
+                    show-character-counter="true"
+                    ng-required="false">
+                  </textarea-form-group>
+                  <div class="col-sm-12" ng-if="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage">
+                    <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                    <div class="my-2" ng-non-bindable>
+                      Tokens: {{ownerID}}, {{ownerName}},
+                      {{requiredAmount}}, {{missingAmount}},
+                      {{overrideFee}}, {{overrideFeeWarningMessage}},
+                      {{relatedStoreID}}, {{relatedStoreName}},
+                      {{checkbox}}, {{attrKey}}
+                    </div>
+                    <div class="mb-3 well well-sm"
+                      ng-bind-html="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeWarningMessage.replace('{{checkbox}}', '') | trustedHtml">
+                    </div>
+                  </div>
+                  <textarea-form-group
+                    ng-if="ipeCtrl.cefConfig.featureSet.purchasing.mustPurchaseInMultiplesOf.override.enabled"
+                    class="col-sm-12"
+                    key="MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage"
+                    ng-model-options="ipeCtrl.debounce500"
+                    ng-model="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage"
+                    ng-disabled="!ipeCtrl.record.MustPurchaseInMultiplesOfAmount
+                      || ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFee === undefined
+                      || ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFee === null"
+                    label-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+                    placeholder-key="ui.admin.controls.widgets.minimumOrders.ByDollarAmountOverrideFeeAcceptedMessage"
+                    max-length="1024"
+                    show-character-counter="true"
+                    ng-required="false">
+                  </textarea-form-group>
+                  <div class="col-sm-12" ng-if="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage">
+                    <p class="bold" data-translate="ui.admin.common.Preview"></p>
+                    <div class="my-2" ng-non-bindable>
+                      Tokens: {{ownerID}}, {{ownerName}},
+                      {{requiredAmount}}, {{missingAmount}},
+                      {{overrideFee}}, {{overrideFeeWarningMessage}},
+                      {{relatedStoreID}}, {{relatedStoreName}},
+                      {{checkbox}}, {{attrKey}}
+                    </div>
+                    <div class="mb-3 well well-sm"
+                      ng-bind-html="ipeCtrl.record.MustPurchaseInMultiplesOfAmountOverrideFeeAcceptedMessage.replace('{{checkbox}}', '') | trustedHtml">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.salesReturns.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger':ipeCtrl.forms.Returning.$invalid}"><i class="far fa-lg fa-hand-o-left"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Returning"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Returning">
+            <div class="row">
+              <toggle-form-group
+                class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                key="IsEligibleForReturn"
+                ng-model="ipeCtrl.record.IsEligibleForReturn"
+                label-key="ui.admin.controls.inventory.productDetail.IsEligibleForReturn"
+                tog-on-key="ui.admin.common.Yes" tog-on-style="btn-success"
+                tog-off-key="ui.admin.common.No" tog-off-style="btn-warning"
+                ng-required="false">
+              </toggle-form-group>
+              <number-input-form-group
+                class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                key="RestockingFeePercent"
+                ng-disabled="!ipeCtrl.record.IsEligibleForReturn"
+                ng-model="ipeCtrl.record.RestockingFeePercent"
+                label-key="ui.admin.controls.inventory.productDetail.RestockingFeePercent"
+                input-class="text-right"
+                step="0.01"
+                precision="5"
+                min="0"
+                placeholder-text="1.00"
+                ng-required="false"
+                is-percent="true">
+              </number-input-form-group>
+              <number-input-form-group
+                class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                key="RestockingFeeAmount"
+                ng-disabled="!ipeCtrl.record.IsEligibleForReturn"
+                ng-model="ipeCtrl.record.RestockingFeeAmount"
+                label-key="ui.admin.controls.inventory.productDetail.RestockingFeeAmount"
+                input-class="text-right"
+                step="0.01"
+                precision="4"
+                min="0"
+                placeholder-text="1.00"
+                ng-required="false"
+                is-currency="true">
+              </number-input-form-group>
+              <select-form-group
+                class="col-xs-6 col-sm-3 col-md-3 col-lg-3"
+                key="RestockingFeeAmountCurrencyID"
+                ng-disabled="!ipeCtrl.record.IsEligibleForReturn || !ipeCtrl.record.RestockingFeeAmount"
+                ng-model="ipeCtrl.record.RestockingFeeAmountCurrencyID"
+                selections="ipeCtrl.currencies"
+                label-key="ui.admin.controls.inventory.productDetail.RestockingFeeAmountCurrency"
+                ng-required="ipeCtrl.record.RestockingFeeAmount > 0">
+              </select-form-group>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger':ipeCtrl.forms.Shipping.$invalid}"><i class="far fa-lg fa-truck"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Shipping"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Shipping">
+            <div class="row">
+              <div class="col-sm-6 col-md-4 col-lg-4" ng-if="ipeCtrl.cefConfig.featureSet.shipping.enabled">
+                <h3 data-translate="ui.admin.controls.inventory.productDetail.ChargesAndFees"></h3>
+                <toggle-form-group
+                  key="NothingToShip"
+                  ng-model="ipeCtrl.record.NothingToShip"
+                  label-key="ui.admin.common.IsShippable"
+                  tog-on-key="ui.admin.controls.inventory.productDetail.NothingToShip" tog-on-style="btn-warning"
+                  tog-off-key="ui.admin.controls.inventory.productDetail.RequiresShipping" tog-off-style="btn-info"
+                  ng-required="false">
+                </toggle-form-group>
+                <toggle-form-group
+                  ng-if="ipeCtrl.cefConfig.featureSet.shipping.rates.productsCanBeFreeShipping"
+                  key="IsFreeShipping"
+                  ng-disabled="ipeCtrl.record.NothingToShip"
+                  ng-model="ipeCtrl.record.IsFreeShipping"
+                  label-key="ui.admin.controls.inventory.productDetail.IsAlwaysFreeShipping"
+                  tooltip-key="ui.admin.controls.inventory.productDetail.IsAlwaysFreeShipping.Tooltip"
+                  tog-on-key="ui.admin.controls.inventory.productDetail.AlwaysFree" tog-on-style="btn-warning"
+                  tog-off-key="ui.admin.controls.inventory.productDetail.NormalShipping" tog-off-style="btn-info"
+                  ng-required="false">
+                </toggle-form-group>
+                <number-input-form-group
+                  ng-if="ipeCtrl.cefConfig.featureSet.shipping.handlingFees.enabled"
+                  key="HandlingCharge"
+                  ng-disabled="ipeCtrl.record.NothingToShip || ipeCtrl.record.IsFreeShipping"
+                  ng-model="ipeCtrl.record.HandlingCharge"
+                  label-key="ui.admin.controls.inventory.categoryDetail.HandlingCharge"
+                  tooltip-key="ui.admin.controls.inventory.productDetail.HandlingCharge.Tooltip"
+                  placeholder-text="0.00"
+                  step="0.01"
+                  precision="4"
+                  min="0"
+                  ng-required="false"
+                  input-class="text-right"
+                  is-currency="true">
+                </number-input-form-group>
+                <number-input-form-group
+                  ng-if="ipeCtrl.cefConfig.featureSet.shipping.rates.flat.enabled"
+                  key="FlatShippingCharge"
+                  ng-disabled="ipeCtrl.record.NothingToShip || ipeCtrl.record.IsFreeShipping"
+                  ng-model="ipeCtrl.record.FlatShippingCharge"
+                  label-key="ui.admin.controls.inventory.productDetail.FlatShippingCharge"
+                  tooltip-key="ui.admin.controls.inventory.productDetail.FlatShippingCharge.Tooltip"
+                  placeholder-text="0.00"
+                  step="0.01"
+                  precision="4"
+                  min="0"
+                  ng-required="false"
+                  input-class="text-right"
+                  is-currency="true">
+                </number-input-form-group>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-4"
+                ng-if="ipeCtrl.cefConfig.featureSet.shipping.leadTimes.enabled">
+                <h3 data-translate="ui.admin.controls.inventory.productDetail.LeadTimes"></h3>
+                <toggle-form-group
+                  key="ShippingLeadTimeIsCalendarDays"
+                  ng-disabled="ipeCtrl.record.NothingToShip"
+                  ng-model="ipeCtrl.record.ShippingLeadTimeIsCalendarDays"
+                  label-key="ui.admin.controls.inventory.productDetail.ShippingLeadTimeIsCalendarDays"
+                  tog-on-key="ui.admin.controls.inventory.productDetail.Calendar" tog-on-style="btn-info"
+                  tog-off-key="ui.admin.controls.inventory.productDetail.Business" tog-off-style="btn-primary"
+                  ng-required="false">
+                </toggle-form-group>
+                <number-input-form-group
+                  key="ShippingLeadTimesDays"
+                  ng-disabled="ipeCtrl.record.NothingToShip"
+                  ng-model="ipeCtrl.record.ShippingLeadTimesDays"
+                  label-key="ui.admin.controls.inventory.productDetail.ShippingLeadTimesDays"
+                  placeholder-text="0"
+                  step="1"
+                  precision="0"
+                  min="0"
+                  input-class="text-right"
+                  ng-required="false">
+                </number-input-form-group>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-4">
+                <h3 data-translate="ui.admin.controls.inventory.productDetail.UnitOutOfBoxDimensions"></h3>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.txtWeightUnitOfMeasure.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Weight"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudWeight" name="nudWeight"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Weight" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control"
+                        id="txtWeightUnitOfMeasure" name="txtWeightUnitOfMeasure"
+                        maxlength="64" placeholder="lbs"
+                        ng-disabled="ipeCtrl.record.NothingToShip"
+                        ng-model="ipeCtrl.record.WeightUnitOfMeasure" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudWeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.txtWidthUnitOfMeasure.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Width"></div>
+                    <input type="number" class="form-control text-right"
+                      id="nudWidth" name="nudWidth"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                      min="0" ng-min="0"step="0.0100" placeholder="0.0000"
+                      ng-model="ipeCtrl.record.Width" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control"
+                        id="txtWidthUnitOfMeasure" name="txtWidthUnitOfMeasure"
+                        maxlength="64" placeholder="in"
+                        ng-disabled="ipeCtrl.record.NothingToShip"
+                        ng-model="ipeCtrl.record.WidthUnitOfMeasure" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudWidth.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.txtDepthUnitOfMeasure.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Depth"></div>
+                    <input type="number" class="form-control text-right"
+                      id="nudDepth" name="nudDepth"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                      min="0" ng-min="0" step="0.0100" placeholder="0.0000"
+                      ng-model="ipeCtrl.record.Depth" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control"
+                        id="txtDepthUnitOfMeasure" name="txtDepthUnitOfMeasure"
+                        maxlength="64" placeholder="in"
+                        ng-disabled="ipeCtrl.record.NothingToShip"
+                        ng-model="ipeCtrl.record.DepthUnitOfMeasure" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudDepth.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.txtHeightUnitOfMeasure.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Height"></div>
+                    <input type="number" class="form-control text-right"
+                      id="nudHeight" name="nudHeight"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                      min="0" ng-min="0" step="0.0100" placeholder="0.0000"
+                      ng-model="ipeCtrl.record.Height" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control"
+                        id="txtHeightUnitOfMeasure" name="txtHeightUnitOfMeasure"
+                        maxlength="64" placeholder="in"
+                        ng-disabled="ipeCtrl.record.NothingToShip"
+                        ng-model="ipeCtrl.record.HeightUnitOfMeasure" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudHeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-sm-6 col-md-4 col-lg-4"
+                ng-if="ipeCtrl.record && ipeCtrl.cefConfig.featureSet.shipping.packages.enabled">
+                <h3 data-translate="ui.admin.common.UnitPackageDimensions"></h3>
+                <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.txtHeightUnitOfMeasure.$invalid}">
+                  <label class="control-label">
+                    <input type="radio" name="rdPackageType"
+                      ng-change="ipeCtrl.switchPackage(false)"
+                      ng-value="false"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-model="ipeCtrl.record.Package.IsCustom" />&nbsp;<!--
+                    --><span data-translate="ui.admin.common.PredefinedPackageDimensions"></span></label>
+                  <div class="input-group">
+                    <select class="form-control" id="ddlPackageID" name="ddlPackageID"
+                      ng-disabled="ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-change="ipeCtrl.switchPackage(false)"
+                      ng-options="sp.ID as (sp.Name + (sp.ID > 0 ? ' (' + sp.Width + sp.WidthUnitOfMeasure + ' x ' + sp.Depth + sp.DepthUnitOfMeasure + ' x ' + sp.Height + sp.HeightUnitOfMeasure + ' @ ' + sp.Weight + sp.WeightUnitOfMeasure + ')' : ''))
+                                  for sp in ipeCtrl.packages
+                                  | filter: { IsCustom: false, TypeKey: 'Package' }
+                                  | orderBy: ['SortOrder','DisplayName || Name']"
+                      ng-model="ipeCtrl.record.PackageID">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group mb-0">
+                  <label class="control-label">
+                    <input type="radio" name="rdPackageType"
+                      ng-value="true"
+                      ng-change="ipeCtrl.switchPackage(true)"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-model="ipeCtrl.record.Package.IsCustom" />&nbsp;<!--
+                    --><span data-translate="ui.admin.common.CustomPackageDimensions"></span></label>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPackageDimensionalWeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.DimensionalWeight.Abbr"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPackageDimensionalWeight" name="nudPackageDimensionalWeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Package.DimensionalWeight"
+                      ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Package.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="lbs"
+                        id="txtPackageDimensionalWeightUnitOfMeasure" name="txtPackageDimensionalWeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Package.DimensionalWeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Package.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPackageDimensionalWeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPackageWeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Weight"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPackageWeight" name="nudPackageWeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Package.Weight"
+                      ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Package.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="lbs"
+                        id="txtPackageWeightUnitOfMeasure" name="txtPackageWeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Package.WeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Package.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPackageWeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPackageWidth.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Width"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPackageWidth" name="nudPackageWidth"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Package.Width"
+                      ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Package.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtPackageWidthUnitOfMeasure" name="txtPackageWidthUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Package.WidthUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Package.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPackageWidth.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPackageDepth.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Depth"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPackageDepth" name="nudPackageDepth"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Package.Depth"
+                      ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Package.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtPackageDepthUnitOfMeasure" name="txtPackageDepthUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Package.DepthUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Package.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPackageDepth.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPackageHeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Height"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPackageHeight" name="nudPackageHeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Package.Height"
+                      ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Package.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtPackageHeightUnitOfMeasure" name="txtPackageHeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Package.HeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Package.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Package.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPackageHeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <p><b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.controls.inventory.productDetail.CustomPackages.Message"></span></p>
+              </div>
+              <div class="col-sm-6 col-md-4 col-lg-4"
+                ng-if="ipeCtrl.record && ipeCtrl.cefConfig.featureSet.shipping.masterPacks.enabled">
+                <h3 data-translate="ui.admin.controls.inventory.productDetail.MasterPackDimensions"></h3>
+                <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.ddlMasterPackID.$invalid}">
+                  <label class="control-label">
+                    <input type="radio" name="masterPackType"
+                      ng-change="ipeCtrl.switchMasterPack(false)"
+                      ng-value="false"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-model="ipeCtrl.record.MasterPack.IsCustom" />&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.productDetail.PredefinedMasterPackDimensions"></span></label>
+                  <div class="input-group">
+                    <select class="form-control" id="ddlMasterPackID" name="ddlMasterPackID"
+                      ng-disabled="ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-change="ipeCtrl.switchMasterPack(false)"
+                      ng-options="sp.ID as (sp.Name + (sp.ID > 0 ? ' (' + sp.Width + sp.WidthUnitOfMeasure + ' x ' + sp.Depth + sp.DepthUnitOfMeasure + ' x ' + sp.Height + sp.HeightUnitOfMeasure + ' @ ' + sp.Weight + sp.WeightUnitOfMeasure + ')' : ''))
+                                  for sp in ipeCtrl.packages
+                                  | filter: { IsCustom: false, TypeKey: 'Master Pack' }
+                                  | orderBy: ['SortOrder','DisplayName || Name']"
+                      ng-model="ipeCtrl.record.MasterPackID">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group mb-0">
+                  <label class="control-label">
+                    <input type="radio" name="masterPackType"
+                      ng-change="ipeCtrl.switchMasterPack(true)"
+                      ng-value="true"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-model="ipeCtrl.record.MasterPack.IsCustom" />&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.productDetail.CustomMasterPackDimensions"></span></label>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackDimensionalWeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.DimensionalWeight.Abbr"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudMasterPackDimensionalWeight" name="nudMasterPackDimensionalWeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.MasterPack.DimensionalWeight"
+                      ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="lbs"
+                        id="txtMasterPackDimensionalWeightUnitOfMeasure" name="txtMasterPackDimensionalWeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.MasterPack.DimensionalWeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackDimensionalWeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackWeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Weight"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudMasterPackWeight" name="nudMasterPackWeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.MasterPack.Weight"
+                      ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="lbs"
+                        id="txtMasterPackWeightUnitOfMeasure" name="txtMasterPackWeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.MasterPack.WeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackWeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackWidth.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Width"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudMasterPackWidth" name="nudMasterPackWidth"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.MasterPack.Width"
+                      ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtMasterPackWidthUnitOfMeasure" name="txtMasterPackWidthUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.MasterPack.WidthUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackWidth.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackDepth.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Depth"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudMasterPackDepth" name="nudMasterPackDepth"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.MasterPack.Depth"
+                      ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtMasterPackDepthUnitOfMeasure" name="txtMasterPackDepthUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.MasterPack.DepthUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackDepth.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudMasterPackHeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Height"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudMasterPackHeight" name="nudMasterPackHeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.MasterPack.Height"
+                      ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtMasterPackHeightUnitOfMeasure" name="txtMasterPackHeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.MasterPack.HeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.MasterPack.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudMasterPackHeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <p><b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.controls.inventory.productDetail.CustomMasterPacks.Message"></span></p>
+                <number-input-form-group
+                  key="QuantityPerMasterPack"
+                  ng-model="ipeCtrl.record.QuantityPerMasterPack"
+                  label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityPerMasterPack"
+                  input-class="text-right"
+                  placeholder-text="1"
+                  step="0.01"
+                  precision="4"
+                  ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0))"
+                  ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0)">
+                </number-input-form-group>
+                <number-input-form-group
+                  key="QuantityMasterPackPerLayer"
+                  ng-model="ipeCtrl.record.QuantityMasterPackPerLayer"
+                  label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityMasterPackPerLayer"
+                  input-class="text-right"
+                  placeholder-text="1"
+                  step="0.01"
+                  precision="4"
+                  ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0))"
+                  ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0)">
+                </number-input-form-group>
+                <number-input-form-group
+                  key="QuantityMasterPackLayersPerPallet"
+                  ng-model="ipeCtrl.record.QuantityMasterPackLayersPerPallet"
+                  label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityMasterPackLayersPerPallet"
+                  input-class="text-right"
+                  placeholder-text="1"
+                  step="0.01"
+                  precision="4"
+                  ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0))"
+                  ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0)">
+                </number-input-form-group>
+              </div>
+              <div class="clearfix visible-sm"></div>
+              <div class="col-sm-6 col-md-4 col-lg-4"
+                 ng-if="ipeCtrl.record && ipeCtrl.cefConfig.featureSet.shipping.pallets.enabled">
+                <h3 data-translate="ui.admin.controls.inventory.productDetail.PalletDimensions"></h3>
+                <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.ddlPalletID.$invalid}">
+                  <label class="control-label">
+                    <input type="radio" name="palletType"
+                      ng-change="ipeCtrl.switchPallet(false)"
+                      ng-value="false"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-model="ipeCtrl.record.Pallet.IsCustom" />&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.productDetail.PredefinedPalletDimensions"></span></label>
+                  <div class="input-group">
+                    <select class="form-control" id="ddlPalletID" name="ddlPalletID"
+                      ng-disabled="ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-change="ipeCtrl.switchPallet(false)"
+                      ng-model="ipeCtrl.record.PalletID"
+                      ng-options="sp.ID as (sp.Name + (sp.ID > 0 ? ' (' + sp.Width + sp.WidthUnitOfMeasure + ' x ' + sp.Depth + sp.DepthUnitOfMeasure + ' x ' + sp.Height + sp.HeightUnitOfMeasure + ' @ ' + sp.Weight + sp.WeightUnitOfMeasure + ')' : ''))
+                                  for sp in ipeCtrl.packages
+                                  | filter: { IsCustom: false, TypeKey: 'Pallet' }
+                                  | orderBy: ['SortOrder','DisplayName || Name']">
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group mb-0">
+                  <label class="control-label">
+                    <input type="radio" name="palletType"
+                      ng-change="ipeCtrl.switchPallet(true)"
+                      ng-value="true"
+                      ng-disabled="ipeCtrl.record.NothingToShip"
+                      ng-model="ipeCtrl.record.Pallet.IsCustom" />&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.inventory.productDetail.CustomPalletDimensions"></span></label>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletDimensionalWeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.DimensionalWeight.Abbr"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPalletDimensionalWeight" name="nudPalletDimensionalWeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Pallet.DimensionalWeight"
+                      ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="lbs"
+                        id="txtPalletDimensionalWeightUnitOfMeasure" name="txtPalletDimensionalWeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Pallet.DimensionalWeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPalletDimensionalWeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletWeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Weight"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPalletWeight" name="nudPalletWeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Pallet.Weight"
+                      ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="lbs"
+                        id="txtPalletWeightUnitOfMeasure" name="txtPalletWeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Pallet.WeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPalletWeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletWidth.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Width"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPalletWidth" name="nudPalletWidth"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Pallet.Width"
+                      ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtPalletWidthUnitOfMeasure" name="txtPalletWidthUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Pallet.WidthUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPalletWidth.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group mb-0" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletDepth.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Depth"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPalletDepth" name="nudPalletDepth"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Pallet.Depth"
+                      ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtPalletDepthUnitOfMeasure" name="txtPalletDepthUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Pallet.DepthUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPalletDepth.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': ipeCtrl.forms.Shipping.nudPalletHeight.$invalid}">
+                  <div class="input-group">
+                    <div class="input-group-addon stack" data-translate="ui.admin.common.Weight"></div>
+                    <input type="number" class="form-control text-right" step="0.0100" placeholder="0.0000"
+                      id="nudPalletHeight" name="nudPalletHeight"
+                      ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                      ng-model="ipeCtrl.record.Pallet.Height"
+                      ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                      ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    <div class="input-group-addon with-control">
+                      <input type="text" class="form-control" placeholder="in"
+                        id="txtPalletHeightUnitOfMeasure" name="txtPalletHeightUnitOfMeasure"
+                        maxlength="64"
+                        ng-model="ipeCtrl.record.Pallet.HeightUnitOfMeasure"
+                        ng-disabled="!ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.NothingToShip"
+                        ng-required="ipeCtrl.record.Pallet.IsCustom" />
+                    </div>
+                  </div>
+                  <div ng-messages="ipeCtrl.forms.Shipping.nudPalletHeight.$error">
+                    <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                  </div>
+                </div>
+                <p><b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.controls.inventory.productDetail.CustomPallets.Message"></span></p>
+                <number-input-form-group
+                  key="QuantityPerPallet"
+                  ng-model="ipeCtrl.record.QuantityPerPallet"
+                  label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityPerPallet"
+                  input-class="text-right"
+                  placeholder-text="1"
+                  step="0.01"
+                  precision="4"
+                  ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0))"
+                  ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0)">
+                </number-input-form-group>
+                <number-input-form-group
+                  key="QuantityMasterPackPerPallet"
+                  ng-model="ipeCtrl.record.QuantityMasterPackPerPallet"
+                  label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityPerPallet"
+                  input-class="text-right"
+                  placeholder-text="1"
+                  step="0.01"
+                  precision="4"
+                  ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0) && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0))"
+                  ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0) && (ipeCtrl.record.MasterPack.IsCustom || ipeCtrl.record.MasterPackID > 0)">
+                </number-input-form-group>
+                <number-input-form-group
+                  key="QuantityPerLayer"
+                  ng-model="ipeCtrl.record.QuantityPerLayer"
+                  label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityPerLayer"
+                  input-class="text-right"
+                  placeholder-text="1"
+                  step="0.01"
+                  precision="4"
+                  ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0))"
+                  ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0)">
+                </number-input-form-group>
+                <number-input-form-group
+                  key="QuantityLayersPerPallet"
+                  ng-model="ipeCtrl.record.QuantityLayersPerPallet"
+                  label-key="ui.admin.controls.inventory.productDetail.UnitPackageQuantityLayersPerPallet"
+                  input-class="text-right"
+                  placeholder-text="1"
+                  step="0.01"
+                  precision="4"
+                  ng-disabled="!(!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0))"
+                  ng-required="!ipeCtrl.record.NothingToShip && (ipeCtrl.record.Pallet.IsCustom || ipeCtrl.record.PalletID > 0)">
+                </number-input-form-group>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Images.$invalid}"><i class="far fa-lg fa-images"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Image.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Images">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.Image.Plural"></h3>
+                <!-- Uploader -->
+                <div cef-upload-image-widget
+                  master="ipeCtrl.record"
+                  upload-type="ImageProduct"
+                  type-key="General"
+                  allow-multiple="true"
+                  is-primary="false">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <!-- Thumbnails -->
+                <div class="form-group">
+                  <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                  <div class="input-group">
+                    <div ng-if="!ipeCtrl.record.Images.length"
+                      data-translate="ui.admin.common.NoImagesHaveBeenUploaded">
+                    </div>
+                    <div ng-repeat="image in ipeCtrl.record.Images"
+                       class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                      <div class="form-vertical">
+                        <div class="form-group">
+                          <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                             ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                   | corsImageLink : 'products' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                             onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Admin/framework/store/img/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                        </div>
+                        <text-input-form-group
+                          key="ImageName{{$index}}"
+                          ng-model="image.Name"
+                          label-key="ui.admin.common.Name"
+                          max-length="128"
+                          ng-required="true">
+                        </text-input-form-group>
+                        <select-form-group
+                          key="ImageTypeID{{$index}}"
+                          ng-model="image.TypeID"
+                          selections="ipeCtrl.imageTypes"
+                          label-key="ui.admin.common.Type"
+                          tooltip-text="The type of the record."
+                          placeholder-key="ui.admin.common.Type"
+                          ng-required="true">
+                        </select-form-group>
+                        <toggle-form-group
+                          key="ImageIsPrimary{{$index}}"
+                          ng-change="ipeCtrl.clearOtherPrimaryImagesNew($index)"
+                          ng-model="image.IsPrimary"
+                          label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                          tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                          tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                          ng-required="false">
+                        </toggle-form-group>
+                        <button type="button" class="btn btn-danger btn-block"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="ipeCtrl.removeImageNew($index)">
+                          <i class="far fa-trash-o"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.products.storedFiles.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.StoredFiles.$invalid}"><i class="far fa-lg fa-file"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.StoredFile.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.StoredFiles">
+            <div class="row">
+              <div class="col-md-12"><h3 data-translate="ui.admin.common.StoredFile.Plural"></h3></div>
+              <div class="col-md-12 mb-3">
+                <!-- Uploader -->
+                <div cef-upload-file-widget
+                  master="ipeCtrl.record"
+                  upload-type="StoredFileProduct"
+                  type-key="General"
+                  allow-multiple="true"
+                  form="ipeCtrl.forms.StoredFiles">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed table-striped">
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.common.Name"></th>
+                        <th data-translate="ui.admin.common.FileName"></th>
+                        <th style="width: 43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!ipeCtrl.record.StoredFiles.length">
+                        <td colspan="3"
+                          data-translate="ui.admin.common.NoStoredFilesHaveBeenAdded"></td>
+                      </tr>
+                      <tr ng-repeat="storedFile in ipeCtrl.record.StoredFiles">
+                        <td>
+                          <input type="text" class="form-control"
+                            id="txtStoredFileName{{$index}}" name="txtStoredFileName{{$index}}"
+                            ng-required="true"
+                            max-length="128"
+                            ng-model="storedFile.Name" />
+                        </td>
+                        <td>
+                          <a class="form-control-static" target="_blank"
+                            ng-href="{{(storedFile.StoredFileName || storedFile.Slave.FileName) | corsStoredFilesLink: 'products'}}"
+                            ng-bind="storedFile.StoredFileName || storedFile.Name">
+                          </a>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="ipeCtrl.removeFileNew($index)">
+                            <i class="far fa-trash"></i><!--
+                            --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.products.downloads.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Downloads.$invalid}"><i class="far fa-lg fa-file"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Download.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Downloads">
+            <div class="row">
+              <div class="col-md-12"><h3 data-translate="ui.admin.common.StoredFile.Plural"></h3></div>
+              <div class="col-md-12 mb-3">
+                <!-- Uploader -->
+                <div cef-upload-file-widget
+                  master="ipeCtrl.record"
+                  upload-type="StoredFileProduct"
+                  type-key="Other"
+                  allow-multiple="true"
+                  form="ipeCtrl.forms.ProductDownloads">
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed table-striped">
+                    <thead>
+                      <tr>
+                        <th data-translate="ui.admin.common.Name"></th>
+                        <th data-translate="ui.admin.common.Type"></th>
+                        <th data-translate="ui.admin.common.FileName"></th>
+                        <th style="width: 43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!ipeCtrl.record.ProductDownloads.length">
+                        <td colspan="4"
+                          data-translate="ui.admin.common.NoDownloads"></td>
+                      </tr>
+                      <tr ng-repeat="download in ipeCtrl.record.ProductDownloads">
+                        <td>
+                          <input type="text" class="form-control"
+                               id="txtDownloadFileName{{$index}}"
+                               name="txtDownloadFileName{{$index}}"
+                               ng-required="true"
+                               max-length="128"
+                               ng-model="download.Name" />
+                        </td>
+                        <td>
+                          <select class="form-control"
+                              id="ddlDownloadType{{$index}}" name="ddlDownloadType{{$index}}"
+                              ng-required="true"
+                              ng-options="o.ID as ((o.DisplayName || o.Name) + (o.CustomKey ? ' [' + o.CustomKey + ']' : ''))
+                                          for o in ipeCtrl.downloadTypes
+                                          | orderBy: ['SortOrder','DisplayName || Name','Name','CustomKey']"
+                              ng-model="download.TypeID">
+                            <option value="" data-translate="ui.admin.common.DownloadType.SelectA"></option>
+                          </select>
+                        </td>
+                        <td>
+                          <a class="form-control-static" target="_blank"
+                            ng-href="{{download.Slave.FileName | corsStoredFilesLink: 'products'}}">
+                            <label class="form-control-static" ng-bind="download.FileName"></label>
+                          </a>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="ipeCtrl.removeDownload($index)">
+                            <i class="far fa-trash-o"></i><!--
+                            --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.categories.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Categories.$invalid}"><i class="far fa-lg fa-tags"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Category.Plural"></span></span></uib-tab-heading>
+          <div class="container-fluid" ng-form="ipeCtrl.forms.Categories">
+            <div class="row"><div class="col-md-12 mb-3"><h3 data-translate="ui.admin.common.Category.Plural"></h3></div></div>
+            <div class="row">
+              <div class="col-md-5 col-lg-4">
+                <h4 data-translate="ui.admin.controls.inventory.productDetail.AddCategoriesUsingThePlusButton"></h4>
+                <div kendo-treeview="ipeCtrl.categoryTree"
+                  k-data-source="ipeCtrl.categoryTreeData"
+                  k-options="ipeCtrl.categoryTreeOptions"
+                  k-on-change="ipeCtrl.selectedCategory = dataItem"
+                  ng-model="ipeCtrl.record.ProductCategories">
+                </div>
+              </div>
+              <div class="col-md-7 col-lg-8">
+                <h4 data-translate="ui.admin.controls.inventory.productDetail.AppliedCategory.Plural"></h4>
+                <table class="table table-striped table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="w-10" data-translate="ui.admin.common.ID"></th>
+                      <th class="w-35" data-translate="ui.admin.common.Name"></th>
+                      <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                      <!-- <th class="w-20" data-translate="ui.admin.common.SortOrder"></th> -->
+                      <th ng-if="ipeCtrl.cefConfig.featureSet.products.categoryAttributes.enabled" style="width:43px;"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!ipeCtrl.record.Categories.length">
+                      <td colspan="{{ipeCtrl.cefConfig.featureSet.products.categoryAttributes.enabled ? 6 : 5}}">None</td>
+                    </tr>
+                    <tr ng-repeat="pc in ipeCtrl.record.Categories">
+                      <td><label class="form-control-static font-weight-normal" ng-bind="pc.SlaveID | zeroPadNumber: 6"></label></td>
+                      <td><label class="form-control-static font-weight-normal" ng-bind="pc.Slave.Name || pc.SlaveName"></label></td>
+                      <td><label class="form-control-static font-weight-normal" ng-bind="pc.Slave.CustomKey || pc.SlaveKey"></label></td>
+                      <!-- <td><input type="number" step="1" ng-model="pc.SortOrder" placeholder="0" class="form-control input-sm text-right" /></td> -->
+                      <td ng-if="ipeCtrl.cefConfig.featureSet.products.categoryAttributes.enabled">
+                        <button type="button" class="btn btn-sm btn-success"
+                          translate-attr="{ title: 'ui.admin.controls.inventory.productDetail.EditCategoryAssignment',
+                                            'aria-label': 'ui.admin.controls.inventory.productDetail.EditCategoryAssignment' }"
+                          ng-click="ipeCtrl.editCategory = pc">
+                          <i class="far fa-fw fa-pencil"></i><!--
+                          --><span class="sr-only" data-translate="ui.admin.controls.inventory.productDetail.EditCategoryAssignment"></span>
+                        </button>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-sm btn-danger"
+                          translate-attr="{ title: 'ui.admin.controls.inventory.productDetail.DeleteCategoryAssignment',
+                                            'aria-label': 'ui.admin.controls.inventory.productDetail.DeleteCategoryAssignment' }"
+                          ng-click="ipeCtrl.removeCategory($index)">
+                          <i class="far fa-fw fa-times"></i><!--
+                          --><span class="sr-only" data-translate="ui.admin.controls.inventory.productDetail.DeleteCategoryAssignment"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="col-md-12"
+                  ng-if="ipeCtrl.cefConfig.featureSet.products.categoryAttributes.enabled"
+                  ng-show="ipeCtrl.editCategory">
+                  <span class="h4"><span data-translate="ui.admin.controls.inventory.productDetail.AppliedCategoryAttribute.Plural"></span>&nbsp;<!--
+                  --><span ng-bind="ipeCtrl.editCategory.Slave.Name"></span></span>
+                  <p data-translate="ui.admin.controls.inventory.productDetail.TheseAttributesExistBetweenTheProductAndTheCategoryAndNotDirectlyOnEither"></p>
+                  <div cef-json-attributes-editor
+                    master="ipeCtrl.editCategory"
+                    type="Product Category">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Associations.$invalid}"><i class="far fa-lg fa-object-group"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.productDetail.Association.Plural"></span></span></uib-tab-heading>
+          <div class="container-fluid full-height" ng-form="ipeCtrl.forms.Associations">
+            <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.controls.inventory.productDetail.AssociatedProduct.Plural"></h3></div></div>
+            <div class="row" ng-hide="ipeCtrl.display.ShowAssociatedProductPanel">
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.common.AddProduct.Plural',
+                                    'aria-label': 'ui.admin.common.AddProduct.Plural' }"
+                  data-translate="ui.admin.common.AddProduct.Plural"
+                  ng-click="ipeCtrl.showAddAssociatedProductsPanel()">
+                </button>
+              </div>
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed">
+                    <thead>
+                      <tr>
+                        <th class="text-center" style="width: 200px; min-width: 100px;"
+                          data-translate="ui.admin.controls.inventory.productDetail.AssociationType">
+                        </th>
+                        <th class="text-center" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th class="text-center" data-translate="ui.admin.common.Key"></th>
+                        <th class="text-center" data-translate="ui.admin.common.Name"></th>
+                        <th class="text-center" style="width: 100px; min-width: 75px;"
+                          data-translate="ui.admin.common.UofM.abbr">
+                        </th>
+                        <th class="text-center" style="width: 100px; min-width: 75px;"
+                          data-translate="ui.admin.common.Quantity">
+                        </th>
+                        <th class="text-center" style="width: 100px; min-width: 75px;"
+                          data-translate="ui.admin.common.SortOrder">
+                        </th>
+                        <th style="width: 43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!ipeCtrl.record.ProductAssociations.length">
+                        <td colspan="8"
+                          data-translate="ui.admin.controls.inventory.productDetail.NoAssociatedProductsHaveBeenAdded">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="pa in ipeCtrl.record.ProductAssociations">
+                        <td>
+                          <select class="form-control"
+                            id="ddlAssociationType{{$index}}" name="ddlAssociationType{{$index}}"
+                            ng-required="true"
+                            ng-change="ipeCtrl.updateAssocType($index)"
+                            ng-options="at.ID as ((at.DisplayName || at.Name) + (at.CustomKey && at.CustomKey != '' ? ' [' + at.CustomKey + ']' : ''))
+                                        for at in ipeCtrl.associationTypes
+                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                            ng-model="pa.TypeID">
+                          </select>
+                        </td>
+                        <td class="text-right">
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="pa.SlaveID">
+                          </label>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="pa.SlaveKey || pa.Slave.CustomKey">
+                          </label>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="pa.SlaveName || pa.Slave.Name">
+                          </label>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control"
+                            id="txtAP{{$index}}UnitOfMeasure" name="txtAP{{$index}}UnitOfMeasure"
+                            placeholder="Each"
+                            ng-model="pa.UnitOfMeasure" />
+                        </td>
+                        <td>
+                          <input type="number" class="form-control text-right"
+                            id="nudAP{{$index}}Quantity" name="nudAP{{$index}}Quantity"
+                            ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                            ng-min="0" min="0" step="1" placeholder="1.0000"
+                            ng-model="pa.Quantity" />
+                        </td>
+                        <td>
+                          <input type="number" class="form-control text-right"
+                            id="nudAP{{$index}}SortOrder" name="nudAP{{$index}}SortOrder"
+                            placeholder="0"
+                            ng-model="pa.SortOrder" />
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="ipeCtrl.removeAssociatedProduct($index)">
+                            <i class="far fa-times"></i><!--
+                            --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="row full-height" ng-show="ipeCtrl.display.ShowAssociatedProductPanel">
+              <div class="col-md-12">
+                <div class="form-inline mb-3">
+                  <div class="form-group">
+                    <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                    <div class="input-group">
+                      <input type="text" class="form-control"
+                        ng-model="ipeCtrl.associationSearchParams.ProductCode" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                    <div class="input-group">
+                      <input type="text" class="form-control"
+                        ng-model="ipeCtrl.associationSearchParams.ProductName" />
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-info"
+                    translate-attr="{ title: 'ui.admin.controls.inventory.productDetail.SearchProduct.Plural',
+                                      'aria-label': 'ui.admin.controls.inventory.productDetail.SearchProduct.Plural' }"
+                    data-translate="ui.admin.controls.inventory.productDetail.SearchProduct.Plural"
+                    ng-click="ipeCtrl.searchAssociatedProducts()">
+                  </button>
+                  <label class="control-label"
+                    data-translate="ui.admin.controls.inventory.productDetail.NoteOnlyTheFirst20ProductsWillBeShown">
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-12 full-height">
+                <table class="table table-striped table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.Select"></th>
+                      <th data-translate="ui.admin.common.Key"></th>
+                      <th data-translate="ui.admin.common.Name"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-hide="ipeCtrl.associatedProducts.length">
+                      <td colspan="3"
+                        data-translate="ui.admin.controls.inventory.productDetail.NoProductsWereFoundWithThisSearchCriteria">
+                      </td>
+                    </tr>
+                    <tr ng-repeat="associatedProduct in ipeCtrl.associatedProducts">
+                      <td class="text-center">
+                        <input type="checkbox" ng-model="associatedProduct.Selected" />
+                      </td>
+                      <td ng-bind="associatedProduct.CustomKey"></td>
+                      <td ng-bind="associatedProduct.Name"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-12 mb-3">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.controls.inventory.productDetail.AddSelectedProduct.Plural',
+                                    'aria-label': 'ui.admin.controls.inventory.productDetail.AddSelectedProduct.Plural' }"
+                  data-translate="ui.admin.controls.inventory.productDetail.AddSelectedProduct.Plural"
+                  ng-click="ipeCtrl.addAssociatedProducts()">
+                </button>
+                <button type="button" class="btn btn-warning"
+                  translate-attr="{ title: 'ui.admin.common.Cancel',
+                                    'aria-label': 'ui.admin.common.Cancel' }"
+                  ng-click="ipeCtrl.hideAddAssociatedProductsPanel()">
+                  <i class="far fa-fw fa-undo"></i>&nbsp;<!--
+                  --><span data-translate="ui.admin.common.Cancel"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.inventory.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Inventory.$invalid}"><i class="far fa-lg fa-inventory"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Inventory"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Inventory">
+            <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.controls.inventory.productDetail.CurrentInventory"></h3></div></div>
+            <div class="row">
+              <text-input-form-group
+                class="col-xs-4 col-xs-4 col-sm-4 col-md-4 col-lg-4"
+                key="UnitOfMeasure"
+                ng-model="ipeCtrl.record.UnitOfMeasure"
+                label-key="ui.admin.common.UnitOfMeasure"
+                max-length="64"
+                ng-required="false">
+              </text-input-form-group>
+              <number-input-form-group
+                class="col-xs-6 col-sm-4 col-md-2 col-lg-2"
+                key="StockQuantity"
+                ng-disabled="ipeCtrl.record.IsUnlimitedStock || ipeCtrl.cefConfig.featureSet.inventory.advanced.enabled"
+                ng-model="ipeCtrl.rawInventory.QuantityPresent"
+                label-key="ui.admin.common.StockQuantity"
+                input-class="text-right"
+                step="1"
+                precision="0"
+                ng-required="false">
+              </number-input-form-group>
+              <number-input-form-group
+                class="col-xs-6 col-sm-4 col-md-2 col-lg-2"
+                key="StockQuantityAllocated"
+                ng-disabled="ipeCtrl.record.IsUnlimitedStock || ipeCtrl.cefConfig.featureSet.inventory.advanced.enabled"
+                ng-model="ipeCtrl.rawInventory.QuantityAllocated"
+                label-key="ui.admin.controls.inventory.productDetail.StockQuantityAllocated"
+                input-class="text-right"
+                step="1"
+                precision="0"
+                ng-required="false">
+              </number-input-form-group>
+              <number-input-form-group
+                ng-if="ipeCtrl.cefConfig.featureSet.inventory.preSale.enabled"
+                class="col-xs-6 col-sm-4 col-md-2 col-lg-2"
+                key="StockQuantityPreSold"
+                ng-disabled="ipeCtrl.record.IsUnlimitedStock || ipeCtrl.cefConfig.featureSet.inventory.advanced.enabled"
+                ng-model="ipeCtrl.rawInventory.QuantityPreSold"
+                label-key="ui.admin.controls.inventory.productDetail.StockQuantityPreSold"
+                input-class="text-right"
+                step="1"
+                precision="0"
+                ng-required="false">
+              </number-input-form-group>
+              <toggle-form-group
+                ng-if="ipeCtrl.cefConfig.featureSet.inventory.unlimitedInventory.enabled"
+                class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+                key="IsUnlimitedStock"
+                ng-model="ipeCtrl.record.IsUnlimitedStock"
+                label-key="ui.admin.common.UnlimitedStock"
+                tog-on-key="ui.admin.controls.inventory.productDetail.Unlimited" tog-on-style="btn-warning"
+                tog-off-key="ui.admin.controls.inventory.productDetail.Counted" tog-off-style="btn-info"
+                ng-required="false">
+              </toggle-form-group>
+            </div>
+            <div class="row" ng-if="ipeCtrl.cefConfig.featureSet.inventory.advanced.enabled">
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-primary"
+                  data-translate="ui.admin.controls.inventory.productDetail.AddInventory"
+                  ng-click="ipeCtrl.addInventory()">
+                </button>
+                <!--
+                <button type="button" class="btn btn-danger"
+                  data-translate="ui.admin.controls.inventory.productDetail.BreakKit"
+                  ng-disabled="ipeCtrl.Product.Type.Name != 'Kit'"
+                  ng-click="ipeCtrl.breakKit()">
+                </button>
+                <button type="button" class="btn btn-warning"
+                  data-translate="ui.admin.controls.inventory.productDetail.ReassembleKit"
+                  ng-disabled="ipeCtrl.Product.Type.Name != 'Kit'"
+                  ng-click="ipeCtrl.reassembleKit()">
+                </button>
+                <button type="button" class="btn btn-info"
+                  data-translate="ui.admin.controls.inventory.productDetail.AssembleKit"
+                  ng-disabled="ipeCtrl.Product.Type.Name != 'Kit'"
+                  ng-click="ipeCtrl.assembleKit()">
+                </button>
+                -->
+              </div>
+            </div>
+            <div class="row" ng-if="ipeCtrl.cefConfig.featureSet.inventory.advanced.enabled">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th style="min-width: 150px;"
+                        data-translate="ui.admin.controls.inventory.productDetail.WarehouseSection">
+                      </th>
+                      <th style="width:150px; min-width: 100px;"
+                        data-translate="ui.admin.common.Quantity">
+                      </th>
+                      <th style="width:150px; min-width: 100px;"
+                        data-translate="ui.admin.controls.inventory.productDetail.Allocated">
+                      </th>
+                      <th style="width:150px; min-width: 100px;"
+                        data-translate="ui.admin.controls.inventory.productDetail.PreSold">
+                      </th>
+                      <th style="width:075px; min-width: 75px;"
+                        data-translate="ui.admin.common.Available">
+                      </th>
+                      <th style="width:043px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-show="!ipeCtrl.rawInventory.RelevantLocations.length">
+                      <td colspan="6"
+                        data-translate="ui.admin.controls.inventory.productDetail.NoInventoryHasBeenAdded">
+                      </td>
+                    </tr>
+                    <tr ng-repeat="inventory in ipeCtrl.rawInventory.RelevantLocations">
+                      <td>
+                        <select class="form-control"
+                          id="ddlSectionID{{$index}}" name="ddlSectionID{{$index}}"
+                          ng-required="true"
+                          ng-options="s.ID as (s.InventoryLocationName + ': ' + s.Name)
+                                      for s in ipeCtrl.inventories
+                                      | orderBy: ['SortOrder','InventoryLocationName','Name']"
+                          ng-model="inventory.SlaveID">
+                          <option value=""
+                            data-translate="ui.admin.controls.inventory.productDetail.SelectAWarehouseLocation">
+                          </option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.0000"
+                          id="nudQty{{$index}}" name="nudQty{{$index}}"
+                          ng-required="true"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                          ng-model="inventory.Quantity" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.0000"
+                          id="nudQtyAlloc{{$index}}" name="nudQtyAlloc{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                          ng-model="inventory.QuantityAllocated" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.0000"
+                          id="nudQtyPreSold{{$index}}" name="nudQtyPreSold{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0"
+                          ng-model="inventory.QuantityPreSold" />
+                      </td>
+                      <td class="text-right">
+                        <label class="form-control-static font-weight-normal"
+                          ng-bind="inventory.Quantity - inventory.QuantityAllocated - inventory.QuantityPreSold">
+                        </label>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="ipeCtrl.removeInventory($index)">
+                            <i class="far fa-times"></i><!--
+                          --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            </div>
+            <div class="row" ng-if="ipeCtrl.cefConfig.featureSet.inventory.history.enabled">
+              <div class="col-md-12">
+                <h3 data-translate="ui.admin.controls.inventory.productDetail.InventoryHistory"></h3>
+                <p><b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.controls.inventory.productDetail.ThisDoesNotIncludeOutstandingCustomerOrdersOrPurchaseOrdersOnly"></span></p>
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover table-condensed">
+                    <thead>
+                      <tr>
+                        <th class="hide" data-translate="ui.admin.common.ID">
+                        </th>
+                        <th class="text-left" style="min-width: 150px;"
+                          data-translate="ui.admin.controls.inventory.productDetail.WarehouseSection">
+                        </th>
+                        <th class="text-center" style="width:150px; min-width: 75px;"
+                          data-translate="ui.admin.controls.inventory.productDetail.ChangeDate">
+                        </th>
+                        <th class="text-center" style="width:150px; min-width: 100px;"
+                          data-translate="ui.admin.controls.inventory.productDetail.OldQuantity">
+                        </th>
+                        <th class="text-center" style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!(ipeCtrl.inventoryHistory | filter: { 'Active' : false }).length">
+                        <td colspan="5"
+                          data-translate="ui.admin.controls.inventory.productDetail.NoInventoryHistoryIsAvailableForThisProduct">
+                        </td>
+                      </tr>
+                      <tr ng-repeat="history in ipeCtrl.inventoryHistory
+                                     | filter: { 'Active' : false }
+                                     | orderBy : '-ID'">
+                        <td class="hide">
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="history.ID">
+                          </label>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="history.InventoryLocationSection.InventoryLocationName
+                              + ': ' + history.InventoryLocationSectionName">
+                          </label>
+                        </td>
+                        <td>
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="history.UpdatedDate | convertJSONDate | date:'yyyy-MM-dd hh:MM:ss'">
+                          </label>
+                        </td>
+                        <td class="text-right">
+                          <label class="form-control-static font-weight-normal"
+                            ng-bind="history.Quantity | number:4">
+                          </label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.vendors.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Vendors.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Vendor.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Vendors">
+            <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.common.Vendor.Plural"></h3></div></div>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.common.AddVendor',
+                                    'aria-label': 'ui.admin.common.AddVendor' }"
+                  data-translate="ui.admin.common.AddVendor"
+                  ng-click="ipeCtrl.addVendor()"></button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                      <th data-translate="ui.admin.common.Name"></th>
+                      <!--
+                      <th style="width:125px;" data-translate="ui.admin.controls.inventory.productDetail.MinInventory"></th>
+                      <th style="width:125px;" data-translate="ui.admin.controls.inventory.productDetail.MaxInventory"></th>
+                      <th style="width:125px;" data-translate="ui.admin.controls.inventory.productDetail.InventoryCount"></th>
+                      <th style="width:125px;" data-translate="ui.admin.controls.inventory.productDetail.Bin"></th>
+                      <th style="width:125px;" data-translate="ui.admin.controls.inventory.productDetail.VendorListPrice"></th>
+                      <th style="width:125px;" data-translate="ui.admin.controls.inventory.productDetail.ActualCost"></th>
+                      <th style="width:125px;" data-translate="ui.admin.controls.inventory.productDetail.CostMultiplier"></th>
+                      -->
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!ipeCtrl.record.Vendors.length">
+                      <td colspan="3" data-translate="ui.admin.common.NoVendorsHaveBeenAdded"></td>
+                    </tr>
+                    <tr ng-repeat="vp in ipeCtrl.record.Vendors">
+                      <td ng-bind="vp.ID"></td>
+                      <td>
+                        <select class="form-control"
+                          id="nudVendorID{{$index}}" name="nudVendorID{{$index}}"
+                          ng-required="true"
+                          ng-options="v.ID as ((v.DisplayName || v.Name) + (v.CustomKey && v.CustomKey != '' ? ' [' + v.CustomKey + ']' : ''))
+                                      for v in ipeCtrl.vendors
+                                      | orderBy: ['SortOrder','DisplayName || Name']"
+                          ng-model="vp.MasterID">
+                        </select>
+                      </td>
+                      <!--
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.0000"
+                          id="nudVendorMinInv{{$index}}" name="nudVendorMinInv{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0" step="1" max="{{vp.MaximumInventory}}"
+                          ng-model="vp.MinimumInventory" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.0000"
+                          id="nudVendorMaxInv{{$index}}" name="nudVendorMaxInv{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="{{vp.MinimumInventory}}" step="1"
+                          ng-model="vp.MaximumInventory" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.0000"
+                          id="nudVendorMaxInv{{$index}}" name="nudVendorMaxInv{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" step="1"
+                          ng-model="vp.InventoryCount" />
+                      </td>
+                      <td>
+                        <input type="text" class="form-control"
+                          id="txtVendorBin{{$index}}" name="txtVendorBin{{$index}}"
+                          placeholder="ui.admin.controls.inventory.productDetail.Bin"
+                          ng-required="false"
+                          maxlength="1000"
+                          ng-model="vp.Bin" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.00"
+                          id="nudVendorListedPrice{{$index}}" name="nudVendorListedPrice{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="0.01" min="0"
+                          ng-model="vp.ListedPrice" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.00"
+                          id="nudVendorActualCost{{$index}}" name="nudVendorActualCost{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="0.01" min="0"
+                          ng-model="vp.ActualCost" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right" placeholder="1.00"
+                          id="nudVendorCostMultiplier{{$index}}" name="nudVendorCostMultiplier{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="0.01" min="0"
+                          ng-model="vp.CostMultiplier" />
+                      </td>
+                      -->
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="ipeCtrl.removeVendor($index)">
+                            <i class="far fa-times"></i><!--
+                          --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.manufacturers.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Manufacturers.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Manufacturer.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Manufacturers">
+            <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.common.Manufacturer.Plural"></h3></div></div>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.common.AddManufacturer',
+                                    'aria-label': 'ui.admin.common.AddManufacturer' }"
+                  ng-click="ipeCtrl.addManufacturer()"
+                  data-translate="ui.admin.common.AddManufacturer"></button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="hide" data-translate="ui.admin.common.Number.Symbol"></th>
+                      <th data-translate="ui.admin.common.Name"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!ipeCtrl.record.Manufacturers.length">
+                      <td colspan="2" data-translate="ui.admin.common.NoManufacturersHaveBeenAdded"></td>
+                    </tr>
+                    <tr ng-repeat="mnfProduct in ipeCtrl.record.Manufacturers">
+                      <td>
+                        <select class="form-control"
+                          id="ddlProdMnf{{$index}}" name="ddlProdMnf{{$index}}"
+                          ng-required="true"
+                          ng-options="m.ID as ((m.DisplayName || m.Name) + (m.CustomKey && m.CustomKey != '' ? ' [' + m.CustomKey + ']' : ''))
+                                      for m in ipeCtrl.manufacturers
+                                      | orderBy: ['SortOrder','DisplayName || Name']"
+                          ng-model="mnfProduct.MasterID"></select>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="ipeCtrl.removeManufacturer($index)">
+                            <i class="far fa-times"></i><!--
+                          --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.stores.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Stores.$invalid}"><i class="far fa-lg fa-building"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Store.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Stores">
+            <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.controls.inventory.productDetail.StoresThatCarryThisProduct"></h3></div></div>
+            <div class="row">
+              <div class="col-sm-12">
+                <p>
+                  <button type="button" class="btn btn-primary" ng-click="ipeCtrl.addStore()" data-translate="ui.admin.common.AddStore"></button>
+                  <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                  --><span data-translate="ui.admin.common.TheseCanBeManagedFromTheStoreEditorAsWell"></span></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="hidden text-center" data-translate="ui.admin.common.Number.Symbol"></th>
+                      <th style="width:125px;" class="text-center" data-translate="ui.admin.controls.inventory.productDetail.VisibleInStore"></th>
+                      <th style="min-width:125px;" data-translate="ui.admin.common.Store"></th>
+                      <th style="width:110px;" data-translate="ui.admin.controls.inventory.productDetail.MSRP"></th>
+                      <th style="width:110px;" data-translate="ui.admin.controls.inventory.productDetail.Reduction"></th>
+                      <th style="width:110px;" data-translate="ui.admin.controls.inventory.productDetail.DefaultListBase"></th>
+                      <th style="width:110px;" data-translate="ui.admin.common.SalePrice"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!ipeCtrl.record.Stores.length">
+                      <td colspan="3" data-translate="ui.admin.common.NoStoresHaveBeenAdded"></td>
+                    </tr>
+                    <tr ng-repeat="storeProduct in ipeCtrl.record.Stores">
+                      <td class="hidden" ng-bind="storeProduct.ID"></td>
+                      <td class="text-center">
+                        <toggle class="btn-block"
+                          id="ckIsVisibleIn{{$index}}" name="ckIsVisibleIn{{$index}}"
+                          ng-model="storeProduct.IsVisibleIn"
+                          data-on="Visible" data-truestyle="btn-success"
+                          data-off="Hidden" data-offstyle="btn-danger">
+                        </toggle>
+                      </td>
+                      <td>
+                        <select class="form-control"
+                          id="ddlStore{{$index}}" name="ddlStore{{$index}}"
+                          ng-required="true"
+                          ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' + s.CustomKey + ']' : ''))
+                                for s in ipeCtrl.stores
+                                | orderBy: ['SortOrder','DisplayName || Name']"
+                          ng-model="storeProduct.MasterID">
+                        </select>
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right"
+                          ng-min="0" step="0.01" placeholder="1.0000"
+                          ng-model="storeProduct.PriceMsrp" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right"
+                          ng-min="0" step="0.01" placeholder="1.0000"
+                          ng-model="storeProduct.PriceReduction" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right"
+                          ng-min="storeProduct.PriceSale || 0" step="0.01" placeholder="1.0000"
+                          ng-model="storeProduct.PriceBase" />
+                      </td>
+                      <td>
+                        <input type="number" class="form-control text-right"
+                          ng-min="0" step="0.01" placeholder="1.0000"
+                          ng-max="storeProduct.PriceBase || 0"
+                          ng-disabled="!storeProduct.PriceBase"
+                          ng-model="storeProduct.PriceSale" />
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="ipeCtrl.removeStore($index)">
+                            <i class="far fa-times"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.brands.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Brands.$invalid}"><i class="far fa-lg fa-building"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Brand.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Brands">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.inventory.productDetail.BrandsThatCarryThisProduct"></h3>
+                <button type="button" class="btn btn-primary mb-3"
+                  data-translate="ui.admin.common.AddBrand"
+                  ng-click="ipeCtrl.addBrand()">
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-hover table-condensed">
+                    <thead>
+                      <tr>
+                        <th class="hidden text-center" data-translate="ui.admin.common.Number.Symbol"></th>
+                        <th style="width:125px;" class="text-center" data-translate="ui.admin.controls.inventory.productDetail.VisibleInBrand"></th>
+                        <th style="min-width:125px;" data-translate="ui.admin.common.Brand"></th>
+                        <th style="width:110px;" data-translate="ui.admin.controls.inventory.productDetail.MSRP"></th>
+                        <th style="width:110px;" data-translate="ui.admin.controls.inventory.productDetail.Reduction"></th>
+                        <th style="width:110px;" data-translate="ui.admin.controls.inventory.productDetail.DefaultListBase"></th>
+                        <th style="width:110px;" data-translate="ui.admin.common.SalePrice"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="!ipeCtrl.record.Brands.length">
+                        <td colspan="8" data-translate="ui.admin.common.NoBrandsHaveBeenAdded"></td>
+                      </tr>
+                      <tr ng-repeat="brandProduct in ipeCtrl.record.Brands">
+                        <td class="hidden" ng-bind="brandProduct.ID"></td>
+                        <td class="text-center">
+                          <toggle class="btn-block"
+                            id="ckIsVisibleIn{{$index}}" name="ckIsVisibleIn{{$index}}"
+                            ng-model="brandProduct.IsVisibleIn"
+                            data-on="Visible" data-truestyle="btn-success"
+                            data-off="Hidden" data-offstyle="btn-danger">
+                          </toggle>
+                        </td>
+                        <td>
+                          <select class="form-control"
+                            id="ddlBrand{{$index}}" name="ddlBrand{{$index}}"
+                            ng-required="true"
+                            ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' + s.CustomKey + ']' : ''))
+                                        for s in ipeCtrl.brands
+                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                            ng-model="brandProduct.MasterID">
+                          </select>
+                        </td>
+                        <td>
+                          <input type="number" class="form-control text-right"
+                            ng-min="0" step="0.01" placeholder="1.0000"
+                            ng-model="brandProduct.PriceMsrp" />
+                        </td>
+                        <td>
+                          <input type="number" class="form-control text-right"
+                            ng-min="0" step="0.01" placeholder="1.0000"
+                            ng-model="brandProduct.PriceReduction" />
+                        </td>
+                        <td>
+                          <input type="number" class="form-control text-right"
+                            ng-min="storeProduct.PriceSale || 0" step="0.01" placeholder="1.0000"
+                            ng-model="brandProduct.PriceBase" />
+                        </td>
+                        <td>
+                          <input type="number" class="form-control text-right"
+                            ng-min="0" step="0.01" placeholder="1.0000"
+                            ng-max="storeProduct.PriceBase || 0"
+                            ng-disabled="!storeProduct.PriceBase"
+                            ng-model="brandProduct.PriceSale" />
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="ipeCtrl.removeBrand($index)">
+                            <i class="far fa-times"></i>
+                            <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.shipping.restrictions.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Restrictions.$invalid}"><i class="far fa-lg fa-lock"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Restrictions.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Restrictions">
+            <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.controls.inventory.productDetail.ProductRestrictions"></h3></div></div>
+            <div class="row">
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-primary mb-3"
+                  translate-attr="{ title: 'ui.admin.common.AddRestriction',
+                                    'aria-label': 'ui.admin.common.AddRestriction' }"
+                  data-translate="ui.admin.common.AddRestriction"
+                  ng-click="ipeCtrl.addRestriction()">
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="text-center" data-translate="ui.admin.common.Number.Symbol" rowspan="3"></th>
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.PurchaseInternationally"></th>
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.PurchaseDomestically"></th>
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.PurchaseIntraRegion"></th>
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.ShipInternationally"></th>
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.ShipDomestically"></th>
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.ShipIntraRegion"></th>
+                    </tr>
+                    <tr>
+                      <!--<th></th>-->
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.RestrictionAppliesToCity" colspan="2"></th>
+                      <!--<th></th>-->
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.RestrictionAppliesToCountry"></th>
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.RestrictionAppliesToRegion"></th>
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.RestrictionAppliesToPostalCode"></th>
+                    </tr>
+                    <tr>
+                      <!--<th class="text-center" data-translate="ui.admin.common.Number.Symbol"></th>-->
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.OverrideWithRoles" colspan="4"></th>
+                      <!--<th></th>-->
+                      <!--<th></th>-->
+                      <!--<th></th>-->
+                      <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.OverrideWithAccountType" colspan="2"></th>
+                      <!--<th></th>-->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!ipeCtrl.record.ProductRestrictions.length">
+                      <td colspan="7" data-translate="ui.admin.common.NoRestrictionsHaveBeenAdded"></td>
+                    </tr>
+                    <tr ng-repeat-start="pr in ipeCtrl.record.ProductRestrictions">
+                      <td class="text-right" ng-bind="pr.ID"></td>
+                      <td>
+                        <toggle class="btn-block"
+                          id="ckCanPurchaseInternationally{{$index}}" name="ckCanPurchaseInternationally{{$index}}"
+                          ng-model="pr.CanPurchaseInternationally"
+                          data-on="{{'ui.admin.common.Yes' | translate}}" data-truestyle="btn-success"
+                          data-off="{{'ui.admin.common.No' | translate}}" data-offstyle="btn-danger">
+                        </toggle>
+                      </td>
+                      <td>
+                        <toggle class="btn-block"
+                          id="ckCanPurchaseDomestically{{$index}}" name="ckCanPurchaseDomestically{{$index}}"
+                          ng-model="pr.CanPurchaseDomestically"
+                          data-on="{{'ui.admin.common.Yes' | translate}}" data-truestyle="btn-success"
+                          data-off="{{'ui.admin.common.No' | translate}}" data-offstyle="btn-danger">
+                        </toggle>
+                      </td>
+                      <td>
+                        <toggle class="btn-block"
+                          id="ckCanPurchaseIntraRegion{{$index}}" name="ckCanPurchaseIntraRegion{{$index}}"
+                          ng-model="pr.CanPurchaseIntraRegion"
+                          data-on="{{'ui.admin.common.Yes' | translate}}" data-truestyle="btn-success"
+                          data-off="{{'ui.admin.common.No' | translate}}" data-offstyle="btn-danger">
+                        </toggle>
+                      </td>
+                      <td>
+                        <toggle class="btn-block"
+                          id="ckCanShipInternationally{{$index}}" name="ckCanShipInternationally{{$index}}"
+                          ng-model="pr.CanShipInternationally"
+                          data-on="{{'ui.admin.common.Yes' | translate}}" data-truestyle="btn-success"
+                          data-off="{{'ui.admin.common.No' | translate}}" data-offstyle="btn-danger">
+                        </toggle>
+                      </td>
+                      <td>
+                        <toggle class="btn-block"
+                          id="ckCanShipDomestically{{$index}}" name="ckCanShipDomestically{{$index}}"
+                          ng-model="pr.CanShipDomestically"
+                          data-on="{{'ui.admin.common.Yes' | translate}}" data-truestyle="btn-success"
+                          data-off="{{'ui.admin.common.No' | translate}}" data-offstyle="btn-danger">
+                        </toggle>
+                      </td>
+                      <td>
+                        <toggle class="btn-block"
+                          id="ckCanShipIntraRegion{{$index}}" name="ckCanShipIntraRegion{{$index}}"
+                          ng-model="pr.CanShipIntraRegion"
+                          data-on="{{'ui.admin.common.Yes' | translate}}" data-truestyle="btn-success"
+                          data-off="{{'ui.admin.common.No' | translate}}" data-offstyle="btn-danger">
+                        </toggle>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><!-- Intentionally empty --></td>
+                      <td colspan="3">
+                        <input type="text" class="form-control"
+                          maxlength="128"
+                          translate-attr="{ placeholder: 'ui.admin.common.City' }"
+                          ng-required="false"
+                          ng-model="pr.RestrictionsApplyToCity" />
+                      </td>
+                      <!--<td></td>-->
+                      <td>
+                        <select class="form-control"
+                          id="ddlRestrictionsApplyToCountryID{{$index}}"
+                          name="ddlRestrictionsApplyToCountryID{{$index}}"
+                          ng-required="false"
+                          ng-disabled="!ipeCtrl.countries.length"
+                          ng-options="c.ID as ((c.DisplayName || c.Name) + (c.CustomKey && c.CustomKey != '' ? ' [' + c.CustomKey + ']' : ''))
+                                      for c in ipeCtrl.countries
+                                      | orderBy: ['SortOrder','DisplayName || Name']"
+                          ng-model="pr.RestrictionsApplyToCountryID">
+                          <option value="" data-translate="ui.admin.common.SelectACountry"></option>
+                        </select>
+                      </td>
+                      <td>
+                        <select class="form-control"
+                          id="ddlRestrictionsApplyToRegionID{{$index}}"
+                          name="ddlRestrictionsApplyToRegionID{{$index}}"
+                          ng-required="false"
+                          ng-disabled="!ipeCtrl.regions.length"
+                          ng-options="r.ID as ((r.DisplayName || r.Name) + (r.CustomKey && r.CustomKey != '' ? ' [' + r.CustomKey + ']' : ''))
+                                      for r in ipeCtrl.regions
+                                      | orderBy: ['SortOrder','DisplayName || Name']"
+                          ng-model="pr.RestrictionsApplyToRegionID">
+                          <option value="" data-translate="ui.admin.common.SelectAState"></option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="text" class="form-control"
+                          maxlength="24"
+                          translate-attr="{ placeholder: 'ui.admin.common.Zip' }"
+                          ng-required="false"
+                          ng-model="pr.RestrictionsApplyToPostalCode" />
+                      </td>
+                    </tr>
+                    <tr ng-repeat-end="">
+                      <th>
+                        <button type="button" class="btn btn-danger"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="ipeCtrl.removeRestriction($index)">
+                            <i class="far fa-times"></i>
+                          <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </th>
+                      <td colspan="4">
+                        <input type="text" class="form-control"
+                          maxlength="1024"
+                          translate-attr="{ placeholder: 'ui.admin.common.Role.Plural' }"
+                          ng-required="false"
+                          ng-model="pr.OverrideWithRoles" />
+                      </td>
+                      <!--<td></td>-->
+                      <!--<td></td>-->
+                      <!--<td></td>-->
+                      <td colspan="2">
+                        <select class="form-control"
+                          id="ddlOverrideWithAccountTypeID{{$index}}"
+                          name="ddlOverrideWithAccountTypeID{{$index}}"
+                          ng-required="false"
+                          ng-options="at.ID as ((at.DisplayName || at.Name) + (at.CustomKey && at.CustomKey != '' ? ' [' + at.CustomKey + ']' : ''))
+                                      for at in ipeCtrl.accountTypes
+                                      | orderBy: ['SortOrder','DisplayName || Name']"
+                          ng-model="pr.OverrideWithAccountTypeID">
+                          <option value="" data-translate="ui.admin.controls.inventory.productDetail.SelectAnAccountType"></option>
+                        </select>
+                      </td>
+                      <!--<td></td>-->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="ipeCtrl.cefConfig.featureSet.products.notifications.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Notifications.$invalid}"><i class="far fa-lg fa-exclamation"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Notification.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="ipeCtrl.forms.Notifications">
+            <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.common.ProductNotification.Plural"></h3></div></div>
+            <div class="row">
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-primary mb-3"
+                  translate-attr="{ title: 'ui.admin.common.ProductNotification.Add',
+                                    'aria-label': 'ui.admin.common.ProductNotification.Add' }"
+                  data-translate="ui.admin.common.ProductNotification.Add"
+                  ng-click="ipeCtrl.addNotification()">
+                </button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                  <thead>
+                    <tr>
+                      <th class="text-center w-5" data-translate="ui.admin.common.Number.Symbol" rowspan="3"></th>
+                      <th class="text-center w-10" data-translate="ui.admin.common.CreatedDate"></th>
+                      <th class="text-center w-25" data-translate="ui.admin.common.Name"></th>
+                      <th class="text-center w-60" data-translate="ui.admin.common.Description"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="!ipeCtrl.record.ProductNotifications.length">
+                      <td colspan="4" data-translate="ui.admin.common.NoNotificationsHaveBeenAdded"></td>
+                    </tr>
+                    <tr ng-repeat="pn in ipeCtrl.record.ProductNotifications">
+                      <td class="text-right">
+                        <label class="form-control-static font-weight-normal text-right"
+                          ng-bind="pn.ID"></label>
+                      </td>
+                      <td>
+                        <label class="form-control-static font-weight-normal"
+                          ng-bind="pn.CreatedDate | date : 'yyyy-MM-dd'"></label>
+                      </td>
+                      <td>
+                        <input type="text" class="form-control"
+                          translate-attr="{ placeholder: 'ui.admin.common.Name' }"
+                          maxlength="128"
+                          ng-required="true"
+                          ng-model="pn.Name" />
+                      </td>
+                      <td>
+                        <input type="text" class="form-control"
+                          translate-attr="{ placeholder: 'ui.admin.common.Description' }"
+                          ng-required="true"
+                          ng-model="pn.Description" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': ipeCtrl.forms.Attributes.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Attribute.Plural"></span></span></uib-tab-heading>
+          <div class="container-fluid" ng-form="ipeCtrl.forms.Attributes">
+            <div cef-json-attributes-editor
+              master="ipeCtrl.record"
+              type="Product"
+              ng-if="ipeCtrl.record">
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <div cef-loading-widget
+    overlay="true" size="5" pad-in="true"
+    message="ipeCtrl.viewState.waitMessage"
+    ng-if="ipeCtrl.viewState.running">
+  </div>
+  <!-- Form actions -->
+  <div class="row details-footer" id="footerProductEditor" ng-if="ipeCtrl.record">
+    <div class="col-md-12">
+      <cef-standard-detail-footer-buttons
+        master-controller="ipeCtrl"
+        return-state="inventory.products.list"
+        permissions-base="Products.Product">
+      </cef-standard-detail-footer-buttons>
+      <div class="btn-group dropup mx-1"
+        uib-dropdown dropdown-append-to-body
+        keyboard-nav is-open="ipeCtrl.actionsMenuStatus.isopen">
+        <button type="button" class="btn btn-info dropdown-toggle"
+          id="btnProductEditorActions" name="btnProductEditorActions"
+          translate-attr="{ title: 'ui.admin.common.Action.Plural',
+                            'aria-label': 'ui.admin.common.Action.Plural' }"
+          uib-dropdown-toggle>
+          <span data-translate="ui.admin.common.Action.Plural"></span>&nbsp;<!--
+          --><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropup"
+          uib-dropdown-menu role="menu" aria-labelledby="btnProductEditorActions">
+          <li role="menuitem" ng-if="ipeCtrl.record.SeoUrl">
+            <a class="pointer"
+              id="btnProductEditorSeeLiveInStorefront"
+              name="btnProductEditorSeeLiveInStorefront"
+              ui-sref-plus uisrp-is-product="true"
+              uisrp-path="{{ipeCtrl.record.SeoUrl}}"
+              target="_blank">
+              <i class="far fa-fw fa-external-link"></i>&nbsp;<!--
+              --><span data-translate="ui.admin.controls.inventory.productDetail.SeeLiveInStorefront"></span>
+            </a>
+          </li>
+          <li role="menuitem" hidden>
+            <button type="button"
+              id="btnProductEditorClone" name="btnProductEditorClone"
+              translate-attr="{ title: 'ui.admin.common.Clone',
+                                'aria-label': 'ui.admin.common.Clone' }"
+              ng-disabled="ipeCtrl.dirtyForms()"
+              ng-click="ipeCtrl.clone()">
+              <i class="fas fa-fw fa-copy"></i>&nbsp;<!--
+              --><span data-translate="ui.admin.common.Clone"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!--
+      <button type="button" class="btn btn-default btn-secondary"
+        translate-attr="{ title: 'ui.admin.common.BackCancel',
+                          'aria-label': 'ui.admin.common.BackCancel' }"
+        ng-click="ipeCtrl.backCancel()">
+        <i class="far fa-fw fa-undo"></i>&nbsp;< !--
+        -- ><span data-translate="ui.admin.common.BackCancel"></span>
+      </button>
+
+      <div class="btn-group dropup mx-1"
+        uib-dropdown dropdown-append-to-body
+        keyboard-nav is-open="ipeCtrl.saveMenuStatus.isopen">
+        <button type="button" class="btn btn-success"
+          translate-attr="{ title: 'ui.admin.versioning.SaveAndPublish',
+                            'aria-label': 'ui.admin.versioning.SaveAndPublish' }"
+          ng-disabled="!ipeCtrl.validForms() || !ipeCtrl.dirtyForms()"
+          ng-click="ipeCtrl.saveAndPublish()">
+          <i class="far fa-fw fa-save"></i>&nbsp;< !--
+          -- ><span data-translate="ui.admin.versioning.SaveAndPublish"></span>
+        </button>
+        <button type="button" class="btn btn-success" uib-dropdown-toggle ng-if="ipeCtrl.record.ID > 0">
+          <span class="caret"></span>
+          <span class="sr-only">Additional Save Actions</span>
+        </button>
+        <ul class="dropdown-menu dropup"
+          uib-dropdown-menu role="menu" aria-labelledby="btnProductEditorSave">
+          <li role="menuitem" ng-if="ipeCtrl.record.ID > 0">
+            <button type="button" class=""
+              translate-attr="{ title: 'ui.admin.versioning.Publish',
+                                'aria-label': 'ui.admin.versioning.Publish' }"
+              ng-disabled="ipeCtrl.dirtyForms() || !ipeCtrl.canPublish"
+              ng-click="ipeCtrl.publish()">
+              <i class="far fa-fw fa-share-square"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.versioning.Publish"></span>
+            </button>
+          </li>
+          <li role="menuitem" ng-if="ipeCtrl.record.ID > 0">
+            <button type="button" class=""
+              id="btnProductEditorSave" name="btnProductEditorSave"
+              translate-attr="{ title: 'ui.admin.versioning.SaveVersionOnly',
+                                'aria-label': 'ui.admin.versioning.SaveVersionOnly' }"
+              ng-disabled="!ipeCtrl.validForms() || !ipeCtrl.dirtyForms()"
+              ng-click="ipeCtrl.save()">
+              <i class="far fa-fw fa-save"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.versioning.SaveVersionOnly"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="btn-group dropup mx-1"
+         uib-dropdown dropdown-append-to-body
+         keyboard-nav is-open="ipeCtrl.actionsMenuStatus.isopen">
+        <button type="button" class="btn btn-info dropdown-toggle"
+          id="btnProductEditorActions" name="btnProductEditorActions"
+          translate-attr="{ title: 'ui.admin.common.Action.Plural',
+                            'aria-label': 'ui.admin.common.Action.Plural' }"
+          uib-dropdown-toggle>
+          <span data-translate="ui.admin.common.Action.Plural"></span>&nbsp;< !--
+          -- ><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropup"
+          uib-dropdown-menu role="menu" aria-labelledby="btnProductEditorActions">
+          <li role="menuitem" ng-repeat="v in ipeCtrl.versions | orderBy: ['-ID'] | limitTo: 5">
+            <button type="button"
+              id="btnProductEditorLoadVersionInMgr{{v.ID}}"
+              name="btnProductEditorLoadVersionInMgr{{v.ID}}"
+              translate-attr="{ title: v.Name, 'aria-label': v.Name }"
+              ng-click="ipeCtrl.loadVersionInMgr(v)">
+              <i class="fas fa-fw fa-code-merge"></i>&nbsp;< !--
+              -- ><span ng-bind="v.ID"></span>.&nbsp;<span ng-bind="v.Name"></span>< !--
+              -- ><span ng-if="v.currentPublished">&nbsp;<span data-translate="(Published)"></span></span>< !--
+              -- ><span ng-if="v.currentLoaded">&nbsp;<span data-translate="(Loaded)"></span></span>
+            </button>
+          </li>
+          <li role="separator" class="divider"
+            ng-if="ipeCtrl.record.ID > 0"></li>
+          <li role="menuitem" ng-if="ipeCtrl.record.ID > 0">
+            <button type="button"
+              id="btnProductEditorOpenVersionManager" name="btnProductEditorOpenVersionManager"
+              translate-attr="{ title: 'ui.admin.common.OpenVersionManager',
+                                'aria-label': 'ui.admin.common.OpenVersionManager' }"
+              ng-click="ipeCtrl.openVersionManager()">
+              <i class="fas fa-fw fa-code-branch"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.common.OpenVersionManager"></span>
+            </button>
+          </li>
+          <li role="separator" class="divider"
+            ng-if="ipeCtrl.record.ID > 0"></li>
+          <li role="menuitem" ng-if="ipeCtrl.record.SeoUrl && ipeCtrl.selectedRecordVersionID">
+            <a class="pointer"
+              id="btnProductEditorPreviewInStorefront" name="btnProductEditorPreviewInStorefront"
+              ui-sref-plus uisrp-is-product="true"
+              uisrp-path="{{ipeCtrl.record.SeoUrl}}"
+              uisrp-query-params="{ 'preview': ipeCtrl.selectedRecordVersionID }"
+              target="_blank">
+              <i class="far fa-fw fa-external-link"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.controls.inventory.productDetail.SeePreviewInStorefront"></span>
+            </a>
+          </li>
+          -- >
+          <li role="menuitem" ng-if="ipeCtrl.record.SeoUrl">
+            <a class="pointer"
+              id="btnProductEditorSeeLiveInStorefront" name="btnProductEditorSeeLiveInStorefront"
+              ui-sref-plus uisrp-is-product="true"
+              uisrp-path="{{ipeCtrl.record.SeoUrl}}"
+              target="_blank">
+              <i class="far fa-fw fa-external-link"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.controls.inventory.productDetail.SeeLiveInStorefront"></span>
+            </a>
+          </li>
+          <li role="separator" class="divider"
+            ng-if="ipeCtrl.record.SeoUrl"></li>
+          <li role="menuitem">
+            <button type="button"
+              id="btnProductEditorClone" name="btnProductEditorClone"
+              translate-attr="{ title: 'ui.admin.common.Clone',
+                                'aria-label': 'ui.admin.common.Clone' }"
+              ng-disabled="ipeCtrl.dirtyForms()"
+              ng-click="ipeCtrl.clone()">
+              <i class="fas fa-fw fa-copy"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.common.Clone"></span>
+            </button>
+          </li>
+          <li role="separator" class="divider"
+            ng-if="ipeCtrl.includeDeactivate || ipeCtrl.includeReactivate || ipeCtrl.includeDelete"></li>
+          <li role="menuitem" ng-if="ipeCtrl.includeDeactivate">
+            <button type="button"
+              translate-attr="{ title: 'ui.admin.common.Recycle',
+                                'aria-label': 'ui.admin.common.Recycle' }"
+              ng-disabled="ipeCtrl.dirtyForms()"
+              ng-click="ipeCtrl.deactivate()">
+              <i class="far fa-fw fa-recycle"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.common.Recycle"></span>
+            </button>
+          </li>
+          <li role="menuitem" ng-if="ipeCtrl.includeReactivate">
+            <button type="button"
+              translate-attr="{ title: 'ui.admin.common.Restore',
+                                'aria-label': 'ui.admin.common.Restore' }"
+              ng-disabled="ipeCtrl.dirtyForms()"
+              ng-click="ipeCtrl.reactivate()">
+              <i class="far fa-fw fa-recycle"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.common.Restore"></span>
+            </button>
+          </li>
+          <li role="menuitem" ng-if="ipeCtrl.includeDelete">
+            <button type="button"
+              translate-attr="{ title: 'ui.admin.common.Delete',
+                                'aria-label': 'ui.admin.common.Delete' }"
+              ng-disabled="ipeCtrl.dirtyForms()"
+              ng-click="ipeCtrl.delete()">
+              <i class="far fa-fw fa-times"></i>&nbsp;< !--
+              -- ><span data-translate="ui.admin.common.Delete"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <span class="bold px-1"
+        ng-bind="ipeCtrl.selectedRecordVersionName
+              + (ipeCtrl.dirtyForms() ? ' (Modified)' : '')"></span>
+      <div class="alert alert-danger inline-block ml-1" role="alert"
+        ng-if="ipeCtrl.viewState.hasError">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>< !--
+        -- ><span class="sr-only" data-translate="ui.admin.common.Error"></span>< !--
+        -- ><span ng-if="ipeCtrl.viewState.errorMessage">&nbsp;< !--
+        -- ><span ng-bind="ipeCtrl.viewState.errorMessage"></span></span>
+      </div>
+      <div class="alert alert-info inline-block ml-1" role="alert"
+        ng-if="ipeCtrl.viewState.running">
+        <i class="far fa-info-circle" aria-hidden="true"></i>< !--
+        -- ><span class="sr-only" data-translate="ui.admin.common.Info"></span>< !--
+        -- ><span ng-if="ipeCtrl.viewState.waitMessage">&nbsp;< !--
+        -- ><span ng-bind="ipeCtrl.viewState.waitMessage"></span></span>
+      </div>
+      -->
+    </div>
+  </div>
+</div>

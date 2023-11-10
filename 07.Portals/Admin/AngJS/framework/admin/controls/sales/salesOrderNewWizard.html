@@ -1,0 +1,1741 @@
+﻿<div class="container-fluid cv-wizard-form full-height">
+    <div class="row wizard-header">
+        <span class="col-md-12 details-title">
+            <span data-translate="ui.admin.common.Order.New"></span><!--
+            --><span ng-if="salesOrderNewWizardCtrl.salesOrder.CustomKey"
+                     >&nbsp;[<span ng-bind="salesOrderNewWizardCtrl.salesOrder.CustomKey"></span>]</span><!--
+            --><span ng-if="salesOrderNewWizardCtrl.accountID"
+                     >&nbsp;<span data-translate="ui.admin.common.ForAccount"
+                     ></span>&nbsp;<span ng-bind="salesOrderNewWizardCtrl.account.CustomKey"></span></span><!--
+            --><span ng-if="salesOrderNewWizardCtrl.userID"
+                     >&nbsp;<span data-translate="ui.admin.common.User"
+                     ></span>&nbsp;<span ng-bind="salesOrderNewWizardCtrl.user.UserName"></span></span>
+        </span>
+    </div>
+    <div class="row wizard-body">
+        <div class="col-md-12 wizard-steps">
+            <uib-tabset class="tabs-left" vertical="true" active="salesOrderNewWizardCtrl.currentStep">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': salesOrderNewWizardCtrl.forms.UserAndAccount.$invalid}"><!--
+                    --><i class="far fa-lg fa-users"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Step1"></span>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.UserAndAccount"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="salesOrderNewWizardCtrl.forms.UserAndAccount">
+                        <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.controls.sales.salesOrderNewWizard.UserAndOrAccountInformation"></h3></div></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.AccountOrUserRequired"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group"
+                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.UserAndAccount.taAccount.$invalid}">
+                                    <label class="control-label" for="taAccount"
+                                           data-translate="ui.admin.common.Account"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control typeahead"
+                                               id="taAccount" name="taAccount"
+                                               ng-required="!salesOrderNewWizardCtrl.accountID && !salesOrderNewWizardCtrl.userID"
+                                               translate-attr="{ placeholder: 'ui.admin.controls.sales.salesOrderNewWizard.SearchAccounts.Ellipses' }"
+                                               uib-typeahead="a.ID as (a.Name + (a.CustomKey && a.CustomKey != '' ? ' [' + a.CustomKey + ']' : ''))
+                                                              for a in salesOrderNewWizardCtrl.grabAccounts(salesOrderNewWizardCtrl.accountToGrab)"
+                                               typeahead-wait-ms="500" typeahead-min-length="1" typeahead-no-results="salesOrderNewWizardCtrl.noAccountResults"
+                                               typeahead-loading="salesOrderNewWizardCtrl.loadingAccounts"
+                                               typeahead-on-select="salesOrderNewWizardCtrl.selectAccountFromTypeAhead($item, $model, $label, $event)"
+                                               ng-model="salesOrderNewWizardCtrl.accountToGrab" />
+                                        <div class="input-group-addon">
+                                            <i class="far fa-refresh" ng-if="salesOrderNewWizardCtrl.loadingAccounts"></i>
+                                            <i class="far fa-times" ng-if="salesOrderNewWizardCtrl.noAccountResults"></i>
+                                            <i class="far fa-check" ng-if="salesOrderNewWizardCtrl.accountID"></i>
+                                            <i class="far fa-question"
+                                               ng-if="!salesOrderNewWizardCtrl.loadingAccounts
+                                                      && !salesOrderNewWizardCtrl.noAccountResults
+                                                      && !salesOrderNewWizardCtrl.accountID"></i>
+                                        </div>
+                                    </div>
+                                    <div ng-if="salesOrderNewWizardCtrl.noAccountResults"
+                                         data-translate="ui.admin.controls.sales.salesOrderNewWizard.NoAccountsFound"></div>
+                                    <div ng-messages="productDetailCtrl.forms.UserAndAccount.taAccount.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-if="salesOrderNewWizardCtrl.account">
+                                    <b data-translate="ui.admin.common.ID"></b> {{salesOrderNewWizardCtrl.accountID}}
+                                    <b data-translate="ui.admin.common.Key"></b> {{salesOrderNewWizardCtrl.account.CustomKey}}<br />
+                                    <b data-translate="ui.admin.common.Name"></b> {{salesOrderNewWizardCtrl.account.Name}}<br />
+                                    <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (salesOrderNewWizardCtrl.account.Active ? "Yes" : "No")) | translate}}
+                                    <b data-translate="ui.admin.common.OnHold"></b> {{('ui.admin.common.' + (salesOrderNewWizardCtrl.account.IsOnHold ? "Yes" : "No")) | translate}}<br />
+                                    <b data-translate="ui.admin.common.Status"></b> {{salesOrderNewWizardCtrl.account.StatusDisplayName || salesOrderNewWizardCtrl.account.StatusName}}<br />
+                                    <b data-translate="ui.admin.common.Type"></b> {{salesOrderNewWizardCtrl.account.TypeDisplayName || salesOrderNewWizardCtrl.account.TypeName}}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': salesOrderNewWizardCtrl.forms.UserAndAccount.taUser.$invalid}">
+                                    <label class="control-label" for="taUser" data-translate="ui.admin.common.User"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control typeahead"
+                                               id="taUser" name="taUser"
+                                               ng-required="!salesOrderNewWizardCtrl.accountID && !salesOrderNewWizardCtrl.userID"
+                                               translate-attr="{ placeholder: 'ui.admin.controls.sales.salesOrderNewWizard.SearchUsers.Ellipses' }"
+                                               uib-typeahead="u.ID as (u.ContactFirstName + ' ' + u.ContactLastName + ' [' + u.UserName + ']')
+                                                              for u in salesOrderNewWizardCtrl.grabUsers(salesOrderNewWizardCtrl.userToGrab)"
+                                               typeahead-wait-ms="500" typeahead-min-length="1" typeahead-no-results="salesOrderNewWizardCtrl.noUserResults"
+                                               typeahead-loading="salesOrderNewWizardCtrl.loadingUsers"
+                                               typeahead-on-select="salesOrderNewWizardCtrl.selectUserFromTypeAhead($item, $model, $label, $event)"
+                                               ng-model="salesOrderNewWizardCtrl.userToGrab" />
+                                        <div class="input-group-addon">
+                                            <i class="far fa-refresh" ng-if="salesOrderNewWizardCtrl.loadingUsers"></i>
+                                            <i class="far fa-times" ng-if="salesOrderNewWizardCtrl.noUserResults"></i>
+                                            <i class="far fa-check" ng-if="salesOrderNewWizardCtrl.userID"></i>
+                                            <i class="far fa-question"
+                                               ng-if="!salesOrderNewWizardCtrl.loadingUsers
+                                                      && !salesOrderNewWizardCtrl.noUserResults
+                                                      && !salesOrderNewWizardCtrl.userID"></i>
+                                        </div>
+                                    </div>
+                                    <div ng-if="salesOrderNewWizardCtrl.noUserResults"
+                                         data-translate="ui.admin.controls.sales.salesOrderNewWizard.NoUsersFound"></div>
+                                    <div ng-messages="productDetailCtrl.forms.UserAndAccount.taUser.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-if="salesOrderNewWizardCtrl.user">
+                                    <b data-translate="ui.admin.common.ID"></b> {{salesOrderNewWizardCtrl.userID}}
+                                    <b data-translate="ui.admin.common.Key"></b> {{salesOrderNewWizardCtrl.user.CustomKey}}
+                                    <b data-translate="ui.admin.common.Username"></b> {{salesOrderNewWizardCtrl.user.UserName}}<br />
+                                    <b data-translate="ui.admin.common.Name"></b> {{salesOrderNewWizardCtrl.user.ContactFirstName}} {{salesOrderNewWizardCtrl.user.ContactLastName}}<br />
+                                    <b data-translate="ui.admin.common.Active"></b> {{('ui.admin.common.' + (salesOrderNewWizardCtrl.user.Active ? "Yes" : "No")) | translate}}
+                                    <b data-translate="ui.admin.common.Status"></b> {{salesOrderNewWizardCtrl.user.StatusDisplayName || salesOrderNewWizardCtrl.user.StatusName}}<br />
+                                    <b data-translate="ui.admin.common.Type"></b> {{salesOrderNewWizardCtrl.user.TypeDisplayName || salesOrderNewWizardCtrl.user.TypeName}}<br />
+                                    <b data-translate="ui.admin.common.Account"></b> {{salesOrderNewWizardCtrl.user.AccountKey || salesOrderNewWizardCtrl.user.Account.CustomKey || 'Unassigned'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': salesOrderNewWizardCtrl.forms.CartLineItems.$invalid}"><!--
+                    --><i class="far fa-lg fa-shopping-cart"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Step2"></span>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.CartLineItems"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="salesOrderNewWizardCtrl.forms.CartLineItems">
+                        <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.controls.sales.salesOrderNewWizard.CartLineItems"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.ChooseUserSpecificCarts"></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.ChangeQuantityWillUpdatePrice"></p>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="salesOrderNewWizardCtrl.userID">
+                            <div class="form-group col-sm-4 col-md-3">
+                                <label class="control-label" for="ddlUserCart"
+                                       data-translate="ui.admin.controls.sales.salesOrderNewWizard.CreateANewCartForTheUser"></label>
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-info"
+                                            translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.CreateNewCart',
+                                                              'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.CreateNewCart' }"
+                                            data-translate="ui.admin.controls.sales.salesOrderNewWizard.CreateNewCart"
+                                            ng-disabled="salesOrderNewWizardCtrl.currentCart
+                                                         && salesOrderNewWizardCtrl.currentCart.CustomKey.indexOf('New Cart for User') !== -1"
+                                            ng-click="salesOrderNewWizardCtrl.createNewCart()"></button>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-8 col-md-9">
+                                <label class="control-label" for="ddlUserCart"
+                                       data-translate="ui.admin.controls.sales.salesOrderNewWizard.SelectACartTheUserHasCreated"></label>
+                                <div class="input-group">
+                                    <select class="form-control"
+                                            id="ddlUserCart" name="ddlUserCart"
+                                            ng-change="salesOrderNewWizardCtrl.loadUserCart()"
+                                            ng-options="cart.ID as (cart.TypeName + ' [' + cart.ItemQuantity + ' items]' + ' [' + cart.SessionID.substring(0,6) + ']')
+                                                        for cart in salesOrderNewWizardCtrl.userCarts
+                                                        | orderBy:['-UpdatedDate','-CreatedDate']
+                                                        | filter: {'ItemQuantity':'!0'}"
+                                            ng-model="salesOrderNewWizardCtrl.currentCartID">
+                                        <option value="" data-translate="ui.admin.controls.sales.salesOrderNewWizard.NewCart"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <h3 ng-bind="'Cart: ' + (salesOrderNewWizardCtrl.currentCart.CustomKey || salesOrderNewWizardCtrl.currentCart.SessionID || 'No Cart')"></h3>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="salesOrderNewWizardCtrl.currentCart">
+                            <div class="col-md-12 table-responsive" style="overflow-x: visible;">
+                                <table class="table table-striped table-hover">
+                                    <colgroup>
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col style="width: 100px;" />
+                                        <col style="width: 100px;" />
+                                        <col />
+                                        <col style="width: 100px;" />
+                                        <col />
+                                        <col style="width: 40px;" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Number.Symbol"></th>
+                                            <th data-translate="ui.admin.common.ID"></th>
+                                            <th data-translate="ui.admin.common.Sku"></th>
+                                            <th data-translate="ui.admin.common.Name"></th>
+                                            <th class="text-center" data-translate="ui.admin.common.Quantity"></th>
+                                            <th class="text-center" data-translate="ui.admin.common.QuantityBackordered"></th>
+                                            <th class="text-center" data-translate="ui.admin.controls.sales.salesOrderNewWizard.Core$"></th>
+                                            <th data-translate="ui.admin.controls.sales.salesOrderNewWizard.Sold$"></th>
+                                            <th class="text-center" data-translate="ui.admin.controls.sales.salesOrderNewWizard.Ext$"></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="scroll-over-500">
+                                        <tr ng-if="!salesOrderNewWizardCtrl.currentCart.SalesItems.length">
+                                            <td colspan="9"><p>No products have been added</p></td>
+                                        </tr>
+                                        <tr ng-repeat="item in salesOrderNewWizardCtrl.currentCart.SalesItems">
+                                            <td><label class="form-control-static font-weight-normal" ng-bind="item.ID || '-'"></label></td>
+                                            <td><label class="form-control-static font-weight-normal" ng-bind="item.ProductID"></label></td>
+                                            <td><label class="form-control-static font-weight-normal" ng-bind="item.ProductKey"></label></td>
+                                            <td><label class="form-control-static font-weight-normal" ng-bind="item.ProductName"></label></td>
+                                            <td>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudQuantity{{$index}}" name="nudQuantity{{$index}}"
+                                                       ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="1" min="0" placeholder="1.0000"
+                                                       ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                       ng-model="item.Quantity" />
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudQuantityBackOrdered{{$index}}" name="nudQuantityBackOrdered{{$index}}"
+                                                       ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="1" min="0" placeholder="1.0000"
+                                                       ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                       ng-model="item.QuantityBackOrdered" />
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control text-right"
+                                                       id="nudQuantityPreSold{{$index}}" name="nudQuantityPreSold{{$index}}"
+                                                       ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" step="1" min="0" placeholder="1.0000"
+                                                       ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                       ng-model="item.QuantityPreSold" />
+                                            </td>
+                                            <td class="text-right">
+                                                <label class="form-control-static font-weight-normal"
+                                                       ng-bind="item.UnitCorePrice | currency"></label>
+                                            </td>
+                                            <td class="text-right">
+                                                <label class="form-control-static font-weight-normal"
+                                                       ng-bind="item.UnitSoldPrice | currency"></label>
+                                                <div class="btn-group" uib-dropdown is-open="item.status.open" auto-close="outsideClick">
+                                                    <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                                    <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon" aria-hidden="true">
+                                                                <i class="fa"
+                                                                   ng-class="{'fa-usd':item.UnitSoldPriceModifierMode == 1 || item.UnitSoldPriceModifierMode == 2,
+                                                                              'fa-percent':item.UnitSoldPriceModifierMode == 3}"></i>
+                                                            </div>
+                                                            <input type="number" class="form-control text-right"
+                                                                   id="nudUnitSoldPrice{{$index}}Modifier" name="nudUnitSoldPrice{{$index}}Modifier"
+                                                                   ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                                   min="{{salesOrderNewWizardCtrl.itemSoldPriceModifierMin(item)}}"
+                                                                   max="{{salesOrderNewWizardCtrl.itemSoldPriceModifierMax(item)}}"
+                                                                   ng-class="{'text-red':item.UnitSoldPriceModifier < 0 && item.UnitSoldPriceModifierMode == 2}"
+                                                                   ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                   ng-model="item.UnitSoldPriceModifier" />
+                                                        </div>
+                                                        <select class="form-control"
+                                                                id="nudUnitSoldPrice{{$index}}ModifierMode" name="nudUnitSoldPrice{{$index}}ModifierMode"
+                                                                ng-if="salesOrderNewWizardCtrl.subtotalModifierModes.length"
+                                                                ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                ng-options="mode.value as mode.label
+                                                                            for mode in salesOrderNewWizardCtrl.subtotalModifierModes"
+                                                                ng-model="item.UnitSoldPriceModifierMode">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <label class="form-control-static font-weight-normal"
+                                                       ng-bind="item.ExtendedPrice | currency"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-narrow btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.common.Remove',
+                                                                          'aria-label': 'ui.admin.common.Remove' }"
+                                                        ng-click="salesOrderNewWizardCtrl.removeCartItem(item.ID)">
+                                                    <i class="far fa-times"></i><!--
+                                                    --><span class="sr-only" data-translate="ui.admin.common.Remove"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="salesOrderNewWizardCtrl.currentCart">
+                            <div class="col-md-12 table-responsive" style="overflow-x: visible;">
+                                <table class="table table-striped table-hover">
+                                    <colgroup>
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" data-translate="ui.admin.common.Discount.Plural"></th>
+                                            <th class="text-center" data-translate="ui.admin.common.Fee.Plural"></th>
+                                            <th class="text-center" data-translate="ui.admin.common.Shipping"></th>
+                                            <th class="text-center" data-translate="ui.admin.common.Handling"></th>
+                                            <th class="text-center" data-translate="ui.admin.common.Tax.Plural"></th>
+                                            <th class="text-center" data-translate="ui.admin.common.Subtotal"></th>
+                                            <th class="text-center" data-translate="ui.admin.common.Total"></th>
+                                            <th class="text-center"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">
+                                                <label class="form-control-static font-weight-normal text-right"
+                                                       ng-bind="salesOrderNewWizardCtrl.getModifiedValueByName('Discounts') | currency"></label>
+                                                <div class="btn-group" uib-dropdown is-open="salesOrderNewWizardCtrl.discounts.status.open" auto-close="outsideClick">
+                                                    <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                                    <div class="dropdown-menu p-1" uib-dropdown-menu role="menu">
+                                                        <table class="w-100">
+                                                            <tr>
+                                                                <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                                <td class="w-75 text-right"
+                                                                    ng-bind="salesOrderNewWizardCtrl.currentCart.Totals.Discounts | currency"></td>
+                                                            </tr>
+                                                        </table>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon" aria-hidden="true">
+                                                                <i class="fa"
+                                                                   ng-class="{'fa-usd': salesOrderNewWizardCtrl.currentCart.SubtotalDiscountsModifierMode == 1
+                                                                                        || salesOrderNewWizardCtrl.currentCart.SubtotalDiscountsModifierMode == 2,
+                                                                              'fa-percent': salesOrderNewWizardCtrl.currentCart.SubtotalDiscountsModifierMode == 3}"></i>
+                                                            </div>
+                                                            <input type="number" class="form-control text-right"
+                                                                   id="nudSubtotalDiscountsModifier" name="nudSubtotalDiscountsModifier"
+                                                                   ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                                   min="{{salesOrderNewWizardCtrl.getModifierMinByName('Discounts')}}"
+                                                                   max="{{salesOrderNewWizardCtrl.getModifierMaxByName('Discounts')}}"
+                                                                   ng-class="{'text-red': salesOrderNewWizardCtrl.currentCart.SubtotalDiscountsModifier < 0
+                                                                                          && salesOrderNewWizardCtrl.currentCart.SubtotalDiscountsModifierMode == 2}"
+                                                                   ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                   ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalDiscountsModifier" />
+                                                        </div>
+                                                        <select class="form-control"
+                                                                id="nudSubtotalDiscountsModifierMode" name="nudSubtotalDiscountsModifierMode"
+                                                                ng-if="salesOrderNewWizardCtrl.subtotalModifierModes.length"
+                                                                ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                ng-options="mode.value as mode.label for mode in salesOrderNewWizardCtrl.subtotalModifierModes"
+                                                                ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalDiscountsModifierMode">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="form-control-static font-weight-normal text-right"
+                                                       ng-bind="salesOrderNewWizardCtrl.getModifiedValueByName('Fees') | currency"></label>
+                                                <div class="btn-group" uib-dropdown is-open="salesOrderNewWizardCtrl.fees.status.open" auto-close="outsideClick">
+                                                    <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                                    <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                                        <table class="w-100">
+                                                            <tr>
+                                                                <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                                <td class="w-75 text-right"
+                                                                    ng-bind="salesOrderNewWizardCtrl.currentCart.Totals.Fees | currency"></td>
+                                                            </tr>
+                                                        </table>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon" aria-hidden="true">
+                                                                <i class="fa"
+                                                                   ng-class="{'fa-usd': salesOrderNewWizardCtrl.currentCart.SubtotalFeesModifierMode == 1
+                                                                                        || salesOrderNewWizardCtrl.currentCart.SubtotalFeesModifierMode == 2,
+                                                                              'fa-percent': salesOrderNewWizardCtrl.currentCart.SubtotalFeesModifierMode == 3 }"></i>
+                                                            </div>
+                                                            <input type="number" class="form-control text-right"
+                                                                   id="nudSubtotalFeesModifier" name="nudSubtotalFeesModifier"
+                                                                   ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                                   min="{{salesOrderNewWizardCtrl.getModifierMinByName('Fees')}}"
+                                                                   max="{{salesOrderNewWizardCtrl.getModifierMaxByName('Fees')}}"
+                                                                   ng-class="{'text-red': salesOrderNewWizardCtrl.currentCart.SubtotalFeesModifier < 0
+                                                                                          && salesOrderNewWizardCtrl.currentCart.SubtotalFeesModifierMode == 2}"
+                                                                   ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                   ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalFeesModifier" />
+                                                        </div>
+                                                        <select class="form-control"
+                                                                id="nudSubtotalFeesModifierMode" name="nudSubtotalFeesModifierMode"
+                                                                ng-if="salesOrderNewWizardCtrl.subtotalModifierModes.length"
+                                                                ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                ng-options="mode.value as mode.label for mode in salesOrderNewWizardCtrl.subtotalModifierModes"
+                                                                ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalFeesModifierMode">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="form-control-static font-weight-normal text-right"
+                                                       ng-bind="salesOrderNewWizardCtrl.getModifiedValueByName('Shipping') | currency"></label>
+                                                <div class="btn-group" uib-dropdown is-open="salesOrderNewWizardCtrl.shipping.status.open" auto-close="outsideClick">
+                                                    <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                                    <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                                        <table class="w-100">
+                                                            <tr>
+                                                                <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                                <td class="w-75 text-right"
+                                                                    ng-bind="salesOrderNewWizardCtrl.currentCart.Totals.Shipping | currency"></td>
+                                                            </tr>
+                                                        </table>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon" aria-hidden="true">
+                                                                <i class="fa"
+                                                                   ng-class="{'fa-usd': salesOrderNewWizardCtrl.currentCart.SubtotalShippingModifierMode == 1
+                                                                                        || salesOrderNewWizardCtrl.currentCart.SubtotalShippingModifierMode == 2,
+                                                                              'fa-percent': salesOrderNewWizardCtrl.currentCart.SubtotalShippingModifierMode == 3 }"></i>
+                                                            </div>
+                                                            <input type="number" class="form-control text-right"
+                                                                   id="nudSubtotalShippingModifier" name="nudSubtotalShippingModifier"
+                                                                   ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                                   min="{{salesOrderNewWizardCtrl.getModifierMinByName('Shipping')}}"
+                                                                   max="{{salesOrderNewWizardCtrl.getModifierMaxByName('Shipping')}}"
+                                                                   ng-class="{'text-red': salesOrderNewWizardCtrl.currentCart.SubtotalShippingModifier < 0
+                                                                                          && salesOrderNewWizardCtrl.currentCart.SubtotalShippingModifierMode == 2}"
+                                                                   ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                   ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalShippingModifier" />
+                                                        </div>
+                                                        <select class="form-control"
+                                                                id="nudSubtotalShippingModifierMode" name="nudSubtotalShippingModifierMode"
+                                                                ng-if="salesOrderNewWizardCtrl.subtotalModifierModes.length"
+                                                                ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                ng-options="mode.value as mode.label for mode in salesOrderNewWizardCtrl.subtotalModifierModes"
+                                                                ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalShippingModifierMode">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="form-control-static font-weight-normal text-right"
+                                                       ng-bind="salesOrderNewWizardCtrl.getModifiedValueByName('Handling') | currency"></label>
+                                                <div class="btn-group" uib-dropdown is-open="salesOrderNewWizardCtrl.handling.status.open" auto-close="outsideClick">
+                                                    <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                                    <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                                        <table class="w-100">
+                                                            <tr>
+                                                                <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                                <td class="w-75 text-right"
+                                                                    ng-bind="salesOrderNewWizardCtrl.currentCart.Totals.Handling | currency"></td>
+                                                            </tr>
+                                                        </table>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon" aria-hidden="true">
+                                                                <i class="fa"
+                                                                   ng-class="{'fa-usd': salesOrderNewWizardCtrl.currentCart.SubtotalHandlingModifierMode == 1
+                                                                                        || salesOrderNewWizardCtrl.currentCart.SubtotalHandlingModifierMode == 2,
+                                                                              'fa-percent': salesOrderNewWizardCtrl.currentCart.SubtotalHandlingModifierMode == 3 }"></i>
+                                                            </div>
+                                                            <input type="number" class="form-control text-right"
+                                                                   id="nudSubtotalHandlingModifier" name="nudSubtotalHandlingModifier"
+                                                                   ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                                   min="{{salesOrderNewWizardCtrl.getModifierMinByName('Handling')}}"
+                                                                   max="{{salesOrderNewWizardCtrl.getModifierMaxByName('Handling')}}"
+                                                                   ng-class="{'text-red':salesOrderNewWizardCtrl.currentCart.SubtotalHandlingModifier < 0
+                                                                                         && salesOrderNewWizardCtrl.currentCart.SubtotalHandlingModifierMode == 2}"
+                                                                   ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                   ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalHandlingModifier" />
+                                                        </div>
+                                                        <select class="form-control"
+                                                                id="nudSubtotalHandlingModifierMode" name="nudSubtotalHandlingModifierMode"
+                                                                ng-if="salesOrderNewWizardCtrl.subtotalModifierModes.length"
+                                                                ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                ng-options="mode.value as mode.label for mode in salesOrderNewWizardCtrl.subtotalModifierModes"
+                                                                ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalHandlingModifierMode">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="form-control-static font-weight-normal text-right"
+                                                       ng-bind="salesOrderNewWizardCtrl.getModifiedValueByName('Tax') | currency"></label>
+                                                <div class="btn-group" uib-dropdown is-open="salesOrderNewWizardCtrl.tax.status.open" auto-close="outsideClick">
+                                                    <button type="button" class="btn-link" uib-dropdown-toggle><i class="far fa-pencil"></i></button>
+                                                    <div class="dropdown-menu-right p-1" uib-dropdown-menu role="menu">
+                                                        <table class="w-100">
+                                                            <tr>
+                                                                <td class="w-25" data-translate="ui.admin.common.Base"></td>
+                                                                <td class="w-75 text-right"
+                                                                    ng-bind="salesOrderNewWizardCtrl.currentCart.Totals.Tax | currency"></td>
+                                                            </tr>
+                                                        </table>
+                                                        <div class="input-group">
+                                                            <div class="input-group-addon" aria-hidden="true">
+                                                                <i class="fa"
+                                                                   ng-class="{'fa-usd': salesOrderNewWizardCtrl.currentCart.SubtotalTaxesModifierMode == 1
+                                                                                        || salesOrderNewWizardCtrl.currentCart.SubtotalTaxesModifierMode == 2,
+                                                                              'fa-percent': salesOrderNewWizardCtrl.currentCart.SubtotalTaxesModifierMode == 3 }"></i>
+                                                            </div>
+                                                            <input type="number" class="form-control text-right"
+                                                                   id="nudSubtotalTaxesModifier" name="nudSubtotalTaxesModifier"
+                                                                   ng-pattern="/^-?[0-9]+(\.[0-9]{1,2})?$/" step="0.01" placeholder="1.00"
+                                                                   min="{{salesOrderNewWizardCtrl.getModifierMinByName('Tax')}}"
+                                                                   max="{{salesOrderNewWizardCtrl.getModifierMaxByName('Tax')}}"
+                                                                   ng-class="{'text-red': salesOrderNewWizardCtrl.currentCart.SubtotalTaxesModifier < 0
+                                                                                          && salesOrderNewWizardCtrl.currentCart.SubtotalTaxesModifierMode == 2}"
+                                                                   ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                   ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalTaxesModifier" />
+                                                        </div>
+                                                        <select class="form-control"
+                                                                id="nudSubtotalTaxesModifierMode" name="nudSubtotalTaxesModifierMode"
+                                                                ng-if="salesOrderNewWizardCtrl.subtotalModifierModes.length"
+                                                                ng-change="salesOrderNewWizardCtrl.updateCurrentCartTotals()"
+                                                                ng-options="mode.value as mode.label for mode in salesOrderNewWizardCtrl.subtotalModifierModes"
+                                                                ng-model="salesOrderNewWizardCtrl.currentCart.SubtotalTaxesModifierMode">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="form-control-static font-weight-normal text-right"
+                                                       ng-bind="salesOrderNewWizardCtrl.currentCart.Totals.SubTotal | currency"></label>
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="form-control-static font-weight-normal text-right"
+                                                       ng-bind="salesOrderNewWizardCtrl.currentCart.Totals.Total | currency"></label>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-block btn-info"
+                                                        data-translate="ui.admin.controls.sales.salesOrderNewWizard.UpdateCart"
+                                                        ng-click="salesOrderNewWizardCtrl.updateCart()"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="salesOrderNewWizardCtrl.currentCart">
+                            <div class="col-md-12">
+                                <uib-tabset justified="true">
+                                    <uib-tab heading="{{'Find Products to Add' | translate}}">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-sm-12 pt-3">
+                                                    <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectProductsToAdd"></h4>
+                                                    <div cef-paging-header paging="salesOrderNewWizardCtrl.productPaging"></div>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-hover table-condensed mb-3">
+                                                            <colgroup>
+                                                                <col class="w-5" />
+                                                                <col class="w-30" />
+                                                                <col class="w-45" />
+                                                                <col class="w-10" />
+                                                                <col class="w-10" />
+                                                                <col style="width:43px;" />
+                                                            </colgroup>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-center" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                                    <th data-translate="ui.admin.common.Key"></th>
+                                                                    <th data-translate="ui.admin.common.Name"></th>
+                                                                    <th class="text-center" data-translate="ui.admin.controls.inventory.productDetail.DefaultListBase"></th>
+                                                                    <th class="text-center" data-translate="ui.admin.common.SalePrice"></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-show="salesOrderNewWizardCtrl.productPaging.filteredCount === 0">
+                                                                    <td colspan="6" data-translate="ui.admin.controls.sales.salesOrderNewWizard.NoResults"></td>
+                                                                </tr>
+                                                                <tr ng-repeat="p in salesOrderNewWizardCtrl.productPaging.filteredData[salesOrderNewWizardCtrl.productPaging.currentPage]
+                                                                               | orderBy: ['Name','CustomKey','ID']
+                                                                               | limitTo: salesOrderNewWizardCtrl.productPaging.pageSize
+                                                                                        : salesOrderNewWizardCtrl.productPaging.skip()">
+                                                                    <td><label class="w-100 font-weight-normal form-control-static text-right" ng-bind="p.ID"></label></td>
+                                                                    <td><label class="w-100 font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                                    <td><label class="w-100 font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                                    <td><label class="w-100 font-weight-normal form-control-static text-right" ng-bind="p.readPrices().base | globalizedCurrency"></label></td>
+                                                                    <td><label class="w-100 font-weight-normal form-control-static text-right" ng-bind="p.readPrices().sale | globalizedCurrency"></label></td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-success"
+                                                                                translate-attr="{ title: 'ui.admin.common.AddToCart',
+                                                                                                  'aria-label': 'ui.admin.common.AddToCart' }"
+                                                                                ng-click="salesOrderNewWizardCtrl.addProduct(p.ID)">
+                                                                            <i class="far fa-cart-plus"></i>
+                                                                            <span class="sr-only" data-translate="ui.admin.common.AddToCart"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+                                    <uib-tab heading="{{'Review Discounts' | translate}}">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-sm-12 pt-3"><h4 data-translate="ui.admin.common.Discount.PluralApplied"></h4></div>
+                                                <div class="form-group col-sm-12">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               id="txtDiscountCode" name="txtDiscountCode"
+                                                               translate-attr="{ placeholder: 'Enter a Discount Code...' }"
+                                                               ng-model="salesOrderNewWizardCtrl.NewDiscountCode" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-info"
+                                                                    translate-attr="{ title: 'ui.admin.common.Apply',
+                                                                                      'aria-label': 'ui.admin.common.Apply' }"
+                                                                    data-translate="ui.admin.common.Apply"
+                                                                    ng-click="salesOrderNewWizardCtrl.applyDiscountCode()"></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12" ng-if="!salesOrderNewWizardCtrl.discountItems.length">
+                                                    <p data-translate="ui.admin.common.NoDiscountsApplied"></p>
+                                                </div>
+                                                <div class="col-sm-12" ng-if="salesOrderNewWizardCtrl.discountItems.length">
+                                                    <kendo-grid
+                                                        k-data-source="salesOrderNewWizardCtrl.discountItems"
+                                                        k-rebind="salesOrderNewWizardCtrl.discountItems"
+                                                        k-options="salesOrderNewWizardCtrl.discountGridConfiguration">
+                                                    </kendo-grid>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+                                </uib-tabset>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': salesOrderNewWizardCtrl.forms.BillingInfo.$invalid}"><!--
+                    --><i class="far fa-lg fa-usd"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Step3"></span>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.BillingInfo"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="salesOrderNewWizardCtrl.forms.BillingInfo">
+                        <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.common.BillingInformation"></h3></div></div>
+                        <div class="row"
+                             ng-if="salesOrderNewWizardCtrl.accountContacts.length">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="ddlBillingSelection"
+                                       data-translate="ui.admin.controls.sales.salesOrderNewWizard.SelectAnAddressFromTheAccountsAddressBook"></label>
+                                <select class="form-control"
+                                        id="ddlBillingSelection" name="ddlBillingSelection"
+                                        ng-change="salesOrderNewWizardCtrl.setBillingAddress(salesOrderNewWizardCtrl.selectedBilling)"
+                                        ng-options="ac.Slave as ((ac.Slave.Address.CustomKey || ac.Slave.CustomKey || ac.CustomKey || 'No Key')
+                                                                   + ': ' + ac.Slave.Address.Street1)
+                                                    for ac in salesOrderNewWizardCtrl.accountContacts
+                                                    | orderBy: ['Slave.Address.CustomKey','Slave.CustomKey','CustomKey']"
+                                        ng-model="salesOrderNewWizardCtrl.selectedBilling">
+                                    <option value="" data-translate="ui.admin.controls.sales.salesOrderNewWizard.EnterANewBillingAddress"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--from address book mode -->
+                        <div class="row"
+                             ng-if="!salesOrderNewWizardCtrl.editBilling && salesOrderNewWizardCtrl.accountContacts.length">
+                            <div class="col-sm-12" ng-if="salesOrderNewWizardCtrl.selectedBilling">
+                                <!-- TODO: Replace with contact address block widget -->
+                                <p>
+                                    {{salesOrderNewWizardCtrl.selectedBilling.FirstName}}
+                                    {{salesOrderNewWizardCtrl.selectedBilling.LastName}}<br ng-if="salesOrderNewWizardCtrl.selectedBilling.FirstName || salesOrderNewWizardCtrl.selectedBilling.LastName" />
+                                    {{salesOrderNewWizardCtrl.selectedBilling.Address.Street1}}<br ng-if="salesOrderNewWizardCtrl.selectedBilling.Address.Street1" />
+                                    {{salesOrderNewWizardCtrl.selectedBilling.Address.Street2}}<br ng-if="salesOrderNewWizardCtrl.selectedBilling.Address.Street2" />
+                                    {{salesOrderNewWizardCtrl.selectedBilling.Address.Street3}}<br ng-if="salesOrderNewWizardCtrl.selectedBilling.Address.Street3" />
+                                    {{salesOrderNewWizardCtrl.selectedBilling.Address.City}},
+                                    {{salesOrderNewWizardCtrl.selectedBilling.Address.RegionCode || salesOrderNewWizardCtrl.selectedBilling.Address.Region.Code}}
+                                    {{salesOrderNewWizardCtrl.selectedBilling.Address.PostalCode}}<br />
+                                    {{salesOrderNewWizardCtrl.selectedBilling.Address.Country.Name}}
+                                </p>
+                            </div>
+                        </div>
+                        <!--edit mode-->
+                        <div ng-if="salesOrderNewWizardCtrl.editBilling
+                                    || !salesOrderNewWizardCtrl.accountContacts.length">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group"
+                                         ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingCustomKey.$invalid}">
+                                        <label class="control-label" for="txtBillingCustomKey"
+                                               ><span data-translate="ui.admin.common.AddressNickname"></span>&nbsp;<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control"
+                                               id="txtBillingCustomKey" name="txtBillingCustomKey"
+                                               translate-attr="{ placeholder: 'ui.admin.common.addressBook.EnterAReferenceNameEGMyOffice' }"
+                                               style="text-transform: uppercase;"
+                                               maxlength="15"
+                                               ng-required="false"
+                                               ng-model="salesOrderNewWizardCtrl.selectedAddressBilling.Address.CustomKey" />
+                                    </div>
+                                    <p class="small" data-translate="ui.admin.common.Note"></p>
+                                </div>
+                                <hr class="w-100 my-3 mx-3" />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 data-translate="ui.admin.common.BillingDetail.Plural"></h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <!--first-->
+                                        <div class="form-group col-sm-6"
+                                             ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingFirstName.$invalid}">
+                                            <label class="control-label" for="txtBillingFirstName"
+                                                   ><span data-translate="ui.admin.common.FirstName"></span>&nbsp;<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                   id="txtBillingFirstName" name="txtBillingFirstName"
+                                                   placeholder="John"
+                                                   ng-required="true"
+                                                   ng-model="salesOrderNewWizardCtrl.selectedBilling.FirstName" />
+                                        </div>
+                                        <!--last-->
+                                        <div class="form-group col-sm-6"
+                                             ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingLastName.$invalid}">
+                                            <label class="control-label" for="txtBillingLastName"
+                                                   ><span data-translate="ui.admin.common.LastName"></span>&nbsp;<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                   id="txtBillingLastName" name="txtBillingLastName"
+                                                   placeholder="Smith"
+                                                   ng-required="true"
+                                                   ng-model="salesOrderNewWizardCtrl.selectedBilling.LastName" />
+                                        </div>
+                                        <!--email-->
+                                        <div class="form-group col-sm-12"
+                                             ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingEmail.$invalid}">
+                                            <label class="control-label" for="txtBillingEmail"
+                                                   ><span data-translate="ui.admin.common.Email"></span>&nbsp;<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                   id="txtBillingEmail" name="txtBillingEmail"
+                                                   placeholder="john.smith@email.com"
+                                                   ng-required="true"
+                                                   ng-change="salesOrderNewWizardCtrl.selectedBilling.Email1 = salesOrderNewWizardCtrl.selectedBilling.Address.Email;"
+                                                   ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.Email" />
+                                        </div>
+                                        <!--phone 1-->
+                                        <div class="col-md-12">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingPhone1.$invalid}">
+                                                <label class="control-label" for="txtBillingPhone1"
+                                                       ><span data-translate="ui.admin.common.Phone1"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingPhone1" name="txtBillingPhone1"
+                                                       placeholder="+1(555)555-5555x55555"
+                                                       ng-required="true"
+                                                       ng-change="salesOrderNewWizardCtrl.selectedBilling.Address.Phone = salesOrderNewWizardCtrl.selectedBilling.Phone1;
+                                                                  salesOrderNewWizardCtrl.runPhonePrefixLookups(salesOrderNewWizardCtrl.selectedBilling, true)"
+                                                       ng-model-options="{ updateOn: 'default blur', debounce: {'default':500,'blur':0} }"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Phone1" />
+                                            </div>
+                                            <button ng-hide="salesOrderNewWizardCtrl.showBillingPhone2"
+                                                    type="button" class="btn btn-link pull-right"
+                                                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.AddMorePhones"
+                                                    ng-click="salesOrderNewWizardCtrl.showBillingPhone2 = true"></button>
+                                        </div>
+                                        <!--phone 2-->
+                                        <div class="col-sm-12" ng-show="salesOrderNewWizardCtrl.showBillingPhone2">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingPhone2.$invalid}">
+                                                <label class="control-label" for="txtBillingPhone2"
+                                                       data-translate="ui.admin.common.Phone2"></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingPhone2" name="txtBillingPhone2"
+                                                       placeholder="+1(555)555-5555x55555"
+                                                       ng-required="false"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Phone2" />
+                                            </div>
+                                            <button ng-hide="salesOrderNewWizardCtrl.showBillingPhone3"
+                                                    type="button" class="btn btn-link pull-right"
+                                                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.AddMorePhones"
+                                                    ng-click="salesOrderNewWizardCtrl.showBillingPhone3 = true"></button>
+                                        </div>
+                                        <!--phone 3-->
+                                        <div class="col-sm-12" ng-show="salesOrderNewWizardCtrl.showBillingPhone3">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingPhone3.$invalid}">
+                                                <label class="control-label" for="txtBillingPhone3"
+                                                       data-translate="ui.admin.common.Phone3"></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingPhone3" name="txtBillingPhone3"
+                                                       placeholder="+1(555)555-5555x55555"
+                                                       ng-required="false"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Phone3" />
+                                            </div>
+                                        </div>
+                                        <!--fax-->
+                                        <div class="col-sm-12">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingFax.$invalid}">
+                                                <label class="control-label" for="txtBillingFax"
+                                                       data-translate="ui.admin.common.Fax"></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingFax" name="txtBillingFax"
+                                                       placeholder="+1(555)555-5555"
+                                                       ng-required="false"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Fax1" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <!--company-->
+                                        <div class="col-sm-12">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingCompany.$invalid}">
+                                                <label class="control-label" for="txtBillingCompany"
+                                                       data-translate="ui.admin.common.Company"></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingCompany" name="txtBillingCompany"
+                                                       translate-attr="{ placeholder: 'ui.admin.common.Company' }"
+                                                       ng-required="false"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.Company" />
+                                            </div>
+                                        </div>
+                                        <!--country-->
+                                        <div class="col-sm-12">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.ddlBillingCountry.$invalid}">
+                                                <label class="control-label" for="ddlBillingCountry"
+                                                       ><span data-translate="ui.admin.common.Country"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                <select class="form-control"
+                                                        id="ddlBillingCountry" name="ddlBillingCountry"
+                                                        ng-required="true"
+                                                        ng-change="salesOrderNewWizardCtrl.propagateCountryChange(salesOrderNewWizardCtrl.selectedBilling, true)"
+                                                        ng-options="c.ID as c.Name for c in salesOrderNewWizardCtrl.countries"
+                                                        ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.CountryID">
+                                                    <option value="" data-translate="ui.admin.common.Country"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--street-->
+                                        <div class="col-sm-12">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingStreet1.$invalid}">
+                                                <label for="txtBillingStreet1" class="control-label"
+                                                       ><span data-translate="ui.admin.common.Street1"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingStreet1" name="txtBillingStreet1"
+                                                       placeholder="111 Fake Ln"
+                                                       ng-required="true"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.Street1" />
+                                            </div>
+                                            <button ng-hide="salesOrderNewWizardCtrl.showBillingStreet2"
+                                                    type="button" class="btn btn-link pull-right"
+                                                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.AddMoreLines"
+                                                    ng-click="salesOrderNewWizardCtrl.showBillingStreet2 = true"></button>
+                                        </div>
+                                        <!--street 2-->
+                                        <div class="col-sm-12" ng-show="salesOrderNewWizardCtrl.showBillingStreet2">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingStreet2.$invalid}">
+                                                <label class="control-label" for="txtBillingStreet2"
+                                                       data-translate="ui.admin.common.Street2"></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingStreet2" name="txtBillingStreet2"
+                                                       placeholder="#123"
+                                                       ng-required="false"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.Street2" />
+                                            </div>
+                                            <button ng-hide="salesOrderNewWizardCtrl.showBillingStreet3"
+                                                    type="button" class="btn btn-link pull-right"
+                                                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.AddMoreLines"
+                                                    ng-click="salesOrderNewWizardCtrl.showBillingStreet3 = true"></button>
+                                        </div>
+                                        <!--street 3-->
+                                        <div class="col-sm-12" ng-show="salesOrderNewWizardCtrl.showBillingStreet3">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingStreet3.$invalid}">
+                                                <label class="control-label" for="txtBillingStreet3"
+                                                       data-translate="ui.admin.common.Street3"></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingStreet3" name="txtBillingStreet3"
+                                                       ng-required="false"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.Street3" />
+                                            </div>
+                                        </div>
+                                        <!--city-->
+                                        <div class="col-sm-12">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingCity.$invalid}">
+                                                <label class="control-label" for="txtBillingCity"
+                                                       ><span data-translate="ui.admin.common.City"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingCity" name="txtBillingCity"
+                                                       placeholder="City"
+                                                       ng-required="true"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.City" />
+                                            </div>
+                                        </div>
+                                        <!--state-->
+                                        <div class="col-sm-6" ng-if="salesOrderNewWizardCtrl.regionsForBilling.length > 0">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.ddlBillingState.$invalid}">
+                                                <label class="control-label" for="ddlBillingState"
+                                                       ><span data-translate="ui.admin.common.State"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                <select class="form-control"
+                                                        id="ddlBillingState" name="ddlBillingState"
+                                                        ng-required="true"
+                                                        ng-change="salesOrderNewWizardCtrl.propagateRegionChange(salesOrderNewWizardCtrl.selectedBilling, true)"
+                                                        ng-options="state.ID as state.Name for state in salesOrderNewWizardCtrl.regionsForBilling"
+                                                        ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.RegionID">
+                                                    <option value="" data-translate="ui.admin.common.State.SelectA"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--zip-->
+                                        <div ng-class="salesOrderNewWizardCtrl.regionsForBilling.length > 0 ? 'col-sm-6' : 'col-sm-12'">
+                                            <div class="form-group"
+                                                 ng-class="{'has-error': salesOrderNewWizardCtrl.forms.BillingInfo.txtBillingZip.$invalid}">
+                                                <label class="control-label" for="txtBillingZip"
+                                                       ><span data-translate="ui.admin.common.Zip"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control"
+                                                       id="txtBillingZip" name="txtBillingZip"
+                                                       placeholder="55555"
+                                                       ng-required="true"
+                                                       ng-model="salesOrderNewWizardCtrl.selectedBilling.Address.PostalCode" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': salesOrderNewWizardCtrl.forms.ShippingInfo.$invalid}"><!--
+                    --><i class="far fa-lg fa-truck"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Step4"></span>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.ShippingInfo"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="salesOrderNewWizardCtrl.forms.ShippingInfo">
+                        <div class="row"><div class="col-md-12"><h3 data-translate="ui.admin.common.ShippingInformation"></h3></div></div>
+                        <div class="row" ng-if="!salesOrderNewWizardCtrl.showSplitShipping">
+                            <div class="col-sm-12">
+                                <div class="form-group pl-4">
+                                    <label class="checkbox">
+                                        <input type="checkbox"
+                                               id="chkSameAsBilling" name="chkSameAsBilling"
+                                               ng-change="salesOrderNewWizardCtrl.updateShippingFromBilling()"
+                                               ng-model="salesOrderNewWizardCtrl.isShippingSameAsBilling" />
+                                        <span data-translate="ui.admin.common.SameAsBilling"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6"
+                                 ng-if="salesOrderNewWizardCtrl.accountContacts.length && !salesOrderNewWizardCtrl.isShippingSameAsBilling">
+                                <div class="form-group">
+                                    <label class="control-label" for="ddlShippingSelection"
+                                           data-translate="ui.admin.controls.sales.salesOrderNewWizard.SelectAnAddressFromTheAccountsAddressBook"></label>
+                                    <select class="form-control"
+                                            id="ddlShippingSelection" name="ddlShippingSelection"
+                                            ng-required="false"
+                                            ng-change="salesOrderNewWizardCtrl.setShippingAddress(salesOrderNewWizardCtrl.selectedShipping)"
+                                            ng-options="ac.Slave as ((ac.Slave == salesOrderNewWizardCtrl.selectedBilling ? 'Same as Billing: ' : '')
+                                                                       + (ac.Slave.Address.CustomKey || ac.Slave.CustomKey || ac.CustomKey || 'No Key')
+                                                                       + ': ' +   ac.Slave.Address.Street1)
+                                                        for ac in salesOrderNewWizardCtrl.accountContacts"
+                                            ng-model="salesOrderNewWizardCtrl.selectedShipping">
+                                        <option value="" data-translate="ui.admin.controls.sales.salesOrderNewWizard.EnterANewShippingAddress"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--edit mode-->
+                            <div class="col-md-12"
+                                 ng-if="!salesOrderNewWizardCtrl.isShippingSameAsBilling
+                                        && (salesOrderNewWizardCtrl.editShipping || !salesOrderNewWizardCtrl.accountContacts.length)">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group"
+                                             ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingCustomKey.$invalid}">
+                                            <label class="control-label" for="txtShippingCustomKey"
+                                                   ><span data-translate="ui.admin.common.AddressNickname"></span>&nbsp;<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                   id="txtShippingCustomKey" name="txtShippingCustomKey"
+                                                   translate-attr="{ placeholder: 'ui.admin.common.addressBook.EnterAReferenceNameEGMyOffice' }"
+                                                   style="text-transform: uppercase;"
+                                                   maxlength="15"
+                                                   ng-required="true"
+                                                   ng-model="salesOrderNewWizardCtrl.selectedShipping.Address.CustomKey" />
+                                        </div>
+                                        <p class="small" data-translate="ui.admin.common.Note"></p>
+                                    </div>
+                                    <hr class="w-100 my-3 mx-3" />
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <!--first-->
+                                            <div class="col-sm-6">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingFirstName.$invalid}">
+                                                    <label class="control-label" for="txtShippingFirstName"
+                                                           ><span data-translate="ui.admin.common.FirstName"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingFirstName" name="txtShippingFirstName"
+                                                           placeholder="John"
+                                                           maxlength="128"
+                                                           ng-required="true"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.FirstName" />
+                                                </div>
+                                            </div>
+                                            <!--last-->
+                                            <div class="col-sm-6">
+                                                <div class="form-group col-sm-6"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingLastName.$invalid}">
+                                                    <label class="control-label" for="txtShippingLastName"
+                                                           ><span data-translate="ui.admin.common.LastName"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingLastName" name="txtShippingLastName"
+                                                           placeholder="Smith"
+                                                           maxlength="128"
+                                                           ng-required="true"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.LastName" />
+                                                </div>
+                                            </div>
+                                            <!--email-->
+                                            <div class="col-sm-12">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingEmail.$invalid}">
+                                                    <label class="control-label" for="txtShippingEmail"
+                                                           ><span data-translate="ui.admin.common.Email"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingEmail" name="txtShippingEmail"
+                                                           placeholder="john.smith@email.com"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.Email1" />
+                                                </div>
+                                            </div>
+                                            <!--primary phone-->
+                                            <div class="col-sm-12">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingPhone1.$invalid}">
+                                                    <label class="control-label" for="txtShippingPhone1"
+                                                           ><span data-translate="ui.admin.common.Phone1"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingPhone1" name="txtShippingPhone1"
+                                                           placeholder="+1(555)555-5555 x55555"
+                                                           ng-required="true"
+                                                           ng-change="salesOrderNewWizardCtrl.selectedShipping.Address.Phone = salesOrderNewWizardCtrl.selectedShipping.Phone1;
+                                                                      salesOrderNewWizardCtrl.runPhonePrefixLookups(salesOrderNewWizardCtrl.selectedShipping, false)"
+                                                           ng-model-options="{ updateOn: 'default blur', debounce: {'default':500,'blur':0} }"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.Phone1" />
+                                                    <!-- NOTE: No UI Masks or ng-patterns, must take foreign phone numbers -->
+                                                </div>
+                                                <button ng-hide="salesOrderNewWizardCtrl.showShippingPhone2"
+                                                        type="button" class="btn btn-link pull-right"
+                                                        data-translate="ui.admin.controls.sales.salesOrderNewWizard.AddMorePhones"
+                                                        ng-click="salesOrderNewWizardCtrl.showShippingPhone2 = true"></button>
+                                            </div>
+                                            <!--phone 2-->
+                                            <div class="col-sm-12" ng-show="salesOrderNewWizardCtrl.showShippingPhone2">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingPhone2.$invalid}">
+                                                    <label class="control-label" for="txtShippingPhone2"
+                                                           data-translate="ui.admin.common.Phone2"></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingPhone2" name="txtShippingPhone2"
+                                                           placeholder="+1(555)555-5555 x55555"
+                                                           ng-required="false"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.Phone2" />
+                                                    <!-- NOTE: No UI Masks or ng-patterns, must take foreign phone numbers -->
+                                                </div>
+                                                <button ng-hide="salesOrderNewWizardCtrl.showShippingPhone3"
+                                                        type="button" class="btn btn-link pull-right"
+                                                        data-translate="ui.admin.controls.sales.salesOrderNewWizard.AddMorePhones"
+                                                        ng-click="salesOrderNewWizardCtrl.showShippingPhone3 = true"></button>
+                                            </div>
+                                            <!--phone 3-->
+                                            <div class="col-sm-12" ng-show="salesOrderNewWizardCtrl.showShippingPhone3">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingPhone3.$invalid}">
+                                                    <label class="control-label" for="txtShippingPhone3"
+                                                           data-translate="ui.admin.common.Phone3"></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingPhone3" name="txtShippingPhone3"
+                                                           placeholder="+1(555)555-5555 x55555"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.Phone3" />
+                                                    <!-- NOTE: No UI Masks or ng-patterns, must take foreign phone numbers -->
+                                                </div>
+                                            </div>
+                                            <!--fax-->
+                                            <div class="col-sm-12">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingFax.$invalid}">
+                                                    <label class="control-label" for="txtShippingFax"
+                                                           data-translate="ui.admin.common.Fax"></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingFax" name="txtShippingFax"
+                                                           placeholder="+1(555)555-5555"
+                                                           ng-required="false"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.Fax1" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <!--company-->
+                                            <div class="col-sm-12">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingCompany.$invalid}">
+                                                    <label class="control-label" for="txtShippingCompany"
+                                                           data-translate="ui.admin.common.Company"></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingCompany" name="txtShippingCompany"
+                                                           translate-attr="{ placeholder: 'ui.admin.common.Company' }"
+                                                           ng-required="false"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedAddressShipping.Address.Company" />
+                                                </div>
+                                            </div>
+                                            <!--country-->
+                                            <div class="col-sm-12">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.ddlShippingCountry.$invalid}">
+                                                    <label class="control-label" for="ddlShippingCountry"
+                                                           ><span data-translate="ui.admin.common.Country"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <select class="form-control"
+                                                                id="ddlShippingCountry" name="ddlShippingCountry"
+                                                                ng-required="true"
+                                                                ng-change="salesOrderNewWizardCtrl.propagateCountryChange(salesOrderNewWizardCtrl.selectedShipping)"
+                                                                ng-options="c.ID as c.Name for c in salesOrderNewWizardCtrl.countries"
+                                                                ng-model="salesOrderNewWizardCtrl.selectedShipping.Address.CountryID"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--street-->
+                                            <div class="col-sm-12">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingStreet1.$invalid}">
+                                                    <label for="txtShippingStreet1" class="control-label"
+                                                           ><span data-translate="ui.admin.common.Street1"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingStreet1" name="txtShippingStreet1"
+                                                           placeholder="111 Fake Ln"
+                                                           ng-required="true"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.Address.Street1" />
+                                                </div>
+                                                <button ng-hide="salesOrderNewWizardCtrl.showShippingStreet2"
+                                                        type="button" class="btn btn-link pull-right"
+                                                        data-translate="ui.admin.controls.sales.newSalesOrderWizard.AddMoreLines"
+                                                        ng-click="salesOrderNewWizardCtrl.showShippingStreet2 = true"></button>
+                                            </div>
+                                            <!--street 2-->
+                                            <div class="col-sm-12" ng-show="salesOrderNewWizardCtrl.showShippingStreet2">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingStreet2.$invalid}">
+                                                    <label class="control-label" for="txtShippingStreet2"
+                                                           data-translate="ui.admin.common.Street2"></label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               id="txtShippingStreet2" name="txtShippingStreet2"
+                                                               placeholder="#123"
+                                                               ng-required="false"
+                                                               ng-model="salesOrderNewWizardCtrl.selectedShipping.Address.Street2" />
+                                                    </div>
+                                                </div>
+                                                <button ng-hide="salesOrderNewWizardCtrl.showShippingStreet3"
+                                                        type="button" class="btn btn-link pull-right"
+                                                        data-translate="ui.admin.controls.sales.newSalesOrderWizard.AddMoreLines"
+                                                        ng-click="salesOrderNewWizardCtrl.showShippingStreet3 = true"></button>
+                                            </div>
+                                            <!--street 3-->
+                                            <div class="col-sm-12" ng-show="salesOrderNewWizardCtrl.showShippingStreet3">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingStreet3.$invalid}">
+                                                    <label class="control-label" for="txtShippingStreet3"
+                                                           data-translate="ui.admin.common.Street3"></label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               id="txtShippingStreet3" name="txtShippingStreet3"
+                                                               ng-required="false"
+                                                               ng-model="salesOrderNewWizardCtrl.selectedShipping.Address.Street3" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--city-->
+                                            <div class="col-sm-12">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingCity.$invalid}">
+                                                    <label class="control-label" for="txtShippingCity"
+                                                           ><span data-translate="ui.admin.common.City"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               id="txtShippingCity" name="txtShippingCity"
+                                                               placeholder="Fake City"
+                                                               ng-required="true"
+                                                               ng-model="salesOrderNewWizardCtrl.selectedShipping.Address.City" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--state-->
+                                            <div class="col-sm-6" ng-if="salesOrderNewWizardCtrl.regionsForShipping.length > 0">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.ddlShippingState.$invalid}">
+                                                    <label class="control-label" for="ddlShippingState"
+                                                           ><span data-translate="ui.admin.common.State"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <select class="form-control"
+                                                            id="ddlShippingState" name="ddlShippingState"
+                                                            ng-required="true"
+                                                            ng-change="salesOrderNewWizardCtrl.propagateRegionChange(salesOrderNewWizardCtrl.selectedShipping)"
+                                                            ng-options="state.ID as state.Name for state in salesOrderNewWizardCtrl.regionsForShipping"
+                                                            ng-model="salesOrderNewWizardCtrl.selectedShipping.Address.RegionID">
+                                                        <option value="" data-translate="ui.admin.common.State.SelectA"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--zip-->
+                                            <div ng-class="salesOrderNewWizardCtrl.regionsForShipping.length > 0 ? 'col-sm-6' : 'col-sm-12'">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.ShippingInfo.txtShippingZip.$invalid}">
+                                                    <label class="control-label" for="txtShippingZip"
+                                                           ><span data-translate="ui.admin.common.Zip"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtShippingZip" name="txtShippingZip"
+                                                           placeholder="55555"
+                                                           ng-required="true"
+                                                           ng-model="salesOrderNewWizardCtrl.selectedShipping.Address.PostalCode" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table class="w-100 mb-3">
+                                    <tr>
+                                        <td>
+                                            <button type="button" class="btn btn-info"
+                                                    id="btnReestimateShipping" name="btnReestimateShipping"
+                                                    ng-disabled="salesOrderNewWizardCtrl.forms.ShippingInfo.$invalid"
+                                                    translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.ReestimateShippingCost',
+                                                                      'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.ReestimateShippingCost' }"
+                                                    ng-click="salesOrderNewWizardCtrl.updateShippingAddressSelection()">
+                                                <span ng-if="!salesOrderNewWizardCtrl.selectedRateQuoteID"
+                                                      data-translate="ui.admin.controls.sales.salesOrderNewWizard.EstimateShippingCost"></span>
+                                                <span ng-if="salesOrderNewWizardCtrl.selectedRateQuoteID"
+                                                      data-translate="ui.admin.controls.sales.salesOrderNewWizard.ReestimateShippingCost"></span>
+                                            </button>
+                                        </td>
+                                        <td class="w-100">
+                                            <p ng-if="salesOrderNewWizardCtrl.viewState.gettingRates"
+                                               class="alert alert-info ml-3 mb-0 p-2"
+                                               data-translate="ui.admin.controls.sales.salesOrderNewWizard.WereSearchingForRatesForTheAddressInformationProvided.Ellipses"></p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="row"
+                                     ng-form="salesOrderNewWizardCtrl.forms.Delivery"
+                                     ng-show="salesOrderNewWizardCtrl.haveRateQuotes">
+                                    <div class="col-md-12">
+                                        <h4 data-translate="ui.admin.controls.sales.salesOrderNewWizard.ReestimateShippingCost"></h4>
+                                    </div>
+                                    <div class="col-sm-12"
+                                         ng-hide="salesOrderNewWizardCtrl.viewState.running">
+                                        <div cef-rate-quotes-manager-widget
+                                             type="'Cart'"
+                                             cart="salesOrderNewWizardCtrl.currentCart"
+                                             contact="salesOrderNewWizardCtrl.selectedShipping"
+                                             apply="false">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="txtaSpecialInstructions"
+                                           data-translate="ui.admin.controls.sales.salesOrderNewWizard.SpecialInstructions"></label>
+                                    <textarea class="form-control"
+                                              id="txtaSpecialInstructions" name="txtaSpecialInstructions"
+                                              ng-required="false"
+                                              ng-model="salesOrderNewWizardCtrl.specialInstructions"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"
+                             ng-if="salesOrderNewWizardCtrl.showSplitShipping
+                                    && salesOrderNewWizardCtrl.currentCartID
+                                    && salesOrderNewWizardCtrl.userID">
+                            <div class="col-sm-12"
+                                 ng-form="salesOrderNewWizardCtrl.forms.ShippingInfo.SplitShipping">
+                                <div cef-checkout-split-shipping
+                                     type="'Cart'"
+                                     apply="true"
+                                     current-cart-id="salesOrderNewWizardCtrl.currentCartID"
+                                     user-id="salesOrderNewWizardCtrl.userID"
+                                     contacts="salesOrderNewWizardCtrl.accountContacts"
+                                     show-in-store-pickup-option="salesOrderNewWizardCtrl.cefConfig.store.showInStorePickupOption"
+                                     show-ship-to-store-option="salesOrderNewWizardCtrl.cefConfig.store.showShipToStoreOption"
+                                     hide-add-address-option="false"
+                                     use-phone-prefix-lookups="salesOrderNewWizardCtrl.cefConfig.usePhonePrefixLookups.enabled">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': salesOrderNewWizardCtrl.forms.Notes.$invalid}"><!--
+                    --><i class="far fa-lg fa-sticky-note"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Step5"></span>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Note.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="salesOrderNewWizardCtrl.forms.Notes">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 data-translate="ui.admin.common.PrivateNote.Plural"></h3>
+                                <cef-notes-editor
+                                    notes="salesOrderNewWizardCtrl.currentCart.Notes"
+                                    note-type-name="'Private'">
+                                </cef-notes-editor>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 data-translate="ui.admin.controls.sales.salesOrderNewWizard.OrderNote.Plural"></h3>
+                                <cef-notes-editor
+                                    notes="salesOrderNewWizardCtrl.currentCart.Notes"
+                                    note-type-name="'Order'">
+                                </cef-notes-editor>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 data-translate="ui.admin.common.CustomerNote.Plural"></h3>
+                                <cef-notes-editor
+                                    notes="salesOrderNewWizardCtrl.currentCart.Notes"
+                                    note-type-name="'Customer'">
+                                </cef-notes-editor>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': salesOrderNewWizardCtrl.forms.Attributes.$invalid}"><!--
+                    --><i class="far fa-lg fa-th-list"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Step6"></span>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Attribute.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="salesOrderNewWizardCtrl.forms.Attributes">
+                        <div cef-json-attributes-editor
+                             master="salesOrderNewWizardCtrl.currentCart"
+                             type="Sales Order"
+                             ng-if="salesOrderNewWizardCtrl.currentCart != null"></div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': salesOrderNewWizardCtrl.forms.Payment.$invalid}"><!--
+                    --><i class="far fa-lg fa-credit-card"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Step7"></span>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Payment"></span></span></uib-tab-heading>
+                    <div class="container-fluid"
+                         ng-form="salesOrderNewWizardCtrl.forms.Payment"
+                         ng-init="salesOrderNewWizardCtrl.paymentMethod = 'credit';
+                                  salesOrderNewWizardCtrl.paymentData.HolderType = 'business';
+                                  salesOrderNewWizardCtrl.paymentData.AccountType = 'checking'">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 data-translate="ui.admin.controls.sales.salesOrderNewWizard.SelectAPaymentMethod"></h3>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row"
+                                     ng-if="salesOrderNewWizardCtrl.acceptedPayments.creditCard">
+                                    <div class="col-md-12">
+                                        <input type="radio"
+                                               id="rdCreditCard" name="rdPaymentModel"
+                                               ng-model="salesOrderNewWizardCtrl.paymentMethod"
+                                               value="purchasePaymentMethodCreditCard" />&nbsp;<!--
+                                        --><label for="rdCreditCard"
+                                                  data-translate="ui.admin.common.PaymentCC"></label>
+                                    </div>
+                                </div>
+                                <div class="row"
+                                     ng-if="false && salesOrderNewWizardCtrl.acceptedPayments.payPal">
+                                    <div class="col-md-12">
+                                        <input type="radio" id="rdPayPal" name="rdPaymentModel"
+                                               ng-model="salesOrderNewWizardCtrl.paymentMethod"
+                                               value="purchasePaymentMethodPayPal" />&nbsp;<!--
+                                        --><label for="rdPayPal">PayPal<sup>&trade;</sup></label>
+                                        <!-- Note: Don't translate "PayPal" -->
+                                    </div>
+                                </div>
+                                <div class="row"
+                                     ng-if="salesOrderNewWizardCtrl.acceptedPayments.invoice">
+                                    <div class="col-md-12">
+                                        <input type="radio" id="rdInvoice" name="rdPaymentModel"
+                                               ng-model="salesOrderNewWizardCtrl.paymentMethod"
+                                               value="purchasePaymentMethodInvoice" />&nbsp;<!--
+                                        --><label for="rdInvoice"
+                                                  data-translate="ui.admin.common.PaymentInvoice"></label>
+                                    </div>
+                                </div>
+                                <div class="row" ng-form="salesOrderNewWizardCtrl.forms.Payment.TaxExemptions">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="txtTaxExemptionNumber"
+                                                   data-translate="ui.admin.controls.sales.salesOrderNewWizard.AreYouTaxExempt.Question"></label>
+                                            <input type="text" class="form-control"
+                                                   id="txtTaxExemptionNumber" name="txtTaxExemptionNumber"
+                                                   translate-attr="{ placeholder: 'ui.admin.controls.sales.salesOrderNewWizard.TaxExemptionNo' }"
+                                                   ng-required="false"
+                                                   ng-model="salesOrderNewWizardCtrl.taxExemptionNumber" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div ng-switch="salesOrderNewWizardCtrl.paymentMethod">
+                                    <div ng-switch-when="purchasePaymentMethodCreditCard">
+                                        <div class="row" ng-form="salesOrderNewWizardCtrl.forms.Payment.CreditCard">
+                                            <div ng-if="salesOrderNewWizardCtrl.wallet.length"
+                                                 class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="control-label hidden" for="ddlSelectedCard"
+                                                           data-translate="ui.admin.controls.sales.salesOrderNewWizard.SelectACard"></label>
+                                                    <select class="form-control"
+                                                            id="ddlSelectedCard" name="ddlSelectedCard"
+                                                            ng-change="salesOrderNewWizardCtrl.updatePaymentDataWithCard(salesOrderNewWizardCtrl.selectedCard)"
+                                                            ng-options="card as card.Name for card in salesOrderNewWizardCtrl.wallet"
+                                                            ng-model="salesOrderNewWizardCtrl.selectedCard">
+                                                        <option value="" data-translate="ui.admin.controls.sales.salesOrderNewWizard.EnterANewCard"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div ng-if="salesOrderNewWizardCtrl.selectedCardIsFromWallet()"
+                                                 class="col-sm-12">
+                                                 <div class="row"
+                                                      ng-form="salesOrderNewWizardCtrl.forms.Payment.CreditCard.Card">
+                                                    <div class="col-sm-12 wallet-card-panel">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <p class="h3 mt-0">
+                                                                            <b ng-bind="salesOrderNewWizardCtrl.selectedCard.Name"></b>
+                                                                            <span class="pull-right" aria-hidden="true">
+                                                                                <i class="far fa-2x" ng-class="{
+                                                                                    'fa-cc-amex': salesOrderNewWizardCtrl.selectedCard.CardType == 'American Express',
+                                                                                    'fa-cc-discover': salesOrderNewWizardCtrl.selectedCard.CardType == 'Discover',
+                                                                                    'fa-cc-mastercard': salesOrderNewWizardCtrl.selectedCard.CardType == 'MasterCard'
+                                                                                                        || salesOrderNewWizardCtrl.selectedCard.CardType == 'Diners Club',
+                                                                                    'fa-cc-visa': salesOrderNewWizardCtrl.selectedCard.CardType == 'Visa'}"></i>
+                                                                                <span class="sr-only" ng-bind="salesOrderNewWizardCtrl.selectedCard.CardType"></span>
+                                                                            </span>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-sm-12" ng-if="!salesOrderNewWizardCtrl.viewstate.createMode">
+                                                                        <p class="h3"
+                                                                           ng-bind-html="('&bull;&bull;&bull;&bull;&nbsp;'
+                                                                                + '&bull;&bull;&bull;&bull;&nbsp;'
+                                                                                + '&bull;&bull;&bull;&bull;&nbsp;'
+                                                                                + (salesOrderNewWizardCtrl.selectedCard.CreditCardNumber | limitTo: -4)) | trustedHtml">
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-xs-6 col-xs-6">
+                                                                        <p data-translate="ui.admin.common.CardholderName"></p>
+                                                                        <p class="bold"
+                                                                           ng-bind="salesOrderNewWizardCtrl.selectedCard.CardHolderName"></p>
+                                                                    </div>
+                                                                    <div class="col-xs-3 col-xs-3">
+                                                                        <p data-translate="ui.admin.common.wallet.walletCard.ValidThrough"></p>
+                                                                        <p class="bold"
+                                                                           ng-bind="salesOrderNewWizardCtrl.selectedCard.ExpirationMonth + '/' + salesOrderNewWizardCtrl.selectedCard.ExpirationYear"></p>
+                                                                    </div>
+                                                                    <div class="col-xs-3 col-xs-3">
+                                                                        <div class="form-group"
+                                                                             ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.CreditCard.Card.txtCVVWallet.$invalid}">
+                                                                            <label class="control-label" for="txtCVVWallet"
+                                                                                   ><span data-translate="ui.admin.common.CVV"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                                            <input type="text" class="form-control"
+                                                                                   id="txtCVVWallet" name="txtCVVWallet"
+                                                                                   placeholder="123"
+                                                                                   ng-required="true"
+                                                                                   ng-model="salesOrderNewWizardCtrl.selectedCard.CVV"
+                                                                                   cc-cvc cc-type="salesOrderNewWizardCtrl.forms.Payment.CreditCard.Card.creditCardcard.type" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12"
+                                                         ng-if="salesOrderNewWizardCtrl.forms.Payment.CreditCard.$valid && salesOrderNewWizardCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0">
+                                                        <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.GrandTotalWithSplitTargets.Template"
+                                                           translate-value-total="{{salesOrderNewWizardCtrl.cvCartService.grandTotal()}}"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="!salesOrderNewWizardCtrl.selectedCardIsFromWallet()"
+                                                 class="col-sm-12">
+                                                <!--Reference Name-->
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.CreditCard.$dirty && salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtReferenceName.$invalid}"
+                                                     ng-if="salesOrderNewWizardCtrl.allowWallet">
+                                                    <label class="control-label" for="txtReferenceName"
+                                                           data-translate="ui.admin.common.CardNickname"></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtReferenceName" name="txtReferenceName"
+                                                           ng-required="false"
+                                                           ng-model="salesOrderNewWizardCtrl.paymentData.ReferenceName" />
+                                                </div>
+                                                <p ng-if="salesOrderNewWizardCtrl.allowWallet"
+                                                   class="small"
+                                                   data-translate="ui.admin.controls.sales.salesOrderNewWizard.WalletReferenceName.Note"></p>
+                                                <!--Cardholder Name-->
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.CreditCard.$dirty && salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardHolderName.$invalid}">
+                                                    <label class="control-label" for="txtCardHolderName"
+                                                           ><span data-translate="ui.admin.common.CardholderName"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtCardHolderName" name="txtCardHolderName"
+                                                           ng-required="true"
+                                                           ng-model="salesOrderNewWizardCtrl.paymentData.CardHolderName" />
+                                                </div>
+                                                <!--Card Number-->
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.CreditCard.$dirty && salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$invalid}">
+                                                    <label class="control-label" for="txtCardNumber"
+                                                           ><span data-translate="ui.admin.common.CardNumber"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                               id="txtCardNumber" name="txtCardNumber"
+                                                               placeholder="1234 5678 9012 3456"
+                                                               cc-number cc-format cc-eager-type
+                                                               ng-required="true"
+                                                               ng-change="salesOrderNewWizardCtrl.payment.creditCard.type = salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType;"
+                                                               ng-model="salesOrderNewWizardCtrl.paymentData.CardNumber" />
+                                                        <div ng-if="salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType"
+                                                             class="input-group-addon" aria-hidden="true">
+                                                            <i class="fa" ng-class="{
+                                                                'fa-cc-amex': salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType == 'American Express',
+                                                                'fa-cc-discover': salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType == 'Discover',
+                                                                'fa-cc-mastercard': salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType == 'MasterCard'
+                                                                                    || salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType == 'Diners Club',
+                                                                'fa-cc-visa': salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType == 'Visa'}"></i>
+                                                            <span class="sr-only" ng-bind="salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" cc-exp>
+                                                    <!--Month-->
+                                                    <div class="form-group col-sm-6"
+                                                         ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.CreditCard.$dirty && salesOrderNewWizardCtrl.forms.Payment.CreditCard.ddlExpirationMonth.$invalid}">
+                                                        <label class="control-label" for="ddlExpirationMonth"
+                                                               ><span data-translate="ui.admin.common.ExpirationMonth"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                        <select class="form-control"
+                                                                id="ddlExpirationMonth" name="ddlExpirationMonth"
+                                                                cc-exp-month
+                                                                ng-required="true"
+                                                                ng-model="salesOrderNewWizardCtrl.paymentData.ExpirationMonth"
+                                                                ng-options="month.Key as month.Value for month in salesOrderNewWizardCtrl.expirationMonths">
+                                                            <option value="" ng-disabled="true" data-translate="ui.admin.common.ExpirationMonth"></option>
+                                                        </select>
+                                                    </div>
+                                                    <!--Year-->
+                                                    <div class="form-group col-sm-3"
+                                                         ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.CreditCard.$dirty && salesOrderNewWizardCtrl.forms.Payment.CreditCard.ddlExpirationYear.$invalid}">
+                                                        <label class="control-label" for="ddlExpirationYear"
+                                                               ><span data-translate="ui.admin.common.ExpirationYear"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                        <select class="form-control"
+                                                                id="ddlExpirationYear" name="ddlExpirationYear"
+                                                                cc-exp-year
+                                                                ng-required="true"
+                                                                ng-model="salesOrderNewWizardCtrl.paymentData.ExpirationYear"
+                                                                ng-options="y as y for y in salesOrderNewWizardCtrl.expirationYears">
+                                                            <option value="" ng-disabled="true" data-translate="ui.admin.common.ExpirationYear"></option>
+                                                        </select>
+                                                    </div>
+                                                    <!--CVV-->
+                                                    <div class="form-group col-sm-3"
+                                                         ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.CreditCard.$dirty && salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCVV.$invalid}">
+                                                        <label class="control-label" for="txtCVV"
+                                                               ><span data-translate="ui.admin.common.CVV"></span>&nbsp;<span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control"
+                                                               id="txtCVV" name="txtCVV"
+                                                               placeholder="123"
+                                                               cc-cvc cc-type="salesOrderNewWizardCtrl.paymentData.CardNumber.$ccType"
+                                                               ng-required="true"
+                                                               ng-model="salesOrderNewWizardCtrl.paymentData.CVV" />
+                                                    </div>
+                                                </div>
+                                                <div class="row"
+                                                     ng-if="salesOrderNewWizardCtrl.forms.Payment.CreditCard.$dirty && salesOrderNewWizardCtrl.forms.Payment.CreditCard.$invalid">
+                                                    <div class="col-md-12">
+                                                        <div ng-messages="salesOrderNewWizardCtrl.forms.Payment.CreditCard.$error"
+                                                             role="alert">
+                                                            <div ng-message-exp="['ccNumber','card']" class="alert alert-danger mb-3">
+                                                                 <span data-translate="ui.admin.controls.sales.salesOrderNewWizard.ThisIsNotAValidCreditCardNum.Part1"></span>&nbsp;<!--
+                                                                 --><span ng-bind="salesOrderNewWizardCtrl.forms.Payment.CreditCard.txtCardNumber.$ccEagerType"></span>&nbsp;<!--
+                                                                 --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.ThisIsNotAValidCreditCardNum.Part2"></span>
+                                                            </div>
+                                                            <div ng-message-exp="['ccCvc','cvc']" class="alert alert-danger mb-3">
+                                                                <span data-translate="ui.admin.controls.sales.salesOrderNewWizard.ThisIsNotAValidSecurityCode"></span>
+                                                            </div>
+                                                            <div ng-message="ccExpMonth" class="alert alert-danger mb-3">
+                                                                <span data-translate="ui.admin.controls.sales.salesOrderNewWizard.ThisIsNotAValidExpirationMonth"></span>
+                                                            </div>
+                                                            <div ng-message="ccExpYear" class="alert alert-danger mb-3">
+                                                                <span data-translate="ui.admin.controls.sales.salesOrderNewWizard.ThisIsNotAValidExpirationYear"></span>
+                                                            </div>
+                                                            <div ng-message="ccExp" class="alert alert-danger mb-3">
+                                                                <span data-translate="ui.admin.controls.sales.salesOrderNewWizard.TheSelectedExpirationDateHasPassed"></span>
+                                                            </div>
+                                                            <div ng-message="required" class="alert alert-danger mb-3">
+                                                                <span data-translate="ui.admin.common.walletCard.AllFieldsAreRequired"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row"
+                                                     ng-if="salesOrderNewWizardCtrl.forms.Payment.CreditCard.$valid && salesOrderNewWizardCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0">
+                                                    <div class="col-md-12">
+                                                        <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.GrandTotalWithSplitTargets.Template"
+                                                           translate-value-total="{{salesOrderNewWizardCtrl.cvCartService.grandTotal()}}"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="purchasePaymentMethodPayPal">
+                                        <div class="row" ng-form="salesOrderNewWizardCtrl.forms.Payment.PayPal">
+                                            <div class="col-md-12">
+                                                <h1>PayPal<sup>&trade;</sup></h1>
+                                                <div ng-show="salesOrderNewWizardCtrl.paypal.error"
+                                                     class="alert alert-danger"
+                                                     ng-bind-html="salesOrderNewWizardCtrl.paypal.message | trustedHtml"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="purchasePaymentMethodInvoice">
+                                        <div class="row" ng-form="salesOrderNewWizardCtrl.forms.Payment.Invoice">
+                                            <div class="col-md-12">
+                                                <div class="form-group"
+                                                     ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.Invoice.txtPONumber.$invalid}">
+                                                    <label class="control-label" for="txtPONumber"
+                                                           ><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.PONumber"></span>&nbsp;<!--
+                                                           --><span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control"
+                                                           id="txtPONumber" name="txtPONumber"
+                                                           translate-attr="{ placeholder: 'ui.admin.controls.sales.salesOrderNewWizard.EnterYourPurchaseOrderOrReferenceNumber' }"
+                                                           ng-required="true"
+                                                           ng-model="salesOrderNewWizardCtrl.paymentData.PONumber" />
+                                                    <div ng-messages="salesOrderNewWizardCtrl.forms.Payment.Invoice.txtPONumber.$error">
+                                                        <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+                                                    </div>
+                                                </div>
+                                                <div cef-upload-file-widget
+                                                     master="salesOrderNewWizardCtrl.currentCart"
+                                                     upload-type="'StoredFileSalesOrder'"
+                                                     type-key="'General'"
+                                                     allow-multiple="true">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row"
+                                     ng-form="salesOrderNewWizardCtrl.forms.Payment.Terms">
+                                    <div class="col-sm-12"
+                                         ng-class="{'has-error': salesOrderNewWizardCtrl.forms.Payment.Terms.termsAgreedCC.$invalid}">
+                                        <input type="checkbox" class="termsAgreed"
+                                               id="termsAgreedCC" name="termsAgreedCC"
+                                               ng-required="true"
+                                               ng-model="salesOrderNewWizardCtrl.agreedTerms" />&nbsp;<!--
+                                        --><label class="form-control-static control-label" for="termsAgreedCC"
+                                               id="termsAgreedCCLbl"
+                                               data-translate="ui.admin.controls.sales.salesOrderNewWizard.TheCustomerAgreeToTheTermsAndConditions"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': salesOrderNewWizardCtrl.forms.Confirmation.$invalid}"><!--
+                    --><i class="far fa-lg fa-check-square-o"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.Step8"></span>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Confirmation"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="salesOrderNewWizardCtrl.forms.Confirmation">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <h2 class="mt-0"
+                                        data-translate="ui.admin.controls.sales.salesOrderNewWizard.ThankYouForYourPurchase"></h2>
+                                    <p data-translate="ui.admin.controls.sales.salesOrderNewWizard.YourPurchaseWasSuccessfulAndIsInTheProcessOfBeing"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-sm-12"
+                                         ng-if="!salesOrderNewWizardCtrl.checkoutResult.OrderIDs || salesOrderNewWizardCtrl.checkoutResult.OrderIDs.length <= 0">
+                                        <h4><span data-translate="ui.admin.controls.sales.salesOrderNewWizard.OrderNumber"></span>&nbsp;<!--
+                                        --><b ng-bind="salesOrderNewWizardCtrl.checkoutResult.OrderID"></b></h4>
+                                    </div>
+                                    <div class="col-sm-12"
+                                         ng-if="salesOrderNewWizardCtrl.checkoutResult.OrderIDs.length > 0">
+                                        <h4><span data-translate="ui.admin.controls.sales.salesGroupDetail.MasterSalesOrder"></span>&nbsp;<!--
+                                        --><b ng-bind="salesOrderNewWizardCtrl.checkoutResult.OrderIDs[0]"></b></h4>
+                                        <p class="small bold"
+                                           data-translate="ui.admin.controls.sales.salesOrderNewWizard.MasterOrder.Message"></p>
+                                        <h5><span data-translate="ui.admin.controls.sales.sampleRequestDetail.SubOrders.OptionalPlural"></span>&nbsp;<!--
+                                        --><b ng-repeat="orderID in salesOrderNewWizardCtrl.checkoutResult.OrderIDs"
+                                              ng-hide="$first"
+                                              ng-bind="orderID + (!$last ? ', ' : '')"></b></h5>
+                                        <p class="small"
+                                           data-translate="ui.admin.controls.sales.salesOrderNewWizard.SubOrder.Message"></p>
+                                    </div>
+                                </div>
+                                <p class="alert alert-warning" role="alert"
+                                   ng-if="salesOrderNewWizardCtrl.checkoutResult.WarningMessage"
+                                   ng-bind="salesOrderNewWizardCtrl.checkoutResult.WarningMessage"></p>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <div class="row wizard-footer">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-info"
+                    translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.PreviousStep',
+                                      'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.PreviousStep' }"
+                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.PreviousStep"
+                    ng-disabled="salesOrderNewWizardCtrl.viewState.running
+                                 || salesOrderNewWizardCtrl.currentStep <= 0"
+                    ng-click="salesOrderNewWizardCtrl.prevStepGo()"></button>
+            <button type="button" class="btn btn-warning"
+                    translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.ResetStep',
+                                      'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.ResetStep' }"
+                    ng-disabled="salesOrderNewWizardCtrl.viewState.running"
+                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.ResetStep"
+                    ng-click="salesOrderNewWizardCtrl.resetStep()"></button>
+            <button type="button" class="btn btn-primary"
+                    translate-attr="{ title: 'ui.admin.controls.sales.salesOrderNewWizard.NextStep',
+                                      'aria-label': 'ui.admin.controls.sales.salesOrderNewWizard.NextStep' }"
+                    data-translate="ui.admin.controls.sales.salesOrderNewWizard.NextStep"
+                    ng-disabled="salesOrderNewWizardCtrl.viewState.running
+                                 || salesOrderNewWizardCtrl.currentStep >= (salesOrderNewWizardCtrl.stepDefinitions.length - 1)
+                                 || !salesOrderNewWizardCtrl.validateCurrentStep()"
+                    ng-click="salesOrderNewWizardCtrl.nextStepGo()"></button>
+            <div class="inline-block ml-3">
+                <div class="w-100 alert alert-info" role="alert"
+                     ng-if="salesOrderNewWizardCtrl.viewState.running"
+                     ng-bind="salesOrderNewWizardCtrl.viewState.waitMessage || 'Running...'"></div>
+                <div class="w-100 alert alert-danger" role="alert"
+                     ng-if="salesOrderNewWizardCtrl.viewState.hasError
+                            && !salesOrderNewWizardCtrl.viewState.errorMessages.length"
+                     ng-bind="salesOrderNewWizardCtrl.viewState.errorMessage || 'There was an error!'"></div>
+                <div class="w-100 alert alert-danger" role="alert"
+                     ng-if="salesOrderNewWizardCtrl.viewState.hasError"
+                     ng-repeat="s in salesOrderNewWizardCtrl.viewState.errorMessages"
+                     ng-bind="s || 'There was an error!'"></div>
+            </div>
+        </div>
+    </div>
+</div>

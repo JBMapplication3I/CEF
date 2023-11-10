@@ -1,0 +1,23 @@
+﻿<div class="row" ng-if="!productDetailsCtrl.productWhichIsTheCurrentVariant && productDetailsCtrl.productToDisplay.TypeName === 'Kit'">
+  <div class="col-12">
+    <span class="h1 bold mt-0 mb-3">
+      <span data-translate="ui.storefront.product.detail.productDetails.combineAndSave"></span><br/>
+      <span ng-bind="productDetailsCtrl.sumKitComponentProductsPriceBase() | globalizedCurrency"></span>
+      <!-- TODO: Read this controller instead of parent -->
+      <span class="text-success"
+        ng-bind="productDetailsCtrl.productToDisplay.readPrices().base | globalizedCurrency">
+      </span>
+      <small>
+        <!-- TODO: Move calcs to controller -->
+        <!-- TODO: Single text binding -->
+        <span ng-bind="((productDetailsCtrl.sumKitComponentProductsPriceBase()
+          - productDetailsCtrl.sumKitComponentProductsPriceSale()) * -1) | globalizedCurrency"
+          ></span>&nbsp;<!--
+        -->(<span ng-bind="(((productDetailsCtrl.sumKitComponentProductsPriceBase()
+          - productDetailsCtrl.sumKitComponentProductsPriceSale())
+          / productDetailsCtrl.sumKitComponentProductsPriceBase())) * 100 | number:0"></span>%&nbsp;<!--
+        --><span data-translate="ui.storefront.product.detail.productDetails.Off"></span>)
+      </small>
+    </span>
+  </div>
+</div>

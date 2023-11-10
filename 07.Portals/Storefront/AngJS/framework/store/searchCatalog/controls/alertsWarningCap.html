@@ -1,0 +1,19 @@
+﻿<div class="row"
+ng-if="scawcCtrl.shouldShow()">
+<div class="col-12">
+<div class="text-larger alert alert-warning" role="alert">
+<table>
+<tbody>
+<tr>
+<td><i class="far fa-exclamation-triangle fa-3x fa-fw" aria-hidden="true"></i></td>
+<td>
+<b>WARNING!</b> Your search returned more than <b>{{10000 | number:0}} results</b>. You will
+not be able to navigate past this amount. Please reduce the results by further narrowing
+your search with more terms or filters.
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>

@@ -1,0 +1,160 @@
+<div class="image-with-control-overlay">
+  <div id="cartProductImageThumbnail{{pctwwoCtrl.index}}"
+    class="product-image justify-content-center">
+    <img class="img-fluid d-block"
+      ng-class="{ 'mx-auto' : pctwwoCtrl.withMargins }"
+      alt="{{pctwwoCtrl.product.Name || pctwwoCtrl.productName}}"
+      ng-src="{{pctwwoCtrl.src | removeUrlHash}}"
+      width="{{pctwwoCtrl.width}}" height="{{pctwwoCtrl.height}}"
+      onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+  </div>
+  <div class="text-center image-overlay-controls p-3 bg-transparent">
+    <div class="btn-group-vertical center"
+      ng-if="pctwwoCtrl.product && (!pctwwoCtrl.hideFL || !pctwwoCtrl.hideWL || !pctwwoCtrl.hideNM || !pctwwoCtrl.hideC)"
+      role="group">
+      <!--Favorites-->
+      <button type="button" class="btn btn-secondary rounded-pill text-decoration-none"
+        id="btnGridAddToFavoritesListProduct{{pctwwoCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.Favorites.AddTo',
+                          'aria-label': 'ui.storefront.common.Favorites.AddTo' }"
+        ng-if="!pctwwoCtrl.hideFL && !pctwwoCtrl.isInFavoritesList"
+        ng-click="pctwwoCtrl.addToFavoritesList()">
+        <table class="w-100">
+          <tr>
+            <td class="w-auto">
+              <i class="far fa-star fa-fw fa-lg"></i>
+            </td>
+            <td class="text-center w-100">
+              <span data-translate="ui.storefront.common.Favorites.AddTo"></span>
+            </td>
+          </tr>
+        </table>
+      </button>
+      <button type="button" class="btn btn-secondary rounded-pill text-decoration-none"
+        id="btnGridRemoveFromFavoritesListProduct{{pctwwoCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.Favorites.RemoveFrom',
+                          'aria-label': 'ui.storefront.common.Favorites.RemoveFrom' }"
+        ng-if="!pctwwoCtrl.hideFL && pctwwoCtrl.isInFavoritesList"
+        ng-click="pctwwoCtrl.removeFromFavoritesList()">
+        <table class="w-100">
+          <tr>
+            <td class="w-auto">
+              <i class="fas fa-star fa-fw fa-lg"></i>
+            </td>
+            <td class="text-center w-100">
+              <span data-translate="ui.storefront.common.Favorites.RemoveFrom"></span>
+            </td>
+          </tr>
+        </table>
+      </button>
+      <!--Wishlist-->
+      <button type="button" class="btn btn-secondary rounded-pill text-decoration-none mt-1"
+        id="btnGridAddToWishListProduct{{pctwwoCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.WishList.AddTo',
+                          'aria-label': 'ui.storefront.common.WishList.AddTo' }"
+        ng-if="!pctwwoCtrl.hideWL && !pctwwoCtrl.isInWishList"
+        ng-click="pctwwoCtrl.addToWishList()">
+        <table class="w-100">
+          <tr>
+            <td class="w-auto">
+              <i class="far fa-heart fa-fw fa-lg"></i>
+            </td>
+            <td class="text-center w-100">
+              <span data-translate="ui.storefront.common.WishList.AddTo"></span>
+            </td>
+          </tr>
+        </table>
+      </button>
+      <button type="button" class="btn btn-secondary rounded-pill text-decoration-none mt-1"
+        id="btnGridRemoveFromWishListProduct{{pctwwoCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.WishList.RemoveFrom',
+                          'aria-label': 'ui.storefront.common.WishList.RemoveFrom' }"
+        ng-if="!pctwwoCtrl.hideWL && pctwwoCtrl.isInWishList"
+        ng-click="pctwwoCtrl.removeFromWishList()">
+        <table class="w-100">
+          <tr>
+            <td class="w-auto">
+              <i class="fas fa-heart fa-fw fa-lg"></i>
+            </td>
+            <td class="text-center w-100">
+              <span data-translate="ui.storefront.common.WishList.RemoveFrom"></span>
+            </td>
+          </tr>
+        </table>
+      </button>
+      <!--Notify Me-->
+      <button type="button" class="btn btn-secondary rounded-pill text-decoration-none mt-1"
+        id="btnGridAddToNotifyMeListProduct{{pctwwoCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.InStockAlert.Add',
+                          'aria-label': 'ui.storefront.common.InStockAlert.Add' }"
+        ng-disabled="!pctwwoCtrl.product.readInventory().IsOutOfStock"
+        ng-if="!pctwwoCtrl.hideNM && !pctwwoCtrl.isInNotifyMeList"
+        ng-click="pctwwoCtrl.addToNotifyMeList()">
+        <table class="w-100">
+          <tr>
+            <td class="w-auto">
+              <i class="far fa-bell fa-fw fa-lg"></i>
+            </td>
+            <td class="text-center w-100">
+              <span data-translate="ui.storefront.common.InStockAlert.Add"></span>
+            </td>
+          </tr>
+        </table>
+      </button>
+      <button type="button" class="btn btn-secondary rounded-pill text-decoration-none mt-1"
+        id="btnGridRemoveFromNotifyMeListProduct{{pctwwoCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.InStockAlert.Remove',
+                          'aria-label': 'ui.storefront.common.InStockAlert.Remove' }"
+        ng-if="!pctwwoCtrl.hideNM && pctwwoCtrl.isInNotifyMeList"
+        ng-click="pctwwoCtrl.removeFromNotifyMeList()">
+        <table class="w-100">
+          <tr>
+            <td class="w-auto">
+              <i class="fas fa-bell fa-fw fa-lg"></i>
+            </td>
+            <td class="text-center w-100">
+              <span data-translate="ui.storefront.common.InStockAlert.Remove"></span>
+            </td>
+          </tr>
+        </table>
+      </button>
+      <!--Compare-->
+      <button type="button" class="btn btn-secondary rounded-pill text-decoration-none mt-1"
+        id="btnGridAddToCompareProduct{{pctwwoCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.Compare.AddTo',
+                          'aria-label': 'ui.storefront.common.Compare.AddTo' }"
+        ng-if="!pctwwoCtrl.hideC && !pctwwoCtrl.isInCompareCart"
+        ng-click="pctwwoCtrl.addToCompare()"
+        ng-disabled="pctwwoCtrl.viewState.running || pctwwoCtrl.cvCartService.viewstate.cartIsLoading.compare">
+        <table class="w-100">
+          <tr>
+            <td class="w-auto">
+              <i class="far fa-sliders-h fa-fw fa-lg"></i>
+            </td>
+            <td class="text-center w-100">
+              <span data-translate="ui.storefront.common.Compare.AddTo"></span>
+            </td>
+          </tr>
+        </table>
+      </button>
+      <button type="button" class="btn btn-secondary rounded-pill text-decoration-none mt-1"
+        id="btnGridRemoveFromCompareProduct{{pctwwoCtrl.product.ID}}"
+        translate-attr="{ title: 'ui.storefront.common.Compare.RemoveFrom',
+                          'aria-label': 'ui.storefront.common.Compare.RemoveFrom' }"
+        ng-if="!pctwwoCtrl.hideC && pctwwoCtrl.isInCompareCart"
+        ng-click="pctwwoCtrl.removeFromCompare()"
+        ng-disabled="pctwwoCtrl.viewState.running || pctwwoCtrl.cvCartService.viewstate.cartIsLoading.compare">
+        <table class="w-100">
+          <tr>
+            <td class="w-auto">
+              <i class="fas fa-sliders-h-square fa-fw fa-lg"></i>
+            </td>
+            <td class="text-center w-100">
+              <span data-translate="ui.storefront.common.Compare.RemoveFrom"></span>
+            </td>
+          </tr>
+        </table>
+      </button>
+    </div>
+  </div>
+</div>

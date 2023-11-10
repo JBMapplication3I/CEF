@@ -1,0 +1,365 @@
+// Primary Clarity CSS, for CEF-2020.1.x+ w/ BS4
+
+// Clarity overrides to the variable values
+
+$escaped-characters: (
+  ("<","%3c"),
+  (">","%3e"),
+  ("#","%23"),
+) !default;
+
+@import "vendors/bootstrap/functions";
+@import "vendors/bootstrap/mixins";
+@import 'bootstrapVariables';
+@import '../bootstrap/stylesheets/bootstrap';
+// Default bootstrap 4 variables
+// Default dnn styles
+@import 'dnn';
+#dnn_uxHeader_dnnLOGO_imgLogo {
+    max-width: 100%;
+    height: auto;
+}
+// css fixes for DNN asset manager
+#dnnModuleDigitalAssetsSelectionToolbar {
+    min-height: 40px !important;
+}
+
+.rgMasterTable{
+    margin-bottom: 30px;
+}
+
+$media-expressions: (
+  'screen': 'screen',
+  'print': 'print',
+  'handheld': 'handheld',
+  'landscape': '(orientation: landscape)',
+  'portrait': '(orientation: portrait)',
+  'retina2x': '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)',
+  'retina3x': '(-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 240dpi)'
+);
+
+@import 'vendors/include-media';
+
+@import 'base/functions';
+@import 'base/mixins';
+@import 'base/helpers';
+@import 'base/typography';
+
+@import "vendors/fonts";
+@import "vendors/icomoon";
+@import 'vendors/jcf';
+@import 'vendors/slick';
+@import 'vendors/fancybox';
+
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/tables';
+@import 'components/alerts';
+@import 'components/badge';
+@import 'components/forms';
+@import 'components/links-list';
+@import 'components/contact-list';
+@import 'components/tabs-main';
+@import 'components/social-list';
+@import 'components/items-holder';
+@import 'components/intro-section';
+@import 'components/main-section';
+@import 'components/desc-section';
+@import 'components/breadcrumb-section';
+@import 'components/product-holder';
+@import 'components/cards-gallery';
+@import 'components/holder-section';
+@import 'components/order-box';
+@import 'components/info-box';
+@import 'components/payment-method';
+
+@import 'layout/common';
+@import 'layout/header';
+@import 'layout/footer';
+
+@import 'components/angular-bootstrap-toggle';
+// Classes that assist with setting up templates quickly
+// without having to edit css
+@import 'components/helpers';
+// Header, which includes menus, logos, etc.
+@import 'components/header';
+// Footer, which includes logos, commonly used links,
+// copyright info, contact info, etc.
+@import 'components/footer';
+// Specific stylings for regular dropdown menus
+@import 'components/dropdowns';
+// For UIB Typeaheads, styles so the popups can display
+// appropriately
+@import 'components/popup-wrappers';
+// Catalog styles
+@import 'components/catalog';
+// Product Details styles
+@import 'components/product';
+// CV-Grid styles, that merge with kendo's
+@import 'components/cv-grid';
+// Styles for the User Dashboard Side-bar
+@import 'components/userDashSidebar';
+// User Dashboard
+@import 'components/ecommerce/dashboard/dashboard';
+// Mega Menu styles
+@import 'components/navMegaMenu';
+// Mini Menu styles
+@import 'components/navMiniMenu';
+// Carousel styles
+@import 'components/carousel';
+// Brand Admin
+@import 'components/brand-admin';
+
+
+
+.fa-cog {
+  padding-top: 2px;
+  &.fa-5x {
+    padding-top: 6px;
+  }
+}
+
+li[cef-categories-menu-bar] a#btnCategoriesMenuLinkMega {
+  color: inherit; 
+}
+
+.jbm-homepage-category-images img {
+  width: 100% !important;
+  height: 20.5rem;
+  object-fit: cover;
+}
+
+#nav .content-item a:hover {
+  background-color: #006497 !important;
+  color: #fff !important;
+}
+
+#nav .content-item .dropdown-item.cef-nav-item:hover {
+  background-color: #006497 !important;
+  color: #fff !important;
+}
+
+#nav .nav.nav-tabs.nav-stacked {
+  border: none;
+  padding-bottom: 20px;
+}
+
+.category-results-grid {
+  justify-content: space-between !important;
+}
+
+.catalog-result-card.category {
+  max-width: 25% !important;
+}
+
+.category-catalog-card {
+  height: auto !important;
+}
+
+.image-decor-category-catalog {
+  width: 25vw !important;
+  right: 73% !important;
+  left: 0% !important;
+}
+
+.light-bg {
+  background: $gray-100
+}
+
+.results-control-bar button {
+    border-radius: .2rem !important;
+}
+
+.popover-body {
+  display: none;
+}
+
+.hideRegSelector #newUserRegistrationType {
+  display: none;
+}
+
+.catalog-uom label {
+  display: none !important;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.non-dropdown-rounded {
+  border-radius: 1.55rem !important;
+}
+
+.uom-select-input .custom-select {
+  border-radius: 3px !important;
+}
+
+.table .uom-select-input .custom-select {
+  padding: 0.375rem 1.75rem 0.375rem .75rem !important;
+  border: 1px solid !important;
+}
+
+#ProductCardUOMSelection {
+  min-width: 75px;
+}
+
+.my-price-list-dropdown li a span{
+  color: #606c72 !important;
+}
+
+.my-price-list-dropdown {
+	font-size: rem-calc(16);
+	font-weight: 500;
+	margin: 0;
+  a {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    z-index: 1;
+    text-decoration: none;
+    transition: color .27s ease-in-out, background-color .27s ease-in-out;
+    color: inherit;
+  }
+  .pl-a {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    z-index: 1;
+    text-decoration: none;
+    transition: color .27s ease-in-out, background-color .27s ease-in-out;
+    color: inherit;
+    @include media-breakpoint-down(md) {
+      display: block;
+      padding: rem-calc(15 0);
+    }
+    @include media-breakpoint-up(lg) {
+      padding: rem-calc(20 0);
+    }
+    &:before {
+      @include media-breakpoint-up(lg) {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        left: 51%;
+        right: 51%;
+        bottom: 0;
+        background: $primary;
+        height: rem-calc(5);
+        transition-property: left, right;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-out;
+      }
+    }
+    &:hover,
+    &:focus {
+      outline: none;
+      &:before {
+        left: 0;
+        right: 0;
+      }
+    }
+  }
+}
+
+.price-list-dropdown-item {
+  cursor: pointer;
+  &:hover {
+    background: #006497;
+    outline: none;
+    color: #fff;
+  }
+}
+
+.results-grid-products .catalog-result-card .grid-layout .card-img-top {
+  grid-area: image;
+  height: 225px;
+}
+  
+.results-grid-products .catalog-result-card .grid-layout .stock-info {
+  grid-area: stock;
+  height: 50px;
+}
+  
+.results-grid-products .catalog-result-card .grid-layout .product-name {
+  grid-area: name;
+  height: 125px;
+}
+  
+.results-grid-products .catalog-result-card .grid-layout .product-desc {
+  grid-area: desc;
+  height: 100px;
+}
+  
+.results-grid-products .catalog-result-card .grid-layout .sku-info {
+  grid-area: sku;
+  height: 75px;
+}
+  
+.results-grid-products .catalog-result-card .grid-layout .product-price {
+  grid-area: price;
+  height: 100px;
+}
+  
+.results-grid-products .catalog-result-card .grid-layout .action-btn {
+  grid-area: action;
+  height: 100px;
+}

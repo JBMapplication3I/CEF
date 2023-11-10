@@ -1,0 +1,30 @@
+<div class="row">
+  <h1>TODO: Replace with account+user selectors</h1>
+  <div ng-if="psmbCtrl.allowLogin"
+    ng-hide="psmbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-md-6"
+    ng-class="{ 'mx-auto': !psmbCtrl.allowGuest }">
+     <div class="row">
+      <div class="col-xs-12"
+        cef-purchase-login
+        no-return="true"
+        login-callback="psmbCtrl.loginCallback(loginSuccessful)">
+      </div>
+    </div>
+  </div>
+  <div ng-if="psmbCtrl.allowGuest"
+    ng-hide="psmbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-md-6 text-center"
+    ng-class="{ 'mx-auto': !psmbCtrl.allowLogin }">
+    <i class="far fa-user fa-5x" aria-hidden="true"></i>
+    <h4 data-translate="ui.store front.checkout.methodNew"></h4>
+    <p data-translate="ui.store front.checkout.methodGuest"></p>
+    <button type="button" class="btn btn-primary"
+      id="btnPurchaseAsNewUser" name="btnPurchaseAsNewUser"
+      translate-attr="{ title: 'ui.store front.checkout.views.checkoutMethod.continueAsNewUser',
+                        'aria-label': 'ui.store front.checkout.views.checkoutMethod.continueAsNewUser' }"
+      data-translate="ui.store front.checkout.views.checkoutMethod.continueAsNewUser"
+      ng-click="psmbCtrl.nextStep()">
+    </button>
+  </div>
+</div>

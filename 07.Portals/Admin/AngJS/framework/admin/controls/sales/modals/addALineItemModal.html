@@ -1,0 +1,404 @@
+<div ng-form="addALineItemModalCtrl.forms.add">
+  <div class="modal-header">
+    <h2 data-translate="ui.admin.common.AddLineItem"></h2>
+  </div>
+  <div class="modal-body p-0" style="min-height: 55vh;">
+    <uib-tabset justified="true">
+      <uib-tab heading="Basics">
+        <div class="p-3">
+          <div class="row form-vertical">
+            <div class="col-md-6">
+              <text-input-form-group
+                key="CustomKey"
+                ng-model="addALineItemModalCtrl.newValue.CustomKey"
+                label-key="ui.admin.common.Key"
+                tooltip-text="The key of the record. In most cases, this is provided by a third party system. This record specifically requires a unique value even if not integrated with a 3rd party system."
+                placeholder-key="ui.admin.common.Key"
+                max-length="128"
+                ng-required="!addALineItemModalCtrl.newValue.CustomKey && !addALineItemModalCtrl.newValue.Sku && !addALineItemModalCtrl.newValue.ProductID">
+              </text-input-form-group>
+              <div class="row">
+                <div class="col-md-12">
+                  <h4 data-translate="ui.admin.common.Product"></h4>
+                  <div class="form-group"
+                    ng-class="{'has-error': addALineItemModalCtrl.forms.add.acProductLookup.$invalid || addALineItemModalCtrl.noResults}">
+                    <label class="control-label"
+                      data-translate="ui.admin.controls.sales.modals.editALineItemModal.ProductLookup">
+                    </label>
+                    <div class="input-group">
+                      <input type="text" class="form-control"
+                        id="acProductLookup" name="acProductLookup"
+                        placeholder="Product ID, Name, Sku to look up by"
+                        ng-required="true"
+                        ng-model="addALineItemModalCtrl.productFilter"
+                        ng-model-options="addALineItemModalCtrl.debounce500"
+                        uib-typeahead="p.ID as (p.Name + ' [' + p.CustomKey + ']')
+                                       for p in addALineItemModalCtrl.updateProductsList($viewValue)"
+                        typeahead-on-select="addALineItemModalCtrl.onSelectProduct($item, $model, $label, $event)"
+                        typeahead-loading="addALineItemModalCtrl.loadingProducts"
+                        typeahead-no-results="addALineItemModalCtrl.noResults" />
+                      <div ng-show="addALineItemModalCtrl.loadingProducts"
+                        class="input-group-addon">
+                        <i class="far fa-spin fa-spinner"></i>
+                      </div>
+                      <div ng-show="addALineItemModalCtrl.noResults"
+                        class="input-group-addon">
+                        <i class="far fa-times"></i>&nbsp;<!--
+                        --><span data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></span>
+                      </div>
+                    </div>
+                    <div ng-messages="addALineItemModalCtrl.forms.add.acProductLookup.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3 w-100">
+                    <b data-translate="ui.admin.common.ID"></b>&nbsp;{{addALineItemModalCtrl.newValue.ProductID}}&nbsp;<!--
+                    --><b data-translate="ui.admin.common.Key"></b>&nbsp;{{addALineItemModalCtrl.newValue.ProductKey}}<br/>
+                    <b data-translate="ui.admin.common.Name"></b>&nbsp;{{addALineItemModalCtrl.newValue.ProductName}}<br/>
+                    <b data-translate="ui.admin.common.Description"></b>&nbsp;{{addALineItemModalCtrl.newValue.ProductDescription}}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <text-input-form-group
+                  class="col-md-4"
+                  key="Sku"
+                  ng-disabled="!addALineItemModalCtrl.newValue.ProductID"
+                  ng-model="addALineItemModalCtrl.newValue.Sku"
+                  label-key="ui.admin.common.Sku"
+                  placeholder-key="ui.admin.common.Sku"
+                  max-length="128"
+                  ng-required="!addALineItemModalCtrl.newValue.CustomKey && !addALineItemModalCtrl.newValue.Sku && !addALineItemModalCtrl.newValue.ProductID">
+                </text-input-form-group>
+                <text-input-form-group
+                  class="col-md-8"
+                  key="Name"
+                  ng-disabled="!addALineItemModalCtrl.newValue.ProductID"
+                  ng-model="addALineItemModalCtrl.newValue.Name"
+                  label-key="ui.admin.common.Name"
+                  placeholder-key="ui.admin.common.Name"
+                  max-length="128"
+                  ng-required="!addALineItemModalCtrl.newValue.ProductID">
+                </text-input-form-group>
+              </div>
+              <textarea-form-group
+                key="Description"
+                ng-disabled="!addALineItemModalCtrl.newValue.ProductID"
+                ng-model="addALineItemModalCtrl.newValue.Description"
+                label-key="ui.admin.common.Description"
+                placeholder-key="ui.admin.common.Description"
+                ng-required="false">
+              </textarea-form-group>
+              <!-- TODO
+              VendorProduct<br/>
+              StoreProduct<br/>
+              Store<br/>
+              User
+              -->
+            </div>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <number-input-form-group
+                    key="Quantity"
+                    ng-model="addALineItemModalCtrl.newValue.Quantity"
+                    label-key="ui.admin.common.Quantity"
+                    placeholder-text="0.0000"
+                    step="0.0001"
+                    min="0.0000"
+                    max="99999999"
+                    precision="4"
+                    is-currency="false"
+                    ng-required="!addALineItemModalCtrl.newValue.Quantity && !addALineItemModalCtrl.newValue.QuantityBackOrdered && !addALineItemModalCtrl.newValue.QuantityPreSold">
+                  </number-input-form-group>
+                  <number-input-form-group
+                    ng-if="addALineItemModalCtrl.cefConfig.featureSet.inventory.backOrder.enabled"
+                    key="QuantityBackOrdered"
+                    ng-model="addALineItemModalCtrl.newValue.QuantityBackOrdered"
+                    label-key="ui.admin.common.QuantityBackordered"
+                    placeholder-text="0.0000"
+                    step="0.0001"
+                    min="0.0000"
+                    max="99999999"
+                    precision="4"
+                    is-currency="false"
+                    ng-required="!addALineItemModalCtrl.newValue.Quantity && !addALineItemModalCtrl.newValue.QuantityBackOrdered && !addALineItemModalCtrl.newValue.QuantityPreSold">
+                  </number-input-form-group>
+                </div>
+                <div class="col-md-6">
+                  <number-input-form-group
+                    ng-if="addALineItemModalCtrl.cefConfig.featureSet.inventory.preSale.enabled"
+                    key="QuantityPreSold"
+                    ng-model="addALineItemModalCtrl.newValue.QuantityPreSold"
+                    label-key="ui.admin.common.QuantityPreSold"
+                    placeholder-text="0.0000"
+                    step="0.0001"
+                    min="0.0000"
+                    max="99999999"
+                    precision="4"
+                    is-currency="false"
+                    ng-required="!addALineItemModalCtrl.newValue.Quantity && !addALineItemModalCtrl.newValue.QuantityBackOrdered && !addALineItemModalCtrl.newValue.QuantityPreSold">
+                  </number-input-form-group>
+                  <text-input-form-group
+                    key="UnitOfMeasure"
+                    ng-model="addALineItemModalCtrl.newValue.UnitOfMeasure"
+                    label-key="ui.admin.common.UnitOfMeasure"
+                    placeholder-key="ui.admin.common.UnitOfMeasure"
+                    max-length="128"
+                    ng-required="false">
+                  </text-input-form-group>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <select-form-group
+                    ng-if="addALineItemModalCtrl.cefConfig.featureSet.multiCurrency.enabled"
+                    key="OriginalCurrencyID"
+                    ng-model="addALineItemModalCtrl.newValue.OriginalCurrencyID"
+                    selections="addALineItemModalCtrl.currencies"
+                    label-key="ui.admin.controls.sales.modals.editALineItemModal.OriginalCurrency"
+                    include-null="true" null-key="ui.admin.controls.inventory.productDetail.SelectACurrency"
+                    when-changed="addALineItemModalCtrl.updateOriginalCurrency()"
+                    ng-required="false">
+                  </select-form-group>
+                  <number-input-form-group
+                    key="UnitCorePrice"
+                    ng-model="addALineItemModalCtrl.newValue.UnitCorePrice"
+                    label-key="ui.admin.controls.sales.modals.editALineItemModal.UnitOriginalPrice"
+                    placeholder-text="0.0000"
+                    step="0.0001"
+                    min="0.0000"
+                    max="99999999"
+                    precision="4"
+                    is-currency="true"
+                    ng-required="true">
+                  </number-input-form-group>
+                  <div class="form-group"
+                    ng-if="addALineItemModalCtrl.cefConfig.featureSet.multiCurrency.enabled"
+                    ng-class="{'has-error': addALineItemModalCtrl.forms.add.nudUnitCorePriceInSellingCurrency.$invalid}">
+                    <label class="control-label"
+                      data-translate="Unit Core Price in Selling Currency">
+                    </label>
+                    <div class="input-group">
+                      <input type="number" class="form-control"
+                        id="nudUnitCorePriceInSellingCurrency" name="nudUnitCorePriceInSellingCurrency"
+                        min="0" max="9999999" step="0.0001"
+                        placeholder="0.0000"
+                        ng-disabled="!addALineItemModalCtrl.newValue.OriginalCurrencyID
+                          || !addALineItemModalCtrl.newValue.SellingCurrencyID
+                          || addALineItemModalCtrl.newValue.SellingCurrencyID === addALineItemModalCtrl.newValue.OriginalCurrencyID
+                          || !addALineItemModalCtrl.newValue.UnitCorePrice"
+                        ng-model="addALineItemModalCtrl.newValue.UnitCorePriceInSellingCurrency" />
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-default"
+                          translate-attr="{ title: 'Calculate', 'aria-label': 'Calculate' }"
+                          ng-disabled="!addALineItemModalCtrl.newValue.OriginalCurrencyID
+                            || !addALineItemModalCtrl.newValue.SellingCurrencyID
+                            || addALineItemModalCtrl.newValue.SellingCurrencyID === addALineItemModalCtrl.newValue.OriginalCurrencyID
+                            || !addALineItemModalCtrl.newValue.UnitCorePrice"
+                          ng-click="addALineItemModalCtrl.calcSellCur(false)">
+                          <i class="far fa-calculator" aria-hidden="true"></i>
+                          <span class="sr-only" data-translate="Calculate"></span>
+                        </button>
+                      </div>
+                    </div>
+                    <div ng-messages="addALineItemModalCtrl.forms.add.nudUnitCorePriceInSellingCurrency.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <select-form-group
+                    ng-if="addALineItemModalCtrl.cefConfig.featureSet.multiCurrency.enabled"
+                    key="SellingCurrencyID"
+                    ng-model="addALineItemModalCtrl.newValue.SellingCurrencyID"
+                    selections="addALineItemModalCtrl.currencies"
+                    label-key="ui.admin.controls.sales.modals.editALineItemModal.SellingCurrency"
+                    include-null="true" null-key="ui.admin.controls.inventory.productDetail.SelectACurrency"
+                    when-changed="addALineItemModalCtrl.updateSellingCurrency()"
+                    ng-required="false">
+                  </select-form-group>
+                  <number-input-form-group
+                    key="UnitSoldPrice"
+                    ng-model="addALineItemModalCtrl.newValue.UnitSoldPrice"
+                    label-key="ui.admin.controls.sales.modals.editALineItemModal.UnitSellingPrice"
+                    placeholder-text="0.0000"
+                    step="0.0001"
+                    min="0.0000"
+                    max="addALineItemModalCtrl.newValue.UnitCorePrice || 99999999"
+                    precision="4"
+                    is-currency="true"
+                    ng-required="false">
+                  </number-input-form-group>
+                  <div class="form-group"
+                    ng-if="addALineItemModalCtrl.cefConfig.featureSet.multiCurrency.enabled"
+                    ng-class="{'has-error': addALineItemModalCtrl.forms.add.nudUnitSoldPriceInSellingCurrency.$invalid}">
+                    <label class="control-label"
+                      data-translate="Unit Core Price in Selling Currency">
+                    </label>
+                    <div class="input-group">
+                      <input type="number" class="form-control"
+                        id="nudUnitSoldPriceInSellingCurrency" name="nudUnitSoldPriceInSellingCurrency"
+                        min="0" max="9999999" step="0.0001"
+                        placeholder="0.0000"
+                        ng-disabled="!addALineItemModalCtrl.newValue.OriginalCurrencyID
+                          || !addALineItemModalCtrl.newValue.SellingCurrencyID
+                          || addALineItemModalCtrl.newValue.SellingCurrencyID === addALineItemModalCtrl.newValue.OriginalCurrencyID
+                          || !addALineItemModalCtrl.newValue.UnitSoldPrice"
+                        ng-model="addALineItemModalCtrl.newValue.UnitSoldPriceInSellingCurrency" />
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-default"
+                          translate-attr="{ title: 'Calculate', 'aria-label': 'Calculate' }"
+                          ng-disabled="!addALineItemModalCtrl.newValue.OriginalCurrencyID
+                            || !addALineItemModalCtrl.newValue.SellingCurrencyID
+                            || addALineItemModalCtrl.newValue.SellingCurrencyID === addALineItemModalCtrl.newValue.OriginalCurrencyID
+                            || !addALineItemModalCtrl.newValue.UnitSoldPrice"
+                          ng-click="addALineItemModalCtrl.calcSellCur(true)">
+                          <i class="far fa-calculator" aria-hidden="true"></i>
+                          <span class="sr-only" data-translate="Calculate"></span>
+                        </button>
+                      </div>
+                    </div>
+                    <div ng-messages="addALineItemModalCtrl.forms.add.nudUnitSoldPriceInSellingCurrency.$error">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+      <!-- TODO
+      <uib-tab heading="Shipments">
+        <div class="p-3">
+          <div class="row">
+            <div class="col-md-6">
+              ShippingCarrierName<br/>
+              ShippingCarrierMethodName<br/>
+              TrackingNumber
+            </div>
+            <div class="col-md-6">
+              Shipments
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+      -->
+      <!-- TODO
+      <uib-tab heading="Discounts">
+        <div class="p-3">
+          <div class="row">
+            <div class="col-md-6">
+              Discounts
+            </div>
+            <div class="col-md-6">
+            </div>
+          </div>
+        </div>
+      </uib-tab>
+      -->
+      <uib-tab heading="Attributes">
+        <div class="p-3">
+          <div ng-if="addALineItemModalCtrl.newValue"
+             cef-json-attributes-editor
+             master="addALineItemModalCtrl.newValue"
+             type="{{addALineItemModalCtrl.kind}}"></div>
+        </div>
+      </uib-tab>
+      <!-- TODO
+      <uib-tab heading="Returns">
+        <div class="p-3">
+          <div class="row">
+            <div class="col-md-6">
+              Return
+            </div>
+            <div class="col-md-6">
+              RestockingFeeAmount
+            </div>
+          </div>
+        </div>
+      </uib-tab>-->
+      <!-- TODO
+      <uib-tab heading="Responses" ng-if="addALineItemModalCtrl.cefConfig.featureSet.salesQuotes.enabled">
+        <div class="p-0">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="p-3" ng-if="!addALineItemModalCtrl.relevantResponses.length">
+                <p data-translate="ui.admin.common.NoResponses"></p>
+              </div>
+              <table class="table table-hover table-condensed table-bordered"
+                   ng-if="addALineItemModalCtrl.relevantResponses.length">
+                <thead>
+                  <tr>
+                    <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.Item"></th>
+                    <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ItemID"></th>
+                    <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ItemKey"></th>
+                    <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ProductID"></th>
+                    <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ProductKey"></th>
+                    <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.ProductName"></th>
+                    <th data-translate="ui.admin.common.CorePrice"></th>
+                    <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.SellingPrice"></th>
+                    <th data-translate="ui.admin.common.Status"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="info">
+                    <th data-translate="ui.admin.controls.sales.modals.editALineItemModal.Original"></th>
+                    <td ng-bind="addALineItemModalCtrl.newValue.ID"></td>
+                    <td ng-bind="addALineItemModalCtrl.newValue.CustomKey"></td>
+                    <td><a ui-sref="inventory.products.detail({ 'ID': addALineItemModalCtrl.newValue.ProductID })" target="_blank" ng-bind="addALineItemModalCtrl.newValue.ProductID"></a></td>
+                    <td><a ui-sref="inventory.products.detail({ 'ID': addALineItemModalCtrl.newValue.ProductID })" target="_blank" ng-bind="addALineItemModalCtrl.newValue.ProductKey"></a></td>
+                    <td><a ui-sref="inventory.products.detail({ 'ID': addALineItemModalCtrl.newValue.ProductID })" target="_blank" ng-bind="addALineItemModalCtrl.newValue.ProductName"></a></td>
+                    <td class="text-right" ng-bind="(addALineItemModalCtrl.newValue.UnitCorePrice | globalizedCurrency) || '-'"></td>
+                    <td class="text-right" ng-bind="((addALineItemModalCtrl.newValue.UnitSoldPrice || addALineItemModalCtrl.newValue.UnitCorePrice) | globalizedCurrency) || '-'"></td>
+                    <td class="text-center" ng-bind="addALineItemModalCtrl.newValue.StatusName || 'Not Awarded'"></td>
+                  </tr>
+                </tbody>
+                <tbody ng-repeat="rr in addALineItemModalCtrl.relevantResponses">
+                  <tr ng-repeat="rri in rr.SalesItems | filter: { 'ReleventItem': addALineItemModalCtrl.newValue.ID }"
+                    ng-class="{ 'warning': rri.StatusName != 'Awarded', 'success': rri.StatusName == 'Awarded' }">
+                    <th><span data-translate="ui.admin.controls.sales.modals.editALineItemModal.Response"></span>&nbsp;{{rr.ID}}</th>
+                    <td ng-bind="rri.ID"></td>
+                    <td ng-bind="rri.CustomKey"></td>
+                    <td><a ui-sref="inventory.products.detail({ 'ID': rri.ProductID })" target="_blank" ng-bind="rri.ProductID"></a></td>
+                    <td><a ui-sref="inventory.products.detail({ 'ID': rri.ProductID })" target="_blank" ng-bind="rri.ProductKey"></a></td>
+                    <td><a ui-sref="inventory.products.detail({ 'ID': rri.ProductID })" target="_blank" ng-bind="rri.ProductName"></a></td>
+                    <td class="text-right" ng-bind="(rri.UnitCorePrice || rri.UnitSoldPrice) | globalizedCurrency"></td>
+                    <td class="text-right" ng-bind="rri.UnitSoldPrice | globalizedCurrency"></td>
+                    <td class="text-center">
+                      <a ng-if="addALineItemModalCtrl.newValue.StatusName !== 'Awarded'"
+                         class="pointer"
+                         ng-click="salesQuoteDetailCtrl.awardItem(addALineItemModalCtrl.newValue.ID, rri.ID)"
+                         data-translate="ui.admin.controls.sales.modals.editALineItemModal.Award"></a>
+                      <span ng-if="addALineItemModalCtrl.newValue.StatusName == 'Awarded'"
+                          data-translate="ui.admin.controls.sales.modals.editALineItemModal.Awarded"></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </uib-tab>-->
+    </uib-tabset>
+    <!--<div class="row">
+      <div class="col-sm-12">
+        <span style="display: block; max-height: 300px; overflow-x: scroll;"
+          >{{addALineItemModalCtrl.newValue}}</span>
+      </div>
+    </div>-->
+  </div>
+  <div class="modal-footer p-3">
+    <span class="inline-block"
+        data-translate="ui.admin.controls.sales.modals.editALineItemModal.ModalNote.Template"
+        translate-value-kind="{{addALineItemModalCtrl.kind}}"></span>
+    <button type="button" class="btn btn-large btn-primary"
+        ng-disabled="addALineItemModalCtrl.forms.add.$invalid"
+        ng-click="addALineItemModalCtrl.ok()"
+        data-translate="ui.admin.common.OK"></button>
+    <button type="button" class="btn btn-large btn-warning"
+        ng-click="addALineItemModalCtrl.cancel()"
+        data-translate="ui.admin.common.Cancel"></button>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<!-- step.completed.view Template -->
+<div class="row">
+  <div class="col-xs-12">
+    <!-- This one forces the green checkmark when you reach it -->
+    <h5>
+      <i ng-hide="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()] || step.complete"
+        class="far fa-square text-primary"
+        aria-hidden="true"></i><!--
+      --><i ng-show="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()] || step.complete"
+        class="far fa-check-square text-success"
+        aria-hidden="true"></i><!--
+      -->&nbsp;<span ng-class="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()] || step.complete
+        ? 'text-success' : 'inactive'"
+        ><span data-translate="{{step.titleKey}}"></span></span>
+    </h5>
+  </div>
+  <hr class="w-100 my-2 mx-3" />
+  <div ng-show="step.index === pCtrl.service.activeStep[pCtrl.lookupKey.toString()] || step.completed"
+    class="col-xs-12"
+    ng-form="pCtrl.forms.completed">
+    <div cef-purchase-step-completed-body
+      lookup-key="pCtrl.lookupKey">
+    </div>
+  </div>
+  <!--
+  <div ng-if="pCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true"
+    size="3"
+    pad-in="true"
+    message="pCtrl.viewState.waitMessage">
+  </div>
+  -->
+  <!-- NOTE: Intentionally no continue button in this template -->
+  <!-- NOTE: Intentionally no bottom hr in this template -->
+</div>

@@ -1,0 +1,95 @@
+﻿<Modal @ref="modalRef">
+  <ModalContent Centered="true">
+    <ModalHeader Background="Background.Dark" TextColor="TextColor.Light" Padding="Padding.Is2.OnY">
+      <ModalTitle>@Title</ModalTitle>
+      <CloseButton
+        TextColor="TextColor.Light"
+        Clicked="HideModalAsync"
+      />
+    </ModalHeader>
+    <ModalBody Padding="Padding.Is0.FromBottom">
+      @Message
+    </ModalBody>
+    <ModalFooter Background="Background.Dark" Padding="Padding.Is2.OnY">
+      <Blazorise.Button
+        Color="Color.Primary"
+        Clicked="HideModalAsync">
+        @OKText
+      </Blazorise.Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+
+@code
+{
+  private Action? Callback { get; set; }
+
+  private Func<Task>? CallbackAsync { get; set; }
+
+  private Modal? modalRef;
+
+  /// <summary>Shows.</summary>
+  /// <param name="message">The message.</param>
+  /// <returns>A Task.</returns>
+  public Task ShowAsync(
+    string message,
+    string title = "Alert",
+    string okText = "OK",
+    Action? callback = null)
+  {
+    Message = message;
+    Title = title;
+    OKText = okText;
+    Callback = callback;
+    return modalRef!.Show();
+  }
+
+  /// <summary>Shows.</summary>
+  /// <param name="message"> The message.</param>
+  /// <param name="title">   The title.</param>
+  /// <param name="okText">  The ok text.</param>
+  /// <param name="callback">The callback.</param>
+  /// <returns>A Task.</returns>
+  public Task ShowAsync(
+    string message,
+    string title = "Alert",
+    string okText = "OK",
+    Func<Task>? callback = null)
+  {
+    Message = message;
+    Title = title;
+    OKText = okText;
+    CallbackAsync = callback;
+    return modalRef!.Show();
+  }
+
+  /// <summary>Gets or sets the message.</summary>
+  /// <value>The message.</value>
+  public string Message { get; set; } = string.Empty;
+
+  /// <summary>Gets or sets the title.</summary>
+  /// <value>The title.</value>
+  public string Title { get; set; } = "Alert";
+
+  /// <summary>Gets or sets the ok text.</summary>
+  /// <value>The ok text.</value>
+  public string OKText { get; set; } = "OK";
+
+  private Task ShowModalAsync()
+  {
+    return modalRef!.Show();
+  }
+
+  private async Task HideModalAsync()
+  {
+    await modalRef!.Hide();
+    if (Callback is not null)
+    {
+      Callback();
+    }
+    else if (CallbackAsync is not null)
+    {
+      await CallbackAsync().ConfigureAwait(false);
+    }
+  }
+}

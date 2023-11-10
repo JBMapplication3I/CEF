@@ -1,0 +1,31 @@
+<!-- step.payment.method.invoice.body -->
+<div class="row mb-3" ng-form="pmibCtrl.forms.invoice">
+  <div class="col-12">
+    <div class="form-group"
+      ng-class="{'has-error': pmibCtrl.forms.invoice.txtPONumber.$invalid}"
+      ng-init="pmibCtrl.onChange()">
+      <label class="control-label" for="txtPONumber">
+        <span data-translate="ui.storefront.checkout.views.paymentInformation.poNumber"></span>
+      </label>
+      <input type="text" class="form-control"
+        id="txtPONumber" name="txtPONumber"
+        translate-attr="{ placeholder: 'ui.storefront.checkout.views.paymentInformation.enterYourPurchaseOrderOrReferenceNumber' }"
+        ng-required="false"
+        ng-change="pmibCtrl.onChange()"
+        ng-model="pmibCtrl.paymentData.PayByBillMeLater.CustomerPurchaseOrderNumber"
+        maxlength="50"/>
+      <div ng-messages-multiple ng-messages="pmibCtrl.forms.invoice.txtPONumber.$error"
+        role="alert" class="invalid-feedback">
+        <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}">
+        </div>
+      </div>
+    </div>
+    <div cef-upload-file-widget
+      master="pmibCtrl.paymentData.PayByBillMeLater"
+      upload-type="StoredFileSalesOrder"
+      type-key="General"
+      allow-multiple="true"
+      upload-callback="pmibCtrl.onChange">
+    </div>
+  </div>
+</div>

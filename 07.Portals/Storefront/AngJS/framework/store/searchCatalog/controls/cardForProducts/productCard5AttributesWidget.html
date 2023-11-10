@@ -1,0 +1,8 @@
+<div class="row" ng-if="pcawCtrl.product && pcawCtrl.catalogAttrList.length">
+  <div ng-repeat="attr in pcawCtrl.catalogAttrList | orderBy: ['SortOrder', 'Key', 'Value', 'UofM']" class="col-sm-5 card-attr">
+    <b><span ng-bind="attr.DisplayName || attr.Name || attr.CustomKey"></span></b><br/>
+    <span ng-bind="pcawCtrl.productAttr(attr.CustomKey).Value"></span><span
+      ng-if="pcawCtrl.productAttr(attr.CustomKey).UofM">&nbsp;<!--
+    --><span ng-bind="pcawCtrl.productAttr(attr.CustomKey).UofM"></span></span>
+  </div>
+</div>

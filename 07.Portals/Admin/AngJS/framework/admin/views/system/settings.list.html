@@ -1,0 +1,45 @@
+﻿<cv-page caption="{{'ui.admin.views.system.settingsList.ManageSettings' | translate}}" head-icon="fa-gear"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.System.Settings')">
+    <cv-widget>
+        <widget-menu-item caption="{{'ui.admin.views.system.settingsList.AddSetting' | translate}}"
+            icon-class="fa-plus-circle"
+            click="$root.$state.go('system.settings.detail',{ID:'New'})"
+            permission="'System.Setting.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     sortable="false" server-sorting="true" filter-side="true"
+                     on-search="search.getSettings"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateSetting"
+                     on-reactivate="search.reactivateSetting"
+                     on-delete="search.deleteSetting"
+                     edit-state="system.settings.detail,[ID]"
+                     permissions-base="System.Setting">
+                <cv-column hidden field="TypeID"
+                            title-key="ui.admin.common.Type"
+                           filter filter-type="select"
+                           on-option-repeat="$parent.search.searchTypes.getSettingTypes">
+                    <option value="" selected data-translate="ui.admin.common.Any"></option>
+                </cv-column>
+                <cv-column hidden field="StoreID"
+                           title-key="ui.admin.common.Store"
+                           filter filter-type="select"
+                           on-option-repeat="$parent.search.getStores">
+                    <option value="" selected data-translate="ui.admin.common.Any"></option>
+                </cv-column>
+                <cv-column filter field="ID"
+                           title="#"
+                           width="50px" />
+                <cv-column field="TypeKey"
+                           title-key="ui.admin.common.TypeKey" />
+                <cv-column field="TypeName"
+                           title-key="ui.admin.common.TypeName" />
+                <cv-column field="Value"
+                           title-key="ui.admin.common.Value" />
+                <cv-column field="StoreID"
+                           title-key="ui.admin.common.Store"
+                           width="50px" cell-class="text-right" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

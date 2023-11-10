@@ -1,0 +1,61 @@
+﻿<div class="row"
+     ng-form="cefCheckoutCtrl.forms.Card">
+    <div class="col-sm-12 wallet-card-panel">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="h3 mt-0">
+                            <b ng-bind="cefCheckoutCtrl.selectedCard.Name"></b>
+                            <span class="pull-right" aria-hidden="true">
+                                <i class="far fa-2x" ng-class="{
+                                    'fa-cc-amex': cefCheckoutCtrl.selectedCard.CardType == 'American Express',
+                                    'fa-cc-discover': cefCheckoutCtrl.selectedCard.CardType == 'Discover',
+                                    'fa-cc-mastercard': cefCheckoutCtrl.selectedCard.CardType == 'MasterCard'
+                                                        || cefCheckoutCtrl.selectedCard.CardType == 'Diners Club',
+                                    'fa-cc-visa': cefCheckoutCtrl.selectedCard.CardType == 'Visa'}"></i>
+                                <span class="sr-only" ng-bind="cefCheckoutCtrl.selectedCard.CardType"></span>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12" ng-if="!cefCheckoutCtrl.viewstate.createMode">
+                        <p class="h3"
+                           ng-bind-html="('&bull;&bull;&bull;&bull;&nbsp;'
+                                + '&bull;&bull;&bull;&bull;&nbsp;'
+                                + '&bull;&bull;&bull;&bull;&nbsp;'
+                                + cefCheckoutCtrl.selectedCard.CreditCardNumber) | trustedHtml"></p>
+                    </div>
+                    <div class="col-xs-6 col-xs-6">
+                        <p data-translate="ui.admin.wallet.walletCard.CardHolderName"></p>
+                        <p class="bold"
+                           ng-bind="cefCheckoutCtrl.selectedCard.CardHolderName"></p>
+                    </div>
+                    <div class="col-xs-3 col-xs-3">
+                        <p data-translate="ui.admin.common.wallet.walletCard.ValidThrough"></p>
+                        <p class="bold"
+                           ng-bind="cefCheckoutCtrl.selectedCard.ExpirationMonth + '/' + cefCheckoutCtrl.selectedCard.ExpirationYear"></p>
+                    </div>
+                    <div class="col-xs-3 col-xs-3">
+                        <div class="form-group"
+                             ng-class="{'has-error': cefCheckoutCtrl.forms.Card.txtCVV.$invalid}">
+                            <label class="control-label" for="txtCVV"
+                                   ><span data-translate="ui.admin.common.CVV"
+                                   ></span>&nbsp;<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control"
+                                   id="txtCVV" name="txtCVV"
+                                   placeholder="123"
+                                   ng-required="true"
+                                   ng-model="cefCheckoutCtrl.selectedCard.CVV"
+                                   cc-cvc cc-type="cefCheckoutCtrl.forms.payment.creditCardcard.type" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12"
+         ng-if="cefCheckoutCtrl.forms.payment.creditCard.$valid && cefCheckoutCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0">
+        <p data-translate="ui.admin.checkout.paymentMethods.creditCard.GrandTotalWithSplitTargets.Template"
+           translate-value-total="{{cefCheckoutCtrl.cvCartService.grandTotal()}}"></p>
+    </div>
+</div>

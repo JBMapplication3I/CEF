@@ -1,0 +1,9 @@
+<div ng-if="!pckwCtrl.hideK && pckwCtrl.product"
+  class="product-sku rows-1 small"
+><span ng-if="!pckwCtrl.hideLabels"
+><span sid="CatalogProductCardSkuText"
+data-translate="ui.storefront.cart.SKU"></span><br/></span><!--
+--><span id="lblProductSku{{pckwCtrl.product.ID}}"
+class="font-weight-bold"
+ng-bind="pckwCtrl.product.CustomKey"
+></span></div>

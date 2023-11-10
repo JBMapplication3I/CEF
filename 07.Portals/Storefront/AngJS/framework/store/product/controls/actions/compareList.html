@@ -1,0 +1,9 @@
+﻿<button type="button" class="btn btn-outline-dark border-light text-left"
+id="btnProductDetails{{pclCtrl.index}}"
+name="btnProductDetails{{pclCtrl.index}}"
+translate-attr="{ title: pclCtrl.key, 'aria-label': pclCtrl.key }"
+ng-click="pclCtrl.toggle()">
+<i class="fa-fw"
+ng-class="pclCtrl.in() ? 'fas fa-sliders-h-square' : 'far fa-sliders-h'"></i>&nbsp;<!--
+--><span data-translate="{{pclCtrl.key}}"></span>
+</button>

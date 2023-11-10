@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFrameworks>net5.0</TargetFrameworks>
+    <AssemblyName>Clarity.Ecommerce.SignalRCore</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.SignalRCore</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.SignalRCore</RootNamespace>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.csproj" />
+  </ItemGroup>
+</Project>

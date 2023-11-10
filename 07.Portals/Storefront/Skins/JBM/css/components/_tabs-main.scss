@@ -1,0 +1,44 @@
+.tabs-main {
+	.tab-content {
+		position: relative;
+		padding: rem-calc(25 13);
+	}
+
+	.tab-pane {
+		width: 100%;
+		display: block !important;
+		left: -9999px !important;
+		position: absolute !important;
+		top: -9999px !important;
+
+		&.active {
+			left: auto !important;
+			position: relative !important;
+			top: auto !important;
+
+		}
+	}
+
+	.nav-link {
+		padding: rem-calc(5 13 11);
+		background: $body-bg;
+		border-color: $border-color;
+		color: $primary;
+
+		&:hover,
+		&:focus {
+			color: $body-color;
+			outline: none;
+			border-color: $border-color;
+		}
+
+		&.active {
+			border-color: $border-color $border-color transparent $border-color;
+
+			&:hover,
+			&:focus {
+				border-color: $border-color $border-color transparent $border-color;
+			}
+		}
+	}
+}

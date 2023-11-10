@@ -1,0 +1,61 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+    record="shippingDiscountDetailCtrl.record"
+    new-kind-key="ui.admin.controls.shipments.packageDetail.newShippingPackage"
+    existing-kind-key="ui.admin.controls.shipments.packageDetail.shippingPackage">
+  </div>
+  <div class="row details-body">
+    <div class="col-md-12 carrier-account-editor">
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': shippingDiscountDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="shippingDiscountDetailCtrl.forms.Details">
+            <div class="row">
+              <div class="col-xs-12 col-md-4 col-md-offset-4">
+                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                <div class="form-group" ng-class="{'has-error': shippingDiscountDetailCtrl.forms.Details.txtName.$invalid}">
+                  <label class="control-label" data-translate="ui.admin.controls.shipments.packageDetail.Name"></label>
+                  <!-- <text-input-form-group
+                    key="shippingDiscountKey"
+                    ng-model="shippingDiscountDetailCtrl.record.OptionName"
+                    label-title="Option Name"
+                    max-length="128"
+                    ng-required="true">
+                  </text-input-form-group> -->
+                  <select-form-group
+                    key="shippingDiscountKey"
+                    ng-model="shippingDiscountDetailCtrl.record.OptionName"
+                    selections="shippingDiscountDetailCtrl.shipCarrierMethods"
+                    options-as-value="Name"
+                    label-title="Option Name"
+                    tooltip-text="The Name of the shipping option."
+                    ng-required="true">
+                  </select-form-group>
+                  <number-input-form-group
+                    key="shippingDiscountValue"
+                    ng-model="shippingDiscountDetailCtrl.record.DiscountRate"
+                    label-key="ui.admin.common.Value"
+                    max-length="128"
+                    tooltip-text="The percent value discounted from the chosen shipping method"
+                    is-percent="true"
+                    ng-required="true">
+                  </number-input-form-group>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <!-- Form actions -->
+  <div class="row details-footer">
+    <div class="col-md-12">
+      <cef-standard-detail-footer-buttons
+        master-controller="shippingDiscountDetailCtrl"
+        return-state="shipments.shippingDiscounts.list"
+        permissions-base="Shipping.Package">
+      </cef-standard-detail-footer-buttons>
+    </div>
+  </div>
+</div>

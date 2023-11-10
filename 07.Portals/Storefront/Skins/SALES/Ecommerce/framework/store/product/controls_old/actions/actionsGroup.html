@@ -1,0 +1,57 @@
+﻿<div class="row product-actions"
+  ng-switch="actionsGroupCtrl.product.SerializableAttributes.Template.Value">
+  <div class="col-12 pb-3 btn-group-vertical"
+    ng-switch-when="Clothing">
+    <div ng-if="actionsGroupCtrl.cefConfig.featureSet.carts.wishList.enabled"
+      cef-product-wish-list
+      product="actionsGroupCtrl.product">
+    </div>
+  </div>
+  <div class="col-12 btn-group-vertical"
+      ng-switch-default>
+      <div ng-if="actionsGroupCtrl.cefConfig.featureSet.carts.compare.enabled"
+        cef-product-compare-list
+        product="actionsGroupCtrl.product">
+      </div>
+      <div ng-if="actionsGroupCtrl.cefConfig.featureSet.carts.favoritesList.enabled"
+        cef-product-favorites-list
+        product="actionsGroupCtrl.product">
+      </div>
+      <div ng-if="actionsGroupCtrl.cefConfig.featureSet.carts.wishList.enabled"
+        cef-product-wish-list
+        product="actionsGroupCtrl.product">
+      </div>
+      <div ng-if="actionsGroupCtrl.cefConfig.featureSet.carts.shoppingLists.enabled"
+        cef-product-shopping-list
+        product="actionsGroupCtrl.product">
+      </div>
+      <div ng-if="actionsGroupCtrl.cefConfig.featureSet.salesQuotes.enabled"
+        cef-product-request-for-quote-button
+        product="actionsGroupCtrl.product"
+        store-product="actionsGroupCtrl.storeProduct">
+      </div>
+      <!-- Disabled until verified for core
+      <li ng-if="productDetailsActionsSidebarCtrl.storeProduct">
+          <a class="d-flex align-items-center justify-content-center text-primary"
+              ui-sref-plus uisrp-is-store="true"
+              uisrp-path="{{productDetailsActionsSidebarCtrl.storeProduct.StoreSeoUrl}}"
+              translate-attr="{ title: 'ui.storefront.common.StoreProfile' }"
+              ><span data-translate="ui.storefront.common.StoreProfile"></span></a></li>
+      -->
+      <!-- Disabled until verified for core
+      <li>
+          <a class="d-flex align-items-center justify-content-center text-primary"
+              translate-attr="{ title: 'ui.storefront.messaging.chat.startChatButton.ChatNow' }"
+              cef-start-chat-button
+              target-product-id="productDetailsActionsSidebarCtrl.product.ID"
+              ><span data-translate="ui.storefront.messaging.chat.startChatButton.ChatNow"></span></a></li>
+      -->
+      <!-- Disabled until verified for core
+      <li>
+          <a class="d-flex align-items-center justify-content-center text-primary"
+              ui-sref-plus uisrp-is-dashboard="true" uisrp-state="userDashboard.chatHub"
+              translate-attr="{ title: 'ui.storefront.storeDashboard.storeMenuSidebar.MessageHub' }"
+              ><span data-translate="ui.storefront.storeDashboard.storeMenuSidebar.MessageHub"></span></a></li>
+      -->
+  </div>
+</div>

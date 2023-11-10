@@ -1,0 +1,265 @@
+﻿﻿<#@ template debug="true" hostspecific="True" language="C#" #><#@
+output extension=".tstxt" #><#@
+assembly name="System" #><#@
+assembly name="System.Core" #><#@
+assembly name="System.Web.dll" #><#@
+assembly name="$(UserProfile)\.nuget\packages\newtonsoft.json\13.0.1\lib\net45\Newtonsoft.Json.dll" #><#@
+assembly name="$(UserProfile)\.nuget\packages\entityframework\6.4.4\lib\net45\EntityFramework.dll" #><#@
+assembly name="$(UserProfile)\.nuget\packages\hangfire.core\1.7.27\lib\net46\Hangfire.Core.dll" #><#@
+assembly name="$(SolutionDir)packages\ServiceStack.Interfaces.4.5.14\lib\portable-wp80+sl5+net45+win8+wpa81+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll" #><#@
+assembly name="$(SolutionDir)packages\ServiceStack.Text.Signed.4.5.14\lib\net45\ServiceStack.Text.dll" #><#@
+assembly name="$(SolutionDir)00.Core\00.Clarity.Ecommerce.RegistryLoader\bin\Debug\net472\Clarity.Ecommerce.RegistryLoader.dll" #><#@
+assembly name="$(SolutionDir)01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\bin\Debug\net472\Clarity.Ecommerce.DataModel.dll" #><#@
+assembly name="$(SolutionDir)02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\bin\Debug\net472\Clarity.Ecommerce.Interfaces.Models.dll" #><#@
+assembly name="$(SolutionDir)03.ModelsAndMapping\03.Clarity.Ecommerce.Models\bin\Debug\net472\Clarity.Ecommerce.Models.dll" #><#@
+assembly name="$(SolutionDir)05.BusinessLogic\05.Clarity.Ecommerce.Workflow\bin\Debug\net472\Clarity.Ecommerce.Workflow.dll" #><#@
+assembly name="$(SolutionDir)06.Services\06.Clarity.Ecommerce.Service\bin\Clarity.Ecommerce.Service.dll" #><#@
+assembly name="$(SolutionDir)11.T4\11.T4.CodeGenerator\bin\Debug\net472\CodeGenerator.dll" #><#@
+assembly name="$(SolutionDir)11.T4\11.T4.ServiceStack.CodeGenerator.TypeScript\bin\Debug\net472\ServiceStack.CodeGenerator.TypeScript.dll" #><#@
+import namespace="System.Collections.Generic" #><#@
+import namespace="System.ComponentModel.DataAnnotations" #><#@
+import namespace="System.ComponentModel.DataAnnotations.Schema" #><#@
+import namespace="System.Data.Entity" #><#@
+import namespace="System.Linq" #><#@
+import namespace="System.Reflection" #><#@
+import namespace="System.Runtime.InteropServices" #><#@
+import namespace="Clarity.Ecommerce.DataModel" #><#@
+import namespace="Clarity.Ecommerce.Interfaces.DataModel" #><#@
+import namespace="CodeGenerator" #><#@
+import namespace="ServiceStack" #><#@
+import namespace="ServiceStack.CodeGenerator.TypeScript" #><#@
+include file="$(SolutionDir)11.T4\11.T4.CodeGenerator\MultiOutput.old.ttinclude" #><#@
+include file="types.search.ui.ttinclude" #><#@
+include file="types.search.ts.ttinclude" #><#@
+include file="types.details.view.ttinclude" #><#@
+include file="types.details.ui.ttinclude" #><#@
+include file="types.details.ts.ttinclude" #><#
+var routeTypes = AppDomain.CurrentDomain.GetAssemblies()
+.Where(a => a.FullName.StartsWith("Clarity.Ecommerce.Service"))
+.SelectMany(a => a.GetTypes()
+.Where(t => t.CustomAttributes.Any(attr => attr.AttributeType == typeof(RouteAttribute))));
+TypescriptCodeGenerator cg = new TypescriptCodeGenerator(
+"ClarityEcomService",
+new string[]{ "Clarity.Ecommerce.DataModel" },
+"admin");
+var tableClasses = AppDomain.CurrentDomain.GetAssemblies()
+.Where(x => x.FullName.StartsWith("Clarity.Ecommerce.DataModel"))
+.SelectMany(x => x.GetTypes().Where(t => t.CustomAttributes.Any(at => at.AttributeType == typeof(SqlSchemaAttribute))))
+.OrderBy(x => ((SqlSchemaAttribute)Attribute.GetCustomAttribute(x, typeof(SqlSchemaAttribute))).Both)
+.GroupBy(x => ((SqlSchemaAttribute)Attribute.GetCustomAttribute(x, typeof(SqlSchemaAttribute))).Schema);
+List<Type> routes = new List<Type>();
+foreach (IGrouping<string, Type> group in tableClasses) {
+foreach (Type table in group) {
+if (!(table.GetInterfaces().Any(x => x == typeof(ITypableBase))
+|| table.GetInterfaces().Any(x => x == typeof(IStatusableBase))
+|| table.GetInterfaces().Any(x => x == typeof(IStateableBase)))
+|| table.Name == "GeneralAttribute") {
+continue;
+}
+routes.Add(table);
+GenerateSearchUserIntefaceFile(table, group.Key);
+SaveOutputNoDot(HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name.Replace("Clarity.Ecommerce.DataModel.", ""))), ".list.html", true);
+GenerateSearchTypeScriptFile(table, group.Key);
+SaveOutputNoDot(HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name.Replace("Clarity.Ecommerce.DataModel.", ""))), ".list.ts", true);
+GenerateDetailsDetailViewFile(table, group.Key, cg);
+SaveOutputNoDot(HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name.Replace("Clarity.Ecommerce.DataModel.", ""))), ".view.html", true);
+GenerateDetailsUserIntefaceFile(table, group.Key, cg);
+SaveOutputNoDot(HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name.Replace("Clarity.Ecommerce.DataModel.", ""))), ".detail.html", true);
+GenerateDetailsTypeScriptFile(table, group.Key, cg);
+SaveOutputNoDot(HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name.Replace("Clarity.Ecommerce.DataModel.", ""))), ".detail.ts", true);
+}
+}
+// Routes HTML for the Menu File #>
+<!-- Statuses -->
+<# foreach (Type table in routes.Where(x => x.Name.Contains("Status"))) {
+var lowerFirstPluralizedTableName = HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name)); #>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('statuses.<#= lowerFirstPluralizedTableName #>')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('statuses.<#= lowerFirstPluralizedTableName #>').requiresPermission + '')">
+<a ui-sref="statuses.<#= lowerFirstPluralizedTableName #>.list" ng-click="toggleDropdown($event)">
+<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase().Replace("Sales ", "") #>
+<span ng-if="$root.$state.includes('statuses.<#= lowerFirstPluralizedTableName #>')" class="sr-only">(current)</span>
+</a>
+</div>
+<# } #>
+<# SaveOutput("menu.statuses", "html", true); #>
+<!-- Types -->
+<# foreach (Type table in routes.Where(x => x.Name.Contains("Type"))) {
+var lowerFirstPluralizedTableName = HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name)); #>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.<#= lowerFirstPluralizedTableName #>')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.<#= lowerFirstPluralizedTableName #>').requiresPermission + '')">
+<a ui-sref="types.<#= lowerFirstPluralizedTableName #>.list" ng-click="toggleDropdown($event)">
+<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase().Replace("Sales ", "") #>
+<span ng-if="$root.$state.includes('types.<#= lowerFirstPluralizedTableName #>')" class="sr-only">(current)</span>
+</a>
+</div>
+<# } #>
+<# SaveOutput("menu.types", "html", true); #>
+<!-- States -->
+<# foreach (Type table in routes.Where(x => x.Name.Contains("State"))) {
+var lowerFirstPluralizedTableName = HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name)); #>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('states.<#= lowerFirstPluralizedTableName #>')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('states.<#= lowerFirstPluralizedTableName #>').requiresPermission + '')">
+<a ui-sref="states.<#= lowerFirstPluralizedTableName #>.list" ng-click="toggleDropdown($event)">
+<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase().Replace("Sales ", "") #>
+<span ng-if="$root.$state.includes('states.<#= lowerFirstPluralizedTableName #>')" class="sr-only">(current)</span>
+</a>
+</div>
+<# } #>
+<# SaveOutput("menu.states", "html", true); #>
+<!-- Other -->
+<# foreach (Type table in routes.Where(x => !x.Name.Contains("Type") && !x.Name.Contains("Status") && !x.Name.Contains("State"))) {
+var lowerFirstPluralizedTableName = HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name)); // Other #>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.<#= lowerFirstPluralizedTableName #>')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.<#= lowerFirstPluralizedTableName #>').requiresPermission + '')">
+<a ui-sref="types.<#= lowerFirstPluralizedTableName #>.list" ng-click="toggleDropdown($event)">
+<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase().Replace("Sales ", "") #>
+<span ng-if="$root.$state.includes('types.<#= lowerFirstPluralizedTableName #>')" class="sr-only">(current)</span>
+</a>
+</div>
+<# } #>
+<# SaveOutput("menu.other", "html", true);
+// Routes TS for the References File
+foreach (Type table in routes) { #>
+/// <reference path="<#= HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name)) #>.list.ts" />
+/// <reference path="<#= HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name)) #>.detail.ts" />
+<# }
+SaveOutput("types.reference", "ts", true);
+// Search Controller TS File (Admin)
+#>/**
+ * @file framework/admin/controls/types/types.searchController.ts
+ * @author Copyright (c) 2016-<#= DateTime.Today.Year #> clarity-ventures.com. All rights reserved.
+ * @desc Types search controller class (admin)
+ */
+module cef.admin.controls.types {
+export class SearchTypeController {
+constructor(
+private readonly $http: ng.IHttpService,
+private readonly $scope,
+private readonly cvApi: api.ICEFAPI) { }
+
+// ===== Types & Statuses =====
+<# foreach (Type table in routes) {
+string schema = ((SqlSchemaAttribute)table.GetCustomAttribute(typeof(SqlSchemaAttribute))).Schema;
+schema = schema.Replace("System", "Structure"); #>
+// <#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase() #>
+get<#= HelpFunctions.PluralizeName(table.Name) #> = this.cvApi.<#= HelpFunctions.LowerFirstCharacter(schema) #>.Get<#= HelpFunctions.PluralizeName(table.Name) #>;
+deactivate<#= table.Name #> = (id: number) => { return this.cvApi.<#= HelpFunctions.LowerFirstCharacter(schema) #>.Deactivate<#= table.Name #>ByID(id); };
+reactivate<#= table.Name #> = (id: number) => { return this.cvApi.<#= HelpFunctions.LowerFirstCharacter(schema) #>.Reactivate<#= table.Name #>ByID(id); };
+delete<#= table.Name #> = (id: number) => { return this.cvApi.<#= HelpFunctions.LowerFirstCharacter(schema) #>.Delete<#= table.Name #>ByID(id); };
+<# } #>
+}
+adminApp.controller("SearchTypeController", SearchTypeController);
+}
+<# SaveOutput("types.searchController", "ts", true);
+foreach (Type table in routes) { #>
+ui.admin.common.<#= table.Name #>			<#= table.Name.SplitCamelCase() #>
+ui.admin.common.<#= table.Name #>.Plural			<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase() #>
+ui.admin.common.<#= table.Name #>.Manage			Manage <#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase() #>
+ui.admin.common.<#= table.Name #>.Add			Add <#= table.Name.SplitCamelCase() #>
+<# }
+SaveOutput("types.translations", "txt", true);
+DeleteOldOutputs();
+// Routes TS File
+#>/**
+ * @file /framework/admin/controls/types/types.ts
+ * @author Copyright (c) 2016-<#= DateTime.Today.Year #> clarity-ventures.com. All rights reserved.
+ * @desc UI Router States for CEF Types, Statuses and States.
+ */
+module cef.admin.controls.types {
+adminApp.config((
+$stateProvider: ng.ui.IStateProvider,
+cefConfig: core.CefConfig) =>
+{
+const fullInner = urlConfig => {
+if (!urlConfig.host && !urlConfig.root) {
+// We don't have a static url or root path to apply
+return "";
+}
+if (!urlConfig.host && urlConfig.root) {
+// We don't have a static url, but we do have a root path to apply
+return urlConfig.root;
+}
+if (urlConfig.host && !urlConfig.root) {
+// We don't have a root path, but we do have a static url to apply
+return urlConfig.host;
+}
+// We have both a root path and a static url to apply
+return urlConfig.host + urlConfig.root;
+};
+const templateRoot = fullInner(cefConfig.routes.ui) + "/framework/admin"; // <UI>/framework/admin
+const makeSectionState = (rootStateName: string, name: string, permission: RegExp | string, url: string, translationKey: string) => {
+const viewObj = {};
+viewObj[rootStateName] = { template: `<div ui-view="${name}" class="full-height"></div>`, };
+$stateProvider.state(`${rootStateName}.${name}`, <ng.ui.IState>{
+resolve: { $title: () => translationKey },
+abstract: true,
+nomenu: true,
+requiresPermission: permission,
+url: url,
+views: viewObj
+});
+};
+const makeDashboardState = (rootStateName: string, name: string, permission: RegExp | string) => {
+const viewObj = {};
+viewObj[name] = { templateUrl: `${templateRoot}/controls/types/${name}.dashboard.html`, };
+$stateProvider.state(`${rootStateName}.${name}.dashboard`, <ng.ui.IState>{
+resolve: { $title: () => "ui.admin.common.Dashboard" },
+requiresPermission: permission,
+url: "/Dashboard",
+views: viewObj
+});
+};
+const makeListState = (rootStateName: string, name: string, permission: RegExp | string) => {
+const viewObj = {};
+viewObj[name] = { templateUrl: `${templateRoot}/controls/types/${name}.list.html`, };
+$stateProvider.state(`${rootStateName}.${name}.list`, <ng.ui.IState>{
+resolve: { $title: () => "ui.admin.common.Search" },
+requiresPermission: permission,
+url: "/List",
+views: viewObj
+});
+};
+const makeDetailState = (rootStateName: string, name: string, permission: RegExp | string) => {
+const viewObj = {};
+viewObj[name] = { templateUrl: `${templateRoot}/controls/types/${name}.view.html`, };
+$stateProvider.state(`${rootStateName}.${name}.detail`, <ng.ui.IState>{
+resolve: { $title: () => "ui.admin.common.NumberSymbolXDetail.Template" },
+nomenu: true,
+requiresPermission: permission,
+url: "/Detail/:ID",
+views: viewObj
+});
+};
+const makeSetOfStates = (rootStateName: string, name: string, permission: RegExp | string, url: string, translationKey: string) => {
+makeSectionState(rootStateName, name, permission, url, translationKey);
+makeDashboardState(rootStateName, name, permission);
+makeListState(rootStateName, name, permission);
+makeDetailState(rootStateName, name, permission);
+};
+// Types
+<# foreach (Type table in routes.Where(x => x.Name.Contains("Type"))) { #>
+makeSetOfStates("types", "<#= HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name))
+#>", "Admin.Types", "/<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase().Replace(" ", "-")
+#>", "<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase() #>");
+<# } #>
+// Statuses
+<# foreach (Type table in routes.Where(x => x.Name.Contains("Status"))) { #>
+makeSetOfStates("statuses", "<#= HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name))
+#>", "Admin.Statuses", "/<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase().Replace(" ", "-")
+#>", "<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase() #>");
+<# } #>
+// States
+<# foreach (Type table in routes.Where(x => x.Name.Contains("State"))) { #>
+makeSetOfStates("states", "<#= HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name))
+#>", "Admin.States", "/<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase().Replace(" ", "-")
+#>", "<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase() #>");
+<# } #>
+// Other
+<# foreach (Type table in routes.Where(x => !x.Name.Contains("Type") && !x.Name.Contains("Status") && !x.Name.Contains("State"))) { // Other #>
+makeSetOfStates("types", "<#= HelpFunctions.LowerFirstCharacter(HelpFunctions.PluralizeName(table.Name))
+#>", "Admin.Types", "/<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase().Replace(" ", "-")
+#>", "<#= HelpFunctions.PluralizeName(table.Name).SplitCamelCase() #>");
+<# } #>
+});
+}
+<# SaveOutput("types", "ts", true); #>

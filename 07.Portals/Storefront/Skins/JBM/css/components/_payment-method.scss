@@ -1,0 +1,23 @@
+.payment-method {
+	margin-top: rem-calc(20);
+	margin-bottom: rem-calc(30);
+
+	@include media-breakpoint-up(md) {
+		margin-top: rem-calc(30);
+	}
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	>[class^="col"],
+	>[class*="col"] {
+		padding-bottom: rem-calc(20);
+	}
+
+	.order-info {
+		display: block;
+		font-size: inherit;
+		padding: rem-calc(11 15);
+	}
+}

@@ -1,0 +1,340 @@
+﻿<div class="row compare-results">
+  <style>.limit-260 { height: 260px; }</style>
+  <div class="col-12">
+    <div class="row">
+      <div class="col">
+        <h2 sid="CompareProductsText"
+          data-translate="ui.storefront.searchCatalog.compareProduct.Plural">
+        </h2>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-secondary xs-mb-3"
+          id="btnBackToResultsHeader"
+          translate-attr="{ title: 'ui.storefront.searchCatalog.BackToResults',
+                            'aria-label': 'ui.storefront.searchCatalog.BackToResults' }"
+          data-translate="ui.storefront.searchCatalog.BackToResults"
+          onclick="window.history.back();">
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="row no-gutters flex-nowrap">
+      <div class="col-auto">
+        <div class="paging-left">
+          <button type="button" class="btn btn-link"
+            id="btnCompareCartPageLeft"
+            ng-disabled="cvSearchCatalogProductCompareService.paging.currentPage <= 0"
+            ng-click="cvSearchCatalogProductCompareService.paging.goToPreviousPage()">
+            <i class="far fa-chevron-left fa-2x"></i>
+            <span class="sr-only">Page Left</span>
+          </button>
+        </div>
+      </div>
+      <div class="col">
+        <table class="table table-hover table-striped table-sm" id="tblCompare">
+          <thead>
+            <tr>
+              <th class="w-28 sm-w-28 md-w-20 lg-w-20 xl-w-20 tk-w-20 fk-w-20"
+                sid="CompareSpecificationsText"
+                data-translate="ui.storefront.product.detail.productDetails.Specifications">
+              </th>
+              <th class="w-33 sm-w-33 md-w-25 lg-w-25 xl-w-25 tk-w-25 fk-w-25 compare-text compare-title"
+                ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                           | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                    : cvSearchCatalogProductCompareService.paging.skip()">
+                <a target="_blank"
+                  id="btnCompareCartProductCard_{{$index}}"
+                  ui-sref-plus uisrp-is-product="true"
+                  uisrp-path="{{p.SeoUrl}}"
+                  ng-bind="p.Name">
+                </a>
+              </th>
+              <th class="w-10 sm-w-5 md-w-5 lg-w-5 xl-w-5 tk-w-5 fk-w-5"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td sid="CompareImageText"
+                data-translate="ui.storefront.searchCatalog.compare.Image">
+              </td>
+              <td ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                             | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                      : cvSearchCatalogProductCompareService.paging.skip()">
+                <div cef-product-card-thumbnail-widget
+                  product-id="p.ID"
+                  product-image="p.PrimaryImageFileName"
+                  width="250"
+                  height="250"
+                  index="$index">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td sid="CompareSummaryText"
+                data-translate="ui.storefront.userDashboard2.controls.salesDetail.Summary">
+              </td>
+              <td ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                             | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                      : cvSearchCatalogProductCompareService.paging.skip()">
+                <em class="compare-text"
+                  ng-bind="p.ShortDescription"></em>
+              </td>
+            </tr>
+            <tr>
+              <td sid="CompareDescriptionText"
+                data-translate="ui.storefront.common.Description">
+              </td>
+              <td ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                             | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                      : cvSearchCatalogProductCompareService.paging.skip()">
+                <em class="compare-text"
+                  ng-bind="p.Description | limitToEllipses: 250"></em>
+              </td>
+            </tr>
+            <tr>
+              <td sid="CompareSkuText"
+                data-translate="ui.storefront.cart.SKU">
+              </td>
+              <td class="compare-text"
+                ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                           | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                    : cvSearchCatalogProductCompareService.paging.skip()"
+                ng-bind="p.CustomKey"></td>
+            </tr>
+            <tr>
+              <td sid="CompareDimensionsText"
+                data-translate="ui.storefront.searchCatalog.compare.Dimensions">
+              </td>
+              <td class="compare-text"
+                ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                           | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                    : cvSearchCatalogProductCompareService.paging.skip()">
+                <table class="table table-bordered mb-0">
+                  <tbody>
+                    <tr ng-if="!p.Width && !p.Depth && !p.Height && !p.Weight">
+                      <th data-translate="ui.storefront.searchCatalog.filters.None"></th>
+                    </tr>
+                    <tr ng-if="p.Width">
+                      <th data-translate="ui.storefront.storeDashboard.storeProductEditor.Width"></th>
+                      <td>{{p.Width}} {{p.WidthUnitOfMeasure}}</td>
+                    </tr>
+                    <tr ng-if="p.Depth">
+                      <th data-translate="ui.storefront.storeDashboard.storeProductEditor.Depth"></th>
+                      <td>{{p.Depth}} {{p.DepthUnitOfMeasure}}</td>
+                    </tr>
+                    <tr ng-if="p.Height">
+                      <th data-translate="ui.storefront.storeDashboard.storeProductEditor.Height"></th>
+                      <td>{{p.Height}} {{p.HeightUnitOfMeasure}}</td>
+                    </tr>
+                    <tr ng-if="p.Weight">
+                      <th data-translate="ui.storefront.storeDashboard.storeProductEditor.Weight"></th>
+                      <td>{{p.Weight}} {{p.WeightUnitOfMeasure}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr ng-repeat="title in cvSearchCatalogProductCompareService.getRowTitles() | orderBy: 'toString()'">
+              <td ng-bind="title.replace('SerializableAttributes.', '') | camelCaseToHuman : true"></td>
+              <td class="compare-text"
+                ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                           | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                    : cvSearchCatalogProductCompareService.paging.skip()"
+                ng-bind="title.startsWith('SerializableAttributes.')
+                  ? (p.SerializableAttributes[title.replace('SerializableAttributes.', '')].Value + ' '
+                    + p.SerializableAttributes[title.replace('SerializableAttributes.', '')].UofM)
+                  : p[title]">
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr ng-if="cvSearchCatalogProductCompareService.cefConfig.featureSet.inventory.enabled">
+              <td sid="CompareCartStockText"
+                data-translate="ui.storefront.searchCatalog.compare.Stock">
+              </td>
+              <td class="compare-text"
+                ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                           | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                    : cvSearchCatalogProductCompareService.paging.skip()">
+                <span ng-switch="p.readInventory().IsUnlimitedStock">
+                  <span ng-switch-when="true"
+                    class="text-success"
+                    data-translate="ui.storefront.common.Unlimited">
+                  </span>
+                  <span ng-switch-when="false">
+                    <span ng-switch="p.readInventory().IsOutOfStock">
+                      <span ng-switch-when="false" class="text-success">
+                        <span ng-bind="(p.readInventory().QuantityOnHand || 0) | number"></span>&nbsp;<!--
+                        --><span data-translate="ui.storefront.common.InStock"></span>
+                      </span>
+                      <span ng-switch-when="true">
+                        <span ng-switch="p.readInventory().AllowBackOrder">
+                          <span ng-switch-when="true"
+                            class="text-warning"
+                            sid="CompareCartStockStatus_{{$index}}"
+                            data-translate="ui.storefront.common.OnBackorder">
+                          </span>
+                          <span ng-switch-when="false"
+                            class="text-danger"
+                            data-translate="ui.storefront.common.OutOfStock">
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td sid="ComparePriceText"
+                data-translate="ui.storefront.common.Price">
+              </td>
+              <td ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                             | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                      : cvSearchCatalogProductCompareService.paging.skip()">
+                <div ng-switch="pricingDisplayStyle" ng-init="pricingDisplayStyle = 'sideBySide'">
+                  <div class="row product-pricing" ng-switch-when="multiLevel">
+                    <!-- List/MSRP Price -->
+                    <div class="col-6" ng-if="p.readPrices().msrp">
+                      <p data-translate="ui.storefront.product.detail.featuredProducts.listPrice"></p>
+                    </div>
+                    <div class="col-6" ng-if="p.readPrices().msrp">
+                      <p ng-bind="p.readPrices().msrp | globalizedCurrency"></p>
+                    </div>
+                    <!-- Reduction Price (Shaved off of MSRP) -->
+                    <div class="col-6" ng-if="p.readPrices().reduction">
+                      <p data-translate="ui.storefront.product.detail.featuredProducts.ReductionPrice"></p>
+                    </div>
+                    <div class="col-6" ng-if="p.readPrices().reduction">
+                      <p ng-bind="p.readPrices().reduction | globalizedCurrency"></p>
+                    </div>
+                    <!-- Store's normal selling price -->
+                    <div class="col-6" ng-if="p.readPrices().base">
+                      <p data-translate="ui.storefront.product.detail.featuredProducts.ourPrice"
+                        class="bold"
+                        ng-class="{'strike-through':p.readPrices().isSale}">
+                      </p>
+                    </div>
+                    <div class="col-6" ng-if="p.readPrices().base">
+                      <p ng-bind="p.readPrices().base | globalizedCurrency"
+                        class="bold"
+                        ng-class="{'strike-through':p.readPrices().isSale}">
+                      </p>
+                    </div>
+                    <!-- Sale Price when on sale, or the normal selling price when not on sale -->
+                    <div class="col-6" ng-if="p.readPrices().sale">
+                      <p data-translate="ui.storefront.{{p.readPrices().isSale ? 'product.detail.featuredProducts.PriceSale' : 'catalog.YourPrice'}}"
+                        class="bold big"
+                        ng-class="{'text-danger':p.readPrices().isSale}">
+                      </p>
+                    </div>
+                    <div class="col-6" ng-if="p.readPrices().sale">
+                      <p ng-bind="(p.readPrices().isSale ? p.readPrices().sale : p.readPrices().base) | globalizedCurrency"
+                        class="bold big"
+                        ng-class="{'text-danger':p.readPrices().isSale}">
+                      </p>
+                    </div>
+                    <!-- Savings amount from normal selling price (or list if set) -->
+                    <div class="col-6">
+                      <p data-translate="ui.storefront.common.Saving.Plural" class="italic">
+                      </p>
+                    </div>
+                    <div class="col-6">
+                      <p class="italic">
+                        <span ng-bind="p.readPrices().amountOff | globalizedCurrency"></span>&nbsp;<!--
+                        -->(<span ng-bind="p.readPrices().percentOff | number:0"></span>%)
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row product-pricing" ng-switch-when="sideBySide">
+                    <div class="col-12">
+                      <p class="text-center">
+                        <!-- Display Free, when no price is returned -->
+                        <span ng-if="!p.readPrices().base && !p.readPrices().sale"
+                          class="bold very-big"
+                          data-translate="ui.storefront.common.Free">
+                        </span>
+                        <!-- Store's normal selling price -->
+                        <span ng-if="p.readPrices().base"
+                          ng-bind="p.readPrices().base | globalizedCurrency"
+                          class="bold"
+                          sid="CompareProductCardPrice_{{$index}}"
+                          ng-class="p.readPrices().isSale ? 'strike-through big' : 'very-big'">
+                        </span>
+                        <!-- Sale Price when on sale, or the normal selling price when not on sale -->
+                        <span ng-if="p.readPrices().isSale"
+                          ng-bind="p.readPrices().sale | globalizedCurrency"
+                          sid="CompareProductCardSalePrice_{{$index}}"
+                          class="bold very-big text-danger">
+                        </span>
+                        <!-- Savings amount from normal selling price (or list if set) -->
+                        <span ng-if="p.readPrices().isSale"
+                            class="italic small d-inline-block">
+                          <span ng-bind="p.readPrices().amountOff | globalizedCurrency"></span><br /><!--
+                          --><span ng-bind="p.readPrices().percentOff | number:0"></span>%&nbsp;<!--
+                          --><span data-translate="ui.storefront.product.detail.productDetails.Off"></span>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="compare-text"
+                ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                           | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                    : cvSearchCatalogProductCompareService.paging.skip()">
+                <div cef-product-card-action-button-widget
+                  product-id="p.ID">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td ng-repeat="p in cvSearchCatalogProductCompareService.paging.filteredData
+                             | limitTo: cvSearchCatalogProductCompareService.paging.pageSize
+                                      : cvSearchCatalogProductCompareService.paging.skip()">
+                <button type="button" class="btn btn-link btn-block text-danger text-danger compare-cart-product-remove"
+                  ng-click="cvSearchCatalogProductCompareService.removeItem(p.ID)">
+                  <i class="far fa-trash fa-lg"></i>
+                  <span sid="btnRemoveFromCompareCart"
+                    data-translate="ui.storefront.common.Compare.RemoveFrom">
+                  </span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-auto">
+        <div class="paging-right">
+          <button type="button" class="btn btn-link"
+            id="btnCompareCartPageRight"
+            ng-disabled="cvSearchCatalogProductCompareService.paging.currentPage >= cvSearchCatalogProductCompareService.paging.maxPage()-1"
+            ng-click="cvSearchCatalogProductCompareService.paging.goToNextPage()">
+            <i class="far fa-chevron-right fa-2x"></i>
+            <span class="sr-only">Page Right</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-secondary mb-3"
+          id="btnBackToResultsFooter"
+          translate-attr="{ title: 'ui.storefront.searchCatalog.BackToResults',
+                            'aria-label': 'ui.storefront.searchCatalog.BackToResults' }"
+          data-translate="ui.storefront.searchCatalog.BackToResults"
+          onclick="window.history.back();">
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

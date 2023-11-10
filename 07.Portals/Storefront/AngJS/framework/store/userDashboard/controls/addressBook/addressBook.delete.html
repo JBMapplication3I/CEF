@@ -1,0 +1,38 @@
+﻿<div class="modal-header bg-dark text-light">
+  <h5 class="modal-title"
+    sid="RemoveAddressModalHeaderText"
+    data-translate="ui.storefront.userDashboard2.controls.addressBook2Delete.DoYouReallyWantToRemoveThisAddress">
+  </h5>
+  <button type="button" class="close"
+    id="btnAddressBookRemoveItemModalClose"
+    name="btnAddressBookRemoveItemModalClose"
+    translate-attr="{ title: 'ui.storefront.common.Close',
+                      'aria-label': 'ui.storefront.common.Close' }"
+    ng-click="addressBookDeleteCtrl.cancel()">
+    <i class="far fa-times text-light" aria-hidden="true"></i>
+    <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+  </button>
+</div>
+<div class="modal-body">
+  <div cef-contact-address-block
+    contact="addressBookDeleteCtrl.accountContact.Slave">
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary"
+    id="btnAddressBookRemoveItemModalCancel"
+    name="btnAddressBookRemoveItemModalCancel"
+    translate-attr="{ title: 'ui.storefront.common.Cancel',
+                      'aria-label': 'ui.storefront.common.Cancel' }"
+    data-translate="ui.storefront.common.Cancel"
+    ng-click="addressBookDeleteCtrl.cancel()">
+  </button>
+  <button type="button" class="btn btn-danger"
+    id="btnAddressBookRemoveItemModalOk"
+    name="btnAddressBookRemoveItemModalOk"
+    translate-attr="{ title: 'ui.storefront.userDashboard2.controls.addressBook2.RemoveAddress',
+                      'aria-label': 'ui.storefront.userDashboard2.controls.addressBook2.RemoveAddress' }"
+    data-translate="ui.storefront.userDashboard2.controls.addressBook2.RemoveAddress"
+    ng-click="addressBookDeleteCtrl.ok()">
+  </button>
+</div>

@@ -1,0 +1,12 @@
+﻿<div class="row text-center cart-header-bar"
+     ng-if="cartHeaderBarCtrl.cvCartService.carts['Cart'].ItemQuantity
+            && cartHeaderBarCtrl.cvCartService.carts['Cart'].Totals.Discounts">
+    <div class="col-sm-12 col-md-6">
+        <span class="label" data-translate="ui.storefront.cartHeader.TotalSavings"></span>:&nbsp;<!--
+        --><span ng-bind="cartHeaderBarCtrl.cvCartService.carts['Cart'].Totals.Discounts | globalizedCurrency"></span>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <a ui-sref-plus uisrp-root="/Promotions"
+           ><span data-translate="ui.storefront.cartHeader.CheckOutPromos"></span></a>
+    </div>
+</div>

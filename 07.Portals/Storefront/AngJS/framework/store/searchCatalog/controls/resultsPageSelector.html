@@ -1,0 +1,153 @@
+﻿<div ng-cloak="scrpCtrl.service.activeSearchViewModel.Form.PageSize"
+  ng-hide="!scrpCtrl.service.activeSearchViewModel.Total">
+  <div class="items-paginator-option xs-text-left sm-text-center md-text-center lg-text-right xs-text-center">
+    <div class="form-group d-sm-none">
+      <label class="control-label text-center"
+        sid="ShowingNumberOfProductsText"
+        ng-hide="scrpCtrl.hideLabel == 'true'"
+        translate-cloak
+        ng-bind="scrpCtrl.showingLabelContent">
+      </label>
+      <div class="input-group">
+        <div class="input-group-prepend input-group-btn">
+          <button type="button" class="btn btn-outline-secondary"
+            translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToFirstPage',
+                              'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToFirstPage' }"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || !scrpCtrl.pagesInSets.length
+              || !scrpCtrl.currentChoice"
+            ng-click="scrpCtrl.goToFirstPage()">
+            <i class="far fa-angle-double-left"></i><!--
+            --><span class="sr-only"
+              data-translate="ui.storefront.searchCatalog.pageSelector.GoToFirstPage">
+            </span>
+          </button>
+          <button type="button" class="btn btn-outline-secondary"
+            translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToPreviousPage',
+                              'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToPreviousPage' }"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || !scrpCtrl.pagesInSets.length
+              || !scrpCtrl.currentChoice"
+            ng-click="scrpCtrl.goToPreviousPage()">
+            <i class="far fa-angle-left"></i><!--
+            --><span class="sr-only"
+              data-translate="ui.storefront.searchCatalog.pageSelector.GoToPreviousPage">
+            </span>
+          </button>
+        </div>
+        <select class="form-control"
+          ng-disabled="scrpCtrl.service.searchIsRunning
+            || !scrpCtrl.pagesInSets.length"
+          ng-options="p as (p+1) for p in scrpCtrl.pagesInSets[scrpCtrl.pageSetCurrent]"
+          ng-model="scrpCtrl.currentChoice">
+        </select>
+        <div class="input-group-append input-group-btn">
+          <button type="button" class="btn btn-outline-secondary"
+            translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToNextPage',
+                              'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToNextPage' }"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || !scrpCtrl.pagesInSets.length
+              || scrpCtrl.currentChoice >= scrpCtrl.maxPage()"
+            ng-click="scrpCtrl.goToNextPage()">
+            <i class="far fa-angle-right"></i><!--
+            --><span class="sr-only"
+              data-translate="ui.storefront.searchCatalog.pageSelector.GoToNextPage">
+            </span>
+          </button>
+          <button type="button" class="btn btn-outline-secondary"
+            translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToLastPage',
+                              'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToLastPage' }"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || !scrpCtrl.pagesInSets.length
+              || scrpCtrl.currentChoice >= scrpCtrl.maxPage()"
+            ng-click="scrpCtrl.goToLastPage()">
+            <i class="far fa-angle-double-right"></i><!--
+            --><span class="sr-only"
+              data-translate="ui.storefront.searchCatalog.pageSelector.GoToLastPage">
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group d-none d-sm-block text-sm-center text-md-center text-lg-center">
+      <label class="control-label text-sm-center text-md-center text-lg-center w-100"
+        ng-hide="scrpCtrl.hideLabel == 'true'"
+        translate-cloak
+        ng-bind="scrpCtrl.showingLabelContent">
+      </label>
+      <div class="input-group">
+        <div class="btn-group btn-group-justified" role="group" aria-label="Paging">
+          <button type="button" class="btn btn-outline-secondary"
+            sid="btnFirstPage"
+            translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToFirstPage',
+                              'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToFirstPage' }"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || !scrpCtrl.pagesInSets.length
+              || !scrpCtrl.currentChoice"
+            ng-click="scrpCtrl.goToFirstPage()">
+            <i class="far fa-angle-double-left"></i><!--
+            --><span class="sr-only"
+              data-translate="ui.storefront.searchCatalog.pageSelector.GoToFirstPage">
+            </span>
+          </button>
+          <button type="button" class="btn btn-outline-secondary"
+            sid="btnPreviousPage"
+            translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToPreviousPage',
+                              'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToPreviousPage' }"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || !scrpCtrl.pagesInSets.length
+              || !scrpCtrl.currentChoice"
+            ng-click="scrpCtrl.goToPreviousPage()">
+            <i class="far fa-angle-left"></i><!--
+            --><span class="sr-only"
+              data-translate="ui.storefront.searchCatalog.pageSelector.GoToPreviousPage">
+            </span>
+          </button>
+          <!-- When there are no pages, show a disabled dummy button -->
+          <button ng-if="!scrpCtrl.pagesInSets.length"
+            type="button" class="btn d-none d-sm-block btn-primary"
+            ng-disabled="true">
+            1
+          </button>
+          <button ng-repeat="p in scrpCtrl.pagesInSets[scrpCtrl.pageSetCurrent]"
+            type="button" class="btn d-none d-sm-block"
+            id="btnPageNumber_{{$index}}" name="btnPageNumber_{{$index}}"
+            title="{{'ui.storefront.searchCatalog.pageSelector.GoToPage' | translate}} {{p+1}}"
+            aria-label="{{'ui.storefront.searchCatalog.pageSelector.GoToPage' | translate}} {{p+1}}"
+            ng-class="scrpCtrl.currentChoice == p ? 'btn-primary' : 'btn-outline-secondary'"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || p == scrpCtrl.currentChoice"
+            ng-click="scrpCtrl.currentChoice = p;"
+            ng-bind="p+1">
+          </button>
+          <button type="button" class="btn btn-outline-secondary"
+            sid="btnNextPage"
+            translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToNextPage',
+                              'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToNextPage' }"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || !scrpCtrl.pagesInSets.length
+              || (scrpCtrl.currentChoice+1) >= scrpCtrl.maxPage()"
+            ng-click="scrpCtrl.goToNextPage()">
+            <i class="far fa-angle-right"></i><!--
+            --><span class="sr-only"
+              data-translate="ui.storefront.searchCatalog.pageSelector.GoToNextPage">
+            </span>
+          </button>
+          <button type="button" class="btn btn-outline-secondary"
+            sid="btnLastPage"
+            translate-attr="{ title: 'ui.storefront.searchCatalog.pageSelector.GoToLastPage',
+                              'aria-label': 'ui.storefront.searchCatalog.pageSelector.GoToLastPage' }"
+            ng-disabled="scrpCtrl.service.searchIsRunning
+              || !scrpCtrl.pagesInSets.length
+              || (scrpCtrl.currentChoice+1) >= scrpCtrl.maxPage()"
+            ng-click="scrpCtrl.goToLastPage()">
+            <i class="far fa-angle-double-right"></i><!--
+            --><span class="sr-only"
+              data-translate="ui.storefront.searchCatalog.pageSelector.GoToLastPage">
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

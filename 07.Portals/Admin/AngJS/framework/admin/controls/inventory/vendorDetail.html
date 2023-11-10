@@ -1,0 +1,533 @@
+﻿<div class="container-fluid cv-details-form full-height">
+  <div cef-standard-detail-header-widget
+    record="vendorDetailCtrl.record"
+    new-kind-key="ui.admin.common.Vendor.New"
+    existing-kind-key="ui.admin.common.Vendor">
+  </div>
+  <div class="row details-body">
+    <div class="col-sm-12 vendor-editor">
+      <uib-tabset class="tabs-left" vertical="true">
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': vendorDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="vendorDetailCtrl.forms.Details">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                <text-input-form-group
+                  key="Name"
+                  ng-model="vendorDetailCtrl.record.Name"
+                  label-key="ui.admin.common.Name"
+                  tooltip-text="The name of the record."
+                  placeholder-key="ui.admin.common.Name"
+                  max-length="256"
+                  ng-required="true">
+                </text-input-form-group>
+                <div class="row">
+                  <text-input-form-group
+                    class="col-sm-9"
+                    key="CustomKey"
+                    ng-model="vendorDetailCtrl.record.CustomKey"
+                    label-key="ui.admin.common.Key"
+                    tooltip-text="The key of the record. In most cases, this is provided by a third party system. This record specifically requires a unique value even if not integrated with a 3rd party system."
+                    placeholder-key="ui.admin.common.Key"
+                    max-length="128"
+                    ng-required="false">
+                  </text-input-form-group>
+                  <div class="form-group col-sm-3">
+                    <label class="control-label"
+                      data-translate="ui.admin.controls.accounts.userDetail.CreatedDate">
+                    </label>
+                    <div class="input-group">
+                      <label class="form-control-static font-weight-normal"
+                        ng-bind="vendorDetailCtrl.record.CreatedDate | date">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <select-form-group
+                  key="TypeID"
+                  ng-model="vendorDetailCtrl.record.TypeID"
+                  selections="vendorDetailCtrl.types"
+                  label-key="ui.admin.common.Type"
+                  tooltip-text="The type of the record."
+                  placeholder-key="ui.admin.common.Type"
+                  ng-required="true">
+                </select-form-group>
+              </div>
+              <div class="col-sm-6" ng-if="vendorDetailCtrl.record">
+                <div cef-contact-editor-widget
+                  class="mb-3"
+                  contact="vendorDetailCtrl.record.Contact"
+                  is-editable="true"
+                  id-suffix="vendor"
+                  hide-key="true">
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="vendorDetailCtrl.cefConfig.featureSet.vendors.minMax">
+          <uib-tab-heading><span ng-class="{'text-danger': vendorDetailCtrl.forms.MinOrders.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.categoryDetail.MinimumOrders.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="vendorDetailCtrl.forms.MinOrders">
+            <div class="row">
+              <div cef-order-minimums-editor
+                master="vendorDetailCtrl.record"
+                class="col-sm-12"></div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="vendorDetailCtrl.cefConfig.featureSet.vendors.minMax && vendorDetailCtrl.cefConfig.featureSet.shipping.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': vendorDetailCtrl.forms.MinFreeShip.$invalid}"><i class="far fa-lg fa-truck"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.categoryDetail.FreeShipping"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="vendorDetailCtrl.forms.MinFreeShip">
+            <div class="row">
+              <div cef-free-shipping-minimums-editor
+                master="vendorDetailCtrl.record"
+                class="col-sm-12"></div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger':vendorDetailCtrl.forms.Images.$invalid}"><i class="far fa-lg fa-picture-o"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Image.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="vendorDetailCtrl.forms.Images">
+            <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.Image.Plural"></h3></div></div>
+            <div class="row">
+              <div class="col-sm-12">
+                <!-- Uploader -->
+                <div cef-upload-image-widget
+                  master="vendorDetailCtrl.record"
+                  upload-type="ImageStore"
+                  type-key="General"
+                  allow-multiple="true"
+                  is-primary="false">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <!-- Thumbnails -->
+                <div class="form-group">
+                  <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                  <div class="input-group">
+                    <div ng-if="vendorDetailCtrl.record.Images.length <= 0" data-translate="ui.admin.common.NoImagesHaveBeenUploaded"></div>
+                    <div ng-repeat="image in vendorDetailCtrl.record.Images" class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                      <div class="form-vertical">
+                        <div class="form-group">
+                          <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                            ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                      | corsImageLink : 'stores' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                            onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Admin/framework/store/img/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                        </div>
+                        <text-input-form-group
+                          key="ImageName{{$index}}"
+                          ng-model="image.Name"
+                          label-key="ui.admin.common.Name"
+                          max-length="128"
+                          ng-required="true">
+                        </text-input-form-group>
+                        <select-form-group
+                          key="ImageTypeID{{$index}}"
+                          ng-model="image.TypeID"
+                          selections="vendorDetailCtrl.imageTypes"
+                          label-key="ui.admin.common.Type"
+                          tooltip-text="The type of the record."
+                          placeholder-key="ui.admin.common.Type"
+                          ng-required="true">
+                        </select-form-group>
+                        <toggle-form-group
+                          key="ImageIsPrimary{{$index}}"
+                          ng-change="vendorDetailCtrl.clearOtherPrimaryImagesNew($index)"
+                          ng-model="image.IsPrimary"
+                          label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                          tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                          tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                          ng-required="false">
+                        </toggle-form-group>
+                        <button type="button" class="btn btn-danger btn-block"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="vendorDetailCtrl.removeImageNew($index)">
+                          <i class="far fa-trash-o"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': vendorDetailCtrl.forms.Purchasing.$invalid}"><i class="far fa-lg fa-usd"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.controls.inventory.vendorDetail.Purchasing"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="vendorDetailCtrl.forms.Purchasing">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 data-translate="ui.admin.controls.inventory.vendorDetail.PurchaseOrderSetting.Plural"></h3>
+                <text-input-form-group
+                  key="AccountNumber"
+                  ng-model="vendorDetailCtrl.record.AccountNumber"
+                  label-key="ui.admin.common.AccountNumber"
+                  placeholder-key="ui.admin.common.AccountNumber"
+                  max-length="100"
+                  ng-required="false">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="Terms"
+                  ng-model="vendorDetailCtrl.record.Terms"
+                  label-key="ui.admin.common.Terms"
+                  placeholder-key="ui.admin.common.Terms"
+                  max-length="100"
+                  ng-required="false">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="TermNotes"
+                  ng-model="vendorDetailCtrl.record.TermNotes"
+                  label-key="ui.admin.common.TermNotes"
+                  placeholder-key="ui.admin.common.TermNotes"
+                  ng-required="false">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="SendMethod"
+                  ng-model="vendorDetailCtrl.record.SendMethod"
+                  label-key="ui.admin.controls.inventory.vendorDetail.SendMethod"
+                  placeholder-key="ui.admin.controls.inventory.vendorDetail.SendMethod"
+                  max-length="100"
+                  ng-required="false">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="EmailSubject"
+                  ng-model="vendorDetailCtrl.record.EmailSubject"
+                  label-key="ui.admin.controls.inventory.vendorDetail.EmailSubject"
+                  placeholder-key="ui.admin.controls.inventory.vendorDetail.EmailSubject"
+                  max-length="300"
+                  ng-required="false">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="ShipTo"
+                  ng-model="vendorDetailCtrl.record.ShipTo"
+                  label-key="ui.admin.controls.inventory.vendorDetail.ShipTo"
+                  placeholder-key="ui.admin.controls.inventory.vendorDetail.ShipTo"
+                  max-length="100"
+                  ng-required="false">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="ShipViaNotes"
+                  ng-model="vendorDetailCtrl.record.ShipViaNotes"
+                  label-key="ui.admin.controls.inventory.vendorDetail.ShipViaNotes"
+                  placeholder-key="ui.admin.controls.inventory.vendorDetail.ShipViaNotes"
+                  ng-required="false">
+                </text-input-form-group>
+                <text-input-form-group
+                  key="SignBy"
+                  ng-model="vendorDetailCtrl.record.SignBy"
+                  label-key="ui.admin.controls.inventory.vendorDetail.SignatureBy"
+                  placeholder-key="ui.admin.controls.inventory.vendorDetail.SignatureBy"
+                  max-length="100"
+                  ng-required="false">
+                </text-input-form-group>
+              </div>
+              <div class="col-sm-6">
+                <h3 data-translate="ui.admin.common.Other"></h3>
+                <div class="row">
+                  <toggle-form-group
+                    class="col-xs-6"
+                    key="AllowDropShip"
+                    ng-model="vendorDetailCtrl.record.AllowDropShip"
+                    label-key="ui.admin.controls.inventory.vendorDetail.AllowsDropShip"
+                    tog-on-key="ui.admin.common.Yes" tog-on-style="btn-success"
+                    tog-off-key="ui.admin.common.No" tog-off-style="btn-danger"
+                    ng-required="false">
+                  </toggle-form-group>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger':vendorDetailCtrl.forms.Products.$invalid}"><i class="far fa-lg fa-object-group"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Product.Plural"></span></span></uib-tab-heading>
+          <div class="form-vertical container-fluid" ng-form="vendorDetailCtrl.forms.Products">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.inventory.vendorDetail.ProductsProducedByThisVendor"></h3>
+              </div>
+            </div>
+            <div class="row" ng-hide="vendorDetailCtrl.display.ShowAddProductsPanel">
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.common.AddProduct',
+                                    'aria-label': 'ui.admin.common.AddProduct' }"
+                  data-translate="ui.admin.common.AddProduct"
+                  ng-click="vendorDetailCtrl.showAddProductsPanel()">
+                </button>
+                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.controls.inventory.vendorDetail.TheseCanBeManagedFromTheProductEditorAsWell"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12" ng-hide="vendorDetailCtrl.display.ShowAddProductsPanel">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="min-width:50px;" data-translate="ui.admin.common.ID"></th>
+                      <th style="min-width:100px;" data-translate="ui.admin.common.CustomKey"></th>
+                      <th style="min-width:100px;" data-translate="ui.admin.common.Name"></th>
+                      <th style="max-width:125px;" ng-if="false" data-translate="ui.admin.controls.inventory.productDetail.MinInventory"></th>
+                      <th style="max-width:125px;" ng-if="false" data-translate="ui.admin.controls.inventory.productDetail.MaxInventory"></th>
+                      <th style="max-width:125px;" ng-if="false" data-translate="ui.admin.controls.inventory.productDetail.VendorListPrice"></th>
+                      <th style="max-width:125px;" ng-if="false" data-translate="ui.admin.controls.inventory.productDetail.ActualCost"></th>
+                      <th style="max-width:125px;" ng-if="false" data-translate="ui.admin.controls.inventory.productDetail.CostMultiplier"></th>
+                      <th style="width:43px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-if="vendorDetailCtrl.record.Products.length <= 0">
+                      <td colspan="9" data-translate="ui.admin.common.NoProductsHaveBeenAdded"></td>
+                    </tr>
+                    <tr ng-repeat="vp in vendorDetailCtrl.record.Products">
+                      <td><span class="form-control-static" ng-bind="vp.SlaveID || vp.SlaveID"></span></td>
+                      <td><span class="form-control-static" ng-bind="vp.SlaveKey || vp.SlaveKey"></span></td>
+                      <td><span class="form-control-static" ng-bind="vp.SlaveName || vp.SlaveName"></span></td>
+                      <td ng-if="false">
+                        <input type="number" class="form-control text-right" placeholder="1.0000"
+                          id="nudVendorMinInv{{$index}}" name="nudVendorMinInv{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="0" ng-min="0" step="1" max="{{vp.MaximumInventory}}"
+                          ng-model="vp.MinimumInventory" />
+                      </td>
+                      <td ng-if="false">
+                        <input type="number" class="form-control text-right" placeholder="1.0000"
+                          id="nudVendorMaxInv{{$index}}" name="nudVendorMaxInv{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/" min="{{vp.MinimumInventory}}" step="1"
+                          ng-model="vp.MaximumInventory" />
+                      </td>
+                      <td ng-if="false">
+                        <input type="number" class="form-control text-right" placeholder="1.00"
+                          id="nudVendorListedPrice{{$index}}" name="nudVendorListedPrice{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" min="0"
+                          ng-model="vp.ListedPrice" />
+                      </td>
+                      <td ng-if="false">
+                        <input type="number" class="form-control text-right" placeholder="1.00"
+                          id="nudVendorActualCost{{$index}}" name="nudVendorActualCost{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" min="0"
+                          ng-model="vp.ActualCost" />
+                      </td>
+                      <td ng-if="false">
+                        <input type="number" class="form-control text-right" placeholder="1.00"
+                          id="nudVendorCostMultiplier{{$index}}" name="nudVendorCostMultiplier{{$index}}"
+                          ng-required="false"
+                          ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" min="0"
+                          ng-model="vp.CostMultiplier" />
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger"
+                          translate-attr="{ title: 'ui.admin.common.Delete',
+                                            'aria-label': 'ui.admin.common.Delete' }"
+                          ng-click="vendorDetailCtrl.removeProduct($index)">
+                          <i class="far fa-times"></i><!--
+                          --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-12" ng-show="vendorDetailCtrl.display.ShowAddProductsPanel">
+                <div class="separator bottom"></div>
+                <div class="filter-bar">
+                  <div class="margin-none form-inline">
+                    <div class="form-group col-sm-3">
+                      <label data-translate="ui.admin.common.Key"></label>
+                      <div class="input-group">
+                        <input type="text" class="form-control"
+                          ng-model="vendorDetailCtrl.productSearchParams.ProductCode" />
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-3">
+                      <label data-translate="ui.admin.common.Name"></label>
+                      <div class="input-group">
+                        <input type="text" class="form-control"
+                          ng-model="vendorDetailCtrl.productSearchParams.ProductName" />
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                      <label>&nbsp;</label>
+                      <div class="input-group">
+                        <button type="button" class="btn btn-info"
+                          translate-attr="{ title: 'ui.admin.controls.accounts.storeDetail.SearchProduct.Plural',
+                                            'aria-label': 'ui.admin.controls.accounts.storeDetail.SearchProduct.Plural' }"
+                          ng-click="vendorDetailCtrl.searchProducts()">
+                          <i class="far fa-fw fa-filter"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.controls.accounts.storeDetail.SearchProduct.Plural"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                          translate-attr="{ title: 'ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plural',
+                                            'aria-label': 'ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plural' }"
+                          ng-click="vendorDetailCtrl.addProducts()">
+                          <i class="far fa-fw fa-plus"></i>&nbsp;<!--
+                          --><span data-translate="ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plural"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th data-translate="ui.admin.common.Select"></th>
+                      <th data-class="expand" data-translate="ui.admin.common.Key"></th>
+                      <th data-hide="phone,tablet" data-translate="ui.admin.common.Name"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-hide="vendorDetailCtrl.products.length > 0">
+                      <td colspan="4" data-translate="ui.admin.controls.accounts.storeDetail.NoProductsWereFoundWithThisSearchCriteria"></td>
+                    </tr>
+                    <tr ng-repeat="product in vendorDetailCtrl.products">
+                      <td><input type="checkbox" ng-model="product.Selected" /></td>
+                      <td ng-bind="product.CustomKey"></td>
+                      <td ng-bind="product.Name"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="form-actions m-0">
+                  <button type="button" class="btn btn-primary"
+                    translate-attr="{ title: 'ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plura',
+                                      'aria-label': 'ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plura' }"
+                    ng-click="vendorDetailCtrl.addProducts()">
+                    <i class="far fa-fw fa-plus"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.controls.accounts.storeDetail.AddSelectedProduct.Plural"></span>
+                  </button>
+                  <button type="button" class="btn btn-info"
+                    translate-attr="{ title: 'ui.admin.common.Cancel',
+                                      'aria-label': 'ui.admin.common.Cancel' }"
+                    ng-click="vendorDetailCtrl.hideAddProductsPanel()">
+                    <i class="far fa-fw fa-undo"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Cancel"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab ng-if="vendorDetailCtrl.cefConfig.featureSet.manufacturers.enabled">
+          <uib-tab-heading><span ng-class="{'text-danger': vendorDetailCtrl.forms.Manufacturers.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Manufacturer.Plural"></span></span></uib-tab-heading>
+          <div class="container-fluid" ng-form="vendorDetailCtrl.forms.Manufacturers">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.controls.inventory.vendorDetail.ManufacturersThatProvideProductsToThisVendor"></h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 mb-3">
+                <button type="button" class="btn btn-primary"
+                  translate-attr="{ title: 'ui.admin.common.AddManufacturer',
+                                    'aria-label': 'ui.admin.common.AddManufacturer' }"
+                  data-translate="ui.admin.common.AddManufacturer"
+                  ng-click="vendorDetailCtrl.addManufacturer()">
+                </button>
+                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                --><span data-translate="ui.admin.common.TheseCanBeManagedFromTheManufacturerEditorAsWell"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="table-responsive">
+                  <table class="table table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th style="width:50px;">#</th>
+                        <th data-translate="ui.admin.common.Manufacturer"></th>
+                        <th style="width:43px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-if="vendorDetailCtrl.record.Manufacturers.length == 0">
+                        <td colspan="3" data-translate="ui.admin.common.NoManufacturersHaveBeenAdded"></td>
+                      </tr>
+                      <tr ng-repeat="mnfVendor in vendorDetailCtrl.record.Manufacturers">
+                        <td><label class="form-control-static" ng-bind="mnfVendor.ID"></label></td>
+                        <td>
+                          <select class="form-control"
+                            id="ddlManufacturerID{{$index}}"
+                            name="ddlManufacturerID{{$index}}"
+                            ng-required="true"
+                            ng-options="m.ID as ((m.DisplayName || m.Name) + (m.CustomKey && m.CustomKey != '' ? ' [' + m.CustomKey + ']' : ''))
+                                        for m in vendorDetailCtrl.manufacturers
+                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                            ng-model="mnfVendor.MasterID">
+                            <option value="" ng-disabled="true"
+                              data-translate="ui.admin.common.SelectAManufacturer">
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger"
+                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                              'aria-label': 'ui.admin.common.Delete' }"
+                            ng-click="vendorDetailCtrl.removeManufacturer($index)">
+                            <i class="far fa-times"></i><!--
+                            --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger': vendorDetailCtrl.forms.Notes.$invalid}"><i class="far fa-lg fa-sticky-note-o"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Note.Plural"></span></span></uib-tab-heading>
+          <div class="container-fluid" ng-form="vendorDetailCtrl.forms.Notes">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3 data-translate="ui.admin.common.PrivateNote.Plural"></h3>
+              </div>
+            </div>
+            <div class="row">
+              <div cef-notes-editor
+                class="col-sm-12"
+                notes="vendorDetailCtrl.record.Notes"
+                note-type-name="'Private'">
+              </div>
+            </div>
+          </div>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><span ng-class="{'text-danger':vendorDetailCtrl.forms.Attributes.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+          --><span data-translate="ui.admin.common.Attribute.Plural"></span></span></uib-tab-heading>
+          <div class="container-fluid" ng-form="vendorDetailCtrl.forms.Attributes">
+            <div cef-json-attributes-editor
+              master="vendorDetailCtrl.record"
+              type="Vendor"
+              ng-if="vendorDetailCtrl.record != null">
+            </div>
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+  </div>
+  <!-- Form actions -->
+  <div class="row details-footer">
+    <div class="col-md-12">
+      <cef-standard-detail-footer-buttons
+        master-controller="vendorDetailCtrl"
+        return-state="inventory.vendors.list"
+        permissions-base="Vendors.Vendor">
+      </cef-standard-detail-footer-buttons>
+    </div>
+  </div>
+</div>

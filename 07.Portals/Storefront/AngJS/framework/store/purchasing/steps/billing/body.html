@@ -1,0 +1,94 @@
+<!-- step.billing.body Template -->
+<div class="row" ng-form="psbbCtrl.forms.billing">
+  <div class="col-12">
+    <h4 class="mt-2"><span sid="CheckoutBillingStageText"
+      data-translate="ui.storefront.checkout.billingInfo.whichAddy"></span>&nbsp;<!--
+    --><span class="text-danger">*</span></h4>
+  </div>
+  <div ng-if="psbbCtrl.viewState.running"
+    cef-loading-widget
+    overlay="true" pad-in="true"
+    message="psbbCtrl.viewState.waitMessage">
+  </div>
+  <div ng-if="psbbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group"
+          ng-class="{ 'has-error': psbbCtrl.forms.billing.ddlBillingSelection.$invalid }">
+          <div class="input-group">
+            <select class="form-control custom-select"
+              sid="BillingAddressDropDownText"
+              ng-class="{ 'is-valid': psbbCtrl.forms.billing.ddlBillingSelection.$valid,
+                          'is-invalid': psbbCtrl.forms.billing.ddlBillingSelection.$invalid }"
+              id="ddlBillingSelection" name="ddlBillingSelection"
+              ng-change="psbbCtrl.onChange()"
+              ng-required="true"
+              ng-options="ac as (ac | acToDropdownItem)
+                          for ac in psbbCtrl.book
+                          | filter:{SerializableAttributes: {isBilling: {Value: ''}}}:false
+                          | orderBy: ['Slave.Address.CustomKey','Slave.CustomKey','CustomKey']"
+              ng-model="psbbCtrl.currentAccountContact">
+              <option ng-disabled="true" value=""
+                data-translate="ui.storefront.userDashboard2.controls.addressBook.PleaseSelectABillingAddress">
+              </option>
+            </select>
+            <!-- <div class="input-group-append input-group-btn">
+              <button type="button" class="btn btn-secondary rounded-right"
+                id="btnAddBilling" name="btnAddBilling"
+                translate-attr="{ title: 'ui.storefront.cart.Add',
+                                  'aria-label': 'ui.storefront.cart.Add' }"
+                data-translate="ui.storefront.cart.Add"
+                ng-click="psbbCtrl.add()">
+              </button>
+            </div> -->
+            <div ng-messages-multiple ng-messages="psbbCtrl.forms.billing.ddlBillingSelection.$error"
+              role="alert" class="invalid-feedback">
+              <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="!psbbCtrl.currentAccountContact.Slave.Address.CountryID"
+        class="col-12">
+        <div class="alert alert-info mb-3 py-2">
+          <span data-translate="ui.storefront.purchasing.PleaseSelectAnAddress.Message">
+          </span>
+        </div>
+      </div>
+      <div ng-if="psbbCtrl.currentAccountContact.Slave
+        && psbbCtrl.currentAccountContact.Slave.Address.Street1"
+        class="col-12 col-lg-9 col-xl-9 col-tk-6 col-fk-6">
+        <div cef-contact-address-block
+          contact="psbbCtrl.currentAccountContact.Slave"
+          no-links="true"
+          two-col="true"
+          class="mb-3">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="!psbbCtrl.cvAuthenticationService.isAuthenticated()"
+    class="col-12">
+    <div cef-contact-widget
+      contact="psbbCtrl.currentAccountContact.Slave"
+      hide-key="!psbbCtrl.cefConfig.featureSet.addressBook.enabled
+             || !psbbCtrl.cvAuthenticationService.isAuthenticated()"
+      address-title="psbbCtrl.addressTitle"
+      id-suffix="psbbCtrl.idSuffix"
+      on-input-change="psbbCtrl.onChange()"
+      is-billing="true">
+    </div>
+  </div>
+  <div ng-if="psbbCtrl.smtmd"
+    class="col-12">
+    <div class="form-group checkbox">
+      <label class="control-label">
+        <input type="checkbox"
+          ng-required="false"
+          ng-model="psbbCtrl.makeThisNewDefaultBilling" />&nbsp;<!--
+        --><span data-translate="ui.storefront.purchasing.MakeThisMyNewDefaultBillingAddress"></span>
+      </label>
+    </div>
+  </div>
+</div>

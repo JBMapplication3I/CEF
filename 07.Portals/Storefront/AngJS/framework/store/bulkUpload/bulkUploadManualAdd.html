@@ -1,0 +1,25 @@
+﻿<!-- Bulk Upload Manual Add Item Form -->
+<div class="row">
+    <div class="col-8">
+        <input type="text" class="form-control"
+               id="autoSearchUpload" name="autoSearchUpload"
+               translate-attr="{ placeholder: 'ui.storefront.cart.searchProducts', title: 'ui.storefront.cart.searchProducts' }"
+               uib-typeahead="p.ID as (p.ID + ' - ' + p.Name) for p in cefBulkUploadCtrl.loadProductList(productID)"
+               typeahead-loading="loadingProducts"
+               typeahead-wait-ms="500"
+               typeahead-min-length="1"
+               ng-model="productID" />
+    </div>
+    <div class="col-2 table-responsive">
+        <input type="number" class="form-control"
+               translate-attr="{ placeholder: 'ui.storefront.common.Quantity.Abbreviation' }"
+               min="1"
+               ng-model="item.Quantity" />
+    </div>
+    <div class="col-2 table-responsive">
+        <button type="button" class="btn btn-primary"
+                translate-attr="{ title: 'ui.storefront.cart.Add', 'aria-label': 'ui.storefront.cart.Add' }"
+                ng-click="cefBulkUploadCtrl.manualAdd(productID, 'Temp Cart', item.Quantity)"
+                data-translate="ui.storefront.cart.Add"></button>
+    </div>
+</div>

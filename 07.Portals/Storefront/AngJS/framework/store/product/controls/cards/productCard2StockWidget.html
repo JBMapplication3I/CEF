@@ -1,0 +1,34 @@
+<div ng-if="!pcswCtrl.hideS && !pcswCtrl.viewState.running && pcswCtrl.product.readInventory()"
+  ng-switch="pcswCtrl.product.readInventory().IsUnlimitedStock">
+  <small ng-switch-when="true" class="alert alert-success p-1"
+    data-translate="ui.storefront.common.Unlimited">
+  </small>
+  <span ng-switch-default>
+    <span ng-switch="pcswCtrl.product.readInventory().IsOutOfStock">
+      <span ng-switch-when="false" class="alert alert-success p-1">
+        <small ng-if="pcswCtrl.countStoreStockOnly"
+          ng-bind="pcswCtrl.product.inventoryObject.storeQty | number"></small><!--
+        --><small ng-if="!pcswCtrl.countStoreStockOnly"
+          ng-bind="(pcswCtrl.product.readInventory().QuantityOnHand || 0) | number"></small>&nbsp;<!--
+        --><small data-translate="ui.storefront.common.InStock">
+        </small>
+      </span>
+      <span ng-switch-when="true">
+        <span ng-switch="pcswCtrl.product.readInventory().AllowBackOrder">
+          <small ng-switch-when="true" class="alert alert-warning p-1"
+            sid="InventoryStatusText_{{pcswCtrl.product.CustomKey}}"
+            data-translate="ui.storefront.common.OnBackorder">
+          </small>
+          <small ng-switch-when="false" class="alert alert-danger p-1"
+            data-translate="ui.storefront.common.OutOfStock">
+          </small>
+        </span>
+      </span>
+    </span>
+  </span>
+</div>
+<div ng-if="pcswCtrl.viewState.running || pcswCtrl.product.readInventory().loading"
+  cef-loading-widget
+  overlay="true"
+  message="pcswCtrl.viewState.waitMessage">
+</div>

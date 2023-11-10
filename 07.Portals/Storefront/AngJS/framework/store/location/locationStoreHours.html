@@ -1,0 +1,11 @@
+﻿<table class="store-hours" ng-class="{small: locationHoursCtrl.smallText}">
+    <tbody>
+        <tr ng-repeat="(day, hours) in locationHoursCtrl.templateHours">
+            <td><b>{{day}}&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+            <td ng-if="!hours.open" data-translate="ui.storefront.location.shipTo.shipToDetails.Closed"></td>
+            <td ng-if="hours.open > 0" class="text-right">{{hours.open | numberToTime}}</td>
+            <td ng-if="hours.close > 0">&nbsp;-&nbsp;</td>
+            <td ng-if="hours.close > 0">{{hours.close | numberToTime}}</td>
+        </tr>
+    </tbody>
+</table>

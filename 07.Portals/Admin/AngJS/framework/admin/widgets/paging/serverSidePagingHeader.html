@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-sm-12"
+    ng-class="{ 'col-md-8': wssphCtrl.narrow,
+                'col-md-5 col-lg-5': !wssphCtrl.narrow }">
+    <div class="form-group">
+      <label class="control-label"
+        data-translate="ui.admin.common.QuickFilter">
+      </label>
+      <input type="text" class="form-control"
+        translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+        ng-disabled="wssphCtrl.disabled"
+        ng-model-options="wssphCtrl.debounce500"
+        ng-model="wssphCtrl.paging.quickFilter" />
+    </div>
+  </div>
+  <div ng-class="{ 'col-sm-12 col-md-4': wssphCtrl.narrow,
+                   'col-sm-3 col-md-2 col-lg-2': !wssphCtrl.narrow }">
+    <div class="form-group">
+      <label class="control-label"
+        data-translate="ui.admin.common.PageSize">
+      </label>
+      <select class="form-control text-right"
+        ng-disabled="wssphCtrl.disabled"
+        ng-options="o for o in [8,16,32,64,128]"
+        ng-model="wssphCtrl.paging.pageSize">
+      </select>
+    </div>
+  </div>
+  <div ng-class="{ 'col-sm-12': wssphCtrl.narrow,
+                   'col-xs-12 col-sm-9 col-md-5 col-lg-5': !wssphCtrl.narrow }">
+    <div class="form-group">
+      <label class="control-label text-center"
+        ng-bind="wssphCtrl.paging.showingLabelContent">
+      </label>
+      <div class="input-group">
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-info"
+            ng-disabled="wssphCtrl.paging.currentPage <= 0 || wssphCtrl.disabled"
+            ng-click="wssphCtrl.paging.goToFirstPage()">
+            <i class="far fa-fw fa-angle-double-left"></i>
+          </button>
+          <button type="button" class="btn btn-info"
+            ng-disabled="wssphCtrl.paging.currentPage <= 0 || wssphCtrl.disabled"
+            ng-click="wssphCtrl.paging.goToPreviousPage()">
+            <i class="far fa-fw fa-angle-left"></i>
+          </button>
+        </div>
+        <select class="form-control" style="min-width: 75px;"
+          ng-disabled="wssphCtrl.disabled"
+          ng-options="p as (p+1) for p in (wssphCtrl.paging.pages() || [0])"
+          ng-model="wssphCtrl.paging.currentPage">
+        </select>
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-info"
+            ng-disabled="wssphCtrl.paging.currentPage >= wssphCtrl.paging.maxPage()-1 || wssphCtrl.disabled"
+            ng-click="wssphCtrl.paging.goToNextPage()">
+            <i class="far fa-fw fa-angle-right"></i>
+          </button>
+          <button type="button" class="btn btn-info"
+            ng-disabled="wssphCtrl.paging.currentPage >= wssphCtrl.paging.maxPage()-1 || wssphCtrl.disabled"
+            ng-click="wssphCtrl.paging.goToLastPage()">
+            <i class="far fa-fw fa-angle-double-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

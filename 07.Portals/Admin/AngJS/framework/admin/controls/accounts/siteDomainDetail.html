@@ -1,0 +1,288 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="siteDomainDetailCtrl.record"
+         new-kind-key="ui.admin.common.SiteDomain.New"
+         existing-kind-key="ui.admin.common.SiteDomain">
+    </div>
+    <div class="row details-body">
+        <div class="col-sm-12 site-domain-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': siteDomainDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="siteDomainDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtName.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtName" name="txtName"
+                                               ng-required="true" maxlength="128"
+                                               ng-model="siteDomainDetailCtrl.record.Name" />
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtName.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtCustomKey" name="txtCustomKey"
+                                               ng-required="true" maxlength="128"
+                                               ng-model="siteDomainDetailCtrl.record.CustomKey" />
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtCustomKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtUrl.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Url"></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon" aria-hidden="true"><i class="far fa-globe"></i></div>
+                                        <input type="text" class="form-control" id="txtUrl" name="txtUrl"
+                                               ng-required="true"
+                                               ng-model="siteDomainDetailCtrl.record.Url" />
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtUrl.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtAlternateUrl1.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.AlternateUrl.No1"></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon" aria-hidden="true"><i class="far fa-globe"></i></div>
+                                        <input type="text" class="form-control" id="txtAlternateUrl1" name="txtAlternateUrl1"
+                                               ng-required="false"
+                                               ng-model="siteDomainDetailCtrl.record.AlternateUrl1" />
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtAlternateUrl1.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtAlternateUrl2.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.AlternateUrl.No2"></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon" aria-hidden="true"><i class="far fa-globe"></i></div>
+                                        <input type="text" class="form-control" id="txtAlternateUrl2" name="txtAlternateUrl2"
+                                               ng-required="false"
+                                               ng-model="siteDomainDetailCtrl.record.AlternateUrl2" />
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtAlternateUrl2.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtAlternateUrl3.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.AlternateUrl.No3"></label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon" aria-hidden="true"><i class="far fa-globe"></i></div>
+                                        <input type="text" class="form-control" id="txtAlternateUrl3" name="txtAlternateUrl3"
+                                               ng-required="false"
+                                               ng-model="siteDomainDetailCtrl.record.AlternateUrl3" />
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtAlternateUrl3.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtaCatalogContent.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.accounts.siteDomainDetail.CatalogLandingHeader"></label>
+                                    <div class="input-group">
+                                        <textarea kendo-editor k-encoded="false" style="width: 100%; height: 300px;"
+                                                  id="txtaCatalogContent" name="txtaCatalogContent"
+                                                  k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  ng-model="siteDomainDetailCtrl.record.CatalogContent"></textarea>
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtaCatalogContent.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h3 data-translate="ui.admin.controls.accounts.siteDomainDetail.StaticContent"></h3>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtaHeaderContent.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Header"></label>
+                                    <div class="input-group">
+                                        <textarea kendo-editor k-encoded="false" style="width: 100%; height: 300px;"
+                                                  id="txtaHeaderContent" name="txtaHeaderContent"
+                                                  k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  ng-model="siteDomainDetailCtrl.record.HeaderContent"></textarea>
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtaHeaderContent.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtaSideBarContent.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Sidebar"></label>
+                                    <div class="input-group">
+                                        <textarea kendo-editor k-encoded="false" style="width: 100%; height: 300px;"
+                                                  id="txtaSideBarContent" name="txtaSideBarContent"
+                                                  k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  ng-model="siteDomainDetailCtrl.record.SideBarContent"></textarea>
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtaSideBarContent.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': siteDomainDetailCtrl.forms.Details.txtaFooterContent.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Footer"></label>
+                                    <div class="input-group">
+                                        <textarea kendo-editor k-encoded="false" style="width: 100%; height: 300px;"
+                                                  id="txtaFooterContent" name="txtaFooterContent"
+                                                  k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList','indent','createLink','insertImage','createTable']"
+                                                  ng-model="siteDomainDetailCtrl.record.FooterContent"></textarea>
+                                    </div>
+                                    <div ng-messages="siteDomainDetailCtrl.forms.Details.txtaFooterContent.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': siteDomainDetailCtrl.forms.Brands.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Brand.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="siteDomainDetailCtrl.forms.Brands">
+                        <div class="row">
+                            <div class="col-sm-12 mb-3">
+                                <h3 data-translate="ui.admin.controls.accounts.siteDomainDetail.BrandsThatUseThisSiteDomain"></h3>
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="siteDomainDetailCtrl.addBrand()"
+                                        data-translate="ui.admin.controls.accounts.siteDomainDetail.AddBrand"></button>
+                                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                                --><span data-translate="ui.admin.controls.accounts.siteDomainDetail.TheseCanBeManagedFromTheBrandEditorAsWell"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="50px">#</th>
+                                                <th data-translate="ui.admin.common.Brand"></th>
+                                                <th width="43px"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="!siteDomainDetailCtrl.record.Brands.length">
+                                                <td colspan="3"
+                                                    data-translate="ui.admin.common.NoBrandsHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="brandStore in siteDomainDetailCtrl.record.Brands">
+                                                <td><label class="form-control-static" ng-bind="brandStore.ID"></label></td>
+                                                <td>
+                                                    <select class="form-control"
+                                                            id="ddlBrand{{$index}}" name="ddlBrand{{$index}}"
+                                                            ng-required="true"
+                                                            ng-options="b.ID as ((b.DisplayName || b.Name) + (b.CustomKey && b.CustomKey != '' ? ' [' + b.CustomKey + ']' : ''))
+                                                                        for b in siteDomainDetailCtrl.brands
+                                                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                                                            ng-model="brandStore.MasterID">
+                                                        <option value="" ng-disabled="true"
+                                                                data-translate="ui.admin.controls.accounts.siteDomainDetail.SelectABrand"></option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            ng-click="siteDomainDetailCtrl.removeBrand($index)">
+                                                        <i class="far fa-trash-o"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': siteDomainDetailCtrl.forms.SocialProviders.$invalid}"><i class="far fa-lg fa-globe"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.SocialProvider.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="siteDomainDetailCtrl.forms.SocialProviders">
+                        <div class="row">
+                            <div class="col-sm-12 mb-3">
+                                <h3 data-translate="ui.admin.controls.accounts.siteDomainDetail.SocialProvidersForThisSiteDomain"></h3>
+                                <button type="button" class="btn btn-primary"
+                                        ng-click="siteDomainDetailCtrl.addSocialProvider()"
+                                        data-translate="ui.admin.controls.accounts.siteDomainDetail.AddSocialProvider"></button>
+                                <b data-translate="ui.admin.common.Note"></b>&nbsp;<!--
+                                --><span data-translate="ui.admin.controls.accounts.siteDomainDetail.TheseCanBeManagedFromTheSocialProviderEditorAsWell"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="50px">#</th>
+                                                <th data-translate="ui.admin.common.SocialProvider"></th>
+                                                <th data-translate="ui.admin.common.Script"></th>
+                                                <th data-translate="ui.admin.common.UrlValue.Plural"></th>
+                                                <th width="43px"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="!siteDomainDetailCtrl.record.SiteDomainSocialProviders.length">
+                                                <td colspan="5"
+                                                    data-translate="ui.admin.common.NoSocialProvidersHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="siteDomainSocialProvider in siteDomainDetailCtrl.record.SiteDomainSocialProviders">
+                                                <td><label class="form-control-static" ng-bind="siteDomainSocialProvider.ID"></label></td>
+                                                <td>
+                                                    <select class="form-control"
+                                                            id="ddlSiteDomain{{$index}}" name="ddlSiteDomain{{$index}}"
+                                                            ng-required="true"
+                                                            ng-options="sp.ID as ((sp.DisplayName || sp.Name) + (sp.CustomKey && sp.CustomKey != '' ? ' [' + sp.CustomKey + ']' : ''))
+                                                                        for sp in siteDomainDetailCtrl.socialProviders
+                                                                        | orderBy: ['SortOrder','DisplayName || Name']"
+                                                            ng-model="siteDomainSocialProvider.SlaveID">
+                                                        <option value="" ng-disabled="true"
+                                                                data-translate="ui.admin.controls.accounts.siteDomainDetail.SelectASocialProvider"></option>
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" class="form-control" ng-model="siteDomainSocialProvider.Script" /></td>
+                                                <td><input type="text" class="form-control" ng-model="siteDomainSocialProvider.UrlValues" /></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            ng-click="siteDomainDetailCtrl.removeSocialProvider($index)">
+                                                        <i class="far fa-times"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': siteDomainDetailCtrl.forms.Attributes.$invalid}"><i class="far fa-lg fa-list"></i>&nbsp;<!--
+                    --><span data-translate="ui.admin.common.Attribute.Plural"></span></span></uib-tab-heading>
+                    <div class="container-fluid" ng-form="siteDomainDetailCtrl.forms.Attributes">
+                        <cef-json-attributes-editor
+                            master="siteDomainDetailCtrl.record"
+                            type="Site Domain"
+                            ng-if="siteDomainDetailCtrl.record">
+                        </cef-json-attributes-editor>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="siteDomainDetailCtrl"
+                return-state="accounts.siteDomains.list"
+                permissions-base="Stores.SiteDomain">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

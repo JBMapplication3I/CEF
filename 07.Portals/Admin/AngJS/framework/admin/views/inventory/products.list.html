@@ -1,0 +1,224 @@
+﻿<div ng-controller="InventoryProductSearchController as inventoryProductSearch"
+  class="full-height">
+  <cv-page
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Inventory.Products')"
+    caption="Manage Products"
+    head-icon="fa-list">
+    <cv-widget>
+      <widget-menu-item
+        caption="Add Product"
+        icon-class="fa-plus-circle"
+        click="$root.$state.go('inventory.products.detail',{ID:'New'})"
+        permission="'Products.Product.Create'">
+      </widget-menu-item>
+      <widget-menu-item
+        caption="Import Products"
+        icon-class="fa-cloud-upload"
+        click="$root.$state.go('inventory.products.import')"
+        permission="'/^Products\\.Product\\.(?:Create|Update)$/'">
+      </widget-menu-item>
+      <widget-menu-item
+        caption="Import Seo Keywords"
+        icon-class="fa-cloud-upload"
+        click="$root.$state.go('inventory.products.import')"
+        permission="'/^Products\\.Product\\.(?:Create|Update)$/'">
+      </widget-menu-item>
+      <widget-menu-item
+        caption="Export to Excel"
+        icon-class="fa-download"
+        click="$parent.$parent.$parent.$parent.inventoryProductSearch.doExportToExcel()"
+        permission="'Products.Product.Export'">
+      </widget-menu-item>
+      <widget-menu-item
+        caption="View Product Site Map"
+        icon-class="fa-eye"
+        click="$parent.$parent.$parent.$parent.inventoryProductSearch.doGetProductSiteMapContent()"
+        permission="'/^Products\\.Product\\.(?:Create|Update)$/'">
+      </widget-menu-item>
+      <widget-menu-item
+        caption="Regenerate Product Site Map"
+        icon-class="fa-refresh"
+        click="$parent.$parent.$parent.$parent.inventoryProductSearch.doRegenerateProductSiteMap()"
+        permission="'/^Products\\.Product\\.(?:Create|Update)$/'">
+      </widget-menu-item>
+      <widget-menu-item
+        caption="Index Products"
+        icon-class="fa-refresh"
+        click="$parent.$parent.$parent.$parent.inventoryProductSearch.doIndexProducts()"
+        permission="'/^Products\\.Product\\.(?:Create|Update)$/'">
+      </widget-menu-item>
+
+      <widget-body ng-controller="SearchController as search">
+        <cv-grid
+          show-pager="true"
+          page-sizes="8,16,32,64,128"
+          server-paging="true"
+          sortable="false"
+          server-sorting="true"
+          groupable="false"
+          filter-side="true"
+          force-show-labels="true"
+          on-search="search.getProducts"
+          no-initial-run="false"
+          partial-reset="false"
+          on-deactivate="search.deactivateProduct"
+          on-reactivate="search.reactivateProduct"
+          on-delete="search.deleteProduct"
+          edit-state="inventory.products.detail,[ID]"
+          permissions-base="Products.Product">
+          <cv-query-param field="SkipPricing" value="true" />
+          <cv-column
+            if="$parent.search.cefConfig.featureSet.categories.enabled"
+            hidden
+            field="CategoryID"
+            title="Category"
+            filter
+            filter-type="select"
+            on-option-repeat="$parent.search.getCategories">
+            <option value=""
+              data-translate="ui.admin.views.inventory.productslist.Any">
+            </option>
+          </cv-column>
+          <cv-column
+            hidden
+            field="TypeID"
+            title="Type"
+            filter
+            filter-type="select"
+            on-option-repeat="$parent.search.searchTypes.getProductTypes">
+            <option value=""
+              data-translate="ui.admin.views.inventory.productslist.Any">
+            </option>
+          </cv-column>
+          <cv-column
+            if="$parent.search.cefConfig.featureSet.stores.enabled"
+            hidden
+            field="StoreID"
+            title="Store"
+            filter
+            filter-type="select"
+            on-option-repeat="$parent.search.getStores">
+            <option value=""
+              data-translate="ui.admin.views.inventory.productslist.Any">
+            </option>
+          </cv-column>
+          <cv-column
+            if="$parent.search.cefConfig.featureSet.vendors.enabled"
+            hidden
+            field="VendorID"
+            title="Vendor"
+            filter
+            filter-type="select"
+            on-option-repeat="$parent.search.getVendors">
+            <option value=""
+              data-translate="ui.admin.views.inventory.productslist.Any">
+            </option>
+          </cv-column>
+          <cv-column
+            if="$parent.search.cefConfig.featureSet.manufacturers.enabled"
+            hidden
+            field="ManufacturerID"
+            title="Manufacturer"
+            filter
+            filter-type="select"
+            on-option-repeat="$parent.search.getManufacturers">
+            <option value=""
+              data-translate="ui.admin.views.inventory.productslist.Any">
+            </option>
+          </cv-column>
+          <cv-column
+            field="ID"
+            title="#"
+            width="6%"
+            header-class="text-center"
+            cell-class="text-right"
+            filter filter-type="id"
+            sort-by="4"
+            sort-by-direction="asc"
+            groupable="false" />
+          <cv-column
+            field="CustomKey"
+            title="Key"
+            width="15%"
+            filter
+            sort-by="1"
+            sort-by-direction="asc"
+            groupable="false" />
+          <cv-column
+            field="Name"
+            width="20%"
+            filter
+            sort-by="2"
+            sort-by-direction="asc"
+            groupable="false" />
+          <cv-column
+            field="SeoUrl"
+            title="SEO URL"
+            width="20%"
+            filter
+            groupable="false" />
+          <cv-column
+            field="TypeName"
+            title="Type"
+            hidden
+            groupable="false" />
+          <cv-column
+            field="IsVisible"
+            title="Visible"
+            type="boolean"
+            width="5%"
+            cell-class="text-center"
+            header-class="text-center"
+            filter
+            filter-type="boolean"
+            filter-value="true" />
+          <cv-column
+            field="IsDiscontinued"
+            title="Disc."
+            type="boolean"
+            width="5%"
+            cell-class="text-center"
+            header-class="text-center"
+            filter
+            filter-type="boolean"
+            filter-value="false" />
+          <cv-column
+            if="$parent.search.cefConfig.featureSet.shipping.enabled"
+            field="NothingToShip"
+            title="No Ship"
+            type="boolean"
+            width="5%"
+            cell-class="text-center"
+            header-class="text-center"
+            filter
+            filter-type="boolean"
+            filter-value="false" />
+          <cv-column
+            field="SortOrder"
+            title="Sort"
+            type="number"
+            width="5%"
+            header-class="text-center"
+            cell-class="text-right"
+            sort-by="3"
+            sort-by-direction="asc"
+            groupable="false" />
+          <cv-column
+            field="Active"
+            title="Active"
+            type="boolean"
+            width="5%"
+            cell-class="text-center"
+            header-class="text-center"
+            filter
+            filter-type="boolean"
+            filter-value="true" />
+          <!-- Example attribute column with filter:
+          <cv-column field="TestMaterial" title="Test Material" type="attribute"
+            filter filter-type="attribute" />
+          -->
+        </cv-grid>
+      </widget-body>
+    </cv-widget>
+  </cv-page>
+</div>

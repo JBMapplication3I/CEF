@@ -1,0 +1,100 @@
+﻿@using Newtonsoft.Json
+@inherits MVC.Core.ModalEditAssociationBase<StoreUserModel>
+@inject CEFConfig cefConfig
+
+<Modal @ref="ModalRef">
+  <ModalContent Centered="true">
+    <ModalHeader
+      Background="Background.Dark"
+      TextColor="TextColor.Light"
+      Padding="Padding.Is2.OnY">
+      <ModalTitle>Edit Store User #@(Association?.ID)</ModalTitle>
+      <CloseButton
+        TextColor="TextColor.Light"
+        Clicked="@(() => HideAsync(false))"
+      />
+    </ModalHeader>
+    <ModalBody Padding="Padding.Is0.FromBottom">
+      <Row>
+        <Column>
+          <Paragraph>
+            There are no additional data points to adjust.
+          </Paragraph>
+        </Column>
+      </Row>
+    </ModalBody>
+    <ModalFooter Background="Background.Dark" Padding="Padding.Is2.OnY">
+      <Button
+        Color="Color.Secondary"
+        Clicked="@(() => HideAsync(false))">
+        Cancel
+      </Button>
+      <Button
+        Color="Color.Primary"
+        Clicked="@(() => HideAsync(true))">
+        Save
+      </Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+
+@*
+@code
+{
+  private StoreUserModel Association { get; set; } = null!;
+
+  private Action<bool, StoreUserModel>? Callback { get; set; }
+
+  private Func<bool, StoreUserModel, Task>? CallbackAsync { get; set; }
+
+  private Modal? modalRef;
+
+  /// <summary>Shows.</summary>
+  /// <param name="association">The association.</param>
+  /// <param name="callback">   The callback.</param>
+  /// <returns>A Task.</returns>
+  public Task ShowAsync(
+    StoreUserModel association,
+    Action<bool, StoreUserModel>? callback = null)
+  {
+    Association = JsonConvert.DeserializeObject<StoreUserModel>(
+      JsonConvert.SerializeObject(association))!;
+    Callback = callback;
+    Result = false;
+    return modalRef!.Show();
+  }
+
+  /// <summary>Shows.</summary>
+  /// <param name="association">The association.</param>
+  /// <param name="callback">   The callback.</param>
+  /// <returns>A Task.</returns>
+  public Task ShowAsync(
+    StoreUserModel association,
+    Func<bool, StoreUserModel, Task>? callback = null)
+  {
+    Association = JsonConvert.DeserializeObject<StoreUserModel>(
+      JsonConvert.SerializeObject(association))!;
+    CallbackAsync = callback;
+    Result = false;
+    return modalRef!.Show();
+  }
+
+  /// <summary>Gets a value indicating whether the result was true or false.</summary>
+  /// <value>True if result, false if not.</value>
+  public bool Result { get; private set; }
+
+  private async Task HideModalAsync(bool accept)
+  {
+    Result = accept;
+    await modalRef!.Hide();
+    if (Callback is not null)
+    {
+      Callback(accept, Association);
+    }
+    else if (CallbackAsync is not null)
+    {
+      await CallbackAsync(accept, Association).ConfigureAwait(false);
+    }
+  }
+}
+*@

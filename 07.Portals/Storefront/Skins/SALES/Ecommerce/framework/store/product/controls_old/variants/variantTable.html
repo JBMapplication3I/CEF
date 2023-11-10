@@ -1,0 +1,42 @@
+﻿<table class="table">
+    <colgroup>
+        <col class="lg-w-20">
+        <col class="lg-w-50">
+        <col class="lg-w-20">
+        <col class="lg-w-10">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="p-2">Item #</th>
+            <th class="p-2">Description</th>
+            <th class="p-2">Price</th>
+            <th class="p-2">Qty</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="variant in productVariantsTableCtrl.masterController.productVariants  | orderBy: 'ID'"
+            ng-if="true"
+            ng-class="{'active-record': variant.selected}">
+            <td class="px-2 py-1 small" ng-bind="variant.Slave.CustomKey"></td>
+            <td class="px-2 py-1 small" ng-bind="variant.Slave.Name"></td>
+            <td class="text-right px-2 py-1">
+                <div class="price-holder text-right" ng-if="variant.Slave.PriceBase || variant.Slave.PriceSale"
+                    ng-bind="variant.Slave.PriceSale ? variant.Slave.PriceSale : variant.Slave.PriceBase | globalizedCurrency"></div>
+            </td>
+            <td class="p-1"><input type="number"
+                    class="form-control text-right px-1"
+                    min="0" max="999" placeholder="0"
+                    ng-model="productVariantsTableCtrl.masterController.productVariantSelections[$index].quantity"></td>
+        </tr>
+    </tbody>
+</table>
+<button 
+        type="button" class="btn btn-lg btn-success w-100"
+        id="btnDetailsAddToCartProduct{{productBuyBlockCtrl.productToDisplay.ID}}"
+        name="btnDetailsAddToCartProduct{{productBuyBlockCtrl.productToDisplay.ID}}"
+        translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                        'aria-label': 'ui.storefront.cart.addToCart' }"
+        ng-click="productVariantsTableCtrl.masterController.addSelectedVariantsToCart()">
+    <i class="fa fa-cart-plus" aria-hidden="true"></i>&nbsp;<!--
+    --><span data-translate="ui.storefront.cart.addToCart"></span>
+</button>

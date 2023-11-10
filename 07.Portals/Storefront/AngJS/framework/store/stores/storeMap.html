@@ -1,0 +1,151 @@
+<section class="map-section py-40 pt-lg-80">
+  <div class="container">
+    <div class="row">
+      <div class="col mb-25">
+        <div class="text-center lead mb-20 mb-lg-45">
+          <h1>Find Your Local Team Store</h1>
+          <p>
+            Search using the fields below or click on your state to find your
+            local store.
+            <a href="#"><strong>Start Your Own »</strong></a>
+          </p>
+        </div>
+        <div class="data-panel p-3 mx-xl-65 mb-30 bg-secondary">
+          <div
+            class="
+              row
+              justify-content-center justify-content-lg-between
+              align-items-end
+            "
+          >
+            <div class="col-lg-10 form-row align-items-center">
+              <div class="form-group col-lg-3 my-15 my-lg-0">
+                <label for="select-sport">Sport</label>
+                <select id="select-sport" 
+                    class="custom-select"
+                    ng-model="storeMapCtrl.selectedSport"
+                    ng-options="sport as sport.SlaveName for sport in storeMapCtrl.sports">
+                  <option value="" selected>Select Sport</option>
+                </select>
+              </div>
+              <div class="form-group col-lg-3 my-15 my-lg-0">
+                <label for="teamName">Team Name</label>
+                <input
+                  type="text"
+                  id="inpt-name"
+                  placeholder="Team Name"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group col-lg-3 my-15 my-lg-0">
+                <label for="county">County</label>
+                <input
+                  type="text"
+                  id="inpt-county"
+                  placeholder="County Name"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group col-lg-3 my-15 my-lg-0">
+                <label for="city">City</label>
+                <input
+                  type="text"
+                  id="inpt-city"
+                  placeholder="City Name"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="col-lg-2 text-center text-lg-right pl-lg-0">
+              <button type="button" class="btn btn-danger shadow-sm">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="map">
+          <div action="#">
+            <label for="select-state" class="sr-only">State</label>
+            <select id="select-state" name="state" class="custom-select">
+              <option value="none" selected>Select a state</option>
+              <option value="US-AL">Alabama</option>
+              <option value="US-AR">Arkansas</option>
+              <option value="US-AZ">Arizona</option>
+              <option value="US-CA">California</option>
+              <option value="US-CO">Colorado</option>
+              <option value="US-CT">Connecticut</option>
+              <option value="US-DC">Washington, DC</option>
+              <option value="US-DE">Delaware</option>
+              <option value="US-FL">Florida</option>
+              <option value="US-GA">Georgia</option>
+              <option value="US-IA">Iowa</option>
+              <option value="US-ID">Idaho</option>
+              <option value="US-IL">Illinois</option>
+              <option value="US-IN">Indiana</option>
+              <option value="US-KS">Kansas</option>
+              <option value="US-KY">Kentucky</option>
+              <option value="US-LA">Louisiana</option>
+              <option value="US-MA">Massachusetts</option>
+              <option value="US-MD">Maryland</option>
+              <option value="US-ME">Maine</option>
+              <option value="US-MI">Michigan</option>
+              <option value="US-MN">Minnesota</option>
+              <option value="US-MO">Missouri</option>
+              <option value="US-MS">Mississippi</option>
+              <option value="US-MT">Montana</option>
+              <option value="US-NC">North Carolina</option>
+              <option value="US-ND">North Dakota</option>
+              <option value="US-NE">Nebraska</option>
+              <option value="US-NH">New Hampshire</option>
+              <option value="US-NJ">New Jersey</option>
+              <option value="US-NM">New Mexico</option>
+              <option value="US-NV">Nevada</option>
+              <option value="US-NY">New York</option>
+              <option value="US-OH">Ohio</option>
+              <option value="US-OK">Oklahoma</option>
+              <option value="US-OR">Oregon</option>
+              <option value="US-PA">Pennsylvania</option>
+              <option value="US-RI">Rhode Island</option>
+              <option value="US-SC">South Carolina</option>
+              <option value="US-SD">South Dakota</option>
+              <option value="US-TN">Tennessee</option>
+              <option value="US-TX">Texas</option>
+              <option value="US-UT">Utah</option>
+              <option value="US-VA">Virginia</option>
+              <option value="US-VT">Vermont</option>
+              <option value="US-WA">Washington</option>
+              <option value="US-WI">Wisconsin</option>
+              <option value="US-WV">West Virginia</option>
+              <option value="US-WY">Wyoming</option>
+            </select>
+            <input type="submit" value="submit" class="sr-only" />
+          </div>
+          <div class="map-holder">
+            <svg
+              version="1.1"
+              xmlns:amcharts="http://amcharts.com/ammap"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 937 599"
+              style="enable-background: new 0 0 937 599"
+              xml:space="preserve"
+            >
+              <g>
+                <path
+                  ng-repeat="region in storeMapCtrl.states"
+                  title="{{region.CustomKey}}"
+                  class="land"
+                  ng-click="storeMapCtrl.stateSelected($event)"
+                  id="US-{{region.Code}}"
+                  ng-attr-d="{{region.SerializableAttributes['SVG Path'].Value}}"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

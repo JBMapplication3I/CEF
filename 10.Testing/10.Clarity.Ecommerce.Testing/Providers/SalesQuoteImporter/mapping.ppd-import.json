@@ -1,0 +1,912 @@
+﻿{
+  "configName": "RFQ Import Sales Quotes from Excel File",
+  "sheetName": "MSPV Grouped Item Data",
+  "columnSkip": 0,
+  "rowSkip": 1,
+  "headerRowCount": 1,
+  "coreEntity": "SalesQuote",
+  "recordsAre": "SalesQuote.SalesItems",
+  "mapUnmappedTo": {
+    "entity": "SalesQuote.SalesItems",
+    "to": [ "JsonAttributes" ]
+  },
+  "mappings": [
+    {
+      "examples": [ "VA-17-0005048" ],
+      "header": [ "VOA_Tracker_ID" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote",
+          "to": [ "CustomKey" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Row_Num" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "10001" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "CustomKey", "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Parent_VOA_Tracker_ID" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "VA-17-0005048" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_AllOrNone_OneOrMore" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "One or more", "All or None" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Contact" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "McMillian, Timothy" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_SupplyLine_Level1" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "OPERATING ROOM", "UROLOGY SUPPLIES" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_SupplyLine_Level2" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "INSTRUMENTS SURGICAL", "CATHETERS AND SETS URETHRAL" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_SupplyLine_Level3" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "INSTRUMENTS SURGICAL: UROLOGY MISCELLANEOUS", "TRAYS URETHRAL CATHETER" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_SupplyLine_Level4" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "SYSTEM PUMP SINGLE ACTION", "CATHETER URETHRAL ROBINSON" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_UNSPSC" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "42.29.49.12" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_MedPDB_Key" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "2580074", "12212878" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_NIF_Num" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "137165", "39236" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_NIF_Long_Desc" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "PUMPING SYSTEM,UROLOGIC,SINGLE ACTION,10 CC VACUUM SYRINGE,DUAL-CHECK VALVE,T-FITTING,CONTINUOUS FLOW,ADJUSTABLE LENGTH TUBING SYSTEM,ROLLER CLAMP,STERILE,DISPOSABLE" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "Description", "ShortDescription", "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Product_Name" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "SYSTEM PUMP SINGLE ACTION 10ML VACUUM SYRINGE DUAL CHECK VALVE CONTINUOUS FLOW ADJUSTABLE LENGTH TUBING" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "Name", "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Manufacturer" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "BOSTON SCIENTIFIC" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product.ManufacturerProducts.Manufacturer",
+          "to": [ "Name" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Manu_Prod_Brand_Name" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "SAPS" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "BrandName", "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_OEM_Part_Num" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "M0067201011" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "ManufacturerPartNumber", "CustomKey", "JsonAttributes" ]
+        },
+        {
+          "entity": "SalesQuote.SalesItems.Product.ManufacturerProducts",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_URL_to_OEM" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product.ManufacturerProducts",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Image_Filename" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "NIF-137165.jpg" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },
+        {
+          "entity": "SalesQuote.SalesItems.Product.Images",
+          "to": [ "OriginalFileName", "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Compatibility" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "COMPATIBLE WITH ALL USA ELITE™AND ELITE 2 SYSTEM™ RESECTOSCOPE SHEATHS " ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_BNOE" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "BNOE", "Brand Name", "Sole Source" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Unique_Char" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "Used for the injection of contrast medium and anesthetic gel and/or for safety wire placement." ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Salient_Char" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "SYSTEM PUMP, URETEROSCOPY AND LASER LITHOTRIPSY, SINGLE ACTION, CONTINUOUS FLOW, DUAL CHECK ONE-WAY VALVE W/ AUTOMATIC REFILL, LATEX-FREE, ADJUSTABLE LENGTH TUBING, 10CC VACUUM SYRINGE" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Hist_Ann_Qty_Num_Pkgs" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "109" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Num_Items_per_Pkg" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "BX OF 5EA", "CA OF 10EA", "CT OF 10EA", "EA", "50" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "UnitOfMeasure", "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Base_Year_Est" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "38533" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_FSS_or_Non_FSS" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "n/a", "FSS", "Non-FSS" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_FSS_Link" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "http://www.va.gov/nac/index.cfm?template=MedSurg_detail&LogNumber=6602515&BPALognumber=" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_FSS_Contract_Holder" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "OLYMPUS AMERICA" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_FSS_Contract_Num" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "V797P-2065D" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_FSS_Contract_End_Date" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "42735", "8/31/2016\r\n11/14/2018", "14 Aug 2018, 14 Nov 2018" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "VOA_Tracker_ID" ],
+      "headerOccurrence": 1,
+      "ignore": [ "n/a" ],
+      "examples": [ "VA-17-0005048" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Unicor_AbilityOne" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "Not Unicor or Ability One", "UNICOR", "Ability One" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "FSS_Category" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "65 IIA" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "FSS_SIN" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "A-87" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Product_Supply_Code" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "6515" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Manu_NAICS_Code" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "339112", "339113" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "FDA_CLASS" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "I" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Industry_Life_Cycle" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "Maturity" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Multiple_Sources_Avail" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "Yes", "No" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Possible_Sources" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "OLYMPUS AMERICA, BUFFALO HOSPITAL SUPPLY" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Non_Manu_Rule_Waiver_Supported" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "Yes", "No" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Rec_Acq_Strategy" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "Set-Aside - SDVOSB" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Manu_Pkging" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "EACH" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product.ManufacturerProducts",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Units_per_pkg" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "1" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "KitBaseQuantityPriceMultiplier" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Pkg_Price" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "1103.0767" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "UnitCorePrice" ]
+        },
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "PriceBase", "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Avg_Unit_Price" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "1103.0767" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Hist_ANNUAL_usage_per_pgk" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "480" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Hist_ANNUAL_usage_per_unit" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "480" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Base_Year_Estimate" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "35745.66" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "IGCE_5_yr_total" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "87158.33691" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Lowest_Comm_Price" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "0.4922" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Units_per_pkg_for_lowest_Comm_price" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "1" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Lowest_Fed_price" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "52.38" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Units_per_pkg_for_lowest_Federal_price" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "1" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Lowest_FSS_price" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a", "NA" ],
+      "examples": [ "191.75" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "Units_per_pkg_for_lowest_FSS_price" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "1" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "BEST_Pot_Savings" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "191.75" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems.Product",
+          "to": [ "JsonAttributes" ]
+        },{
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    }
+  ]
+}

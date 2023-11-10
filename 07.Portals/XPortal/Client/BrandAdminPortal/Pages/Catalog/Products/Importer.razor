@@ -1,0 +1,121 @@
+﻿@page "/catalog/products/importer"
+@inherits MVC.Core.TemplatedControllerBase
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+@inject RoutingOptions routingOptions
+@inject HttpClient client
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + routingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100 container-fluid" ElementId="importPage">
+    <Row Class="align-items-center d-flex mx-0 my-3">
+      <Blazorise.Anchor To="/catalog/products" TextColor="TextColor.Danger">
+        <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleLeft" Class="mr-1" />
+        Back to All Products
+      </Blazorise.Anchor>
+    </Row>
+    <Row>
+      <Column>
+        <Div Class="form-group">
+          <Div Class="btn btn-outline-primary pointer btn-block">
+            <Div Class="mb-1">Drag &amp; drop file or click to upload</Div>
+            @*
+            <Blazorise.FileEdit
+              ElementId="fileInput"
+              Class="fileUploadInput"
+              Changed="UploadFiles"
+              @ref="inputFileEl"
+              Multiple="false"
+              Filter="application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            />
+            *@
+            <InputFile
+              id="fileInput"
+              OnChange="UploadFiles"
+              @ref="inputFileEl"
+              single
+              accept="application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            />
+          </Div>
+        </Div>
+      </Column>
+    </Row>
+    @if (error is not null)
+    {
+      <Row>
+        <Column>
+          <Div TextColor="TextColor.Danger">@error</Div>
+        </Column>
+      </Row>
+    }
+    @if (isLoading)
+    {
+      <Row>
+        <Column>
+          <LoadingBar />
+        </Column>
+      </Row>
+    }
+    <Heading Size="HeadingSize.Is6">@completedText</Heading>
+  </Div>
+</CascadingValue>
+
+@code
+{
+  private string? error;
+  private bool isLoading;
+  private InputFile? inputFileEl;
+  private string completedText = string.Empty;
+
+  private async Task UploadFiles(InputFileChangeEventArgs args)
+  {
+    Master = await cvApi.GetCurrentMasterAsync().ConfigureAwait(false);
+    error = null;
+    isLoading = true;
+    completedText = string.Empty;
+    StateHasChanged();
+    try
+    {
+      await using var stream = new System.IO.MemoryStream();
+      await using var fileStream = args.File.OpenReadStream();
+      await fileStream.CopyToAsync(stream).ConfigureAwait(false);
+      using var byteArrayContent = new ByteArrayContent(stream.ToArray());
+      byteArrayContent.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/vnd.ms-excel");
+      client.DefaultRequestHeaders.Accept.Add(new("application/json"));
+      var response = await client.PostAsync(
+        cvApi.CEFService.Client.BaseUri.TrimEnd('/') + "/Media/StoredFiles/Upload",
+        new MultipartFormDataContent
+        {
+          {
+            new StringContent(
+              FileEntityType.ImportProduct.ToString(),
+              System.Text.Encoding.UTF8,
+              "application/json"),
+            "EntityFileType"
+          },
+          {
+            byteArrayContent,
+            "Images",
+            args.File.Name
+          },
+        })
+        .ConfigureAwait(false);
+      response.EnsureSuccessStatusCode();
+      _ = await response.Content.ReadFromJsonAsync<StoredUploadFilesResponse>().ConfigureAwait(false);
+    }
+    catch (WebServiceException wex)
+    {
+      error = wex.Message.Split('|', 2, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)[1];
+    }
+    finally
+    {
+      isLoading = false;
+      completedText = args.File.Name + " uploaded successfully!";
+    }
+  }
+}

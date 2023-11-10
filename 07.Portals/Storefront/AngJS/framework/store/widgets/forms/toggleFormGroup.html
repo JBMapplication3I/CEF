@@ -1,0 +1,27 @@
+<div ng-form="tgfgCtrl.forms.{{tgfgCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="{'has-error': tgfgCtrl.forms[tgfgCtrl.formIdentifier].$invalid}">
+  <label class="control-label" for="ck{{tgfgCtrl.formIdentifier}}"
+    uib-tooltip="{{tgfgCtrl.tooltip}}" tooltip-placement="auto top-left">
+    <span data-translate="{{tgfgCtrl.labelKey}}">{{tgfgCtrl.labelText}}</span><!--
+    --><span ng-if="tgfgCtrl.required" class="text-danger">&nbsp;*</span><!--
+    --><span ng-if="tgfgCtrl.tooltip" class="text-info">&nbsp;<i class="far fa-question-circle"></i></span>
+  </label>
+  <div class="input-group">
+  <toggle id="{{tgfgCtrl.inputPrefix}}{{tgfgCtrl.formIdentifier}}"
+    name="{{tgfgCtrl.inputPrefix}}{{tgfgCtrl.formIdentifier}}"
+    class="btn-block" ng-class="tgfgCtrl.inputClass"
+    on="{{tgfgCtrl.togOnKey ? (tgfgCtrl.togOnKey | translate) : tgfgCtrl.togOnText}}"
+    truestyle="{{tgfgCtrl.togOnStyle}}"
+    off="{{tgfgCtrl.togOffKey ? (tgfgCtrl.togOffKey | translate) : tgfgCtrl.togOffText}}"
+    offstyle="{{tgfgCtrl.togOffStyle}}"
+    ng-change="tgfgCtrl.whenChanged()"
+    ng-disabled="tgfgCtrl.disabled"
+    ng-required="tgfgCtrl.required"
+    ng-model="tgfgCtrl.property">
+  </toggle>
+  </div>
+  <div ng-messages="tgfgCtrl.formError" role="alert">
+  <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+  </div>
+</div>

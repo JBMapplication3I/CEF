@@ -1,0 +1,310 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-sales-header-widget
+         record="salesReturnDetailCtrl.record"
+         new-kind-key="ui.admin.controls.sales.salesReturnDetail.NewSalesReturn"
+         existing-kind-key="ui.admin.controls.sales.salesReturnDetail.SalesReturn"></div>
+    <div class="row details-body">
+        <div class="col-sm-12 col-md-10 col-lg-10 order-tabs">
+            <uib-tabset justified="true">
+                <uib-tab heading="{{'ui.admin.common.LineItems' | translate}}">
+                    <div ng-if="!salesReturnDetailCtrl.holdLineItemEditor"
+                         class="container-fluid full-height">
+                        <div cef-line-items-widget
+                             class="full-height"
+                             kind="Sales Return"
+                             record="salesReturnDetailCtrl.record"
+                             is-editable="!salesReturnDetailCtrl.isOneOfTheseStatuses(['Completed','Cancelled','Void'])">
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="{{'ui.admin.common.BillingAndShipping' | translate}}">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 data-translate="ui.admin.common.AccountInformation"></h3>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           data-translate="ui.admin.common.Account"></label>
+                                    <select class="form-control"
+                                            id="ddlAccountID" name="ddlAccountID"
+                                            ng-disabled="salesReturnDetailCtrl.isOneOfTheseStatuses(['Completed','Cancelled','Void']) || !salesReturnDetailCtrl.accounts.length"
+                                            ng-options="a.ID as (a.Name + (a.CustomKey ? ' [' + a.CustomKey + ']' : ''))
+                                                        for a in salesReturnDetailCtrl.accounts"
+                                            ng-model="salesReturnDetailCtrl.record.AccountID">
+                                        <option value="" data-translate="ui.admin.common.SelectAnAccount"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label"
+                                           data-translate="ui.admin.common.User"></label>
+                                    <select class="form-control"
+                                            id="ddlUserID" name="ddlUserID"
+                                            ng-disabled="salesReturnDetailCtrl.isOneOfTheseStatuses(['Completed','Cancelled','Void']) || !salesReturnDetailCtrl.users.length"
+                                            ng-options="u.ID as (u.ContactFirstName + ' ' + u.ContactLastName + ' [' + u.UserName + ']' + (u.CustomKey ? ' [' + u.CustomKey + ']' : ''))
+                                                        for u in salesReturnDetailCtrl.users
+                                                        | filter: { 'AccountID': salesReturnDetailCtrl.record.AccountID }"
+                                            ng-model="salesReturnDetailCtrl.record.UserID">
+                                        <option value=""
+                                                data-translate="ui.admin.common.SelectAUser{{salesReturnDetailCtrl.record.AccountID ? 'FilteredByAccount' : ''}}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div ng-if="salesReturnDetailCtrl.record"
+                                     cef-contact-editor-widget class="mb-3"
+                                     title-key="ui.admin.common.BillingInformation"
+                                     contact="salesReturnDetailCtrl.record.BillingContact"
+                                     is-editable="!salesReturnDetailCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+                                     account="salesReturnDetailCtrl.record.Account"
+                                     id-suffix="returnBilling"
+                                     hide-key="true">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div ng-if="salesReturnDetailCtrl.record"
+                                     cef-contact-editor-widget class="mb-3"
+                                     title-key="ui.admin.common.ShippingInformation"
+                                     contact="salesReturnDetailCtrl.record.ShippingContact"
+                                     is-editable="!salesReturnDetailCtrl.isOneOfTheseStatuses(['Processed','Approved','Rejected','Void'])"
+                                     do-mirror="salesReturnDetailCtrl.record.ShippingSameAsBilling"
+                                     to-mirror="salesReturnDetailCtrl.record.BillingContact"
+                                     account="salesReturnDetailCtrl.record.Account"
+                                     id-suffix="returnShipping"
+                                     hide-key="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="{{'ui.admin.common.Note.Plural' | translate}}">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 data-translate="ui.admin.common.PrivateNote.Plural"></h3>
+                                <div cef-notes-editor
+                                     notes="salesReturnDetailCtrl.record.Notes"
+                                     note-type-name="'Private'"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 data-translate="ui.admin.controls.sales.salesReturnDetail.ReturnNote.Plural"></h3>
+                                <div cef-notes-editor
+                                     notes="salesReturnDetailCtrl.record.Notes"
+                                     note-type-name="'Return'"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 data-translate="ui.admin.common.CustomerNote.Plural"></h3>
+                                <div cef-notes-editor
+                                     notes="salesReturnDetailCtrl.record.Notes"
+                                     note-type-name="'Customer'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="{{'ui.admin.common.Attribute.Plural' | translate}}">
+                    <div class="container-fluid">
+                        <div cef-json-attributes-editor
+                             master="salesReturnDetailCtrl.record"
+                             type="Sales Return"
+                             ng-if="salesReturnDetailCtrl.record"></div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="{{'ui.admin.common.StoredFile.Plural' | translate}}">
+                    <div class="form-vertical container-fluid" ng-form="salesReturnDetailCtrl.forms.StoredFiles">
+                        <div class="row">
+                            <div class="col-md-12"><h3 data-translate="ui.admin.common.StoredFile.Plural"></h3></div>
+                            <div class="col-md-12">
+                                <!-- Uploader -->
+                                <div cef-upload-file-widget
+                                     master="salesReturnDetailCtrl.record"
+                                     upload-type="StoredFileSalesReturn"
+                                     type-key="General"
+                                     allow-multiple="true">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-condensed table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th data-translate="ui.admin.common.Name"></th>
+                                                <th data-translate="ui.admin.common.FileName"></th>
+                                                <th style="width: 43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-if="!salesReturnDetailCtrl.record.StoredFiles.length">
+                                                <td colspan="3"
+                                                    data-translate="ui.admin.common.NoStoredFilesHaveBeenAdded"></td>
+                                            </tr>
+                                            <tr ng-repeat="storedFile in salesReturnDetailCtrl.record.StoredFiles">
+                                                <td>
+                                                    <input type="text" class="form-control"
+                                                           id="txtStoredFileName{{$index}}" name="txtStoredFileName{{$index}}"
+                                                           ng-required="true"
+                                                           max-length="128"
+                                                           ng-model="storedFile.Slave.FileName" />
+                                                </td>
+                                                <td>
+                                                    <a class="form-control-static" target="_blank"
+                                                       ng-src="{{(storedFile.StoredFileName || storedFile.Slave.FileName) | corsStoredFilesLink : 'salesReturns'}}"
+                                                       ng-bind="storedFile.StoredFileName"></a>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger"
+                                                            translate-attr="{ title: 'ui.admin.common.Delete',
+                                                                              'aria-label': 'ui.admin.common.Delete' }"
+                                                            ng-click="salesReturnDetailCtrl.removeFileNew($index)">
+                                                        <i class="far fa-trash-o"></i><!--
+                                                        --><span class="sr-only" data-translate="ui.admin.common.Delete"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <div class="col-sm-12 col-md-2 col-lg-2 order-summary">
+            <div class="form-vertical">
+                <div class="row">
+                    <div class="col-sm-12 text-white">
+                        <h3 data-translate="ui.admin.common.Total.Plural"></h3>
+                        <div cef-totals-widget
+                             totals="salesReturnDetailCtrl.record.Totals"
+                             is-editable="!salesReturnDetailCtrl.isOneOfTheseStatuses(['Rejected','Completed','Void'])"
+                             record="salesReturnDetailCtrl.record"
+                             discount-items="salesReturnDetailCtrl.discountItems"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           data-translate="ui.admin.common.Total"></label>
+                    <p class="total"
+                       ng-bind="salesReturnDetailCtrl.record.Totals.Total | globalizedCurrency"></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           data-translate="ui.admin.controls.sales.salesReturnDetail.RefundAmount"></label>
+                    <p class="total"
+                       ng-show="salesReturnDetailCtrl.isOneOfThesesStatuses(['Rejected','Void','Completed'])"
+                       ng-bind="salesReturnDetailCtrl.record.RefundAmount | globalizedCurrency"></p>
+                    <input type="number" class="form-control text-right" step="0.01" placeholder="1.00"
+                           id="refundAmountValue" name="refundAmountValue"
+                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" ng-min="0" min="0"
+                           ng-hide="salesReturnDetailCtrl.isOneOfThesesStatuses(['Rejected','Void','Completed'])"
+                           ng-model="salesReturnDetailCtrl.record.RefundAmount" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           data-translate="ui.admin.controls.sales.salesReturnDetail.ReturnDate"></label>
+                    <p class="form-control-static"
+                       ng-bind="salesReturnDetailCtrl.record.CreatedDate | convertJSONDate | date:'yyyy MMM dd hh:mm a'"></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           data-translate="ui.admin.controls.sales.salesReturnDetail.ReturnStatus"></label>
+                    <p class="form-control-static"
+                       ng-bind="salesReturnDetailCtrl.record.StatusName || salesReturnDetailCtrl.record.Status.Name"></p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"
+                           data-translate="ui.admin.controls.sales.salesReturnDetail.SalesReturnKey"></label>
+                    <p class="form-control-static"
+                       ng-hide="salesReturnDetailCtrl.isOneOfThesesStatuses(['Confirmed','Rejected','Void','Completed'])"
+                       ng-bind="salesReturnDetailCtrl.record.CustomKey"></p>
+                    <input type="text" class="form-control"
+                           translate-attr="{ placeholder: 'ui.admin.controls.sales.salesReturnDetail.ReturnKey' }"
+                           ng-hide="salesReturnDetailCtrl.isOneOfThesesStatuses(['Confirmed','Rejected','Void','Completed'])"
+                           ng-model="salesReturnDetailCtrl.record.CustomKey" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row details-footer">
+        <div class="col-md-12" ng-cloak="salesReturnDetailCtrl.record">
+            <button ng-if="salesReturnDetailCtrl.isOneOfThesesStatuses(['Confirmed','Rejected','Void','Completed'])"
+                    type="button" class="btn btn-info"
+                    translate-attr="{ title: 'ui.admin.common.back',
+                                      'aria-label': 'ui.admin.common.back' }"
+                    ui-sref="sales.salesReturns.list"
+                    ><span data-translate="ui.admin.common.back"></span></button>
+            <!-- Save/Cancel -->
+            <button ng-if="!salesReturnDetailCtrl.recordIsNew()"
+                    type="button" class="btn btn-primary"
+                    ng-click="salesReturnDetailCtrl.saveRecord()"
+                    uib-tooltip="{{('ui.admin.common.SaveChange.Plural' | translate)
+                                   + '\r\nThe Return will be saved with any changes.'}}"
+                    tooltip-placement="top-left"
+                    translate-attr="{ title: 'ui.admin.common.SaveChange.Plural',
+                                      'aria-label': 'ui.admin.common.SaveChange.Plural' }"
+                    ><span data-translate="ui.admin.common.SaveChange.Plural"></span></button>
+            <button ng-if="!salesReturnDetailCtrl.recordIsNew()"
+                    type="button" class="btn btn-warning"
+                    ui-sref="sales.salesReturns.list"
+                    uib-tooltip="{{('ui.admin.common.BackCancel' | translate)
+                                   + '\r\nThe Return Details will revert back to their original state. You will be returned to the sales return list.'}}"
+                    tooltip-placement="top-left"
+                    translate-attr="{ title: 'ui.admin.common.BackCancel',
+                                      'aria-label': 'ui.admin.common.BackCancel' }"
+                    ><span data-translate="ui.admin.common.BackCancel"></span></button>
+            <button ng-if="salesReturnDetailCtrl.recordIsNew()"
+                    type="button" class="btn btn-primary"
+                    ng-click="salesReturnDetailCtrl.saveRecord()"
+                    uib-tooltip="{{('ui.admin.controls.sales.salesReturnDetail.CreateNewReturn' | translate)
+                                   + '\r\nThe New Return will be saved which will enable functions like Confirming the Sales Return.'}}"
+                    tooltip-placement="top-left"
+                    translate-attr="{ title: 'ui.admin.controls.sales.salesOrderDetail.CreateNewReturn',
+                                      'aria-label': 'ui.admin.controls.sales.salesOrderDetail.CreateNewReturn' }"
+                    ><span data-translate="ui.admin.controls.sales.salesOrderDetail.CreateNewReturn"></span></button>
+            <button ng-if="salesReturnDetailCtrl.recordIsNew()"
+                    type="button" class="btn btn-warning"
+                    ui-sref="sales.salesReturns.list"
+                    uib-tooltip="{{('ui.admin.common.BackCancel' | translate)
+                                   + '\r\nThe New Return will not be saved and cannot be referred back to. You will be returned to the sales return list.'}}"
+                    tooltip-placement="top-left"
+                    translate-attr="{ title: 'ui.admin.common.BackCancel',
+                                      'aria-label': 'ui.admin.common.BackCancel' }"
+                    ><span data-translate="ui.admin.common.BackCancel"></span></button>
+            <!-- Actions against a Valid Return -->
+            <!--
+            <label class="control-label text-center block form-control-static"
+                   data-translate="ui.admin.controls.sales.salesReturnDetail.ReturnActions"></label>
+            -->
+            <button ng-if="!salesReturnDetailCtrl.recordIsNew() && salesReturnDetailCtrl.isOneOfTheseStatuses(['Pending'])"
+                    type="button" class="btn btn-success"
+                    ng-click="salesReturnDetailCtrl.validateReturn()"
+                    uib-tooltip="{{('ui.admin.controls.sales.salesReturnDetail.ConfirmMessageValidateReturn' | translate)
+                                   + '\r\nThe sales return will be set to \'Confirmed\' status. An email notification will be sent to the customer.'}}"
+                    tooltip-placement="top-left"
+                    ><span data-translate="ui.admin.controls.sales.salesReturnDetail.ValidateReturn"></span></button>
+            <button ng-if="!salesReturnDetailCtrl.recordIsNew() && salesReturnDetailCtrl.isOneOfTheseStatuses(['Pending'])"
+                    type="button" class="btn btn-danger"
+                    ng-click="salesReturnDetailCtrl.rejectReturn()"
+                    uib-tooltip="{{('ui.admin.controls.sales.salesReturnDetail.RejectReturn' | translate)
+                                   + '\r\nReject the sales return. It will no longer be processed and will be visible on the Rejected Return view. An email notification will be sent to the customer.'}}"
+                    tooltip-placement="top-left"
+                    ><span data-translate="ui.admin.controls.sales.salesReturnDetail.RejectReturn"></span></button>
+            <button ng-if="!salesReturnDetailCtrl.recordIsNew() && salesReturnDetailCtrl.isOneOfTheseStatuses(['Confirmed'])"
+                    type="button" class="btn btn-success"
+                    ng-click="salesReturnDetailCtrl.refundReturn()"
+                    uib-tooltip="{{('ui.admin.controls.sales.salesReturnDetail.RefundReturn' | translate)
+                                   + '\r\nRefund the sales return. The refund amount will be processed and the sales return will be completed. An email notification will be sent to the customer.'}}"
+                    tooltip-placement="top-left"
+                    ><span data-translate="ui.admin.controls.sales.salesReturnDetail.RefundReturn"></span></button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+﻿<div style="padding: 1em;">
+    <div class="card">
+        <div class="card-header">Contact</div>
+        <div class="card-body" login-modal>
+            <cef-contact-message mode="compose"
+                                 contacts="modalComposeCtrl.contacts"
+                                 subject="modalComposeCtrl.subject"
+                                 show-buttons="true"
+                                 send-callback="modalComposeCtrl.messageSent()"
+                                 cancel-callback="closeThisDialog()"></cef-contact-message>
+        </div>
+        <p ng-show="modalComposeCtrl.isLoggedIn" class="text-right" style="margin: auto 1em 1em;">
+            <button type="button" class="btn btn-primary" ng-show="modalComposeCtrl.showCloseButton" ng-click="closeThisDialog()">Close</button>
+        </p>
+    </div>
+</div>

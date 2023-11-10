@@ -1,0 +1,886 @@
+﻿@page "/customers/users/editor/{IDStr}"
+@using Clarity.Ecommerce.MVC.Core
+@using Clarity.Ecommerce.UI.XPortal.SharedLibrary.Pages.Customers.Users.EditParts
+@inherits MVC.Core.EditorViewTemplatedControllerBase<UserModel, MVC.Api.Endpoints.UpdateUser>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="newUserPage">
+    @if (ViewState.loading || Record == null! && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (EditContext != null! && Record is not null)
+    {
+      <Validations
+        EditContext="EditContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="EditContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content-with-footer">
+            <Container Fluid="true">
+              <Row>
+                <Column ColumnSize="ColumnSize.IsFull">
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.User" Class="mr-1" />
+                    @ClippedName #@ID
+                  </Heading>
+                </Column>
+              </Row>
+              <Tabs
+                SelectedTab="@SelectedTab"
+                SelectedTabChanged="@OnSelectedTabChanged"
+                TabPosition="TabPosition.Start"
+                Mode="TabsMode.LazyReload"
+                Pills="true"
+                Shadow="Shadow.Small"
+                Class="h-100">
+                <Items>
+                  <Tab Name="details">Details</Tab>
+                  <Tab Name="roles">Roles</Tab>
+                  <Tab Name="images">Images</Tab>
+                  @if (CEFConfig.featureSet?.franchises?.enabled == true && IncludeFranchises)
+                  {
+                    <Tab Name="franchises">Franchises</Tab>
+                  }
+                  @if (CEFConfig.featureSet?.stores_enabled == true && IncludeStores)
+                  {
+                    <Tab Name="stores">Stores</Tab>
+                  }
+                  @if (CEFConfig.featureSet?.profile_storedFiles?.enabled == true)
+                  {
+                    <Tab Name="storedFiles">Stored Files</Tab>
+                  }
+                  @if (Record.ID > 0)
+                  {
+                    <Tab Name="notes">Notes</Tab>
+                  }
+                  <Tab Name="attributes">Attributes</Tab>
+                </Items>
+                <Content>
+                  <TabPanel Name="details">
+                    @* <TabDetails @ref="tabDetails" Record="Record" /> *@
+                    <Container Fluid="true">
+                      <Row>
+                        <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                          <Heading Size="HeadingSize.Is3">Basic Information</Heading>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <SelectFormGroup
+                                FormIdentifier="TypeID"
+                                @bind-Value="@Record.TypeID"
+                                OptionsList="@Types"
+                                ItemValueFunc="@(x => ((TypeModel)x).ID)"
+                                ItemLabelFunc="@(x => ((TypeModel)x).DisplayName ?? ((TypeModel)x).Name)"
+                                LabelText="Type"
+                                PlaceholderText="Type"
+                                Disabled="ViewState.InputDisable"
+                                Required="true"
+                                StartTouched="true"
+                                DontAllowNull="true"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <SelectFormGroup
+                                FormIdentifier="StatusID"
+                                @bind-Value="@Record.StatusID"
+                                OptionsList="@Statuses"
+                                ItemValueFunc="@(x => ((StatusModel)x).ID)"
+                                ItemLabelFunc="@(x => ((StatusModel)x).DisplayName ?? ((StatusModel)x).Name)"
+                                LabelText="Status"
+                                PlaceholderText="Status"
+                                Disabled="ViewState.InputDisable"
+                                Required="true"
+                                StartTouched="true"
+                                DontAllowNull="true"
+                              />
+                            </Column>
+                          </Row>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is9.OnSM()">
+                              <TextFormGroup
+                                FormIdentifier="CustomKey"
+                                @bind-Value="@Record.CustomKey"
+                                LabelText="Custom Key"
+                                PlaceholderText="Key"
+                                MaxLength="128"
+                                StartTouched="true"
+                                Required="true"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is3.OnSM()">
+                              <Div Class="form-group">
+                                <Blazorise.Label Class="control-label">Created Date</Blazorise.Label>
+                                <Div Class="input-group">
+                                  <Blazorise.Label Class="form-control-static font-weight-normal">
+                                    @Record.CreatedDate.ToString("MMM dd, yyyy")
+                                  </Blazorise.Label>
+                                </Div>
+                              </Div>
+                            </Column>
+                          </Row>
+                          <Row>
+                            <Column>
+                              <TypeAheadFormGroup
+                                TValue="string"
+                                TItem="AccountModel"
+                                FormIdentifier="AccountID"
+                                OptionsList="@Accounts"
+                                ItemValueFunc="@(x => ((AccountModel)x).ID.ToString())"
+                                ItemLabelFunc="@(x => ((AccountModel)x).Name ?? ((AccountModel)x).CustomKey)"
+                                OnSearchChanged="@((search) => GrabAccountsAsync(search))"
+                                LabelText="Account"
+                                PlaceholderText="Search Accounts..."
+                                StartTouched="false"
+                                Required="false"
+                              />
+                              @* TODO: Create TypeAhead form group
+                              <Addons>
+                                <input
+                                  type="text"
+                                  class="form-control typeahead"
+                                  Id="taAccount" Name="taAccount"
+                                  Required="false"
+                                  uib-typeahead="a.ID as (a.Name + (a.CustomKey && a.CustomKey != '' ? ' [' + a.CustomKey + ']' : ''))
+                                  for a in grabAccounts(accountToGrab)"
+                                  typeahead-wait-ms="500" typeahead-min-length="1" typeahead-no-results="noAccountResults"
+                                  typeahead-loading="loadingAccounts"
+                                  typeahead-on-select="selectAccountFromTypeAhead($item, $model, $Label, $event)"
+                                  @bind-value="@accountToGrab"
+                                />
+                                <Addon AddonType="AddonType.End">
+                                  @if (loadingAccounts)
+                                  {
+                                    <i Class="fa fa-refresh"></i>
+                                  }
+                                  @if (noAccountResults)
+                                  {
+                                    <i Class="fa fa-times"></i>
+                                  }
+                                  @if (accountID)
+                                  {
+                                    <i Class="fa fa-check"></i>
+                                  }
+                                  @if (!loadingAccounts && !noAccountResults && !accountID)
+                                  {
+                                    <i Class="fa fa-question" />
+                                  }
+                                </Addon>
+                              </Addons>
+                              *@
+                              @if (Record.Account is not null)
+                              {
+                                <Div Class="form-group">
+                                  <Blazorise.Strong>Account</Blazorise.Strong>&nbsp;<!--
+                                  --><Blazorise.Anchor To="@("/customers/accounts/editor/" + @Record.AccountID)"><!--
+                                  -->#@Record.AccountID [@Record.Account.CustomKey] @Record.Account.Name</Blazorise.Anchor>
+                                  <br />
+                                  <Strong>Active</Strong> @(Record.Account.Active ? "Yes" : "No")
+                                  <Strong>On Hold</Strong> @(Record.Account.IsOnHold ? "Yes" : "No")
+                                  <Strong>Status</Strong> @(Record.Account.StatusDisplayName is not null ? Record.Account.StatusDisplayName : Record.Account.StatusName)
+                                  <Strong>Type</Strong> @(Record.Account.IsOnHold ? Record.Account.TypeDisplayName : Record.Account.TypeName)
+                                </Div>
+                              }
+                            </Column>
+                          </Row>
+                          <Row>
+                            @if (CEFConfig.featureSet?.multiCurrency?.enabled == true)
+                            {
+                              <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                                <SelectFormGroup
+                                  FormIdentifier="CurrencyID"
+                                  @bind-Value="@Record.CurrencyID"
+                                  OptionsList="@Currencies"
+                                  ItemValueFunc="@(x => ((CurrencyModel)x).ID)"
+                                  ItemLabelFunc="@(x => ((CurrencyModel)x).Name)"
+                                  LabelText="Currency"
+                                  PlaceholderText="Currency"
+                                  Disabled="ViewState.InputDisable"
+                                  Required="true"
+                                  DontAllowNull="false"
+                                  LeftIcon="@FontAwesomeIcons.DollarSign"
+                                />
+                              </Column>
+                            }
+                            @if (CEFConfig.featureSet?.languages_enabled == true)
+                            {
+                              <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                                <SelectFormGroup
+                                  FormIdentifier="LanguageID"
+                                  @bind-Value="@Record.LanguageID"
+                                  OptionsList="@Languages"
+                                  ItemValueFunc="@(x => ((LanguageModel)x).ID)"
+                                  ItemLabelFunc="@(x => ((LanguageModel)x).Locale)"
+                                  LabelText="Language"
+                                  PlaceholderText="Language"
+                                  Disabled="ViewState.InputDisable"
+                                  Required="true"
+                                  DontAllowNull="false"
+                                  LeftIcon="@FontAwesomeIcons.Language"
+                                />
+                              </Column>
+                            }
+                          </Row>
+                          <Heading Size="HeadingSize.Is3">Contact Information</Heading>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <TextFormGroup
+                                FormIdentifier="Contact.FirstName"
+                                @bind-Value="@Record.Contact.FirstName"
+                                LabelText="First Name"
+                                PlaceholderText="First Name"
+                                MaxLength="128"
+                                StartTouched="true"
+                                Required="true"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <TextFormGroup
+                                FormIdentifier="Contact.LastName"
+                                @bind-Value="@Record.Contact.LastName"
+                                LabelText="Last Name"
+                                PlaceholderText="Last Name"
+                                MaxLength="128"
+                                StartTouched="true"
+                                Required="true"
+                              />
+                            </Column>
+                          </Row>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is7.OnMD()">
+                              <TextFormGroup
+                                FormIdentifier="Contact.Phone1"
+                                @bind-Value="@Record.Contact.Phone1"
+                                LabelText="Phone"
+                                PlaceholderText="+1 (555) 555-5555 x55555"
+                                MaxLength="64"
+                                StartTouched="true"
+                                Required="false"
+                                IsPhone="true"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is5.OnMD()">
+                              <TextFormGroup
+                                FormIdentifier="Contact.Fax1"
+                                @bind-Value="@Record.Contact.Fax1"
+                                LabelText="Fax"
+                                PlaceholderText="+1 (555) 555-5555 x55555"
+                                MaxLength="64"
+                                StartTouched="true"
+                                Required="false"
+                                IsFax="true"
+                              />
+                            </Column>
+                          </Row>
+                          <TextFormGroup
+                            Role="@TextRole.Email"
+                            FormIdentifier="Contact.Email1"
+                            @bind-Value="@Record.Contact.Email1"
+                            LabelText="Email"
+                            StartTouched="true"
+                            Required="false"
+                          />
+                          <Heading Size="HeadingSize.Is3">Login Information</Heading>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <TextFormGroup
+                                IsUsername="true"
+                                FormIdentifier="UserName"
+                                @bind-Value="@Record.UserName"
+                                LabelText="Username can be an Email"
+                                Required="true"
+                                StartTouched="true"
+                                MaxLength="128"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <TextFormGroup
+                                IsPassword="true"
+                                FormIdentifier="OverridePassword"
+                                @bind-Value="@Record.OverridePassword"
+                                LabelText="Password"
+                                Required="true"
+                                ShowValidTooltip="true"
+                                StartTouched="true"
+                                MaxLength="128"
+                              />
+                            </Column>
+                          </Row>
+                          @* TODO: Implment Lockout
+                          <CheckboxFormGroup
+                            FormIdentifier="LockoutEnabled"
+                            TValue="bool"
+                            OptionsList="@Types"
+                            ItemLabelFunc="@(x => x.Name)"
+                            OnToggle="@(x => Record.LockoutEnabled = true)"
+                            IsOptionToggled="@(cat => Record.LockoutEnabled)"
+                            LabelText="Lockout Enabled"
+                            Required="false"
+                          />
+                          *@
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                          <ContactEditor @bind-Contact="Record.Contact" />
+                        </Column>
+                      </Row>
+                    </Container>
+                  </TabPanel>
+                  <TabPanel Name="roles">
+                    @* <TabRoles @ref="tabRoles" Record="Record" /> *@
+                    <Container Fluid="true" Class="form-vertical">
+                      <Row>
+                        <Column>
+                          <Heading Size="HeadingSize.Is3">Roles Assigned To The User</Heading>
+                          <Paragraph>
+                            <Strong>Warning</Strong>&nbsp;<Span>Role assignments occur directly without
+                            pressing</Span>&nbsp;<Strong>Save Changes</Strong>.
+                          </Paragraph>
+                        </Column>
+                        <Column ColumnSize="ColumnSize.IsAuto">
+                          @* TODO: If they already have all the available roles assigned to them, don't allow Add *@
+                          <Blazorise.Button
+                            Type="ButtonType.Button"
+                            Color="Color.Info"
+                            title="Add Role"
+                            ElementId="@("btnAdd_roleToUser" + Record.ID)"
+                            Disabled="ViewState.InputDisable"
+                            Clicked="@(() => AddUserRoleAsync("Add", "Add Role"))">
+                            <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Plus" />
+                            <Span>Add Role</Span>
+                          </Blazorise.Button>
+                        </Column>
+                      </Row>
+                      <Row>
+                        <Column>
+                          <Table Responsive="true">
+                            <TableHeader>
+                              <TableRow>
+                                <TableRowHeader>Role</TableRowHeader>
+                                <TableRowHeader>Start</TableRowHeader>
+                                <TableRowHeader>End</TableRowHeader>
+                                <TableRowHeader Class="w-1"></TableRowHeader>
+                                <TableRowHeader Class="w-1"></TableRowHeader>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              @if (Contract.CheckEmpty(UserRoles))
+                              {
+                                <TableRow>
+                                  <TableRowCell ColumnSpan="5">No Roles have been assigned to this User</TableRowCell>
+                                </TableRow>
+                              }
+                              else
+                              {
+                                <Repeater Items="UserRoles" Context="x">
+                                  <TableRow>
+                                    <TableRowCell>@x.Name</TableRowCell>
+                                    <TableRowCell>@x.StartDate?.ToString("o")</TableRowCell>
+                                    <TableRowCell>@x.EndDate?.ToString("o")</TableRowCell>
+                                    <TableRowCell>
+                                      <Blazorise.Button
+                                        Type="ButtonType.Button"
+                                        Color="Color.Info"
+                                        ElementId="@("btnUpdate_roleToUser" + Record.ID)"
+                                        Disabled="ViewState.InputDisable"
+                                        Clicked="@(() => AddUserRoleAsync("Update", "Edit Role", x.RoleId))">
+                                        <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.PencilAlt" />
+                                        <Span Class="sr-only">Edit</Span>
+                                      </Blazorise.Button>
+                                    </TableRowCell>
+                                    <TableRowCell>
+                                      <Blazorise.Button
+                                        Type="ButtonType.Button"
+                                        Color="Color.Danger"
+                                        ElementId="@("btnRemove_roleToUser" + Record.ID)"
+                                        Disabled="ViewState.InputDisable"
+                                        Clicked="@(() => AddUserRoleAsync("Remove", "Remove Role", x.RoleId))">
+                                        <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Times" />
+                                        <Span Class="sr-only">Remove</Span>
+                                      </Blazorise.Button>
+                                    </TableRowCell>
+                                  </TableRow>
+                                </Repeater>
+                              }
+                            </TableBody>
+                          </Table>
+                        </Column>
+                      </Row>
+                    </Container>
+                  </TabPanel>
+                  <TabPanel Name="images">
+                    <RecordImages
+                      TMaster="UserModel"
+                      TImageModel="UserImageModel"
+                      TImageTypeModel="TypeModel"
+                      TCreateImageCall="MVC.Api.Endpoints.CreateUserImage"
+                      CreateImageCallAsync="async i => (await cvApi.CreateUserImage(i).ConfigureAwait(false)).data!.Result"
+                      Record="Record"
+                    />
+                  </TabPanel>
+                  @if (CEFConfig.featureSet?.franchises?.enabled == true && IncludeFranchises)
+                  {
+                    <TabPanel Name="franchises"><TabFranchises @ref="tabFranchises" Record="Record" /></TabPanel>
+                  }
+                  @if (CEFConfig.featureSet?.stores_enabled == true && IncludeStores)
+                  {
+                    <TabPanel Name="stores"><TabStores @ref="tabStores" Record="Record" /></TabPanel>
+                  }
+                  @if (CEFConfig.featureSet?.profile_storedFiles?.enabled == true)
+                  {
+                    <TabPanel Name="storedFiles">
+                      @* <TabStores @ref="tabStoredFiles" Record="Record" /> *@
+                      <Row>
+                        <Column ColumnSize="ColumnSize.Is12">
+                          <Heading Size="HeadingSize.Is3">Stored Files</Heading>
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is12" Class="mb-3">
+                          @* Uploader *@
+                          @*
+                          <Div cef-upload-file-widget
+                            master=Record"
+                            upload-type="StoredFileUser"
+                            type-key="General"
+                            allow-multiple="true"
+                            form=forms.StoredFiles">
+                          </Div>
+                          *@
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is12">
+                          <Table Responsive="true" Hoverable="true" Striped="true" Narrow="true">
+                            <TableHeader>
+                              <TableRow>
+                                <TableRowHeader>Name</TableRowHeader>
+                                <TableRowHeader>File Name</TableRowHeader>
+                                <TableRowHeader Class="w-1"></TableRowHeader>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              @if (Contract.CheckEmpty(Record.StoredFiles))
+                              {
+                                <TableRow>
+                                  <TableRowCell ColumnSpan="3">No Stored Files Have Been Added</TableRowCell>
+                                </TableRow>
+                              }
+                              else
+                              {
+                                <Repeater Items="Record.StoredFiles" Context="x">
+                                  <TableRow>
+                                    <TableRowCell>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="@("txtStoredFileName" + x.ID)"
+                                        name="@("txtStoredFileName" + x.ID)"
+                                        required="true"
+                                        MaxLength="128"
+                                        @bind-value="x.Name"
+                                      />
+                                    </TableRowCell>
+                                    <TableRowCell>
+                                      <Blazorise.Anchor
+                                        Class="form-control-static"
+                                        To="@(x.Name ?? x.Slave?.FileName)"
+                                        @bind-Value="x.Name">
+                                      </Blazorise.Anchor>
+                                    </TableRowCell>
+                                    <TableRowCell>
+                                      <Button
+                                        Color="Color.Danger"
+                                        Clicked="@(() => { /*RemoveFileNew(x)*/ })">
+                                        <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Trash" />
+                                        <Span Class="sr-only">Remove</Span>
+                                      </Button>
+                                    </TableRowCell>
+                                  </TableRow>
+                                </Repeater>
+                              }
+                            </TableBody>
+                          </Table>
+                        </Column>
+                      </Row>
+                    </TabPanel>
+                  }
+                  <TabPanel Name="notes">
+                    <Row>
+                      <Column>
+                        <Heading Size="HeadingSize.Is3">Private Notes</Heading>
+                      </Column>
+                    </Row>
+                    @*<NotesEditor Notes="Record.Notes" NoteTypeName="'Private'" />*@
+                    <Row>
+                      <Column ColumnSize="ColumnSize.Is6.OnMD()" Class="mb-3">
+                        <TextAreaFormGroup
+                          FormIdentifier="Comment"
+                          LabelText="Enter A New Note Below"
+                          @bind-Value="@Comment"
+                          Required="true"
+                          StartTouched="true"
+                        />
+                        <Button Color="Color.Primary"
+                          Class="cvAddNote"
+                          Disabled="@Contract.CheckEmpty(Comment)"
+                          Clicked="@(() => AddNote())">
+                          Add Private Note
+                        </Button>
+                      </Column>
+                      <Column ColumnSize="ColumnSize.Is6.OnMD()" Class="table-responsive scroll-over-500">
+                        <Table Hoverable Striped Class="table-condensed">
+                          <TableHeader>
+                            <TableRow>
+                              <TableRowHeader width="30%">
+                                <Span>Date</Span><br/>
+                                <Span>Created By User</Span>
+                              </TableRowHeader>
+                              <TableRowHeader>Note</TableRowHeader>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            @if (Contract.CheckEmpty(Record.Notes))
+                            {
+                              <TableRow>
+                                <TableRowCell ColumnSpan="2">
+                                  <Span>No &nbsp;Private Notes&nbsp; Have Been Added</Span>
+                                </TableRowCell>
+                              </TableRow>
+                            }
+                            else
+                            {
+                              <Repeater Items="Record.Notes" Context="x">
+                                <TableRow>
+                                  <TableRowCell>
+                                    <Span>@x.CreatedDate.ToString("yyyy MMM dd hh:mm tt")</Span>
+                                    <br />
+                                    @if (x.CreatedByUserID is not null)
+                                    {
+                                      <Span>@Record.Contact.FullName [#@Record.ID: @Record.CustomKey]</Span>
+                                    }
+                                    else
+                                    {
+                                      <Span>System</Span>
+                                    }
+                                  </TableRowCell>
+                                  <TableRowCell>@x.Note1</TableRowCell>
+                                </TableRow>
+                              </Repeater>
+                            }
+                          </TableBody>
+                        </Table>
+                      </Column>
+                    </Row>
+                  </TabPanel>
+                  <TabPanel Name="attributes">
+                    <RecordAttributes
+                      Record="Record"
+                      OtherTypeName="User"
+                    />
+                  </TabPanel>
+                </Content>
+              </Tabs>
+            </Container>
+          </Div>
+          <Div Class="page-footer mb-5">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Primary"
+              Disabled="@(FormInvalid || ViewState.saving || ViewState.running || ViewState.pristine)"
+              Clicked="OnSave">
+              Save Changes
+            </Blazorise.Button>
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Secondary"
+              Class="ml-1"
+              Disabled="ViewState.InputDisable"
+              Clicked="@(() => NavigationManager.NavigateTo(GridRouteFormat))">
+              Back
+            </Blazorise.Button>
+            @*<blazorise.ValidationSummary Class="ml-3" />*@
+            <ErrorBlock
+              Class="ml-3"
+              Orientation="Blazorise.Orientation.Horizontal"
+            />
+            <DebugViewStateBlock
+              Class="ml-3 mb-0"
+              Orientation="Blazorise.Orientation.Horizontal"
+            />
+          </Div>
+        </EditForm>
+        <MessageModalFactory @ref="messageModalFactory" />
+        <ConfirmModalFactory @ref="confirmModalFactory" />
+        <AccountUserRoleModal @ref="accountUserRoleModal" />
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/customers/users";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+  #endregion
+
+  protected string Comment { get; set; } = string.Empty;
+  private MessageModalFactory? messageModalFactory;
+  private ConfirmModalFactory? confirmModalFactory;
+  private AccountUserRoleModal? accountUserRoleModal;
+
+  #region Tabs
+//  private TabDetails? tabDetails;
+//  private TabImages? tabImages;
+//  private TabStoredFiles? tabStoredFiles;
+#if BRANDADMIN || FRANCHISEADMIN
+  private bool IncludeStores => true;
+  private TabStores? tabStores;
+#else
+  private bool IncludeStores => false;
+  private object? tabStores;
+#endif
+#if BRANDADMIN
+  private bool IncludeFranchises => true;
+  private TabFranchises? tabFranchises;
+#else
+  private bool IncludeFranchises => false;
+  private object? tabFranchises;
+#endif
+//  // private TabAttributes? tabAttributes;
+  #endregion
+
+  protected void AddNote()
+  {
+    if (Contract.CheckEmpty(Comment) || Record is null)
+    {
+        return;
+    }
+    if (Record.Notes is null)
+    {
+        Record.Notes = new();
+    }
+    Record.Notes.Add(new()
+    {
+      Active = true,
+      CustomKey = null,
+      CreatedDate = DateTime.Now,
+      UpdatedDate = null,
+      CreatedByUserID = Record.ID,
+      CreatedByUserContactFirstName = Record.Contact.FirstName,
+      CreatedByUserContactLastName = Record.Contact.LastName,
+      TypeID = 0,
+      Note1 = Comment,
+      Type = new()
+      {
+        Active = true,
+        CustomKey = "Private",
+        CreatedDate = DateTime.Now,
+        UpdatedDate = null,
+        Name = "Private",
+        Description = null,
+        IsPublic = false,
+        IsCustomer = false
+      }
+    });
+    Comment = string.Empty;
+  }
+
+  #region Loading
+  /// <inheritdoc />
+  protected override Func<int, Task<IHttpPromiseCallbackArg<UserModel>>> GetCallerFunc
+    => id => cvApi.GetUserByID(new() { ID = id });
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    return LoadUserRolesAsync();
+  }
+  #endregion
+
+  #region Grab Accounts
+  private IEnumerable<AccountModel>? Accounts { get; set; } = Array.Empty<AccountModel>();
+
+  private async Task GrabAccountsAsync(string search)
+  {
+    DebugBeginMethod();
+    var lookup = search.ToLower();
+    var result = await cvApi.GetAccounts(
+      new()
+      {
+        Active = true,
+        AsListing = true,
+        IDOrCustomKeyOrName = search,
+        Paging = new()
+        {
+          Size = 50,
+          StartIndex = 1,
+        }
+      })
+      .ConfigureAwait(false);
+    Accounts = result?.data?.Results?.ToList();
+    StateHasChanged();
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveATypeBaseModel Handlers
+  private List<TypeModel>? Types { get; set; }
+
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetUserTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveAStatusModel Handlers
+  private List<StatusModel>? Statuses { get; set; }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetUserStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveANullableCurrencyBaseModel Handlers
+  private List<CurrencyModel>? Currencies { get; set; }
+
+  private async Task LoadCurrenciesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetCurrencies(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Currencies = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveANullableLanguageBaseModel Handlers
+  private List<LanguageModel>? Languages { get; set; }
+
+  private async Task LoadLanguagesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetLanguages(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Languages = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveARoleModel Handlers
+  private RoleForUserModel[]? UserRoles { get; set; }
+
+  private async Task LoadUserRolesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetRolesForUser(new() { ID = Record.ID }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      UserRoles = result.data;
+    }
+    DebugEndMethod();
+  }
+
+  private Task AddUserRoleAsync(string type, string key, int roleID = 0)
+  {
+    DebugBeginMethod();
+    if (accountUserRoleModal is null)
+    {
+      throw new InvalidOperationException();
+    }
+    DebugEndMethod();
+    return accountUserRoleModal!.ShowAsync(
+      dgType: type,
+      titleKey: key,
+      userID: Record.ID,
+      roleID: roleID,
+      callback: async (result) =>
+      {
+        await LoadUserRolesAsync().ConfigureAwait(false);
+        StateHasChanged();
+        DebugEndMethod();
+      });
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<UserModel, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> UpdateCallerFunc
+    => Record => cvApi.UpdateUser(Mapper.Map<MVC.Api.Endpoints.UpdateUser>(Record));
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await Task.WhenAll(LoadTypesAsync(), LoadStatusesAsync()).ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+  }
+
+  /// <inheritdoc />
+#pragma warning disable CS1998
+  protected override async Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+#pragma warning restore CS1998
+  {
+//    await tabDetails!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabImages!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabStoredFiles!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+//    await tabManufacturers!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabVendors!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//#endif
+#if BRANDADMIN || FRANCHISEADMIN
+    await tabStores!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+#endif
+//#if BRANDADMIN
+//    await tabFranchises!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//#endif
+    // await tabAttributes!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+#pragma warning disable CS1998
+  protected override async Task ExtendedRecordDataCallsOnAfterSaveAsync(DateTime timestamp)
+#pragma warning restore CS1998
+  {
+//#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+//    await tabManufacturers!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabVendors!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+#if BRANDADMIN || FRANCHISEADMIN
+    await tabStores!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+#endif
+//#if BRANDADMIN
+//    await tabFranchises!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+//#endif
+//#endif
+  }
+  #endregion
+}

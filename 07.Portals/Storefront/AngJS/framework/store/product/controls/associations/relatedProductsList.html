@@ -1,0 +1,63 @@
+﻿<div class="row"
+  id="related-products-list-{{rplCtrl.type.replace(' ', '-')}}"
+  ng-if="rplCtrl.products && rplCtrl.paging.data.length">
+  <div class="carousel col-12">
+    <div class="carousel-inner px-5">
+      <div class="carousel-item active">
+        <div class="row">
+          <div ng-repeat="product in rplCtrl.paging.filteredData
+                          | limitTo: (rplCtrl.size || 4)
+                                   : rplCtrl.paging.skip()"
+             class="col-sm-6 col-md-4 col-lg-3 mb-5">
+            <div cef-product-card-gen-widget
+              thumb-width="rplCtrl.thumbWidth"
+              thumb-height="rplCtrl.thumbHeight"
+              name-rows="2"
+              short-desc-rows="2"
+              pricing-display-style="'sideBySide'"
+              action-button-view="'addToCart'"
+              quick-add="true"
+              hide-stock="false"
+              hide-sku="false"
+              hide-short-desc="false"
+              hide-favorites-list="false"
+              hide-wish-list="false"
+              hide-notify-me="false"
+              hide-compare="false"
+              hide-icons="false"
+              product-id="product.SlaveID"
+              product-image="product.SlavePrimaryImageFileName"
+              index="$index">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a ng-show="rplCtrl.products.length > 1"
+      id="relatedProductsScrollLeft"
+      name="relatedProductsScrollLeft"
+      class="carousel-control-prev" role="button"
+      ng-class="{ 'disabled': rplCtrl.paging.currentPage <= 0 }"
+      tabindex
+      ng-click="!(rplCtrl.paging.currentPage <= 0)
+        && rplCtrl.paging.goToPreviousPage()">
+      <span aria-hidden="true"
+        class="carousel-control-prev-icon far fa-chevron-left fa-2x text-dark">
+      </span>
+      <span class="sr-only">previous</span>
+    </a>
+    <a ng-show="rplCtrl.products.length > 1"
+      id="relatedProductsScrollRight"
+      name="relatedProductsScrollRight"
+      class="carousel-control-next" role="button"
+      ng-class="{ 'disabled': rplCtrl.paging.currentPage >= rplCtrl.paging.maxPage()-1 }"
+      tabindex
+      ng-click="!(rplCtrl.paging.currentPage >= rplCtrl.paging.maxPage()-1)
+        && rplCtrl.paging.goToNextPage()">
+      <span aria-hidden="true"
+        class="carousel-control-next-icon far fa-chevron-right fa-2x text-dark">
+      </span>
+      <span class="sr-only">next</span>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="card form-vertical" ng-form="reCtrl.forms.entry"
+  ng-class="{ 'border-success': reCtrl.viewState.success }">
+  <div class="card-header" sid="WriteAReviewText"
+    data-translate="ui.storefront.product.reviews.productReview.{{
+      reCtrl.hideComment ? 'enterARating' : 'writeAReview'}}">
+  </div>
+  <div class="card-body"
+    ng-if="!reCtrl.cvAuthenticationService.isAuthenticated()">
+    <button type="button" class="btn btn-primary btn-large"
+      translate-attr="{ title: 'ui.storefront.product.reviews.reviewEntry.signInToReview',
+                        'aria-label': 'ui.storefront.product.reviews.reviewEntry.signInToReview' }"
+      data-translate="ui.storefront.product.reviews.reviewEntry.signInToReview"
+      login-modal
+      ng-click="loginModalCtrl.open(null, null, true)">
+    </button>
+  </div>
+  <div class="card-body"
+    ng-if="reCtrl.cvAuthenticationService.isAuthenticated()">
+    <div class="form-group">
+      <label class="control-label" sid="WriteAReviewRatingText"
+        data-translate="ui.storefront.product.reviews.reviewEntry.Rating">
+      </label>
+      <div class="input-group">
+        <cef-rating-entry
+          review="reCtrl.review"
+          scale="5">
+        </cef-rating-entry>
+      </div>
+    </div>
+    <div ng-if="!reCtrl.hideComment"
+      class="form-group"
+      ng-class="{'hasError': reCtrl.forms.entry.$dirty && reCtrl.forms.entry.txtTitle.$invalid}">
+      <label class="control-label" for="txtTitle" sid="WriteAReviewTitleText"
+        data-translate="ui.storefront.common.Title">
+      </label>
+      <div class="input-group">
+        <input class="form-control"
+          id="txtTitle" name="txtTitle"
+          ng-required="true"
+          ng-disabled="reCtrl.viewState.running || reCtrl.viewState.success"
+          ng-model="reCtrl.review.Title" />
+      </div>
+      <div ng-messages="reCtrl.forms.entry.txtTitle.$error"
+        ng-show="reCtrl.forms.entry.$dirty">
+        <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+      </div>
+    </div>
+    <div class="form-group"
+      ng-class="{'hasError': reCtrl.forms.entry.$dirty && reCtrl.forms.entry.txtaComment.$invalid}"
+      ng-hide="reCtrl.hideComment">
+      <label class="control-label" sid="WriteAReviewCommentText"
+        data-translate="ui.storefront.product.reviews.reviewEntry.Comment">
+      </label>
+      <div class="input-group">
+        <textarea class="form-control"
+          id="txtaComment" name="txtaComment"
+          ng-required="true"
+          ng-disabled="reCtrl.viewState.running || reCtrl.viewState.success"
+          ng-model="reCtrl.review.Comment">
+        </textarea>
+      </div>
+      <div ng-messages="reCtrl.forms.entry.txtaComment.$error"
+        ng-show="reCtrl.forms.entry.$dirty">
+        <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+      </div>
+    </div>
+    <div class="d-block text-right">
+      <button type="button" class="btn btn-primary"
+        id="btnSaveReview" name="btnSaveReview"
+        translate-attr="{ title: 'ui.storefront.common.Save',
+                          'aria-label': 'ui.storefront.common.Save' }"
+        data-translate="ui.storefront.common.Save"
+        ng-disabled="reCtrl.forms.entry.$invalid || reCtrl.viewState.running || reCtrl.viewState.success"
+        ng-click="reCtrl.saveReview()">
+      </button>
+    </div>
+  </div>
+  <div class="card-footer border-success bg-success text-white" ng-if="reCtrl.viewState.success">
+      <p id="reviewSuccess"
+        ng-class="{ 'mb-0': reCtrl.hideComment }"
+        data-translate="{{reCtrl.reviewSuccessMessage}}">
+      </p>
+      <p class="mb-0" ng-if="!reCtrl.hideComment">
+        <b data-translate="ui.storefront.common.Note"></b>:&nbsp;<!--
+        --><span sid="ReviewAdminNote"
+          data-translate="ui.storefront.product.reviews.reviewEntry.theWebsiteAdministratorRequiresThatReviewsAreApprovedBefore">
+        </span>
+      </p>
+  </div>
+</div>

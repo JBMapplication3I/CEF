@@ -1,0 +1,281 @@
+<!-- step.payment.method.echeck.body -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row" ng-form="pmebCtrl.forms.payments.echeck">
+      <div class="col-sm-12 wallet-echeck-panel">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <p class="h3 mt-0">
+                  <b ng-bind="pmebCtrl.selectedEcheck.Name"></b>
+                  <span class="float-right m-0"
+                    ng-bind="pmebCtrl.selectedEcheck.AccountType">
+                  </span>
+                </p>
+              </div>
+              <div class="col-xs-12">
+                <!-- <p data-translate="ui.admin.checkout.echeck.AccountHolder"></p> -->
+                <p class="bold"
+                  ng-bind="pmebCtrl.selectedEcheck.AccountHolderName">
+                </p>
+              </div>
+              <div class="col-xs-12" ng-if="!pmebCtrl.viewstate.createMode">
+                <div class="w-50 inline-block">
+                  <p class="h3 mt-2"
+                    ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;'
+                      + (pmebCtrl.selectedEcheck.RoutingNumber | limitTo: -3)) | trustedHtml">
+                  </p>
+                </div>
+                <div class="w-50 inline-block">
+                  <p class="h3 mt-2"
+                    ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;'
+                      + (pmebCtrl.selectedEcheck.AccountNumber | limitTo: -3)) | trustedHtml">
+                  </p>
+                </div>
+                <p class="mb-0" ng-bind="pmebCtrl.selectedEcheck.BankName"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12"
+        ng-if="pmebCtrl.forms.payment.echeck.$valid
+          && pmebCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0">
+        <p data-translate="ui.admin.checkout.paymentMethods.creditCard.GrandTotalWithSplitTargets.Template"
+          translate-value-total="{{pmebCtrl.cvCartService.grandTotal()}}">
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div ng-if="pmebCtrl.viewstate.isLoggedIn
+        && pmebCtrl.cefConfig.featureSet.payments.wallet.enabled
+        && (pmebCtrl.wallet | filter: { 'RoutingNumber': '' }).length"
+        class="col-xs-12">
+        <div class="form-group">
+          <label class="control-label hidden" for="ddlSelectedECheck"
+            data-translate="ui.admin.checkout.views.paymentInformation.SelectAnECheckAccount">
+          </label>
+          <select class="form-control"
+            id="ddlSelectedECheck" name="ddlSelectedECheck"
+            ng-change="pmebCtrl.updatePaymentDataWithWalletEntry(pmebCtrl.selectedECheck)"
+            ng-options="entry as entry.Name
+                        for entry in pmebCtrl.wallet
+                        | filter: { 'RoutingNumber': '' }"
+            ng-model="pmebCtrl.selectedEcheck">
+            <option value=""
+              data-translate="ui.admin.checkout.views.paymentInformation.enterANewECheck">
+            </option>
+          </select>
+        </div>
+      </div>
+      <div ng-if="pmebCtrl.cefConfig.featureSet.payments.wallet.enabled && pmebCtrl.selectedEcheckIsFromWallet()"
+        class="col-xs-12">
+        <!--
+        <div class="row"
+          ng-form="cefCheckoutCtrl.forms.payments.echeck">
+          <div class="col-sm-12 wallet-echeck-panel">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <p class="h3 mt-0">
+                      <b ng-bind="cefCheckoutCtrl.selectedEcheck.Name"></b>
+                      <span class="float-right m-0"
+                        ng-bind="cefCheckoutCtrl.selectedEcheck.CardType">
+                      </span>
+                    </p>
+                  </div>
+                  <div class="col-xs-12">
+                    <p class="bold"
+                      ng-bind="cefCheckoutCtrl.selectedEcheck.CardHolderName">
+                    </p>
+                  </div>
+                  <div class="col-xs-12" ng-if="!cefCheckoutCtrl.viewstate.createMode">
+                    <div class="w-50 inline-block">
+                      <p class="h3 mt-2"
+                        ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;'
+                          + (cefCheckoutCtrl.selectedEcheck.RoutingNumber | limitTo: -3)) | trustedHtml">
+                      </p>
+                    </div>
+                    <div class="w-50 inline-block">
+                      <p class="h3 mt-2"
+                        ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;'
+                          + (cefCheckoutCtrl.selectedEcheck.AccountNumber | limitTo: -3)) | trustedHtml">
+                      </p>
+                    </div>
+                    <p class="mb-0" ng-bind="cefCheckoutCtrl.selectedEcheck.BankName"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12"
+            ng-if="cefCheckoutCtrl.forms.payment.echeck.$valid
+              && cefCheckoutCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0">
+            <p data-translate="ui.admin.checkout.paymentMethods.creditCard.GrandTotalWithSplitTargets.Template"
+              translate-value-total="{{cefCheckoutCtrl.cvCartService.grandTotal()}}">
+            </p>
+          </div>
+        </div>
+        -->
+      </div>
+      <div ng-if="!pmebCtrl.cefConfig.featureSet.payments.wallet.enabled || !pmebCtrl.selectedEcheckIsFromWallet()"
+        class="col-xs-12">
+        <!--Reference Name-->
+        <div class="form-group"
+          ng-class="{'has-error': pmebCtrl.forms.payment.echeck.$dirty && pmebCtrl.forms.payment.echeck.txtAccountReferenceName.$invalid}"
+          ng-if="pmebCtrl.viewstate.isLoggedIn && pmebCtrl.cefConfig.featureSet.payments.wallet.enabled">
+          <label class="control-label" for="txtAccountReferenceName"
+            data-translate="ui.admin.common.ECheckAccountNickname">
+          </label>
+          <input type="text" class="form-control"
+            id="txtAccountReferenceName" name="txtAccountReferenceName"
+            ng-required="false"
+            ng-model="pmebCtrl.tempPaymentData.PayByECheck.AccountReferenceName" />
+        </div>
+        <p ng-if="pmebCtrl.viewstate.isLoggedIn"
+          class="small"
+          data-translate="ui.admin.checkout.modularCheckout.WalletReferenceName.Note">
+        </p>
+        <!--Account Type-->
+        <div class="form-group"
+          ng-class="{'has-error': pmebCtrl.forms.payment.echeck.$dirty && pmebCtrl.forms.payment.echeck.ddlAccountType.$invalid}">
+          <label class="control-label" for="ddlAccountType"
+            ><span data-translate="ui.admin.checkout.echeck.AccountType"
+            ></span>&nbsp;<span class="text-danger">*</span></label>
+          <select class="form-control"
+            id="ddlAccountType" name="ddlAccountType"
+            ng-required="true"
+            ng-options="type.Key as type.Value
+                        for type in pmebCtrl.cvWalletService.eCheckAccountTypes"
+            ng-model="pmebCtrl.tempPaymentData.PayByECheck.AccountType">
+            <option value="" ng-disabled="true"
+              data-translate="ui.admin.checkout.echeck.SelectAnAccountType">
+            </option>
+          </select>
+        </div>
+        <!--Account holder Name-->
+        <div class="form-group"
+          ng-class="{'has-error': pmebCtrl.forms.payment.echeck.$dirty && pmebCtrl.forms.payment.echeck.txtAccountHolderName.$invalid}">
+          <label class="control-label" for="txtAccountHolderName"
+            ><span data-translate="ui.admin.checkout.echeck.AccountHolder"
+            ></span>&nbsp;<span class="text-danger">*</span></label>
+          <input type="text" class="form-control"
+            id="txtAccountHolderName" name="txtAccountHolderName"
+            ng-required="true"
+            ng-model="pmebCtrl.tempPaymentData.PayByECheck.AccountHolderName" />
+        </div>
+        <!--Bank Name-->
+        <div class="form-group"
+          ng-class="{'has-error': pmebCtrl.forms.payment.echeck.$dirty && pmebCtrl.forms.payment.echeck.txtBankName.$invalid}">
+          <label class="control-label" for="txtBankName"
+            ><span data-translate="ui.admin.checkout.echeck.BankName"
+            ></span>&nbsp;<span class="text-danger">*</span></label>
+          <input type="text" class="form-control"
+            id="txtBankName" name="txtBankName"
+            ng-required="true"
+            ng-model="pmebCtrl.tempPaymentData.PayByECheck.BankName" />
+        </div>
+        <!--Routing Number-->
+        <div class="form-group"
+          ng-class="{'has-error': pmebCtrl.forms.payment.echeck.$dirty && pmebCtrl.forms.payment.echeck.txtRoutingNumber.$invalid}">
+          <label class="control-label" for="txtRoutingNumber"
+            ><span data-translate="ui.admin.checkout.echeck.RoutingNumber"
+            ></span>&nbsp;<span class="text-danger">*</span></label>
+          <input type="text" class="form-control"
+            id="txtRoutingNumber" name="txtRoutingNumber"
+            placeholder="123456789"
+            ng-required="true"
+            ng-model="pmebCtrl.tempPaymentData.PayByECheck.RoutingNumber" />
+        </div>
+        <!--Account Number-->
+        <div class="form-group"
+          ng-class="{'has-error': pmebCtrl.forms.payment.echeck.$dirty && pmebCtrl.forms.payment.echeck.txtAccountNumber.$invalid}">
+          <label class="control-label" for="txtAccountNumber"
+            ><span data-translate="ui.admin.checkout.echeck.AccountNumber"
+            ></span>&nbsp;<span class="text-danger">*</span></label>
+          <input type="text" class="form-control"
+            id="txtAccountNumber" name="txtAccountNumber"
+            placeholder="012345678"
+            ng-required="true"
+            ng-model="pmebCtrl.tempPaymentData.PayByECheck.AccountNumber" />
+        </div>
+        <div class="row"
+          ng-if="pmebCtrl.forms.payment.echeck.$dirty && pmebCtrl.forms.payment.echeck.$invalid">
+          <div class="col-xs-12">
+            <div ng-messages="pmebCtrl.forms.payment.echeck.$error"
+              role="alert">
+              <div ng-message="required" class="alert alert-danger mb-3">
+                <span data-translate="ui.admin.userDashboard2.controls.walletCard.AllFieldsAreRequired"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row"
+          ng-if="pmebCtrl.forms.payment.echeck.$valid && pmebCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0">
+          <div class="col-xs-12">
+            <p data-translate="ui.admin.checkout.paymentMethods.creditCard.GrandTotalWithSplitTargets.Template"
+              translate-value-total="{{pmebCtrl.cvCartService.grandTotal()}}">
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12" ng-if="pmebCtrl.cefConfig.debug">
+    <div class="alert alert-dark">
+      <h4 class="alert-heading">Debug Info for this step</h4>
+      <table class="table table-borderless table-hover table-sm mb-0">
+        <tr>
+          <th>pmebCtrl.tempPaymentData.PayByECheck.AccountType</th>
+          <td>{{pmebCtrl.tempPaymentData.PayByECheck.AccountType}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.tempPaymentData.PayByECheck.AccountReferenceName</th>
+          <td>{{pmebCtrl.tempPaymentData.PayByECheck.AccountReferenceName}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.tempPaymentData.PayByECheck.AccountHolderName</th>
+          <td>{{pmebCtrl.tempPaymentData.PayByECheck.AccountHolderName}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.tempPaymentData.PayByECheck.RoutingNumber</th>
+          <td>{{pmebCtrl.tempPaymentData.PayByECheck.RoutingNumber}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.tempPaymentData.PayByECheck.AccountNumber</th>
+          <td>{{pmebCtrl.tempPaymentData.PayByECheck.AccountNumber}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.tempPaymentData.PayByECheck.BankName</th>
+          <td>{{pmebCtrl.tempPaymentData.PayByECheck.BankName}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.paymentData.PayByECheck.AccountType</th>
+          <td>{{pmebCtrl.paymentData.PayByECheck.AccountType}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.paymentData.PayByECheck.AccountReferenceName</th>
+          <td>{{pmebCtrl.paymentData.PayByECheck.AccountReferenceName}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.paymentData.PayByECheck.AccountHolderName</th>
+          <td>{{pmebCtrl.paymentData.PayByECheck.AccountHolderName}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.paymentData.PayByECheck.RoutingNumber</th>
+          <td>{{pmebCtrl.paymentData.PayByECheck.RoutingNumber}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.paymentData.PayByECheck.AccountNumber</th>
+          <td>{{pmebCtrl.paymentData.PayByECheck.AccountNumber}}</td>
+        </tr>
+        <tr>
+          <th>pmebCtrl.paymentData.PayByECheck.BankName</th>
+          <td>{{pmebCtrl.paymentData.PayByECheck.BankName}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

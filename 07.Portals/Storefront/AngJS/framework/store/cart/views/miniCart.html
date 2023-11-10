@@ -1,0 +1,374 @@
+﻿<div class="card mb-3">
+  <div class="card-header px-3 py-2">
+    <div class="row">
+      <div class="col">
+        <h4 ng-if="cvmcCtrl.type !== 'Quote Cart'"
+          class="my-0"
+          id="lblOrderSummary"
+          data-translate="ui.storefront.common.OrderSummary">
+        </h4>
+        <h4 ng-if="cvmcCtrl.type == 'Quote Cart'"
+          class="my-0"
+          id="lblQuoteSummary"
+          data-translate="ui.storefront.common.QuoteSummary">
+        </h4>
+      </div>
+      <div class="col-auto">
+        <a ng-if="cvmcCtrl.type !== 'Quote Cart'"
+          class="btn btn-link px-1 py-0"
+          id="btnEditCart"
+          ui-sref-plus uisrp-area="cart">
+          <i class="far fa-pencil" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.checkout.checkoutPanels.editCart"></span>
+        </a>
+        <a ng-if="cvmcCtrl.type == 'Quote Cart'"
+          class="btn btn-link px-1 py-0"
+          id="btnEditQuoteCart"
+          ui-sref-plus uisrp-area="quoteCart">
+          <i class="far fa-pencil" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.submitQuote.EditQuoteCart"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card-body py-1 bg-medium">
+    <span class="card-subtitle font-weight-bold"
+      sid="MiniCartItemsText"
+      data-translate="ui.storefront.product.catalog.results.quickView.Items">
+    </span>
+  </div>
+  <div class="list-group"
+    ng-if="cvmcCtrl.cefConfig.featureSet.carts.miniCart.enabled">
+    <div ng-repeat="(itemIndex, item) in cvmcCtrl.cartItems
+                    | limitTo: cvmcCtrl.quantityItemsShown"
+      class="list-group-item p-0">
+      <div class="row no-gutters">
+        <div class="col-3 d-none d-xl-flex xl-pl-2 xl-py-2 tk-py-2 fk-py-2">
+          <div id="miniCartProductImageThumbnail{{itemIndex}}"
+            class="card-img"
+            cef-product-card-thumbnail-widget
+            product-id="item.ProductID"
+            product-image="item.ProductPrimaryImage"
+            width="80"
+            height="80"
+            index="itemIndex">
+          </div>
+        </div>
+        <div class="col py-2 pl-3 xl-pl-2 tk-pl-2 fk-pl-3 pr-3">
+          <span id="miniCartProductName_{{itemIndex}}"
+            class="cart-item-label"
+            ng-bind="item.Name || item.ProductName">
+          </span>
+          <div ng-if="!cvmcCtrl.cefConfig.loginForPricing.enabled
+            || cvmcCtrl.cvAuthenticationService.isAuthenticated()"
+            class="row no-gutters">
+            <div class="col small">
+              <div class="text-left font-weight-bold"
+                sid="MiniCartProductPriceText_{{itemIndex}}"
+                data-translate="ui.storefront.common.Price">
+              </div>
+              <div id="cartProductPrice{{itemIndex}}"
+                class="d-block form-control-static cart-price price text-left text-muted py-0"
+                ng-class="{'strike-through text-disabled':
+                  item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0
+                  || item.DiscountTotal && item.DiscountTotal < 0}"
+                ng-bind="item.UnitCorePrice | globalizedCurrency">
+              </div>
+              <div ng-if="item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                class="d-block form-control-static cart-price price text-left text-danger py-0"
+                sid="cartProductSalePrice_{{$index}}"
+                ng-class="{'strike-through text-disabled': item.DiscountTotal && item.DiscountTotal < 0}"
+                ng-bind="item.UnitSoldPrice | globalizedCurrency">
+              </div>
+              <div class="d-block form-control-static cart-price price text-left text-success py-0"
+                ng-if="item.DiscountTotal && item.DiscountTotal < 0"
+                ng-bind="(item.UnitSoldPrice || item.UnitCorePrice || 0) + (item.DiscountTotal / item.TotalQuantity) | globalizedCurrency">
+              </div>
+            </div>
+            <div class="col small">
+              <div class="text-center font-weight-bold"
+                sid="MiniCartProductQuantityText_{{itemIndex}}"
+                data-translate="ui.storefront.common.Quantity">
+              </div>
+              <div ng-if="!(item.QuantityBackOrdered > 0) && !(item.QuantityPreSold > 0)"
+                id="miniCartProductQuantity_{{itemIndex}}"
+                class="text-center text-muted"
+                ng-bind="item.Quantity | number">
+              </div>
+              <table ng-if="item.QuantityBackOrdered > 0"
+                class="mt-2 mb-0 table table-borderless">
+                <tr>
+                  <td data-translate="ui.storefront.common.available"></td>
+                  <td class="text-muted" ng-bind="item.Quantity | number"></td>
+                </tr>
+                <tr>
+                  <td data-translate="ui.storefront.common.Backordered"></td>
+                  <td class="text-muted" ng-bind="item.QuantityBackOrdered | number"></td>
+                </tr>
+              </table>
+              <table ng-if="item.QuantityPreSold > 0" class="small mt-2">
+                <tr>
+                  <td data-translate="ui.storefront.common.PreSales"></td>
+                  <td class="text-muted" ng-bind="item.QuantityPreSold | number"></td>
+                </tr>
+              </table>
+            </div>
+            <div class="col small">
+              <div class="text-right font-weight-bold"
+                sid="MiniCartItemTotalText_{{itemIndex}}"
+                data-translate="ui.storefront.checkout.views.checkoutLabelItemTotal.avd">
+              </div>
+              <div class="d-block form-control-static font-weight-normal text-right text-muted py-0"
+                ng-class="{'strike-through text-disabled':
+                  item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0
+                  || item.DiscountTotal && item.DiscountTotal < 0 }"
+                id="cartProductSubtotalCore{{itemIndex}}"
+                ng-bind="(item.UnitCorePrice * item.TotalQuantity) | globalizedCurrency">
+              </div>
+              <div ng-if="item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                class="d-block form-control-static font-weight-normal text-right text-danger py-0"
+                ng-class="{'strike-through text-disabled': item.DiscountTotal && item.DiscountTotal < 0 }"
+                id="cartProductSubtotal{{itemIndex}}"
+                ng-bind="item.ExtendedPrice | globalizedCurrency">
+              </div>
+              <div ng-if="item.DiscountTotal && item.DiscountTotal < 0"
+                class="d-block form-control-static font-weight-normal text-right text-success py-0"
+                id="cartProductSubtotalWithDiscounts{{itemIndex}}"
+                ng-bind="(item.ExtendedPrice + item.DiscountTotal) | globalizedCurrency">
+              </div>
+            </div>
+          </div>
+          <div ng-if="cvmcCtrl.cefConfig.loginForPricing.enabled
+            && !cvmcCtrl.cvAuthenticationService.isAuthenticated()"
+            cef-login-for-pricing>
+          </div>
+        </div>
+      </div>
+      <div class="row no-gutters"
+        ng-if="cvmcCtrl.cefConfig.featureSet.discounts.enabled
+          && item.Discounts.length
+          && (!cvmcCtrl.cefConfig.loginForPricing.enabled
+              || cvmcCtrl.cvAuthenticationService.isAuthenticated())">
+        <div class="col-12 small">
+          <table ng-if="item.Discounts && item.Discounts.length"
+            class="table table-borderless w-auto mb-2 mx-3 bg-light rounded">
+            <tr ng-repeat="(discountIndex, discount) in item.Discounts">
+              <td class="text-right w-auto">
+                <span class=""
+                  id="cartProductDiscountDescription{{itemIndex + '.' + discountIndex}}"
+                  title="{{discount.SlaveName}}"
+                  ng-bind="discount.SlaveName | limitToEllipses: 25">
+                </span>
+              </td>
+              <td class="w-auto">
+                <button ng-if="!discount.DiscountIsAutoApplied"
+                  type="button" class="btn btn-link top p-0 text-nowrap"
+                  id="btnRemoveDiscountFromItem{{itemIndex + '.' + discountIndex}}"
+                  name="btnRemoveDiscountFromItem{{itemIndex + '.' + discountIndex}}"
+                  translate-attr="{ title: 'ui.storefront.cart.removeDiscountFromItem',
+                                    'aria-label': 'ui.storefront.cart.removeDiscountFromItem' }"
+                  ng-click="cvmcCtrl.removeCartItemDiscount(discount.ID)">
+                  <span id="cartProductDiscountValue{{itemIndex + '.' + discountIndex}}"
+                    class="text-success"
+                    ng-bind="discount.DiscountValueType == 1
+                      ? (discount.DiscountValue | globalizedCurrency)
+                      : (discount.DiscountValue + '%')">
+                  </span>&nbsp;<span class="text-success"
+                    data-translate="ui.storefront.common.Off"></span>&nbsp;<!--
+                  --><i class="far fa-trash fa-lg text-danger"></i>
+                  <span class="sr-only"
+                    data-translate="ui.storefront.cart.removeDiscountFromItem">
+                  </span>
+                </button>
+                <span ng-if="discount.DiscountIsAutoApplied">
+                  <span id="cartProductDiscountValue{{itemIndex + '.' + discountIndex}}"
+                    class="text-success"
+                    ng-bind="discount.DiscountValueType == 1
+                      ? (discount.DiscountValue | globalizedCurrency)
+                      : (discount.DiscountValue + '%')">
+                  </span>&nbsp;<span class="text-success"
+                    data-translate="ui.storefront.common.Off">
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div ng-if="cvmcCtrl.cefConfig.featureSet.carts.miniCart.enabled && cvmcCtrl.showShowMoreButton"
+      class="list-group-item p-1">
+      <button type="button" class="btn btn-secondary w-100"
+        translate-attr="{ title: 'ui.storefront.cart.cartShippingEstimator.ShowMore',
+                          'aria-label': 'ui.storefront.cart.cartShippingEstimator.ShowMore' }"
+        data-translate="ui.storefront.cart.cartShippingEstimator.ShowMore"
+        ng-click="cvmcCtrl.showMore()">
+      </button>
+    </div>
+    <div ng-if="cvmcCtrl.cefConfig.featureSet.carts.miniCart.enabled && cvmcCtrl.showShowLessButton"
+      class="list-group-item p-1">
+      <button type="button" class="btn btn-secondary w-100"
+        translate-attr="{ title: 'ui.storefront.cart.cartShippingEstimator.ShowLess',
+                          'aria-label': 'ui.storefront.cart.cartShippingEstimator.ShowLess' }"
+        data-translate="ui.storefront.cart.cartShippingEstimator.ShowLess"
+        ng-click="cvmcCtrl.showLess()">
+      </button>
+    </div>
+  </div>
+  <div class="card-body py-1 bg-medium"
+    ng-if="cvmcCtrl.cefConfig.featureSet.discounts.enabled
+      && (cvmcCtrl.orderDiscounts.length || cvmcCtrl.shippingDiscounts.length)">
+    <span class="card-subtitle font-weight-bold"
+      data-translate="ui.storefront.checkout.appliedDiscounts">
+    </span>
+  </div>
+  <div class="list-group list-group-flush"
+    id="miniCartDiscounts" name="miniCartDiscounts"
+    ng-if="cvmcCtrl.cefConfig.featureSet.discounts.enabled
+      && (cvmcCtrl.orderDiscounts.length || cvmcCtrl.shippingDiscounts.length)
+      && (!cvmcCtrl.cefConfig.loginForPricing.enabled || cvmcCtrl.cvAuthenticationService.isAuthenticated())">
+    <div ng-repeat="(discountIndex, discount) in cvmcCtrl.orderDiscounts"
+      class="list-group-item px-3">
+      <div class="row no-gutters align-items-center">
+        <div class="col-auto pr-1">
+          <button ng-if="!discount.DiscountIsAutoApplied"
+            type="button" class="btn btn-link float-left text-danger top p-0"
+            id="btnRemoveOrderDiscount{{discountIndex}}"
+            name="btnRemoveOrderDiscount{{discountIndex}}"
+            translate-attr="{ title: 'ui.storefront.cart.removeItemFromCart',
+                              'aria-label': 'ui.storefront.cart.removeOrderDiscountFromCart' }"
+            ng-click="cvmcCtrl.removeCartDiscount(discount.ID)">
+            <i class="far fa-trash fa-lg"></i>
+            <span class="sr-only" data-translate="ui.storefront.cart.removeDiscountFromItem"></span>
+          </button>
+        </div>
+        <div class="col px-1">
+          <div class="text-left">
+            <div id="orderDiscountName{{discountIndex}}"
+              class="form-control-static font-weight-normal">
+              <span ng-bind="discount.SlaveName | limitToEllipses : 13"></span>
+            </div>
+          </div>
+        </div>
+        <div class="col px-1">
+          <div class="text-right">
+            <div id="orderDiscountValue{{discountIndex}}"
+              class="d-block form-control-static cart-price price text-right">
+              <span ng-bind="discount.DiscountValueType == 1
+                ? (discount.DiscountValue | globalizedCurrency)
+                : (discount.DiscountValue + '%')"></span>&nbsp;<!--
+              --><span data-translate="ui.storefront.common.Off"></span>
+            </div>
+          </div>
+        </div>
+        <div class="col pl-1">
+          <div id="orderDiscountTotal{{discountIndex}}"
+            class="d-block form-control-static cart-price price text-right text-success">
+            <b ng-bind="discount.DiscountTotal | globalizedCurrency"></b>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-repeat="(discountIndex, discount) in cvmcCtrl.shippingDiscounts"
+      class="list-group-item px-3">
+      <div class="row no-gutters align-items-center">
+        <div class="col-auto pr-1">
+          <button ng-if="!discount.DiscountIsAutoApplied"
+            type="button" class="btn btn-link float-left text-danger top p-0"
+            id="btnRemoveShipDiscount{{discountIndex}}"
+            name="btnRemoveShipDiscount{{discountIndex}}"
+            translate-attr="{ title: 'ui.storefront.cart.removeItemFromCart',
+                              'aria-label': 'ui.storefront.cart.removeOrderDiscountFromCart' }"
+            ng-click="cvmcCtrl.removeCartDiscount(discount.ID)">
+            <i class="far fa-trash fa-lg"></i>
+            <span class="sr-only" data-translate="ui.storefront.cart.removeDiscountFromItem"></span>
+          </button>
+        </div>
+        <div class="col px-1">
+          <div class="text-left">
+            <div id="shipDiscountName{{discountIndex}}"
+              class="form-control-static font-weight-normal">
+              <span ng-bind="discount.SlaveName | limitToEllipses : 13"></span>
+            </div>
+          </div>
+        </div>
+        <div class="col px-1">
+          <div class="text-right">
+            <div id="shipDiscountValue{{discountIndex}}"
+              class="d-block form-control-static cart-price price text-right">
+              <span ng-bind="discount.DiscountValueType == 1
+                ? (discount.DiscountValue | globalizedCurrency)
+                : (discount.DiscountValue + '%')"></span>&nbsp;<!--
+              --><span data-translate="ui.storefront.common.Off"></span>
+            </div>
+          </div>
+        </div>
+        <div class="col pl-1">
+          <div id="shipDiscountTotal{{discountIndex}}"
+            class="d-block form-control-static cart-price price text-right text-success">
+            <b ng-bind="discount.DiscountTotal | globalizedCurrency"></b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="cvmcCtrl.cefConfig.loginForPricing.enabled
+    && !cvmcCtrl.cvAuthenticationService.isAuthenticated()"
+    cef-login-for-pricing>
+  </div>
+  <div class="card-body py-1 bg-medium">
+    <span class="card-subtitle font-weight-bold"
+      sid="MiniCartTotalsText"
+      data-translate="ui.storefront.cart.widgets.totalsWidget.Totals">
+    </span>
+  </div>
+  <div class="card-body p-0">
+    <div ng-if="cvmcCtrl.cvCartService.carts[cvmcCtrl.type].Totals"
+      cef-totals-widget
+      type="cvmcCtrl.type"
+      show-header="false"
+      no-margin-bottom="true"
+      pad-align="true"
+      hide-shipping="cvmcCtrl.hideShipping"
+      hide-handling="cvmcCtrl.hideHandling"
+      hide-fees="cvmcCtrl.hideFees"
+      hide-discounts="cvmcCtrl.hideDiscounts"
+      hide-taxes="cvmcCtrl.hideTaxes">
+    </div>
+  </div>
+  <div class="card-footer p-3"
+    ng-if="cvmcCtrl.cefConfig.featureSet.discounts.enabled && cvmcCtrl.type !== 'Quote Cart'
+      || cvmcCtrl.cvCartService.validationResponse">
+    <div class="row">
+      <div class="col-12 cef-checkout"
+        ng-if="cvmcCtrl.cefConfig.featureSet.discounts.enabled"
+        ng-form="cvmcCtrl.forms.discounts">
+        <h4 sid="MiniCartDoYouHaveAnyDiscountsText"
+          data-translate="ui.storefront.checkout.discounts.DoYouHaveAnyDiscounts">
+        </h4>
+        <div class="input-group mb-1">
+          <input type="text" class="form-control"
+            id="txtCoupon" name="txtCoupon"
+            translate-attr="{ placeholder: 'ui.storefront.cart.enterCouponCode' }"
+            ng-required="true"
+            ng-keydown="cvmcCtrl.addDiscountEnter($event)"
+            ng-model="cvmcCtrl.discountCode" />
+          <div class="input-group-append input-group-btn">
+            <button type="button" class="btn btn-secondary"
+              id="btnApplyDiscountToCart" name="btnApplyDiscountToCart"
+              translate-attr="{ title: 'ui.storefront.cart.Apply',
+                                'aria-label': 'ui.storefront.cart.Apply' }"
+              data-translate="ui.storefront.cart.Apply"
+              ng-disabled="cvmcCtrl.forms.discounts.$invalid || !cvmcCtrl.discountCode"
+              ng-click="cvmcCtrl.addDiscount()">
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12"
+        cef-cart-validator
+        type="cvmcCtrl.type">
+      </div>
+    </div>
+  </div>
+</div>

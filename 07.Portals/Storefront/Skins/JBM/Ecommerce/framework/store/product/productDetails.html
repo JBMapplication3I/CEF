@@ -1,0 +1,182 @@
+﻿<div class="breadcrumb-section"
+  ng-if="!productDetailsCtrl.productToDisplay || productDetailsCtrl.viewState.running">
+  <div cef-loading-widget
+    overlay="true"
+    message="productDetailsCtrl.viewState.waitMessage">
+  </div>
+</div>
+<div class="breadcrumb-section"
+  ng-if="productDetailsCtrl.productToDisplay">
+  <div class="container">
+    <div cef-product-details-breadcrumb
+      product="productDetailsCtrl.productToDisplay"
+      last-item="{{productDetailsCtrl.productToDisplay.Name}}">
+    </div>
+  </div>
+</div>
+<div class="main-section pb-6 pb-md-9" ng-if="productDetailsCtrl.productToDisplay">
+  <div class="container">
+    <div class="product-holder">
+      <div class="product-gallery-holder" cef-product-images>
+      </div>
+      <div class="product-content-holder">
+        <h1 ng-if="productDetailsCtrl.previewMode"
+          id="isPreview" class="text-danger">
+          This is a Preview of a version of this data and not
+          reflective of what is live on the website.
+        </h1>
+        <h1 id="productName"
+          class="d-lg-block">
+          <i class="mx-1 fa fa-solid fa-prescription very-big"
+            ng-if="productDetailsCtrl.productIsRX()"
+            uib-tooltip="{{'ui.storefront.catalog.rxInformationTooltip'}}"></i>
+          <span ng-bind="productDetailsCtrl.productToDisplay.Name"></span>
+        </h1>
+        <div class="product-info-holder">
+          <div class="producr-info-main">
+            <span class="title-price"><span class="icon-price text-warning"></span><i>Your Price</i></span>
+            <div ng-if="productDetailsCtrl.cefConfig.featureSet.reviews.enabled"
+              class="cef-ratings w-100 mb-3">
+              <div cef-rating-summary
+                value="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Value"
+                count="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Count"
+                scale="5">
+              </div>
+            </div>
+            <!--shareThis start
+            <div class="w-100">
+              <div class="sharethis-inline-share-buttons"></div>
+              <hr class="mt-3 mb-1" />
+            </div>
+            shareThis end-->
+            <div class="price"
+              cef-product-price
+              product="productDetailsCtrl.productToDisplay">
+            </div>
+            <div cef-product-stock
+              product="productDetailsCtrl.productToDisplay">
+            </div>
+            <div ng-if="productDetailsCtrl.displayHCPC && productDetailsCtrl.hcpcCode" class="my-3">
+              <span class="alert alert-info p-1">
+                <small data-translate="ui.storefront.common.HCPC"></small>
+                <small ng-bind="productDetailsCtrl.hcpcCode"></small>
+              </span>
+            </div>
+            <div cef-product-common-data
+              product="productDetailsCtrl.productToDisplay">
+            </div>
+            <div ng-if="productDetailsCtrl.productVariants.length"
+              cef-product-variants-table
+              master-controller="productDetailsCtrl">
+            </div>
+            <div ng-if="productDetailsCtrl.productVariants.length"
+              cef-product-variant-swatches
+              product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+              product-variants="productDetailsCtrl.productVariants">
+            </div>
+            <div>
+              <hr />
+            </div>
+            <div cef-product-short-description
+              product="productDetailsCtrl.productToDisplay">
+            </div>
+          </div>
+          <div class="producr-info-sidebar">
+            <div>
+              <div cef-product-buy-block
+                product-to-display="productDetailsCtrl.productToDisplay"
+                product-which-is-the-master="productDetailsCtrl.productWhichIsTheMaster"
+                product-which-is-the-current-variant="productDetailsCtrl.productWhichIsTheCurrentVariant"
+                product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+                product-variants="productDetailsCtrl.productVariants"
+                quantity-for-add-to-cart="productDetailsCtrl.quantityForAddToCart"
+                get-serializable-attributes="productDetailsCtrl.getSerializableAttributes">
+              </div>
+            </div>
+            <div>
+              <div cef-product-actions-group
+                product="productDetailsCtrl.productToDisplay"
+                store-product="productDetailsCtrl.storeProduct">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="productDetailsCtrl.productToDisplay.TypeKey === 'VARIANT-KIT'
+        || productDetailsCtrl.productToDisplay.TypeKey === 'KIT'"
+        class="col-12 mb-3"
+        cef-product-kit-components>
+      </div>
+    </div>
+    <div class="uom-grid my-5" ng-if="productDetailsCtrl.uomArray.length > 0">
+      <table class="w-100">
+        <thead>
+          <tr class="border-bottom border-top">
+            <th class="col-3 p-2" data-translate="ui.storefront.searchCatalog.compare.Stock"></th>
+            <th class="col-3 p-2" data-translate="ui.storefront.common.UoM"></th>
+            <th class="col-3 p-2" data-translate="ui.storefront.common.Price"></th>
+            <th class="col-3 p-2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(key, value) in productDetailsCtrl.uomArray  track by $index" class="border-bottom border-top">
+            <td class="pt-4 pb-4">
+              <span ng-if="(productDetailsCtrl.sumInventoryQuantities() / value.Value | roundDown) > 0"
+                  class="alert alert-success p-1">
+                  {{ productDetailsCtrl.sumInventoryQuantities() / value.Value | roundDown }}
+                  <small data-translate="ui.storefront.common.InStock"></small>
+              </span>
+            </td>
+            <td class="pt-4 pb-4">
+              {{value.Key}}
+            </td>
+            <td class="pt-4 pb-4">
+              <span ng-if="productDetailsCtrl.productToDisplay.$_rawPrices.base">
+                {{ productDetailsCtrl.productToDisplay.$_rawPricesUOMs[value.Key].SalePrice | globalizedCurrency }}
+              </span>
+            </td>
+            <td class="pt-4 pb-4">
+              <div cef-add-to-cart-button
+                sales-item="productDetailsCtrl.productToDisplay"
+                item-id="productDetailsCtrl.productToDisplay.ID"
+                item-name="productDetailsCtrl.productToDisplay.Name"
+                item-seo-url="productDetailsCtrl.productToDisplay.SeoUrl"
+                default-value="value.Value"
+                current-value="value.Value"
+                show-icon="false"
+                show-text="true"
+                ship-option=""
+                out-of-stock-links-to-details="false"
+                debug="false"
+                handle-uoms="true"
+                product-uom-key="value.Key"
+                product-uom-value="productDetailsCtrl.productToDisplay.$_rawPricesUOMs[value.Key].SalePrice">
+              </div>
+            </td>
+            <td class="pt-4 pb-4">
+              <div cef-product-shopping-list
+                product="productDetailsCtrl.productToDisplay"
+                handle-uoms="true"
+                product-uom-key="value.Key"
+                product-uom-value="productDetailsCtrl.productToDisplay.$_rawPricesUOMs[value.Key].SalePrice">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12 mb-3"
+      cef-product-tabs
+      product="productDetailsCtrl.productToDisplay">
+    </div>
+    <div class="col-12"
+      related-products-list
+      products="productDetailsCtrl.productWhichIsTheMaster.ProductAssociations"
+      type="Related Product"
+      size="4">
+    </div>
+  </div>
+  <div class="image-decor">
+    <img src="../images/ecommerce/img-decor03.png" alt="image-description">
+  </div>
+</div>

@@ -1,0 +1,64 @@
+.links-list {
+	@extend %listreset;
+	border-radius: 3px;
+	border: $border-width solid $border-color;
+
+	li {
+		&:last-child {
+			a {
+				border: none;
+			}
+
+			button {
+				border: none;
+			}
+		}
+	}
+
+	a {
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		color: $body-color;
+		padding: rem-calc(10 15);
+		border-bottom: $border-width solid $border-color;
+
+		&:hover,
+		&:focus {
+			background: $border-color;
+			color: $primary;
+		}
+	}
+
+	button {
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		color: $body-color;
+		padding: rem-calc(10 15);
+		border-bottom: $border-width solid $border-color;
+		width: 100%;
+		border-radius: 0px;
+		box-shadow: none;
+
+		&:hover,
+		&:focus {
+			background: #dedfe0;
+			color: $primary;
+			width: 100%;
+			border-radius: 0px;
+			box-shadow: none !important;
+			-webkit-box-shadow: none !important;
+		}
+	}
+
+	i {
+		margin: rem-calc(0 10 0 0);
+		font-size: rem-calc(16);
+		width: 1em;
+
+		&:before {
+			font-size: .9em;
+		}
+	}
+}

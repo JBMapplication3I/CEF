@@ -1,0 +1,31 @@
+﻿<div class="featured-section-title" ng-if="popularCategoriesCtrl.categories.length > 0">
+    <h4 data-translate="ui.storefront.category.PopularCategories"></h4>
+</div>
+<div class="items-holder row justify-content-center">
+    <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="category in popularCategoriesCtrl.categories">
+        <a ui-sref-plus 
+           class="item position-relative"
+           uisrp-is-catalog="true"
+           style="height: auto"
+           uisrp-state="searchCatalog.products.results.both"
+           uisrp-params="{ 'category': '{{category.Name}}|{{category.CustomKey}}' }">
+            <div cef-product-card-thumbnail-widget
+                    class="jbm-homepage-category-images"
+                    product-id="category.ID"
+                    product-image="category.PrimaryImageFileName"
+                    is-category="true"
+                    width="250"
+                    height="500"
+                    index="$index"></div>
+        <h3 class="h5 item-title position-absolute w-100" ng-bind="category.DisplayName || category.Name"></h3>
+        </a>
+    </div>
+</div>
+<div class="text-center">
+    <a class="btn btn-success btn-lg"
+       uisrp-state="searchCatalog.products.results.both"
+       uisrp-params="{ 'category': null, 'term': null  }"
+       ui-sref-plus 
+       uisrp-is-catalog="true"
+       ><b data-translate="ui.storefront.personalization.personalizedCategoriesQuickNav.ShopAllCategories"></b></a>
+</div>

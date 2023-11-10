@@ -1,0 +1,273 @@
+<dotnetnuke type="Package" version="5.0">
+  <packages>
+    <package name="ClarityEcommerceDNN" type="Module" version="01.00.01">
+      <friendlyName>Clarity eCommerce Extensions</friendlyName>
+      <description>Core elements shared by DNN Extensions for Clarity eCommerce. This module should not be placed on a page.</description>
+      <iconFile>~/Images/icon_extensions_32px.png</iconFile>
+      <owner>
+        <name>Clarity Ventures, Inc.</name>
+        <organization>Clarity Ventures, Inc.</organization>
+        <url>http://www.clarity-ventures.com</url>
+        <email>info@clarity-ventures.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">09.00.00</dependency>
+      </dependencies>
+
+      <components>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\ClarityEcommerceDNN</basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.01.Core.SqlDataProvider</name>
+              <version>01.00.01</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.Core.SqlDataProvider</name>
+              <version>01.00.01</version>
+            </script>
+          </scripts>
+        </component>
+
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/ClarityEcommerceDNN</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="Module">
+          <desktopModule>
+            <moduleName>Clarity.Ecommerce.Dnn.Extensions.Core</moduleName>
+            <foldername>ClarityEcommerceDNN</foldername>
+            <businessControllerClass>Clarity.Ecommerce.DNN.Extensions.CoreController</businessControllerClass>
+            <supportedFeatures>
+              <supportedFeature>IUpgradeable</supportedFeature>
+            </supportedFeatures>
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>Clarity eCommerce Extensions Core</friendlyName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey />
+                    <controlSrc>DesktopModules/ClarityEcommerceDNN/View.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle />
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>Edit</controlKey>
+                    <controlSrc>DesktopModules/ClarityEcommerceDNN/Edit.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>Advanced</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                    <supportsPopUps>True</supportsPopUps>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+          <eventMessage>
+            <processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
+            <processorCommand>UpgradeModule</processorCommand>
+            <attributes>
+              <businessControllerClass>Clarity.Ecommerce.DNN.Extensions.CoreController</businessControllerClass>
+              <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
+              <upgradeVersionsList>01.00.01</upgradeVersionsList>
+            </attributes>
+          </eventMessage>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>ClarityEcommerceDNN.dll</name>
+              <path>bin</path>
+            </assembly>
+            <assembly>
+              <name>Clarity.Ecommerce.Core.dll</name>
+              <path>bin</path>
+            </assembly>
+            <assembly>
+              <name>Clarity.Ecommerce.Encryption.dll</name>
+              <path>bin</path>
+            </assembly>
+            <assembly>
+              <name>Clarity.Ecommerce.Utilities.dll</name>
+              <path>bin</path>
+            </assembly>
+            <assembly>
+              <name>DocumentFormat.OpenXml.dll</name>
+              <path>bin</path>
+            </assembly>
+            <assembly>
+              <name>ServiceStack.Interfaces.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+    <package name="ClarityEcommerceDnnComponent" type="Module" version="01.00.01">
+      <friendlyName>Clarity eCommerce Component</friendlyName>
+      <description>This one module can be used to place any one of the multiple Clarity eCommerce Components on a page.</description>
+      <iconFile>~/Images/icon_extensions_32px.png</iconFile>
+      <owner>
+        <name>Clarity Ventures, Inc.</name>
+        <organization>Clarity Ventures, Inc.</organization>
+        <url>http://www.clarity-ventures.com</url>
+        <email>info@clarity-ventures.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">09.00.00</dependency>
+      </dependencies>
+
+      <components>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\ClarityEcommerceDNN</basePath>
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>01.00.01.Component.SqlDataProvider</name>
+              <version>01.00.01</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.Component.SqlDataProvider</name>
+              <version>01.00.01</version>
+            </script>
+          </scripts>
+        </component>
+
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/ClarityEcommerceDNN</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+
+        <component type="Module">
+          <desktopModule>
+            <moduleName>Clarity.Ecommerce.Dnn.Extensions.Component</moduleName>
+            <foldername>ClarityEcommerceDNN</foldername>
+            <businessControllerClass>Clarity.Ecommerce.DNN.Extensions.ComponentController</businessControllerClass>
+            <supportedFeatures>
+              <supportedFeature type="Upgradeable"></supportedFeature>
+            </supportedFeatures>
+            <moduleDefinitions>
+              <moduleDefinition>
+                <friendlyName>Clarity eCommerce Component</friendlyName>
+                <defaultCacheTime>0</defaultCacheTime>
+                <moduleControls>
+                  <moduleControl>
+                    <controlKey />
+                    <controlSrc>DesktopModules/ClarityEcommerceDNN/ComponentView.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle />
+                    <controlType>View</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                  </moduleControl>
+                  <moduleControl>
+                    <controlKey>Edit</controlKey>
+                    <controlSrc>DesktopModules/ClarityEcommerceDNN/ComponentEdit.ascx</controlSrc>
+                    <supportsPartialRendering>False</supportsPartialRendering>
+                    <controlTitle>Edit Component</controlTitle>
+                    <controlType>Edit</controlType>
+                    <iconFile />
+                    <helpUrl />
+                    <viewOrder>0</viewOrder>
+                    <supportsPopUps>True</supportsPopUps>
+                  </moduleControl>
+                </moduleControls>
+              </moduleDefinition>
+            </moduleDefinitions>
+          </desktopModule>
+          <eventMessage>
+            <processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
+            <processorCommand>UpgradeModule</processorCommand>
+            <attributes>
+              <businessControllerClass>Clarity.Ecommerce.DNN.Extensions.ComponentController, Clarity.Ecommerce.DNN.Extensions</businessControllerClass>
+              <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
+              <upgradeVersionsList>01.00.01</upgradeVersionsList>
+            </attributes>
+          </eventMessage>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>ClarityEcommerceDNN.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+      </components>
+    </package>
+    <package name="Clarity.Ecommerce.Dnn.Extensions.PersonaBar" type="PersonaBar" version="01.00.01">
+      <friendlyName>Clarity eCommerce Extensions Settings</friendlyName>
+      <description>Setup and Settings used by DNN Extensions for Clarity eCommerce.</description>
+      <iconFile>~/DesktopModules/admin/Dnn.PersonaBar/images/module_icon_32x32.png</iconFile>
+      <owner>
+        <name>Clarity Ventures, Inc.</name>
+        <organization>Clarity Ventures, Inc.</organization>
+        <url>http://www.clarity-ventures.com/</url>
+        <email>info@clarity-ventures.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <dependencies>
+        <dependency type="CoreVersion">09.00.00</dependency>
+        <dependency type="ManagedPackage" version="01.00.01">Dnn.PersonaBar.UI</dependency>
+      </dependencies>
+      <azureCompatible>true</azureCompatible>
+      <components>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/admin/Dnn.PersonaBar/Modules/ClarityEcommerceDNN</basePath>
+            <resourceFile>
+              <name>Resources_PersonaBar.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <name>ClarityEcommerceDNN.dll</name>
+              <path>bin</path>
+            </assembly>
+          </assemblies>
+        </component>
+        <component type="PersonaBarMenu">
+          <menu>
+            <identifier>ClarityEcommerceDNN</identifier>
+            <moduleName>ClarityEcommerceDNN</moduleName>
+            <resourceKey>nav_PersonaBarMenu</resourceKey>
+            <path>ClarityEcommerceDNN</path>
+            <mobileSupport>true</mobileSupport>
+            <parent>Settings</parent>
+            <order>2</order>
+          </menu>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

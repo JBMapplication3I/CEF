@@ -1,0 +1,77 @@
+<div class="modal-header bg-danger text-light">
+  <h5 class="modal-title text-white"
+    data-translate="ui.storefront.modals.sizingChart.heading"
+  ></h5>
+  <button type="button" class="close"
+    translate-attr="{ title: 'ui.storefront.common.Close',
+                            'aria-label': 'ui.storefront.common.Close' }"
+    ng-click="sizingChartModalCtrl.ok()">
+    <i class="far fa-times text-light" aria-hidden="true"></i>
+    <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+  </button>
+</div>
+<div class="modal-body">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th>Neck</th>
+        <th>Chest</th>
+        <th>Waist</th>
+        <th>Sleeve Length</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Small</td>
+        <td>15.5 - 16</td>
+        <td>36 - 38</td>
+        <td>31 - 32</td>
+        <td>32.5 - 33</td>
+      </tr>
+      <tr>
+        <td>Medium</td>
+        <td>16.5 - 17</td>
+        <td>39 - 41</td>
+        <td>33 - 35</td>
+        <td>33 - 33.5</td>
+      </tr>
+      <tr>
+        <td>Large</td>
+        <td>17 - 17.5</td>
+        <td>42 - 44</td>
+        <td>36 - 38</td>
+        <td>33.5 - 34</td>
+      </tr>
+      <tr>
+        <td>XL</td>
+        <td>18 - 18.5</td>
+        <td>45 - 48</td>
+        <td>39 - 43</td>
+        <td>34 - 34.5</td>
+      </tr>
+      <tr>
+        <td>2XL</td>
+        <td>18.5 - 19</td>
+        <td>49 - 52</td>
+        <td>44 - 48</td>
+        <td>34.5 - 35</td>
+      </tr>
+      <tr>
+        <td>3XL</td>
+        <td>19.5 - 20.5</td>
+        <td>53 - 56</td>
+        <td>49 - 53</td>
+        <td>35 - 36</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger"
+    translate-attr="{ title: 'ui.storefront.common.OK',
+                            'aria-label': 'ui.storefront.common.OK' }"
+    data-translate="ui.storefront.common.OK"
+    ng-click="sizingChartModalCtrl.ok()"
+  ></button>
+</div>

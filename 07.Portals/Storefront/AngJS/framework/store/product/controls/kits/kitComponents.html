@@ -1,0 +1,52 @@
+﻿<!-- TODO: Bootstrap 4 Upgrade -->
+            <!-- TODO: Read this controller instead of parent -->
+<div class="row"
+     ng-if="productDetailsCtrl.productWhichIsTheMaster.TypeName === 'Kit'
+         || productDetailsCtrl.productWhichIsTheMaster.TypeName === 'Variant Kit'
+         || productDetailsCtrl.productWhichIsTheMaster.TypeName === 'Variant Master'">
+    <div class="col-12 cef-kit-component">
+        <h3 data-translate="ui.storefront.product.detail.productDetails.whatComesInThisKit"></h3>
+        <div ng-if="productDetailsCtrl.productWhichIsTheMaster.TypeName !== 'Variant Master'"
+             ng-repeat="ap in productDetailsCtrl.productWhichIsTheMaster.ProductAssociations | filter: { 'TypeName': 'Kit Component' }">
+            <div cef-product-thumbnail-widget
+                product="ap.Slave"
+                product-id="ap.SlaveID"
+                product-name="ap.SlaveName"
+                product-seo-url="ap.SlaveSeoUrl"
+                product-image="ap.SlavePrimaryImageFileName"
+                width="100" height="100"></div>
+            <p>
+                <!-- TODO: Single text binding -->
+                <a ui-sref-plus uisrp-is-product="true"
+                   uisrp-path="{{ap.SlaveSeoUrl}}"
+                   uisrp-params="{ 'backToTitle': 'Kit', 'backToSeoUrl': '{{productDetailsCtrl.productWhichIsTheMaster.SeoUrl | urlEncode}}' }"
+                   ><span ng-bind="ap.Quantity + ' x ' + ap.SlaveName"></span><!--
+                   --><span ng-if="ap.UnitOfMeasure && ap.UnitOfMeasure.toLower() !== 'each' && ap.UnitOfMeasure.toLower() !== 'ea'"
+                            >&nbsp;(<span ng-bind="ap.UnitOfMeasure"></span>)</span></a>
+            </p>
+            <p><span data-translate="ui.storefront.product.detail.productDetails.Regularly"></span>&nbsp;<!--
+            --><span ng-bind="ap.Slave.readPrices().base | globalizedCurrency"></span></p>
+        </div>
+        <div ng-if="productDetailsCtrl.productWhichIsTheMaster.TypeName == 'Variant Master'"
+             ng-repeat="ap in productDetailsCtrl.productToDisplay.ProductAssociations | filter: { 'TypeName': 'Kit Component' }">
+            <div cef-product-thumbnail-widget
+                product="ap.Slave"
+                product-id="ap.SlaveID"
+                product-name="ap.SlaveName"
+                product-seo-url="ap.SlaveSeoUrl"
+                product-image="ap.SlavePrimaryImageFileName"
+                width="100" height="100"></div>
+            <p>
+                <!-- TODO: Single text binding -->
+                <a ui-sref-plus uisrp-is-product="true"
+                   uisrp-path="{{ap.SlaveSeoUrl}}"
+                   uisrp-params="{ 'backToTitle': 'Kit', 'backToSeoUrl': '{{productDetailsCtrl.productWhichIsTheMaster.SeoUrl | urlEncode}}' }"
+                   ><span ng-bind="ap.Quantity + ' x ' + ap.SlaveName"></span><!--
+                   --><span ng-if="ap.UnitOfMeasure && ap.UnitOfMeasure.toLower() !== 'each' && ap.UnitOfMeasure.toLower() !== 'ea'"
+                            >&nbsp;(<span ng-bind="ap.UnitOfMeasure"></span>)</span></a>
+            </p>
+            <p><span data-translate="ui.storefront.product.detail.productDetails.Regularly"></span>&nbsp;<!--
+            --><span ng-bind="ap.Slave.readPrices().base | globalizedCurrency"></span></p>
+        </div>
+    </div>
+</div>

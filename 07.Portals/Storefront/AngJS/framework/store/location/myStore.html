@@ -1,0 +1,103 @@
+﻿<div class="row"
+     ng-if="myStoreCtrl.currentStore.Active">
+    <div class="col-12">
+        <h4 data-translate="ui.storefront.location.myStore.myStore"></h4>
+    </div>
+    <div class="col-12">
+        <div class="col-md-5">
+            <img alt="{{myStoreCtrl.currentStore.Name}}"
+                 ng-src="{{ myStoreCtrl.currentStore.getMapImageUrl(locationButtonCtrl.imageParams) }}">
+        </div>
+        <div class="col-md-4">
+            <p ng-bind="myStoreCtrl.currentStore.Name"></p>
+            <address class="mb-0">
+                {{myStoreCtrl.currentStore.Contact.Address.Street1}}<br />
+                {{myStoreCtrl.currentStore.Contact.Address.City}}, {{myStoreCtrl.currentStore.Contact.Address.RegionCode}}&nbsp;<!--
+                -->{{myStoreCtrl.currentStore.Contact.Address.PostalCode}}
+            </address>
+            <p ng-if="myStoreCtrl.currentStore.Contact.Phone1">
+                <span data-translate="ui.storefront.common.Telephone.Abbreviation"></span>&nbsp;<!--
+                --><a ng-href="tel:{{myStoreCtrl.currentStore.Contact.Phone1}}" class="tel"
+                      ng-bind="myStoreCtrl.currentStore.Contact.Phone1"></a>
+            </p>
+            <!--<p>
+                <b data-translate="ui.storefront.common.Monday.Abbreviation"></b> {{myStoreCtrl.currentStore.OperatingHoursMondayStart}} - {{myStoreCtrl.currentStore.OperatingHoursMondayEnd}}<br />
+                <b data-translate="ui.storefront.common.Tuesday.Abbreviation"></b> {{myStoreCtrl.currentStore.OperatingHoursTuesdayStart}} - {{myStoreCtrl.currentStore.OperatingHoursTuesdayEnd}}<br />
+                <b data-translate="ui.storefront.common.Wednesday.Abbreviation"></b> {{myStoreCtrl.currentStore.OperatingHoursWednesdayStart}} - {{myStoreCtrl.currentStore.OperatingHoursWednesdayEnd}}<br />
+                <b data-translate="ui.storefront.common.Thursday.Abbreviation"></b> {{myStoreCtrl.currentStore.OperatingHoursThursdayStart}} - {{myStoreCtrl.currentStore.OperatingHoursThursdayEnd}}<br />
+                <b data-translate="ui.storefront.common.Friday.Abbreviation"></b> {{myStoreCtrl.currentStore.OperatingHoursFridayStart}} - {{myStoreCtrl.currentStore.OperatingHoursFridayEnd}}<br />
+                <b data-translate="ui.storefront.common.Saturday.Abbreviation"></b> {{myStoreCtrl.currentStore.OperatingHoursSaturdayStart}} - {{myStoreCtrl.currentStore.OperatingHoursSaturdayEnd}}<br />
+                <b data-translate="ui.storefront.common.Sunday.Abbreviation"></b> {{myStoreCtrl.currentStore.OperatingHoursSundayStart}} - {{myStoreCtrl.currentStore.OperatingHoursSundayEnd}}<br />
+            </p>-->
+            <table>
+                <tbody>
+                    <tr>
+                        <td><b data-translate="ui.storefront.location.shipTo.shipToDetails.Monday"></b></td>
+                        <td ng-if="!myStoreCtrl.currentStore.OperatingHoursMondayStart"
+                            data-translate="ui.storefront.location.shipTo.shipToDetails.Closed"></td>
+                        <td class="text-right" ng-bind="myStoreCtrl.currentStore.OperatingHoursMondayStart | numberToTime"></td>
+                        <td ng-if="myStoreCtrl.currentStore.OperatingHoursMondayStart > 0">&nbsp;-&nbsp;</td>
+                        <td ng-bind="myStoreCtrl.currentStore.OperatingHoursMondayEnd | numberToTime"></td>
+                    </tr>
+                    <tr>
+                        <td><b data-translate="ui.storefront.common.Tuesday"></b></td>
+                        <td ng-if="!myStoreCtrl.currentStore.OperatingHoursTuesdayStart"
+                            data-translate="ui.storefront.location.shipTo.shipToDetails.Closed"></td>
+                        <td class="text-right" ng-bind="myStoreCtrl.currentStore.OperatingHoursTuesdayStart | numberToTime"></td>
+                        <td ng-if="myStoreCtrl.currentStore.OperatingHoursTuesdayStart > 0">&nbsp;-&nbsp;</td>
+                        <td ng-bind="myStoreCtrl.currentStore.OperatingHoursTuesdayEnd | numberToTime"></td>
+                    </tr>
+                    <tr>
+                        <td><b data-translate="ui.storefront.common.Wednesday"></b></td>
+                        <td ng-if="!myStoreCtrl.currentStore.OperatingHoursWednesdayStart"
+                            data-translate="ui.storefront.location.shipTo.shipToDetails.Closed"></td>
+                        <td class="text-right" ng-bind="myStoreCtrl.currentStore.OperatingHoursWednesdayStart | numberToTime"></td>
+                        <td ng-if="myStoreCtrl.currentStore.OperatingHoursWednesdayStart > 0">&nbsp;-&nbsp;</td>
+                        <td ng-bind="myStoreCtrl.currentStore.OperatingHoursWednesdayEnd | numberToTime"></td>
+                    </tr>
+                    <tr>
+                        <td><b data-translate="ui.storefront.common.Thursday"></b></td>
+                        <td ng-if="!myStoreCtrl.currentStore.OperatingHoursThursdayStart"
+                            data-translate="ui.storefront.location.shipTo.shipToDetails.Closed"></td>
+                        <td class="text-right" ng-bind="myStoreCtrl.currentStore.OperatingHoursThursdayStart | numberToTime"></td>
+                        <td ng-if="myStoreCtrl.currentStore.OperatingHoursThursdayStart > 0">&nbsp;-&nbsp;</td>
+                        <td ng-bind="myStoreCtrl.currentStore.OperatingHoursThursdayEnd | numberToTime"></td>
+                    </tr>
+                    <tr>
+                        <td><b data-translate="ui.storefront.common.Friday"></b></td>
+                        <td ng-if="!myStoreCtrl.currentStore.OperatingHoursFridayStart"
+                            data-translate="ui.storefront.location.shipTo.shipToDetails.Closed"></td>
+                        <td class="text-right" ng-bind="myStoreCtrl.currentStore.OperatingHoursFridayStart | numberToTime"></td>
+                        <td ng-if="myStoreCtrl.currentStore.OperatingHoursFridayStart > 0">&nbsp;-&nbsp;</td>
+                        <td ng-bind="myStoreCtrl.currentStore.OperatingHoursFridayEnd | numberToTime"></td>
+                    </tr>
+                    <tr>
+                        <td><b data-translate="ui.storefront.location.shipTo.shipToDetails.Saturday"></b></td>
+                        <td ng-if="!myStoreCtrl.currentStore.OperatingHoursSaturdayStart"
+                            data-translate="ui.storefront.location.shipTo.shipToDetails.Closed"></td>
+                        <td class="text-right" ng-bind="myStoreCtrl.currentStore.OperatingHoursSaturdayStart | numberToTime"></td>
+                        <td ng-if="myStoreCtrl.currentStore.OperatingHoursSaturdayStart > 0">&nbsp;-&nbsp;</td>
+                        <td ng-bind="myStoreCtrl.currentStore.OperatingHoursSaturdayEnd | numberToTime"></td>
+                    </tr>
+                    <tr>
+                        <td><b data-translate="ui.storefront.location.shipTo.shipToDetails.Sunday"></b></td>
+                        <td ng-if="!myStoreCtrl.currentStore.OperatingHoursSundayStart"
+                            data-translate="ui.storefront.location.shipTo.shipToDetails.Closed"></td>
+                        <td class="text-right" ng-bind="myStoreCtrl.currentStore.OperatingHoursSundayStart | numberToTime"></td>
+                        <td ng-if="myStoreCtrl.currentStore.OperatingHoursSundayStart > 0">&nbsp;-&nbsp;</td>
+                        <td ng-bind="myStoreCtrl.currentStore.OperatingHoursSundayEnd | numberToTime"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><a><span data-translate="ui.storefront.location.myStore.emailHere"></span>&nbsp;<!--
+            --><span ng-bind="myStoreCtrl.currentStore.StoreContacts.Email"></span></a></p>
+            <p><a ng-href="{{myStoreCtrl.currentStore.Website}}" ng-bind="myStoreCtrl.currentStore.Website"></a></p>
+            <a class="btn btn-block btn-primary"
+               ng-href="{{myStoreCtrl.currentStore.mapUrl}}" target="_blank"
+               data-translate="ui.storefront.common.GetDirection.Plural"></a>
+            <a class="btn btn-small btn-secondary btn-block"
+               ui-sref-plus uisrp-area="storeLocator"
+               ><span data-translate="ui.storefront.location.myStore.findMoreStores"></span></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,324 @@
+<div class="row" ng-form="ssCtrl.forms.shipping">
+  <div class="col-xs-12">
+    <p ng-if="!ssCtrl.cartItems.length"
+      data-translate="ui.admin.checkout.checkoutPanels.noItems.avd">
+    </p>
+    <div class="row">
+      <div class="col-xs-12">
+        <h4 sid="WhichShippingAddressText"
+          data-translate="ui.admin.checkout.shippingTitle">
+        </h4>
+        <p sid="SplitShippingText">
+          Your items will be split up to separate orders based on where they are coming from and
+          where they are going to. Please fill out each distribution of your items below as desired.
+          All items must be fully allocated.
+        </p>
+      </div>
+    </div>
+    <!-- TODO: Stopped working when grouping was introduced
+    <div class="row">
+      <div class="col-xs-12 form-group">
+        <label ng-if="!ssCtrl.cefConfig.featureSet.shipping.splitShipping.onlyAllowOneDestination"
+          class="control-label" for="ddlPreselect"
+          data-translate="ui.admin.checkout.splitShipping.OptionallyPreselectDestination.Message">
+        </label>
+        <label ng-if="ssCtrl.cefConfig.featureSet.shipping.splitShipping.onlyAllowOneDestination"
+          class="control-label" for="ddlPreselect"
+          data-translate="ui.admin.checkout.splitShipping.SelectADestination.Message">
+        </label>
+        <div class="input-group">
+          <select class="form-control custom-select"
+            id="ddlPreselect" name="ddlPreselect"
+            ng-disabled="ssCtrl.viewState.running"
+            ng-required="ssCtrl.cefConfig.featureSet.shipping.splitShipping.onlyAllowOneDestination"
+            ng-change="ssCtrl.preselectValues()"
+            ng-options="c.ID as (c | cToDropdownItem)
+                        for c in ssCtrl.addressOptions
+                        | orderBy: ['Address.CustomKey','CustomKey']"
+            ng-model="ssCtrl.preselectedID">
+            <option value="" data-translate="ui.admin.checkout.splitShipping.SelectADestination"></option>
+          </select>
+        </div>
+      </div>
+    </div>
+    -->
+    <div ng-if="!ssCtrl.cefConfig.featureSet.shipping.splitShipping.onlyAllowOneDestination"
+      class="row">
+      <div ng-repeat="grouped in ssCtrl.grouped"
+        class="col-xs-12"
+        ng-form="{{ssCtrl.keyToGroupFormName(grouped.key)}}">
+        <div class="card mb-3"
+          ng-class="{ 'is-valid': ssCtrl.forms.shipping[ssCtrl.keyToGroupFormName(grouped.key)].$valid
+                                  || grouped.key.startsWith('Non-shippable') }">
+          <div sid="ShipmentGroupTitle_{{$index}}"
+            class="card-header pl-3" ng-bind="grouped.key">
+          </div>
+          <div ng-repeat-start="item in grouped.value
+                                | orderBy: ['!ProductNothingToShip','ProductName','ProductKey']"
+            class="card-body p-3 pb-1">
+            <!-- Product -->
+            <div class="card-title mb-{{item().ProductNothingToShip && $last ? 2 : 0}}"
+              sid="SplitShippingProductName_{{$index}}"
+              ng-bind="(item().ProductNothingToShip ? ((item().Quantity + (item().QuantityBackOrdered || 0) + (item().QuantityPreSold || 0)) | number: 0) + ' x ' : '')
+                + (item().Name ? (item().Name + ' (' + item().Sku + ')') : (item().ProductName + ' (' + item().ProductKey + ')'))">
+            </div>
+          </div>
+          <!-- If shippable, show the targets UI to select quantities and destinations -->
+          <div ng-repeat-end class="list-group list-group-flush" ng-if="!item().ProductNothingToShip">
+            <div class="list-group-item px-3 pt-1 pb-3"
+              ng-form="itemForm{{item().ID}}"
+              quantity-group="item().Quantity + (item().QuantityBackOrdered || 0) + (item().QuantityPreSold || 0)">
+              <div ng-repeat="target in item().Targets"
+                class="row">
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-7">
+                  <div class="form-group mb-0"
+                    ng-class="{'has-error': ssCtrl.keyAndIndexToTargetFormDropDown(grouped.key, item().ID, $index).$invalid}">
+                    <select class="form-control custom-select"
+                      sid="TargetsDropDownText_{{$index}}"
+                      ng-class="{ 'is-valid': ssCtrl.keyAndIndexToTargetFormDropDown(grouped.key, item().ID, $index).$valid,
+                                  'is-invalid': ssCtrl.keyAndIndexToTargetFormDropDown(grouped.key, item().ID, $index).$invalid }"
+                      id="ddlDestinationForTarget_{{item().ID}}_{{$index}}"
+                      name="ddlDestinationForTarget_{{item().ID}}_{{$index}}"
+                      index="{{$index}}"
+                      ng-required="true"
+                      ng-disabled="ssCtrl.viewState.running"
+                      ng-change="ssCtrl.checkAddressOption(target.DestinationContactID, target)"
+                      ng-options="c.ID as (c | cToDropdownItem)
+                                  for c in ssCtrl.addressOptions
+                                  | notPreviouslySelectedAsATarget : target : item().Targets
+                                  | orderBy: ['Address.CustomKey','CustomKey']"
+                      ng-model="target.DestinationContactID">
+                      <option value="" ng-disabled=""
+                        data-translate="ui.admin.checkout.splitShipping.SelectADestination">
+                      </option>
+                    </select>
+                    <div ng-messages-multiple ng-messages="ssCtrl.keyAndIndexToTargetFormDropDown(grouped.key, item().ID, $index).$error"
+                      role="alert" class="invalid-feedback">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                    <div ng-messages-multiple ng-messages="ssCtrl.keyAndIndexToTargetFormDropDown(grouped.key, item().ID, $index).$$success"
+                      role="alert" class="valid-feedback">
+                      <div ng-messages-include="{{'/framework/admin/widgets/forms/_successMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                  <div class="form-group mb-0"
+                    ng-class="{'has-error': ssCtrl.forms.shipping[ssCtrl.keyToGroupFormName(grouped.key)]['itemForm' + item().ID]['nudTargetQuantity_'+item().ID+'_'+$index].$invalid}">
+                    <div class="input-group">
+                      <div class="input-group-prepend input-group-btn">
+                        <button type="button" class="btn btn-outline-secondary"
+                          id="btnShippingAddressReduceQuantity_{{item().ID}}_{{$index}}"
+                          name="btnShippingAddressReduceQuantity_{{item().ID}}_{{$index}}"
+                          translate-attr="{ title: 'ui.admin.cart.controls.addToCartQuantitySelector.DecreaseItemQuantity',
+                                            'aria-label': 'ui.admin.cart.controls.addToCartQuantitySelector.DecreaseItemQuantity' }"
+                          ng-disabled="target.Quantity <= 1 || item().Targets.length <= 1 || ssCtrl.viewState.running"
+                          ng-click="ssCtrl.modifyQuantity(item(), target, -1)">
+                          <i class="far fa-minus"></i>
+                          <span class="sr-only"
+                            data-translate="ui.admin.cart.controls.addToCartQuantitySelector.DecreaseItemQuantity">
+                          </span>
+                        </button>
+                      </div>
+                      <!-- NOTE: Disabled because changing the text manually or by scroll wheel
+                      doesn't trigger the allocation logic correctly -->
+                      <input type="text" class="form-control qty text-center"
+                        id="nudTargetQuantity_{{item().ID}}_{{$index}}"
+                        name="nudTargetQuantity_{{item().ID}}_{{$index}}"
+                        placeholder="0"
+                        ng-required="true"
+                        ng-pattern="/^\d+(\.\d{0,4})?$/"
+                        min="1" max="{{item().Quantity + (item().QuantityBackOrdered || 0) + (item().QuantityPreSold || 0)}}"
+                        ng-disabled="true"
+                        ng-model="target.Quantity"
+                        quantity-group-member
+                      />
+                      <div class="input-group-append input-group-btn">
+                        <button type="button" class="btn btn-outline-secondary"
+                          id="btnShippingAddressAddQuantity_{{item().ID}}_{{$index}}"
+                          translate-attr="{ title: 'ui.admin.cart.controls.addToCartQuantitySelector.IncreaseItemQuantity',
+                                            'aria-label': 'ui.admin.cart.controls.addToCartQuantitySelector.IncreaseItemQuantity' }"
+                          ng-disabled="target.Quantity >= (item().Quantity + (item().QuantityBackOrdered || 0) + (item().QuantityPreSold || 0) - (item().Targets.length - 1))
+                                       || ssCtrl.viewState.running"
+                          ng-click="ssCtrl.modifyQuantity(item(), target, 1)">
+                          <i class="far fa-plus"></i>
+                          <span class="sr-only"
+                            data-translate="ui.admin.cart.controls.addToCartQuantitySelector.IncreaseItemQuantity">
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <button type="button" class="btn btn-outline-danger"
+                    id="btnRemoveShippingTargetAddress_{{item().ID}}_{{$index}}"
+                    translate-attr="{ title: 'ui.admin.checkout.splitShipping.RemoveTarget',
+                                      'aria-label': 'ui.admin.checkout.splitShipping.RemoveTarget' }"
+                    ng-disabled="item().Targets.length <= 1 || ssCtrl.viewState.running"
+                    ng-click="ssCtrl.removeShippingTarget(item(), target)">
+                    <i class="far fa-trash fa-lg"></i>
+                    <span class="sr-only"
+                      data-translate="ui.admin.checkout.splitShipping.RemoveTarget">
+                    </span>
+                  </button>
+                  <button type="button" class="btn btn-outline-success"
+                    id="btnAddShippingTargetAddress_{{item().ID}}_{{$index}}"
+                    name="btnAddShippingTargetAddress_{{item().ID}}_{{$index}}"
+                    ng-class="$last && (item().Quantity + (item().QuantityBackOrdered || 0) + (item().QuantityPreSold || 0)) > 1 ? 'visible' : 'invisible'"
+                    translate-attr="{ title: 'ui.admin.checkout.splitShipping.AddTarget',
+                                      'aria-label': 'ui.admin.checkout.splitShipping.AddTarget' }"
+                    ng-disabled="item().Targets.length >= (item().Quantity + (item().QuantityBackOrdered || 0) + (item().QuantityPreSold || 0))
+                                 || ssCtrl.forms.shipping['itemForm'+item().ID].$invalid
+                                 || ssCtrl.viewState.running"
+                    ng-click="ssCtrl.addShippingTarget(item())">
+                    <i class="far fa-plus fa-lg"></i>
+                    <span class="sr-only"
+                      data-translate="ui.admin.checkout.splitShipping.AddTarget">
+                    </span>
+                  </button>
+                </div>
+                <div class="col-xs-12" ng-if="ssCtrl.cefConfig.debug">
+                  <div class="alert alert-dark">
+                    <h4 class="alert-heading">Debug Info for this target</h4>
+                    <table class="table table-borderless table-hover table-sm mb-0">
+                      <tbody>
+                        <tr><th>$invalid</th><td ng-bind="ssCtrl.keyAndIndexToTargetFormDropDown(grouped.key, item().ID, $index).$invalid"></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary mb-3"
+      ng-if="!ssCtrl.cefConfig.featureSet.shipping.rates.estimator.enabled"
+      id="btnSubmitAndAnalyzeForShipments" name="btnSubmitAndAnalyzeForShipments"
+      translate-attr="{ title: 'ui.admin.checkout.splitShipping.SubmitAndAnalyzeForShipments',
+                        'aria-label': 'ui.admin.checkout.splitShipping.SubmitAndAnalyzeForShipments' }"
+      data-translate="ui.admin.checkout.splitShipping.SubmitAndAnalyzeForShipments"
+      ng-disabled="ssCtrl.forms.shipping.$invalid
+                   || ssCtrl.viewState.running
+                   || (ssCtrl.cefConfig.featureSet.shipping.splitShipping.onlyAllowOneDestination
+                       && ssCtrl.preselectedID <= 0)"
+      ng-click="ssCtrl.submit()">
+    </button>
+    <button type="button" class="btn btn-primary mb-3"
+      ng-if="ssCtrl.cefConfig.featureSet.shipping.rates.estimator.enabled"
+      id="btnSubmitAndGetRateQuotesForShipments" name="btnSubmitAndGetRateQuotesForShipments"
+      translate-attr="{ title: 'ui.admin.checkout.splitShipping.SubmitAndGetRateQuotesForShipments',
+                        'aria-label': 'ui.admin.checkout.splitShipping.SubmitAndGetRateQuotesForShipments' }"
+      data-translate="ui.admin.checkout.splitShipping.SubmitAndGetRateQuotesForShipments"
+      ng-disabled="ssCtrl.forms.shipping.$invalid
+                   || ssCtrl.viewState.running
+                   || (ssCtrl.cefConfig.featureSet.shipping.splitShipping.onlyAllowOneDestination
+                       && ssCtrl.preselectedID <= 0)"
+      ng-click="ssCtrl.submit()">
+    </button>
+    <hr class="my-2" ng-if="ssCtrl.targetedCarts.length" />
+    <div class="row" ng-if="ssCtrl.targetedCarts.length">
+      <div class="col-xs-12">
+        <h4 id="lbResolvedToTargetsMessage"
+          ng-if="!ssCtrl.cefConfig.featureSet.shipping.rates.estimator.enabled"
+          data-translate="ui.admin.checkout.splitShipping.EachItemHasBeenResolvedToAShipmentNoEstimator.Message">
+        </h4>
+        <h4 id="lbResolvedToTargetsMessage"
+          ng-if="ssCtrl.cefConfig.featureSet.shipping.rates.estimator.enabled"
+          data-translate="ui.admin.checkout.splitShipping.EachItemHasBeenResolvedToAShipment.Message">
+        </h4>
+      </div>
+      <div ng-repeat="targetCart in ssCtrl.targetedCarts
+                      | filter: { 'ID':'!'+ssCtrl.cvCartService.accessCart(ssCtrl.lookupKey).ID }
+                      | orderBy: ['!NothingToShip']"
+        class="col-xs-12">
+        <div class="card mb-3"
+          ng-class="{ 'is-valid': ssCtrl.forms.shipping[ssCtrl.keyToGroupFormName(targetCart.TypeKey)+'Result'].$valid
+                                  || targetCart.TypeKey.startsWith('Non-shippable') }"
+          ng-form="{{ssCtrl.keyToGroupFormName(targetCart.TypeKey)}}Result">
+          <div class="card-header pl-3">
+            <div ng-if="targetCart.NothingToShip"
+              data-translate="Non-shippable products">
+            </div>
+            <div ng-if="!targetCart.NothingToShip"
+              sid="NoShipMessage"
+              data-translate="Product(s) being shipped">
+            </div>
+          </div><!-- /card-header (products) -->
+          <div class="card-body p-3">
+            <div ng-repeat="item in targetCart.SalesItems
+                            | orderBy: ['Name || ProductName','ProductName']"
+              sid="ShipGroupProduct_{{$index}}"
+              ng-bind="((item.Quantity + (item.QuantityBackOrdered || 0) + (item.QuantityPreSold || 0)) | number: 0)
+                       + ' x ' + (item.Name ? (item.Name + ' (' + item.Sku + ')') : (item.ProductName + ' (' + item.ProductKey + ')'))"
+              class="block">
+            </div>
+          </div><!-- /card-body (products) -->
+          <div class="card-header" ng-if="!targetCart.NothingToShip">
+            <span data-translate="Your Full Address">
+            </span>
+          </div><!-- /card-header (address) -->
+          <div class="card-body p-3" ng-if="!targetCart.NothingToShip">
+            <div cef-contact-address-block
+              contact="targetCart.ShippingContact"
+              no-links="true"
+              two-col="true">
+            </div>
+          </div><!-- /card-body (address) -->
+          <div class="card-header" ng-if="!targetCart.NothingToShip">
+            <span data-translate="Your Shipping Rate Quotes">
+            </span>
+          </div><!-- /card-header (rates) -->
+          <div class="card-body p-0" ng-if="!targetCart.NothingToShip">
+            <div class="w-100"
+              ng-if="targetCart.ShippingContact
+                     && ssCtrl.cefConfig.featureSet.shipping.rates.estimator.enabled">
+              <!--<p class="font-weight-bold">Shipping Estimator for cart #{{targetCart.ID}}</p>-->
+              <div cef-purchase-rate-quotes-manager-widget
+                lookup-key="ssCtrl.lookupKey"
+                current-cart-id="targetCart.ID"
+                contact="targetCart.ShippingContact"
+                apply="false"
+                hide-address="true"
+                hide-title="true">
+              </div>
+            </div>
+          </div><!-- /card-body (rates) -->
+        </div><!-- /card -->
+      </div><!-- /col-xs-12 (repeat) -->
+    </div>
+    <div class="row"
+      ng-if="ssCtrl.readyToLoadShippingRateQuotes
+             && ssCtrl.cefConfig.featureSet.shipping.rates.estimator.enabled
+             && ssCtrl.targetedCarts.length">
+      <div class="col-xs-12">
+        <p class="text-right font-weight-bold big">
+          <span data-translate="ui.admin.checkout.splitShipping.TotalShipping.Colon"
+            sid="TotalShippingText"></span>&nbsp;<!--
+          --><span ng-bind="ssCtrl.totalShipping" sid="TotalShippingAmountText"
+            ng-if="ssCtrl.cefConfig.featureSet.shipping.rates.estimator.enabled"></span><br />
+          <span data-translate="ui.admin.checkout.splitShipping.TotalTaxes.Colon"
+            sid="TotalTaxesText"></span>&nbsp;<!--
+          --><span ng-bind="ssCtrl.totalTaxes" sid="TotalTaxesAmountText"></span><br />
+          <span data-translate="ui.admin.checkout.splitShipping.NewGrandTotal.Colon"
+            sid="NewGrandTotalText"></span>&nbsp;<!--
+          --><span ng-bind="ssCtrl.grandTotal" sid="NewGrandTotalAmountText"></span>
+        </p>
+      </div>
+    </div>
+    <div class="row" ng-if="ssCtrl.viewState.hasError">
+      <div class="col-xs-12">
+        <div class="alert alert-danger" role="alert"
+          ng-bind="ssCtrl.viewState.errorMessage">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div ng-if="ssCtrl.viewState.running"
+  cef-loading-widget
+  overlay="true" pad-in="true"
+  message="ssCtrl.viewState.waitMessage">
+</div>

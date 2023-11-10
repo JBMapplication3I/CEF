@@ -1,0 +1,97 @@
+<div class="modal-header bg-dark text-light"
+     ng-show="orderRequestAddToModalCtrl.addListDisplay && orderRequestAddToModalCtrl.cartTypes.length">
+    <h3 class="modal-title"
+        sid="SelectAOrderRequestModalText"
+        data-translate="ui.storefront.userDashboard2.controls.addToOrderRequest.SelectAOrderRequest"></h3>
+    <button type="button" class="close"
+            id="btnCloseOrderRequestModal"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="orderRequestAddToModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span sid="CloseOrderRequestBtn" class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body"
+     ng-show="orderRequestAddToModalCtrl.addListDisplay && orderRequestAddToModalCtrl.cartTypes.length">
+    <select class="form-control mb-3"
+            id="orderRequestSelect" name="orderRequestSelect"
+            ng-options="cart as cart.Name for cart in orderRequestAddToModalCtrl.cartTypes"
+            ng-model="orderRequestAddToModalCtrl.listItem">
+        <option value="" data-translate="ui.storefront.userDashboard2.controls.addToOrderRequest.SelectAOrderRequest"></option>
+    </select>
+    <p ng-show="orderRequestAddToModalCtrl.createdMessage" class="alert alert-success mb-0" role="alert"
+       ><span sid="OrderRequestModalProductText"
+         ng-bind="orderRequestAddToModalCtrl.productName"></span>&nbsp;<!--
+       --><span sid="OrderRequestModalProductAddedText"
+         data-translate="ui.storefront.userDashboard2.controls.addToOrderRequest.HasBeenAddedTo"></span>&nbsp;<!--
+       --><span sid="OrderRequestAddToModalCreatedText" 
+         class="bold" ng-bind="orderRequestAddToModalCtrl.createdMessage"></span></p>
+</div>
+<div class="modal-footer"
+     ng-show="orderRequestAddToModalCtrl.addListDisplay && orderRequestAddToModalCtrl.cartTypes.length">
+    <button type="button" class="btn btn-secondary"
+            id="closeSelectOrderRequestModal"
+            ng-click="orderRequestAddToModalCtrl.close()"
+            data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.BackToExistingLists"></button>
+    <button type="button" class="btn btn-secondary"
+            id="btnModalCreateOrderRequest" name="btnModalCreateOrderRequest"
+            ng-click="orderRequestAddToModalCtrl.createAddViewToggle()"
+            data-translate="ui.storefront.userDashboard2.controls.addToOrderRequest.CreateAndAddAnother"></button>
+    <button type="button" class="btn btn-primary"
+            id="addToOrderRequestModalBtn"
+            ng-disabled="orderRequestAddToModalCtrl.isInList(orderRequestAddToModalCtrl.listItem)"
+            ng-click="orderRequestAddToModalCtrl.addToList(orderRequestAddToModalCtrl.listItem)"
+            data-translate="{{orderRequestAddToModalCtrl.isInList(orderRequestAddToModalCtrl.listItem)
+                ? 'ui.storefront.userDashboard2.controls.addToOrderRequest.AlreadyInThisList'
+                : 'ui.storefront.userDashboard2.controls.addToOrderRequest.AddToList' }}"></button>
+</div>
+<div class="modal-header bg-dark text-light"
+     ng-show="orderRequestAddToModalCtrl.createListDisplay || !orderRequestAddToModalCtrl.cartTypes.length">
+    <h3 class="modal-title"
+        sid="NewOrderRequestModalTitleText"
+        data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.NewOrderRequestName">
+    </h3>
+    <button type="button" class="close"
+            id="btnCloseNewOrderRequestModal"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="orderRequestAddToModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span sid="CloseNewOrderRequestBtn" class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body"
+     ng-form="orderRequestAddToModalCtrl.forms.OrderRequest"
+     ng-show="orderRequestAddToModalCtrl.createListDisplay || !orderRequestAddToModalCtrl.cartTypes.length">
+    <div class="form-group" ng-class="{'has-error': orderRequestAddToModalCtrl.forms.OrderRequest.txtName.$invalid}">
+        <label class="control-label" for="txtName">
+            <span sid="NewOrderRequestModalFieldText"
+              data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.NewOrderRequestName"
+              ></span>&nbsp;<!--
+            --><span class="text-danger">*</span>
+        </label>
+        <input type="text" class="form-control"
+               id="txtName" name="txtName"
+               ng-required="true"
+               ng-keypress="orderRequestAddToModalCtrl.inputKeyPress($event)"
+               ng-model="orderRequestAddToModalCtrl.orderRequest" />
+    </div>
+    <div ng-show="orderRequestAddToModalCtrl.createdMessage" class="alert alert-success"
+        sid="OrderRequestModalNameText">
+        <span ng-bind="orderRequestAddToModalCtrl.createdMessage"></span>&nbsp;<!--
+        --><span sid="OrderRequestCreatedText" data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.HasBeenCreated"></span>
+    </div>
+</div>
+<div class="modal-footer text-right"
+     ng-show="orderRequestAddToModalCtrl.createListDisplay || !orderRequestAddToModalCtrl.cartTypes.length">
+    <button type="button" class="btn btn-secondary"
+            id="btnModalCreateListBackToExisting" name="btnModalCreateListBackToExisting"
+            data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.BackToExistingLists"
+            ng-click="orderRequestAddToModalCtrl.close()"></button>
+    <button type="button" class="btn btn-success"
+            id="btnModalCreateListSubmit" name="btnModalCreateListSubmit"
+            data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.CreateList"
+            ng-disabled="orderRequestAddToModalCtrl.forms.OrderRequest.$invalid || orderRequestAddToModalCtrl.viewState.running"
+            ng-click="orderRequestAddToModalCtrl.createOrderRequest(orderRequestAddToModalCtrl.orderRequest, false)"></button>
+</div>

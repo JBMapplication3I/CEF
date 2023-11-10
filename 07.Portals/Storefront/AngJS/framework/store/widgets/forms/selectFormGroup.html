@@ -1,0 +1,63 @@
+<div ng-form="sFGCtrl.forms.{{sFGCtrl.formIdentifier}}"
+  class="form-group"
+  ng-class="[{'has-error': sFGCtrl.formInvalid},sFGCtrl.formClasses]">
+  <label class="control-label" for="{{sFGCtrl.inputName}}"
+    uib-tooltip="{{sFGCtrl.tooltip}}" tooltip-placement="auto top-left">
+    <span data-translate="{{sFGCtrl.labelKey}}">{{sFGCtrl.labelText}}</span><!--
+    --><span ng-if="sFGCtrl.required" class="text-danger">&nbsp;*</span><!--
+    --><span ng-if="sFGCtrl.tooltip" class="text-info">&nbsp;<i class="far fa-question-circle"></i></span>
+  </label>
+  <div class="input-group">
+    <div class="input-group-prepend input-group-text"
+      ng-if="tIFGCtrl.leftIcon">
+      <i class="{{tIFGCtrl.leftIcon}} fa-fw"></i>
+    </div>
+    <select class="form-control custom-select"
+      ng-class="[{'is-valid': sFGCtrl.applyIsValidClass && !sFGCtrl.hideValidation,
+                  'is-invalid': sFGCtrl.applyIsInvalidClass && !sFGCtrl.hideValidation},
+                  sFGCtrl.inputClass]"
+      id="{{sFGCtrl.inputName}}"
+      name="{{sFGCtrl.inputName}}"
+      ng-blur="sFGCtrl.extraOnBlur($event)"
+      ng-focus="sFGCtrl.extraOnFocus($event)"
+      ng-keydown="sFGCtrl.extraOnKeydown($event)"
+      ng-keypress="sFGCtrl.extraOnKeypress($event)"
+      ng-keyup="sFGCtrl.extraOnKeyup($event)"
+      ng-mousedown="sFGCtrl.extraOnMousedown($event)"
+      ng-mouseenter="sFGCtrl.extraOnMouseenter($event)"
+      ng-mouseleave="sFGCtrl.extraOnMouseleave($event)"
+      ng-mousemove="sFGCtrl.extraOnMousemove($event)"
+      ng-mouseover="sFGCtrl.extraOnMouseover($event)"
+      ng-mouseup="sFGCtrl.extraOnMouseup($event)"
+      ng-change="sFGCtrl.extraOnChange($event)"
+      ng-disabled="sFGCtrl.disabled"
+      ng-required="sFGCtrl.required"
+      ng-options="(sFGCtrl.optionsAsValue ? o[sFGCtrl.optionsAsValue] : o.ID) as (sFGCtrl.displayAttribute ? o.SerializableAttributes[sFGCtrl.displayAttribute].Value : ((o.DisplayName || o.Name || o.ContactKey)
+                  + (!sFGCtrl.hideOptionKey && o.CustomKey && o.CustomKey != '' ? ' [' + o.CustomKey + ']' : '')))
+                  for o in sFGCtrl.selections
+                  | orderBy: ['SortOrder','DisplayName || Name']"
+      ng-model-options="sFGCtrl.options"
+      ng-model="sFGCtrl.property"
+      ng-autocomplete
+      ng-autofocus>
+      <option ng-if="sFGCtrl.includeNull"
+        value=""
+        ng-disabled="sFGCtrl.required"
+        data-translate="{{sFGCtrl.nullKey}}">
+        {{sFGCtrl.nullText}}
+      </option>
+    </select>
+    <div class="input-group-append input-group-text rounded-right"
+      ng-if="tIFGCtrl.rightIcon">
+      <i class="{{tIFGCtrl.rightIcon}} fa-fw"></i>
+    </div>
+    <div ng-messages-multiple ng-messages="sFGCtrl.formError"
+      role="alert" class="invalid-feedback" ng-hide="sFGCtrl.hideInvalidTooltip">
+      <div ng-messages-include="{{'/framework/store/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+    </div>
+    <div ng-messages-multiple ng-messages="sFGCtrl.formSuccess"
+      role="alert" class="valid-feedback" ng-hide="!sFGCtrl.showValidTooltip">
+      <div ng-messages-include="{{'/framework/store/widgets/forms/_successMessages.html' | corsLink: 'ui'}}"></div>
+    </div>
+  </div>
+</div>

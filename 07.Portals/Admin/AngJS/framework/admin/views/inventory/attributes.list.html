@@ -1,0 +1,166 @@
+﻿<cv-page
+  ng-if="$root.cvSecurityService.hasPermission('Admin.Inventory.Attributes')"
+  caption="Manage Attributes"
+  head-icon="fa-list">
+  <cv-widget>
+    <widget-menu-item
+      caption="Add Attribute"
+      icon-class="fa-plus-circle"
+      click="$root.$state.go('inventory.attributes.detail',{ID:'New'})"
+      permission="'Attributes.GeneralAttribute.Create'">
+    </widget-menu-item>
+    <widget-body ng-controller="SearchController as search">
+      <cv-grid
+        show-pager="true"
+        page-sizes="8,16,32,64,128"
+        server-paging="true"
+        filter-side="true"
+        force-show-labels="true"
+        sortable="false"
+        server-sorting="true"
+        groupable="false"
+        on-search="search.getAttributes"
+        on-deactivate="search.deactivateAttribute"
+        on-reactivate="search.reactivateAttribute"
+        on-delete="search.deleteAttribute"
+        edit-state="inventory.attributes.detail,[ID]"
+        permissions-base="Attributes.GeneralAttribute">
+        <cv-column
+          hidden
+          field="TypeID"
+          title="Type"
+          filter
+          filter-type="select"
+          on-option-repeat="$parent.search.searchTypes.getAttributeTypes">
+          <option-repeat-parameter
+            value="2"
+            data-translate="ui.admin.views.inventory.attributeslist.TypeID">
+          </option-repeat-parameter>
+          <option value="" selected
+            data-translate="ui.admin.views.inventory.attributeslist.Any">
+          </option>
+        </cv-column>
+        <cv-column
+          field="ID"
+          title="#"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-right"
+          filter
+          filter-type="id"
+          sort-by="4"
+          sort-by-direction="asc"
+          groupable="false" />
+        <cv-column
+          field="CustomKey"
+          title="Key"
+          width="10%"
+          filter
+          groupable="false" />
+        <cv-column
+          field="Name"
+          title="Name"
+          width="15%"
+          filter
+          groupable="false" />
+        <cv-column
+          field="DisplayName"
+          title="Display Name"
+          width="15%"
+          filter
+          groupable="false" />
+        <!--
+        <cv-column
+          field="Group"
+          title="Group"
+          hidden
+          filter
+          groupable="false"
+          sort-by="1">
+          <cv-group-header-template>
+            <script type="x-group-header-template"
+              ><span><span data-translate="ui.admin.common.Group"></span>:&nbsp;< !--
+              -- ><span ng-bind="dataItem.items[0].Group || dataItem.items[0].items[0].Group || dataItem.items[0].items[0].items[0].Group || 'No Group'"></span></span>
+            </script>
+          </cv-group-header-template>
+        </cv-column>
+        -->
+        <cv-column
+          field="TypeName"
+          title="Type"
+          hidden
+          groupable="false"
+          sort-by="2" />
+        <cv-column
+          field="HideFromStorefront"
+          title="Hidden"
+          type="boolean"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-center"
+          filter filter-type="boolean"
+          groupable="false" />
+        <cv-column
+          field="IsComparable"
+          title="Compare"
+          type="boolean"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-center"
+          filter
+          filter-type="boolean"
+          groupable="false" />
+        <cv-column
+          field="IsFilter"
+          title="Filter"
+          type="boolean"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-center"
+          filter
+          filter-type="boolean"
+          groupable="false" />
+        <cv-column
+          field="IsPredefined"
+          title="Predefined"
+          type="boolean"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-center"
+          filter
+          filter-type="boolean"
+          groupable="false" />
+        <cv-column
+          field="IsMarkup"
+          title="Markup"
+          type="boolean"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-center"
+          filter
+          filter-type="boolean"
+          groupable="false" />
+        <cv-column
+          field="IsTab"
+          title="Tab"
+          type="boolean"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-center"
+          filter
+          filter-type="boolean"
+          groupable="false" />
+        <cv-column
+          field="SortOrder"
+          title="Sort"
+          type="number"
+          width="5%"
+          header-class="text-center"
+          cell-class="text-right"
+          sort-by="3"
+          sort-by-direction="asc"
+          groupable="false" />
+      </cv-grid>
+    </widget-body>
+  </cv-widget>
+</cv-page>

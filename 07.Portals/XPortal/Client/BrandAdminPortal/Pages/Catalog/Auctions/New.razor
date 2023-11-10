@@ -1,0 +1,383 @@
+﻿@page "/catalog/auctions/creator"
+@using Clarity.Ecommerce.MVC.Core
+@inherits MVC.Core.CreatorViewTemplatedControllerBase<AuctionModel, MVC.Api.Endpoints.CreateAuction>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="auctionCreatorPage">
+    @if (ViewState.loading || Record == null! && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (EditContext != null! && Record is not null)
+    {
+      <Validations
+        EditContext="EditContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="EditContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content-with-footer">
+            <Container Fluid="true">
+              <Row>
+                <Column>
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Gavel" Class="mr-1" />
+                    @ClippedName
+                  </Heading>
+                </Column>
+              </Row>
+              <Tabs
+                SelectedTab="@SelectedTab"
+                SelectedTabChanged="@OnSelectedTabChanged"
+                TabPosition="TabPosition.Start"
+                Mode="TabsMode.LazyReload"
+                Pills="true"
+                Shadow="Shadow.Small">
+                <Items>
+                  <Tab Class="font-weight-bold" TextColor="TextColor.Danger" Name="details">Details</Tab>
+                  <Tab Class="font-weight-bold" TextColor="TextColor.Danger" Name="categories">Categories</Tab>
+                  <Tab Class="font-weight-bold" TextColor="TextColor.Danger" Name="location">Location</Tab>
+                  <Tab Class="font-weight-bold" TextColor="TextColor.Danger" Name="attributes">Attributes</Tab>
+                </Items>
+                <Content>
+                  <TabPanel Name="details">
+                    <Row>
+                      <Column>
+                        <Heading Size="HeadingSize.Is2">Basic Information</Heading>
+                        <TextFormGroup
+                          FormIdentifier="Name"
+                          LabelText="Name"
+                          PlaceholderText="Name"
+                          @bind-Value="@Record.Name"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The name of the auction"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                        <TextFormGroup
+                          FormIdentifier="CustomKey"
+                          LabelText="Auction Key"
+                          PlaceholderText="Auction Key"
+                          @bind-Value="@Record.CustomKey"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The unique auction key"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                        <Row>
+                          <Column ColumnSize="ColumnSize.IsHalf.OnTablet">
+                            <SelectFormGroup
+                              TValue="int"
+                              FormIdentifier="Status"
+                              LabelText="Status"
+                              @bind-Value="@Record.StatusID"
+                              OptionsList="@Statuses"
+                              ItemValueFunc="@(x => ((StatusModel)x).ID)"
+                              ItemLabelFunc="@(x => ((StatusModel)x).DisplayName ?? ((StatusModel)x).Name)"
+                              Disabled="@ViewState.InputDisable"
+                              Required="true"
+                            />
+                          </Column>
+                          <Column ColumnSize="ColumnSize.IsHalf.OnTablet">
+                            <SelectFormGroup
+                              TValue="int"
+                              FormIdentifier="Type"
+                              LabelText="Type"
+                              @bind-Value="@Record.TypeID"
+                              OptionsList="@Types"
+                              ItemValueFunc="@(x => ((TypeModel)x).ID)"
+                              ItemLabelFunc="@(x => ((TypeModel)x).DisplayName ?? ((TypeModel)x).Name)"
+                              Disabled="@ViewState.InputDisable"
+                              Required="true"
+                            />
+                          </Column>
+                        </Row>
+                        <Heading Size="HeadingSize.Is2">Description</Heading>
+                        <TextAreaFormGroup
+                          FormIdentifier="Description"
+                          LabelText="Long Description"
+                          PlaceholderText="Auction Long Description"
+                          @bind-Value="@Record.Description"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The description of the Auction"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                      </Column>
+                    </Row>
+                  </TabPanel>
+                  <TabPanel Name="location">
+                    <Row>
+                      <Column>
+                        <Heading Size="HeadingSize.Is2" Class="my-4">Location</Heading>
+                        <SelectFormGroup
+                          TValue="int"
+                          FormIdentifier="addresses"
+                          LabelText="Select an existing address or create a new one"
+                          Value="@SelectedAuctionAddressID"
+                          ValueChanged="(x => OnSelectedAuctionAddressIDChanged(x))"
+                          ValueExpression="@(() => SelectedAuctionAddressID)"
+                          OptionsList="@Addresses"
+                          ItemValueFunc="@(x => ((AccountContactModel)x).SlaveID)"
+                          ItemLabelFunc="@(x => ((AccountContactModel)x).CustomKey ?? ((AccountContactModel)x).Slave.Address.Street1)"
+                        />
+                        <Row>
+                          @if (Contract.CheckAnyValidID(SelectedAuctionAddressID))
+                          {
+                            <Column ColumnSize="ColumnSize.IsHalf.OnDesktop.IsFull.OnMobile">
+                              <ContactAddressBlock @bind-Contact="Contact" />
+                            </Column>
+                          }
+                          else
+                          {
+                            <Column ColumnSize="ColumnSize.IsHalf.OnDesktop.IsFull.OnMobile">
+                              <ContactEditor @bind-Contact="Contact" />
+                            </Column>
+                          }
+                          <Column ColumnSize="ColumnSize.IsHalf.OnDesktop.IsFull.OnMobile">
+                            <Div @ref="MapReference" ElementId="map" Class="w-100" Style="height:500px;">
+                            </Div>
+                          </Column>
+                        </Row>
+                      </Column>
+                    </Row>
+                  </TabPanel>
+                  <TabPanel Name="attributes">
+                    <RecordAttributes
+                      Record="Record"
+                      OtherTypeName="Auction"
+                    />
+                  </TabPanel>
+                </Content>
+              </Tabs>
+            </Container>
+          </Div>
+          <Div Class="page-footer">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Primary"
+              Disabled="@(FormInvalid || ViewState.saving || ViewState.running || ViewState.pristine)"
+              Clicked="OnSave">
+              Save Changes
+            </Blazorise.Button>
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Secondary"
+              Class="ml-1"
+              Disabled="@(ViewState.dirty || ViewState.InputDisable)"
+              Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, GridRouteFormat))">
+              Back
+            </Blazorise.Button>
+            @* @((MarkupString)ViewState.AsHTMLDebugBlock()) *@
+            <Blazorise.ValidationSummary Class="ml-3" />
+          </Div>
+        </EditForm>
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/catalog/auctions";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+  #endregion
+
+  #region Map
+  private Blazorise.Div? MapReference;
+
+  protected override async Task OnAfterRenderAsync(bool firstrender)
+  {
+    if (MapReference is not null)
+    {
+      await JSRuntime.InvokeVoidAsync(
+          "initGoogleMap",
+          new { Lat = Contact?.Address.Latitude, Lng = Contact?.Address.Longitude })
+        .ConfigureAwait(false);
+    }
+  }
+  #endregion
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    return Task.WhenAll(
+      LoadTypesAsync(),
+      LoadStatusesAsync(),
+      LoadAddressesAsync(),
+      LoadRegions(),
+      LoadContactAsync());
+  }
+
+  #region IHaveATypeBaseModel Handling
+  /// <summary>Gets or sets the types.</summary>
+  /// <value>The types.</value>
+  private List<TypeModel>? Types { get; set; }
+
+  /// <summary>Loads types.</summary>
+  /// <returns>The types.</returns>
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetAuctionTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveAStatusBaseModel Handling
+  /// <summary>Gets or sets the statuses.</summary>
+  /// <value>The statuses.</value>
+  private List<StatusModel>? Statuses { get; set; }
+
+  /// <summary>Loads statuses.</summary>
+  /// <returns>The statuses.</returns>
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetAuctionStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region User
+  /// <summary>Gets or sets the types.</summary>
+  /// <value>The types.</value>
+  private UserModel? User { get; set; }
+  private ContactModel? Contact { get; set; }
+
+  /// <summary>Loads types.</summary>
+  /// <returns>The types.</returns>
+  private async Task LoadContactAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetCurrentUser().ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      User = result.data;
+    }
+    var contact = await cvApi.GetContactByID(new() { ID = User!.ContactID }).ConfigureAwait(false);
+    if (contact.data is not null)
+    {
+      Contact = contact.data;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveAnAccountContactModel Handling
+  /// <summary>Gets or sets the addresses.</summary>
+  /// <value>The addresses.</value>
+  private List<AccountContactModel>? Addresses { get; set; }
+
+  private int SelectedAuctionAddressID { get; set; }
+
+  private async Task OnSelectedAuctionAddressIDChanged(int id)
+  {
+    SelectedAuctionAddressID = id;
+    var contact = await cvApi.GetContactByID(new() { ID = id }).ConfigureAwait(false);
+    if (contact.data is not null)
+    {
+      Contact = contact.data;
+      Record.ContactID = Contact.ID;
+    }
+  }
+
+  /// <summary>Loads addresses.</summary>
+  /// <returns>The addresses.</returns>
+  private async Task LoadAddressesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetCurrentAccountAddressBook().ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Addresses = result.data;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region Regions
+  /// <summary>Gets regions.</summary>
+  /// <value>The regions.</value>
+  private List<RegionModel>? regions;
+
+  /// <summary>Loads regions.</summary>
+  /// <returns>The regions.</returns>
+  private async Task LoadRegions()
+  {
+    DebugBeginMethod();
+    regions = await LoadCollection<MVC.Api.Endpoints.GetRegions, RegionPagedResults, RegionModel>(
+        cvApi.GetRegions,
+        new() { Active = true, AsListing = true })
+      .ConfigureAwait(false);
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<MVC.Api.Endpoints.CreateAuction, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> CreateCallerFunc
+    => record => cvApi.CreateAuction(record);
+
+  /// <inheritdoc />
+  protected override Func<int, DateTime, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> AssocToMasterCallerFunc
+#if BRANDADMIN
+    => (newID, timestamp) => cvApi.CreateBrandAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif FRANCHISEADMIN
+    => (newID, timestamp) => cvApi.CreateFranchiseAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif MANUFACTURERADMIN
+    => (newID, timestamp) => cvApi.CreateManufacturerAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif STOREADMIN
+    => (newID, timestamp) => cvApi.CreateStoreAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif VENDORADMIN
+    => (newID, timestamp) => cvApi.CreateVendorAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#endif
+
+  /// <inheritdoc />
+  protected override Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    if (!Contract.CheckValidID(Record.TypeID))
+    {
+      Record.TypeID = Types?.First().ID ?? 1;
+    }
+    if (!Contract.CheckValidID(Record.StatusID))
+    {
+      Record.StatusID = Statuses?.First().ID ?? 1;
+    }
+    Record.Active = false;
+    return Task.CompletedTask;
+  }
+  #endregion
+}

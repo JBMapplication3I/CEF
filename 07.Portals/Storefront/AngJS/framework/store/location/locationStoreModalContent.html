@@ -1,0 +1,23 @@
+﻿<div class="modal-content">
+    <div class="modal-body">
+        <div ng-if="locationButtonCtrl.viewstate.loading"
+             cef-loading-widget
+             overlay="true">
+        </div>
+        <div class="row"
+             ng-hide="locationButtonCtrl.viewstate.loading">
+            <div class="col-sm-12 col-md-5">
+                <location-store-selector
+                    store-list="locationButtonCtrl.storeList"
+                    store-action="locationButtonCtrl.goToCatalogPage"
+                    selected-store="locationButtonCtrl.selectedStore">
+                </location-store-selector>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div id="map_canvas">
+                    <location-store-map></location-store-map>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

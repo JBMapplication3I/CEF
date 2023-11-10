@@ -1,0 +1,102 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+<Heading Size="HeadingSize.Is2">Returning</Heading>
+<Row>
+  <Column ColumnSize="ColumnSize.Is6.OnMobile.Is3.OnTablet">
+    <ToggleFormGroup
+      FormIdentifier="IsEligibleForReturn"
+      @bind-Value="Record.IsEligibleForReturn"
+      IsOptionToggled="@(_ => Record.IsEligibleForReturn)"
+      LabelText="Is Eligible for Return"
+      ToggleOnText="ui.admin.common.Yes"
+      ToggleOffText="ui.admin.common.No"
+      SwitchColor="Color.Success"
+      Required="false"
+    />
+  </Column>
+  <Column ColumnSize="ColumnSize.Is6.OnMobile.Is3.OnTablet">
+    <NumericFormGroup
+      FormIdentifier="RestockingFeePercent"
+      Disabled="@(!Record.IsEligibleForReturn)"
+      @bind-Value="Record.RestockingFeePercent"
+      LabelText="Restocking Fee Percent"
+      InputClasses="text-right"
+      Step="0.01m"
+      Min="0"
+      PlaceholderText="1.00"
+      Required="false"
+      IsPercent="true"
+    />
+  </Column>
+  <Column ColumnSize="ColumnSize.Is6.OnMobile.Is3.OnTablet">
+    <NumericFormGroup
+      FormIdentifier="RestockingFeeAmount"
+      Disabled="@(!Record.IsEligibleForReturn)"
+      @bind-Value="Record.RestockingFeeAmount"
+      LabelText="Restocking Fee Amount"
+      InputClasses="text-right"
+      Step="0.01m"
+      Min="0"
+      PlaceholderText="1.00"
+      Required="false"
+      IsCurrency="true"
+    />
+  </Column>
+  <Column ColumnSize="ColumnSize.Is6.OnMobile.Is3.OnTablet">
+    <SelectFormGroup
+      TValue="int?"
+      FormIdentifier="RestockingFeeAmountCurrencyID"
+      Disabled="@(!Record.IsEligibleForReturn || !Contract.CheckValidID(Record.RestockingFeeAmount))"
+      @bind-Value="Record.RestockingFeeAmountCurrencyID"
+      OptionsList="currencies"
+      ItemLabelFunc="@(i => ((CurrencyModel)i).Name ?? ((CurrencyModel)i).CustomKey)"
+      ItemValueFunc="@(i => ((CurrencyModel)i).ID)"
+      LabelText="Restocking Fee Amount Currency"
+      Required="Record.RestockingFeeAmount > 0"
+    />
+  </Column>
+</Row>
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+    await Task.WhenAll(LoadCurrenciesAsync()).ConfigureAwait(false);
+#endif
+  }
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    return Task.CompletedTask;
+  }
+
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+  private List<CurrencyModel>? currencies;
+
+  private async Task LoadCurrenciesAsync()
+  {
+    currencies = await LoadCollection<MVC.Api.Endpoints.GetCurrencies, CurrencyPagedResults, CurrencyModel>(
+        cvApi.GetCurrencies,
+        new() { Active = true, AsListing = true })
+      .ConfigureAwait(false);
+  }
+#else
+  private List<CurrencyModel>? currencies = null;
+#endif
+}

@@ -1,0 +1,13 @@
+<div ng-if="udCtrl.currentAccount"
+  cef-address-book
+  account="udCtrl.currentAccount"
+  class="row"
+  classes="col-12">
+</div>
+<div ng-if="!udCtrl.currentAccount"
+  class="row">
+  <div class="col-12">
+    <p data-translate="ui.storefront.userDashboard2.views.addressBook2.NoAccount.Message">
+    </p>
+  </div>
+</div>

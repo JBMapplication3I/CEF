@@ -1,0 +1,300 @@
+<div ng-form="udpimcCtrl.forms.payment">
+  <div class="modal-header bg-dark text-light px-3 py-2 align-items-center">
+    <h3 class="modal-title inline-block"
+      ng-bind="('ui.admin.controls.sales.modals.PayInvoice' | translate)
+        + ' ' + ('ui.admin.common.Number.Symbol' | translate)
+        + udpimcCtrl.id">
+    </h3>
+    <button type="button" class="close"
+      id="btnPayInvoiceModalCancelHeader" name="btnPayInvoiceModalCancelHeader"
+      translate-attr="{ title: 'ui.admin.common.Close',
+                        'aria-label': 'ui.admin.common.Close' }"
+      ng-click="udpimcCtrl.cancel()">
+      <i class="far fa-times text-light" aria-hidden="true"></i>
+      <span class="sr-only" data-translate="ui.admin.common.Close"></span>
+    </button>
+  </div>
+  <div class="modal-body form-vertical p-3">
+    <div class="row" ng-if="udpimcCtrl.paymentMethods.length > 1">
+      <div class="form-group col-sm-12">
+        <label class="control-label" for="PaymentMethod">
+          <span data-translate="ui.admin.payments.PaymentMethod"></span>&nbsp;<!--
+          --><span class="text-danger">*</span>
+        </label>
+        <select class="form-control"
+          id="ddlPaymentMethod" name="ddlPaymentMethod"
+          ng-required="true"
+          ng-options="p as p for p in udpimcCtrl.paymentMethods"
+          ng-model="udpimcCtrl.paymentData.paymentMethod">
+        </select>
+      </div>
+    </div>
+    <div class="row" ng-form="udpimcCtrl.forms.wallet"
+      ng-if="udpimcCtrl.isProcessCreditCard()">
+      <div ng-if="udpimcCtrl.cefConfig.featureSet.payments.wallet.enabled"
+        class="col-sm-12">
+        <div class="form-group"
+          ng-class="{ 'has-error': udpimcCtrl.forms.wallet.ddlSelectedCard.$invalid }">
+          <label class="control-label" for="ddlSelectedCard"
+            data-translate="ui.admin.checkout.views.paymentInformation.selectACard">
+          </label>
+          <div class="input-group">
+            <select class="form-control custom-select"
+              ng-class="{ 'is-valid': udpimcCtrl.forms.wallet.ddlSelectedCard.$valid,
+                          'is-invalid': udpimcCtrl.forms.wallet.ddlSelectedCard.$invalid }"
+              id="ddlSelectedCard" name="ddlSelectedCard"
+              ng-required="true"
+              ng-disabled="!udpimcCtrl.wallet.length"
+              ng-change="udpimcCtrl.updatePaymentDataWithCard(udpimcCtrl.selectedCard)"
+              ng-options="entry as entry.Name for entry in udpimcCtrl.wallet track by entry.Name"
+              ng-model="udpimcCtrl.selectedCard">
+              <option ng-disabled="true" value=""
+                data-translate="ui.admin.checkout.views.paymentInformation.selectACard">
+              </option>
+            </select>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default"
+                id="btnAddWalletEntry" name="btnAddWalletEntry"
+                translate-attr="{ title: 'ui.admin.common.Add',
+                                  'aria-label': 'ui.admin.common.Add' }"
+                data-translate="ui.admin.common.Add"
+                ng-disabled="udpimcCtrl.viewState.running"
+                ng-click="udpimcCtrl.addWalletEntry()">
+              </button>
+            </div>
+          </div>
+          <div ng-messages-multiple ng-messages="udpimcCtrl.forms.wallet.ddlSelectedCard.$error"
+            role="alert" class="invalid-feedback">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="udpimcCtrl.cefConfig.featureSet.payments.wallet.enabled && udpimcCtrl.selectedCardIsFromWallet()"
+        class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body pb-1">
+            <div class="row">
+              <div class="col-sm-10">
+                <p class="h3 mt-0"
+                  ng-bind-html="('&bull;&bull;&bull;&bull;&nbsp;'
+                    + '&bull;&bull;&bull;&bull;&nbsp;'
+                    + '&bull;&bull;&bull;&bull;&nbsp;'
+                    + (udpimcCtrl.selectedCard.CreditCardNumber | limitTo: -4)) | trustedHtml">
+                </p>
+              </div>
+              <div class="col-sm-2" aria-hidden="true">
+                <p class="h3 mt-0">
+                  <i class="fa-lg" ng-class="{
+                    'fab fa-cc-amex': udpimcCtrl.selectedCard.CardType == 'American Express',
+                    'fab fa-cc-discover': udpimcCtrl.selectedCard.CardType == 'Discover',
+                    'fab fa-cc-mastercard': udpimcCtrl.selectedCard.CardType == 'MasterCard',
+                    'fab fa-cc-diners-club': udpimcCtrl.selectedCard.CardType == 'Diners Club',
+                    'fab fa-cc-visa': udpimcCtrl.selectedCard.CardType == 'Visa'}">
+                  </i>
+                  <span class="sr-only"
+                    ng-bind="udpimcCtrl.selectedCard.CardType">
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-5">
+                <p class="small"
+                  data-translate="ui.admin.common.CardholderName">
+                </p>
+                <p class="bold"
+                  ng-bind="udpimcCtrl.selectedCard.CardHolderName">
+                </p>
+              </div>
+              <div class="col-xs-4">
+                <p class="small"
+                  data-translate="ui.admin.common.wallet.walletCard.ValidThrough">
+                </p>
+                <p class="bold"
+                  ng-bind="(udpimcCtrl.selectedCard.ExpirationMonth | zeroPadNumber: 2)
+                   + '/' + (udpimcCtrl.selectedCard.ExpirationYear | zeroPadNumber: 4)">
+                </p>
+              </div>
+              <div class="col-xs-3">
+                <div class="form-group"
+                  ng-class="{'has-error': udpimcCtrl.forms.payment.txtCVVWallet.$invalid}">
+                  <label class="control-label small" for="txtCVVWallet"
+                    ><span data-translate="ui.admin.common.CVV"
+                    ></span>&nbsp;<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control"
+                    id="txtCVVWallet" name="txtCVVWallet"
+                    placeholder="123"
+                    ng-required="true"
+                    ng-model="udpimcCtrl.selectedCard.CVV"
+                    cc-cvc cc-type="udpimcCtrl.forms.payment.txtCardNumber.type" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-form="udpimcCtrl.forms.billing">
+      <div class="col-sm-12">
+        <div class="form-group"
+          ng-class="{ 'has-error': udpimcCtrl.forms.billing.ddlBillingSelection.$invalid }">
+          <label class="control-label"
+            data-translate="Select a Billing Address">
+          </label>
+          <div class="input-group">
+            <select class="form-control custom-select"
+              ng-class="{ 'is-valid': udpimcCtrl.forms.billing.ddlBillingSelection.$valid,
+                          'is-invalid': udpimcCtrl.forms.billing.ddlBillingSelection.$invalid }"
+              sid="BillingAddressDropDownText"
+              id="ddlBillingSelection" name="ddlBillingSelection"
+              ng-required="true"
+              ng-options="ac as (ac | acToDropdownItem)
+                          for ac in udpimcCtrl.book
+                          | orderBy: ['Slave.Address.CustomKey','Slave.CustomKey','CustomKey']"
+              ng-model="udpimcCtrl.currentAccountContact">
+              <option ng-disabled="true" value=""
+                data-translate="ui.admin.controls.accounts.accountDetail.PleaseSelectABillingAddress">
+              </option>
+            </select>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default"
+                id="btnAddBilling" name="btnAddBilling"
+                translate-attr="{ title: 'ui.admin.common.Add',
+                                  'aria-label': 'ui.admin.common.Add' }"
+                data-translate="ui.admin.common.Add"
+                ng-disabled="udpimcCtrl.viewState.running"
+                ng-click="udpimcCtrl.addAddress()">
+              </button>
+            </div>
+          </div>
+          <div ng-messages-multiple ng-messages="udpimcCtrl.forms.billing.ddlBillingSelection.$error"
+            role="alert" class="invalid-feedback">
+            <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="!udpimcCtrl.currentAccountContact.Slave.Address.CountryID"
+        class="col-sm-12">
+        <div class="alert alert-info mb-3 py-2">
+          <span data-translate="ui.admin.purchasing.PleaseSelectAnAddress.Message"></span>
+        </div>
+      </div>
+      <div ng-if="udpimcCtrl.currentAccountContact.Slave
+        && udpimcCtrl.currentAccountContact.Slave.Address.Street1"
+        class="col-sm-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div cef-contact-address-block
+              contact="udpimcCtrl.currentAccountContact.Slave"
+              no-links="true"
+              two-col="true">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div cef-contact-widget
+          contact="udpimcCtrl.currentAccountContact.Slave"
+          hide-key="!udpimcCtrl.cefConfig.featureSet.addressBook.enabled
+                 || !udpimcCtrl.cvAuthenticationService.isAuthenticated()"
+          address-title="udpimcCtrl.addressTitle"
+          id-suffix="udpimcCtrl.idSuffix"
+          on-input-change="udpimcCtrl.onChange()"
+          is-billing="true">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well mb-0">
+          <div class="d-flex">
+            <div ng-class="udpimcCtrl.cefConfig.featureSet.salesInvoices.canPayViaCSR.single.partial ? 'w-50' : 'w-100'">
+              <p class="mb-1" data-translate="Balance Due"></p>
+              <p class="h3 mt-0 mb-1"
+                ng-bind="udpimcCtrl.balanceDue | globalizedCurrency">
+              </p>
+            </div>
+            <div class="w-50"
+              ng-if="udpimcCtrl.cefConfig.featureSet.salesInvoices.canPayViaCSR.single.partial">
+              <p class="mb-1">Chosen Amount</p>
+              <div class="input-group mb-2">
+                <div class="input-group-addon">
+                  <i class="far fa-dollar-sign" aria-hidden="true"></i>
+                </div>
+                <input type="number" class="form-control text-right"
+                  ng-required="true"
+                  ng-change="udpimcCtrl.updateAmount()"
+                  ng-max="udpimcCtrl.balanceDue"
+                  ng-min="0.0001"
+                  step="0.01"
+                  ng-model="udpimcCtrl.manualAmount" />
+              </div>
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="w-50">
+              <p class="mb-1" ng-if="udpimcCtrl.fee > 0">Total Fees</p>
+              <p class="h3 mt-0 mb-1" ng-if="udpimcCtrl.fee > 0"
+                ng-bind="udpimcCtrl.fee | globalizedCurrency">
+              </p>
+            </div>
+            <div class="w-50">
+              <p class="mb-1" ng-if="udpimcCtrl.fee > 0">Total Payment Amount</p>
+              <p class="h3 my-0" ng-if="udpimcCtrl.fee > 0"
+                ng-bind="udpimcCtrl.sumTotal | globalizedCurrency">
+              </p>
+            </div>
+          </div>
+          <!-- TODO: Remarks about useGreater uplift fee result setting when active (default off) -->
+          <div ng-if="udpimcCtrl.paymentMethod == udpimcCtrl.cvServiceStrings.checkout.paymentMethods.creditCard">
+            <p class="mb-0" ng-if="udpimcCtrl.cefConfig.featureSet.payments.methods.creditCard.uplifts.percent > 0">
+              <small>
+                <b>NOTE:</b> A {{udpimcCtrl.cefConfig.featureSet.payments.methods.creditCard.uplifts.percent * 100 | number: 0}}%
+                processing fee is charged for credit card transactions.
+              </small>
+            </p>
+            <p class="mb-0" ng-if="udpimcCtrl.cefConfig.featureSet.payments.methods.creditCard.uplifts.amount > 0">
+              <small>
+                <b>NOTE:</b> A {{udpimcCtrl.cefConfig.featureSet.payments.methods.creditCard.uplifts.amount | globalizedCurrency}}
+                processing fee is charged for credit card transactions.
+              </small>
+            </p>
+          </div>
+          <div ng-if="udpimcCtrl.paymentMethod == udpimcCtrl.cvServiceStrings.checkout.paymentMethods.echeck">
+            <p class="mb-0" ng-if="udpimcCtrl.cefConfig.featureSet.payments.methods.eCheck.uplifts.percent > 0">
+              <small>
+                <b>NOTE:</b> A {{udpimcCtrl.cefConfig.featureSet.payments.methods.eCheck.uplifts.percent * 100 | number: 0}}%
+                processing fee is charged for eCheck transactions.
+              </small>
+            </p>
+            <p class="mb-0" ng-if="udpimcCtrl.cefConfig.featureSet.payments.methods.eCheck.uplifts.amount > 0">
+              <small>
+                <b>NOTE:</b> A {{udpimcCtrl.cefConfig.featureSet.payments.methods.eCheck.uplifts.amount | globalizedCurrency}}
+                processing fee is charged for eCheck transactions.
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer px-3 py-2">
+    <p ng-if="udpimcCtrl.viewState.errorMessage"
+      ng-bind="udpimcCtrl.viewState.errorMessage">
+    </p>
+    <button type="button" class="btn btn-default btn-secondary ml-1"
+      id="btnPayInvoiceCancel" name="btnPayInvoiceCancel"
+      translate-attr="{ title: 'ui.admin.common.Cancel',
+                        'aria-label': 'ui.admin.common.Cancel' }"
+      data-translate="ui.admin.common.Cancel"
+      ng-click="udpimcCtrl.cancel()">
+    </button>
+    <button type="button" class="btn btn-large btn-primary"
+      translate-attr="{ title: 'ui.admin.common.Submit',
+                        'aria-label': 'ui.admin.common.Submit' }"
+      data-translate="ui.admin.common.Submit"
+      ng-disabled="udpimcCtrl.forms.payment.$invalid || udpimcCtrl.viewState.running"
+      ng-click="udpimcCtrl.ok()">
+    </button>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+// the mega menu dropdown styles for the "products" dropdown
+//*
+$mega-menu-color: #302b27;
+
+#menu-mega-top {
+
+    .dropdown-menu[render=mega-tabs] {
+
+        .grid-demo {
+            .mega-menu-tabset {
+                ul.nav.nav-tabs.nav-stacked {
+                    width: 25%;
+                    margin-left: 0;
+                    display: inline-block;
+
+                    > li {
+                        display: block;
+                        width: 100%;
+
+                        &.active {
+                            background: #ddd;
+                        }
+
+                        > a {
+                            > uib-tab-heading {
+                                > span {
+                                    &.has-sub {
+                                        width: 95%;
+                                        display: inline-block;
+                                        padding-right: 4px;
+                                    }
+
+                                    &.caret-right {
+                                        width: 5%;
+                                        display: inline-block;
+                                        float: right;
+                                        padding: 4px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .tab-content {
+                    width: 74%;
+                    display: inline-block;
+                    flex-wrap: nowrap;
+                    padding: 10px;
+                    vertical-align: top;
+
+                    > .tab-pane {
+                        width: 0%;
+
+                        &.active {
+                            width: 100%;
+                        }
+
+                        .dropdown-tertiary-container {
+                            padding-bottom: 25px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .grid-demo {
+        padding: 0;
+    }
+}
+// end #mega-menu-top
+// */

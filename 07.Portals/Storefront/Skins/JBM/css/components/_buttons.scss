@@ -1,0 +1,151 @@
+.btn:not(.btn-link) {
+	@include animate(color background border opacity transform box-shadow);
+	box-shadow: $btn-box-shadow;
+	display: inline-flex;
+	vertical-align: top;
+	align-items: center;
+	justify-content: center;
+
+	&:hover,
+	&:focus {
+		box-shadow: $btn-focus-box-shadow;
+	}
+
+	&.btn-success {
+		border-color: $secondary;
+
+		&:hover {
+			border-color: darken($secondary, 15%);
+		}
+	}
+
+	&.btn-lg {
+		text-transform: uppercase;
+		letter-spacing: .1em;
+		font-weight: 700;
+	}
+
+	&.btn-sm {
+		box-shadow: none;
+
+		&:focus,
+		&:hover {
+			box-shadow: $btn-focus-box-shadow;
+		}
+	}
+
+	&.btn-success,
+	&.btn-light,
+	&.btn-warning {
+		color: $secondary;
+	}
+
+	&[class^="outline"],
+	&[class*="outline"] {
+		box-shadow: none;
+
+		&:hover {
+			box-shadow: $btn-box-shadow;
+		}
+
+		&:focus {
+			box-shadow: $btn-focus-box-shadow;
+		}
+	}
+}
+
+.btn {
+	&.btn-link {
+		position: relative;
+		z-index: 1;
+		padding: 0;
+		min-width: auto !important;
+
+		&:after {
+			content: "";
+			position: absolute;
+			z-index: -1;
+			left: 51%;
+			right: 51%;
+			bottom: 0;
+			background: currentColor;
+			height: rem-calc(1);
+			transition-property: left, right;
+			transition-duration: 0.3s;
+			transition-timing-function: ease-out;
+		}
+
+		&:hover,
+		&:focus {
+			outline: none;
+			box-shadow: none;
+
+			&:after {
+				left: 0;
+				right: 0;
+			}
+		}
+	}
+
+	i {
+		margin: rem-calc(0 7 0 0);
+	}
+}
+
+.btn-holder {
+	display: flex;
+	flex-wrap: wrap;
+	margin: rem-calc(0 -7.5);
+
+	&:last-child {
+		margin-bottom: rem-calc(-10);
+	}
+
+	.btn {
+		margin: rem-calc(0 7.5 10);
+		padding-left: rem-calc(14);
+		padding-right: rem-calc(14);
+	}
+}
+
+.btn-delete {
+	@include animate(color);
+	min-width: rem-calc(36);
+	padding: rem-calc(3);
+	color: $danger;
+	border: none;
+	background: transparent;
+	font-size: rem-calc(20);
+
+	&:hover,
+	&:hover {
+		color: inherit;
+	}
+}
+
+.btn-add {
+	@include animate(color);
+	min-width: rem-calc(36);
+	padding: rem-calc(3);
+	color: $form-feedback-valid-color;
+	border: none;
+	background: transparent;
+	font-size: rem-calc(20);
+
+	&:hover,
+	&:hover {
+		color: inherit;
+	}
+}
+
+.del-plus-holder {
+	display: flex;
+
+	>* {
+		margin: rem-calc(0 0 0 10);
+
+		&:first-child {
+			margin: 0;
+		}
+	}
+}

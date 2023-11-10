@@ -1,0 +1,102 @@
+<table class="table table-sm table-hover w-100"
+  ng-class="{ 'mb-0': twCtrl.noMarginBottom }">
+  <colgroup>
+    <col class="w-auto" />
+    <col class="w-auto" />
+  </colgroup>
+  <thead ng-if="twCtrl.showHeader">
+    <tr>
+      <th colspan="2"
+        class="border-medium"
+        ng-class="{ 'px-3': twCtrl.padAlign }"
+        data-translate="ui.storefront.cart.widgets.totalsWidget.Totals">
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th sid="MiniCartSubtotalText"
+        data-translate="ui.storefront.common.Subtotal"
+        class="border-medium"
+        ng-class="{ 'pl-3': twCtrl.padAlign }">
+      </th>
+      <td id="cartTotalsWidgetSubtotal"
+        class="text-right border-medium"
+        ng-class="{ 'pr-3': twCtrl.padAlign }"
+        ng-bind="twCtrl.totalsToUse.SubTotal | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+    </tr>
+    <tr ng-if="twCtrl.cefConfig.featureSet.shipping.enabled && !twCtrl.hideShipping">
+      <th sid="CartTotalShippingText"
+        class="border-medium"
+        ng-class="{ 'pl-3': twCtrl.padAlign }"
+        data-translate="ui.storefront.common.Shipping">
+      </th>
+      <td id="cartTotalsWidgetShipping"
+        class="text-right border-medium"
+        ng-class="{ 'pr-3': twCtrl.padAlign }"
+        ng-bind="twCtrl.totalsToUse.Shipping | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+    </tr>
+    <tr ng-if="!twCtrl.hideHandling && twCtrl.totalsToUse.Handling > 0">
+      <th data-translate="ui.storefront.common.Handling"
+        class="border-medium"
+        ng-class="{ 'pl-3': twCtrl.padAlign }">
+      </th>
+      <td id="cartTotalsWidgetHandling"
+        class="text-right border-medium"
+        ng-class="{ 'pr-3': twCtrl.padAlign }"
+        ng-bind="twCtrl.totalsToUse.Handling | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+    </tr>
+    <tr ng-if="!twCtrl.hideFees && twCtrl.totalsToUse.Fees > 0">
+      <th data-translate="ui.storefront.common.Fee.Plural"
+        ng-class="{ 'pl-3': twCtrl.padAlign }">
+      </th>
+      <td id="cartTotalsWidgetFees"
+        class="text-right border-medium"
+        ng-class="{ 'pr-3': twCtrl.padAlign }"
+        ng-bind="twCtrl.totalsToUse.Fees | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+    </tr>
+    <tr ng-if="twCtrl.cefConfig.featureSet.discounts.enabled
+      && !twCtrl.hideDiscounts && twCtrl.totalsToUse.Discounts < 0">
+      <th sid="MiniCartDiscountsText"
+        data-translate="ui.storefront.common.Discount.Plural"
+        class="border-medium"
+        ng-class="{ 'pl-3': twCtrl.padAlign }">
+      </th>
+      <td id="cartTotalsWidgetDiscounts"
+        class="text-right border-medium"
+        ng-class="{ 'pr-3': twCtrl.padAlign }"
+        ng-bind="twCtrl.totalsToUse.Discounts | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+    </tr>
+    <tr ng-if="twCtrl.cefConfig.featureSet.taxes.enabled && !twCtrl.hideTaxes">
+      <th sid="MiniCartTaxesText"
+        data-translate="ui.storefront.cart.Taxes"
+        class="border-medium"
+        ng-class="{ 'pl-3': twCtrl.padAlign }">
+      </th>
+      <td id="cartTotalsWidgetTaxes"
+        class="text-right border-medium"
+        ng-class="{ 'pr-3': twCtrl.padAlign }"
+        ng-bind="twCtrl.totalsToUse.Tax | globalizedCurrency : twCtrl.sellingCurrency">
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th sid="MiniCartTotalText"
+        class="border-medium big"
+        data-translate="ui.storefront.common.Total"
+        ng-class="{ 'pl-3': twCtrl.padAlign }">
+      </th>
+      <th id="cartTotalsWidgetTotal"
+        class="big text-right border-medium"
+        ng-class="{ 'pr-3': twCtrl.padAlign }"
+        ng-bind="twCtrl.totalsToUse.Total | globalizedCurrency : twCtrl.sellingCurrency">
+      </th>
+    </tr>
+  </tfoot>
+</table>

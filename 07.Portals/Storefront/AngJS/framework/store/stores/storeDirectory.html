@@ -1,0 +1,141 @@
+﻿<div id="directory-header" class="green-blue-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1 class="light" data-translate="ui.storefront.stores.storeDirectory.goAfricasUniqueProfessionalAfricanDirectory"></h1>
+                <h4><span data-translate="ui.storefront.stores.storeDirectory.WantToGetListedHere"></span>&nbsp;<!--
+                --><a class="btn btn-link" style="font-size: 18px; margin-top: -4px;"
+                      ui-sref-plus uisrp-root="/Membership-Seller-Select#!?email=signup&vtoken=mD64w2U5hUK55qMbw9s983z9ZcfFN6UQcEHnPX8EZGVxhdxE2RaZ6YGCNavy2f2X&typeName=directory"
+                      >It's Easy!</a></h4>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <p>
+                        <label data-translate="ui.storefront.stores.storeDirectory.ByRegion"></label><br />
+                        <select name="directory-options-region" id="directoryOptionsRegion"
+                                class="form-control"
+                                ng-change="storeDirectory.filterStores()"
+                                ng-model="storeDirectory.filter.region"
+                                ng-options="r.ID as r.Name for r in storeDirectory.regions | orderBy: 'Code'">
+                            <option value="" selected data-translate="ui.storefront.stores.storeDirectory.ShowAll"></option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <p>
+                        <label data-translate="ui.storefront.stores.storeDirectory.ByCategory"></label><br />
+                        <select name="directory-options-category" id="directoryOptionsCategory"
+                                class="form-control"
+                                ng-change="storeDirectory.filterStores()"
+                                ng-model="storeDirectory.filter.category"
+                                ng-options="c.ID as c.Name group by c.Parent.Name for c in storeDirectory.categoriesGrouped | filter: {TypeID: 1002}">
+                            <option value="" selected data-translate="ui.storefront.stores.storeDirectory.ShowAll"></option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <p>
+                        <label data-translate="ui.storefront.stores.storeDirectory.ByType"></label><br />
+                        <select name="directory-options-type" id="directoryOptionsType"
+                                class="form-control"
+                                ng-change="storeDirectory.filterStores()"
+                                ng-model="storeDirectory.filter.type"
+                                ng-options="t.ID as t.Name for t in storeDirectory.types | orderBy: 'Name' | filter: {CustomKey: 'DIRECTORY'}">
+                            <option value="" selected data-translate="ui.storefront.stores.storeDirectory.ShowAll"></option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <p class="mb-0"><label data-translate="ui.storefront.stores.storeDirectory.QuickFinder"></label></p>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for..." ng-change="storeDirectory.filterStores()" ng-model="storeDirectory.filter.text">
+                        <span class="input-group-append input-group-btn">
+                            <button class="btn btn-primary" type="button"><i class="far fa-search" aria-hidden="true"></i><span class="sr-only" data-translate="ui.storefront.stores.storeDirectory.Search"></span></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div id="directory-more-filters" class="btn-group">
+                        <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span data-translate="ui.storefront.stores.storeDirectory.ShowMoreFilters"></span> &raquo;
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-3">
+                                        <p>
+                                            <label data-translate="ui.storefront.stores.storeDirectory.ByCity"></label><br />
+                                            <input type="text" class="form-control" placeholder="City Name" ng-change="storeDirectory.filterStores()" ng-model="storeDirectory.filter.city">
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <p>
+                                            <label data-translate="ui.storefront.stores.storeDirectory.ByCountry"></label><br />
+                                            <select name="directory-options-country" id="directoryOptionsCountry"
+                                                    class="form-control"
+                                                    ng-change="storeDirectory.filterStores()"
+                                                    ng-model="storeDirectory.filter.country"
+                                                    ng-options="c.ID as c.Name for c in storeDirectory.countries | orderBy: 'Name'">
+                                                <option value="" selected data-translate="ui.storefront.stores.storeDirectory.ShowAll"></option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <p>
+                                            <label data-translate="ui.storefront.stores.storeDirectory.ByLanguage"></label><br />
+                                            <select name="directory-options-language" id="directoryOptionsLanguage"
+                                                    class="form-control"
+                                                    ng-change="storeDirectory.filterStores()"
+                                                    ng-model="storeDirectory.filter.language"
+                                                    ng-options="r.ID as r.Name for r in storeDirectory.languages">
+                                                <option value="" selected data-translate="ui.storefront.stores.storeDirectory.ShowAll"></option>
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            $('#directory-more-filters').on('hide.bs.dropdown', function () {
+                                return false;
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sideNavMain-triangles"></div>
+    <div id="home-header-triangles"></div>
+</div>
+
+<div id="directory-body" class="container">
+    <div class="row">
+        <!--<div class="col-12">
+            <h3>A</h3>
+        </div>-->
+        <div class="directory-header-banner col-md-12">
+            <cef-ad-display data-zid="2"></cef-ad-display>
+        </div>
+    </div>
+    <div class="row">
+        <div class="directory-item col-md-6" ng-repeat="store in storeDirectory.stores | filter: {Active:true}">
+            <h5 class="title"><a ui-sref-plus uisrp-root="/Directory/Detail/{{store.CustomKey}}" target="_blank">{{store.Name}}</a></h5>
+            <p class="info" ng-if="store.StoreContacts.length > 0">
+                <span class="info-title" data-translate="ui.storefront.stores.storeDirectory.Regions"></span>
+                <span ng-repeat="region in store.StoreContacts">{{region.Contact.Address.RegionName}}<span ng-hide="$last">, </span></span>
+            </p>
+            <p class="info" ng-if="store.TypeName.length > 0">
+                <span class="info-title" data-translate="ui.storefront.common.Type"></span>
+                {{store.TypeName}}
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="directory-footer-banner col-md-12">
+            <cef-ad-display data-zid="3"></cef-ad-display>
+        </div>
+    </div>
+</div>

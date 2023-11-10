@@ -1,0 +1,21 @@
+﻿<div>
+    <h2 class="h4" data-translate="ui.storefront.personalization.personalizedCategoriesQuickNav.MyCategories"></h2>
+    <!-- category-nav -->
+    <ul class="category-nav">
+        <li class="py-2 lg-py-3"
+            ng-repeat="cat in personalizedCategoriesQuickNavCtrl.categories | limitTo: 6"
+            ng-class="{'hidden-lg-down':$index == 3,'hidden-xl-down':$index > 3}"
+            ><a ui-sref-plus uisrp-is-catalog="true"
+                uisrp-state="searchCatalog.products.results.both"
+                uisrp-params="{ 'category': '{{cat.Name}}|{{cat.CustomKey}}' }"
+                ng-class="{'text-capitalize':!cat.DisplayName}"
+                ng-bind="cat.DisplayName || (cat.Name | lowercase)"></a></li>
+        <li class="py-2 lg-py-3">
+            <a class="text-primary more"
+               ui-sref-plus uisrp-is-catalog="true"
+               uisrp-state="searchCatalog.products.categories.level1"
+               ><span data-translate="ui.storefront.personalization.personalizedCategoriesQuickNav.ShopAllCategories"></span>&nbsp;<!--
+                --><i class="far fa-angle-double-right"></i></a>
+        </li>
+    </ul>
+</div>

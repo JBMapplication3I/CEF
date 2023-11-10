@@ -1,0 +1,10 @@
+﻿<a class="nav-link cef-micro-cart d-flex"
+  id="btnMicroCart_{{mcc.type}}"
+  ng-if="mcc.type == 'Cart' && mcc.isSupervisor || mcc.type == 'Quote Cart' && !mcc.isSupervisor"
+  name="btnMicroCart_{{mcc.type}}"
+  ui-sref-plus uisrp-area="{{mcc.type == 'Quote Cart' ? 'quoteCart' : 'cart'}}">
+  <i class="far fa-shopping-cart fa-lg"></i><!--
+  --><span class="text-nowrap" ng-bind="'(' + ((mcc.cvCartService.carts[mcc.type].ItemQuantity || 0) | number:0) + ') '
+                    + ((mcc.cvCartService.carts[mcc.type].Totals.Total || 0) | globalizedCurrency)">
+  </span>
+</a>

@@ -1,0 +1,734 @@
+﻿<div class="row">
+  <div class="col-12">
+    <h1 ng-if="cartCtrl.type == 'Quote Cart'"
+      class="mt-3"
+      sid="CartPageTitle"
+      data-translate="ui.storefront.cart.OrderRequest">
+    </h1>
+    <h1 ng-if="cartCtrl.type == 'Cart'"
+      class="mt-3"
+      sid="CartPageTitle"
+      data-translate="ui.storefront.cart.microCart.MyCart">
+    </h1>
+  </div>
+  <div cef-cart-validator class="col-12 mt-3" type="cartCtrl.type"></div>
+  <div ng-if="cartCtrl.cartItems.length > 20" class="col-12">
+    <div cef-paging-header paging="cartCtrl.cartItemsPaging"></div>
+  </div>
+  <div class="col-12" ng-form="cartCtrl.forms.SalesItems">
+    <div class="d-block d-sm-none" id="tblCartXS_{{cartCtrl.type}}">
+      <div ng-if="!cartCtrl.cartItems.length">
+        <label class="form-control-static font-weight-normal"
+          id="cartEmptyLabelXS"
+          data-translate="ui.storefront.cart.noItemsHaveBeenAddedToTheCart">
+        </label>
+      </div>
+      <div ng-repeat="(itemIndex, item) in (cartCtrl.cartItems.length > 20
+          ? (cartCtrl.cartItemsPaging.filteredData
+              | limitTo: cartCtrl.cartItemsPaging.pageSize
+                       : cartCtrl.cartItemsPaging.skip())
+          : cartCtrl.cartItems)
+          | orderBy: ['ProductName','ProductKey']"
+          class="card mb-3">
+        <div class="row no-gutters">
+          <div class="col-auto">
+            <div cef-product-card-thumbnail-widget
+              product-id="item.ProductID"
+              product-image="item.ProductPrimaryImage"
+              width="100" height="100"
+              index="itemIndex">
+            </div>
+          </div>
+          <div class="col">
+            <div class="card-body px-2 py-3">
+              <a id="cartProductNameXS{{itemIndex}}"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <span class="pointer mb-0"
+                  ng-bind="item.ProductKey + ' - ' + item.ProductName">
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <!-- Item Discounts -->
+          <div class="col-12">
+            <div class="card-body p-2">
+              <div ng-if="item.Discounts && item.Discounts.length" class="card-text">
+                <div ng-repeat="(discountIndex, discount) in item.Discounts">
+                  <span class="small"
+                    id="cartProductDiscountNameXS{{itemIndex + '.' + discountIndex}}"
+                    ng-bind="discount.SlaveName">
+                  </span>
+                  <button ng-if="!discount.DiscountIsAutoApplied"
+                    type="button" class="btn btn-link top p-0 text-nowrap"
+                    id="btnRemoveDiscountFromItemXS{{itemIndex + '.' + discountIndex}}"
+                    name="btnRemoveDiscountFromItemXS{{itemIndex + '.' + discountIndex}}"
+                    translate-attr="{ title: 'ui.storefront.cart.removeDiscountFromItem',
+                                      'aria-label': 'ui.storefront.cart.removeDiscountFromItem' }"
+                    ng-click="cartCtrl.removeCartItemDiscount(discount.ID)">
+                    <span class="text-success small"
+                      id="cartProductDiscountValueXS{{itemIndex + '.' + discountIndex}}"
+                      ng-bind="discount.DiscountValueType == 1
+                        ? (discount.DiscountValue | globalizedCurrency)
+                        : (discount.DiscountValue + '%')">
+                    </span>&nbsp;<span class="small text-success"
+                      data-translate="ui.storefront.common.Off"></span>&nbsp;<!--
+                    --><i class="far fa-trash fa-lg text-danger"></i>
+                    <span class="sr-only"
+                      data-translate="ui.storefront.cart.removeDiscountFromItem">
+                    </span>
+                  </button>
+                  <span ng-if="discount.DiscountIsAutoApplied">
+                    <span class="text-success small"
+                      id="cartProductDiscountValueXS{{itemIndex + '.' + discountIndex}}"
+                      ng-bind="discount.DiscountValueType == 1
+                        ? (discount.DiscountValue | globalizedCurrency)
+                        : (discount.DiscountValue + '%')">
+                    </span>&nbsp;<span class="text-success small"
+                      data-translate="ui.storefront.common.Off">
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Item Prices -->
+          <div class="col-12" ng-cloak="item">
+            <div class="card-body p-2">
+              <table class="w-100 mb-2">
+                <tbody>
+                  <tr ng-if="!cartCtrl.cefConfig.loginForPricing.enabled || cartCtrl.cvAuthenticationService.isAuthenticated()">
+                    <td>
+                      <div class="card-price text-right text-muted"
+                        ng-class="{'strike-through small text-disabled':
+                          item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0
+                          || item.DiscountTotal && item.DiscountTotal < 0}"
+                        id="cartProductPriceXS{{itemIndex}}"
+                        ng-bind="item.UnitCorePrice | globalizedCurrency">
+                      </div>
+                    </td>
+                    <td>
+                      <div class="text-right text-muted"
+                        ng-class="{'strike-through small text-disabled':
+                          item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0
+                          || item.DiscountTotal && item.DiscountTotal < 0 }"
+                        id="cartProductSubtotalCoreXS{{itemIndex}}"
+                        ng-bind="(item.UnitCorePrice * item.TotalQuantity) | globalizedCurrency">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr ng-if="!cartCtrl.cefConfig.loginForPricing.enabled || cartCtrl.cvAuthenticationService.isAuthenticated()">
+                    <td>
+                      <div class="cart-price price text-right text-danger"
+                        ng-if="item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                        ng-class="{'strike-through small text-disabled': item.DiscountTotal && item.DiscountTotal < 0}"
+                        ng-bind="item.UnitSoldPrice | globalizedCurrency">
+                      </div>
+                    </td>
+                    <td>
+                      <div ng-if="item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                        class="text-right text-danger"
+                        ng-class="{'strike-through small text-disabled': item.DiscountTotal && item.DiscountTotal < 0 }"
+                        id="cartProductSubtotalXS{{itemIndex}}"
+                        ng-bind="item.ExtendedPrice | globalizedCurrency">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr ng-if="!cartCtrl.cefConfig.loginForPricing.enabled || cartCtrl.cvAuthenticationService.isAuthenticated()">
+                    <td>
+                      <div class="cart-price price text-right text-success"
+                        ng-if="item.DiscountTotal && item.DiscountTotal < 0"
+                        ng-bind="(item.UnitSoldPrice || item.UnitCorePrice || 0) + (item.DiscountTotal / item.TotalQuantity) | globalizedCurrency">
+                      </div>
+                    </td>
+                    <td>
+                      <div ng-if="item.DiscountTotal && item.DiscountTotal < 0"
+                        class="text-right text-success"
+                        id="cartProductSubtotalWithDiscountsXS{{itemIndex}}"
+                        ng-bind="(item.ExtendedPrice + item.DiscountTotal) | globalizedCurrency">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <!-- NOTE: No onStep here as it would duplicate the other one and fire twice -->
+                      <div cef-add-to-cart-quantity-selector
+                        item-id="item.ProductID"
+                        sales-item="item"
+                        default-value="1"
+                        current-value="item.TotalQuantity"
+                        is-required="true"
+                        step="1"
+                        index="itemIndex + 'XS'"
+                        always-allow-input="cartCtrl.type === 'Quote Cart'"
+                        debug="false">
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div ng-if="cartCtrl.cefConfig.loginForPricing.enabled && !cartCtrl.cvAuthenticationService.isAuthenticated()">
+                <div cef-login-for-pricing></div>
+              </div>
+              <div class="w-100 text-center">
+                <button type="button" class="btn btn-link text-danger"
+                  id="btnRemoveItemXS{{itemIndex}}FromCart"
+                  name="btnRemoveItemXS{{itemIndex}}FromCart"
+                  translate-attr="{ title: 'ui.storefront.cart.removeItemFromCart',
+                                    'aria-label': 'ui.storefront.cart.removeItemFromCart' }"
+                  ng-click="cartCtrl.removeCartItem(item.ID)">
+                  <i class="far fa-trash fa-lg"></i>&nbsp;<!--
+                  --><span data-translate="ui.storefront.cart.removeItemFromCart"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-repeat="(discountIndex, discount) in cartCtrl.orderDiscounts"
+        class="card mb-3">
+        <div class="card-header"
+          id="orderDiscountTypeXS{{discountIndex}}"
+          data-translate="ui.storefront.cart.orderDiscountType">
+        </div>
+        <div class="card-body">
+          <span class="small"
+            id="orderDiscountNameXS{{discountIndex}}"
+            ng-bind="discount.SlaveName">
+          </span>
+          <button ng-if="!discount.DiscountIsAutoApplied"
+            type="button" class="btn btn-link top p-0 text-nowrap"
+            id="btnRemoveOrderDiscountXS{{discountIndex}}"
+            name="btnRemoveOrderDiscountXS{{discountIndex}}"
+            translate-attr="{ title: 'ui.storefront.cart.removeOrderDiscountFromCart',
+                              'aria-label': 'ui.storefront.cart.removeOrderDiscountFromCart' }"
+            ng-click="cartCtrl.removeCartDiscount(discount.ID)">
+            <span class="text-success small"
+              id="orderDiscountValueXS{{discountIndex}}"
+              ng-bind="discount.DiscountValueType == 1
+                ? ((discount.DiscountValue * -1) | globalizedCurrency)
+                : (discount.DiscountValue + '%')">
+            </span>&nbsp;<span class="small text-success"
+              data-translate="ui.storefront.common.Off"></span>&nbsp;<!--
+            --><i class="far fa-trash fa-lg text-danger"></i>
+            <span class="sr-only"
+              data-translate="ui.storefront.cart.removeOrderDiscountFromCart">
+            </span>
+          </button>
+          <span ng-if="discount.DiscountIsAutoApplied">
+            <span class="text-success small"
+              id="orderDiscountValueXS{{discountIndex}}"
+              ng-bind="discount.DiscountValueType == 1
+                ? (discount.DiscountValue | globalizedCurrency)
+                : (discount.DiscountValue + '%')">
+            </span>&nbsp;<span class="text-success small"
+              data-translate="ui.storefront.common.Off">
+            </span>
+          </span>
+        </div>
+      </div>
+      <div ng-repeat="(discountIndex, discount) in cartCtrl.shippingDiscounts"
+        class="card mb-3">
+        <div class="card-header"
+          data-translate="ui.storefront.cart.shipmentDiscountType">
+        </div>
+        <div class="card-body">
+          <span class="small"
+            id="shipmentDiscountNameXS{{discountIndex}}"
+            ng-bind="discount.SlaveName">
+          </span>
+          <button ng-if="!discount.DiscountIsAutoApplied"
+            type="button" class="btn btn-link top p-0 text-nowrap"
+            id="btnRemoveShipmentDiscountXS{{discountIndex}}"
+            name="btnRemoveShipmentDiscountXS{{discountIndex}}"
+            translate-attr="{ title: 'ui.storefront.cart.removeShipmentDiscountFromCart',
+                              'aria-label': 'ui.storefront.cart.removeShipmentDiscountFromCart' }"
+            ng-click="cartCtrl.removeCartDiscount(discount.ID)">
+            <span class="text-success small"
+              id="shipmentDiscountValueXS{{discountIndex}}"
+              ng-bind="discount.DiscountValueType == 1
+                ? ((discount.DiscountValue * -1) | globalizedCurrency)
+                : (discount.DiscountValue + '%')">
+            </span>&nbsp;<span class="small text-success"
+              data-translate="ui.storefront.common.Off"></span>&nbsp;<!--
+            --><i class="far fa-trash fa-lg text-danger"></i>
+            <span class="sr-only"
+              data-translate="ui.storefront.cart.removeShipmentDiscountFromCart">
+            </span>
+          </button>
+          <span ng-if="discount.DiscountIsAutoApplied">
+            <span class="text-success small"
+              id="shipmentDiscountValueXS{{discountIndex}}"
+              ng-bind="discount.DiscountValueType == 1
+                ? (discount.DiscountValue | globalizedCurrency)
+                : (discount.DiscountValue + '%')">
+            </span>&nbsp;<span class="text-success small"
+              data-translate="ui.storefront.common.Off">
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive d-none d-sm-block">
+      <table class="data-table cart-table table table-sm table-hover"
+        id="tblCart_{{cartCtrl.type}}">
+        <thead>
+          <tr class="first last">
+            <!-- Col 1 -->
+            <th class="d-none w-auto d-lg-table-cell"></th>
+            <!-- Col 2 -->
+            <th class="sm-w-22 md-w-20 lg-w-16 xl-w-16 tk-w-20 fk-w-16"
+              data-translate="ui.storefront.cart.SKU">
+            </th>
+            <!-- Col 3 -->
+            <th class="w-38 sm-w-38 md-w-26 lg-w-32 xl-w-40 tk-w-40 fk-w-48"
+              data-translate="ui.storefront.common.Name">
+            </th>
+            <!-- Col 4 -->
+            <th class="w-1 text-center"
+              data-translate="ui.storefront.common.UoM">
+            </th>
+            <!-- Col 5 -->
+            <th class="d-none d-md-table-cell md-w-13 lg-w-10 xl-w-8 tk-w-8 fk-w-8 text-center"
+              data-translate="ui.storefront.common.Price">
+            </th>
+            <!-- Col 6 -->
+            <th class="w-30 sm-w-30 md-w-30 lg-w-20 xl-w-16 tk-w-12 fk-w-8 text-center"
+              data-translate="ui.storefront.common.Quantity">
+            </th>
+            <!-- Col 7 -->
+            <th class="sm-w-10 md-w-12 lg-w-10 xl-w-8 tk-w-8 fk-w-8 text-center"
+              data-translate="ui.storefront.common.Subtotal">
+            </th>
+            <!-- Col 8 -->
+            <th class="w-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="!cartCtrl.cartItems.length"
+            class="border-top border-bottom border-medium">
+            <td colspan="7">
+              <label class="form-control-static font-weight-normal"
+                id="cartEmptyLabel"
+                data-translate="ui.storefront.cart.noItemsHaveBeenAddedToTheCart">
+              </label>
+            </td>
+          </tr>
+          <tr ng-repeat-start="(itemIndex, item) in (cartCtrl.cartItems.length > 20
+            ? (cartCtrl.cartItemsPaging.filteredData
+                | limitTo: cartCtrl.cartItemsPaging.pageSize
+                        : cartCtrl.cartItemsPaging.skip())
+            : cartCtrl.cartItems)
+            | orderBy: ['ProductName','ProductKey']"
+            class="border-top border-bottom border-medium">
+            <!-- Col 1 -->
+            <td class="p-0 d-none d-lg-table-cell align-middle"
+              rowspan="{{cartCtrl.cefConfig.featureSet.inventory.preSale.enabled && item.ProductAllowPreSale
+                     || cartCtrl.cefConfig.featureSet.inventory.backOrder.enabled && item.QuantityBackOrdered > 0
+                     ? 2 : 1}}">
+              <div cef-product-card-thumbnail-widget
+                product-id="item.ProductID"
+                product-image="item.ProductPrimaryImage"
+                width="100" height="100"
+                index="itemIndex">
+              </div>
+            </td>
+            <!-- Col 2 -->
+            <td class="align-middle">
+              <a id="cartProductSku{{itemIndex}}"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal pointer py-0 mb-0"
+                  ng-bind="item.ProductKey">
+                </label>
+              </a>
+            </td>
+            <!-- Col 3 -->
+            <td class="align-middle">
+              <a id="cartProductName{{itemIndex}}"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal pointer mb-0 py-0"
+                  ng-bind="item.Name || item.ProductName">
+                </label>
+              </a>
+              <a class="d-inline d-sm-none"
+                id="cartProductSku{{itemIndex}}"
+                ui-sref-plus uisrp-is-product="true"
+                uisrp-path="{{item.ProductSeoUrl}}">
+                <label class="form-control-static font-weight-normal pointer mb-0 py-0"
+                  ng-bind="item.Sku || item.ProductKey">
+                </label>
+              </a>
+              <table ng-if="item.Discounts && item.Discounts.length"
+                class="table table-borderless w-auto mb-0 bg-light rounded">
+                <tr ng-repeat="(discountIndex, discount) in item.Discounts">
+                  <td class="text-right w-auto">
+                    <span class="small"
+                      id="cartProductDiscountDescription{{itemIndex + '.' + discountIndex}}"
+                      ng-bind="discount.SlaveName">
+                    </span>
+                  </td>
+                  <td class="w-auto">
+                    <button ng-if="!discount.DiscountIsAutoApplied"
+                      type="button" class="btn btn-link top p-0 text-nowrap"
+                      id="btnRemoveDiscountFromItem{{itemIndex + '.' + discountIndex}}"
+                      name="btnRemoveDiscountFromItem{{itemIndex + '.' + discountIndex}}"
+                      translate-attr="{ title: 'ui.storefront.cart.removeDiscountFromItem',
+                                        'aria-label': 'ui.storefront.cart.removeDiscountFromItem' }"
+                      ng-click="cartCtrl.removeCartItemDiscount(discount.ID)">
+                      <span id="cartProductDiscountValue{{itemIndex + '.' + discountIndex}}"
+                        class="text-success small"
+                        ng-bind="discount.DiscountValueType == 1
+                          ? (discount.DiscountValue | globalizedCurrency)
+                          : (discount.DiscountValue + '%')">
+                      </span>&nbsp;<span class="small text-success"
+                        data-translate="ui.storefront.common.Off"></span>&nbsp;<!--
+                      --><i class="far fa-trash fa-lg text-danger"></i>
+                      <span class="sr-only"
+                        data-translate="ui.storefront.cart.removeDiscountFromItem">
+                      </span>
+                    </button>
+                    <span ng-if="discount.DiscountIsAutoApplied">
+                      <span id="cartProductDiscountValue{{itemIndex + '.' + discountIndex}}"
+                        class="text-success small"
+                        ng-bind="discount.DiscountValueType == 1
+                          ? (discount.DiscountValue | globalizedCurrency)
+                          : (discount.DiscountValue + '%')">
+                      </span>&nbsp;<span class="text-success small"
+                        data-translate="ui.storefront.common.Off">
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <!-- Col 4 -->
+            <td class="align-middle text-center">
+              <span ng-bind="item.SerializableAttributes.SelectedUOM.Value | bracketWrap">
+            </td>
+            <!-- Col 5 (2 versions, only 1 ever visible at a time) -->
+            <td ng-if="!cartCtrl.cefConfig.loginForPricing.enabled
+              || cartCtrl.cvAuthenticationService.isAuthenticated()"
+              class="d-none d-md-table-cell text-right align-middle">
+              <div id="cartProductPrice{{itemIndex}}"
+                class="d-block form-control-static cart-price price text-right text-muted py-0"
+                ng-class="{'strike-through small text-disabled':
+                  item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0
+                  || item.DiscountTotal && item.DiscountTotal < 0}"
+                ng-bind="item.UnitCorePrice | globalizedCurrency">
+              </div>
+              <div ng-if="item.UnitSoldPrice && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                class="d-block form-control-static cart-price price text-right text-danger py-0"
+                sid="cartProductSalePrice_{{$index}}"
+                ng-class="{'strike-through small text-disabled': item.DiscountTotal && item.DiscountTotal < 0}"
+                ng-bind="item.UnitSoldPrice | globalizedCurrency">
+              </div>
+              <div class="d-block form-control-static cart-price price text-right text-success py-0"
+                ng-if="item.DiscountTotal && item.DiscountTotal < 0"
+                ng-bind="(item.UnitSoldPrice || item.UnitCorePrice || 0) + (item.DiscountTotal / item.TotalQuantity) | globalizedCurrency">
+              </div>
+            </td>
+            <td ng-if="cartCtrl.cefConfig.loginForPricing.enabled && !cartCtrl.cvAuthenticationService.isAuthenticated()"
+              class="d-none d-md-table-cell align-middle">
+              <div cef-login-for-pricing></div>
+            </td>
+            <!-- Col 6 -->
+            <td class="align-middle">
+              <div cef-add-to-cart-quantity-selector
+                item-id="item.ProductID"
+                sales-item="item"
+                default-value="1"
+                current-value="item.TotalQuantity"
+                is-required="true"
+                step="1"
+                on-step="cartCtrl.updateCartItemQuantity"
+                index="itemIndex"
+                always-allow-input="cartCtrl.type === 'Quote Cart'"
+                cart-type="cartCtrl.type"
+                debug="false">
+              </div>
+              <table ng-if="item.QuantityPreSold > 0" class="small mt-2">
+                <tr>
+                  <td data-translate="ui.storefront.common.PreSales"></td>
+                  <td ng-bind="item.QuantityPreSold | number"></td>
+                </tr>
+              </table>
+              <div ng-if="(!cartCtrl.cefConfig.loginForPricing.enabled || cartCtrl.cvAuthenticationService.isAuthenticated())"
+                class="d-block d-sm-none text-right">
+                <div class="d-block form-control-static font-weight-normal text-right"
+                  id="cartProductSubtotal{{itemIndex}}"
+                  ng-bind="(item.ExtendedPrice + item.DiscountTotal) | globalizedCurrency">
+                </div>
+              </div>
+              <div ng-if="cartCtrl.cefConfig.loginForPricing.enabled && !cartCtrl.cvAuthenticationService.isAuthenticated()"
+                class="d-block d-sm-none">
+                <div cef-login-for-pricing></div>
+              </div>
+            </td>
+            <!-- Col 7 (2 versions, only 1 ever visible at a time) -->
+            <td ng-if="(!cartCtrl.cefConfig.loginForPricing.enabled || cartCtrl.cvAuthenticationService.isAuthenticated())"
+              class="text-right align-middle">
+              <div class="d-block form-control-static font-weight-normal text-right text-muted py-0"
+                ng-class="{'strike-through small text-disabled':
+                  item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0
+                  || item.DiscountTotal && item.DiscountTotal < 0 }"
+                id="cartProductSubtotalCore{{itemIndex}}"
+                ng-bind="(item.UnitCorePrice * item.TotalQuantity) | globalizedCurrency">
+              </div>
+              <div ng-if="item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                class="d-block form-control-static font-weight-normal text-right text-danger py-0"
+                ng-class="{'strike-through small text-disabled': item.DiscountTotal && item.DiscountTotal < 0 }"
+                id="cartProductSubtotal{{itemIndex}}"
+                ng-bind="item.ExtendedPrice | globalizedCurrency">
+              </div>
+              <div ng-if="item.DiscountTotal && item.DiscountTotal < 0"
+                class="d-block form-control-static font-weight-normal text-right text-success py-0"
+                id="cartProductSubtotalWithDiscounts{{itemIndex}}"
+                ng-bind="(item.ExtendedPrice + item.DiscountTotal) | globalizedCurrency">
+              </div>
+            </td>
+            <td ng-if="cartCtrl.cefConfig.loginForPricing.enabled && !cartCtrl.cvAuthenticationService.isAuthenticated()"
+              class="align-middle">
+              <div cef-login-for-pricing></div>
+            </td>
+            <!-- Col 8 -->
+            <td class="w-1 align-middle">
+              <button type="button" class="btn btn-link text-danger"
+                id="btnRemoveItem{{itemIndex}}FromCart" name="btnRemoveItem{{itemIndex}}FromCart"
+                translate-attr="{ title: 'ui.storefront.cart.removeItemFromCart',
+                                  'aria-label': 'ui.storefront.cart.removeItemFromCart' }"
+                ng-click="cartCtrl.removeCartItem(item.ID)">
+                <i class="far fa-trash fa-lg"></i>
+                <span class="sr-only" data-translate="ui.storefront.cart.removeItemFromCart"></span>
+              </button>
+            </td>
+          </tr>
+          <tr ng-repeat-end class="border-top border-bottom border-medium">
+          </tr>
+          <tr ng-repeat="(discountIndex, discount) in cartCtrl.orderDiscounts"
+            class="border-top border-bottom border-medium">
+            <!-- Col 1 -->
+            <td class="d-none d-lg-table-cell align-middle"></td>
+            <!-- Col 2 -->
+            <td  class="align-middle">
+              <div class="form-control-static font-weight-normal small"
+                id="orderDiscountType{{discountIndex}}"
+                data-translate="ui.storefront.cart.orderDiscountType">
+              </div>
+            </td>
+            <!-- Col 3 -->
+            <td  class="align-middle">
+              <div class="form-control-static font-weight-normal small"
+                id="orderDiscountName{{discountIndex}}"
+                ng-bind="discount.SlaveName">
+              </div>
+            </td>
+            <!-- Col 4 -->
+            <td class="d-none d-md-table-cell text-right align-middle">
+              <div class="form-control-static cart-price price text-right text-success"
+                id="orderDiscountValue{{discountIndex}}"
+                ng-bind="discount.DiscountValueType == 1
+                  ? ((discount.DiscountValue * -1) | globalizedCurrency)
+                  : (discount.DiscountValue + '%')">
+              </div>
+            </td>
+            <!-- Col 5 -->
+            <td class="d-none d-md-table-cell align-middle"></td>
+            <!-- Col 6 -->
+            <td class="text-right align-middle">
+              <div class="d-block form-control-static cart-price price text-right text-success"
+                id="orderDiscountTotal{{discountIndex}}"
+                ng-bind="discount.DiscountTotal | globalizedCurrency">
+              </div>
+            </td>
+            <!-- Col 7 -->
+            <td class="w-1 align-middle">
+              <button ng-if="!discount.DiscountIsAutoApplied"
+                type="button" class="btn btn-link text-danger top"
+                id="btnRemoveOrderDiscount{{discountIndex}}"
+                name="btnRemoveOrderDiscount{{discountIndex}}"
+                translate-attr="{ title: 'ui.storefront.cart.removeItemFromCart',
+                                  'aria-label': 'ui.storefront.cart.removeOrderDiscountFromCart' }"
+                ng-click="cartCtrl.removeCartDiscount(discount.ID)">
+                <i class="far fa-trash fa-lg"></i>
+                <span class="sr-only"
+                  data-translate="ui.storefront.cart.removeOrderDiscountFromCart">
+                </span>
+              </button>
+            </td>
+          </tr>
+          <tr ng-repeat="(discountIndex, discount) in cartCtrl.shippingDiscounts"
+            class="border-top border-bottom border-medium">
+            <!-- Col 1 -->
+            <td class="d-none d-lg-table-cell align-middle"></td>
+            <!-- Col 2 -->
+            <td class="align-middle">
+              <div id="shipmentDiscountType{{discountIndex}}"
+                class="form-control-static font-weight-normal">
+                <span data-translate="ui.storefront.cart.shipmentDiscountType"></span>
+              </div>
+            </td>
+            <!-- Col 3 -->
+            <td class="align-middle">
+              <div id="shipmentDiscountName{{discountIndex}}"
+                class="form-control-static font-weight-normal small">
+                <span ng-bind="discount.SlaveName"></span>
+              </div>
+            </td>
+            <!-- Col 4 -->
+            <td class="d-none d-md-table-cell text-right align-middle">
+              <div id="shipmentDiscountValue{{discountIndex}}"
+                class="d-block form-control-static cart-price price text-right text-success"
+                ng-bind="discount.DiscountValueType == 1
+                  ? ((discount.DiscountValue * -1) | globalizedCurrency)
+                  : (discount.DiscountValue + '%')">
+              </div>
+            </td>
+            <!-- Col 5 -->
+            <td class="align-middle"></td>
+            <!-- Col 6 -->
+            <td class="text-right align-middle">
+              <div id="shipmentDiscountTotal{{discountIndex}}"
+                class="d-block form-control-static font-weight-normal text-right text-success"
+                ng-bind="discount.DiscountTotal | globalizedCurrency">
+              </div>
+            </td>
+            <!-- Col 7 -->
+            <td class="w-1 align-middle">
+              <button ng-if="!discount.DiscountIsAutoApplied"
+                type="button" class="btn btn-link text-danger top"
+                id="btnRemoveShipmentDiscount{{discountIndex}}"
+                name="btnRemoveShipmentDiscount{{discountIndex}}"
+                translate-attr="{ title: 'ui.storefront.cart.removeItemFromCart',
+                                  'aria-label': 'ui.storefront.cart.removeShipmentDiscountFromCart' }"
+                ng-click="cartCtrl.removeCartDiscount(discount.ID)">
+                <i class="far fa-trash fa-lg"></i>
+                <span class="sr-only"
+                  data-translate="ui.storefront.cart.removeShipmentDiscountFromCart">
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="row cart-collaterals">
+  <div ng-if="cartCtrl.includeQuickOrder"
+    class="col-12 col-sm-6 col-md-auto col-lg-auto col-xl-auto">
+    <div cef-quick-add-to-cart
+      type="cartCtrl.type"
+      flyout-count="8"
+      class="mb-3">
+    </div>
+  </div>
+  <div class="col d-sm-none d-md-block">
+  </div>
+  <div class="col-12 col-sm-6 col-md-auto col-lg-auto col-xl-auto totals">
+    <h3 sid="ShoppingCartTotalText"
+      data-translate="{{cartCtrl.type == 'Quote Cart' ? 'ui.storefront.cart.OrderRequestTotal' : 'ui.storefront.cart.shoppingCartTotal'}}">
+    </h3>
+    <table id="tableCartTotals"
+      class="table shopping-cart-table-total table-striped table-hover">
+      <colgroup>
+        <col class="" />
+      </colgroup>
+      <tbody>
+        <tr>
+          <td class="a-right" sid="CartSubtotalText" data-translate="ui.storefront.common.Subtotal"></td>
+          <td id="cartTotalsSubtotal"
+            class="a-left price text-right"
+            ng-bind="(cartCtrl.cvCartService.carts[cartCtrl.type].Totals.SubTotal || 0) | globalizedCurrency">
+          </td>
+        </tr>
+        <tr ng-if="cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Shipping > 0">
+          <td class="a-right" data-translate="ui.storefront.common.Shipping"></td>
+          <td id="cartTotalsShipping"
+            class="a-left price text-right"
+            ng-class="{'strike-through' : cartCtrl.shippingStrikethrough }"
+            ng-bind="(cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Shipping || 0) | globalizedCurrency">
+          </td>
+        </tr>
+        <tr ng-if="cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Handling > 0">
+          <td class="a-right" data-translate="ui.storefront.common.Handling"></td>
+          <td id="cartTotalsHandling"
+            class="a-left price text-right"
+            ng-bind="(cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Handling || 0) | globalizedCurrency">
+          </td>
+        </tr>
+        <tr ng-if="cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Fees > 0">
+          <td class="a-right" data-translate="ui.storefront.common.Fee.Plural"></td>
+          <td id="cartTotalsFees"
+            class="a-left price text-right"
+            ng-bind="(cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Fees || 0) | globalizedCurrency">
+          </td>
+        </tr>
+        <tr ng-if="cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Discounts < 0">
+          <td class="a-right" sid="CartDiscountsText" data-translate="ui.storefront.common.Discount.Plural"></td>
+          <td id="cartTotalsDiscounts"
+            class="a-left price text-right"
+            ng-bind="(cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Discounts || 0) | globalizedCurrency">
+          </td>
+        </tr>
+        <tr ng-if="cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Tax > 0">
+          <td class="a-right" data-translate="ui.storefront.cart.Taxes"></td>
+          <td id="cartTotalsTaxes"
+            class="a-left price text-right"
+            ng-bind="(cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Tax || 0) | globalizedCurrency">
+          </td>
+        </tr>
+        <tr>
+          <td class="a-right bold" sid="CartGrandTotalText" data-translate="ui.storefront.cart.grandTotal"></td>
+          <td id="cartTotalsTotal"
+            class="a-left price text-right bold"
+            ng-bind="(cartCtrl.cvCartService.carts[cartCtrl.type].Totals.Total || 0) | globalizedCurrency">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" id="availableSupervisors" ng-if="cartCtrl.supervisorList.length > 0">
+            <select-form-group
+              key="availableSupervisors"
+              label-text="Available Supervisors"
+              selections="cartCtrl.supervisorSelectList"
+              include-null="true"
+              null-text="Choose supervisor..."
+              ng-form-classes="select-supervisor"
+              ng-model="cartCtrl.selectedSupervisorID"
+              ng-required="true">
+            </select-form-group>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" class="px-0">
+            <button ng-if="cartCtrl.type === 'Cart'"
+              type="button" class="btn btn-block btn-success btn-lg rounded"
+              id="btnProceedToCheckout" name="btnProceedToCheckout"
+              ui-sref-plus uisrp-area="checkout"
+              translate-attr="{ title: 'ui.storefront.cart.proceedToCheckout',
+                                'aria-label': 'ui.storefront.cart.proceedToCheckout' }"
+              ng-disabled="!cartCtrl.cvCartService.validForCheckout
+                || !cartCtrl.cvCartService.carts[cartCtrl.type].ItemQuantity">
+              <span data-translate="ui.storefront.cart.proceedToCheckout"></span>
+            </button>
+            <button ng-if="cartCtrl.type === 'Quote Cart'"
+              type="button" class="btn btn-block btn-success btn-lg rounded"
+              id="btnSubmitQuote" name="btnSubmitQuote"
+              ng-click="cartCtrl.submitCartToSupervisor()"
+              translate-attr="{ title: 'ui.storefront.common.SubmitOrderRequest',
+                                'aria-label': 'ui.storefront.common.SubmitOrderRequest' }"
+              ng-disabled="!cartCtrl.cvCartService.validForSubmitQuote
+                || !cartCtrl.cvCartService.carts[cartCtrl.type].ItemQuantity || !cartCtrl.selectedSupervisorID">
+              <span data-translate="ui.storefront.common.SubmitOrderRequest"></span>
+            </button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

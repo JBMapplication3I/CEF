@@ -1,0 +1,153 @@
+﻿@page "/catalog/products/creator"
+@using Clarity.Ecommerce.MVC.Core
+@using Clarity.Ecommerce.UI.XPortal.SharedLibrary.Pages.Catalog.Products.EditParts
+@inherits MVC.Core.CreatorViewTemplatedControllerBase<ProductModel, MVC.Api.Endpoints.CreateProduct>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="productCreatorPage">
+    @if (ViewState.loading || Record == null! && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (EditContext != null! && Record != null!)
+    {
+      <Validations
+        EditContext="EditContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="EditContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content-with-footer">
+            <Container Fluid="true">
+              <Row>
+                <Column>
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="@("fa-box-full")" Class="mr-1" />
+                    @ClippedName
+                  </Heading>
+                </Column>
+              </Row>
+              <Tabs
+                SelectedTab="@SelectedTab"
+                SelectedTabChanged="@OnSelectedTabChanged"
+                TabPosition="TabPosition.Start"
+                Mode="TabsMode.LazyReload"
+                Pills="true"
+                Shadow="Shadow.Small"
+                Class="h-100">
+                <Items>
+                  <Tab Name="details">Details</Tab>
+                  <Tab Name="attributes">Attributes</Tab>
+                </Items>
+                <Content>
+                  <TabPanel Name="details"><TabDetails @ref="tabDetails" Record="Record" /></TabPanel>
+                  <TabPanel Name="attributes">
+                    <RecordAttributes
+                      Record="Record"
+                      OtherTypeName="Product"
+                    />
+                  </TabPanel>
+                </Content>
+              </Tabs>
+            </Container>
+          </Div>
+          <Div Class="page-footer mb-5">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Primary"
+              Disabled="@(FormInvalid || ViewState.saving || ViewState.running || ViewState.pristine)"
+              Clicked="OnSave">
+              Save Changes
+            </Blazorise.Button>
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Secondary"
+              Class="ml-1"
+              Disabled="ViewState.InputDisable"
+              Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, GridRouteFormat))">
+              Back
+            </Blazorise.Button>
+            @*<Blazorise.ValidationSummary Class="ml-3" />*@
+            <ErrorBlock
+              Class="ml-3"
+              Orientation="Blazorise.Orientation.Horizontal"
+            />
+            <DebugViewStateBlock
+              Class="ml-3 mb-0"
+              Orientation="Blazorise.Orientation.Horizontal"
+            />
+          </Div>
+        </EditForm>
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/catalog/products";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+  #endregion
+
+  #region Tabs
+  private TabDetails? tabDetails;
+  // private TabAttributes? tabAttributes;
+  #endregion
+
+  #region Loading
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    return Task.CompletedTask;
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<MVC.Api.Endpoints.CreateProduct, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> CreateCallerFunc
+    => record => cvApi.CreateProduct(record);
+
+  /// <inheritdoc />
+  protected override Func<int, DateTime, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> AssocToMasterCallerFunc
+#if BRANDADMIN
+    => (newID, timestamp) => cvApi.CreateBrandProduct(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif FRANCHISEADMIN
+    => (newID, timestamp) => cvApi.CreateFranchiseProduct(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif MANUFACTURERADMIN
+    => (newID, timestamp) => cvApi.CreateManufacturerProduct(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif STOREADMIN
+    => (newID, timestamp) => cvApi.CreateStoreProduct(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif VENDORADMIN
+    => (newID, timestamp) => cvApi.CreateVendorProduct(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#endif
+
+  /// <inheritdoc />
+  protected override async Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    await tabDetails!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+    // await tabAttributes!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+    Record.IsVisible = false;
+  }
+  #endregion
+}

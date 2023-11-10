@@ -1,0 +1,99 @@
+<div class="modal-header bg-dark text-light">
+    <h5 class="modal-title translate-cloak"
+      id="lbAddToCartConfirmationModalTitle"
+      data-translate="ui.storefront.carts.AddToCartModalTitle"
+      translate-cloak="ui.storefront.carts.AddToCartModalTitle">
+    </h5>
+    <button type="button" class="close"
+      translate-attr="{ title: 'ui.storefront.common.Close',
+                        'aria-label': 'ui.storefront.common.Close' }"
+      ng-click="addToCartModalCtrl.cancel()">
+      <i class="far fa-times text-light" sid="btnCancelAddToCartModalHeader" aria-hidden="true"></i>
+      <span class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div ng-class="addToCartModalCtrl.item ? 'col-12' : 'ng-hide'">
+        <div class="row">
+          <div class="col-sm-4">
+            <!--
+            <img ng-src="htt p://images.orgill.com/large/{ {addToCartModalCtrl.item.CustomKey || addToCartModalCtrl.item.customKey}}.jpg"
+              alt="{ {addToCartModalCtrl.item.Name || addToCartModalCtrl.item.name}}" />
+            -->
+            <img class="img-fluid d-block mx-auto"
+              alt="{{addToCartModalCtrl.item.Name || addToCartModalCtrl.item.name}}"
+              ng-src="{{addToCartModalCtrl.item.PrimaryImageFileName
+                | corsImageLink : 'products' : { 'maxwidth': 150, 'maxheight': 150, 'mode': 'pad', 'scale': 'both' } }}"
+            />
+          </div>
+          <div class="col-sm-8">
+            <!--standard model-->
+            <h4 class="cef-confirmation-add-cart-title"
+              sid="AddToCartModalProductText"
+              ng-bind="addToCartModalCtrl.item.Name">
+            </h4>
+            <!--
+            <p class="h3 cef-confirmation-add-cart-price"
+               ng-if="!addToCartModalCtrl.item.readPrices().isSale"
+               ng-bind="addToCartModalCtrl.item.readPrices().base | globalizedCurrency">
+            </p>
+            <p class="h3 cef-confirmation-add-cart-price"
+               ng-if="addToCartModalCtrl.item.readPrices().isSale"
+               ng-bind="addToCartModalCtrl.item.readPrices().sale | globalizedCurrency">
+            </p>
+            -->
+          </div>
+        </div>
+      </div>
+      <!--
+      <div class="text-center" ng-class="addToCartModalCtrl.item ? 'col-sm-4' : 'col-sm-12'">
+        <p class="bold" data-translate="ui.storefront.cart.CartTotal"></p>
+        <p id="productDetailAddToCartModalCartTotal"
+          class="h3 cef-confirmation-add-cart-price"
+          ng-bind="addToCartModalCtrl.cvCartService.carts[addToCartModalCtrl.type].Totals.Total | globalizedCurrency">
+        </p>
+      </div>
+      -->
+      <div class="col-12" ng-show="addToCartModalCtrl.messages.length">
+        <div ng-repeat="m in addToCartModalCtrl.messages"
+          ng-if="!m.includes('Back-Order')"
+          class="alert" role="alert" sid="AddToCartModalText_{{$index}}"
+          ng-class="{ 'alert-danger': m.startsWith('ERROR'),
+                      'alert-warning': m.startsWith('WARNING'),
+                      'alert-info': !m.startsWith('ERROR') && !m.startsWith('WARNING'),
+                      'mb-0': $last }"
+          ng-bind="m">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!--standard button-->
+    <a ng-if="addToCartModalCtrl.url !== addToCartModalCtrl.cefConfig.routes.cart.root"
+      class="btn btn-outline-secondary"
+      id="btnAddToCartModalContinueShopping" name="btnAddToCartModalContinueShopping"
+      translate-attr="{ title: 'ui.storefront.cart.continueShopping',
+                        'aria-label': 'ui.storefront.cart.continueShopping' }"
+      data-translate="ui.storefront.cart.continueShopping"
+      ng-click="addToCartModalCtrl.cancel()">
+    </a>
+    <a ng-if="addToCartModalCtrl.url !== addToCartModalCtrl.cefConfig.routes.cart.root"
+      class="btn btn-primary"
+      id="btnAddToCartModalGoToCart" name="btnAddToCartModalGoToCart"
+      translate-attr="{ title: 'ui.storefront.cart.ViewCart',
+                        'aria-label': 'ui.storefront.cart.ViewCart' }"
+      ui-sref-plus uisrp-area="quoteCart">
+      <span data-translate="ui.storefront.cart.ViewQuoteCart"></span>
+    </a>
+    <!--cart page button-->
+    <a ng-if="addToCartModalCtrl.url === addToCartModalCtrl.cefConfig.routes.cart.root"
+      class="btn btn-primary"
+      id="btnAddToCartModalAtCartClose" name="btnAddToCartModalAtCartClose"
+      translate-attr="{ title: 'ui.storefront.cart.ViewCart',
+                        'aria-label': 'ui.storefront.cart.ViewCart' }"
+      data-translate="ui.storefront.cart.ViewCart"
+      ng-click="addToCartModalCtrl.cancel()">
+    </a>
+  </div>
+  

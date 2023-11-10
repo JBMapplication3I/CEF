@@ -1,0 +1,67 @@
+@namespace Clarity.Ecommerce.UI.XPortal.SharedLibrary
+@inject PortalOptions portalOptions
+
+<Blazorise.ThemeProvider Theme="@theme" WriteVariables="true">
+  <Router
+    AppAssembly="@typeof(Client.NavigationManagerExtensions).Assembly"
+    PreferExactMatches="@true">
+    <Found Context="routeData">
+      @*
+      <AuthorizeRouteView RouteData="@routeData"
+        DefaultLayout="@typeof(MainLayout)">
+        <NotAuthorized>
+          <Div Class="p-3">
+            <Heading Size="HeadingSize.Is1">Error 403: Unauthorized</Heading>
+            <p>That's an error, it means you are not authorized to reach this page.</p>
+            <p>You may need to sign in as a different user or contact support for assistance at {phone number}.</p>
+            <NavLink href="login" class="btn btn-primary">Sign In</NavLink>
+          </Div>
+        </NotAuthorized>
+        <Authorizing>
+          <Div Class="p-3">
+            <Alert Color="Color.Info" role="alert">
+              Authentication in progress...
+            </Alert>
+          </Div>
+        </Authorizing>
+      </AuthorizeRouteView>
+      *@
+      <RouteView RouteData="@routeData"
+        DefaultLayout="@typeof(MainLayout)">
+      </RouteView>
+    </Found>
+    <NotFound>
+      <LayoutView Layout="@typeof(MainLayout)">
+        <Div Class="p-3">
+          <Heading Size="HeadingSize.Is1">Error 404: Not Found</Heading>
+          <Paragraph>
+            That's an error, it means we couldn't find anything in our site at the URL entered. If you believe you
+            reached this page in error, please contact support for assistance at {phone number}.
+          </Paragraph>
+        </Div>
+      </LayoutView>
+    </NotFound>
+    <Navigating>
+      <LayoutView Layout="@typeof(MainLayout)">
+        <Div Class="p-3">
+          <Heading Size="HeadingSize.Is1">Navigating...</Heading>
+          <Paragraph>
+            Please wait while we navigate to the page.
+          </Paragraph>
+        </Div>
+      </LayoutView>
+    </Navigating>
+  </Router>
+</Blazorise.ThemeProvider>
+
+@code
+{
+    // https://blazorise.com/docs/theming/
+    private Blazorise.Theme? theme;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync().ConfigureAwait(false);
+        theme = portalOptions.Theme ?? new();
+    }
+}

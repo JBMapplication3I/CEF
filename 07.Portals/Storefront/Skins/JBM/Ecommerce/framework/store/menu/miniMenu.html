@@ -1,0 +1,87 @@
+<div uib-dropdown is-open="miniMenuCtrl.isOpen">
+  <div ng-if="miniMenuCtrl.buildingMenu">
+    <i class="far fa-cog fa-spin"></i>&nbsp;<!--
+    --><span data-translate="ui.storefront.common.Loading.Ellipses"
+      translate-cloak="ui.storefront.common.Loading.Ellipses">
+    </span>
+  </div>
+  <a ng-if="!miniMenuCtrl.buildingMenu && !miniMenuCtrl.cvAuthenticationService.isAuthenticated()"
+    class="btn btn-secondary pointer" ng-cloak
+    translate-cloak="ui.storefront.user.login.SignIn"
+    id="btnMiniMenuLogin" name="btnMiniMenuLogin"
+    login-modal
+    ng-click="loginModalCtrl.open(null, null, true)"
+    tabindex="0">
+    <span data-translate="ui.storefront.user.login.SignIn"></span>
+  </a>
+  <div class="btn-group" ng-if="!miniMenuCtrl.buildingMenu && miniMenuCtrl.cvAuthenticationService.isAuthenticated()">
+    <a type="button" class="btn btn-secondary"
+      ng-if="!miniMenuCtrl.buildingMenu && miniMenuCtrl.cvAuthenticationService.isAuthenticated()"
+      ng-cloak
+      translate-cloak="ui.storefront.menu.miniMenu.Hi"
+      id="btnMiniMenuUserName" name="btnMiniMenuUserName"
+      tabindex="0">
+      <span class="control-label"
+      ng-bind="('ui.storefront.menu.miniMenu.Hi' | translate)
+        + ' ' + (miniMenuCtrl.displayName || miniMenuCtrl.userName)">
+      </span>
+    </a>
+    <button type="button" uib-dropdown-toggle
+    class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="sr-only">Toggle Dropdown</span><i class="icon-arrow"></i></button>
+  </div>
+  <div ng-if="!miniMenuCtrl.buildingMenu && miniMenuCtrl.cvAuthenticationService.isAuthenticated()"
+    uib-dropdown-menu aria-labelledby="btnMiniMenuUserName" role="menu"
+    class="dropdown-menu"
+    translate-cloak ng-cloak
+    style="max-height: 50vh; overflow-y: auto; position: absolute; top: 0px;">
+    <div role="presentation"
+      ng-repeat="section in miniMenuCtrl.sections | orderBy: ['order','title']"
+      ng-class="{'active': miniMenuCtrl.isActive(section.sref)}"
+      ng-if="section.sref">
+      <a class="dropdown-item" rel="nofollow"
+        id="btnMiniMenu_{{section.name}}" name="btnMiniMenu_{{section.name}}"
+        ui-sref-plus uisrp-is-dashboard="true" uisrp-state="{{section.sref}}"
+        ><span data-translate="{{section.titleKey}}"></span></a>
+    </div>
+    <div ng-if="miniMenuCtrl.cefConfig.featureSet.stores.myStoreAdmin.enabled
+      && miniMenuCtrl.cvSecurityService.hasRole('CEF Store Administrator')
+      && !miniMenuCtrl.cefConfig.paymentHubEnabled"
+      class="separator">
+      <hr class="m-0" />
+    </div>
+    <div class="dropdown-item" role="presentation"
+      ng-if="miniMenuCtrl.cefConfig.featureSet.stores.myStoreAdmin.enabled
+        && miniMenuCtrl.cvSecurityService.hasRole('CEF Store Administrator')
+        && !miniMenuCtrl.cefConfig.paymentHubEnabled">
+      <a class="w-100" rel="nofollow"
+        id="btnMiniMenuMyStoreAdmin" name="btnMiniMenuMyStoreAdmin"
+        ui-sref-plus uisrp-area="myStoreAdmin"
+        ><span data-translate="ui.storefront.location.myStore.myStore"></span></a>
+    </div>
+    <div ng-if="miniMenuCtrl.cefConfig.featureSet.stores.myBrandAdmin.enabled
+      && miniMenuCtrl.cvSecurityService.hasRole('CEF Brand Administrator')
+      && !miniMenuCtrl.cefConfig.paymentHubEnabled"
+      class="separator">
+      <hr class="m-0" />
+    </div>
+    <div class="dropdown-item" role="presentation"
+      ng-if="miniMenuCtrl.cefConfig.featureSet.stores.myBrandAdmin.enabled
+        && miniMenuCtrl.cvSecurityService.hasRole('CEF Brand Administrator')
+        && !miniMenuCtrl.cefConfig.paymentHubEnabled">
+      <a class="w-100" rel="nofollow"
+        id="btnMiniMenuMyBrandAdmin" name="btnMiniMenuMyBrandAdmin"
+        ui-sref-plus uisrp-area="myBrandAdmin"
+        ><span data-translate="ui.storefront.location.myBrand.myBrand"></span></a>
+    </div>
+    <div class="separator"><hr class="m-0" /></div>
+    <div>
+      <a class="dropdown-item pointer w-100 d-flex align-items-center no-gutters" tabindex="0"
+        id="btnMiniMenuLogout" id="btnMiniMenuLogout"
+        ng-click="miniMenuCtrl.cvAuthenticationService.logout(true)"
+        ng-keypress="miniMenuCtrl.cvAuthenticationService.logout(true)">
+        <span class="col" data-translate="ui.storefront.common.Logout"></span>
+        <i class="far fa-sign-out col-auto" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>

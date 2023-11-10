@@ -1,0 +1,25 @@
+﻿<cv-page caption="Manage Manufacturers" head-icon="fa-users"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Inventory.Manufacturers')">
+    <cv-widget>
+        <widget-menu-item caption="Add Manufacturer" icon-class="fa-plus-circle"
+                          click="$root.$state.go('inventory.manufacturers.detail',{ID:'New'})"
+                          permission="'Manufacturers.Manufacturer.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     on-search="search.getManufacturers"
+                     on-deactivate="search.deactivateManufacturer"
+                     on-reactivate="search.reactivateManufacturer"
+                     on-delete="search.deleteManufacturer"
+                     edit-state="inventory.manufacturers.detail,[ID]"
+                     permissions-base="Manufacturers.Manufacturer">
+                <cv-column filter field="ID" title="#" width="50px" />
+                <cv-column filter field="CustomKey" title="Key" />
+                <cv-column filter field="Name" />
+                <cv-column field="ContactFullName" title="Contact Name" />
+                <cv-column field="Phone" title="Phone" width="100px" />
+                <cv-column field="Fax" title="Fax" width="100px" />
+                <cv-column field="Email" title="Email" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

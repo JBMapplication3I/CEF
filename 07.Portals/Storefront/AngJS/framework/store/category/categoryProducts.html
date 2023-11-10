@@ -1,0 +1,15 @@
+<div class="row">
+    <div ng-repeat="product in categoryProductsCtrl.products"
+         class="col-6 col-sm-4 col-md-2">
+        <a ui-sref-plus uisrp-area="category" urisp-path="{{product.SeoUrl}}"
+           class="btn btn-link">
+            <p><div cef-product-card-thumbnail-widget
+                    product-id="product.ID"
+                    product-image="product.PrimaryImageFileName"
+                    width="250"
+                    height="250"
+                    index="$index"></div></p>
+            <span ng-bind="product.DisplayName || product.Name"></span>
+        </a>
+    </div>
+</div>

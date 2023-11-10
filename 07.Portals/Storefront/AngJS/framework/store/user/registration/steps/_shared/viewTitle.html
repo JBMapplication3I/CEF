@@ -1,0 +1,12 @@
+<h5>
+    <i ng-hide="step.complete"
+        class="far fa-square text-primary"
+        aria-hidden="true"></i><!--
+    --><i ng-show="step.complete"
+        class="far fa-check-square text-success"
+        aria-hidden="true"></i><!--
+    -->&nbsp;<span ng-class="step.index === registrationCtrl.cvRegistrationService.activeStep
+                       ? 'text-primary' : step.complete ? 'text-success' : 'inactive'"
+        ><span data-translate="ui.storefront.common.steps.{{step.index + 1}}.Period"></span>&nbsp;<!--
+        --><span data-translate="{{step.titleKey}}"></span></span>
+</h5>

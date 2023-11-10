@@ -1,0 +1,1 @@
+cd /d "%~dp0" && npm i -g npm@6.7.0 && npm i -g --production windows-build-tools@4.0.0 && npm i -g gulp && npm install

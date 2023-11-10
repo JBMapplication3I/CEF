@@ -1,0 +1,23 @@
+﻿<cv-page caption="Manage Badges" head-icon="fa-certificate"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.Badges')">
+    <cv-widget>
+        <widget-menu-item caption="Add Badge" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.badges.detail',{ID:'New'})"
+                          permission="'Badges.Badge.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     on-search="search.getBadges"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateBadge"
+                     on-reactivate="search.reactivateBadge"
+                     on-delete="search.deleteBadge"
+                     edit-state="accounts.badges.detail,[ID]"
+                     permissions-base="Badges.Badge">
+                <cv-column filter field="ID" title="#" width="50px" />
+                <cv-column filter field="CustomKey" title="Key" width="250px" />
+                <cv-column filter field="Name" width="300px" />
+                <cv-column filter field="TypeName" width="150px" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

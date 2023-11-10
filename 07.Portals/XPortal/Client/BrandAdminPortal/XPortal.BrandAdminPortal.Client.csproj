@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.UI.XPortal.BrandAdminPortal.Client</AssemblyName>
+    <PackageId>Clarity.Ecommerce.UI.XPortal.BrandAdminPortal.Client</PackageId>
+    <RootNamespace>Clarity.Ecommerce.UI.XPortal.SharedLibrary</RootNamespace>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <ProjectGuid>{CF4B116C-6A2D-4807-AE19-601A66845FD6}</ProjectGuid>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+    <UseBlazorWebAssembly>true</UseBlazorWebAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;JETBRAINS_ANNOTATIONS;CLIENT;BRANDADMIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>JETBRAINS_ANNOTATIONS;CLIENT;BRANDADMIN</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Catalog\Discounts\**" />
+    <Compile Remove="Pages\Catalog\Warehouses\**" />
+    <Compile Remove="Pages\Details\Currencies\**" />
+    <Compile Remove="Pages\Details\Languages\**" />
+    <Compile Remove="Pages\Details\Nations\**" />
+    <Compile Remove="Pages\Details\Notifications\**" />
+    <Compile Remove="Pages\Details\Settings\**" />
+    <Compile Remove="Pages\Fulfillment\**" />
+    <Content Remove="Pages\Catalog\Attributes\**" />
+    <Content Remove="Pages\Catalog\Categories\**" />
+    <Content Remove="Pages\Catalog\Discounts\**" />
+    <Content Remove="Pages\Catalog\Warehouses\**" />
+    <Content Remove="Pages\Details\Currencies\**" />
+    <Content Remove="Pages\Details\Languages\**" />
+    <Content Remove="Pages\Details\Nations\**" />
+    <Content Remove="Pages\Details\Notifications\**" />
+    <Content Remove="Pages\Details\Settings\**" />
+    <Content Remove="Pages\Fulfillment\**" />
+    <EmbeddedResource Remove="Pages\Catalog\Discounts\**" />
+    <EmbeddedResource Remove="Pages\Catalog\Warehouses\**" />
+    <EmbeddedResource Remove="Pages\Details\Currencies\**" />
+    <EmbeddedResource Remove="Pages\Details\Languages\**" />
+    <EmbeddedResource Remove="Pages\Details\Nations\**" />
+    <EmbeddedResource Remove="Pages\Details\Notifications\**" />
+    <EmbeddedResource Remove="Pages\Details\Settings\**" />
+    <EmbeddedResource Remove="Pages\Fulfillment\**" />
+    <None Remove="Pages\Catalog\Discounts\**" />
+    <None Remove="Pages\Catalog\Warehouses\**" />
+    <None Remove="Pages\Details\Currencies\**" />
+    <None Remove="Pages\Details\Languages\**" />
+    <None Remove="Pages\Details\Nations\**" />
+    <None Remove="Pages\Details\Notifications\**" />
+    <None Remove="Pages\Details\Settings\**" />
+    <None Remove="Pages\Fulfillment\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="Blazor.Extensions.Logging" Version="2.0.4" />
+    <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
+    <PackageReference Include="Blazorise" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.Components" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.DataGrid" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.RichTextEdit" Version="0.9.5.6" />
+    <PackageReference Include="Blazorise.TreeView" Version="0.9.5.6" />
+    <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="ServiceStack.Blazor" Version="5.13.3" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="19.4.0.54" />
+    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="19.4.0.54" />
+    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BackEnd\Api\Endpoints\Endpoints.cstxt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Endpoints.tt</DependentUpon>
+    </None>
+    <None Update="BackEnd\Api\Endpoints\Endpoints.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Endpoints.cstxt</LastGenOutput>
+    </None>
+  </ItemGroup>
+</Project>

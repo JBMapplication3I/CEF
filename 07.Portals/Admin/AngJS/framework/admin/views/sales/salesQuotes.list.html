@@ -1,0 +1,185 @@
+﻿<cv-page caption="Manage Sales Quotes" head-icon="fa-list"
+  ng-if="$root.cvSecurityService.hasPermission('Admin.Sales.SalesQuotes')">
+  <cv-widget>
+    <!-- TODO: A wizard needs to be created for this button to work
+    <widget-menu-item
+      caption="New Sales Quote Wizard"
+      icon-class="fa-plus-circle"
+      click="$root.$state.go('sales.salesQuotes.new')"
+      permission="'Quoting.SalesQuote.Create'">
+    </widget-menu-item>
+    -->
+    <!-- TODO: Client specific functionality needs to be generalized first
+    <widget-menu-item
+      caption="Import"
+      icon-class="fa-cloud-upload"
+      click="$root.$state.go('sales.salesQuotes.import')"
+      permission="'Quoting.SalesQuote.Create'">
+    </widget-menu-item>
+    -->
+    <widget-body ng-controller="SearchController as search">
+      <cv-grid
+        show-pager="true"
+        page-sizes="8,16,32,64,128"
+        server-paging="true"
+        filter-side="true"
+        force-show-labels="true"
+        groupable="false"
+        sortable="false"
+        server-sorting="true"
+        on-search="search.getSalesQuotes"
+        partial-reset="false"
+        on-deactivate="search.deactivateSalesQuote"
+        on-reactivate="search.reactivateSalesQuote"
+        on-delete="search.deleteSalesQuote"
+        edit-state="sales.salesQuotes.detail,[ID]"
+        permissions-base="Quoting.SalesQuote"
+        row-class=""
+        row-ng-class="{
+          'row-default': dataItem.StatusKey == 'Submitted',
+          'row-success': dataItem.StatusKey == 'Approved',
+          'row-info'   : dataItem.StatusKey == 'In Process' || dataItem.StatusName == 'Processed',
+          'row-danger' : dataItem.StatusKey == 'Rejected'
+        }"
+        row-group-class=""
+        row-group-ng-class="{
+          'row-group-default': dataItem.field == 'StatusKey' && dataItem.StatusKey == 'Submitted',
+          'row-group-success': dataItem.field == 'StatusKey' && dataItem.StatusKey == 'Approved',
+          'row-group-info'   : dataItem.field == 'StatusKey' && dataItem.StatusKey == 'In Process' || dataItem.StatusKey == 'Processed',
+          'row-group-danger' : dataItem.field == 'StatusKey' && dataItem.StatusKey == 'Rejected'
+        }">
+        <cv-column
+          hidden
+          field="TypeID"
+          title-key="ui.admin.common.Type"
+          filter
+          filter-order="0"
+          filter-type="select"
+          on-option-repeat="$parent.search.searchTypes.getSalesQuoteTypes">
+          <option
+            value=""
+            selected
+            data-translate="ui.admin.views.sales.salesorderslist.Any">
+          </option>
+        </cv-column>
+        <cv-column
+          field="ID"
+          title-key="ui.admin.common.Number.Symbol"
+          width="8%"
+          filter
+          filter-order="3"
+          filter-type="id"
+          groupable="false" />
+        <cv-column
+          if="$parent.search.cefConfig.featureSet.salesQuotes.hasIntegratedKeys"
+          field="CustomKey"
+          title-key="ui.admin.common.Key"
+          width="20%"
+          filter filter-order="4"
+          groupable="false" />
+        <cv-column
+          field="AccountName"
+          title-key="ui.admin.common.Account"
+          filter
+          filter-field="AccountIDOrCustomKeyOrNameOrDescription"
+          filter-order="5"
+          filter-type="input"
+          groupable="false"
+          sortable="false"
+          sort-field="Account.Name" />
+        <!--
+        <cv-column
+          field="AccountName"
+          title-key="ui.admin.common.Account"
+          filter filter-field="AccountIDOrCustomKeyOrNameOrDescription" filter-order="5"
+          filter-type="autocomplete"
+          on-autocomplete="$parent.search.getAccounts"
+          on-option-repeat="$parent.search.getAccounts"
+          groupable="false"
+          sortable="false" sort-field="Account.Name">
+          <autocomplete-parameter listen="true"
+            >AccountIDOrCustomKeyOrNameOrDescription</autocomplete-parameter>
+        </cv-column>
+        -->
+        <cv-column
+          field="UserUserName"
+          title-key="ui.admin.common.User"
+          width="20%"
+          filter
+          filter-field="UserIDOrCustomKeyOrUserName"
+          filter-order="6"
+          filter-type="input"
+          groupable="false"
+          sortable="false" />
+        <!--
+        <cv-column
+          field="UserUserName"
+          title-key="ui.admin.common.User"
+          width="20%"
+          filter filter-field="UserIDOrCustomKeyOrUserName" filter-order="6"
+          filter-type="autocomplete"
+          on-autocomplete="$parent.search.getUsers"
+          on-option-repeat="$parent.search.getUsers"
+          groupable="false"
+          sortable="false">
+          <autocomplete-parameter listen="true"
+            >UserIDOrCustomKeyOrUserName</autocomplete-parameter>
+        </cv-column>
+        -->
+        <cv-column
+          field="Totals.Total"
+          title-key="ui.admin.common.Total"
+          format="globalizedCurrency : dataItem.SerializableAttributes.SellingCurrencyKey.Value"
+          cell-class="text-right"
+          header-class="text-center"
+          width="20%"
+          sortable="false"
+          sort-field="Total" />
+        <cv-column
+          field="CreatedDate"
+          title-key="ui.admin.common.Date"
+          type="date"
+          width="20%"
+          filter
+          filter-type="minmaxdate"
+          format="yyyy MMM dd hh:mm a"
+          sort-by="3"
+          sort-by-direction="desc" />
+        <cv-column
+          hidden
+          field="Status.SortOrder"
+          title-key="ui.admin.common.Status"
+          filter
+          filter-field="StatusID"
+          filter-order="2"
+          filter-type="select"
+          on-option-repeat="$parent.search.searchTypes.getSalesQuoteStatuses"
+          sort-by="2">
+          <cv-group-header-template>
+            <script type="x-group-header-template"
+              ><span><span data-translate="ui.admin.common.Status"></span>&nbsp;<span ng-bind="dataItem.items[0].StatusName
+              || dataItem.items[0].items[0].StatusName || dataItem.items[0].items[0].items[0].StatusName"></span></span>
+            </script>
+          </cv-group-header-template>
+        </cv-column>
+        <cv-column
+          hidden
+          field="State.SortOrder"
+          title-key="ui.admin.common.State"
+          filter
+          filter-field="StateID"
+          filter-order="1"
+          filter-type="select"
+          on-option-repeat="$parent.search.searchTypes.getSalesQuoteStates"
+          sort-by="1">
+          <cv-group-header-template>
+            <script type="x-group-header-template"
+              ><span><span data-translate="ui.admin.common.State"></span>&nbsp;<span ng-bind="dataItem.items[0].StateName
+              || dataItem.items[0].items[0].StateName || dataItem.items[0].items[0].items[0].StateName"></span></span>
+            </script>
+          </cv-group-header-template>
+        </cv-column>
+      </cv-grid>
+    </widget-body>
+  </cv-widget>
+</cv-page>

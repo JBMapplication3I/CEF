@@ -1,0 +1,1680 @@
+﻿module cef.admin.controls.sales.checkout {
+    export interface IPaypalResult {
+        action: string;
+        token: string;
+        payerID: string;
+    }
+    export interface IWalletModelExtension {
+        update: () => ng.IPromise<void>;
+        deactivate: () => ng.IHttpPromise<api.CEFActionResponse>;
+        add: () => ng.IPromise<Array<api.WalletModel>>;
+    }
+    export interface ExtendedWalletModel
+        extends api.WalletModel, IWalletModelExtension { }
+
+    export class User { UserName: string; Password: string; }
+    export enum CheckoutMethod { Guest = 0, NewUser = 1, ExistingUser = 2 }
+
+    export class CheckoutController extends core.TemplatedControllerBase {
+        get nothingToShip(): boolean {
+            return this.cvCartService.accessCart(this.cartType) &&
+                this.cvCartService.accessCart(this.cartType).NothingToShip;
+        }
+        get orderTotal() { return this.cvCartService.accessCart(this.cartType).Totals.Total; }
+        get checkoutMethodResult(): string { return CheckoutMethod[this.checkoutMethod]; }
+        get wallet(): Array<ExtendedWalletModel> { return []; } // this.cvWalletService.wallet; }
+        get billingResult(): string {
+            return this.selectedBilling &&
+                    this.selectedBilling.Address &&
+                    this.selectedBilling.Address.Street1 !== ""
+                ? this.selectedBilling.Address.Street1
+                : "";
+        }
+        acceptedPayments: core.PaymentSection;
+        accountContacts: api.AccountContactModel[] = [];
+        activeStep: number;
+        agreedTerms: boolean;
+        allowWallet: boolean;
+        carriers = [];
+        cart: api.CartModel;
+        cartEmpty: boolean = true;
+        cartItems: string;
+        cartType: string;
+        currentCartId: number;
+        checkoutMethod: CheckoutMethod = null;
+        checkoutParams: object = { checkoutObj: {}, userObj: {} }
+        checkoutResult: api.CheckoutResult;
+        checkoutSteps: Array<core.TemplateSection>;
+        configs: core.CheckoutConfig;
+        confirmationEmail1: string;
+        confirmationEmail2: string;
+        confirmationNumber = "";
+        contact: api.ContactModel;
+        contactAddress: api.AddressModel;
+        countries: api.CountryModel[];
+        createAccount: boolean;
+        createError: string;
+        creditCardPayment: boolean;
+        customKeyValidityState: string;
+        customPayoneerAccountID: number = null;
+        customPayoneerUserID: number = null;
+        ddlBillingCountries: api.CountryModel[];
+        ddlShippingCountries: api.CountryModel[];
+        discountCode: string;
+        dontAllowCreateAccount: boolean;
+        editBilling: boolean;
+        editShipping: boolean;
+        expirationMonths: Array<{ Key: number, Value: string }>;
+        expirationYears = [];
+        hasLoaded = false;
+        invoicePayment: boolean;
+        isLoggedIn: boolean;
+        lastUsedBilling: api.ContactModel = null;
+        lastUsedShipping: api.ContactModel = null;
+        loginData: api.AuthProviderLoginDto = { Username: null, Password: null, RememberMe: false };
+        mainBilling: api.AccountContactModel = null;
+        orderAttributes: api.SerializableAttributesDictionary = {};
+        orderID: string;
+        overrideLoad: boolean;
+        passwordValidityState: string;
+        paymentMethod = ""; // Only matters if you are using PayPal (value: "easyPay") right now
+        paymentModel: string;
+        paymentStyle = ""; // For not capturing a payment, just how the customer intends to pay eventually
+        paypal = { working: false, error: false, success: false, message: "" }
+        payPalPayment: boolean;
+        restrictedShipping: boolean;
+        selectedAddressBilling: api.ContactModel;
+        selectedAddressShipping: api.ContactModel;
+        selectedBilling: api.ContactModel;
+        selectedBillingCountryName: string;
+        selectedCard: ExtendedWalletModel;
+        selectedEcheck: ExtendedWalletModel;
+        selectedRateQuoteID: number = null;
+        selectedShipOptionKey: string;
+        selectedShipping: api.ContactModel;
+        selectedShippingContact: api.ContactModel = null;
+        selectedShippingCountryName: string;
+        shippingAddressMode = "1";
+        shippingContacts: api.AccountContactModel[] = [];
+        shippingDiscounts: api.AppliedCartDiscountModel[] = [];
+        shippingEstimates: boolean;
+        shippingOptions = [];
+        showBillingEmail: boolean;
+        showBillingFax: boolean;
+        showBillingFirstName: boolean;
+        showBillingLastName: boolean;
+        showBillingPersonalDetails: boolean;
+        showBillingPhone: boolean;
+        showInStorePickupOption: boolean;
+        showShippingEmail: boolean;
+        showShippingFax: boolean;
+        showShippingFirstName: boolean;
+        showShippingLastName: boolean;
+        showShippingPersonalDetails: boolean;
+        showShippingPhone: boolean;
+        showShipToStoreOption: boolean;
+        showSplitShipping: boolean;
+        showVatID: boolean;
+        specialInstructions: string = null;
+        statesBilling: api.RegionModel[];
+        statesShipping: api.RegionModel[];
+        storeAddress: api.StoreModel;
+        taxExemptionNumber: string = null;
+        unbindLoadedCart: Function;
+        useGoogleTagManager: boolean;
+        usePhonePrefixLookups: boolean; // Bound by Link (legacy) or Scope (modular)
+        user: User = { UserName: null, Password: null };
+        userId: number;
+        usernameError: string;
+        usernameIsEmail: boolean;
+        usernameValidityState: string;
+        accountId: number;
+        viewstate = {
+            haveRateQuotes: false,
+            checkoutIsProcessing: false,
+            currentPaneNo: 0,
+            hasLoginFailure: false,
+            hideShippingEstimates: false,
+            isConfirmed: false,
+            isGettingRates: false,
+            isLoggedIn: false,
+            isNotificationSent: false,
+            isOrderComplete: false,
+            isShippingSameAsBilling: false,
+            ptuItemAdded: false,
+            requireForm: true,
+            setAsDefaultBilling: false,
+            showDeliveryFail: false,
+            showStoreAddress: false
+        };
+        paymentData = {
+            WalletCardID: null,
+            CardType: null,
+            ReferenceName: null,
+            CardHolderName: null,
+            CardNumber: null,
+            CVV: null,
+            ExpirationMonth: new Date().getMonth()+1,
+            ExpirationYear: new Date().getFullYear(),
+            PONumber: null,
+            VatID: null,
+            BankName: null,
+            RoutingNumber: null,
+            AccountNumber: null
+        };
+        // Functions
+        load(cart: api.CartModel): void {
+            if (this.hasLoaded) {
+                return;
+            }
+            this.hasLoaded = true;
+            if (!this.overrideLoad && this.checkoutSteps !== undefined) {
+                return;
+            }
+            if (cart && cart.ID) {
+                this.cartEmpty = false;
+            }
+            this.acceptedPayments = this.configs.paymentOptions;
+            this.activeStep = 0;
+            this.agreedTerms = false;
+            this.contactAddress = {
+                ID: 0,
+                Active: true,
+                CreatedDate: new Date()
+            };
+            this.contact = {
+                ID: 0,
+                Active: true,
+                TypeID: 1,
+                CreatedDate: new Date(),
+                Address: this.contactAddress,
+                SameAsBilling: false
+            };
+            this.dontAllowCreateAccount = this.configs.dontAllowCreateAccount;
+            this.passwordValidityState = "Empty";
+            this.restrictedShipping = this.cefConfig.featureSet.shipping.restrictions.enabled;
+            this.shippingEstimates = this.cefConfig.featureSet.shipping.rates.estimator.enabled;
+            this.showInStorePickupOption = this.configs.store.showInStorePickupOption;
+            this.showShipToStoreOption = this.configs.store.showShipToStoreOption;
+            this.showSplitShipping = this.cefConfig.featureSet.shipping.splitShipping.enabled;
+            this.allowWallet = this.cefConfig.featureSet.payments.wallet.enabled;
+            this.usernameValidityState = "Empty";
+            this.usernameError = "Empty";
+            this.usernameIsEmail = this.configs.usernameIsEmail;
+            this.usePhonePrefixLookups = this.cefConfig.usePhonePrefixLookups.enabled;
+            this.createAccount = this.configs
+                && this.configs.flags
+                && this.configs.flags.createAccount;
+            this.paymentMethod = this.configs.defaultPaymentMethod || "purchasePaymentMethodCreditCard";
+            this.selectedBilling = null;
+            this.showBillingFirstName = true; // !this.configs.personalDetailsDisplay.hideBillingFirstName;
+            this.showBillingLastName = true; // !this.configs.personalDetailsDisplay.hideBillingLastName;
+            this.showBillingEmail = true; // !this.configs.personalDetailsDisplay.hideBillingEmail;
+            this.showBillingPhone = true; // !this.configs.personalDetailsDisplay.hideBillingPhone;
+            this.showBillingFax = true; // !this.configs.personalDetailsDisplay.hideBillingFax;
+            this.showShippingFirstName = true; // !this.configs.personalDetailsDisplay.hideShippingFirstName;
+            this.showShippingLastName = true; // !this.configs.personalDetailsDisplay.hideShippingLastName;
+            this.showShippingEmail = true; // !this.configs.personalDetailsDisplay.hideShippingEmail;
+            this.showShippingPhone = true; // !this.configs.personalDetailsDisplay.hideShippingPhone;
+            this.showShippingFax = true; // !this.configs.personalDetailsDisplay.hideShippingFax;
+            this.showBillingPersonalDetails = this.showBillingFirstName ||
+                this.showBillingLastName ||
+                this.showBillingEmail ||
+                this.showBillingPhone ||
+                this.showBillingFax;
+            this.showShippingPersonalDetails = this.showShippingFirstName ||
+                this.showShippingLastName ||
+                this.showShippingEmail ||
+                this.showShippingPhone ||
+                this.showShippingFax;
+            ////if (this.selectedAddressBilling != null) {
+            ////    this.updateCartAddress(this.selectedAddressBilling, "Billing");
+            ////}
+            this.setupSteps(angular.fromJson(angular.toJson(this.configs.sections)))
+                .then(arr => this.checkoutSteps = arr)
+                .finally(() => this.checkAuth(this.overrideLoad));
+        }
+        continueShopping(): void { this.$filter("goToCORSLink")("", "catalog"); }
+        goToStep(step: core.TemplateSection): void {
+            if (!step.complete || !this.configs.stepEnterByClick || (this.checkoutResult && this.checkoutResult.Succeeded)) {
+                return;
+            }
+            _.forEach(this.checkoutSteps, (section: core.TemplateSection) => { section.active = false });
+            this.activeStep = step.position;
+            this.checkoutSteps[this.activeStep].active = true;
+        }
+        shippingNotReadyToContinue(): boolean {
+            if (!this.cefConfig.featureSet.shipping.enabled ||
+                !this.cefConfig.featureSet.shipping.rates.estimator.enabled) {
+                return false;
+            }
+            if (!this.viewstate.haveRateQuotes) {
+                return false;
+            }
+            return this.cefConfig.featureSet.shipping.splitShipping.enabled
+                ? !this.cvCartService.allShippableTargetCartsHaveRatesSelected()
+                : !this.selectedRateQuoteID;
+        }
+        stepDisableCondition(step: core.TemplateSection): boolean {
+            if (step.name === "shipping") {
+                return this.shippingNotReadyToContinue();
+            }
+            return false; // Not disabled
+        }
+        stepAction = (step: core.TemplateSection): void => {
+            this.stepIsValid(step).then(result => {
+                if (!result) {
+                    return;
+                }
+                if (step.name.toLowerCase() === "billing") {
+                    this.updateCartAddress(this.selectedAddressBilling, "Billing");
+                } else if (step.name.toLowerCase() === "shipping") {
+                    this.updateCartAddress(this.selectedAddressShipping, "Shipping");
+                }
+                if (_.toLower(step.name) === "payment") {
+                    this.setRunning();
+                    this.submitPayment();
+                    return;
+                }
+                if (_.toLower(step.name) === "confirmation") {
+                    this.continueShopping();
+                    return;
+                }
+                this.continue();
+            });
+        }
+        setupSteps(array: Array<core.TemplateSection>): ng.IPromise<Array<core.TemplateSection>> {
+            this.checkoutSteps = new Array<core.TemplateSection>();
+            let index = 0;
+            let returnArray = _.filter(_.sortBy(array, "position"), (section: core.TemplateSection) => section.show);
+            if (this.nothingToShip) {
+                returnArray = _.filter(returnArray, (section: core.TemplateSection) => _.toLower(section.name) !== "shipping");
+            }
+            returnArray = _.forEach(returnArray, (section: core.TemplateSection) => {
+                if (_.toLower(section.name) === "shipping") {
+                    section.showButton = !this.shippingEstimates;
+                }
+                section.templateURL = this.$filter("corsLink")(section.templateURL, "ui");
+                section.headingDetailsURL = this.$filter("corsLink")(section.headingDetailsURL, "ui");
+                section.position = index++;
+                if (section.position < (returnArray.length - 1)) {
+                    section.continueText = returnArray[section.position + 1].continueText;
+                } else {
+                    section.continueText = this.configs.finalActionButtonText;
+                }
+                if (section.children.length) {
+                    section.children = _.filter(_.sortBy(section.children, "position"),
+                        (child: core.TemplateSection) => { return child.show; });
+                    this.setupSteps(section.children);
+                }
+            });
+            returnArray[this.activeStep].active = true;
+            return this.$q.resolve(returnArray);
+        }
+        childrenAreValid = (step: core.TemplateSection): boolean =>
+            !step.children.length ||
+            !_.some(_.forEach(step.children, child => this.stepIsValid(child)), ["complete", false]);
+        loginIsValid = (): ng.IPromise<boolean> =>
+            this.cvAuthenticationService.preAuth().then(() => this.cvAuthenticationService.isAuthenticated());
+        billingIsValid = (): boolean => this.forms.billing && this.forms.billing.$valid;
+        checkSingleShipping = (): boolean =>
+            this.viewstate.isShippingSameAsBilling || this.forms.shipping && this.forms.shipping.$valid;
+        checkSplitShipping = (): boolean =>
+            this.forms.splitShipping && this.forms.splitShipping.$valid && this.cvCartService.allShippableTargetCartsHaveRatesSelected();
+        shippingIsValid(): boolean {
+            return this.showSplitShipping
+                ? this.checkSplitShipping()
+                : this.checkSingleShipping();
+        }
+        shippingEstimatesIsValid(): void {
+            const isValid = this.shippingIsValid();
+            _.filter(this.checkoutSteps, section => section.name === "shipping")
+                .forEach(step => step.showButton = isValid);
+        }
+        paymentIsValid = (): boolean => this.forms.payment.$valid;
+        stepIsValid = (step: core.TemplateSection): ng.IPromise<boolean> => {
+            let valid: boolean;
+            switch (_.toLower(step.name)) {
+                case "login": {
+                    return this.loginIsValid();
+                }
+                case "billing": {
+                    valid = this.billingIsValid();
+                    break;
+                }
+                case "shipping": {
+                    valid = this.shippingIsValid();
+                    break;
+                }
+                case "payment": {
+                    valid = this.paymentIsValid();
+                    break;
+                }
+                default: {
+                    valid = true;
+                    break;
+                }
+            }
+            return this.$q.resolve(valid);
+        }
+        continue(): void {
+            this.checkoutSteps[this.activeStep].complete = true;
+            this.checkoutSteps[this.activeStep].active = false;
+            if (this.checkoutSteps[this.activeStep + 1] != null) {
+                this.checkoutSteps[++this.activeStep].active = true;
+            }
+        }
+        checkAuth(override?: boolean): void {
+            this.cvAuthenticationService.preAuth().finally(() => {
+                if (!override &&
+                    !this.cvAuthenticationService.isAuthenticated() &&
+                    this.configs &&
+                    this.configs.flags &&
+                    this.configs.flags.createAccount) {
+                    this.isLoggedIn = false;
+                    this.createAccount = true;
+                    this.readCartContactsAndDiscountsToUIThenCheckShippingContactSelection();
+                    return;
+                };
+                this.createAccount = !angular.isUndefined(this.configs.flags) &&
+                                     !angular.isUndefined(this.configs.flags.createAccount)
+                    ? this.configs.flags.createAccount
+                    : true;
+                this.isLoggedIn = true;
+                if (this.cefConfig.featureSet.addressBook.enabled) {
+                    this.loadAddressBook();
+                }
+                /*if (this.cefConfig.featureSet.payments.wallet.enabled) {
+                    this.cvWalletService.getWallet();
+                }*/
+                this.viewstate.isLoggedIn = true;
+                this.createAccount = false;
+                _.filter(this.checkoutSteps, step => step.name === "login")
+                    .forEach(section => {
+                        section.complete = true;
+                        section.showButton = true;
+                        if (this.activeStep === section.position) {
+                            section.active = false;
+                            this.checkoutSteps[++this.activeStep].active = true;
+                        }
+                    });
+                this.readCartContactsAndDiscountsToUIThenCheckShippingContactSelection();
+            });
+        }
+        matchBilling(): void {
+            this.selectedAddressShipping = this.viewstate.isShippingSameAsBilling
+                ? this.selectedAddressBilling
+                : this.selectedShipping;
+        }
+        saveUserToggle(): void { this.createAccount = !this.createAccount }
+        buildUser(): api.UserModel {
+            this.contact = this.selectedAddressBilling;
+            this.contact.Address = this.selectedAddressBilling.Address;
+            this.contact.Active = true;
+            this.contact.TypeID = 1;
+            this.contact.CustomKey = this.loginData.Username;
+            this.contact.CreatedDate = this.contact.UpdatedDate = new Date();
+            const userToAdd = <api.CreateUserDto>{
+                CreatedDate: new Date(),
+                Active: true,
+                CustomKey: this.loginData.Username,
+                UserName: this.loginData.Username,
+                Password: this.loginData.Password,
+                Email: this.selectedAddressBilling.Email1,
+                OverridePassword: this.loginData.Password,
+                CreateCMSUser: false,
+                CreateCEFUser: this.createAccount,
+                IsDeleted: false,
+                IsSuperAdmin: false,
+                IsEmailSubscriber: false,
+                IsCatalogSubscriber: false,
+                EmailConfirmed: false,
+                StatusID: 1,
+                Status: null,
+                StatusKey: null,
+                StatusName: null,
+                TypeID: null,
+                Type: null,
+                TypeKey: null,
+                TypeName: null,
+                ContactID: 0,
+                Contact: this.contact,
+                AccessFailedCount: 0,
+                PhoneNumberConfirmed: false,
+                TwoFactorEnabled: false,
+                LockoutEnabled: false
+            };
+            return userToAdd;
+        }
+        newUserCheckout(): void {
+            this.cvAuthenticationService.login(this.loginData).finally(() => {
+                if (this.cvAuthenticationService.isAuthenticated()) {
+                    this.$translate("ui.admin.checkout.modularCheckout.errors.UsernameAlreadyExists.Message")
+                        .then(translated => this.createError = translated)
+                        .finally(() => this.completeCheckout().then(() => {
+                            this.continue();
+                            this.$rootScope.$broadcast(this.cvServiceStrings.events.auth.signIn);
+                        }));
+                    return;
+                }
+                this.cvAuthenticationService.register({ ...this.buildUser(), InService: false } as any).then(
+                    () => this.cvAuthenticationService.login(this.loginData).then(
+                        () => this.completeCheckout().then(
+                            () => { this.continue(); this.$rootScope.$broadcast(this.cvServiceStrings.events.auth.signIn); },
+                            result3 => this.handleError(result3)
+                        ).catch(reason3 => this.handleError(reason3)),
+                        result2 => this.handleError(result2)
+                    ).catch(reason2 => this.handleError(reason2)),
+                    result2 => this.handleError(result2)
+                ).catch(reason1 => this.handleError(reason1));
+            });
+        }
+        private handleError(error) {
+            console.error("There was an error creating the user");
+            console.error(error);
+            try { this.createError = error.data.ResponseStatus.Message; } catch (ex) { /* Do Nothing */ }
+        }
+        submitPayment(): void {
+            if (angular.isUndefined(this.selectedAddressShipping)) {
+                this.selectedAddressShipping = _.cloneDeep(this.selectedAddressBilling);
+            }
+            this.selectedShipping = _.cloneDeep(this.selectedAddressShipping);
+            this.selectedBilling = _.cloneDeep(this.selectedAddressBilling);
+            if (!this.createAccount || this.dontAllowCreateAccount) {
+                this.completeCheckout().then(() => this.continue());
+            } else {
+                if (this.usernameValidityState !== "Valid") {
+                    this.finishRunning(true, this.$translate("ui.admin.user.login.ThisIsNotAValidUsername"));
+                    return;
+                }
+                if (this.passwordValidityState !== "Valid") {
+                    this.finishRunning(true, this.$translate("ui.admin.user.login.ThisIsNotAValidPassword"));
+                    return;
+                }
+                if (this.customKeyValidityState !== "Valid") {
+                    this.finishRunning(true, this.$translate("ui.admin.user.login.ThisIsNotAValidCustomKey"));
+                    return;
+                }
+                this.newUserCheckout();
+            }
+        }
+        completeCheckout(): ng.IPromise<any> {
+            if (!this.configs) {
+                throw new Error("ERROR! No checkout config set up, please contact a Dev for support.");
+            }
+            this.setRunning(this.$translate("ui.admin.checkout.slimCheckout.SubmittingYourOrders.Elipses"));
+            return this.$q<any>((resolve, reject) => {
+                if (this.selectedShipping == null && this.viewstate.isShippingSameAsBilling) {
+                    this.selectedShipping = this.selectedBilling;
+                } else if (this.selectedShipping == null
+                    && this.shippingContacts != null
+                    && this.shippingContacts.length > 0) {
+                    this.selectedShipping = angular.fromJson(angular.toJson(this.shippingContacts[0].Slave));
+                }
+                let fileNames = [];
+                if (this.checkoutParams["checkoutObj"] != null && this.checkoutParams["checkoutObj"]["StoredFiles"] != null) {
+                    for (var i = 0; i < this.checkoutParams["checkoutObj"]["StoredFiles"].length; i++) {
+                        fileNames.push(this.checkoutParams["checkoutObj"]["StoredFiles"][i].Name);
+                    }
+                }
+                const checkoutDto = <api.CheckoutModel>{
+                    Active: true,
+                    CreatedDate: new Date(),
+                    CustomKey: null,
+                    CartTypeName: this.cartType,
+                    CartID: this.currentCartId,
+                    UserID: this.userId,
+                    AccountID: this.accountId,
+                    CardNumber: this.paymentData.CardNumber,
+                    CVV: this.paymentData.CVV,
+                    PurchaseOrder: this.paymentData.PONumber,
+                    ExpirationMonth: this.paymentData.ExpirationMonth,
+                    ExpirationYear: this.paymentData.ExpirationYear,
+                    CardHolderName: this.paymentData.CardHolderName,
+                    CardReferenceName: this.paymentData.ReferenceName,
+                    ExternalUserID: $("input[id$=hdnCurrentExternalUserID]").val(),
+                    Billing: this.selectedBilling,
+                    Shipping: this.selectedShipping,
+                    IsNewAccount: false,
+                    Username: this.user.UserName,
+                    Password: this.user.Password,
+                    IsSameAsBilling: this.viewstate.isShippingSameAsBilling
+                        || (this.selectedShipping
+                            && this.selectedShipping.ID
+                            && this.selectedShipping.ID > 0
+                            && this.selectedShipping.ID === this.selectedBilling.ID),
+                    Country: null,
+                    State: null,
+                    ZipCode: null,
+                    Date: null,
+                    Delivery: null,
+                    DeliveryType: null,
+                    IsPartialPayment: null,
+                    PaymentStyle: this.paymentStyle || this.paymentMethod,
+                    PaymentGatewayProvider: null,
+                    PaymentLogin: null,
+                    TransactionKey: null,
+                    TestMode: false,
+                    Token: null,
+                    CardType: this.paymentData.CardType,
+                    WalletID: this.paymentData.WalletCardID,
+                    WalletToken: null,
+                    PayoneerAccountID: this.customPayoneerAccountID,
+                    PayoneerCustomerID: this.customPayoneerUserID,
+                    SpecialInstructions: this.specialInstructions,
+                    TaxExemptionNumber: this.taxExemptionNumber,
+                    FileNames: fileNames,
+                    SerializableAttributes: this.orderAttributes,
+                    VatID: this.paymentData.VatID,
+                    BankName: this.paymentData.BankName,
+                    RoutingNumber: this.paymentData.RoutingNumber,
+                    AccountNumber: this.paymentData.AccountNumber
+                };
+                switch (this.paymentMethod) {
+                    /*case "purchasePaymentMethodPayPal": {
+                        this.paypal.working = true;
+                        this.paypal.error = false;
+                        this.paypal.message = "";
+                        this.cvApi.providers.InitiatePayPalForSpecificCart(checkoutDto).then(response => {
+                            if (!response.data || !response.data.Token || !response.data.Token.startsWith("http")) {
+                                this.paypal.error = true;
+                                this.paypal.working = false;
+                                this.paypal.message = response.data.Token || "Unknown error";
+                                console.error("PayPal failed:", this.paypal.message);
+                                return;
+                            }
+                            window.location.href = response.data.Token;
+                        });
+                        break;
+                    }*/
+                    default: {
+                        /*if (this.cefConfig.googleTagManager.enabled) {
+                            this.cart = this.cvCartService.accessCart(this.cartType);
+                        }*/
+                        /*if (this.cefConfig.facebookPixelService.enabled) {
+                            this.cefFacebookPixelService.purchase(
+                                this.orderTotal,
+                                "USD",
+                                null,
+                                null,
+                                this.productCustomKeys(),
+                                this.cvCartService.accessCart(this.cartType).SalesItems,
+                                this.totalItems());
+                        }*/
+                        if (angular.isFunction(this.unbindLoadedCart)) { this.unbindLoadedCart(); } // Don't refresh the cart here once we're done with it (outside of this is fine)
+                        var promise: (routeParams: api.ProcessSpecificCartToSingleOrderDto | api.ProcessSpecificCartToTargetOrdersDto) => ng.IHttpPromise<api.CheckoutResult> = null;
+                        if (this.showSplitShipping) {
+                            promise = this.cvApi.providers.ProcessSpecificCartToTargetOrders;
+                        } else {
+                            promise = this.cvApi.providers.ProcessSpecificCartToSingleOrder;
+                        }
+                        promise(checkoutDto).then(r => {
+                            if (!r || !r.data || !r.data.Succeeded
+                                || r.data.ErrorMessage && r.data.ErrorMessage.toLowerCase().indexOf("email") === -1
+                                || r.data.PaymentTransactionID && r.data.PaymentTransactionID.indexOf("ERROR") !== -1
+                            ) {
+                                const message = r.data.ErrorMessage || r.data.PaymentTransactionID || "An unknown error occured.";
+                                const error = r.data;
+                                this.$uibModal.open({
+                                    templateUrl: this.$filter("corsLink")("/framework/admin/controls/sales/checkout/errorMessage.html", "ui"),
+                                    controller: ($scope) => {
+                                        $scope.error = error;
+                                        $scope.message = message;
+                                    },
+                                    resolve: {
+                                        message: () => message,
+                                        result: () => error
+                                    }
+                                });
+                                if (!r.data.Succeeded) {
+                                    this.finishRunning(true, message);
+                                    reject(message);
+                                    return;
+                                }
+                            }
+                            this.checkoutResult = r.data;
+                            this.confirmationNumber = r.data.PaymentTransactionID
+                                || (r.data.PaymentTransactionIDs ? r.data.PaymentTransactionIDs.join(", ") : "");
+                            this.viewstate.isOrderComplete = true;
+                            /*if (this.cefConfig.googleTagManager.enabled && this.cart != null) {
+                                this.cefGoogleTagManagerService.purchase(this.cart, r.data.OrderID);
+                            }*/
+                            this.$rootScope["$$isolateBindings"] = true;
+                            this.$rootScope["paymentMethod"] = this.paymentMethod;
+                            this.paymentMethod = null;
+                            this.$rootScope.$broadcast(this.cvServiceStrings.events.carts.updated, this.cartType);
+                            this.$rootScope["checkoutComplete"] = true;
+                            if (r.data.OrderID) {
+                                this.$rootScope["orderId"] = r.data.OrderID
+                            } else if (r.data.OrderIDs && r.data.OrderIDs.length) {
+                                this.$rootScope["orderId"] = r.data.OrderIDs[0]
+                            }
+                            resolve(true);
+                            this.finishRunning();
+                        }, result => {
+                            this.finishRunning(true, result);
+                            reject(result);
+                        }).catch(reason => {
+                            this.finishRunning(true, reason);
+                            reject(reason);
+                        });
+                        break;
+                    }
+                }
+            });
+        }
+        usernameChanged(): void {
+            if (this.usernameIsEmail) {
+                this.usernameValidityState = "Valid";
+                return;
+            }
+            if (!this.loginData.Username || this.loginData.Username === "") {
+                this.usernameValidityState = "Empty";
+                return;
+            }
+            if (this.loginData.Username.length < 5) {
+                this.usernameValidityState = "Invalid";
+                return;
+            }
+            if (!(/^[A-Za-z0-9_\.@]+$/.test(this.loginData.Username))) {
+                this.usernameValidityState = "Invalid";
+                return;
+            }
+            this.cvAuthenticationService.validateUserNameIsGood({ UserName: this.loginData.Username }).then(r => {
+                if (!r || !r.data || !r.data.ActionSucceeded) {
+                    this.usernameValidityState = "Invalid";
+                    this.usernameError = r && r.data && r.data.Messages && r.data.Messages[0];
+                    return;
+                }
+                this.usernameValidityState = "Valid";
+                this.usernameError = "";
+                if (this.usernameIsEmail) {
+                    this.contact.Email1 = this.loginData.Username;
+                }
+            });
+        }
+        passwordChanged(): void {
+            if (!this.loginData || !this.loginData.Password || this.loginData.Password === "") {
+                this.passwordValidityState = "Empty";
+                return;
+            }
+            if (this.loginData.Password.length < 7) {
+                this.passwordValidityState = "Invalid";
+                return;
+            }
+            const oneUpperCheck = /.*[A-Z].*/;
+            if (!oneUpperCheck.test(this.loginData.Password)) {
+                this.passwordValidityState = "Invalid";
+                return;
+            }
+            const oneLowerCheck = /.*[a-z].*/;
+            if (!oneLowerCheck.test(this.loginData.Password)) {
+                this.passwordValidityState = "Invalid";
+                return;
+            }
+            const oneNumberCheck = /.*\d.*/;
+            if (!oneNumberCheck.test(this.loginData.Password)) {
+                this.passwordValidityState = "Invalid";
+                return;
+            }
+            this.cvAuthenticationService.validatePasswordIsGood({ Password: this.loginData.Password })
+                .then(response => {
+                    if (!response.data.ActionSucceeded) {
+                        this.passwordValidityState = "Invalid";
+                        return;
+                    }
+                    this.passwordValidityState = "Valid";
+                }, () => this.passwordValidityState = "Invalid")
+                .catch(() => this.passwordValidityState = "Invalid");
+        }
+        productCustomKeys(): Array<string> {
+            return this.cvCartService.accessCart(this.cartType).SalesItems.map(salesItem => salesItem.ProductKey);
+        }
+        totalItems(): number {
+            return _.sumBy(
+                this.cvCartService.accessCart(this.cartType).SalesItems,
+                x => (x.Quantity || 0) + (x.QuantityBackOrdered || 0) + (x.QuantityPreSold || 0));
+        }
+        // Functions
+        createEmptyAccountContactWithAddress(): api.AccountContactModel {
+            return <api.AccountContactModel>{
+                // Base Properties
+                ID: null,
+                CustomKey: null,
+                Active: true,
+                CreatedDate: new Date(),
+                UpdatedDate: null,
+                // NameableBase Properties
+                Name: null,
+                Description: null,
+                // AccountContact Properties
+                IsPrimary: false,
+                IsBilling: false,
+                TransmittedToERP: false,
+                // IAmARelationshipTable Properties
+                MasterID: null,
+                Master: null,
+                SlaveID: null,
+                Slave: this.cvContactFactory.new()
+            };
+        }
+        propagateCountryChange(contact: api.ContactModel, type: string): void {
+            contact.Address.CountryID = contact.Address.CountryID ? contact.Address.CountryID : null;
+            if (contact.Address.CountryID == null) {
+                contact.Address.Country = null;
+                contact.Address.CountryKey = contact.Address.CountryCode = contact.Address.CountryName = null;
+                return;
+            }
+            contact.Address.Country = _.find(this.countries, v => v.ID === contact.Address.CountryID);
+            contact.Address.CountryKey = contact.Address.Country.CustomKey;
+            contact.Address.CountryCode = contact.Address.Country.Code;
+            contact.Address.CountryName = contact.Address.Country.Name;
+            this.cvApi.geography.GetRegions({ Active: true, AsListing: true, CountryID: contact.Address.CountryID })
+                .then(r => this[`states${type}`] = r.data.Results);
+        }
+        propagateRegionChange(contact: api.ContactModel, type: string): void {
+            contact.Address.RegionID = contact.Address.RegionID ? contact.Address.RegionID : null;
+            if (contact.Address.RegionID == null) {
+                contact.Address.Region = null;
+                contact.Address.RegionKey = contact.Address.RegionCode = contact.Address.RegionName = null;
+                return;
+            }
+            contact.Address.Region = _.find(
+                (type !== "Shipping" ? this.statesBilling : this.statesShipping),
+                v => v.ID === contact.Address.RegionID);
+            if (contact.Address.Region) {
+                contact.Address.RegionKey = contact.Address.Region.CustomKey;
+                contact.Address.RegionCode = contact.Address.Region.Code;
+                contact.Address.RegionName = contact.Address.Region.Name;
+            } else {
+                contact.Address.RegionKey = null;
+                contact.Address.RegionCode = null;
+                contact.Address.RegionName = null;
+            }
+        }
+        /**
+         * @deprecated Use propagateCountryChange instead
+         * Gets the regions.
+         * @param {number} countryId   Identifier for the country.
+         * @param {boolean} billOrShip True to bill or ship.
+         */
+        getRegions(countryId: number, billOrShip: boolean): void {
+            countryId = countryId ? countryId : 1;
+            if (billOrShip) {
+                if (this.selectedBilling) {
+                    this.selectedBilling.Address.Country = _.find(this.countries, v => v.ID === countryId);
+                }
+            } else {
+                if (!this.viewstate.isShippingSameAsBilling && this.selectedShipping) {
+                    this.selectedShipping.Address.Country = _.find(this.countries, v => v.ID === countryId);
+                }
+            }
+            this.cvApi.geography.GetRegions({ Active: true, AsListing: true, CountryID: countryId }).then(r => {
+                if (billOrShip) {
+                    this.statesBilling = r.data.Results;
+                } else {
+                    this.statesShipping = r.data.Results;
+                }
+            });
+        }
+        /**
+         * @deprecated Use propagateRegionChange instead
+         * Region changed.
+         * @param {number} regionId    Identifier for the region.
+         * @param {boolean} billOrShip True to bill or ship.
+         */
+        regionChanged(regionId: number, billOrShip: boolean): void {
+            if (billOrShip) {
+                if (this.selectedBilling) {
+                    this.selectedBilling.Address.Region = _.find(this.statesBilling, v => v.ID === regionId);
+                }
+            } else {
+                if (!this.viewstate.isShippingSameAsBilling && this.selectedShipping) {
+                    this.selectedShipping.Address.Region = _.find(this.statesShipping, v => v.ID === regionId);
+                }
+            }
+        }
+        doLogin(): ng.IPromise<any> {
+            this.setRunning(this.$translate("ui.admin.common.LoggingIn.Ellipses"));
+            return this.$q<any>((resolve, reject) => {
+                this.cvAuthenticationService.login(this.loginData).then(r => {
+                    if (!this.cvAuthenticationService.isAuthenticated()) {
+                        this.viewstate.isLoggedIn = false;
+                        this.viewstate.hasLoginFailure = true;
+                        this.finishRunning(true, this.$translate("ui.admin.user.checkoutLogin.TheUserNameOrPasswordDoesntMatch.Message"));
+                        reject(r);
+                        return;
+                    }
+                    this.viewstate.isLoggedIn = true;
+                    this.viewstate.hasLoginFailure = false;
+                    if (this.cefConfig.featureSet.addressBook.enabled) {
+                        this.loadAddressBook();
+                    }
+                    /*if (this.cefConfig.featureSet.payments.wallet.enabled) {
+                        this.cvWalletService.getWallet();
+                    }*/
+                    this.checkoutMethod = CheckoutMethod.ExistingUser;
+                    resolve(this.cvAuthenticationService.getCurrentUserPromise());
+                    (this.$rootScope as any).showNextPane();
+                    this.$rootScope.$broadcast(this.cvServiceStrings.events.auth.signIn);
+                    this.finishRunning();
+                }, reason => {
+                    this.viewstate.isLoggedIn = false;
+                    this.viewstate.hasLoginFailure = true;
+                    this.finishRunning(true, reason);
+                    reject(reason);
+                });
+            });
+        }
+        /** NOTE: This function must remain as an arrow function to work properly */
+        doSaveUserInfo = (): ng.IPromise<void> => {
+            return this.$q<void>((resolve, reject) => {
+                if (this.viewstate.isLoggedIn
+                    || this.checkoutMethod == CheckoutMethod.Guest // 0
+                    || this.checkoutMethod == CheckoutMethod.NewUser // 1
+                    || this.checkoutMethod == CheckoutMethod.ExistingUser) { // 2
+                    resolve();
+                    return;
+                }
+                reject("ERROR: Unknown Checkout Method");
+            });
+        };
+        readCartContactsAndDiscountsToUIThenCheckShippingContactSelection(): ng.IPromise<api.CartModel> {
+            return this.$q((resolve, reject) => {
+                const cart = this.cvCartService.accessCart(this.cartType);
+                if (cart == null || cart == { } as any) {
+                    reject();
+                    return null;
+                }
+                if (angular.isObject(cart) && angular.isObject(cart.BillingContact)) {
+                    this.selectedBilling = cart.BillingContact;
+                }
+                if (angular.isObject(cart) && angular.isObject(cart.ShippingContact)) {
+                    this.selectedShipping = cart.ShippingContact;
+                }
+                this.shippingDiscounts = !cart.Discounts
+                    ? []
+                    : _.filter(
+                        cart.Discounts,
+                        d => d && d.DiscountTypeID === (cef.admin.api.ItemType.ShippingDiscount - 1));
+                resolve(this.checkShippingSelection());
+            });
+        }
+        checkShippingSelection(): ng.IPromise<api.CartModel> {
+            const addressMap: Array<string> = [];
+            return this.$q((resolve, __) => {
+                /*this.$rootScope.StoreLocationService.getUserSelectedStore().then((store: api.StoreModel) => {
+                    this.storeAddress = store;
+                }).finally(() => {*/
+                    this.cvCartService.accessCart(this.cartType).SalesItems.map(item => {
+                        if (!item.SerializableAttributes[this.cvServiceStrings.attributes.shipOption]
+                            || !item.SerializableAttributes[this.cvServiceStrings.attributes.shipOption].Value) {
+                            return;
+                        }
+                        addressMap.push(item.SerializableAttributes[this.cvServiceStrings.attributes.shipOption].Value);
+                    });
+                    if (addressMap.indexOf(this.cvServiceStrings.attributes.shipToHome) !== -1
+                        && (addressMap.indexOf(this.cvServiceStrings.attributes.shipToStore) !== -1
+                            || addressMap.indexOf(this.cvServiceStrings.attributes.inStorePickup) !== -1)) {
+                        this.viewstate.showStoreAddress = true;
+                    } else if (addressMap.indexOf(this.cvServiceStrings.attributes.shipToHome) === -1
+                        && (addressMap.indexOf(this.cvServiceStrings.attributes.shipToStore) === 0
+                            || addressMap.indexOf(this.cvServiceStrings.attributes.inStorePickup) === 0)) {
+                        // this.selectedShipping = this.storeAddress.Contact;
+                        this.viewstate.showStoreAddress = true;
+                        this.viewstate.requireForm = false;
+                        // The Store Name will be in contact FirstName
+                        if (!this.cvCartService.accessCart(this.cartType).ShippingContact
+                            || this.cvCartService.accessCart(this.cartType).ShippingContact.FirstName !== this.selectedShipping.FirstName) {
+                            // Update the cart to use the store address and then reload
+                            this.updateCartAddress(this.selectedAddressShipping || this.selectedShipping, "Shipping");
+                        }
+                    }
+                    return resolve(this.cvCartService.accessCart(this.cartType));
+                // });
+            });
+        }
+        loadAddressBook(): void {
+            this.cvAuthenticationService.getCurrentAccountPromise().then(account => {
+                this.accountContacts = account.AccountContacts;
+                this.mainBilling = _.find(this.accountContacts, v => v.IsBilling);
+                if (this.mainBilling
+                    && this.mainBilling.Slave
+                    && this.mainBilling.Slave.Address
+                    && this.mainBilling.Slave.Address.Country) {
+                    this.showVatID = this.checkForVat(this.mainBilling.Slave.Address.Country, "Billing");
+                }
+                this.shippingContacts = this.accountContacts;
+                if (!this.accountContacts || this.accountContacts.length <= 0) {
+                    return;
+                }
+                this.lastUsedShipping = this.selectedShipping = this.selectedAddressShipping = (_.find(this.accountContacts, v => v.IsPrimary) // Find the primary
+                    || _.find(this.accountContacts, v => !v.IsBilling) // Find the first not billable
+                    || this.accountContacts[0]).Slave; // Just take the first one
+                this.lastUsedBilling = this.selectedBilling = (_.find(this.accountContacts, v => v.IsBilling) // Find the billable
+                    || this.accountContacts[0]).Slave; // Just take the first one
+                this.selectedAddressBilling = this.selectedBilling;
+            });
+        }
+        selectedShippingIsFromBook(): boolean {
+            if (this.selectedShipping == null) { return false; }
+            return _.some(this.accountContacts, ac => ac.Slave.ID === this.selectedShipping.ID);
+        }
+        clearShippingAddressSelection(): void {
+            this.selectedShipping/*ID*/ = null;
+            this.updateShippingAddressSelection();
+        }
+        updateShippingAddressSelection(): void {
+            this.setRunning();
+            if (this.shippingAddressMode === "2") {
+                this.selectedShipping = this.cvContactFactory.new();
+                this.finishRunning();
+                return;
+            }
+            this.viewstate.showDeliveryFail = false;
+            if (this.selectedAddressShipping != null) {
+                this.selectedShipping = this.selectedAddressShipping;
+            } else if (this.shippingAddressMode === "0") {
+                this.updateShippingFromBilling();
+            }
+            const continueRegister = () => {
+                this.cvApi.providers.ValidateAddress({
+                    ContactID: this.selectedShipping.ID,
+                    AddressID: this.selectedShipping.AddressID,
+                    Address: this.selectedShipping.Address
+                }).then(r => {
+                    if (!r.data.IsValid) {
+                        this.cvMessageModalFactory(this.$translate("ui.admin.checkout.validateAddress.Failed")).then(() => {
+                            this.viewstate.showDeliveryFail = true;
+                            this.finishRunning(true, this.$translate("ui.admin.checkout.validateAddress.Failed"));
+                        });
+                        return;
+                    }
+                    // Check to see if the service gave us modified address(es) to use
+                    if (!r.data.MergedAddress) {
+                        // No, just move on
+                        this.refreshShippingRateQuotes(); // Will call finishRunning
+                        return;
+                    }
+                    // Yes, tell the user and ask to confirm the modification(s)
+                    const add2: string = r.data.MergedAddress.Street2 ? `\r\n${r.data.MergedAddress.Street2}` : "";
+                    this.$translate("ui.admin.checkout.validateAddress.NotFoundButSimilar.Message").then(result => {
+                        let msg: string = result + "\r\n";
+                        msg += r.data.MergedAddress.Street1 + add2;
+                        msg += `\n${r.data.MergedAddress.City}, ${r.data.MergedAddress.RegionCode} ${r.data.MergedAddress.PostalCode}`;
+                        this.cvConfirmModalFactory(msg).then(result => {
+                            if (!result) {
+                                this.cvMessageModalFactory(this.$translate("ui.admin.checkout.validateAddress.Failed")).then(() => {
+                                    this.viewstate.showDeliveryFail = true;
+                                    this.finishRunning(true, this.$translate("ui.admin.checkout.validateAddress.Failed"));
+                                });
+                                return;
+                            }
+                            // Replace address w/ good address and continue
+                            this.selectedShipping.Address.Street1 = r.data.MergedAddress.Street1;
+                            this.selectedShipping.Address.Street2 = r.data.MergedAddress.Street2;
+                            this.selectedShipping.Address.Street3 = r.data.MergedAddress.Street3;
+                            this.selectedShipping.Address.City = r.data.MergedAddress.City;
+                            this.selectedShipping.Address.RegionID = r.data.MergedAddress.Region.ID;
+                            this.selectedShipping.Address.CountryID = r.data.MergedAddress.Country.ID;
+                            this.selectedShipping.Address.PostalCode = r.data.MergedAddress.PostalCode;
+                            this.refreshShippingRateQuotes(); // Will call finishRunning
+                        });
+                    });
+                }, result => this.finishRunning(result))
+                    .catch(reason => this.finishRunning(reason));
+            }
+            /*if (this.restrictedShipping && this.hasRestrictedProducts()) {
+                this.cefRestrictedRegionCheckService.validate(this.selectedShipping).then(restrict => {
+                    if (restrict) {
+                        this.cefRestrictedRegionCheckService.triggerModal(this.selectedShipping, true);
+                        return;
+                    }
+                    continueRegister();
+                });
+            } else {*/
+                continueRegister();
+            // }
+        }
+        runPhonePrefixLookups(contact: api.ContactModel, billOrShip: boolean): void {
+            if (!this.usePhonePrefixLookups // Don't use this
+                || !contact.Phone1) { // Must have content
+                return;
+            }
+            const m = /\d+/.exec(contact.Phone1 || "");
+            if (!m || m.length <= 0) { return; } // Must have a number in the value
+            const cleanPhone = `+${contact.Phone1.trim().replace(/[a-zA-Z\s)(+_-]+/, "")}`;
+            this.cvApi.geography.ReversePhonePrefixToCityRegionCountry({ Prefix: cleanPhone }).then(r => {
+                if (!r || !r.data || !r.data.Results) {
+                    console.log("Failed to get phone prefix lookups data.");
+                    return;
+                }
+                if (r.data.Results.length <= 0) {
+                    console.log(`No results from phone prefix lookups data for "${cleanPhone}"`);
+                    return;
+                }
+                var result = r.data.Results[0];
+                contact.Address.CountryID = result.CountryID;
+                this.propagateCountryChange(contact, billOrShip ? "Billing" : "Shipping");
+                contact.Address.RegionID = result.RegionID;
+                this.propagateRegionChange(contact, billOrShip ? "Billing" : "Shipping");
+                contact.Address.City = result.CityName;
+            });
+        }
+        updateShippingFromBilling(): void {
+            if (!this.viewstate.isShippingSameAsBilling && this.shippingAddressMode !== "0") { return; }
+            // Copy the billing information into shipping
+            this.selectedShipping = _.cloneDeep(this.selectedBilling);
+            this.selectedShipping.Address = _.cloneDeep(this.selectedBilling.Address);
+        }
+        refreshShippingRateQuotes(): void {
+            if (this.viewstate.isGettingRates) { return; }
+            /* TODO: Not sure how reliable starting the set running here will be, the finishRunning would be fired by one or more closers
+            if (!this.viewState.running) {
+                this.setRunning();
+            }*/
+            this.viewstate.isGettingRates = true;
+            this.viewstate.haveRateQuotes = false; // Reset this while we are getting data
+            this.updateCartAddress(this.selectedAddressShipping, "Shipping", true);
+            /* The rate quote manager widget will react by applying the updated shipping contact to the
+             * server, then it will get rate quotes. When that finishes, it will broadcast
+             * "loadShippingRateQuotesCompleted" which this controller will react to with a call to the
+             * "onRefreshShippingRatesComplete" function
+             */
+        }
+        // TODO: onRefreshShippingRatesFailed
+        onRefreshShippingRateQuotesComplete(rateQuotes: api.RateQuoteModel[], selectedRateQuoteID: number): void {
+            this.selectedRateQuoteID = selectedRateQuoteID;
+            this.viewstate.haveRateQuotes = rateQuotes && rateQuotes.length > 0;
+            this.viewstate.isGettingRates = false;
+            this.$rootScope.$broadcast(this.cvServiceStrings.events.shipping.setSelectedRateQuoteID);
+            this.finishRunning();
+        }
+        onShippingRateQuoteSelected(type: string, selectedRateQuoteID: number): void {
+            if (type !== this.cartType) { return; }
+            this.selectedRateQuoteID = selectedRateQuoteID;
+        }
+        calculateDiscountedShippingRate(rate: number): { original: number, discounted: number } {
+            if (!this.shippingDiscounts || this.shippingDiscounts.length === 0) {
+                return { original: rate, discounted: rate };
+            }
+            var discounted = rate;
+            angular.forEach(this.shippingDiscounts.sort((a, b) => { return a.DiscountPriority - b.DiscountPriority; }), value => {
+                if (value.DiscountValueType === 0) { // Percent
+                    discounted = discounted * (1 - value.DiscountValue);
+                } else if (value.DiscountValueType === 1) { // Dollar
+                    discounted = discounted - value.DiscountValue;
+                }
+            });
+            return { original: rate, discounted: discounted };
+        }
+        updatePaymentDataWithWalletEntry(entry: api.WalletModel): void {
+            this.paymentData.WalletCardID = entry ? entry.ID : null;
+        }
+        selectedCardIsFromWallet(): boolean {
+            if (this.selectedCard == null) { return false; }
+            return _.some(this.wallet, value => value.ID === this.selectedCard.ID);
+        }
+        selectedEcheckIsFromWallet(): boolean {
+            if (this.selectedEcheck == null) { return false; }
+            return _.some(this.wallet, value => value.ID === this.selectedEcheck.ID);
+        }
+        genExpirationYears(): number[] {
+            const out: number[] = [];
+            const currentYear = new Date().getFullYear();
+            for (let y = 0; y < 10; y++) {
+                out.push(currentYear + y);
+            }
+            return out;
+        }
+        doPayment(obj?): ng.IPromise<any> {
+            this.viewstate.checkoutIsProcessing = true;
+            this.setRunning(this.$translate("ui.admin.checkout.slimCheckout.SubmittingYourOrders.Elipses"));
+            return this.$q<any>((resolve, reject) => {
+                if (this.selectedShipping == null && this.viewstate.isShippingSameAsBilling) {
+                    this.selectedShipping = this.selectedBilling;
+                } else if (this.selectedShipping == null
+                           && this.shippingContacts != null
+                           && this.shippingContacts.length > 0) {
+                    this.selectedShipping = this.shippingContacts[0].Slave;
+                }
+                var fileNames = [];
+                if (obj.checkoutObj != null && obj.checkoutObj.StoredFiles != null) {
+                    for (var i = 0; i < obj.checkoutObj.StoredFiles.length; i++) {
+                        fileNames.push(obj.checkoutObj.StoredFiles[i].Name);
+                    }
+                }
+                const checkoutDto = <api.CheckoutModel>{
+                    Active: true,
+                    CreatedDate: new Date(),
+                    CustomKey: null,
+                    CartTypeName: this.cartType,
+                    CartID: null,
+                    CardNumber: this.paymentData.CardNumber,
+                    CVV: this.paymentData.CVV,
+                    PurchaseOrder: this.paymentData.PONumber,
+                    ExpirationMonth: this.paymentData.ExpirationMonth,
+                    ExpirationYear: this.paymentData.ExpirationYear,
+                    CardHolderName: this.paymentData.CardHolderName,
+                    CardReferenceName: this.paymentData.ReferenceName,
+                    ExternalUserID: $("input[id$=hdnCurrentExternalUserID]").val(),
+                    Billing: this.selectedBilling,
+                    Shipping: this.selectedShipping,
+                    IsNewAccount: false,
+                    Username: this.user.UserName,
+                    Password: this.user.Password,
+                    UserID: null,
+                    AccountID: null,
+                    IsSameAsBilling: this.viewstate.isShippingSameAsBilling
+                        || (this.selectedShipping
+                            && this.selectedShipping.ID
+                            && this.selectedShipping.ID > 0
+                            && this.selectedShipping.ID === this.selectedBilling.ID),
+                    Country: null,
+                    State: null,
+                    ZipCode: null,
+                    Date: null,
+                    Delivery: null,
+                    DeliveryType: null,
+                    IsPartialPayment: null,
+                    PaymentStyle: this.paymentStyle || this.paymentMethod,
+                    PaymentGatewayProvider: null,
+                    PaymentLogin: null,
+                    TransactionKey: null,
+                    TestMode: false,
+                    Token: null,
+                    CardType: null,
+                    WalletID: this.paymentData.WalletCardID,
+                    WalletToken: null,
+                    PayoneerAccountID: this.customPayoneerAccountID,
+                    PayoneerCustomerID: this.customPayoneerUserID,
+                    SpecialInstructions: this.specialInstructions,
+                    TaxExemptionNumber: this.taxExemptionNumber,
+                    FileNames: fileNames,
+                    SerializableAttributes: this.orderAttributes,
+                    VatID: this.paymentData.VatID
+                };
+                switch (this.paymentMethod) {
+                    case "purchasePaymentMethodPayPal": {
+                        this.paypal.working = true;
+                        this.paypal.error = false;
+                        this.paypal.message = "";
+                        /*
+                        this.cvApi.providers.InitiatePayPalForCurrentCart(checkoutDto).then(response => {
+                            if (!response.data || !response.data.Token || !response.data.Token.startsWith("http")) {
+                                this.paypal.error = true;
+                                this.paypal.working = false;
+                                this.paypal.message = response.data.Token || "Unknown error";
+                                console.error("PayPal failed:", this.paypal.message);
+                                return;
+                            }
+                            // Success!
+                            window.location.href = response.data.Token;
+                        });
+                        */
+                        break;
+                    }
+                    default: {
+                        if (this.useGoogleTagManager) {
+                            this.cart = this.cvCartService.accessCart(this.cartType);
+                        }
+                        if (angular.isFunction(this.unbindLoadedCart)) { this.unbindLoadedCart(); } // Don't refresh the cart here once we're done with it (outside of this is fine)
+                        var promise: (routeParams: api.ProcessSpecificCartToSingleOrderDto | api.ProcessSpecificCartToTargetOrdersDto) => ng.IHttpPromise<api.CheckoutResult> = null;
+                        if (!this.cefConfig.checkout) {
+                            throw new Error("ERROR! No checkout config set up, please contact a Dev for support.");
+                        }
+                        if (this.cefConfig.featureSet.shipping.splitShipping.enabled) {
+                            promise = this.cvApi.providers.ProcessSpecificCartToTargetOrders;
+                        } else {
+                            promise = this.cvApi.providers.ProcessSpecificCartToSingleOrder;
+                        }
+                        promise(checkoutDto).then(response => {
+                            if (!response || !response.data || !response.data.Succeeded
+                                || response.data.ErrorMessage && response.data.ErrorMessage.toLowerCase().indexOf("email") === -1
+                                || response.data.PaymentTransactionID && response.data.PaymentTransactionID.indexOf("ERROR") !== -1
+                            ) {
+                                const message = response.data.ErrorMessage || response.data.PaymentTransactionID || "An unknown error occured.";
+                                const error = response.data;
+                                this.$uibModal.open({
+                                    templateUrl: this.$filter("corsLink")("/framework/admin/controls/sales/checkout/errorMessage.html", "ui"),
+                                    controller: ($scope) => {
+                                        $scope.error = error;
+                                        $scope.message = message;
+                                    },
+                                    resolve: {
+                                        message: () => message,
+                                        result: () => error
+                                    }
+                                });
+                                if (!response.data.Succeeded) {
+                                    this.viewstate.checkoutIsProcessing = false;
+                                    this.finishRunning(true, message);
+                                    reject(message);
+                                    return;
+                                }
+                            }
+                            this.checkoutResult = response.data;
+                            this.confirmationNumber = response.data.PaymentTransactionID
+                                || (response.data.PaymentTransactionIDs ? response.data.PaymentTransactionIDs.join(", ") : "");
+                            this.viewstate.isOrderComplete = true;
+                            /*if (this.useGoogleTagManager && this.cart != null) {
+                                this.cefGoogleTagManagerService.purchase(this.cart, response.data.OrderID);
+                            }*/
+                            this.$rootScope["$$isolateBindings"] = true;
+                            this.$rootScope.$broadcast(this.cvServiceStrings.events.carts.updated, this.cartType);
+                            this.$rootScope["checkoutComplete"] = true;
+                            this.viewstate.checkoutIsProcessing = false;
+                            resolve(true);
+                            this.finishRunning();
+                        }, result => { this.finishRunning(true, result); reject(result); })
+                        .catch(reason => { this.finishRunning(true, reason); reject(reason); });
+                        break;
+                    }
+                }
+            });
+        }
+        doCreateNewPayoneerAccount(): void {
+            /*
+            this.setRunning(this.$translate("ui.admin.checkout.slimCheckout.CreatingYourPayoneerAccount.Ellipses"));
+            this.cvApi.payments.CreateAPayoneerAccountForCurrentUser()
+                .then(r => {
+                    if (!r.data.ActionSucceeded) {
+                        this.finishRunning(true, null, r.data.Messages);
+                        return;
+                    }
+                    const resultArray = r.data.Result.split("|");
+                    this.customPayoneerAccountID = Number(resultArray[0]);
+                    this.customPayoneerUserID = Number(resultArray[1]);
+                    this.finishRunning();
+                }, result => this.finishRunning(true, result))
+                .catch(reason => this.finishRunning(true, reason));
+            */
+        }
+        doPayoneerPaymentModalForOrder(orderID: number): void {
+            /*
+            this.setRunning(this.$translate("ui.admin.checkout.slimCheckout.GettingYourPayoneerPaymentScreenReady.Ellipses"));
+            this.cvApi.payments.GetPaymentInstructionsUrlForEscrowOrder(
+                orderID,
+                this.customPayoneerAccountID || -1,
+                this.customPayoneerUserID || -1)
+                .then(r => {
+                    if (!r.data.ActionSucceeded) {
+                        this.finishRunning(true, null, r.data.Messages);
+                        return;
+                    }
+                    // Use the URL returned from the request
+                    const url = r.data.Result;
+                    armor.openModal(url, false, null, null);
+                    this.finishRunning();
+                }, result => this.finishRunning(true, result))
+                .catch(reason => this.finishRunning(true, reason));
+            */
+        }
+        sendReceiptClick(): void {
+            this.setRunning(this.$translate("ui.admin.checkout.slimCheckout.SendingTheReceipt.Ellipses"));
+            const dto = <api.SendReceiptNotificationWithEmailDto>{
+                OrderID: this.checkoutResult.OrderID,
+                Email: this.confirmationEmail1
+            };
+            this.cvApi.providers.SendReceiptNotificationWithEmail(dto)
+                .then(r => {
+                    if (!r.data.ActionSucceeded) {
+                        this.finishRunning(true, null, r.data.Messages);
+                        return;
+                    }
+                    this.viewstate.isNotificationSent = r.data.ActionSucceeded;
+                    this.finishRunning();
+                }).catch(reason => this.finishRunning(reason));
+        }
+        postPaypal(tokenObj): void {
+            if (!tokenObj) { return; }
+            this.setRunning(this.$translate("ui.admin.checkout.slimCheckout.CompletingYourPayPalTransaction.Ellipses"));
+            /*
+            this.cvApi.providers.CompletePayPalForCurrentCart(tokenObj)
+                .then(r => {
+                    if (!r.data.Succeeded) {
+                        this.paypal.error = true;
+                        this.paymentMethod = "purchasePaymentMethodPayPal";
+                        this.paypal.message = r.data.ErrorMessage || r.data.WarningMessages.join("<br/>");
+                        this.finishRunning(true, this.paypal.message, r.data.ErrorMessages);
+                        return;
+                    }
+                    this.paypal.success = true;
+                    this.paypal.message = r.data.Token;
+                    this.checkoutResult = r.data;
+                    this.confirmationNumber = r.data.PaymentTransactionID;
+                    this.finishRunning();
+                }).catch(reason => this.finishRunning(reason));
+            */
+        }
+        hasRestrictedProducts(): boolean {
+            let hasRestrictedProducts = false;
+            this.cvCartService.accessCart(this.cartType).SalesItems.forEach(salesItem => {
+                if (hasRestrictedProducts) { return; }
+                _.forEach(salesItem.ProductSerializableAttributes, attribute => {
+                    if (attribute.Key === "IsRestricted" && attribute.Value.toLowerCase() === "true") {
+                        hasRestrictedProducts = true;
+                    }
+                });
+            });
+            return hasRestrictedProducts;
+        }
+        filterCountries(type: string): void {
+            const countryName: string = this[`selected${type}CountryName`];
+            if (countryName) {
+                const countriesDdl: api.CountryModel[] = this[`ddl${type}Countries`];
+                const country = _.find(countriesDdl, ddlCountry => ddlCountry.Name.toLowerCase() === countryName.toLowerCase());
+                if (country == null) {
+                    this[`ddl${type}Countries`] = _.filter(this.countries, ddlCountry => _.includes(ddlCountry.Name.toLowerCase(), countryName.toLowerCase()));
+                } else {
+                    this.selectCountry(country, type);
+                    this[`ddl${type}Countries`] = undefined;
+                }
+            } else {
+                this.showVatID = false;
+                if (this[`selectedAddress${type}`] != null &&
+                    this[`selectedAddress${type}`].Address != null &&
+                    this[`selectedAddress${type}`].Address.CountryID != null) {
+                    this.selectedAddressShipping.Address.CountryID = undefined;
+                }
+                if (this[`state${type}`]) {
+                    this[`state${type}`] = undefined;
+                }
+            }
+        }
+        selectCountry(country: api.CountryModel, type: string): void {
+            const address: api.AddressModel = {
+                ID: 0,
+                Active: true,
+                CreatedDate: new Date(),
+                CountryID: country.ID
+            }
+            if (this[`selectedAddress${type}`] == null) {
+                this[`selectedAddress${type}`] = {
+                    Active: true,
+                    CreatedDate: address.CreatedDate,
+                    TypeID: 1,
+                    NotificationViaEmail: false,
+                    NotificationViaSMSPhone: false,
+                    Gender: false,
+                    SameAsBilling: false,
+                    Address: address
+                };
+            } else if (this[`selectedAddress${type}`].Address == null) {
+                this[`selectedAddress${type}`].Address = address;
+            } else {
+                this[`selectedAddress${type}`].Address.CountryID = address.CountryID;
+            }
+            this.propagateCountryChange(this[`selectedAddress${type}`], type);
+            this.showVatID = this.checkForVat(country, type);
+        }
+        private checkForVat(country: api.CountryModel, type: string): boolean {
+            const cart = this.cvCartService.accessCart(this.cartType);
+            if (cart == null) return false;
+            let showVatID = false;
+            if (cart.NothingToShip ||
+                (type === "Shipping" && country.SerializableAttributes != null &&
+                    _.some(country.SerializableAttributes, x => x.Key === "COUNTRY-Continent"))) {
+                const continent = _.find(country.SerializableAttributes, x => x.Key === "COUNTRY-Continent");
+                if (continent == null) return false;
+                showVatID = continent.Value === "EU";
+            }
+            return showVatID;
+        }
+        setAddress(value: api.ContactModel, type: string) {
+            this[`selected${type}`] = value;
+            this[`edit${type}`] = !value;
+            if (!value || !value.Address || !value.Address.Country) {
+                this[`selected${type}CountryName`] = undefined;
+            } else {
+                this[`selected${type}CountryName`] = value.Address.Country.Name;
+                this.filterCountries(type);
+                this.updateCartAddress(value, type);
+            }
+            if (type === "Shipping") {
+                this.viewstate.haveRateQuotes = false;
+            }
+        }
+        private cleanContact(contact: api.ContactModel): api.ContactModel {
+            delete contact["$$hashKey"];
+            delete contact.Images;
+            delete contact.ID;
+            delete contact.CustomKey;
+            delete contact.CreatedDate;
+            delete contact.UpdatedDate;
+            delete contact.SameAsBilling;
+            delete contact.AddressID;
+            delete contact.Address["$$hashKey"];
+            delete contact.Address.ID;
+            delete contact.Address.CustomKey;
+            delete contact.Address.CreatedDate;
+            delete contact.Address.UpdatedDate;
+            delete contact.TypeID;
+            delete contact.Type;
+            delete contact.TypeKey;
+            delete contact.TypeName;
+            delete contact.TypeDisplayName;
+            delete contact.TypeSortOrder;
+            return contact;
+        }
+        private compareContacts(a: api.ContactModel, b: api.ContactModel): boolean {
+            // 1. Ensure there's a clean disconnect from the original memory refernce
+            // 2. Remove identifiers and focus on the actual contents
+            // 3. Reserialize to a string for quick compare
+            const x = angular.toJson(this.cleanContact(angular.fromJson(angular.toJson(a))));
+            const y = angular.toJson(this.cleanContact(angular.fromJson(angular.toJson(b))));
+            return x === y;
+        }
+        updateCartAddress(value: api.ContactModel, type: string, runRateQuotes = false): void {
+            const cart = this.cvCartService.accessCart(this.cartType);
+            if (!cart || angular.toJson(cart) === "{}") { return; }
+            if (type === "Shipping") {
+                if (!this.viewstate.isShippingSameAsBilling &&
+                    cart.ShippingContact &&
+                    this.compareContacts(cart.ShippingContact, value)) {
+                    if (runRateQuotes) {
+                        // It's ok to fire this directly because the data is already the same
+                        // we don't have to wait for the loaded event (it wouldn't occur either)
+                        this.$rootScope.$broadcast(this.cvServiceStrings.events.shipping.ready,
+                            this.cvCartService.accessCart(this.cartType),
+                            false); // Don't reapply
+                    }
+                    return;
+                }
+                cart.ShippingContact = angular.fromJson(angular.toJson(value));
+                cart.ShippingContactID = value.ID;
+                this.cvCartService.overrideCachedCartWithModifications(this.cartType, cart);
+                this.cvCartService.applyShippingContact(this.currentCartId, this.userId, this.accountId, this.cartType).then(() => {
+                    if (runRateQuotes) {
+                        // It's ok to fire this directly because we put the value in manually
+                        // we don't have to wait for the loaded event
+                        this.$rootScope.$broadcast(this.cvServiceStrings.events.shipping.ready,
+                            this.cvCartService.accessCart(this.cartType),
+                            false); // Don't reapply
+                    }
+                }, () => {
+                    if (runRateQuotes) {
+                        // It failed
+                        this.viewstate.isGettingRates = false;
+                        this.viewstate.haveRateQuotes = false;
+                    }
+                }).catch(() => {
+                    if (runRateQuotes) {
+                        // It failed
+                        this.viewstate.isGettingRates = false;
+                        this.viewstate.haveRateQuotes = false;
+                    }
+                });
+            } else {
+                if (cart.BillingContactID === value.ID) {
+                    return;
+                }
+                cart.BillingContact = angular.fromJson(angular.toJson(value));
+                cart.BillingContactID = value.ID;
+                this.cvCartService.overrideCachedCartWithModifications(this.cartType, cart);
+                this.cvCartService.applyBillingContact(this.currentCartId, this.userId, this.accountId, this.cartType);
+            }
+        }
+        private loadMonthTranslations(): void {
+            (monthNames => {
+                this.$q.all(monthNames.map(month => this.$translate(`ui.admin.checkout.views.paymentInformation.Months.${month}`))).then(monthResponses => {
+                    this.expirationMonths = monthResponses.map((monthResponse: string, idx) => {
+                        return { Key: (idx + 1), Value: monthResponse };
+                    });
+                }, () => {
+                    console.warn("Failed to get month name translation values. Check the database."); // Here for a reason, not debugging
+                    this.expirationMonths = monthNames.map((month, idx) => {
+                        return { Key: (idx + 1), Value: month };
+                    });
+                });
+            })(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]);
+        }
+        private loadCountries(): void {
+            this.cvApi.geography.GetCountries({
+                Active: true,
+                AsListing: true,
+                Sorts: [{
+                    field: "Name",
+                    order: 0,
+                    dir: "asc"
+                }]
+            }).then(r => this.countries = this.ddlShippingCountries = this.ddlBillingCountries = r.data.Results);
+        }
+        private checkLoggedInStateAndJumpPanes(): void {
+            this.cvAuthenticationService.preAuth().finally(() => {
+                this.viewstate.isLoggedIn = this.cvAuthenticationService.isAuthenticated();
+                if (!this.viewstate.isLoggedIn) {
+                    return;
+                }
+                if (this.cefConfig.featureSet.addressBook.enabled) {
+                    this.loadAddressBook();
+                }
+                /*if (this.cefConfig.featureSet.payments.wallet.enabled) {
+                    this.cvWalletService.getWallet();
+                }*/
+                this.checkoutMethod = CheckoutMethod.ExistingUser;
+                this.viewstate.currentPaneNo++; // Skip the Checkout Method pane // TODO: Don't skip if not present
+            });
+        }
+        private loadStoredFilesFromUrl(): void {
+            if (!_.has(this.$location.search(), "storedFiles")) {
+                return;
+            }
+            this.checkoutParams["checkoutObj"]["StoredFiles"] = [];
+            var value = this.$location.search()["storedFiles"];
+            (angular.isArray(value) ? value as string[] : [value]).forEach(fileName => {
+                const model = <api.AmAStoredFileRelationshipTableModel>{
+                    Active: true,
+                    CreatedDate: new Date(),
+                    Name: fileName,
+                    FileAccessTypeID: null,
+                    MasterID: null,
+                    SlaveID: null,
+                    Slave: <api.StoredFileModel>{
+                        ID: 0,
+                        Active: true,
+                        CreatedDate: new Date(),
+                        Name: fileName,
+                        FileName: fileName,
+                        IsStoredInDB: false
+                    }
+                };
+                this.checkoutParams["checkoutObj"]["StoredFiles"].push(model);
+            });
+        }
+        // Constructor
+        constructor(
+                private readonly $rootScope: ng.IRootScopeService,
+                private readonly $filter: ng.IFilterService,
+                private readonly $location: ng.ILocationService,
+                private readonly $uibModal: ng.ui.bootstrap.IModalService,
+                private readonly $translate: ng.translate.ITranslateService,
+                private readonly $q: ng.IQService,
+                readonly $scope: ng.IScope,
+                readonly $window: ng.IWindowService,
+                private readonly cvApi: api.ICEFAPI,
+                private readonly cvCartService: admin.services.ICartService,
+                protected readonly cefConfig: core.CefConfig,
+                private readonly cvServiceStrings: admin.services.IServiceStrings,
+                private readonly cvAuthenticationService: admin.services.IAuthenticationService,
+                private readonly cvContactFactory: admin.factories.IContactFactory,
+                private readonly cvConfirmModalFactory: admin.modals.IConfirmModalFactory,
+                private readonly cvMessageModalFactory: admin.modals.IMessageModalFactory,
+                /*private readonly cvWalletService: IWalletService,
+                private readonly cefRestrictedRegionCheckService: IRestrictedRegionCheckService,
+                private readonly cefFacebookPixelService: IFacebookPixelService,
+                private readonly cefGoogleTagManagerService: IGoogleTagManagerService*/) {
+            super(cefConfig);
+            this.configs = this.cefConfig.checkout;
+            if (_.has($location.search(), "type")) {
+                this.cartType = $location.search()["type"] as string;
+            }
+            this.cartType = this.cartType || this.configs.cart.type || this.cvServiceStrings.carts.types.cart;
+            this.cvCartService.expectValidateFrom = this.cartType;
+            this.useGoogleTagManager = $window.dataLayer != null;
+            this.loadStoredFilesFromUrl();
+            this.loadMonthTranslations();
+            this.loadCountries();
+            this.expirationYears = this.genExpirationYears();
+            this.selectedShipping = this.cvContactFactory.new();
+            this.selectedBilling = this.cvContactFactory.new();
+            this.checkLoggedInStateAndJumpPanes();
+            const onShippingLoaded = ($event: ng.IAngularEvent, rateQuotes: api.RateQuoteModel[], selectedRateQuoteID: number) => {
+                console.debug("checkoutRateQuotesManagerWidget.onShippingLoaded");
+                console.debug($event);
+                console.debug(rateQuotes);
+                console.debug(selectedRateQuoteID);
+                this.onRefreshShippingRateQuotesComplete(rateQuotes, selectedRateQuoteID);
+            };
+            const unbind1 = this.$scope.$on(this.cvServiceStrings.events.shipping.loaded, onShippingLoaded);
+            const onCartLoaded = ($event: ng.IAngularEvent, cartType: string) => {
+                if (cartType === this.cvServiceStrings.carts.types.compare) {
+                    return;
+                }
+                console.debug("checkout.onCartLoaded");
+                console.debug("checkout.onCartLoaded: cartType: " + cartType);
+                console.debug("checkout.onCartLoaded: updating hasASelectedRateQuote on cart based on rate quotes list")
+                console.debug("checkout.onCartLoaded: before: " + String(this.cvCartService.accessCart(cartType)[this.cvServiceStrings.carts.props.hasASelectedRateQuote]));
+                this.cvCartService.accessCart(cartType)[this.cvServiceStrings.carts.props.hasASelectedRateQuote] =
+                    _.some(this.cvCartService.accessCart(cartType).RateQuotes, x => x.Selected);
+                console.debug("checkout.onCartLoaded: after: " + String(this.cvCartService.accessCart(cartType)[this.cvServiceStrings.carts.props.hasASelectedRateQuote]));
+                console.debug("checkout.onCartLoaded: continuing...")
+                if (cartType === this.cartType) {
+                    this.load(this.cvCartService.accessCart(cartType));
+                }
+            };
+            this.unbindLoadedCart = $scope.$on(this.cvServiceStrings.events.carts.loaded, onCartLoaded);
+            const unbind2 = $scope.$on(this.cvServiceStrings.events.auth.signIn, () => this.checkAuth());
+            const onSelectedRateQuoteID = ($event: ng.IAngularEvent): void => {
+                console.debug("checkout.onSetSelectedRateQuoteID");
+                console.debug($event);
+                this.shippingEstimatesIsValid();
+            };
+            const unbind3 = $scope.$on(this.cvServiceStrings.events.shipping.setSelectedRateQuoteID, onSelectedRateQuoteID);
+            const onRateQuoteSelected = ($event: ng.IAngularEvent, cartType: string, selectedRateQuoteID: number): void => {
+                console.debug("checkout.onRateQuoteSelected");
+                console.debug($event);
+                console.debug(cartType);
+                console.debug(selectedRateQuoteID);
+                this.shippingEstimatesIsValid();
+                this.onShippingRateQuoteSelected(cartType, selectedRateQuoteID)
+            };
+            const unbind4 = $scope.$on(this.cvServiceStrings.events.shipping.rateQuoteSelected, onRateQuoteSelected);
+            this.cvCartService.loadCart(this.currentCartId, this.userId, this.accountId, this.cartType, false, true); // Start a load in case it hasn't for this type
+            if (this.cvCartService.accessCart(this.cartType) &&
+                this.cvCartService.accessCart(this.cartType) != { } as any) {
+                // The cart has already loaded so the event may have been missed
+                onCartLoaded(null, this.cartType);
+            }
+            $scope.$on(this.cvServiceStrings.events.$scope.$destroy, () => {
+                if (angular.isFunction(unbind1)) { unbind1(); }
+                if (angular.isFunction(unbind2)) { unbind2(); }
+                if (angular.isFunction(unbind3)) { unbind3(); }
+                if (angular.isFunction(unbind4)) { unbind4(); }
+                if (angular.isFunction(this.unbindLoadedCart)) { this.unbindLoadedCart(); }
+            });
+        }
+    }
+
+    adminApp.controller("CheckoutController", CheckoutController);
+}

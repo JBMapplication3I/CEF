@@ -1,0 +1,309 @@
+//
+// Layout
+// --------------------------------------------------
+
+// Grid
+// -------------------------
+
+.row { margin: 0 -5px; }
+div[class*="col-xs-"],
+div[class*="col-sm-"],
+div[class*="col-md-"],
+div[class*="col-lg-"] { padding: 0 15px; }
+/*
+.layout-app {
+	.row-app {
+		margin: 0;
+		> div[class*="col-"] { padding: 0; }
+	}
+	.col-separator {
+		> .widget,
+		> .widget-body,
+		> .widget-stats,
+		> .list-group { 
+			margin: 0 !important; 
+			border: none !important; 
+		}
+		background-color: #fff;
+	}
+	.reset-components {
+		.widget,
+		.widget-body,
+		.widget-stats,
+		.list-group { 
+			margin: 0 !important; 
+			border: none !important;
+		}
+		.list-group li {
+			border-left: none !important;
+			border-right: none !important;
+		}
+	}
+	.col-separator-h {
+		height: @layoutAppSeparator;
+		border-left: none;
+		border-right: none;
+		position: relative;
+		&:after {
+			content: "";
+			display: block;
+			position: absolute;
+			left: 0;
+			right: -1px;
+			top: 0;
+			bottom: 0;
+			background: @containerBg;
+		}
+	}
+
+	.col-separator {
+		position: relative;
+		margin-right: @layoutAppSeparator;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+	.col-separator-first { margin-left: @layoutAppSeparator; }
+	.col-separator-last { margin-right: 0; }
+}*/
+
+@media (min-width: 768px)
+{
+	html.app {
+		.layout-app {
+			.col-separator {
+				position: relative;
+				margin-right: @layoutAppSeparator;
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+			.col-separator-first { margin-left: @layoutAppSeparator; }
+			.col-separator-last { margin-right: 0; }
+		}
+	}
+}
+
+@media (max-width: 991px) {
+	html, html.app {
+		[class*="col-sm-12"] {
+			> .col-separator {
+				margin-left: 0;
+				margin-right: 0;
+			}
+			~ [class*="col-sm-12"] {
+				margin-top: @layoutAppSeparator;
+				position: relative;
+				overflow: visible !important;
+				&:after {
+					background: #efefef;
+					position: absolute;
+					top: -@layoutAppSeparator;
+					left: 0;
+					right: 0;
+					height: @layoutAppSeparator;
+					content: "";
+				}
+			}
+		}
+	}
+}
+
+.layoutAppTop (@navbarMainHeight) when (@navbarMainHeight = 0) {
+	top: @layoutAppTop;
+}
+.layoutAppTop (@navbarMainHeight) when (@navbarMainHeight > 0) {
+	top: @layoutAppTop + @navbarMainHeight + @layoutAppSeparator;
+}
+
+@media (min-width: 992px)
+{
+	html.app {
+		&,
+		body, 
+		body .container-fluid {
+			min-height: 100%;
+			height: 100%; 
+			overflow: hidden;
+		}
+		#content {
+			height: 100%;
+			padding: 0;
+		}
+		.layout-app {
+			position: absolute;
+			.layoutAppTop(@navbarMainHeight);
+			bottom: 48px;
+			width: 100%;
+			
+			.col-table {
+				display: table;
+				height: 100%;
+				width: 100%;
+				position: absolute;
+				table-layout:fixed;
+				left: 0;
+				right: 0;
+			}
+
+			.col-table-row {
+				display: table-row;
+				height: 100%;
+				> .col-app > .col-app {
+					position: absolute;
+					width: 100%;
+				}
+			}
+
+			.col-app {
+				height: 100%;
+				overflow-x: hidden;
+				overflow-y: auto;
+				position: relative;
+			}
+
+			.row-app {
+				padding: 0;
+				width: 100%;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+
+				> div[class*="col-"],
+				.col-app {
+					height: 100%;
+					overflow-x: hidden;
+					overflow-y: auto;
+					position: relative;
+				}
+			}
+
+			.col-separator {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: @layoutAppSeparator;
+				margin: 0;
+				overflow-x: hidden;
+				overflow-y: auto;
+				&.col-unscrollable { overflow-y: hidden; overflow: hidden; }
+			}
+			.col-separator-first { left: @layoutAppSeparator; }
+			.col-separator-last { right: 0px; }
+
+			.col-scrollable { overflow-y: auto; overflow-x: hidden; }
+			.col-unscrollable { overflow-y: hidden; }
+		}
+	}
+}
+
+@media (max-width: 991px) {
+	html.app .layout-app {
+		[class*="col-sm-12"] {
+			> .col-separator {
+				left: 0;
+				right: 0;
+			}
+			~ [class*="col-sm-12"] {
+				margin-top: @layoutAppSeparator;
+				position: relative;
+				overflow: visible !important;
+				&:after {
+					background: #efefef;
+					position: absolute;
+					top: -@layoutAppSeparator;
+					left: 0;
+					right: 0;
+					height: @layoutAppSeparator;
+					content: "";
+				}
+			}
+		}
+	}
+}
+
+// Content
+// -------------------------
+
+.contentPaddingTop (@navbarMainHeight) when (@navbarMainHeight > 0) {
+	padding-top: @navbarMainHeight + (@layoutAppSeparator * 2) + 2px;
+}
+
+.container-fluid { 
+	/*background: @containerBg;*/
+}
+
+#content { 
+	position: relative;
+	overflow: hidden;
+	min-width: 320px;
+	margin: 0 0 0 @menuSidebarWidth;
+	/*padding: 0 0 48px;*/
+	/*background: @containerBg; */
+	.contentPaddingTop(@navbarMainHeight);
+	
+}
+
+// Footer
+// -------------------------
+ 
+#footer {
+	font-weight: 700;
+	position: fixed;
+	overflow: hidden;
+	z-index: 10000;
+	background: @footerBg;
+	text-align: center;
+	padding: 0 10px;
+	height: @footerHeight;
+	line-height: 48px;
+	bottom: 0;
+	left: @menuSidebarWidth;
+	right: 0;
+	a { color: #686868; text-decoration: underline; }
+}
+
+
+// helpers
+.bg-primary { background: @primaryColor !important; color: #fff; }
+.bg-primary-light {
+	background: lighten(@primaryColor, 33%) !important;
+	*:not(.btn) { border-color: lighten(@primaryColor, 17%) !important; }
+	&[class*="border-"], &.box-generic {
+		border-color: lighten(@primaryColor, 28%) !important;
+	}
+	.caret { 
+		border-left-color: transparent !important;
+		border-bottom-color: transparent !important;
+		border-top-color: transparent !important;
+		border-right-color: lighten(@primaryColor, 17%) !important;
+	}
+}
+.bg-gray { background: #f9f9f9 !important; }
+.bg-white { background: #fff !important; }
+.text-white { color: #fff; }
+
+// global helpers
+.border-top { border-top : 1px solid #efefef;}
+.border-right { border-right: 1px solid #efefef;}
+.border-bottom { border-bottom: 1px solid #efefef;}
+.border-left { border-left: 1px solid #efefef;}
+	
+.innerAll { padding: @spacing !important; }
+.innerLR { padding-left: @spacing !important; padding-right: @spacing !important; }
+.innerTB { padding-top: @spacing !important; padding-bottom: @spacing !important; }
+.innerT { padding-top: @spacing !important; }
+.innerB { padding-bottom: @spacing !important; }
+
+.half {
+	&.innerAll { padding: @spacing / 2 !important; }
+	&.innerLR { padding-left: @spacing / 2 !important; padding-right: @spacing / 2 !important; }
+	&.innerTB { padding-top: @spacing / 2 !important; padding-bottom: @spacing / 2 !important; }
+	&.innerT { padding-top: @spacing / 2 !important; }
+	&.innerB { padding-bottom: @spacing / 2 !important; }
+}
+
+.row-app { overflow: hidden; }
+.nicescroll-rails { display: none; }
+.overflow-hidden { overflow: hidden !important; }
+
+.text-success { color:@successColor;}

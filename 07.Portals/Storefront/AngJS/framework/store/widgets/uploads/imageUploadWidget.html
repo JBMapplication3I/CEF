@@ -1,0 +1,6 @@
+﻿<input name="Images" type="file" kendo-upload
+k-multiple="cefUploadImageWidgetCtrl.allowMultiple"
+k-upload="cefUploadImageWidgetCtrl.uploadFile"
+k-success="cefUploadImageWidgetCtrl.uploadedFile"
+k-async="{ saveUrl: '{{'/Media/StoredFiles/Upload/.json' | corsLink: 'api'}}', autoUpload: true }"
+k-localization="{ select: cefUploadImageWidgetCtrl.text }" />

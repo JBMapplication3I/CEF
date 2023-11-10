@@ -1,0 +1,24 @@
+﻿<div class="row">
+    <div class="col-12">
+        <div class="col-md-12 text-center"
+             ng-show="viewstate.imported">
+            <h1>Please review your import results</h1>
+        </div>
+        <div class="col-md-12 text-center"
+             ng-show="!viewstate.imported">
+            <h1>Please enter the part number and quantity you desire</h1>
+        </div>
+    </div>
+</div>
+
+<cef-bulk-upload-table></cef-bulk-upload-table>
+<div class="row">
+    <div class="col-md-8">
+        <cef-bulk-upload-manual-add></cef-bulk-upload-manual-add>
+    </div>
+    <div class="col-md-4">
+        <button type="button" class="btn btn-primary float-right"
+                ng-click="cefBulkUploadCtrl.sendItemsToCart(cefBulkUploadCtrl.items)"
+                >Add to Cart</button>
+    </div>
+</div>

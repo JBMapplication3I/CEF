@@ -1,0 +1,42 @@
+﻿<div class="row"
+     ng-form="cefCheckoutCtrl.forms.payments.echeck">
+    <div class="col-sm-12 wallet-echeck-panel">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="h3 mt-0">
+                            <b ng-bind="cefCheckoutCtrl.selectedEcheck.Name"></b>
+                            <span class="pull-right m-0"
+                                  ng-bind="cefCheckoutCtrl.selectedEcheck.CardType"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-12">
+                        <!-- <p data-translate="ui.admin.checkout.echeck.AccountHolder"></p> -->
+                        <p class="bold"
+                           ng-bind="cefCheckoutCtrl.selectedEcheck.CardHolderName"></p>
+                    </div>
+                    <div class="col-sm-12" ng-if="!cefCheckoutCtrl.viewstate.createMode">
+                        <div class="w-50 inline-block">
+                            <p class="h3 mt-2"
+                               ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;'
+                                             + (cefCheckoutCtrl.selectedEcheck.RoutingNumber | limitTo: -3)) | trustedHtml"></p>
+                        </div>
+                        <div class="w-50 inline-block">
+                            <p class="h3 mt-2"
+                               ng-bind-html="('&bull;&bull;&bull;&bull;&bull;&bull;'
+                                             + (cefCheckoutCtrl.selectedEcheck.AccountNumber | limitTo: -3)) | trustedHtml"></p>
+                        </div>
+                        <p class="mb-0" ng-bind="cefCheckoutCtrl.selectedEcheck.BankName"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12"
+         ng-if="cefCheckoutCtrl.forms.payment.echeck.$valid
+                && cefCheckoutCtrl.cvCartService.totalTargetedCartsShippingRaw() > 0">
+        <p data-translate="ui.admin.checkout.paymentMethods.creditCard.GrandTotalWithSplitTargets.Template"
+           translate-value-total="{{cefCheckoutCtrl.cvCartService.grandTotal()}}"></p>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿<div uib-accordion-group is-open="false" template-url="cat-filters-group-template.html">
+  <div uib-accordion-heading>
+    <!-- <i class="fa fa-fw fa-money mr-2 small"></i> -->
+    <span class="small"
+      id="btnPricingRangeFtr"
+      data-translate="ui.storefront.searchCatalog.filters.PriceRange.Plural">
+    </span>
+  </div>
+  <div class="row">
+    <div ng-repeat="range in searchCatalogFilterByPricingRangesCtrl.cvSearchCatalogService.activeSearchViewModel.PricingRanges"
+    class="col-12"
+    ng-if="range.DocCount > 0">
+    <a ng-click="searchCatalogFilterByPricingRangesCtrl.cvSearchCatalogService.pushRangeKey(searchCatalogFilterByPricingRangesCtrl.mode, range.Label);"
+      id="{{'btnPricingRange'+$index}}"
+      ng-keypress="searchCatalogFilterByPricingRangesCtrl.cvSearchCatalogService.pushRangeKey(searchCatalogFilterByPricingRangesCtrl.mode, range.Label);"
+      ng-class="{'active bold':searchCatalogFilterByPricingRangesCtrl.cvSearchCatalogService.productSearchViewModel.Form.PricingRanges.indexOf(range.Label) > -1}"
+      tabindex="0" class="pointer">
+      <span ng-bind="range.Label"></span><!--{{range.From}} to {{range.To}}--></a>&nbsp;(<span ng-bind="range.DocCount | number:0"></span>)
+    </div>
+  </div>
+</div>

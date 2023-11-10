@@ -1,0 +1,69 @@
+﻿<div ng-if="scfbaCtrl.attributes && (scfbaCtrl.attributes | toArray).length"
+  uib-accordion-group is-open="scfbaCtrl.isOpen"
+  template-url="cat-filters-group-template.html">
+  <div uib-accordion-heading>
+    <!-- <i class="fa fa-fw fa-tasks mr-2 small"></i> -->
+    <span class="small"
+      data-translate="ui.storefront.common.Attribute.Plural">
+    </span>
+  </div>
+  <div class="row">
+    <div class="col-12"
+       ng-repeat="attribute in scfbaCtrl.attributes | orderBy: ['Key'] | limitTo: scfbaCtrl.limitAttrsTo">
+      <a ng-init="scfbaCtrl.showOptions[attribute.Key] = false;"
+        id="btnAttributeFilter{{$index}}"
+        ng-disabled="scfbaCtrl.searchIsRunning"
+        ng-class="{'disabled':scfbaCtrl.searchIsRunning}"
+        ng-click="scfbaCtrl.toggleShowOptions(attribute.Key)"
+        ng-keypress="scfbaCtrl.toggleShowOptions(attribute.Key)"
+        ng-bind="attribute.Key | camelCaseToHuman : true"
+        tabindex="0">
+      </a>
+      <span class="float-right">
+        <a class="pointer"
+          ng-class="{'disabled':scfbaCtrl.searchIsRunning}"
+          ng-disabled="scfbaCtrl.searchIsRunning"
+          ng-click="scfbaCtrl.toggleShowOptions(attribute.Key)">
+          <i class="fa {{scfbaCtrl.plusOrMinus(attribute.Key)}}"></i><!--
+          --><span class="sr-only"
+            data-translate="ui.storefront.searchCatalog.filters.ToggleShowHideAttributeOptions.Message">
+          </span>
+        </a>
+      </span>
+      <div ng-repeat="o in attribute.Value | orderBy: '!Value' | limitTo: scfbaCtrl.limitOptionsTo"
+         ng-show="scfbaCtrl.showOptions[attribute.Key]"
+         class="ml-2">
+        <small>
+          <a class="pointer" tabindex="0"
+            ng-class="{'active bold': scfbaCtrl.optionIsActive(attribute.Key, o.Key),
+                       'disabled': scfbaCtrl.searchIsRunning}"
+            ng-keypress="scfbaCtrl.pushAttributeOptionKey(attribute.Key, o.Key)"
+            ng-disabled="scfbaCtrl.searchIsRunning"
+            ng-click="scfbaCtrl.pushAttributeOptionKey(attribute.Key, o.Key)"
+            ng-bind="o.Key | camelCaseToHuman : true">
+          </a>&nbsp;(<span ng-bind="o.Value"></span>)
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 text-right">
+      <button type="button" class="btn btn-sm btn-secondary mr-1"
+        id="btnAttributesFtrCollapse"
+        translate-attr="{ title: 'ui.storefront.searchCatalog.filters.CollapseAll',
+                          'aria-label': 'ui.storefront.searchCatalog.filters.CollapseAll' }"
+        data-translate="ui.storefront.searchCatalog.filters.CollapseAll"
+        ng-disabled="scfbaCtrl.searchIsRunning"
+        ng-click="scfbaCtrl.collapseAll()">
+      </button>
+      <button type="button" class="btn btn-sm btn-primary"
+        id="btnAttributesFtrExpand"
+        translate-attr="{ title: 'ui.storefront.searchCatalog.filters.ExpandAll',
+                          'aria-label': 'ui.storefront.searchCatalog.filters.ExpandAll' }"
+        data-translate="ui.storefront.searchCatalog.filters.ExpandAll"
+        ng-disabled="scfbaCtrl.searchIsRunning"
+        ng-click="scfbaCtrl.expandAll()">
+      </button>
+    </div>
+  </div>
+</div>

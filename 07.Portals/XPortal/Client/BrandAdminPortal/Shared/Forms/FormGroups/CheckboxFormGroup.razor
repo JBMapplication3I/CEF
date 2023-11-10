@@ -1,0 +1,123 @@
+﻿@inherits MVC.Core.InputFormGroupControllerBase<TValue>
+@typeparam TValue
+
+<Validation>
+  <Tooltip
+    Inline="false"
+    Text="@Tooltip"
+    Placement="TooltipPlacement.Top"
+    Fade="true"
+    AlwaysActive="TooltipIsOpen">
+    <Field
+      Horizontal="@IsHorizontal"
+      sid="@("field_" + InputName)"
+      Class="@AllFormClasses">
+      @if (!NoLabel)
+      {
+        <FieldLabel
+          For="@InputName"
+          title="@Tooltip"
+          sid="@("fieldLabel_" + InputName)">
+          <Span>
+            @LabelText
+            @if (Required)
+            {
+              <Span TextColor="TextColor.Danger">&nbsp;*</Span>
+            }
+            @if (Contract.CheckValidKey(Tooltip) && Tooltip != LabelText)
+            {
+              <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.QuestionCircle" TextColor="TextColor.Info" Class="ml-1" />
+            }
+          </Span>
+        </FieldLabel>
+      }
+      <FieldBody
+        sid="@("fieldBody_" + InputName)">
+        <Repeater Items="OptionsList">
+          <Span class="control-label d-flex">
+            <Check
+              TValue="TValue"
+              sid="@("input_" + InputName)"
+              ElementId="@(InputName + context)"
+              Class="@AllInputClasses"
+              CheckedChanged="@(val => OnToggle.InvokeAsync((context, val)))"
+              Checked="@(IsOptionToggled(context))"
+              Disabled="@Disabled"
+              Autofocus="@Autofocus">
+              <Feedback>
+                @if (FormInvalid == true && !HideInvalidTooltip)
+                {
+                  <ValidationError/>
+                }
+                @if (FormValid == true && ShowValidTooltip)
+                {
+                  <ValidationSuccess/>
+                }
+              </Feedback>
+            </Check>
+            <Span>@(ItemLabelFunc(context))</Span>
+          </Span>
+        </Repeater>
+      </FieldBody>
+    </Field>
+  </Tooltip>
+</Validation>
+
+@code
+{
+  #region Parameters
+#pragma warning disable CS8618 // Ignored: Parameters set by implementer
+  /// <summary>Gets or sets a value indicating whether this object is horizontal.</summary>
+  /// <value>True if this object is horizontal, false if not.</value>
+  [Parameter]
+  public bool IsHorizontal { get; set; }
+
+  /// <summary>Gets or sets the placeholder text.</summary>
+  /// <value>The placeholder text.</value>
+  [Parameter]
+  public string? PlaceholderText { get; set; }
+
+  /// <summary>Gets or sets a list of options.</summary>
+  /// <value>A List of options.</value>
+  [Parameter, EditorRequired]
+  public IEnumerable<TValue> OptionsList { get; set; } = Enumerable.Empty<TValue>();
+
+  /// <summary>Gets or sets the item label function.</summary>
+  /// <value>The item label function.</value>
+  [Parameter, EditorRequired]
+  public Func<TValue, string> ItemLabelFunc { get; set; } = _ => throw new NotImplementedException();
+
+  /// <summary>Gets or sets the on toggle.</summary>
+  /// <value>The on toggle.</value>
+  [Parameter, EditorRequired]
+  public EventCallback<(TValue, TValue isChecked)> OnToggle { get; set; }
+
+  /// <summary>Gets or sets the is option toggled.</summary>
+  /// <value>The is option toggled.</value>
+  [Parameter, EditorRequired]
+  public Func<TValue, TValue> IsOptionToggled { get; set; } = _ => throw new NotImplementedException();
+#pragma warning restore CS8618 // Ignored: Parameters set by implementer
+  #endregion
+
+  /// <summary>Gets a value indicating whether this object has value.</summary>
+  /// <value>True if this object has value, false if not.</value>
+  protected override bool HasValue => false;
+
+  /// <summary>Gets the input prefix.</summary>
+  /// <value>The input prefix.</value>
+  protected override string InputPrefix => "ck";
+
+  /// <summary>Gets all input classes.</summary>
+  /// <value>all input classes.</value>
+  private string AllInputClasses => (FieldCssClasses
+    + (Contract.CheckValidKey(InputClasses) ? " " + InputClasses : string.Empty)
+    + (Contract.CheckValidKey(RightIcon) ? string.Empty : " rounded-right"))
+    .Trim();
+
+  /// <summary>Gets all form classes.</summary>
+  /// <value>all form classes.</value>
+  private string AllFormClasses => ("form-group"
+    + (Contract.CheckValidKey(FormClasses) ? " " + FormClasses : string.Empty)
+    + (FormInvalid == true ? " has-error" : string.Empty))
+    .Trim();
+}

@@ -1,0 +1,87 @@
+﻿<div class="row" id="results-list" ng-init="kind = 'products'">
+  <div ng-repeat="recordID in scprlCtrl.service.activeSearchViewModel.ResultIDs
+                  | orderBy: scprlCtrl.service.getSorter()"
+    class="col-12 product mb-3 catalog-result-card"
+    id="productListBlock{{recordID}}">
+    <div ng-if="scprlCtrl.service.getServiceForKind(kind).getCached({ id: recordID })"
+      class="card bg-white">
+      <div class="row card-body">
+        <div class="col-sm-4">
+          <div class="row">
+            <div class="card-img-top no-gutters"
+              cef-product-card-thumbnail-widget
+              product-id="recordID"
+              width="scprlCtrl.thumbW"
+              height="scprlCtrl.thumbH"
+              index="$index">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card-title"
+                cef-product-card-name-widget
+                product-id="recordID"
+                rows="scprlCtrl.nameR"
+                index="$index">
+              </div>
+              <div class="my-1 card-text"
+                ng-if="!scprlCtrl.hideK"
+                cef-product-card-sku-widget
+                product-id="recordID"
+                hide-sku="scprlCtrl.hideK">
+              </div>
+              <div class="my-1 card-text pt-2"
+                ng-if="!scprlCtrl.hideS"
+                cef-product-card-stock-widget
+                product-id="recordID"
+                hide-stock="scprlCtrl.hideS">
+              </div>
+              <div class="my-1 card-text"
+                ng-if="!scprlCtrl.hideD"
+                cef-product-card-short-desc-widget
+                product-id="recordID"
+                rows="scprlCtrl.shortDescR">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div ng-if="scprlCtrl.hide-attrs"
+              class="col-sm-12 my-1 card-text"
+              cef-product-card-attributes-widget
+              product-id="recordID">
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="my-1 card-text card-price"
+              cef-product-card-pricing-widget
+              product-id="recordID"
+              display-style="scprlCtrl.pds">
+            </div>
+            <div class="row w-100">
+              <div class="my-1 card-text action-button"
+                cef-product-card-action-button-widget
+                product-id="recordID"
+                button-view="scprgCtrl.abv"
+                hide-quantity-selector="false">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="my-1 card-text card-controls"
+              ng-if="!scprlCtrl.hideI"
+              cef-product-card-controls-widget
+              product-id="recordID"
+              hide-favorites-list="scprlCtrl.hideFL"
+              hide-wish-list="scprlCtrl.hideWL"
+              hide-notify-me="scprlCtrl.hideNM"
+              hide-compare="scprlCtrl.hideC"
+              hide-icons="scprlCtrl.hideI">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

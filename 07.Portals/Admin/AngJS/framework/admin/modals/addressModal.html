@@ -1,0 +1,67 @@
+<div class="modal-header bg-dark text-light">
+  <h3 class="modal-title inline-block"
+    data-translate="ui.admin.userDashboard2.controls.addressEditor2.AddANewAddress">
+  </h3>
+  <button type="button" class="close"
+    translate-attr="{ title: 'ui.admin.common.Close',
+                      'aria-label': 'ui.admin.common.Close' }"
+    ng-click="contactModalCtrl.cancel()">
+    <i class="far fa-times text-light" aria-hidden="true"></i>
+    <span class="sr-only" data-translate="ui.admin.common.Close"></span>
+  </button>
+</div>
+<div class="modal-body form-vertical container-fluid"
+  ng-form="contactModalCtrl.forms.contact">
+  <div class="row">
+    <div class="col-md-12"
+      cef-contact-editor-widget
+      contact="contactModalCtrl.contact"
+      address-key="contactModalCtrl.showKey
+                && contactModalCtrl.cefConfig.featureSet.addressBook.enabled
+                && contactModalCtrl.cvAuthenticationService.isAuthenticated()"
+      address-title="contactModalCtrl.addressTitle"
+      use-phone-prefix-lookups="contactModalCtrl.usePhonePrefixLookups"
+      restricted-shipping="contactModalCtrl.restrictedShipping"
+      id-suffix="{{contactModalCtrl.idSuffix}}"
+      on-input-change="contactModalCtrl.callOnChangeIfSet()"
+      is-billing="contactModalCtrl.isBilling">
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <table class="w-100">
+    <tr>
+      <td class="w-100">
+        <div ng-if="contactModalCtrl.viewState.hasError"
+          class="alert alert-danger mb-0 p-2" role="alert">
+          <p class="text-left small"
+            ><span ng-bind="contactModalCtrl.viewState.errorMessage"
+            ></span><span ng-repeat="m in contactModalCtrl.viewState.errorMessages"
+            >{{$first ? '' : ' '}}{{m}}</span></p>
+        </div>
+      </td>
+      <td class="pl-1">
+        <button type="button" class="btn btn-default"
+          translate-attr="{ title: 'ui.admin.common.Cancel',
+                            'aria-label': 'ui.admin.common.Cancel' }"
+          data-translate="ui.admin.common.Cancel"
+          ng-click="contactModalCtrl.cancel()">
+        </button>
+      </td>
+      <td class="pl-1">
+        <button type="button" class="btn btn-primary"
+          translate-attr="{ title: contactModalCtrl.buttonTitle
+                                || 'ui.admin.checkout.splitShipping.addressModal.AddAddress',
+                            'aria-label': contactModalCtrl.buttonTitle
+                                || 'ui.admin.checkout.splitShipping.addressModal.AddAddress' }"
+          data-translate="ui.admin.checkout.splitShipping.addressModal.AddAddress"
+          ng-disabled="contactModalCtrl.forms.contact.$invalid
+                    || contactModalCtrl.forms.contact.$pristine
+                    || !contactModalCtrl.contact.Address.CountryID
+                    || contactModalCtrl.viewState.running"
+          ng-click="contactModalCtrl.ok()">
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

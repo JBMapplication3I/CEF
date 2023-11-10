@@ -1,0 +1,121 @@
+﻿<div class="row product-view" ng-if="srpc.products != null && (srpc.products).length > 0">
+  <div class="col-12"><h3 data-translate="ui.storefront.product.detail.productDetails.recommendedProducts"></h3></div>
+  <div ng-repeat="ap in (srpc.products | limitTo: 5)"
+    class="col-sm-6 col-md-4 col-lg-3 mt-3">
+    <p>
+      <div cef-product-card-thumbnail-widget
+        product-id="ap.SlaveID"
+        product-image="ap.SlavePrimaryImageFileName"
+        width="250"
+        height="250"
+        index="$index">
+      </div>
+    </p>
+    <p class="text-center">
+      <a ui-sref-plus uisrp-is-product="true"
+        uisrp-path="{{ap.SlaveSeoUrl}}"
+        class="bold"
+        ng-bind="ap.SlaveName">
+      </a>
+    </p>
+    <p ng-if="!ap.Slave.readPrices().isSale && !ap.Slave.readPrices().base"
+      class="text-center">
+      <b class="price" data-translate="ui.storefront.common.Free"></b>
+    </p>
+    <p ng-if="!ap.Slave.readPrices().isSale"
+      class="text-center">
+      <b class="price" ng-bind="ap.Slave.readPrices().base | globalizedCurrency"></b>
+    </p>
+    <p ng-if="ap.Slave.readPrices().isSale"
+      class="text-center">
+      <b>
+        <span class="d-inline-block price strike-through"
+          ng-bind="ap.Slave.readPrices().base | globalizedCurrency">
+        </span>
+        <span class="d-inline-block price text-danger"
+          ng-bind="ap.Slave.readPrices().sale | globalizedCurrency">
+        </span>
+      </b>
+    </p>
+    <div class="input-group">
+      <!--
+      <input id="quantity"
+        type="number"
+        class="form-control text-right"
+        min="{{productDetailsCtrl.calculateMinAllowedPurchase(ap.Slave)}}"
+        max="{{productDetailsCtrl.calculateMaxAllowedPurchase(ap.Slave)}}"
+        ng-model="ap.quantity"
+        step="1"
+        placeholder="{{(ap.StockQuantity <= 0 && !ap.AllowBackOrder && !ap.IsUnlimitedStock ? 'Out of Stock' : 1)}}"
+        ng-disabled="ap.Slave.StockQuantity <= 0 && !ap.Slave.AllowBackOrder && !ap.Slave.IsUnlimitedStock" />
+      -->
+      <div class="input-group-append">
+        <!--
+        <button ng-cloak type="button" class="btn btn-secondary visible-xs-inline-block visible-sm-inline-block"
+          ng-disabled="ap.quantity >= productDetailsCtrl.calculateMaxAllowedPurchase(ap.Slave)"
+          ng-click="ap.quantity = ap.quantity + 1;">
+          <i class="far fa-plus"></i>
+          <span class="sr-only" data-translate="ui.storefront.ap.detail.productDetails.Plus"></span>
+        </button>
+        <button ng-cloak type="button" class="btn btn-secondary visible-xs-inline-block visible-sm-inline-block"
+          ng-disabled="ap.quantity <= productDetailsCtrl.calculateMinAllowedPurchase(ap.Slave)"
+          ng-click="ap.quantity = ap.quantity - 1;">
+          <i class="far fa-minus"></i>
+          <span class="sr-only" data-translate="ui.storefront.common.Minus"></span>
+        </button>
+        -->
+        <div cef-add-to-cart-button
+          item-id="ap.SlaveID"
+          item-name="ap.SlaveName"
+          item-seo-url="ap.ProductSeoUrl"
+          default-value="1"
+          current-value="ap.Quantity"
+          show-icon="false"
+          show-text="true"
+          ship-option=""
+          out-of-stock-links-to-details="true"
+          debug="false"
+          index="$index">
+        </div>
+      </div>
+      <div class="input-group-append input-group-btn">
+        <button ng-if="!srpc.cvCartService.cartContainsItem(ap.SlaveID, 'Wish List')"
+          type="button" class="btn btn-secondary"
+          translate-attr="{ title: 'ui.storefront.common.WishList.AddTo',
+                            'aria-label': 'ui.storefront.common.WishList.AddTo' }"
+          ng-click="srpc.cvCartService.addCartItem(ap.SlaveID, 'Wish List')">
+          <i class="far fa-heart"></i>
+          <span class="sr-only" data-translate="ui.storefront.common.WishList.AddTo"></span>
+        </button>
+        <button ng-if="srpc.cvCartService.cartContainsItem(ap.SlaveID, 'Wish List')"
+          type="button" class="btn btn-secondary"
+          translate-attr="{ title: 'ui.storefront.common.WishList.RemoveFrom',
+                            'aria-label': 'ui.storefront.common.WishList.RemoveFrom' }"
+          ng-click="srpc.cvCartService.removeCartItemByType(ap.SlaveID, 'Wish List')">
+          <i class="fas fa-heart"></i>
+          <span class="sr-only" data-translate="ui.storefront.common.WishList.RemoveFrom"></span>
+        </button>
+      </div>
+      <div class="input-group-append input-group-btn" ng-show="ap.Slave.StockQuantity <= 0 && !ap.Slave.allowBackOrder">
+        <button ng-if="!srpc.cvCartService.cartContainsItem(ap.SlaveID, 'Notify Me When In Stock')"
+          type="button" class="btn btn-info"
+          translate-attr="{ title: 'ui.storefront.common.NotifyMeWhenInStock',
+                            'aria-label': 'ui.storefront.common.NotifyMeWhenInStock' }"
+          ng-click="srpc.cvCartService.requireLoginForNotifyMe(ap.SlaveID, true)">
+          <i class="far fa-bell"></i>
+          <span class="sr-only" data-translate="ui.storefront.common.NotifyMeWhenInStock"></span>
+          <span class="visible-xs-inline-block" data-translate="ui.storefront.ap.detail.productDetails.notifyMeWhenInStock"></span>
+        </button>
+        <button ng-if="srpc.cvCartService.cartContainsItem(ap.SlaveID, 'Notify Me When In Stock')"
+          type="button" class="btn btn-danger"
+          translate-attr="{ title: 'ui.storefront.common.DontNotifyMeWhenInStock',
+                            'aria-label': 'ui.storefront.common.DontNotifyMeWhenInStock' }"
+          ng-click="srpc.cvCartService.requireLoginForNotifyMe(ap.SlaveID, false)">
+          <i class="fas fa-bell"></i>
+          <span class="sr-only" data-translate="ui.storefront.common.DontNotifyMeWhenInStock"></span>
+          <span class="visible-xs-inline-block" data-translate="ui.storefront.common.DontNotifyMeWhenInStock"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

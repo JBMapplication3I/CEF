@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Clarity.Ecommerce.Encryption</AssemblyName>
+    <AssemblyTitle>Clarity.Ecommerce.Encryption</AssemblyTitle>
+    <RootNamespace>Clarity.Ecommerce.Encryption</RootNamespace>
+    <ProjectGuid>4049DE6B-22F5-4D5F-87E6-C17C73D12D38</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <Reference Include="System.Web" />
+  </ItemGroup>
+</Project>

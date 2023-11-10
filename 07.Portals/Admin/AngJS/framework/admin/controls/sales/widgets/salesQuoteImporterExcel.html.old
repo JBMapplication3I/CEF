@@ -1,0 +1,64 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <h2 class="mt-3" data-translate="Import Quote from Excel"></h2>
+    </div>
+    <div class="col-md-12" ng-form="salesQuoteImporterExcelCtrl.forms.import">
+        <div class="form-inline mb-3">
+            <div class="form-group" ng-class="{'has-error':salesQuoteImporterExcelCtrl.forms.import.fileUploader.$invalid}">
+                <div class="input-group">
+                    <input type="file" name="fileUploader" kendo-upload
+                           ng-required="true"
+                           k-multiple="false"
+                           k-upload="salesQuoteImporterExcelCtrl.uploadFile"
+                           k-success="salesQuoteImporterExcelCtrl.uploadedFile"
+                           k-async="{ saveUrl: '{{'/Media/StoredFiles/Upload/.json' | corsLink: 'api'}}', autoUpload: true }"
+                           k-localization="{ select: 'Select an Excel 2007+ format file (*.xlsx) by Drag and Drop to this row or clicking this button...' }" />
+                </div>
+            </div>
+            <div class="form-group" style="vertical-align: top;">
+                <div class="input-group">
+                    <button type="button" class="btn btn-lg btn-primary ml-3"
+                            ng-click="salesQuoteImporterExcelCtrl.importData()"
+                            ><span data-translate="ui.admin.controls.inventory.googleSheetsImporter.ImportData"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mb-3" ng-if="salesQuoteImporterExcelCtrl.isImporting">
+        <i class="far fa-5x fa-spin fa-spinner"></i>&nbsp;<!--
+        --><h2 class="inline-block"
+               data-translate="ui.admin.controls.inventory.excelImporter.ImportingPleaseWait.Ellipses"></h2>
+    </div>
+    <div class="col-md-12" ng-if="salesQuoteImporterExcelCtrl.viewState.hasError">
+        <div class="alert alert-danger">
+            <p data-translate="ui.admin.errors.AnErrorHasOccurred.Colon"></p>
+            <p ng-bind="salesQuoteImporterExcelCtrl.viewState.errorMessage"></p>
+        </div>
+    </div>
+    <div class="col-md-12" ng-show="salesQuoteImporterExcelCtrl.importLog">
+        <h3 class="mb-3" data-translate="ui.admin.controls.inventory.excelImporter.ImportLog"></h3>
+        <button type="button" class="btn btn-primary mb-3"
+                ui-sref="sales.salesQuotes.list"
+                ><span data-translate="ui.admin.common.ViewQuotes"></span></button>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default" ng-if="salesQuoteImporterExcelCtrl.importLog">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                           aria-expanded="true" aria-controls="collapseOne"
+                           ><span data-translate="ui.admin.common.Message.Plural"></span>&nbsp;<!--
+                           -->(<span ng-bind="salesQuoteImporterExcelCtrl.importLog.length"></span>)</a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <span ng-repeat="message in salesQuoteImporterExcelCtrl.importLog track by $index" ng-bind-html="message"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary mb-3"
+                ui-sref="sales.salesQuotes.list"
+                ><span data-translate="ui.admin.common.ViewQuotes"></span></button>
+    </div>
+</div>

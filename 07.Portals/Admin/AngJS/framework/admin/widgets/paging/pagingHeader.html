@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-sm-12 col-md-5 col-lg-5">
+    <div class="form-group">
+      <label class="control-label"
+        data-translate="ui.admin.common.QuickFilter">
+      </label>
+      <input type="text" class="form-control"
+        translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+        ng-model-options="wphCtrl.debounce500"
+        ng-model="wphCtrl.paging.quickFilter" />
+    </div>
+  </div>
+  <div class="col-sm-3 col-md-2 col-lg-2">
+    <div class="form-group">
+      <label class="control-label"
+        data-translate="ui.admin.common.PageSize">
+      </label>
+      <select class="form-control text-right"
+        ng-options="o for o in [8,16,32,64,128]"
+        ng-model="wphCtrl.paging.pageSize">
+      </select>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-9 col-md-5 col-lg-5">
+    <div class="form-group">
+      <label class="control-label text-center"
+        ng-bind="wphCtrl.paging.showingLabelContent">
+      </label>
+      <div class="input-group">
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-info"
+            ng-disabled="wphCtrl.paging.currentPage <= 0"
+            ng-click="wphCtrl.paging.goToFirstPage()">
+            <i class="far fa-angle-double-left fa-fw"></i>
+          </button>
+          <button type="button" class="btn btn-info"
+            ng-disabled="wphCtrl.paging.currentPage <= 0"
+            ng-click="wphCtrl.paging.goToPreviousPage()">
+            <i class="far fa-angle-left fa-fw"></i>
+          </button>
+        </div>
+        <select class="form-control" style="min-width: 75px;"
+          ng-options="p as (p+1) for p in wphCtrl.paging.allPages()"
+          ng-model="wphCtrl.paging.currentPage">
+        </select>
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-info"
+            ng-disabled="wphCtrl.paging.currentPage >= wphCtrl.paging.maxPage()-1"
+            ng-click="wphCtrl.paging.goToNextPage()">
+            <i class="far fa-angle-right fa-fw"></i>
+          </button>
+          <button type="button" class="btn btn-info"
+            ng-disabled="wphCtrl.paging.currentPage >= wphCtrl.paging.maxPage()-1"
+            ng-click="wphCtrl.paging.goToLastPage()">
+            <i class="far fa-angle-double-right fa-fw"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,163 @@
+﻿<div class="account-profile" ng-form="accountProfileCtrl.forms.Account">
+    <div class="row">
+        <div class="col-12">
+            <h1 sid="AccountProfileText"
+                data-translate="ui.storefront.userDashboard2.userDashboard.AccountProfile">
+            </h1>
+        </div>
+        <!-- TODO: accountProfileCtrl.currentAccountIsOnHold Alert box to the user that the account is on hold -->
+        <div class="col-sm-6">
+            <div class="row">
+                <text-input-form-group
+                    class="col-12"
+                    key="AccountName"
+                    ng-model="accountProfileCtrl.currentAccount.Name"
+                    label-key="ui.storefront.common.CompanyName"
+                    placeholder-key="ui.storefront.userDashboard2.controls.accountProfile.EnterYourCompanyName"
+                    max-length="256"
+                    ng-required="true">
+                </text-input-form-group>
+                <text-input-form-group
+                    ng-if="accountProfileCtrl.currentAccount.CustomKey"
+                    class="col-12"
+                    key="AccountCustomKey"
+                    ng-model="accountProfileCtrl.currentAccount.CustomKey"
+                    label-key="ui.storefront.common.Key"
+                    max-length="128"
+                    ng-disabled="true"
+                    ng-required="true">
+                </text-input-form-group>
+                <textarea-form-group
+                    class="col-12"
+                    key="AccountDescription"
+                    ng-model="accountProfileCtrl.currentAccount.Description"
+                    label-key="ui.storefront.common.CompanyDescription"
+                    sid="txtAccountDescription"
+                    placeholder-key="ui.storefront.userDashboard2.controls.accountProfile.DescribeYourAccount"
+                    ng-required="false"
+                    rows="4">
+                </textarea-form-group>
+            </div>
+        </div>
+        <div class="col-sm-6" ng-if="accountProfileCtrl.cefConfig.featureSet.taxes.enabled">
+            <div class="form-group" ng-class="{'has-error': accountProfileCtrl.forms.Account.txtTaxExemptionNo.$invalid}">
+                <label class="control-label" for="txtTaxExemptionNo"
+                       sid="txtTaxExemption"
+                       data-translate="ui.storefront.userDashboard2.controls.accountProfile.TaxExemptionNo"></label>
+                <input type="text" class="form-control"
+                       id="txtTaxExemptionNo" name="txtTaxExemptionNo"
+                       ng-required="false"
+                       ng-model="accountProfileCtrl.currentAccount.TaxExemptionNo" />
+                <div ng-messages="accountProfileCtrl.forms.Account.txtTaxExemptionNo.$error">
+                    <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': accountProfileCtrl.forms.Account.txtTaxEntityUseCode.$invalid}">
+                <label class="control-label" for="txtTaxEntityUseCode"
+                       sid="TaxEntityText"
+                       data-translate="ui.storefront.userDashboard2.controls.accountProfile.TaxEntityUseCode"></label>
+                <input type="text" class="form-control"
+                       id="txtTaxEntityUseCode" name="txtTaxEntityUseCode"
+                       ng-required="false"
+                       ng-model="accountProfileCtrl.currentAccount.TaxEntityUseCode" />
+                <div ng-messages="accountProfileCtrl.forms.Account.txtTaxEntityUseCode.$error">
+                    <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" ng-if="accountProfileCtrl.cefConfig.featureSet.accountProfile.storedFiles.enabled">
+            <h3 class="mt-1" data-translate="ui.storefront.common.UploadFiles"></h3>
+            <div cef-upload-file-widget
+                 class="mb-3"
+                 master="accountProfileCtrl.currentAccount"
+                 upload-type="StoredFileAccount"
+                 type-key="General"
+                 allow-multiple="true"
+                 upload-callback="accountProfileCtrl.onStoredFileUploaded">
+            </div>
+        </div>
+        <div ng-if="accountProfileCtrl.cefConfig.featureSet.accountProfile.storedFiles.enabled"
+             ng-repeat="file in accountProfileCtrl.currentAccount.StoredFiles | orderBy: ['SortOrder','Slave.DisplayName','Slave.Name']"
+             class="col-sm-4 col-md-3">
+            <a class="mb-1"
+               ng-href="{{file.Name | corsStoredFilesLink : 'account'}}"
+               target="_blank"
+               ng-bind="file.Slave.Name"></a><br/>
+            <small class="d-block" ng-bind="file.CreatedDate | date: 'yyyy-MM-dd hh:mm a'"></small>
+            <button type="button" class="btn btn-danger mt-1 mb-3"
+                    translate-attr="{ title: 'ui.storefront.common.Delete',
+                                      'aria-label': 'ui.storefront.common.Delete' }"
+                    ng-click="accountProfileCtrl.removeStoredFile($index)">
+                <i class="far fa-trash"></i>&nbsp;<!--
+                --><span data-translate="ui.storefront.common.Delete"></span>
+            </button>
+        </div>
+        <div class="col-12" ng-if="accountProfileCtrl.cefConfig.featureSet.profile.images.enabled">
+            <h3 class="mt-1"data-translate="ui.storefront.common.UploadImages"></h3>
+            <div cef-upload-image-widget
+                 class="mb-3"
+                 master="accountProfileCtrl.currentAccount"
+                 upload-type="ImageAccount"
+                 type-key="General"
+                 allow-multiple="true"
+                 upload-callback="accountProfileCtrl.onImageUploaded">
+            </div>
+        </div>
+        <div ng-if="userProfileCtrl.cefConfig.featureSet.profile.images.enabled"
+             ng-repeat="image in accountProfileCtrl.currentAccount.Images | orderBy: ['SortOrder','DisplayName','OriginalFileName']"
+             class="col-sm-4 col-md-3">
+            <img alt="{{image.DisplayName || image.OriginalFileName}}"
+                 ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                           | corsImageLink : 'account' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                 class="img-thumbnail mb-1" />
+            <span class="d-block" ng-bind="image.OriginalFileName"></span>
+            <small class="d-block" ng-bind="('Created:' | translate) + ' ' + (image.CreatedDate | date: 'yyyy-MM-dd hh:mm a')"></small>
+            <!--<span class="d-block" ng-bind="image.TypeName"></span>-->
+            <button type="button" class="btn btn-danger mt-1 mb-3"
+                    translate-attr="{ title: 'ui.storefront.common.Delete',
+                                      'aria-label': 'ui.storefront.common.Delete' }"
+                    ng-click="accountProfileCtrl.removeImage($index)">
+                <i class="far fa-trash"></i>&nbsp;<!--
+                --><span data-translate="ui.storefront.common.Delete"></span>
+            </button>
+        </div>
+        <div class="col-12">
+            <hr class="w-100 mt-0 mb-3" />
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-lg btn-primary mb-3"
+                            id="btnSaveAccountProfile" name="btnSaveAccountProfile"
+                            translate-attr="{ title: 'ui.storefront.common.Save',
+                                              'aria-label': 'ui.storefront.common.Save' }"
+                            data-translate="ui.storefront.common.Save"
+                            ng-disabled="accountProfileCtrl.forms.Account.$invalid
+                                         || accountProfileCtrl.forms.Account.$pristine
+                                         || accountProfileCtrl.viewState.running
+                                         || accountProfileCtrl.status == 'saving'"
+                            ng-click="accountProfileCtrl.save()">
+                    </button>
+                </div>
+                <div class="col">
+                    <div ng-if="accountProfileCtrl.status == 'saving'"
+                         class="alert alert-info p-2 ml-3 mb-3" role="alert">
+                        <i class="far fa-question-circle" aria-hidden="true"></i>&nbsp;<!--
+                        --><span data-translate="ui.storefront.userDashboard2.controls.userProfile.Saving"></span>
+                    </div>
+                    <div ng-if="accountProfileCtrl.status == 'done' && accountProfileCtrl.viewState.success"
+                         class="alert alert-success p-2 ml-3 mb-3" role="alert">
+                        <i class="far fa-check-circle" aria-hidden="true"></i>&nbsp;<!--
+                        --><span data-translate="ui.storefront.userDashboard2.controls.userProfile.SaveSuccessful"></span>
+                    </div>
+                    <div ng-if="accountProfileCtrl.status == 'done' && !accountProfileCtrl.viewState.success
+                                || accountProfileCtrl.status == 'error'"
+                         class="alert alert-danger p-2 ml-3 mb-3" role="alert">
+                        <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+                        --><span data-translate="ui.storefront.userDashboard2.controls.accountProfile.AnErrorWasEncounteredPleaseTryAgain"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

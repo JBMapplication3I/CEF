@@ -1,0 +1,57 @@
+<!-- Other -->
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.attributeGroups')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.attributeGroups').requiresPermission + '')">
+<a ui-sref="types.attributeGroups.list" ng-click="toggleDropdown($event)">
+Attribute Groups
+<span ng-if="$root.$state.includes('types.attributeGroups')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.attributeTabs')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.attributeTabs').requiresPermission + '')">
+<a ui-sref="types.attributeTabs.list" ng-click="toggleDropdown($event)">
+Attribute Tabs
+<span ng-if="$root.$state.includes('types.attributeTabs')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.lotGroups')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.lotGroups').requiresPermission + '')">
+<a ui-sref="types.lotGroups.list" ng-click="toggleDropdown($event)">
+Lot Groups
+<span ng-if="$root.$state.includes('types.lotGroups')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.memberships')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.memberships').requiresPermission + '')">
+<a ui-sref="types.memberships.list" ng-click="toggleDropdown($event)">
+Memberships
+<span ng-if="$root.$state.includes('types.memberships')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.membershipLevels')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.membershipLevels').requiresPermission + '')">
+<a ui-sref="types.membershipLevels.list" ng-click="toggleDropdown($event)">
+Membership Levels
+<span ng-if="$root.$state.includes('types.membershipLevels')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.pricePoints')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.pricePoints').requiresPermission + '')">
+<a ui-sref="types.pricePoints.list" ng-click="toggleDropdown($event)">
+Price Points
+<span ng-if="$root.$state.includes('types.pricePoints')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.salesReturnReasons')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.salesReturnReasons').requiresPermission + '')">
+<a ui-sref="types.salesReturnReasons.list" ng-click="toggleDropdown($event)">
+Return Reasons
+<span ng-if="$root.$state.includes('types.salesReturnReasons')" class="sr-only">(current)</span>
+</a>
+</div>
+<div class="col-xs-6 sub-link" ng-class="{'active': $root.$state.includes('types.settingGroups')}"
+ng-if="$parent.siteMenu2Ctrl.cvSecurityService.hasPermission($root.$state.get('types.settingGroups').requiresPermission + '')">
+<a ui-sref="types.settingGroups.list" ng-click="toggleDropdown($event)">
+Setting Groups
+<span ng-if="$root.$state.includes('types.settingGroups')" class="sr-only">(current)</span>
+</a>
+</div>

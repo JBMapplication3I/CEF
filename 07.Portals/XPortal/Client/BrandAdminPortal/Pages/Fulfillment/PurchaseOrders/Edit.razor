@@ -1,0 +1,370 @@
+﻿@page "/fulfillment/purchase-orders/editor/{IDStr}"
+@using Clarity.Ecommerce.MVC.Core
+@inherits MVC.Core.EditorViewTemplatedControllerBase<PurchaseOrderModel, MVC.Api.Endpoints.UpdatePurchaseOrder>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="purchaseOrderEditorPage">
+    @if (ViewState.loading || Record == null! && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (Record is not null)
+    {
+      <Validations
+        EditContext="EditContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="EditContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content">
+            <Container>
+              <Row Class="align-items-center my-4">
+                <Column ColumnSize="ColumnSize.Is12">
+                  <i class="fa fa-angle-double-left text-danger mr-1" aria-hidden="true"></i>
+                  <a href="/sales/purchase-orders" class="text-danger">Back to All Purchase Orders</a>
+                </Column>
+              </Row>
+              <Row>
+                <Column ColumnSize="ColumnSize.IsAuto" Class="flex-grow-1">
+                  <Div Class="d-flex align-items-center">
+                    <i class="far fa-file fa-2x mr-2"></i>
+                    <h1 class="mb-0">@(Record.CustomKey is not null ? Record.CustomKey : Record.ID)</h1>
+                  </Div>
+                </Column>
+                <Column ColumnSize="ColumnSize.IsAuto">
+                  <Dropdown>
+                    <DropdownToggle Class="btn btn-outline-primary">
+                      Actions
+                    </DropdownToggle>
+                    <DropdownMenu Class="dropdown-menu-right">
+                      @if (Record.StatusName != "Approved")
+                      {
+                      <DropdownItem Clicked="@(() => UpdateStatus(" Approved"))">
+                        Approve
+                      </DropdownItem>
+                      }
+                      @if (Record.StatusName != "Declined")
+                      {
+                      <DropdownItem Clicked="@(() => UpdateStatus(" Declined"))">
+                        Decline
+                      </DropdownItem>
+                      }
+                    </DropdownMenu>
+                  </Dropdown>
+                </Column>
+              </Row>
+              <Row Class="mb-2">
+                <Div Class="col-lg-4 col-md-6 col-12">
+                  <hr class="border-bottom w-100" />
+                  <h3 class="mb-0 pl-4">Details</h3>
+                  <hr class="border-bottom w-100" />
+                  <Table Borderless="true" Narrow="true">
+                    <TableBody>
+                      <TableRow>
+                        <TableRowCell>ID:</TableRowCell>
+                        <TableRowCell>@Record.ID</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>Status:</TableRowCell>
+                        <TableRowCell>@Record.Status?.DisplayName</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>Number:</TableRowCell>
+                        <TableRowCell>@Record.CustomKey</TableRowCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                  <strong>Balance</strong>
+                  @if (Record.BalanceDue <= 0)
+                  {
+                  <Div Class="alert alert-success d-flex align-items-center">
+                    <b class="text-break">Paid</b>
+                  </Div>
+                  }
+                  else if (Record.BalanceDue > 0 && DateTime.Compare(Convert.ToDateTime(Record.DueDate), DateTime.Now) < 0)
+                  {
+                  <Div Class="alert alert-danger d-flex align-items-center">
+                    <b class="text-break">@Record.BalanceDue due immediately</b>
+                  </Div>
+                  }
+                  else
+                  {
+                  <Div Class="alert alert-warning d-flex align-items-center">
+                    <b className="text-break">@($"{Record.BalanceDue:C}") @($"{(Record.BalanceDue is null ? "Due" : "due")}") by @($"{Record.DueDate:D}")</b>
+                  </Div>
+                  }
+                </Div>
+                <Div Class="col-lg-4 col-md-6 col-12">
+                  <hr class="border-bottom w-100" />
+                  <h3 class="mb-0 pl-4">Billing Info</h3>
+                  <hr class="border-bottom w-100" />
+                  @if (Record.BillingContact is not null)
+                  {
+                  <Table Borderless="true" Narrow="true">
+                    <TableBody>
+                      <TableRow>
+                        <TableRowCell>
+                          <i class="fa fa-user text-primary"></i>
+                        </TableRowCell>
+                        <TableRowCell class="w-100 text-capitalize">@Record.BillingContact.FullName</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <i class="fa fa-suitcase text-primary"></i>
+                        </TableRowCell>
+                        <TableRowCell class="w-100">
+                          <ul class="list-unstyled mb-0">
+                            <li>@Record.BillingContact.Address.Street1</li>
+                            @if (@Record.BillingContact.Address.Street2 is not null)
+                            {
+                            <li>@Record.BillingContact.Address.Street2</li>
+                            }
+                            <li>
+                              <Span class="text-capitalize">
+                                @Record.BillingContact.Address.City,
+                              </Span>
+                              <Span>
+                                @Record.BillingContact.Address.RegionCode
+                              </Span>
+                            </li>
+                          </ul>
+                        </TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <i class="fa fa-phone text-primary"></i>
+                        </TableRowCell>
+                        <TableRowCell class="w-100">@Record.BillingContact.Phone1</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <i class="fa fa-at text-primary"></i>
+                        </TableRowCell>
+                        <TableRowCell class="w-100">@Record.BillingContact.Email1</TableRowCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                  }
+                </Div>
+                <Div Class="col-lg-4 col-12">
+                  <hr class="border-bottom w-100" />
+                  <h3 class="mb-0 pl-4">Shipping Info</h3>
+                  <hr class="border-bottom w-100" />
+                  @if (Record.ShippingSameAsBilling == true)
+                  {
+                  <Span>Same as Billing</Span>
+                  }
+                  else if (Record.ShippingContact is not null
+                  && Record.ShippingSameAsBilling == false
+                  || Record.ShippingContact is not null
+                  && Record.ShippingSameAsBilling is null)
+                  {
+                  <Table Borderless="true" Narrow="true">
+                    <TableBody>
+                      <TableRow>
+                        <TableRowCell>
+                          <i class="fa fa-user text-primary"></i>
+                        </TableRowCell>
+                        <TableRowCell class="w-100 text-capitalize">@Record.ShippingContact.FullName</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <i class="fa fa-suitcase text-primary"></i>
+                        </TableRowCell>
+                        <TableRowCell class="w-100">
+                          <ul class="list-unstyled mb-0">
+                            <li>@Record.ShippingContact.Address.Street1</li>
+                            @if (@Record.ShippingContact.Address.Street2 is not null)
+                            {
+                            <li>@Record.ShippingContact.Address.Street2</li>
+                            }
+                            <li>
+                              <Span class="text-capitalize">
+                                @Record.ShippingContact.Address.City,
+                              </Span>
+                              <Span>
+                                @Record.ShippingContact.Address.RegionCode
+                              </Span>
+                            </li>
+                          </ul>
+                        </TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <i class="fa fa-phone text-primary"></i>
+                        </TableRowCell>
+                        <TableRowCell class="w-100">@Record.ShippingContact.Phone1</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell>
+                          <i class="fa fa-at text-primary"></i>
+                        </TableRowCell>
+                        <TableRowCell class="w-100">@Record.ShippingContact.Email1</TableRowCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                  }
+                </Div>
+              </Row>
+              <Row Class="mb-2 mt-4">
+                <Column ColumnSize="ColumnSize.Is12">
+                  @if (Record.SalesItems is not null && Record.SalesItems.Count > 0)
+                  {
+                  <h3>Summary</h3>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHeaderCell class="font-weight-bold py-3">SKU</TableHeaderCell>
+                        <TableHeaderCell class="font-weight-bold py-3">Name</TableHeaderCell>
+                        <TableHeaderCell class="font-weight-bold py-3">Price</TableHeaderCell>
+                        <TableHeaderCell class="font-weight-bold py-3">Quantity</TableHeaderCell>
+                        <TableHeaderCell class="font-weight-bold py-3">Subtotal</TableHeaderCell>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      @foreach(var item in Record.SalesItems)
+                      {
+                      <TableRow>
+                        <TableRowCell class="py-4 text-dark">@item.Sku</TableRowCell>
+                        <TableRowCell class="py-4 text-dark">@item.Name</TableRowCell>
+                        <TableRowCell class="py-4">@string.Format("{0:C}", item.UnitSoldPrice)</TableRowCell>
+                        <TableRowCell class="py-4">@Decimal.ToInt32(item.Quantity)</TableRowCell>
+                        <TableRowCell class="py-4">@string.Format("{0:C}", item.ExtendedPrice)</TableRowCell>
+                      </TableRow>
+                      }
+                    </TableBody>
+                  </Table>
+                  }
+                  else
+                  {
+                  <Span>No Sales Items to Display</Span>
+                  }
+                </Column>
+              </Row>
+              <Row Class="justify-content-end mb-4">
+                <Column ColumnSize="ColumnSize.Is4">
+                  <Table Striped="true" Class="table">
+                    <TableBody>
+                      <TableRow>
+                        <TableRowCell Class="py-3">Subtotal</TableRowCell>
+                        <TableRowCell Class="py-3 text-right">@string.Format("{0:C}", Record.Totals?.SubTotal)</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell Class="py-3">Fees</TableRowCell>
+                        <TableRowCell Class="py-3 text-right">@string.Format("{0:C}", @Record.Totals?.Fees)</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell Class="py-3">Shipping</TableRowCell>
+                        <TableRowCell Class="py-3 text-right">@string.Format("{0:C}", @Record.Totals?.Shipping)</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell Class="py-3">Taxes</TableRowCell>
+                        <TableRowCell Class="py-3 text-right">@string.Format("{0:C}", @Record.Totals?.Tax)</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell Class="py-3">Discounts</TableRowCell>
+                        <TableRowCell Class="py-3 text-right">@string.Format("{0:C}", @Record.Totals?.Discounts)</TableRowCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowCell Class="pt-4">
+                          <Blazorise.Strong Class="h3 mb-0">Total</Blazorise.Strong>
+                        </TableRowCell>
+                        <TableRowCell Class="pt-4 text-right">
+                          <Blazorise.Strong Class="h3 mb-0">@string.Format("{0:C}", @Record.Totals?.Total)</Blazorise.Strong>
+                        </TableRowCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </Column>
+              </Row>
+            </Container>
+          </Div>
+        </EditForm>
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/catalog/products";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+  #endregion
+
+  #region Loading
+  /// <inheritdoc />
+  protected override Func<int, Task<IHttpPromiseCallbackArg<PurchaseOrderModel>>> GetCallerFunc
+    => id => cvApi.GetPurchaseOrderByID(new() { ID = id });
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    return Task.WhenAll(LoadTypesAsync(), LoadStatusesAsync());
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<PurchaseOrderModel, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> UpdateCallerFunc
+    => record => cvApi.UpdatePurchaseOrder(Mapper.Map<MVC.Api.Endpoints.UpdatePurchaseOrder>(record));
+  #endregion
+
+  #region IHaveATypeBase
+  protected List<TypeModel>? Types { get; set; }
+
+  private async Task LoadTypesAsync()
+  {
+    ConsoleDebug("LoadTypesAsync: Start");
+    var result = await cvApi.GetPurchaseOrderTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    ConsoleDebug("LoadTypesAsync: End");
+  }
+  #endregion
+
+  #region IHaveAStatusBase
+  protected List<StatusModel>? Statuses { get; set; }
+
+  private async Task LoadStatusesAsync()
+  {
+    ConsoleDebug("LoadStatusesAsync: Start");
+    var result = await cvApi.GetPurchaseOrderStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    ConsoleDebug("LoadStatusesAsync: End");
+  }
+
+  public async Task UpdateStatus(string status)
+  {
+    if (!Record!.StatusName!.Equals(status))
+    {
+      ConsoleDebug("Update Status: Start");
+      var newStatus = Statuses!.SingleOrDefault(x => x.Name == status);
+      Record.StatusID = newStatus!.ID;
+      Record.StatusKey = newStatus.CustomKey;
+      await OnSave().ConfigureAwait(false);
+      ConsoleDebug("Update Status: Done");
+    }
+  }
+  #endregion
+}

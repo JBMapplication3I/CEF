@@ -1,0 +1,42 @@
+<table class="table">
+    <colgroup>
+        <col class="lg-w-20">
+        <col class="lg-w-50">
+        <col class="lg-w-20">
+        <col class="lg-w-10">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="p-2">Item #</th>
+            <th class="p-2">Description</th>
+            <th class="p-2">Price</th>
+            <th class="p-2">Qty</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="variant in productVariantTablesCtrl.productVariants | orderBy: 'customKey'"
+            ng-if="variant.originalObject.IsVisible"
+            ng-class="{'active-record': variant.selected}">
+            <td class="px-2 py-1 small" ng-bind="variant.customKey"></td>
+            <td class="px-2 py-1 small" ng-bind="variant.name"></td>
+            <td class="text-right px-2 py-1">
+                <div class="price-holder text-right" ng-if="variant.price > 0"
+                    ng-bind="variant.price | globalizedCurrency"></div>
+            </td>
+            <td class="p-1"><input type="number"
+                    class="form-control text-right px-1"
+                    min="0" max="999" placeholder="20" ng-change="productVariantTablesCtrl.assignNewVariantionQuantity(variant)"
+                    ng-model="variant.quantity"></td>
+        </tr>
+    </tbody>
+</table>
+<button 
+        type="button" class="btn btn-lg btn-success w-100"
+        id="btnDetailsAddToCartProduct{{productBuyBlockCtrl.productToDisplay.ID}}"
+        name="btnDetailsAddToCartProduct{{productBuyBlockCtrl.productToDisplay.ID}}"
+        translate-attr="{ title: 'ui.storefront.cart.addToCart',
+                        'aria-label': 'ui.storefront.cart.addToCart' }"
+        ng-click="$parent.$parent.$parent.$parent.$parent.$parent.productDetailsCtrl.addSelectedVariantsToCart()">
+    <i class="far fa-cart-plus" aria-hidden="true"></i>&nbsp;<!--
+    --><span data-translate="ui.storefront.cart.addToCart"></span>
+</button>

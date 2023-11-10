@@ -1,0 +1,32 @@
+<!-- step.payment.body Template -->
+<div class="row" ng-form="pspbCtrl.forms.payment">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-sm-3" style="min-height: 150px;">
+        <div ng-repeat="(name, method) in pspbCtrl.paymentMethods"
+          class="row"
+          ng-hide="pspbCtrl.hidePaymentMethod(name)">
+          <div class="col-xs-12">
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input"
+                id="rd_{{name}}" name="rdPaymentModel"
+                ng-model="pspbCtrl.paymentMethod"
+                value="{{name}}" />
+              <label class="custom-control-label mb-0 pointer"
+                for="rd_{{name}}"
+                sid="PaymentMethodText_{{$index}}"
+                data-translate="{{method.titleKey ||
+                  ((name.replace('purchasePaymentMethod', '') | camelCaseToHuman : true))}}">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-9">
+        <div ng-include="pspbCtrl.paymentMethods[
+          pspbCtrl.paymentMethod].templateURL | corsLink: 'ui'">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

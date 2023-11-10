@@ -1,0 +1,72 @@
+﻿<div ng-controller="SystemUITranslationsSearchController as systemUITranslationsSearch"
+  class="full-height">
+  <cv-page
+    ng-if="$root.cvSecurityService.hasPermission('Admin.System.UiTranslations')"
+    caption="{{'ui.admin.views.system.uiTranslationsList.ManageUiTranslations' | translate}}"
+    head-icon="fa-gear">
+    <cv-widget>
+      <div widget-menu-item
+        caption="{{'ui.admin.views.system.uiTranslationsList.AddUiTranslation' | translate}}"
+        icon-class="fa-plus-circle"
+        click="$root.$state.go('system.uiTranslations.detail',{ID:'New'})"
+        permission="'Globalization.UiTranslation.Create'">
+      </div>
+      <div widget-menu-item
+        caption="Clear UI Translations Cache"
+        icon-class="fa-refresh"
+        click="$parent.systemUITranslationsSearch.doClearUITranslationsCache()">
+      </div>
+      <widget-body ng-controller="SearchController as search">
+        <cv-grid
+          show-pager="true"
+          page-sizes="8,16,32,64,128"
+          server-paging="true"
+          sortable="false"
+          server-sorting="true"
+          filter-side="true"
+          on-search="search.getUiTranslations"
+          partial-reset="false"
+          on-deactivate="search.deactivateUiTranslation"
+          on-reactivate="search.reactivateUiTranslation"
+          on-delete="search.deleteUiTranslation"
+          edit-state="system.settings.detail,[ID]"
+          permissions-base="Globalization.UiTranslation">
+          <cv-column
+            hidden
+            title="Key Starts With"
+            field="KeyStartsWith"
+            filter
+            filter-type="select">
+            <option value="" selected data-translate="ui.admin.common.Any"></option>
+            <option value="ui.storefront.">ui.storefront.</option>
+            <option value="ui.admin.">ui.admin.</option>
+          </cv-column>
+          <cv-column
+           title="#"
+           field="ID"
+           width="8%"
+           filter />
+          <cv-column
+            title="Locale"
+            field="Locale"
+            width="8%"
+            filter
+            filter-field="LanguageID"
+            filter-type="select"
+            on-option-repeat="$parent.search.getLanguages">
+            <option value="" selected data-translate="ui.admin.common.Any"></option>
+          </cv-column>
+          <cv-column
+            title="UI Key"
+            field="UiKeyKey"
+            filter
+            filter-field="KeyContains" />
+          <cv-column
+            title="Value"
+            field="Value"
+            filter />
+        </cv-grid>
+      </widget-body>
+    </cv-widget>
+  </cv-page>
+</div>

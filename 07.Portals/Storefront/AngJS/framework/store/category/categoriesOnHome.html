@@ -1,0 +1,26 @@
+﻿<div class="cef-categories-on-home row">
+    <div ng-repeat="category in categoriesOnHomeCtrl.categories"
+         class="col-sm-6 col-md-4 home-category">
+        <a ui-sref-plus uisrp-is-catalog="true"
+           uisrp-state="searchCatalog.products.results.both"
+           uisrp-params="{ 'category': '{{category.Name}}|{{category.CustomKey}}' }"
+           class="image">
+            <p><div cef-product-card-thumbnail-widget
+                    product-id="category.ID"
+                    product-image="category.PrimaryImageFileName"
+                    is-category="true"
+                    width="250"
+                    height="250"
+                    index="$index"></div></p>
+        </a>
+        <h4 ng-bind="category | cleanSearchCategoryName"></h4>
+        <p ng-bind-html="category.Description | trustedHtml"></p>
+        <p><a ui-sref-plus uisrp-is-catalog="true"
+              uisrp-state="searchCatalog.products.results.both"
+              uisrp-params="{ 'category': '{{category.Name}}|{{category.CustomKey}}' }"
+              ><span data-translate="ui.storefront.common.Shop"></span>&nbsp;<!--
+              --><span ng-class="{ 'text-capitalize': !category.DisplayName }"
+                       ng-bind="category | cleanSearchCategoryName"></span>&nbsp;<!--
+              --><i class="far fa-angle-double-right"></i></a></p>
+    </div>
+</div>

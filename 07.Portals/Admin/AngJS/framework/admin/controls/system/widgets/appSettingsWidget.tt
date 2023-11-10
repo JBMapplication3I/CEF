@@ -1,0 +1,421 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #><#@
+output extension=".tstxt" #><#@
+assembly name="System.Core" #><#@
+assembly name="System.Web.dll" #><#@
+assembly name="System.Xml.dll" #><#@
+assembly name="$(UserProfile)\.nuget\packages\hangfire.core\1.7.27\lib\net46\Hangfire.Core.dll" #><#@
+assembly name="$(UserProfile)\.nuget\packages\entityframework\6.4.4\lib\net45\EntityFramework.dll" #><#@
+assembly name="$(SolutionDir)packages\ServiceStack.Interfaces.4.5.14\lib\portable-wp80+sl5+net45+win8+wpa81+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll" #><#@
+assembly name="$(SolutionDir)packages\ServiceStack.Text.Signed.4.5.14\lib\net45\ServiceStack.Text.dll" #><#@
+assembly name="$(SolutionDir)00.Core\00.Clarity.Ecommerce.Core\bin\Debug\net472\Clarity.Ecommerce.Core.dll" #><#@
+assembly name="$(SolutionDir)00.Core\00.Clarity.Ecommerce.RegistryLoader\bin\Debug\net472\Clarity.Ecommerce.RegistryLoader.dll" #><#@
+assembly name="$(SolutionDir)01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\bin\Debug\net472\Clarity.Ecommerce.DataModel.dll" #><#@
+assembly name="$(SolutionDir)02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\bin\Debug\net472\Clarity.Ecommerce.Interfaces.Models.dll" #><#@
+assembly name="$(SolutionDir)03.ModelsAndMapping\03.Clarity.Ecommerce.Models\bin\Debug\net472\Clarity.Ecommerce.Models.dll" #><#@
+assembly name="$(SolutionDir)06.Services\06.Clarity.Ecommerce.Service\bin\Clarity.Ecommerce.Service.dll" #><#@
+assembly name="$(SolutionDir)11.T4\11.T4.CodeGenerator\bin\Debug\net472\CodeGenerator.dll" #><#@
+assembly name="$(SolutionDir)11.T4\11.T4.ServiceStack.CodeGenerator.TypeScript\bin\Debug\net472\ServiceStack.CodeGenerator.TypeScript.dll" #><#@
+import namespace="System" #><#@
+import namespace="System.Collections.Generic" #><#@
+import namespace="System.ComponentModel" #><#@
+import namespace="System.ComponentModel.DataAnnotations" #><#@
+import namespace="System.ComponentModel.DataAnnotations.Schema" #><#@
+import namespace="System.Data.Entity" #><#@
+import namespace="System.Linq" #><#@
+import namespace="System.Runtime.InteropServices" #><#@
+import namespace="System.Reflection" #><#@
+import namespace="System.Text" #><#@
+import namespace="System.Xml" #><#@
+import namespace="Clarity.Ecommerce.DataModel" #><#@
+import namespace="Clarity.Ecommerce.Interfaces.DataModel" #><#@
+import namespace="Clarity.Ecommerce.JSConfigs" #><#@
+import namespace="CodeGenerator" #><#@
+import namespace="ServiceStack" #><#@
+import namespace="ServiceStack.CodeGenerator.TypeScript" #><#@
+import namespace="ServiceStack.CodeGenerator.TypeScript.XmlDocumentationReader" #><#@
+include file="$(SolutionDir)11.T4\11.T4.CodeGenerator\MultiOutput.old.ttinclude" #><#
+var properties = typeof(CEFConfigDictionary)
+	.GetProperties(BindingFlags.Public | BindingFlags.Static)
+	.Where(x => x.HasAttribute<AppSettingsKeyAttribute>())
+	.ToArray();
+var processedProperties = new List<PropertyInfo>();
+#>
+/**
+ * @auto-generated
+ * @file framework/admin/controls/system/appSettingsWidget.ts
+ * @author Copyright(c) 2021-<#= DateTime.Today.Year #> clarity-ventures.com. All rights reserved.
+ * @desc The AppSettings keys, values and descriptions and the ability to change them.
+ *       NOTE: This file is generated via the appSettingsWidget.tt T4 in the UI Project
+ */
+module cef.admin {
+	interface ICustomAttribute {
+		DisplayName?: string;
+		ConstructorArguments?: string[];
+	}
+
+	interface IParamDocs {
+		Summary?: string,
+		Remarks?: string,
+		Example?: string,
+	}
+
+	interface IAppSettingDefinition {
+		Index: number;
+		Name?: string;
+		ParamDocs?: IParamDocs;
+		PropertyType?: string;
+		CustomAttributes?: ICustomAttribute[],
+	}
+
+	class AppSettingsWidgetController extends core.TemplatedControllerBase {
+		// Bound Scope Properties
+		// <None>
+		// Properties
+		static readonly timeSpanParser = new RegExp("(?<negative>-)?[Pp]((?<days>\d*)[Dd])?[Tt]((?<hours>\d*)[Hh])?((?<min>\d*)[Mm])?((?<sec>\d*)[Ss])?");
+		appSettingsDefinitions: IAppSettingDefinition[] = [];
+		appSettingsValues: cefalt.admin.Dictionary<cefalt.admin.Dictionary<any>> = null;
+		appSettingsValuesOriginals: cefalt.admin.Dictionary<cefalt.admin.Dictionary<any>> = null;
+		toUpdates: cefalt.admin.Dictionary<cefalt.admin.Dictionary<any>> = { };
+		pageSize = 8;
+		page = 0;
+		pages: number[] = [];
+		get enableSave(): boolean { return this.toUpdates && Object.keys(this.toUpdates).length > 0; }
+		// Functions
+		convertTimeSpan(timeSpan: string): string {
+			const matches = AppSettingsWidgetController.timeSpanParser.exec(timeSpan);
+			const negative = matches["groups"]["negative"] === "-";
+			const days = Number(matches["groups"]["days"]) || 0;
+			const hours = Number(matches["groups"]["hours"]) || 0;
+			const minutes = Number(matches["groups"]["mins"]) || 0;
+			const seconds = Number(matches["groups"]["sec"]) || 0;
+			return `${(negative ? "-" : "")}${days}:${hours}:${minutes}:${seconds}`;
+		}
+		cleanPropertyType(type: string): string {
+			return type
+				.replace('System.Nullable\`1[Clarity.Ecommerce.Enums.HostLookupWhichUrl]', 'HostLookupWhichUrl')
+				.replace('System.Nullable\`1[System.Int32]', 'Int32?')
+				.replace('System.Nullable\`1[System.Decimal]', 'Decimal?')
+				.replace('System.', '').replace('Clarity.Ecommerce.Enums.', '');
+		}
+		currentValue(type: string, name: string): any {
+			return this.appSettingsValues[type][name];
+		}
+		pushToUpdates(type: string, name: string, value: any): void {
+			if (!this.toUpdates) {
+				this.toUpdates = { };
+			}
+			if (!this.toUpdates[type]) {
+				this.toUpdates[type] = { };
+			}
+			if (angular.isDefined(this.toUpdates[type][name])
+				&& this.toUpdates[type][name] == value) {
+				// Do Nothing
+				return;
+			}
+			if (angular.isDefined(this.toUpdates[type][name])
+				&& this.appSettingsValuesOriginals[type][name] == value) {
+				// Matches original, don't try to update (remove from the update dictionary)
+				delete this.toUpdates[type][name];
+				return;
+			}
+			// New value, push to the update dictionary
+			this.toUpdates[type][name] = value;
+		}
+		load(): void {
+			this.setRunning();
+			this.cvApi.jsConfigs.GetAppSettings().then(r => {
+				if (!r || !r.data || !r.data.ActionSucceeded) {
+					this.finishRunning(true, null, r && r.data && r.data.Messages);
+					return;
+				}
+				Object.keys(r.data.Result).forEach(type => {
+					Object.keys(r.data.Result[type]).forEach(name => {
+						const found = _.find(this.appSettingsDefinitions, x => x.Name === name);
+						if (found && found.PropertyType === "System.TimeSpan") {
+							r.data.Result[type][name] = this.convertTimeSpan(r.data.Result[type][name]);
+						}
+					});
+				});
+				this.appSettingsValues = r.data.Result;
+				this.appSettingsValuesOriginals = r.data.Result;
+				const pages = [];
+				let settingsCount = 0;
+				Object.keys(this.appSettingsValues).forEach(type => {
+					settingsCount += Object.keys(this.appSettingsValues[type]).length;
+				});
+				const pageCount = Math.ceil(settingsCount / (this.pageSize || 8));
+				for (let i = 0; i < pageCount; i++) {
+					pages.push(i);
+				}
+				this.pages = pages;
+				this.finishRunning();
+			}).catch(reason => this.finishRunning(true, reason));
+		}
+		save(): void {
+			if (!this.enableSave) {
+				return;
+			}
+			this.setRunning();
+			this.cvApi.jsConfigs.UpdateAppSettings({ KeysToUpdate: this.toUpdates }).then(r => {
+				if (!r || !r.data || !r.data.ActionSucceeded) {
+					this.finishRunning(true, null, r && r.data && r.data.Messages);
+					return;
+				}
+				this.load();
+			}).catch(reason => this.finishRunning(true, reason));
+		}
+		// Events
+		// <None>
+		// Constructor
+		constructor(
+				protected readonly cefConfig: core.CefConfig,
+				private readonly cvApi: api.ICEFAPI) {
+			super(cefConfig);
+			this.setRunning();
+			var index = 0;
+<# foreach (var property in properties) { #>
+this.appSettingsDefinitions.push(<IAppSettingDefinition>{
+Index: ++index,
+Type: "<#= typeof(CEFConfigDictionary).FullName + ", " + typeof(CEFConfigDictionary).Assembly.GetName().Name  #>",
+Name: "<#= property.Name #>",
+<#	try
+	{
+		var paramDocs = XmlDocumentationReader.XMLFromProperty(property); #>
+ParamDocs: <IParamDocs>{
+<#		if (paramDocs != null && paramDocs["summary"] != null) { #>
+Summary: "<#= paramDocs["summary"].InnerText.Trim().Replace("\r\n", "\\\r\n").Replace("\"", "&quot;").Replace("            ", string.Empty) #>",
+<#		} #>
+<#		if (paramDocs != null && paramDocs["remarks"] != null) { #>
+Remarks: "<#= paramDocs["remarks"].InnerText.Trim().Replace("\r\n", "\\\r\n").Replace("\"", "&quot;").Replace("            ", string.Empty) #>",
+<#		} #>
+<#		if (paramDocs != null && paramDocs["example"] != null) { #>
+Example: "<#= paramDocs["example"].InnerText.Trim().Replace("\r\n", "\\\r\n").Replace("\"", "&quot;").Replace("            ", string.Empty) #>",
+<#		} #>
+},
+<#	} catch { /* Do Nothing */ } #>
+PropertyType: "<#= property.PropertyType #>",
+CustomAttributes: [
+<#	foreach (var attr in property.CustomAttributes) { #>
+<ICustomAttribute>{
+DisplayName: "<#= HelpFunctions.SplitCamelCase(attr.AttributeType.Name.Replace("Attribute", string.Empty)) #>",
+ConstructorArguments: [
+<#		foreach (var arg in attr.ConstructorArguments) { #>
+<#			if (arg.ToString().Contains("[")) { #>
+"<#= arg.ToString().Replace("\"", "\\\"").Replace("new String[1] { ", string.Empty).Replace("new String[2] { ", string.Empty).Replace("new Char[1] { ", string.Empty).Replace("new Char[2] { ", string.Empty).Replace(" }", string.Empty) #>",
+<#			} else if (arg.ToString().Contains(".CheckoutModes)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains(".PaymentProviderMode)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains(".PaymentProcessMode)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains(".HostLookupWhichUrl)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains(".HostLookupMethod)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains("(String)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains("(Boolean)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains("(Int32)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains("(Double)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains("(Byte)")) { #>
+"<#= arg #>",
+<#			} else if (arg.ToString().Contains("(Type)")) { #>
+"<#= arg #>",
+<#			} else { #>
+<#= arg.ToString().Replace("\\", "\\\\") #>,
+<#			} #>
+<#		} /* END foreach (var arg in attr.ConstructorArguments) */ #>
+]
+},
+<#	} /* END foreach (var attr in property.CustomAttributes) */ #>
+],
+});
+<# } /* END foreach (var property in properties) */ #>
+			this.load();
+		}
+	}
+
+	adminApp.directive("appSettingsWidget", (/*$filter: ng.IFilterService*/): ng.IDirective => ({
+		restrict: "EA",
+		// templateUrl: $filter("corsLink")("/framework/admin/controls/system/widgets/appSettingsWidget.html", "ui"),
+		template: `<!--
+// <auto-generated>
+// <copyright file="appSettingsWidget.html" company="clarity-ventures.com">
+// Copyright (c) 2021-<#= DateTime.Today.Year #> clarity-ventures.com. All rights reserved.
+// </copyright>
+// <summary>The AppSettings keys, values and descriptions and the ability to edit them.</summary>
+// <remarks>This file was auto-generated by appSettingsWidget.tt in the UI Project</remarks>
+// </auto-generated>
+-->
+<div class="row">
+	<div class="col-sm-12">
+		<h1 class="inline-block">App Settings Reference</h1>
+		<button type="button" class="btn btn-primary pull-right"
+			ng-disabled="aswCtrl.viewState.running || !aswCtrl.enableSave"
+			ng-click="aswCtrl.save()">
+			Save
+		</button>
+		{{aswCtrl.viewState.errorMessage}}
+	</div>
+	<div class="col-sm-12">
+		<p>
+			Each app setting will be listed with it's key, the general kinds of values it should have, and what general
+			effects it will have on the system. In some cases, there are known <b>"mutual exclusivities"</b> (settings
+			that cannot work together) and <b>"depends on"</b> (settings that must be put together to have a
+			functioning feature result. This knowledge-base will take time to build up but will be entered directly
+			into the Summary XML documentation tags of the <b>CEFConfigsDictionary.Properties*.cs</b> files and
+			transcribed here.
+		</p>
+	</div>
+	<div class="col-sm-12 col-md-6">
+		<div class="form-group">
+			<label>Quick filter</label>
+			<input type="text" class="form-control"
+				placeholder="Quick filter..."
+				ng-change="aswCtrl.page = 0"
+				ng-model="aswCtrl.quickFilter" />
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-3">
+		<div class="form-group">
+			<label>Page size</label>
+			<select class="form-control custom-select"
+				ng-change="aswCtrl.page = 0"
+				ng-options="o as o for o in [8,16,32,64,128]"
+				ng-model="aswCtrl.pageSize">
+			</select>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-3">
+		<div class="form-group">
+			<label>Page</label>
+			<select class="form-control custom-select"
+				ng-model="aswCtrl.page"
+				ng-options="o as (o+1) for o in aswCtrl.pages">
+			</select>
+		</div>
+	</div>
+	<div class="col-sm-12" ng-if="!aswCtrl.viewState.loading">
+		<div class="table-responsive">
+			<table class="table table-hover table-striped table-condensed">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Name / Key / Summary / Remarks / Example</th>
+						<th>Default / Current Value / Property Type</th>
+						<!--<th>Custom Attributes</th>-->
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="asd in aswCtrl.appSettingsDefinitions
+									| filter: { $: aswCtrl.quickFilter }
+									| orderBy: ['CustomAttributes']
+									| limitTo: aswCtrl.pageSize
+											 : (aswCtrl.page * aswCtrl.pageSize)">
+						<td>
+							<span ng-bind="asd.Index || '-'" class="block"></span>
+							<span ng-repeat="ca in asd.CustomAttributes | filter: { $: 'Unused' }"
+								class="block">
+								<b>Unused</b>
+							</span>
+						</td>
+						<td>
+							<span class="block"><b>Name:</b> <span ng-bind="asd.Name || '-'"></span></span>
+							<span ng-repeat="ca in asd.CustomAttributes | filter: { $: 'App Settings Key' }"
+								class="block">
+								<b>Key:</b> <span ng-repeat="cca in ca.ConstructorArguments" ng-bind="cca"></span>
+						 	</span>
+							<span ng-repeat="ca in asd.CustomAttributes | filter: { $: 'Depends On' }"
+								class="block">
+								<b>Depends On:</b> <span ng-repeat="cca in ca.ConstructorArguments" ng-bind="cca"></span>
+							</span>
+							<span ng-repeat="ca in asd.CustomAttributes | filter: { $: 'Mutually Exclusive With' }"
+								class="block">
+								<b>Mutually Exclusive With:</b> <span ng-repeat="cca in ca.ConstructorArguments" ng-bind="cca"></span>
+							</span>
+							<span class="block" ng-if="asd.ParamDocs.Summary"><b>Summary:</b> <span ng-bind="asd.ParamDocs.Summary"></span></span>
+							<span class="block" ng-if="asd.ParamDocs.Remarks"><b>Remarks:</b> <span ng-bind="asd.ParamDocs.Remarks"></span></span>
+							<span class="block" ng-if="asd.ParamDocs.Example"><b>Example:</b> <span ng-bind="asd.ParamDocs.Example"></span></span>
+						</td>
+						<td>
+							<span ng-repeat="(a, asvType) in aswCtrl.appSettingsValues"
+								class="block">
+								<div ng-switch="asd.PropertyType">
+									<div ng-switch-when="System.Boolean">
+										<input type="checkbox"
+											ng-change="aswCtrl.pushToUpdates(asd.Type, asd.Name, asvType[asd.Name])"
+											ng-model="asvType[asd.Name]" />
+									</div>
+									<div ng-switch-when="System.Decimal">
+										<input type="number" class="form-control"
+											step="0.0001"
+											ng-change="aswCtrl.pushToUpdates(asd.Type, asd.Name, asvType[asd.Name])"
+											ng-model="asvType[asd.Name]" />
+									</div>
+									<div ng-switch-when="System.Double">
+										<input type="number" class="form-control"
+											step="0.0001"
+											ng-change="aswCtrl.pushToUpdates(asd.Type, asd.Name, asvType[asd.Name])"
+											ng-model="asvType[asd.Name]" />
+									</div>
+									<div ng-switch-when="System.Int32">
+										<input type="number" class="form-control"
+											step="1"
+											ng-change="aswCtrl.pushToUpdates(asd.Type, asd.Name, asvType[asd.Name])"
+											ng-model="asvType[asd.Name]" />
+									</div>
+									<div ng-switch-default>
+										<input type="text" class="form-control"
+											ng-change="aswCtrl.pushToUpdates(asd.Type, asd.Name, asvType[asd.Name])"
+											ng-model="asvType[asd.Name]" />
+									</div>
+								</div>
+							</span>
+							<span ng-repeat="ca in asd.CustomAttributes | filter: { $: 'Default Value' }"
+								class="block">
+								<b>Default:</b> <span ng-repeat="cca in ca.ConstructorArguments" ng-bind="cca.replace('Clarity.Ecommerce.Enums', 'Enums')"></span>
+							</span>
+							<span><b>Property Type:</b>&nbsp;<span ng-bind="aswCtrl.cleanPropertyType(asd.PropertyType) || '-'"></span><!--
+							--><span ng-repeat="ca in asd.CustomAttributes | filter: { $: 'Nullable' }">?</span></span>
+							<span ng-repeat="ca in asd.CustomAttributes | filter: { $: 'Split On' }"
+								class="block">
+								<b>Split On:</b> <span ng-repeat="cca in ca.ConstructorArguments" ng-bind="cca"></span>
+							</span>
+						</td>
+						<!--
+						<td>
+							<span ng-repeat="ca in asd.CustomAttributes"
+								ng-if="ca.DisplayName != 'App Settings Key' && ca.DisplayName != 'Nullable' && ca.DisplayName != 'Default Value' && ca.DisplayName != 'Depends On' && ca.DisplayName != 'Split On' && ca.DisplayName != 'Mutually Exclusive With' && ca.DisplayName != 'Unused'"
+								class="block">
+								<b ng-bind="ca.DisplayName"></b>
+								<span ng-repeat="cca in ca.ConstructorArguments" ng-bind="cca"></span>
+							</span>
+						</td>
+						-->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!--
+		<table ng-repeat="(a, asvType) in aswCtrl.appSettingsValues | limitTo: 3 : 0"
+			class="table table-hover table-striped table-condensed">
+			<thead><tr><th colspan="2"><b ng-bind="a"></b></th></tr></thead>
+			<tbody>
+				<tr ng-repeat="(b, value) in asvType | limitTo: 3 : 0">
+					<td><b ng-bind="b"></b></td>
+					<td ng-bind="value"></td>
+				</tr>
+			</tbody>
+		</table>
+		-->
+	</div>
+</div>
+`,
+		controller: AppSettingsWidgetController,
+		controllerAs: "aswCtrl"
+	}));
+}
+<# SaveOutput("appSettingsWidget", "ts", true); #>

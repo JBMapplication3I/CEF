@@ -1,0 +1,39 @@
+﻿<div class="modal-header bg-dark text-light">
+    <h3 class="modal-title" sid="ModalCreateListText"
+        data-translate="ui.storefront.userDashboard2.controls.createShoppingList.CreateList"></h3>
+    <button type="button" class="close"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="shoppingListCreateModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span sid="CloseCreateShoppingListModalBtn" class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body form-vertical" ng-form="shoppingListCreateModalCtrl.forms.edit">
+    <text-input-form-group
+        key="ModalShoppingListCreateName"
+        ng-model="shoppingListCreateModalCtrl.newName"
+        label-key="ui.storefront.userDashboard2.controls.createShoppingList.NewShoppingListName"
+        max-length="128"
+        ng-required="true"
+        ng-keydown="shoppingListCreateModalCtrl.inputKeyPress">
+    </text-input-form-group>
+    <p ng-if="shoppingListCreateModalCtrl.createdMessage"
+       ><span ng-bind="shoppingListCreateModalCtrl.createdMessage"></span>&nbsp;<span
+        data-translate="ui.storefront.userDashboard2.controls.createShoppingList.HasBeenCreated"></span></p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary"
+            id="btnModalShoppingListCreateClose" name="btnModalShoppingListCreateClose"
+            translate-attr="{ title: 'ui.storefront.common.Cancel',
+                              'aria-label': 'ui.storefront.common.Cancel' }"
+            data-translate="ui.storefront.common.Cancel"
+            ng-click="shoppingListCreateModalCtrl.cancel()"></button>
+    <button type="button" class="btn btn-primary"
+            id="btnModalShoppingListCreateSubmit" name="btnModalShoppingListCreateSubmit"
+            translate-attr="{ title: 'ui.storefront.userDashboard2.controls.createShoppingList.CreateList',
+                              'aria-label': 'ui.storefront.userDashboard2.controls.createShoppingList.CreateList' }"
+            data-translate="ui.storefront.userDashboard2.controls.createShoppingList.CreateList"
+            ng-disabled="shoppingListCreateModalCtrl.forms.edit.$invalid || shoppingListCreateModalCtrl.viewState.running"
+            ng-click="shoppingListCreateModalCtrl.ok()"></button>
+</div>

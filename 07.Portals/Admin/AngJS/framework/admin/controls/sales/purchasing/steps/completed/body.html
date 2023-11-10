@@ -1,0 +1,49 @@
+<!-- step.completed.body Template -->
+<!-- Orders -->
+<div class="row"
+  ng-if="pscbCtrl.cvPurchaseService.checkoutResult.OrderID
+    || pscbCtrl.cvPurchaseService.checkoutResult.OrderIDs.length">
+  <div class="col-xs-12 text-center">
+    <h4 data-translate="ui.admin.checkout.views.orderConfirmation.thankYouForYouPurchase"
+      id="lbThankYouForYourPurchase"
+      class="mt-0">
+    </h4>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <p sid="PurchaseSuccessText"
+      data-translate="ui.admin.checkout.views.orderConfirmation.yourPurchaseWasSuccessfulAndIsInTheProcessOfBeing">
+    </p>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <div class="row">
+      <div ng-if="!pscbCtrl.cefConfig.featureSet.shipping.splitShipping.enabled"
+        class="col-xs-12">
+        <p class="very-big"><span data-translate="ui.admin.checkout.views.orderConfirmation.orderNumber"></span>&nbsp;<!--
+        --><b ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.OrderID"></b></p>
+      </div>
+      <div ng-if="pscbCtrl.cefConfig.featureSet.shipping.splitShipping.enabled"
+        class="col-xs-12">
+        <h5><span sid="CheckoutMasterOrderText"
+          data-translate="ui.admin.checkout.views.orderConfirmation.MasterOrder"></span>&nbsp;<!--
+        --><b sid="CheckoutMasterOrderNumberText"
+          ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.OrderIDs[0]"></b></h5>
+        <p class="small bold" sid="MasterOrderMessageText"
+          data-translate="ui.admin.checkout.views.orderConfirmation.MasterOrder.Message">
+        </p>
+        <h5><span sid="CheckoutSubOrderText"
+          data-translate="ui.admin.checkout.views.orderConfirmation.SubOrder.OptionalPlural"></span>&nbsp;<!--
+        --><b ng-repeat="orderID in pscbCtrl.cvPurchaseService.checkoutResult.OrderIDs"
+          sid="CheckoutSubOrderNumberText_{{$index}}"
+          ng-hide="$first"
+          ng-bind="orderID + (!$last ? ', ' : '')"></b></h5>
+        <p class="small" sid="SubOrderMessageText"
+          data-translate="ui.admin.checkout.views.orderConfirmation.SubOrder.Message">
+        </p>
+      </div>
+    </div>
+    <p ng-if="pscbCtrl.cvPurchaseService.checkoutResult.WarningMessage"
+      class="alert alert-warning" role="alert"
+      ng-bind="pscbCtrl.cvPurchaseService.checkoutResult.WarningMessage">
+    </p>
+  </div>
+</div>

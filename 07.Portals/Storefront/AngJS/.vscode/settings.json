@@ -1,0 +1,47 @@
+{
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true,
+    "**/*.csproj": true,
+    "**/*.csproj.user": true,
+    "lib/cef": true,
+    "framework/telerik-kendo-ui/src/styles": true,
+    "framework/telerik-kendo-ui/styles": true,
+    "framework/store/jquery-plugins/**/*.css": true,
+    "Scripts/thirdparty/MetroUI/css": true
+  },
+  "files.autoGuessEncoding": true,
+  "html.format.maxPreserveNewLines": 1,
+  "editor.detectIndentation": true,
+  "[html]": {
+    "editor.detectIndentation": true,
+    "editor.insertSpaces": true
+  },
+  "[razor]": {
+    "editor.detectIndentation": true,
+    "editor.insertSpaces": true
+  },
+  "[typescript]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "[javascript]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "[json]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[scss]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  }
+}

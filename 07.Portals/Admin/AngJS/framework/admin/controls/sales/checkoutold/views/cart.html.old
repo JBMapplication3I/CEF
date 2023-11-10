@@ -1,0 +1,122 @@
+﻿<div class="row">
+    <div class="col-sm-12">
+        <div cef-cart-validator></div>
+    </div>
+    <div class="col-sm-12">
+        <div class="table-responsive">
+            <table class="data-table cart-table table table-condensed table-striped table-hover" id="shopping-cart-table">
+                <thead>
+                    <tr class="first last">
+                        <th class="w-63" data-translate="ui.admin.cart.ProductDetails"></th>
+                        <th class="w-12" data-translate="ui.admin.common.Quantity"></th>
+                        <th class="w-10" data-translate="ui.admin.cart.Price"></th>
+                        <th class="w-10" data-translate="ui.admin.cart.Subtotal"></th>
+                        <th class="w-5"></th>
+                    </tr>
+                </thead>
+                <tbody ng-form="cartCtrl.forms.SalesItems">
+                <tr class="spacer"><td colspan="5"></td></tr>
+                <tr ng-if="cartCtrl.cartItems.length <= 0">
+                    <td colspan="5">
+                        <label class="form-control-static text-weight-normal"
+                               data-translate="ui.admin.controls.widgets.lineItemsWidget.NoLineItemsHaveBeenAdded"></label>
+                    </td>
+                </tr>
+                <tr ng-repeat="item in cartCtrl.cartItems" class="cart-item">
+                    <td class="form-control-table-cell hidden-xs cart-product-details">
+                        <div class="float-left image">
+                            <div cef-product-card-thumbnail-widget
+                                 product="item.Product"
+                                 product-id="item.ProductID"
+                                 product-name="item.ProductName"
+                                 product-seo-url="item.ProductSeoUrl"
+                                 product-image="item.ProductPrimaryImage"
+                                 width="75" height="75"></div>
+                        </div>
+                        <div class="float-left product-info">
+                            <span class="name"><a ui-sref-plus uisrp-is-product="true" uisrp-path="{{item.ProductSeoUrl}}" ng-bind="item.ProductName"></a></span>
+                            <span class="sku"><span data-translate="ui.admin.cart.SKU"></span>&nbsp;<!--
+                            --><a ui-sref-plus uisrp-is-product="true" uisrp-path="{{item.ProductSeoUrl}}" ng-bind="item.ProductKey"></a></span>
+                        </div>
+                    </td>
+                    <td>
+                        <!--<input type="number" class="input-text qty form-control" title="Qty" min="1" ng-model="item.Quantity" />-->
+                        <div cef-add-to-cart-quantity-selector
+                             ng-init="item.TotalQuantity = item.Quantity + (item.QuantityBackOrdered || 0) + (item.QuantityPreSold || 0)"
+                             item="item.Product"
+                             sales-item="item"
+                             default-value="1"
+                             current-value="item.TotalQuantity"
+                             is-required="true"
+                             step="1"
+                             on-blur="cartCtrl.updateCartItems"
+                             on-step="cartCtrl.updateCartItems"></div>
+                    </td>
+                    <td>
+                        <label class="form-control-static text-weight-normal w-100 cart-price price"
+                               ng-class="{'strike-through': item.UnitSoldPrice != null && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0}"
+                               ng-bind="item.UnitCorePrice | globalizedCurrency"></label>
+                        <label class="form-control-static text-weight-normal w-100 cart-price price text-danger"
+                               ng-if="item.UnitSoldPrice != null && item.UnitCorePrice != item.UnitSoldPrice && item.UnitSoldPrice > 0"
+                               ng-bind="item.UnitSoldPrice | globalizedCurrency"></label>
+                    </td>
+                    <td class="cart-subtotal"><label class="form-control-static text-weight-normal" ng-bind="item.ExtendedPrice | globalizedCurrency"></label></td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-link-brown-gray"
+                                translate-attr="{ title: 'ui.admin.cart.removeItemFromCart',
+                                                  'aria-label': 'ui.admin.cart.removeItemFromCart' }"
+                                ng-click="cartCtrl.removeCartItem(item.ID)">
+                            <i class="far fa-trash-o" aria-hidden="true"></i><span class="sr-only"
+                               data-translate="ui.admin.cart.removeItemFromCart"></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cart-collaterals row justify-content-end">
+            <div class="col-sm-4 totals">
+                <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
+                    <tbody>
+                        <tr>
+                            <td class="a-right text-right" data-translate="ui.admin.cart.Subtotal"></td>
+                            <td class="a-left price" ng-bind="cartCtrl.currentCart.Totals.SubTotal | globalizedCurrency"></td>
+                        </tr>
+                        <tr ng-show="cartCtrl.hasShipping">
+                            <td class="a-right text-right" data-translate="ui.admin.cart.Shipping"></td>
+                            <td class="a-left price" ng-bind="cartCtrl.currentCart.Totals.Shipping | globalizedCurrency"></td>
+                        </tr>
+                        <tr ng-show="cartCtrl.currentCart.Totals.Handling > 0">
+                            <td class="a-right text-right" data-translate="ui.admin.cart.Handling"></td>
+                            <td class="a-left price" ng-bind="cartCtrl.currentCart.Totals.Handling | globalizedCurrency"></td>
+                        </tr>
+                        <tr ng-show="cartCtrl.currentCart.Totals.Fees > 0">
+                            <td class="a-right text-right" data-translate="ui.admin.cart.Fees"></td>
+                            <td class="a-left price" ng-bind="cartCtrl.currentCart.Totals.Fees | globalizedCurrency"></td>
+                        </tr>
+                        <tr ng-show="cartCtrl.currentCart.Totals.Taxes > 0">
+                            <td class="a-right text-right" data-translate="ui.admin.cart.Taxes"></td>
+                            <td class="a-left price" ng-bind="cartCtrl.currentCart.Totals.Taxes | globalizedCurrency"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="a-right text-right bold" data-translate="ui.admin.cart.grandTotal"></td>
+                            <td class="a-left price bold bold"
+                                ng-bind="cartCtrl.currentCart.Totals.Total | globalizedCurrency"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="button" class="btn btn-block btn-primary btn-lg"
+                                        translate-attr="{ title: 'ui.admin.cart.proceedToCheckout',
+                                                          'aria-label': 'ui.admin.cart.proceedToCheckout' }"
+                                        ng-click="cartCtrl.goToLink('/Checkout')"
+                                        data-translate="ui.admin.cart.proceedToCheckout"></button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<!-- Entry form for the user's location -->
+<div class="row">
+    <div class="col-12">
+        <div ng-form="customerLocationEntryForm" class="form-inline" style="margin:1em 0;">
+            <div class="form-group form-group-lg">
+                <label style="color:#fff;" data-translate="ui.storefront.common.Zip"></label>
+                <input placeholder="City, State, Zip"
+                       class="form-control"
+                       ng-model="customerLocationEntryCtrl.userEntry.zip"
+                       ng-model-options="{debounce: 750}"
+                       ng-focus="customerLocationEntryCtrl.zipFocused()" />
+                <select class="form-control" place ng-model="customerLocationEntryCtrl.userEntry.radius">
+                    <option value="" selected><span data-translate="ui.storefront.common.Distance"></span> (mi)</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+                <button type="button" class="form-control"
+                        ng-click="customerLocationEntryCtrl.lookupLocation()"
+                        data-translate="ui.storefront.location.customerLocationEntry.findStores"></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,959 @@
+﻿@page "/details/profile"
+@inherits MVC.Core.TemplatedControllerBase
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+@inject IMapper leMapper
+
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="profilePage">
+    @if (ViewState.loading || record is null && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (record is not null)
+    {
+      <Validations
+        EditContext="@editContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="@editContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content-with-footer pt-3">
+            <Container Fluid="true">
+              <Row>
+                <Column>
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Store" Class="mr-1"  />
+                    Store Profile
+                  </Heading>
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <Heading Size="HeadingSize.Is3">Basic Information</Heading>
+                  <TextFormGroup
+                    FormIdentifier="Name"
+                    LabelText="Name"
+                    PlaceholderText="Store Name"
+                    @bind-Value="record.Name"
+                    Required="true"
+                    Disabled="@ViewState.InputDisable"
+                    TooltipText="The name of the store"
+                    ShowValidTooltip="true"
+                    StartTouched="true"
+                  />
+                  <TextFormGroup
+                    FormIdentifier="CustomKey"
+                    LabelText="Internal Key"
+                    PlaceholderText="Internal Key"
+                    @bind-Value="record.CustomKey"
+                    Required="false"
+                    Disabled="@ViewState.InputDisable"
+                    ShowValidTooltip="true"
+                    StartTouched="true"
+                  />
+                  <SelectFormGroup
+                    TValue="int"
+                    FormIdentifier="Type"
+                    LabelText="Type"
+                    @bind-Value="TypeID"
+                    OptionsList="@(types?.ToList<object>())"
+                    ItemValueFunc="@(x => ((TypeModel)x).ID)"
+                    ItemLabelFunc="@(x => ((TypeModel)x).DisplayName ?? ((TypeModel)x).Name)"
+                    Disabled="@ViewState.InputDisable"
+                    Required="true"
+                    DontAllowNull="true"
+                    ShowValidTooltip="true"
+                    StartTouched="true"
+                  />
+                  <SelectFormGroup
+                    TValue="int?"
+                    FormIdentifier="Currency"
+                    LabelText="Currency"
+                    PlaceholderText="Optionally select..."
+                    @bind-Value="CurrencyID"
+                    OptionsList="@(currencies?.ToList<object>())"
+                    ItemValueFunc="@(x => ((CurrencyModel)x).ID)"
+                    ItemLabelFunc="@(x => ((CurrencyModel)x).Name)"
+                    Disabled="@ViewState.InputDisable"
+                    Required="false"
+                    ShowValidTooltip="true"
+                    StartTouched="true"
+                    LeftIcon="far fa-dollar-sign"
+                  />
+                  <SelectFormGroup
+                    TValue="int?"
+                    FormIdentifier="Language"
+                    LabelText="Language"
+                    PlaceholderText="Optionally select..."
+                    @bind-Value="LanguageID"
+                    OptionsList="@(languages?.ToList<object>())"
+                    ItemValueFunc="@(x => ((LanguageModel)x).ID)"
+                    ItemLabelFunc="@(x => ((LanguageModel)x).UnicodeName)"
+                    Disabled="@ViewState.InputDisable"
+                    Required="false"
+                    ShowValidTooltip="true"
+                    StartTouched="true"
+                    LeftIcon="far fa-language"
+                  />
+                  <TextFormGroup
+                    FormIdentifier="ShippingAccountNumber"
+                    LabelText="Shipping Saint Account Number"
+                    PlaceholderText="Shipping Account Number"
+                    @bind-Value=@record.SerializableAttributes["ShippingSaintAccountNumber"].Value
+                    Required="true"
+                    Disabled="@ViewState.InputDisable"
+                    TooltipText="Shipping Saint Account Number"
+                    ShowValidTooltip="true"
+                    StartTouched="true"
+                  />
+                  @if (false@* && showStoreFields*@)
+                  {
+                    @*
+                    <div class="form-group">
+                      <label class="control-label" for="storeSlogan">Slogan</label>
+                      <input type="text" class="form-control"
+                        id="txtSlogan" name="txtSlogan"
+                        placeholder="Slogan"
+                        @bind="record.Slogan"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label" for="txtExternalUrl">Website</label>
+                      <input type="text" class="form-control"
+                        id="txtExternalUrl" name="txtExternalUrl"
+                        placeholder="http://example.com/"
+                        @bind="record.ExternalUrl"
+                      />
+                    </div>
+                    *@
+                  }
+                </Column>
+                <Column>
+                  <Heading Size="HeadingSize.Is3">Contact</Heading>
+                  @if (Contact is null)
+                  {
+                    <Blazorise.Button
+                      Color="Color.Secondary"
+                      Block="true"
+                      Class="mb-3"
+                      Clicked="@AddContact">
+                      Add Contact
+                    </Blazorise.Button>
+                  }
+                  else
+                  {
+                    <ContactEditor @bind-Contact="Contact" />
+                  }
+                </Column>
+              </Row>
+              @*
+              <Row>
+                <Column>
+                  <Heading Size="HeadingSize.Is3">Company Logo</Heading>
+                  @if (false && hasCompanyLogo)
+                  {
+                    @ * TODO: upload image widget * @
+                    <div cef-upload-image-widget
+                      master="profileDetailCtrl.record"
+                      upload-type="ImageStore"
+                      type-key="CompanyLogo"
+                      allow-multiple="false"
+                      is-primary="false">
+                    </div>
+                    <!--<p><em>[placeholder for drag/drop img upload]</em></p>-->
+                    <p class="text-center">
+                      <small>
+                        <span>Recommended File Type</span><br />
+                        <span>Recommended Minimum Width</span><br />
+                        <span>Maximum File Size</span>
+                      </small>
+                    </p>
+                  }
+                  else
+                  {
+                    <p class="text-center">
+                      <img src="@CorsImageLink(companyLogoFilename, "stores")" alt="@record.Name" />
+                      <Blazorise.Button
+                        Type="ButtonType.Button"
+                        Color="Color.Danger"
+                        Clicked="RemoveCompanyLogo">
+                        <Blazorise.Icons.FontAwesome.Icon Name="Icons.Trash" />
+                        <span>Remove Image</span>
+                      </button>
+                    </p>
+                  }
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <Div ElementId="account-content">
+                    <Row class="full-height-row-boxes">
+                      <Column>
+                        <div class="box">
+                          <Heading Size="HeadingSize.Is3">Sales Representative Image</Heading>
+                          @if (false && hasSalesRep)
+                          {
+                            <p class="text-center">
+                              <img class="rounded-circle" src="@CorsImageLink(salesRepFilename, "stores")" />
+                              <Blazorise.Button
+                                Type="ButtonType.Button"
+                                Color="Color.Link"
+                                Clicked="RemoveSalesRepImage">
+                                <Blazorise.Icons.FontAwesome.Icon Name="Icons.Trash" />
+                                <span>Remove Image</span>
+                              </Blazorise.Button>
+                            </p>
+                          }
+                          else
+                          {
+                            <div cef-upload-image-widget
+                              master="record"
+                              upload-type="ImageStore"
+                              type-key="SalesRep"
+                              allow-multiple="false"
+                              is-primary="false">
+                            </div>
+                            <p class="text-center">
+                              <small>
+                                <span>Recommended Image Size</span><br />
+                                <span>Maximum File Size</span>
+                              </small>
+                            </p>
+                          }
+                        </div>
+                      </Column>
+                    </Row>
+                    <Row>
+                      <Column>
+                        <div class="tabbed-content">
+                          <div class="tab-content box">
+                            <div role="tabpanel" class="tab-pane fade">
+                              <div class="form-group row">
+                                <div class="col-md-6">
+                                  <p>
+                                    <label for="txtFirstName" class="control-label">First Name</label>
+                                    <input type="text" class="form-control"
+                                          id="txtFirstName" name="txtFirstName"
+                                          placeholder="Enter Your First Name"
+                                          required
+                                          @bind="record.Contact.FirstName" />
+                                  </p>
+                                </div>
+                                <div class="col-md-6">
+                                  <p>
+                                    <label for="txtLastName" class="control-label">Last Name</label>
+                                    <input type="text" class="form-control"
+                                          id="txtLastName" name="txtLastName"
+                                          placeholder="Enter Your Last Name"
+                                          required
+                                          @bind="record.Contact.LastName" />
+                                  </p>
+                                </div>
+                                <div class="col-md-6">
+                                  <p>
+                                    <label for="contactInfoTitle" class="control-label">Title</label>
+                                    <input type="text" class="form-control"
+                                          id="contactInfoTitle" name="contactInfoTitle"
+                                          placeholder="Enter Your Title"
+                                          @bind="record.Contact.Website1" />
+                                  </p>
+                                </div>
+                                <div class="col-md-6">
+                                  <p>
+                                    <label for="txtPhone" class="control-label">Phone Number</label>
+                                    <input type="text" class="form-control"
+                                          id="txtPhone" name="txtPhone"
+                                          placeholder="Enter Your Phone Number"
+                                          @bind:event="RunPhonePrefixLookup"
+                                          ng-model-options="{ updateOn: 'default blur', debounce: {'default':500,'blur':0} }"
+                                          required
+                                          @bind="record.Contact.Phone1" />
+                                  </p>
+                                </div>
+                                <div class="col-sm-12">
+                                  <p>
+                                    <label for="txtAddress" class="control-label">Address</label>
+                                    <input type="text" class="form-control"
+                                          id="txtAddress" name="txtAddress"
+                                          placeholder="Enter Your Street Address"
+                                          required
+                                          @bind="record.Contact.Address.Street1" /><br />
+                                    <input type="text" class="form-control"
+                                          id="txtAddress2" name="txtAddress2"
+                                          placeholder="Enter Your Street Address Line 2"
+                                          @bind="record.Contact.Address.Street2" />
+                                  </p>
+                                  <p>
+                                    <label for="ddlCountry" class="control-label">Country</label>
+                                    <select class="form-control"
+                                            id="ddlCountry" name="ddlCountry"
+                                            required
+                                            @bind="record.Contact.Address.CountryID"
+                                            @bind:event="GetRegions">
+                                      <option value="">--</option>
+                                      @if (countries is not null)
+                                      {
+                                        <Repeater Items="countries">
+                                          <option value="@context.ID">@context.Name</option>
+                                        </Repeater>
+                                      }
+                                    </select>
+                                  </p>
+                                </div>
+                                <div class="col-md-4">
+                                  <p>
+                                    <label for="txtCity" class="control-label">City</label>
+                                    <input type="text" class="form-control"
+                                          id="txtCity" name="txtCity"
+                                          placeholder="City"
+                                          required
+                                          @bind="record.Contact.Address.City">
+                                  </p>
+                                </div>
+                                @if (Contract.CheckNotEmpty(regions))
+                                {
+                                  <div class="col-md-4">
+                                    <p>
+                                      <label for="ddlRegion" class="control-label">Region Departments</label>
+                                      <select class="form-control"
+                                              id="ddlRegion" name="ddlRegion"
+                                              required
+                                              @bind="record.Contact.Address.RegionID">
+                                        @if (regions is not null)
+                                        {
+                                          <Repeater Items="regions>
+                                            <option value="@context.ID">@context.Name</option>
+                                          </Repeater>
+                                        }
+                                      </select>
+                                    </p>
+                                  </div>
+                                }
+                                <div class="col-md-4">
+                                  <p>
+                                    <label for="txtZip" class="control-label">Zip</label>
+                                    <input type="text" class="form-control"
+                                          id="txtZip" name="txtZip"
+                                          placeholder="Enter Zip"
+                                          required
+                                          @bind="record.Contact.Address.PostalCode" />
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            @if (false && showStoreFields)
+                            {
+                              <div role="tabpanel" class="tab-pane fade"
+                                  ng-form="profileDetailCtrl.forms.OperatingHours">
+                                <p>Operating Hours</p>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group mb-0"
+                                        ng-class="{'has-error': profileDetailCtrl.forms.OperatingHours.ddlTimeZone.$invalid}">
+                                      <div class="input-group">
+                                        <div class="input-group-addon stack">Time Zone</div>
+                                        <select class="form-control"
+                                                id="ddlTimeZone" name="ddlTimeZone"
+                                                ng-options="tz.Id as tz.DisplayName for tz in timeZones"
+                                                @bind="record.OperatingHoursTimeZoneId">
+                                          <option value="" disabled="disabled">Select a Time Zone</option>
+                                        </select>
+                                      </div>
+                                      <div ng-messages="profileDetailCtrl.forms.OperatingHours.ddlTimeZone.$error">
+                                        <div ng-messages-include="{{'/framework/store/checkout/views/validationMessages.html' | corsLink: 'ui'}}"></div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group mb-0"
+                                        ng-class="{'has-error': profileDetailCtrl.forms.OperatingHours.timeMondayStart.$invalid
+                                              || profileDetailCtrl.forms.OperatingHours.timeMondayEnd.$invalid}">
+                                      <div class="input-group">
+                                        <div class="input-group-addon stack">Monday</div>
+                                        <select class="form-control"
+                                                id="timeMondayStart" name="timeMondayStart"
+                                                ng-options="h.value as h.display for h in hoursList"
+                                                @bind="record.OperatingHoursMondayStart">
+                                          <option value="">--</option>
+                                        </select>
+                                        <div class="input-group-addon with-control">
+                                          <select class="form-control" style="min-width: 125px;"
+                                                  id="timeMondayEnd" name="timeMondayEnd"
+                                                  ng-options="h.value as h.display for h in hoursList"
+                                                  @bind="record.OperatingHoursMondayEnd">
+                                            <option value="">--</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group mb-0" ng-class="{'has-error': profileDetailCtrl.forms.OperatingHours.timeTuesdayStart.$invalid || profileDetailCtrl.forms.OperatingHours.timeTuesdayEnd.$invalid}">
+                                      <div class="input-group">
+                                        <div class="input-group-addon stack"
+                                            data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Tuesday"></div>
+                                        <select class="form-control"
+                                                id="timeTuesdayStart" name="timeTuesdayStart"
+                                                ng-options="h.value as h.display for h in storeAccountSettingsCtrl.hoursList"
+                                                ng-model="profileDetailCtrl.store.OperatingHoursTuesdayStart">
+                                          <option value="">--</option>
+                                        </select>
+                                        <div class="input-group-addon with-control">
+                                          <select class="form-control" style="min-width: 125px;"
+                                                  id="timeTuesdayEnd" name="timeTuesdayEnd"
+                                                  ng-options="h.value as h.display for h in storeAccountSettingsCtrl.hoursList"
+                                                  ng-model="profileDetailCtrl.store.OperatingHoursTuesdayEnd">
+                                            <option value="">--</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group mb-0" ng-class="{'has-error': profileDetailCtrl.forms.OperatingHours.timeWednesdayStart.$invalid || profileDetailCtrl.forms.OperatingHours.timeWednesdayEnd.$invalid}">
+                                      <div class="input-group">
+                                        <div class="input-group-addon stack"
+                                            data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Wednesday"></div>
+                                        <select class="form-control"
+                                                id="timeWednesdayStart" name="timeWednesdayStart"
+                                                ng-options="h.value as h.display for h in storeAccountSettingsCtrl.hoursList"
+                                                ng-model="profileDetailCtrl.store.OperatingHoursWednesdayStart">
+                                          <option value="">--</option>
+                                        </select>
+                                        <div class="input-group-addon with-control">
+                                          <select class="form-control" style="min-width: 125px;"
+                                                  id="timeWednesdayEnd" name="timeWednesdayEnd"
+                                                  ng-options="h.value as h.display for h in storeAccountSettingsCtrl.hoursList"
+                                                  ng-model="profileDetailCtrl.store.OperatingHoursWednesdayEnd">
+                                            <option value="">--</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group mb-0" ng-class="{'has-error': profileDetailCtrl.forms.OperatingHours.timeThursdayStart.$invalid || profileDetailCtrl.forms.OperatingHours.timeThursdayEnd.$invalid}">
+                                      <div class="input-group">
+                                        <div class="input-group-addon stack"
+                                            data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Thursday"></div>
+                                        <select class="form-control"
+                                                id="timeThursdayStart" name="timeThursdayStart"
+                                                ng-options="h.value as h.display for h in profileDetailCtrl.hoursList"
+                                                ng-model="profileDetailCtrl.store.OperatingHoursThursdayStart">
+                                          <option value="">--</option>
+                                        </select>
+                                        <div class="input-group-addon with-control">
+                                          <select class="form-control" style="min-width: 125px;"
+                                                  id="timeThursdayEnd" name="timeThursdayEnd"
+                                                  ng-options="h.value as h.display for h in profileDetailCtrl.hoursList"
+                                                  ng-model="profileDetailCtrl.store.OperatingHoursThursdayEnd">
+                                            <option value="">--</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group mb-0" ng-class="{'has-error': profileDetailCtrl.forms.OperatingHours.timeFridayStart.$invalid || profileDetailCtrl.forms.OperatingHours.timeFridayEnd.$invalid}">
+                                      <div class="input-group">
+                                        <div class="input-group-addon stack"
+                                            data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Friday"></div>
+                                        <select class="form-control"
+                                                id="timeFridayStart" name="timeFridayStart"
+                                                ng-options="h.value as h.display for h in storeAccountSettingsCtrl.hoursList"
+                                                ng-model="profileDetailCtrl.store.OperatingHoursFridayStart">
+                                          <option value="">--</option>
+                                        </select>
+                                        <div class="input-group-addon with-control">
+                                          <select class="form-control" style="min-width: 125px;"
+                                                  id="timeFridayEnd" name="timeFridayEnd"
+                                                  ng-options="h.value as h.display for h in storeAccountSettingsCtrl.hoursList"
+                                                  ng-model="profileDetailCtrl.store.OperatingHoursFridayEnd">
+                                            <option value="">--</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group mb-0" ng-class="{'has-error': profileDetailCtrl.forms.OperatingHours.timeSaturdayStart.$invalid || profileDetailCtrl.forms.OperatingHours.timeSaturdayEnd.$invalid}">
+                                      <div class="input-group">
+                                        <div class="input-group-addon stack"
+                                            data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Saturday"></div>
+                                        <select class="form-control"
+                                                id="timeSaturdayStart" name="timeSaturdayStart"
+                                                ng-options="h.value as h.display for h in profileDetailCtrl.hoursList"
+                                                ng-model="profileDetailCtrl.store.OperatingHoursSaturdayStart">
+                                          <option value="">--</option>
+                                        </select>
+                                        <div class="input-group-addon with-control">
+                                          <select class="form-control" style="min-width: 125px;"
+                                                  id="timeSaturdayEnd" name="timeSaturdayEnd"
+                                                  ng-options="h.value as h.display for h in profileDetailCtrl.hoursList"
+                                                  ng-model="profileDetailCtrl.store.OperatingHoursSaturdayEnd">
+                                            <option value="">--</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error': profileDetailCtrl.forms.OperatingHours.timeSundayStart.$invalid || profileDetailCtrl.forms.OperatingHours.timeSundayEnd.$invalid}">
+                                      <div class="input-group">
+                                        <div class="input-group-addon stack"
+                                            data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Sunday"></div>
+                                        <select class="form-control"
+                                                id="timeSundayStart" name="timeSundayStart"
+                                                ng-options="h.value as h.display for h in profileDetailCtrl.hoursList"
+                                                ng-model="profileDetailCtrl.store.OperatingHoursSundayStart">
+                                          <option value="">--</option>
+                                        </select>
+                                        <div class="input-group-addon with-control">
+                                          <select class="form-control" style="min-width: 125px;"
+                                                  id="timeSundayEnd" name="timeSundayEnd"
+                                                  ng-options="h.value as h.display for h in profileDetailCtrl.hoursList"
+                                                  ng-model="profileDetailCtrl.store.OperatingHoursSundayEnd">
+                                            <option value="">--</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            }
+                            @if (false && showStoreFields)
+                            {
+                              <div role="tabpanel" class="tab-pane fade">
+                                <p>About Us</p>
+                                <p>
+                                  <textarea id="txtAboutUs" name="txtAboutUs"
+                                            kendo-editor k-encoded="false" k-paste="profileDetailCtrl.sanitizeMarkup"
+                                            k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough',
+                                  'justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList',
+                                  'insertOrderedList','indent','createLink','insertImage','createTable']"
+                                            @bind="record.About"
+                                            required
+                                            style="width: 100%; height: 300px;"
+                                            placeholder="About Us Content">
+                              </textarea>
+                                </p>
+                              </div>
+                            }
+                            @if (false && showStoreFields)
+                            {
+                              <div role="tabpanel" class="tab-pane fade">
+                                <p>Company Overview</p>
+                                <p>
+                                  <textarea id="txtCompanyOverview" name="txtCompanyOverview"
+                                            kendo-editor k-encoded="false" k-paste="profileDetailCtrl.sanitizeMarkup"
+                                            k-tools="['formatting','viewHtml','bold','italic','underline','strikethrough',
+                                  'justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList',
+                                  'insertOrderedList','indent','createLink','insertImage','createTable']"
+                                            @bind="record.Overview"
+                                            required
+                                            style="width: 100%; height: 300px;"
+                                            placeholder="Company Overview Content">
+                              </textarea>
+                                </p>
+                              </div>
+                            }
+                            @if (false && showStoreFields)
+                            {
+                              <div role="tabpanel" class="tab-pane fade">
+                                <p>Detail Images</p>
+                                @if (storeImages is not null)
+                                {
+                                  <Repeater Items="storeImages">
+                                    <div class="row">
+                                      <div class="col-md-8">
+                                        <img class="store-image-icon"
+                                          src="/images/@si.OriginalFileName"
+                                          alt="@si.Name"
+                                        />
+                                        <Heading Size="HeadingSize.Is3">@si.Name</Heading>
+                                        <p class="bold"><small>@(si.OriginalHeight)px X @(si.OriginalWidth)px</small></p>
+                                        <p>@si.Description</p>
+                                      </div>
+                                      <div class="col-md-4">
+                                        @if (hasStoreImage)
+                                        {
+                                          <p class="text-right">
+                                            <img src="@CorsImageLink(si.Name, "stores")" />
+                                            <Blazorise.Button
+                                              Type="ButtonType.Button"
+                                              Color="Color.Link"
+                                              Clicked="RemoveStoreImage(si)">
+                                              <Blazorise.Icons.FontAwesome.Icon Name="Icons.Trash" />
+                                              <span>Remove Image</span>
+                                            </Blazorise.Button>
+                                          </p>
+                                        }
+                                        else
+                                        {
+                                          <p class="text-right">
+                                            <div cef-upload-image-widget
+                                              master="record"
+                                              upload-type="ImageStore"
+                                              type-key="General"
+                                              allow-multiple="true"
+                                              is-primary="false">
+                                            </div>
+                                          </p>
+                                        }
+                                      </div>
+                                    </div>
+                                  </Repeater>
+                                }
+                              </div>
+                            }
+                            @if (false && showStoreFields)
+                            {
+                              <div role="tabpanel" class="tab-pane fade"
+                                id="store-details-directory-options">
+                                <div class="form-group row">
+                                  <div class="col-md-12">
+                                    <p data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.PleaseSelectUpTo3Categories"></p>
+                                    <p>
+                                      <label for="directoryOptionsCategory1" class="control-label"
+                                        data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Category1"></label>
+                                      <select name="directoryOptionsCategory1" id="directoryOptionsCategory1"
+                                        class="form-control"
+                                        ng-model="storeAccountSettingsCtrl.storeCategory1.CategoryID"
+                                        ng-options="c.ID as c.Name group by c.Parent.Name for c in storeAccountSettingsCtrl.categoriesGrouped | filter: {TypeID: 1002}"
+                                        required>
+                                        <option value="" data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.SelectACategoryRequired"></option>
+                                      </select>
+                                    </p>
+                                    <p>
+                                      <label for="directoryOptionsCategory2" class="control-label"
+                                        data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Category2"></label>
+                                      <select name="directoryOptionsCategory2" id="directoryOptionsCategory2"
+                                        class="form-control"
+                                        ng-model="storeAccountSettingsCtrl.storeCategory2.CategoryID"
+                                        ng-options="c.ID as c.Name group by c.Parent.Name for c in storeAccountSettingsCtrl.categoriesGrouped | filter: {TypeID: 1002}">
+                                        <option value="" data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.SelectASecondCategoryOptional"></option>
+                                      </select>
+                                    </p>
+                                    <p>
+                                      <label for="directoryOptionsCategory3" class="control-label"
+                                        data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Category3"></label>
+                                      <select name="directoryOptionsCategory3" id="directoryOptionsCategory3"
+                                        class="form-control"
+                                        ng-model="storeAccountSettingsCtrl.storeCategory3.CategoryID"
+                                        ng-options="c.ID as c.Name group by c.Parent.Name for c in storeAccountSettingsCtrl.categoriesGrouped | filter: {TypeID: 1002}">
+                                        <option value="" data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.SelectAThirdCategoryOptional"></option>
+                                      </select>
+                                    </p>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <p></p>
+                                    <p>
+                                      <span data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.PleaseCheckTheRegion"></span>
+                                      <a ng-click="storeAccountSettingsCtrl.checkAllCountries()"
+                                        data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.checkAll"></a>
+                                    </p>
+                                    <div class="row">
+                                      <div class="col-md-4" ng-repeat="c in storeAccountSettingsCtrl.regionList | filter: {CustomKey: 'REGION'}">
+                                        <label class="checkbox-inline">
+                                          <input type="checkbox" id="region-{{c.CustomKey}}" value="{{c.Code}}" ng-model="c.Active" /> {{c.Name}}
+                                        </label>
+                                      </div>
+                                      <p></p>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <p></p>
+                                    <p>
+                                      <span data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.PleaseCheckTheLanguage"></span>
+                                      <a ng-click="storeAccountSettingsCtrl.checkAllLanguages()"
+                                        data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.checkAll">
+                                      </a>
+                                    </p>
+                                    <div class="row">
+                                      <div class="col-md-4" ng-repeat="l in storeAccountSettingsCtrl.languageList">
+                                        <label class="checkbox-inline">
+                                          <input type="checkbox" id="region-{{l.CustomKey}}" value="{{l.Code}}" ng-model="l.Active"> {{l.Name}}
+                                        </label>
+                                      </div>
+                                      <p></p>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <p></p>
+                                    <p data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.PleaseSelectTheType"></p>
+                                    <p>
+                                      <label for="directoryOptionsType" class="control-label" data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.Type"></label>
+                                      <select id="directoryOptionsType" name="directoryOptionsType" class="form-control" required
+                                        ng-options="c.ID as c.Name for c in storeAccountSettingsCtrl.types | orderBy: 'Name' | filter: {CustomKey: 'DIRECTORY'}"
+                                        ng-model="storeAccountSettingsCtrl.store.TypeID">
+                                        <option value="" data-translate="ui.storeAdmin.storeDashboard.storeProfileEditor.SelectAType"></option>
+                                      </select>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            }
+                          </div>
+                        </div>
+                      </Column>
+                    </Row>
+                  </Div>
+                </Column>
+              </Row>
+              *@
+            </Container>
+          </Div>
+          <Div Class="page-footer">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Primary"
+              Block="true"
+              Class="mb-3"
+              ElementId="btnSave"
+              Disabled="@(formInvalid || ViewState.saving || ViewState.running || ViewState.pristine)"
+              Clicked="Save">
+              Save Changes
+            </Blazorise.Button>
+            @((MarkupString)ViewState.AsHTMLDebugBlock())
+            <Blazorise.ValidationSummary />
+          </Div>
+        </EditForm>
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+#if BRANDADMIN
+  private BrandModel? record;
+#elif FRANCHISEADMIN
+  private FranchiseModel? record;
+#elif MANUFACTURERADMIN
+  private ManufacturerModel? record;
+#elif STOREADMIN
+  private StoreModel? record;
+#elif VENDORADMIN
+  private VendorModel? record;
+#endif
+  private List<CurrencyModel>? currencies;
+  private List<LanguageModel>? languages;
+  private List<TypeModel>? types;
+  private EditContext? editContext;
+  private bool formInvalid;
+
+  private int TypeID
+  {
+#if BRANDADMIN || FRANCHISEADMIN || MANUFACTURERADMIN
+    get => 0;
+    set { /* Do Nothing */ var _ = value; }
+#elif STOREADMIN || VENDORADMIN
+    get => record?.TypeID ?? 0;
+    set
+    {
+      if (record is not null)
+      {
+        record.TypeID = value;
+      }
+    }
+#endif
+  }
+
+  private int? CurrencyID
+  {
+#if BRANDADMIN || FRANCHISEADMIN || MANUFACTURERADMIN || VENDORADMIN
+    get => null;
+    set { /* Do Nothing */ var _ = value; }
+#elif STOREADMIN
+    get => record?.CurrencyID ?? 0;
+    set
+    {
+      if (record is not null)
+      {
+        record.CurrencyID = value;
+      }
+    }
+#endif
+  }
+
+  private int? LanguageID
+  {
+#if BRANDADMIN || FRANCHISEADMIN || MANUFACTURERADMIN || VENDORADMIN
+    get => null;
+    set { /* Do Nothing */ var _ = value; }
+#elif STOREADMIN
+    get => record?.LanguageID;
+    set
+    {
+      if (record is not null)
+      {
+        record.LanguageID = value;
+      }
+    }
+#endif
+  }
+
+  private ContactModel? Contact
+  {
+#if BRANDADMIN || FRANCHISEADMIN || MANUFACTURERADMIN || VENDORADMIN
+    get => (ContactModel?)null;
+    set { /* Do Nothing */ var _ = value; }
+#elif STOREADMIN
+    get => record?.Contact;
+    set
+    {
+      if (record is not null)
+      {
+        record.Contact = value;
+      }
+    }
+#endif
+  }
+
+  /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+  /// resources.</summary>
+  public void Dispose()
+  {
+    if (editContext is null)
+    {
+      return;
+    }
+    editContext.OnFieldChanged -= HandleFieldChanged;
+  }
+
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await SetRunningAsync().ConfigureAwait(false);
+    await Task.WhenAll(
+        LoadRecord(),
+        LoadRecordTypes(),
+        LoadCurrencies(),
+        LoadLanguages())
+      .ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+  }
+
+  private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+  {
+    if (editContext is null)
+    {
+      return;
+    }
+    formInvalid = !editContext.Validate();
+    StateHasChanged();
+  }
+
+  private async Task LoadRecord()
+  {
+#if BRANDADMIN
+    record = await LoadRecordInCEFAR<MVC.Api.Endpoints.GetCurrentBrandAdministration, BrandModel>(
+        cvApi.GetCurrentBrandAdministration)
+      .ConfigureAwait(false);
+#elif FRANCHISEADMIN
+    record = await LoadRecordInCEFAR<MVC.Api.Endpoints.GetCurrentFranchiseAdministration, FranchiseModel>(
+        cvApi.GetCurrentFranchiseAdministration)
+      .ConfigureAwait(false);
+#elif MANUFACTURERADMIN
+    record = await LoadRecordInCEFAR<MVC.Api.Endpoints.GetCurrentManufacturerAdministration, ManufacturerModel>(
+        cvApi.GetCurrentManufacturerAdministration)
+      .ConfigureAwait(false);
+#elif STOREADMIN
+    record = await LoadRecordInCEFAR<MVC.Api.Endpoints.GetCurrentStoreAdministration, StoreModel>(
+        cvApi.GetCurrentStoreAdministration)
+      .ConfigureAwait(false);
+#elif VENDORADMIN
+    record = await LoadRecordInCEFAR<MVC.Api.Endpoints.GetCurrentVendorAdministration, VendorModel>(
+        cvApi.GetCurrentVendorAdministration)
+      .ConfigureAwait(false);
+#endif
+    if (record is null)
+    {
+        throw new NullReferenceException("Record is null after load");
+    }
+    record.SerializableAttributes ??= new();
+    if (!record.SerializableAttributes.ContainsKey("ShippingSaintAccountNumber"))
+    {
+      record.SerializableAttributes["ShippingSaintAccountNumber"] = new SerializableAttributeObject { Key = "ShippingSaintAccountNumber", Value = "" };
+    }
+    editContext = new(record);
+    editContext.SetFieldCssClassProvider(new MVC.Core.Bootstrap4FieldClassProvider());
+    editContext.OnFieldChanged += HandleFieldChanged;
+    HandleFieldChanged(null, new(new()));
+  }
+
+#pragma warning disable CS1998
+  private async Task LoadRecordTypes()
+#pragma warning restore CS1998
+  {
+#if BRANDADMIN || FRANCHISEADMIN || MANUFACTURERADMIN || VENDORADMIN
+    types = new();
+#elif STOREADMIN
+    types = await LoadCollection<MVC.Api.Endpoints.GetStoreTypes, StoreTypePagedResults, TypeModel>(
+        cvApi.GetStoreTypes,
+        new() { Active = true, AsListing = true })
+      .ConfigureAwait(false);
+#endif
+  }
+
+#pragma warning disable CS1998
+  private async Task LoadCurrencies()
+#pragma warning restore CS1998
+  {
+#if BRANDADMIN || FRANCHISEADMIN || MANUFACTURERADMIN || VENDORADMIN
+    currencies = new();
+#elif STOREADMIN
+    currencies = await LoadCollection<MVC.Api.Endpoints.GetCurrencies, CurrencyPagedResults, CurrencyModel>(
+        cvApi.GetCurrencies,
+        new() { Active = true, AsListing = true })
+      .ConfigureAwait(false);
+#endif
+  }
+
+#pragma warning disable CS1998
+  private async Task LoadLanguages()
+#pragma warning restore CS1998
+  {
+#if BRANDADMIN || FRANCHISEADMIN || MANUFACTURERADMIN || VENDORADMIN
+    languages = new();
+#elif STOREADMIN
+    languages = await LoadCollection<MVC.Api.Endpoints.GetLanguages, LanguagePagedResults, LanguageModel>(
+        cvApi.GetLanguages,
+        new() { Active = true, AsListing = true })
+      .ConfigureAwait(false);
+#endif
+  }
+
+  private async Task Save()
+  {
+    DebugBeginMethod();
+#if BRANDADMIN
+    await cvApi.UpdateBrand(leMapper.Map<MVC.Api.Endpoints.UpdateBrand>(record)).ConfigureAwait(false);
+#elif FRANCHISEADMIN
+    await cvApi.UpdateFranchise(leMapper.Map<MVC.Api.Endpoints.UpdateFranchise>(record)).ConfigureAwait(false);
+#elif MANUFACTURERADMIN
+    await cvApi.UpdateManufacturer(leMapper.Map<MVC.Api.Endpoints.UpdateManufacturer>(record)).ConfigureAwait(false);
+#elif STOREADMIN
+    await cvApi.UpdateStore(leMapper.Map<MVC.Api.Endpoints.UpdateStore>(record)).ConfigureAwait(false);
+#elif VENDORADMIN
+    await cvApi.UpdateVendor(leMapper.Map<MVC.Api.Endpoints.UpdateVendor>(record)).ConfigureAwait(false);
+#endif
+    ConsoleDebug("Save: Update finished, calling Load...");
+    await LoadRecord().ConfigureAwait(false);
+    DebugEndMethod();
+  }
+
+  private Task AddContact()
+  {
+    if (record is null)
+    {
+      // Do Nothing, something else should have initialized this first
+      return Task.CompletedTask;
+    }
+#if MANUFACTURERADMIN || STOREADMIN || VENDORADMIN
+    record.Contact ??= new();
+#endif
+    return Task.CompletedTask;
+  }
+}

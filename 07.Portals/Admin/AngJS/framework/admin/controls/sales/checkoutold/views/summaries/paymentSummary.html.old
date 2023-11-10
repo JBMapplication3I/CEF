@@ -1,0 +1,22 @@
+﻿<div ng-switch="cefCheckoutCtrl.paymentMethod">
+    <div ng-switch-when="'purchasePaymentMethodCreditCard'">
+        <cef-checkout-credit-card-summary
+            ng-if="cefCheckoutCtrl.forms.payment.creditCard.$valid">
+        </cef-checkout-credit-card-summary>
+    </div>
+    <div ng-switch-when="'purchasePaymentMethodEcheck'">
+        <cef-checkout-echeck-summary
+            ng-if="cefCheckoutCtrl.forms.payment.echeck.$valid">
+        </cef-checkout-echeck-summary>
+    </div>
+    <div ng-switch-when="'purchasePaymentMethodPayPal'">
+        <cef-checkout-pay-pal-summary
+            ng-if="cefCheckoutCtrl.forms.payment.payPal.$valid">
+        </cef-checkout-pay-pal-summary>
+    </div>
+    <div ng-switch-when="'purchasePaymentMethodInvoice'">
+        <cef-checkout-invoice-summary
+            ng-if="cefCheckoutCtrl.forms.payment.invoice.$valid">
+        </cef-checkout-invoice-summary>
+    </div>
+</div>

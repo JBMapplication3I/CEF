@@ -1,0 +1,285 @@
+﻿<div class="row" ng-form="contactCtrl.forms.contact">
+    <div class="col-12" ng-if="contactCtrl.addressTitle">
+        <h4 ng-bind="contactCtrl.addressTitle"></h4>
+    </div>
+    <div class="col-12" ng-if="contactCtrl.showKey">
+        <div class="row">
+            <text-input-form-group
+                class="col-6"
+                input-class="text-uppercase"
+                key="Key{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Address.CustomKey"
+                label-key="ui.storefront.checkout.views.accountInformation.addressKey"
+                placeholder-key="ui.storefront.checkout.views.accountInformation.addressKey"
+                tooltip-key="ui.storefront.checkout.views.accountInformation.enterAReferenceNameEGMyOffice"
+                when-changed="contactCtrl.updateKeys()"
+                max-length="15"
+                ng-required="true"
+                fails-on="contactCtrl.duplicateKey"
+                is-autofocus="true"
+                start-touched="true">
+            </text-input-form-group>
+        </div>
+    </div>
+    <div ng-if="contactCtrl.showPersonalDetails"
+         ng-class="contactCtrl.showAddress ? 'col-md-6' : 'col-12'">
+        <div class="row">
+            <!--first-->
+            <text-input-form-group
+                ng-if="contactCtrl.showFirstName"
+                class="col-md-6"
+                key="FirstName{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.FirstName"
+                label-key="ui.storefront.common.FirstName"
+                placeholder-key="ui.storefront.common.FirstName"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                auto-comp="fname"
+                max-length="128"
+                ng-required="true">
+            </text-input-form-group>
+            <!--last-->
+            <text-input-form-group
+                ng-if="contactCtrl.showLastName"
+                class="col-md-6"
+                key="LastName{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.LastName"
+                label-key="ui.storefront.common.LastName"
+                placeholder-key="ui.storefront.common.LastName"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                auto-comp="lname"
+                max-length="128"
+                ng-required="true">
+            </text-input-form-group>
+            <!--email-->
+            <text-input-form-group
+                ng-if="contactCtrl.showEmail"
+                class="col-12"
+                key="Email{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Email1"
+                label-key="ui.storefront.common.Email"
+                placeholder-key="ui.storefront.common.Email"
+                when-changed="contactCtrl.emailChanged($event, control)"
+                ng-required="true"
+                fails-on="contactCtrl.emailValidityState == 'Invalid'"
+                is-email="true">
+            </text-input-form-group>
+            <!--phone 1-->
+            <text-input-form-group
+                ng-if="contactCtrl.showPhone"
+                class="col-12"
+                key="Phone1{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Phone1"
+                label-key="ui.storefront.common.Phone"
+                placeholder-text="+1(555)555-5555 x55555"
+                when-changed="contactCtrl.runPhonePrefixLookups()"
+                is-phone="true"
+                ng-required="true">
+            </text-input-form-group>
+            <div class="col-12" ng-if="!contactCtrl.showPhone2 && contactCtrl.showMorePhones">
+                <button type="button" class="btn btn-link float-right"
+                        sid="btnAddMorePhoneNumbers"
+                        data-translate="ui.storefront.checkout.shippingAddMorePhones"
+                        ng-click="contactCtrl.showPhone2 = true"></button>
+            </div>
+            <!--phone 2-->
+            <text-input-form-group
+                ng-if="contactCtrl.showPhone2"
+                class="col-12"
+                key="Phone2{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Phone2"
+                label-key="ui.storefront.common.Phone"
+                placeholder-text="+1(555)555-5555 x55555"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                is-phone="true"
+                ng-required="false">
+            </text-input-form-group>
+            <div class="col-12" ng-if="contactCtrl.showPhone2 && !contactCtrl.showPhone3">
+                <button type="button" class="btn btn-link float-right"
+                        sid="btnSecondaryAddMorePhoneNumbers"
+                        data-translate="ui.storefront.checkout.shippingAddMorePhones"
+                        ng-click="contactCtrl.showPhone3 = true"></button>
+            </div>
+            <!--phone 3-->
+            <text-input-form-group
+                ng-if="contactCtrl.showPhone3"
+                class="col-12"
+                key="Phone3{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Phone3"
+                label-key="ui.storefront.common.Phone"
+                placeholder-text="+1(555)555-5555 x55555"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                is-phone="true"
+                ng-required="false">
+            </text-input-form-group>
+            <!--fax-->
+            <text-input-form-group
+                ng-if="contactCtrl.showFax"
+                class="col-12"
+                key="Fax1{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Fax1"
+                label-key="ui.storefront.common.Fax"
+                placeholder-text="+1(555)555-5555"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                ng-required="false"
+                is-fax="true">
+            </text-input-form-group>
+        </div>
+    </div>
+    <div ng-if="contactCtrl.showAddress"
+         ng-class="contactCtrl.showPersonalDetails ? 'col-md-6' : 'col-12'">
+        <div class="row">
+            <!--company-->
+            <text-input-form-group
+                class="col-12"
+                key="Company{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Address.Company"
+                label-key="ui.storefront.common.Company"
+                placeholder-key="ui.storefront.common.Company"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                auto-comp="organization"
+                max-length="128"
+                ng-required="true"
+                left-icon="far fa-briefcase">
+            </text-input-form-group>
+            <!--country-->
+            <!--
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{'has-error': !contactCtrl.contact.Address.CountryID}">
+                    <label class="control-label" for="ddlCountry{{contactCtrl.idSuffix}}"
+                           ><span data-translate="ui.storefront.common.Country"
+                           ></span>&nbsp;<span class="text-danger">*</span></label>
+                    <input type="text" class="search-input form-control"
+                           id="ddlCountry{{contactCtrl.idSuffix}}"
+                           name="ddlCountry{{contactCtrl.idSuffix}}"
+                           translate-attr="{ placeholder: 'ui.storefront.searchCatalog.controls.externalSearchBox.Search.Ellipses' }"
+                           autocomplete="false"
+                           uib-typeahead="c.Name for c in contactCtrl.ddlCountries"
+                           typeahead-loading="loadingSuggestions"
+                           typeahead-wait-ms="500"
+                           typeahead-min-length="1"
+                           typeahead-focus-first="false"
+                           typeahead-on-select="contactCtrl.selectCountry($item)"
+                           ng-required="!contactCtrl.contact.Address.CountryID"
+                           ng-change="contactCtrl.filterCountries(); contactCtrl.callOnChangeIfSet($event, control);"
+                           ng-model="contactCtrl.selectedCountryName" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group" ng-if="contactCtrl.contact.Address.CountryName">
+                    <label class="control-label" for="ddlCountry{{contactCtrl.idSuffix}}"
+                           data-translate="ui.storefront.common.Selected"></label>
+                    <label class="d-block form-control-static text-weight-normal nowrap"
+                           style="overflow-x: hidden;"
+                           ng-bind="contactCtrl.contact.Address.CountryName"></label>
+                </div>
+            </div>
+            -->
+            <select-form-group
+                class="col-12"
+                key="CountryID{{contactCtrl.idSuffix}}"
+                label-key="ui.storefront.common.Country"
+                ng-model="contactCtrl.contact.Address.CountryID"
+                selections="contactCtrl.countries"
+                include-null="true" null-key="ui.storefront.common.geography.Country.SelectA"
+                auto-comp="{{contactCtrl.isBilling ? 'billing' : 'shipping'}} country"
+                ng-required="true"
+                when-changed="contactCtrl.propagateCountryChange()"
+                ng-blur="contactCtrl.propagateCountryChange()"
+                hide-option-key="true"
+                left-icon="fal fa-globe-americas">
+            </select-form-group>
+            <!--street-->
+            <text-input-form-group
+                class="col-12"
+                key="Street1{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Address.Street1"
+                label-key="ui.storefront.common.Street"
+                placeholder-key="ui.storefront.common.Street"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                auto-comp="{{contactCtrl.isBilling ? 'billing' : 'shipping'}} address-line1"
+                ng-required="true"
+                left-icon="far fa-road">
+            </text-input-form-group>
+            <div class="col-12" ng-if="!contactCtrl.showStreet2">
+                <button type="button" class="btn btn-link float-right"
+                        id="btnShowStreet2{{contactCtrl.idSuffix}}"
+                        name="btnShowStreet2{{contactCtrl.idSuffix}}"
+                        data-translate="ui.storefront.checkout.shippingAddMore"
+                        ng-click="contactCtrl.showStreet2 = true"></button>
+            </div>
+            <!--street 2-->
+            <text-input-form-group
+                ng-if="contactCtrl.showStreet2"
+                class="col-12"
+                key="Street2{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Address.Street2"
+                label-key="ui.storefront.common.Street"
+                placeholder-key="ui.storefront.common.Street"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                auto-comp="{{contactCtrl.isBilling ? 'billing' : 'shipping'}} address-line2"
+                ng-required="false"
+                left-icon="far fa-road">
+            </text-input-form-group>
+            <div class="col-12" ng-if="contactCtrl.showStreet2 && !contactCtrl.showStreet3">
+                <button type="button" class="btn btn-link float-right"
+                        sid="btnSecondaryShowStreet3{{contactCtrl.idSuffix}}"
+                        data-translate="ui.storefront.checkout.shippingAddMore"
+                        ng-click="contactCtrl.showStreet3 = true"></button>
+            </div>
+            <!--street 3-->
+            <text-input-form-group
+                ng-if="contactCtrl.showStreet3"
+                class="col-12"
+                key="Street3{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Address.Street3"
+                label-key="ui.storefront.common.Street"
+                placeholder-key="ui.storefront.common.Street"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                auto-comp="{{contactCtrl.isBilling ? 'billing' : 'shipping'}} address-line3"
+                ng-required="false"
+                left-icon="far fa-road">
+            </text-input-form-group>
+            <!--city-->
+            <text-input-form-group
+                class="col-12"
+                key="City{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Address.City"
+                label-key="ui.storefront.common.City"
+                placeholder-key="ui.storefront.common.City"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                auto-comp="{{contactCtrl.isBilling ? 'billing' : 'shipping'}} address-level2"
+                max-length="128"
+                ng-required="true"
+                left-icon="far fa-city">
+            </text-input-form-group>
+            <!--state-->
+            <select-form-group
+                ng-if="contactCtrl.regions.length"
+                class="col-sm-7"
+                key="RegionID{{contactCtrl.idSuffix}}"
+                label-key="ui.storefront.common.geography.State"
+                ng-model="contactCtrl.contact.Address.RegionID"
+                selections="contactCtrl.regions"
+                include-null="true"
+                null-key="ui.storefront.common.geography.State.SelectA"
+                when-changed="contactCtrl.propagateRegionChange()"
+                auto-comp="{{contactCtrl.isBilling ? 'billing' : 'shipping'}} address-level1"
+                ng-required="true"
+                hide-option-key="true">
+            </select-form-group>
+            <!--zip-->
+            <text-input-form-group
+                ng-form-class="{ 'col-12': !contactCtrl.regions.length, 'col-sm-5': contactCtrl.regions.length }"
+                key="Zip{{contactCtrl.idSuffix}}"
+                ng-model="contactCtrl.contact.Address.PostalCode"
+                label-key="ui.storefront.common.Zip"
+                placeholder-key="ui.storefront.common.Zip"
+                when-changed="contactCtrl.callOnChangeIfSet($event, control)"
+                auto-comp="{{contactCtrl.isBilling ? 'billing' : 'shipping'}} postal-code"
+                max-length="12"
+                ng-required="true">
+            </text-input-form-group>
+        </div>
+    </div>
+</div>

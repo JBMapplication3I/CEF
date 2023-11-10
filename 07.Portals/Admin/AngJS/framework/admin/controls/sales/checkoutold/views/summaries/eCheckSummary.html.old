@@ -1,0 +1,15 @@
+﻿<div class="row">
+    <div class="col-sm-12 text-right">
+        <b ng-bind="cefCheckoutCtrl.selectedEcheck.Name
+                    || cefCheckoutCtrl.paymentData.referenceName
+                    || cefCheckoutCtrl.paymentData.cardholderName"></b>
+        <b ng-bind="cefCheckoutCtrl.selectedEcheck.BankName"></b>
+        <b ng-bind="cefCheckoutCtrl.selectedEcheck.CardType"></b>
+        <h5>&bull;&bull;&bull;&bull;&bull;&bull;<!--
+        --><span ng-bind="(cefCheckoutCtrl.selectedEcheck.RoutingNumber
+                           || cefCheckoutCtrl.paymentData.RoutingNumber) | limitTo: -3"></span></h5>
+        <h5>&bull;&bull;&bull;&bull;&bull;&bull;<!--
+        --><span ng-bind="(cefCheckoutCtrl.selectedEcheck.AccountNumber
+                           || cefCheckoutCtrl.paymentData.AccountNumber) | limitTo: -3"></span></h5>
+    </div>
+</div>

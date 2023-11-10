@@ -1,0 +1,8 @@
+<button ng-if="currencySelectorButtonCtrl.cefConfig.featureSet.multiCurrency.enabled"
+        type="button" class="btn btn-secondary"
+        translate-attr="{ title: 'ui.storefront.common.Currency.Select',
+                          'aria-label': 'ui.storefront.common.Currency.Select' }"
+        ng-bind="currencySelectorButtonCtrl.selectedCurrencyObject.Name
+                + ' (' + (currencySelectorButtonCtrl.selectedCurrencyObject.UnicodeSymbolValue | hex2char) + ')'"
+        ng-click="currencySelectorButtonCtrl.open()">
+</button>

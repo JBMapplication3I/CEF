@@ -1,0 +1,88 @@
+﻿<nav class="navbar navbar-expand-md navbar-light pt-lg-0">
+  <div class="navbar-header pb-2">
+    <button type="button" class="navbar-toggler"
+      data-toggle="collapse"
+      data-target="#cef-dashboard-nav-collapse"
+      aria-controls="cef-dashboard-nav-collapse"
+      aria-expanded="false"
+      translate-attr="{ 'aria-label': 'ui.storefront.userDashboard.ToggleNavigation' }">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <div id="cef-dashboard-nav-collapse"
+    class="collapse navbar-collapse">
+    <div class="navbar-nav w-100">
+      <ul class="nav flex-column w-100">
+        <div class="form-group mb-3 px-3"
+          ng-if="userDashboardSideMenuCtrl.cefConfig.featureSet.affiliates.enabled
+            && userDashboardSideMenuCtrl.cvSecurityService.hasRole('CEF Affiliate Administrator')
+            && userDashboardSideMenuCtrl.accessibleAccounts.length > 1">
+          <label class="control-label" for="ddlSelectedAccountKey"
+            data-translate="ui.storefront.userDashboard2.widgets.menus.userDashboardSideMenu.SelectedAccount">
+          </label>
+          <select class="form-control custom-select"
+            id="ddlSelectedAccountKey" name="ddlSelectedAccountKey"
+            ng-change="userDashboardSideMenuCtrl.saveSelectedAccountKey()"
+            ng-model-options="userDashboardSideMenuCtrl.debounce500"
+            ng-options="a.value as a.label
+                        for a in userDashboardSideMenuCtrl.accessibleAccounts"
+            ng-model="userDashboardSideMenuCtrl.selectedAccountKey">
+          </select>
+        </div>
+        <!-- 
+        <div
+          class="form-group mb-3 px-3"
+          ng-if="userDashboardSideMenuCtrl.cefConfig.featureSet.affiliates.enabled
+            && userDashboardSideMenuCtrl.cvSecurityService.hasRole('CEF Affiliate Administrator')
+            && userDashboardSideMenuCtrl.accessibleAccounts.length > 1">
+          <label class="control-label" for="ddlSelectedUserKey"
+            data-translate="ui.storefront.userDashboard2.widgets.menus.userDashboardSideMenu.SelectedUser">
+          </label>
+          <select class="form-control custom-select"
+            id="ddlSelectedUserKey" name="ddlSelectedUserKey"
+            ng-change="userDashboardSideMenuCtrl.saveSelectedUserKey()"
+            ng-model-options="userDashboardSideMenuCtrl.debounce500"
+            ng-options="a.value as a.label
+                        for a in userDashboardSideMenuCtrl.accessibleUsers"
+            ng-model="userDashboardSideMenuCtrl.selectedUserKey">
+          </select>
+        </div>
+        -->
+        <li ng-repeat="section in userDashboardSideMenuCtrl.sections | orderBy: ['order','title']"
+          class="nav-item" role="presentation"
+          ng-class="{ 'active': userDashboardSideMenuCtrl.isActive(section.sref)
+                      || userDashboardSideMenuCtrl.validateChildActive(section)
+                      || userDashboardSideMenuCtrl.validateAlternateActive(section) }">
+          <a id="userDashboardSideMenu{{section.name}}Btn"
+            name="userDashboardSideMenu{{section.name}}Btn"
+            class="nav-link"
+            ng-class="{ 'active': userDashboardSideMenuCtrl.isActive(section.sref)
+                        || userDashboardSideMenuCtrl.validateChildActive(section)
+                        || userDashboardSideMenuCtrl.validateAlternateActive(section) }"
+            ui-sref="{{section.sref || (section.children | orderBy: ['order','title'])[0].sref}}">
+            <span class="cef-dashboard-nav-icon"
+              ng-bind-html="section.icon"></span>
+            <span ng-bind="section.title" translate-cloak></span>
+          </a>
+          <ul class="nav flex-column user-dashboard-sub-nav"
+            ng-if="section.children.length
+              && (userDashboardSideMenuCtrl.isActive(section.sref)
+                  || userDashboardSideMenuCtrl.validateChildActive(section)
+                  || userDashboardSideMenuCtrl.validateAlternateActive(section))">
+            <li ng-repeat="child in section.children | orderBy: ['order','title']"
+              class="nav-item" role="presentation"
+              ng-class="{'active': userDashboardSideMenuCtrl.isActive(child.sref)}">
+              <a class="nav-link"
+                ng-class="{ 'active': userDashboardSideMenuCtrl.isActive(child.sref) }"
+                id="userDashboardSideMenu{{section.name}}{{child.name}}Btn"
+                name="userDashboardSideMenu{{section.name}}{{child.name}}Btn"
+                ui-sref="{{child.sref}}">
+                <span data-translate="{{child.titleKey}}" translate-cloak></span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

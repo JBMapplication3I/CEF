@@ -1,0 +1,377 @@
+﻿@page "/catalog/auctions"
+@inherits MVC.Core.GridViewTemplatedControllerBase<AuctionPagedResults, AuctionModel, MVC.Api.Endpoints.AdminGetAuctionsForPortal>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="auctionCatalogPage">
+    @if (ViewState.loading || CurrentDataCollection is null && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (CurrentDataCollection is not null)
+    {
+      <Div Class="page-content-with-footer">
+        <Container Fluid="true">
+          <Row>
+            <Column>
+              <Div Class="d-flex justify-content-between align-items-center">
+                <Heading Size="HeadingSize.Is1">
+                  <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Gavel" Class="mr-2" />
+                  @(PortalRoute?.HeaderText ?? PortalRoute?.Title ?? "Auctions")
+                </Heading>
+                <Div>
+                  <Blazorise.Button
+                    Type="ButtonType.Button"
+                    Color="Color.Primary"
+                    Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, CreatorRouteBase))">
+                    Create New Auction
+                  </Blazorise.Button>
+                </Div>
+              </Div>
+              <Validations
+                EditContext="EditContext"
+                Mode="ValidationMode.Manual"
+                ValidateOnLoad="true">
+                <DataGrid
+                  TItem="AuctionModel"
+                  Data="@CurrentDataCollection.Results"
+                  Responsive="Responsive"
+                  Narrow="Narrow"
+                  Hoverable="Hoverable"
+                  Striped="Striped"
+                  Bordered="Bordered"
+                  Borderless="Borderless"
+                  Filterable="Filterable"
+                  ShowCaptions="ShowCaptions"
+                  Sortable="Sortable"
+                  Resizable="Resizable"
+                  ShowPageSizes="ShowPageSizes"
+                  ShowPager="ShowPager"
+                  PageSizes="PageSizes"
+                  PageSize="CurrentPageSize"
+                  PageSizeChanged="@(i => { CurrentPageSize = i; StateHasChanged(); })"
+                  CurrentPage="CurrentPage"
+                  PageChanged="@(e => { CurrentPage = e.Page; StateHasChanged(); })"
+                  MaxPaginationLinks="MaxPaginationLinks"
+                  TotalItems="@CurrentDataCollection.TotalCount"
+                  ReadData="@OnReadData"
+                  SelectedRowChanged="@OnSelectedRowChanged"
+                  CommandMode="DataGridCommandMode.Default"
+                  SelectionMode="DataGridSelectionMode.Single"
+                  SortMode="DataGridSortMode.Multiple"
+                  PagerPosition="DataGridPagerPosition.Bottom"
+                  FixedHeader="true"
+                  FixedHeaderDataGridHeight="100%"
+                  FixedHeaderDataGridMaxHeight="100%"
+                  ResizeMode="TableResizeMode.Header">
+                  <DataGridColumns>
+                    <DataGridNumericColumn
+                      TItem="AuctionModel"
+                      Field="@nameof(BaseModel.ID)"
+                      Caption="#"
+                      Sortable="true"
+                      Filterable="true"
+                      FilterCellClass="text-right"
+                      DisplayFormat="{0:00000}"
+                      Width="5%">
+                      <FilterTemplate>
+                        <NumericEdit
+                          Style="min-width: 90px;"
+                          TValue="int?"
+                          Value="@(dto.ID ?? 0)"
+                          ValueExpression="@(() => dto.ID)"
+                          ValueChanged="@(val => { dto.ID = val; OnFilter(); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridNumericColumn>
+                    <DataGridColumn
+                      TItem="AuctionModel"
+                      Field="@nameof(BaseModel.CustomKey)"
+                      Caption="Key"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="10%">
+                      <FilterTemplate>
+                        <TextEdit
+                          Style="min-width: 200px;"
+                          Text="@dto.CustomKey"
+                          TextExpression="@(() => dto.CustomKey)"
+                          TextChanged="@(val => { dto.CustomKey = val; OnFilter(); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="AuctionModel"
+                      Field="@nameof(NameableBaseModel.Name)"
+                      Caption="Title"
+                      Sortable="true"
+                      Filterable="true">
+                      <FilterTemplate>
+                        <TextEdit
+                          Style="min-width: 200px;"
+                          Text="@dto.Name"
+                          TextExpression="@(() => dto.Name)"
+                          TextChanged="@(val => { dto.Name = val; OnFilter(); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="AuctionModel"
+                      Field="@nameof(StatusableBaseModel.StatusID)"
+                      Caption="Status"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%">
+                      <DisplayTemplate>@StatusIDToDisplayName(context.StatusID)</DisplayTemplate>
+                      <FilterTemplate>
+                        <Select
+                          TValue="int?"
+                          Style="min-width: 150px;"
+                          SelectedValue="@dto.StatusID"
+                          SelectedValueExpression="@(() => dto.StatusID)"
+                          SelectedValueChanged="@(val => { dto.StatusID = val; OnFilter(); })">
+                          <SelectItem TValue="int?" Value="@null">Any</SelectItem>
+                          @if (Contract.CheckNotEmpty(Statuses))
+                          {
+                            <Repeater Items="Statuses">
+                              <ChildContent Context="status">
+                                <SelectItem TValue="int?" Value="@status.ID">@StatusIDToDisplayName(status.ID)</SelectItem>
+                              </ChildContent>
+                            </Repeater>
+                          }
+                        </Select>
+                      </FilterTemplate>
+                    </DataGridColumn>
+                    <DataGridColumn
+                      TItem="AuctionModel"
+                      Field="@nameof(AuctionModel.TypeID)"
+                      Caption="Type"
+                      Sortable="true"
+                      Filterable="true"
+                      Width="7%">
+                      <FilterTemplate>
+                        <Select
+                          TValue="int?"
+                          Style="min-width: 150px;"
+                          SelectedValue="@dto.TypeID"
+                          SelectedValueExpression="@(() => dto.TypeID)"
+                          SelectedValueChanged="@(val => { dto.TypeID = val; OnFilter(); })">
+                          <SelectItem TValue="int?" Value="@null">Any</SelectItem>
+                          @if (Contract.CheckNotEmpty(Types))
+                          {
+                            <Repeater Items="Types">
+                              <ChildContent Context="type">
+                                <SelectItem TValue="int?" Value="@type.ID">@TypeIDToDisplayName(type.ID)</SelectItem>
+                              </ChildContent>
+                            </Repeater>
+                          }
+                        </Select>
+                      </FilterTemplate>
+                      <DisplayTemplate>
+                        @TypeIDToDisplayName(context.TypeID)
+                      </DisplayTemplate>
+                    </DataGridColumn>
+                    <DataGridDateColumn
+                      TItem="AuctionModel"
+                      Field="@nameof(AuctionModel.OpensAt)"
+                      Caption="Start Date"
+                      Sortable="true"
+                      Filterable="true"
+                      FilterCellClass="text-right"
+                      Width="15%">
+                      <FilterTemplate>
+                        <DateEdit
+                          TValue="DateTime"
+                          Date="dto.MinOpensAt ?? DateTime.Today.AddYears(-5)"
+                          DateChanged="@(val => { dto.MinOpensAt = val; context.TriggerFilterChange(val); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridDateColumn>
+                    <DataGridDateColumn
+                      TItem="AuctionModel"
+                      Field="@nameof(AuctionModel.ClosesAt)"
+                      Caption="End Date"
+                      Sortable="true"
+                      Filterable="true"
+                      FilterCellClass="text-right"
+                      Width="15%">
+                      <FilterTemplate>
+                        <DateEdit
+                          TValue="DateTime"
+                          Date="dto.MaxClosesAt ?? DateTime.Today.AddYears(5)"
+                          DateChanged="@(val => { dto.MaxClosesAt = val; context.TriggerFilterChange(val); })"
+                        />
+                      </FilterTemplate>
+                    </DataGridDateColumn>
+                    <DataGridColumn
+                      TItem="AuctionModel"
+                      Field="@nameof(BaseModel.ID)"
+                      Caption=""
+                      Sortable="false"
+                      Filterable="false"
+                      Width="5%">
+                      <DisplayTemplate>
+                        <Blazorise.Button
+                          Type="ButtonType.Button"
+                          Color="Color.Link"
+                          Clicked="@(() => OnItemViewClicked(context.ID))">
+                          View
+                        </Blazorise.Button>
+                      </DisplayTemplate>
+                    </DataGridColumn>
+                  </DataGridColumns>
+                  <EmptyTemplate><Div Class="box p-3">No records found.</Div></EmptyTemplate>
+                  <LoadingTemplate><Div Class="box p-3"><Progress Size="Size.Small" Color="Color.Primary" Value="35"></Progress></Div></LoadingTemplate>
+                  <FirstPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleLeft" /></Span></FirstPageButtonTemplate>
+                  <PreviousPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleLeft" /></Span></PreviousPageButtonTemplate>
+                  <NextPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleRight" /></Span></NextPageButtonTemplate>
+                  <LastPageButtonTemplate><Span><Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.AngleDoubleRight" /></Span></LastPageButtonTemplate>
+                </DataGrid>
+              </Validations>
+            </Column>
+          </Row>
+        </Container>
+      </Div>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridViewRouteBase => "/catalog/auctions";
+
+  /// <inheritdoc />
+  protected override string EditorRouteBase => GridViewRouteBase + "/editor/";
+
+  /// <inheritdoc />
+  protected override string CreatorRouteBase => GridViewRouteBase + "/creator";
+
+  #region Dynamic Properties for UI
+  private List<StatusModel>? Statuses { get; set; }
+  private DataGrid<AuctionModel>? TheDataGrid { get; set; }
+  private List<TypeModel>? Types { get; set; }
+  #endregion
+  #endregion
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedInitialDataAsync()
+  {
+    return Task.WhenAll(LoadStatusesAsync(), LoadTypesAsync());
+  }
+
+  /// <inheritdoc />
+  protected override async Task<MVC.Core.IHttpPromiseCallbackArg<AuctionPagedResults?>> FilteredDataLoadCallAsync(
+    DataGridReadDataEventArgs<AuctionModel>? e)
+  {
+    DebugBeginMethod();
+    dto.Active = true;
+    dto.Paging ??= new();
+    dto.Paging.Size = CurrentPageSize;
+    dto.Paging.StartIndex = CurrentPage;
+    // NOTE: Appropriate MasterID check is enforced api-side
+    await ExtendSearchDTOAsync(e).ConfigureAwait(false);
+    DebugEndMethod();
+    return await cvApi.AdminGetAuctionsForPortal(dto).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  protected override Task<MVC.Core.IHttpPromiseCallbackArg<AuctionPagedResults?>> InitialDataLoadCallAsync()
+  {
+    return FilteredDataLoadCallAsync(null);
+  }
+
+  /// <inheritdoc />
+  protected override bool CustomFilterCheck(AuctionModel model)
+  {
+    return true;
+  }
+
+  /// <summary>Extend search data transfer object.</summary>
+  /// <param name="e">  The DataGridReadDataEventArgs{AuctionModel}? to process.</param>
+  /// <returns>A Task.</returns>
+  protected /*override*/ Task ExtendSearchDTOAsync(DataGridReadDataEventArgs<AuctionModel>? e)
+  {
+    DebugBeginMethod();
+    List<Sort>? sorts = null;
+    if (e is not null)
+    {
+      ConsoleDebug("e is not null");
+      sorts = (
+        from dataGridColumnInfo in e.Columns
+        where dataGridColumnInfo.SortDirection != SortDirection.None
+        select new Sort
+        {
+          Dir = dataGridColumnInfo.SortDirection == SortDirection.Ascending ? "asc" : "desc",
+          Order = dataGridColumnInfo.SortIndex,
+          Field = dataGridColumnInfo.Field,
+        })
+        .ToList();
+    }
+    dto.Sorts = Contract.CheckEmpty(sorts) ? null : sorts!.ToArray();
+    DebugEndMethod();
+    return Task.CompletedTask;
+  }
+
+  private string StatusIDToDisplayName(int id)
+  {
+    if (!Contract.CheckValidID(id) || Contract.CheckEmpty(Statuses))
+    {
+      return "Unknown";
+    }
+    var found = Statuses!.SingleOrDefault(x => x.ID == id);
+    if (found is not null)
+    {
+      return found.DisplayName ?? found.Name ?? "Unknown";
+    }
+    return "Unknown";
+  }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetAuctionStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+
+  private string TypeIDToDisplayName(int id)
+  {
+    if (!Contract.CheckValidID(id) || Contract.CheckEmpty(Types))
+    {
+      return "Unknown";
+    }
+    var found = Types!.SingleOrDefault(x => x.ID == id);
+    if (found is not null)
+    {
+      return found.DisplayName ?? found.Name ?? "Unknown";
+    }
+    return "Unknown";
+  }
+
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetAuctionTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+}

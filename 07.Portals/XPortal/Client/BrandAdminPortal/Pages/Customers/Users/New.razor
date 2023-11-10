@@ -1,0 +1,601 @@
+﻿@page "/customers/users/creator"
+@using Clarity.Ecommerce.MVC.Core
+@using Clarity.Ecommerce.UI.XPortal.SharedLibrary.Shared
+@using Clarity.Ecommerce.UI.XPortal.SharedLibrary.Shared.Associations
+@using Clarity.Ecommerce.UI.XPortal.SharedLibrary.Shared.Forms
+@using Clarity.Ecommerce.UI.XPortal.SharedLibrary.Shared.Modals
+@using Clarity.Ecommerce.UI.XPortal.SharedLibrary.Shared.Paged
+@inherits Clarity.Ecommerce.MVC.Core.EditorViewTemplatedControllerBase<Clarity.Ecommerce.MVC.Api.Models.UserModel, Clarity.Ecommerce.MVC.Api.Endpoints.UpdateUser>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="newUserPage">
+    @if (ViewState.loading || Record == null! && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (EditContext != null! && Record is not null)
+    {
+      <Validations
+        EditContext="EditContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="EditContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content-with-footer">
+            <Container Fluid="true">
+              <Row>
+                <Column ColumnSize="ColumnSize.IsFull">
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.User" Class="mr-1" />
+                    @ClippedName #@ID
+                  </Heading>
+                </Column>
+              </Row>
+              <Tabs
+                SelectedTab="@SelectedTab"
+                SelectedTabChanged="@OnSelectedTabChanged"
+                TabPosition="TabPosition.Start"
+                Mode="TabsMode.LazyReload"
+                Pills="true"
+                Shadow="Shadow.Small"
+                Class="h-100">
+                <Items>
+                  <Tab Name="details">Details</Tab>
+                  <Tab Name="attributes">Attributes</Tab>
+                </Items>
+                <Content>
+                  <TabPanel Name="details">
+                    @* <TabDetails @ref="tabDetails" Record="Record" /> *@
+                    <Container Fluid="true">
+                      <Row>
+                        <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                          <Heading Size="HeadingSize.Is3">Basic Information</Heading>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <SelectFormGroup
+                                FormIdentifier="TypeID"
+                                @bind-Value="@Record.TypeID"
+                                OptionsList="@Types"
+                                ItemValueFunc="@(x => ((TypeModel)x).ID)"
+                                ItemLabelFunc="@(x => ((TypeModel)x).DisplayName ?? ((TypeModel)x).Name)"
+                                LabelText="Type"
+                                PlaceholderText="Type"
+                                Disabled="ViewState.InputDisable"
+                                Required="true"
+                                StartTouched="true"
+                                DontAllowNull="true"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <SelectFormGroup
+                                FormIdentifier="StatusID"
+                                @bind-Value="@Record.StatusID"
+                                OptionsList="@Statuses"
+                                ItemValueFunc="@(x => ((StatusModel)x).ID)"
+                                ItemLabelFunc="@(x => ((StatusModel)x).DisplayName ?? ((StatusModel)x).Name)"
+                                LabelText="Status"
+                                PlaceholderText="Status"
+                                Disabled="ViewState.InputDisable"
+                                Required="true"
+                                StartTouched="true"
+                                DontAllowNull="true"
+                              />
+                            </Column>
+                          </Row>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is9.OnSM()">
+                              <TextFormGroup
+                                FormIdentifier="CustomKey"
+                                @bind-Value="@Record.CustomKey"
+                                LabelText="Custom Key"
+                                PlaceholderText="Key"
+                                MaxLength="128"
+                                StartTouched="true"
+                                Required="true"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is3.OnSM()">
+                              <Div Class="form-group">
+                                <Blazorise.Label Class="control-label">Created Date</Blazorise.Label>
+                                <Div Class="input-group">
+                                  <Blazorise.Label Class="form-control-static font-weight-normal">
+                                    @Record.CreatedDate.ToString("MMM dd, yyyy")
+                                  </Blazorise.Label>
+                                </Div>
+                              </Div>
+                            </Column>
+                          </Row>
+                          <Row>
+                            <Column>
+                              <TypeAheadFormGroup
+                                TValue="string"
+                                TItem="AccountModel"
+                                FormIdentifier="AccountID"
+                                OptionsList="@Accounts"
+                                ItemValueFunc="@(x => ((AccountModel)x).ID.ToString())"
+                                ItemLabelFunc="@(x => ((AccountModel)x).Name ?? ((AccountModel)x).CustomKey)"
+                                OnSearchChanged="@((search) => GrabAccountsAsync(search))"
+                                LabelText="Account"
+                                PlaceholderText="Search Accounts..."
+                                StartTouched="false"
+                                Required="false"
+                              />
+                              @* TODO: Create TypeAhead form group
+                              <Addons>
+                                <input
+                                  type="text"
+                                  class="form-control typeahead"
+                                  Id="taAccount" Name="taAccount"
+                                  Required="false"
+                                  uib-typeahead="a.ID as (a.Name + (a.CustomKey && a.CustomKey != '' ? ' [' + a.CustomKey + ']' : ''))
+                                  for a in grabAccounts(accountToGrab)"
+                                  typeahead-wait-ms="500" typeahead-min-length="1" typeahead-no-results="noAccountResults"
+                                  typeahead-loading="loadingAccounts"
+                                  typeahead-on-select="selectAccountFromTypeAhead($item, $model, $Label, $event)"
+                                  @bind-value="@accountToGrab"
+                                />
+                                <Addon AddonType="AddonType.End">
+                                  @if (loadingAccounts)
+                                  {
+                                    <i Class="fa fa-refresh"></i>
+                                  }
+                                  @if (noAccountResults)
+                                  {
+                                    <i Class="fa fa-times"></i>
+                                  }
+                                  @if (accountID)
+                                  {
+                                    <i Class="fa fa-check"></i>
+                                  }
+                                  @if (!loadingAccounts && !noAccountResults && !accountID)
+                                  {
+                                    <i Class="fa fa-question" />
+                                  }
+                                </Addon>
+                              </Addons>
+                              *@
+                              @if (Record.Account is not null)
+                              {
+                                <Div Class="form-group">
+                                  <Blazorise.Strong>Account</Blazorise.Strong>&nbsp;<!--
+                                  --><Blazorise.Anchor To="@("/customers/accounts/editor/" + @Record.AccountID)"><!--
+                                  -->#@Record.AccountID [@Record.Account.CustomKey] @Record.Account.Name</Blazorise.Anchor>
+                                  <br />
+                                  <Strong>Active</Strong> @(Record.Account.Active ? "Yes" : "No")
+                                  <Strong>On Hold</Strong> @(Record.Account.IsOnHold ? "Yes" : "No")
+                                  <Strong>Status</Strong> @(Record.Account.StatusDisplayName is not null ? Record.Account.StatusDisplayName : Record.Account.StatusName)
+                                  <Strong>Type</Strong> @(Record.Account.IsOnHold ? Record.Account.TypeDisplayName : Record.Account.TypeName)
+                                </Div>
+                              }
+                            </Column>
+                          </Row>
+                          <Row>
+                            @if (CEFConfig.featureSet?.multiCurrency?.enabled == true)
+                            {
+                              <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                                <SelectFormGroup
+                                  FormIdentifier="CurrencyID"
+                                  @bind-Value="@Record.CurrencyID"
+                                  OptionsList="@Currencies"
+                                  ItemValueFunc="@(x => ((CurrencyModel)x).ID)"
+                                  ItemLabelFunc="@(x => ((CurrencyModel)x).Name)"
+                                  LabelText="Currency"
+                                  PlaceholderText="Currency"
+                                  Disabled="ViewState.InputDisable"
+                                  Required="true"
+                                  DontAllowNull="false"
+                                  LeftIcon="@FontAwesomeIcons.DollarSign"
+                                />
+                              </Column>
+                            }
+                            @if (CEFConfig.featureSet?.languages_enabled == true)
+                            {
+                              <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                                <SelectFormGroup
+                                  FormIdentifier="LanguageID"
+                                  @bind-Value="@Record.LanguageID"
+                                  OptionsList="@Languages"
+                                  ItemValueFunc="@(x => ((LanguageModel)x).ID)"
+                                  ItemLabelFunc="@(x => ((LanguageModel)x).Locale)"
+                                  LabelText="Language"
+                                  PlaceholderText="Language"
+                                  Disabled="ViewState.InputDisable"
+                                  Required="true"
+                                  DontAllowNull="false"
+                                  LeftIcon="@FontAwesomeIcons.Language"
+                                />
+                              </Column>
+                            }
+                          </Row>
+                          <Heading Size="HeadingSize.Is3">Contact Information</Heading>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <TextFormGroup
+                                FormIdentifier="Contact.FirstName"
+                                @bind-Value="@Record.Contact.FirstName"
+                                LabelText="First Name"
+                                PlaceholderText="First Name"
+                                MaxLength="128"
+                                StartTouched="true"
+                                Required="true"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <TextFormGroup
+                                FormIdentifier="Contact.LastName"
+                                @bind-Value="@Record.Contact.LastName"
+                                LabelText="Last Name"
+                                PlaceholderText="Last Name"
+                                MaxLength="128"
+                                StartTouched="true"
+                                Required="true"
+                              />
+                            </Column>
+                          </Row>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is7.OnMD()">
+                              <TextFormGroup
+                                FormIdentifier="Contact.Phone1"
+                                @bind-Value="@Record.Contact.Phone1"
+                                LabelText="Phone"
+                                PlaceholderText="+1 (555) 555-5555 x55555"
+                                MaxLength="64"
+                                StartTouched="true"
+                                Required="false"
+                                IsPhone="true"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is5.OnMD()">
+                              <TextFormGroup
+                                FormIdentifier="Contact.Fax1"
+                                @bind-Value="@Record.Contact.Fax1"
+                                LabelText="Fax"
+                                PlaceholderText="+1 (555) 555-5555 x55555"
+                                MaxLength="64"
+                                StartTouched="true"
+                                Required="false"
+                                IsFax="true"
+                              />
+                            </Column>
+                          </Row>
+                          <TextFormGroup
+                            Role="@TextRole.Email"
+                            FormIdentifier="Contact.Email1"
+                            @bind-Value="@Record.Contact.Email1"
+                            LabelText="Email"
+                            StartTouched="true"
+                            Required="false"
+                          />
+                          <Heading Size="HeadingSize.Is3">Login Information</Heading>
+                          <Row>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <TextFormGroup
+                                IsUsername="true"
+                                FormIdentifier="UserName"
+                                @bind-Value="@Record.UserName"
+                                LabelText="Username can be an Email"
+                                Required="true"
+                                StartTouched="true"
+                                MaxLength="128"
+                              />
+                            </Column>
+                            <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                              <TextFormGroup
+                                IsPassword="true"
+                                FormIdentifier="OverridePassword"
+                                @bind-Value="@Record.OverridePassword"
+                                LabelText="Password"
+                                Required="true"
+                                ShowValidTooltip="true"
+                                StartTouched="true"
+                                MaxLength="128"
+                              />
+                            </Column>
+                          </Row>
+                          @* TODO: Implment Lockout
+                          <CheckboxFormGroup
+                            FormIdentifier="LockoutEnabled"
+                            TValue="bool"
+                            OptionsList="@Types"
+                            ItemLabelFunc="@(x => x.Name)"
+                            OnToggle="@(x => Record.LockoutEnabled = true)"
+                            IsOptionToggled="@(cat => Record.LockoutEnabled)"
+                            LabelText="Lockout Enabled"
+                            Required="false"
+                          />
+                          *@
+                        </Column>
+                        <Column ColumnSize="ColumnSize.Is6.OnSM()">
+                          @*
+                          <ContactEditorWidget
+                            Class="mb-3"
+                            Contact="@Record.Contact"
+                            IsEditable="true"
+                            IDSuffix="user"
+                            HideKey="true"
+                          />
+                          *@
+                        </Column>
+                      </Row>
+                    </Container>
+                  </TabPanel>
+                  <TabPanel Name="attributes">
+                    <RecordAttributes
+                      Record="Record"
+                      OtherTypeName="User"
+                    />
+                  </TabPanel>
+                </Content>
+              </Tabs>
+            </Container>
+          </Div>
+          <Div Class="page-footer mb-5">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Primary"
+              Disabled="@(FormInvalid || ViewState.saving || ViewState.running || ViewState.pristine)"
+              Clicked="OnSave">
+              Save Changes
+            </Blazorise.Button>
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Secondary"
+              Class="ml-1"
+              Disabled="ViewState.InputDisable"
+              Clicked="@(() => NavigationManager.NavigateTo(GridRouteFormat))">
+              Back
+            </Blazorise.Button>
+            @*<Blazorise.ValidationSummary Class="ml-3" />*@
+            <ErrorBlock
+              Class="ml-3"
+              Orientation="Blazorise.Orientation.Horizontal"
+            />
+            <DebugViewStateBlock
+              Class="ml-3 mb-0"
+              Orientation="Blazorise.Orientation.Horizontal"
+            />
+          </Div>
+        </EditForm>
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/customers/users";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+  #endregion
+
+//  #region Tabs
+//  private TabDetails? tabDetails;
+//  private TabImages? tabImages;
+//  private TabStoredFiles? tabStoredFiles;
+//  // private TabDesigner tabDesigner;
+//  private TabPricing? tabPricing;
+//  private TabShipping? tabShipping;
+//  private TabPurchasing? tabPurchasing;
+//  private TabRestrictions? tabRestrictions;
+//#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+//  private TabAssociations? tabAssociations;
+//  private TabTaxes? tabTaxes;
+//  private TabInventory? tabInventory;
+//  private TabReturning? tabReturning;
+//  private TabNotifications? tabNotifications;
+//  private TabCategories? tabCategories;
+//  private TabManufacturers? tabManufacturers;
+//  private TabVendors? tabVendors;
+//#else
+//  private ElementReference? tabAssociations;
+//  private ElementReference? tabTaxes;
+//  private ElementReference? tabInventory;
+//  private ElementReference? tabReturning;
+//  private ElementReference? tabNotifications;
+//  private ElementReference? tabCategories;
+//  private ElementReference? tabManufacturers;
+//  private ElementReference? tabVendors;
+//#endif
+//#if BRANDADMIN || FRANCHISEADMIN
+//  private TabStores? tabStores;
+//#else
+//  private ElementReference? tabStores;
+//#endif
+//#if BRANDADMIN
+//  private TabFranchises? tabFranchises;
+//#else
+//  private ElementReference? tabFranchises;
+//#endif
+//  // private TabAttributes? tabAttributes;
+//  #endregion
+
+  #region Loading
+  /// <inheritdoc />
+  protected override Func<int, Task<IHttpPromiseCallbackArg<UserModel>>> GetCallerFunc
+    => id => cvApi.GetUserByID(new() { ID = id });
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    return Task.WhenAll(
+      LoadTypesAsync(),
+      LoadStatusesAsync(),
+      LoadCurrenciesAsync(),
+      LoadLanguagesAsync(),
+      LoadUserRolesAsync());
+  }
+  #endregion
+
+  #region Grab Accounts
+  private IEnumerable<AccountModel>? Accounts { get; set; } = Array.Empty<AccountModel>();
+
+  private async Task GrabAccountsAsync(string search)
+  {
+    DebugBeginMethod();
+    var lookup = search.ToLower();
+    var result = await cvApi.GetAccounts(
+      new()
+      {
+        Active = true,
+        AsListing = true,
+        IDOrCustomKeyOrName = search,
+        Paging = new()
+        {
+          Size = 50,
+          StartIndex = 1,
+        }
+      })
+      .ConfigureAwait(false);
+    Accounts = result?.data?.Results?.ToList();
+    StateHasChanged();
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveATypeBaseModel Handlers
+  private List<TypeModel>? Types { get; set; }
+
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetUserTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveAStatusModel Handlers
+  private List<StatusModel>? Statuses { get; set; }
+
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetUserStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveANullableCurrencyBaseModel Handlers
+  private List<CurrencyModel>? Currencies { get; set; }
+
+  private async Task LoadCurrenciesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetCurrencies(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Currencies = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveANullableLanguageBaseModel Handlers
+  private List<LanguageModel>? Languages { get; set; }
+
+  private async Task LoadLanguagesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetLanguages(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Languages = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveARoleModel Handlers
+  private RoleForUserModel[]? UserRoles { get; set; }
+
+  private async Task LoadUserRolesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetRolesForUser(new() { ID = Record.ID }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      UserRoles = result.data;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<UserModel, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> UpdateCallerFunc
+    => Record => cvApi.UpdateUser(Mapper.Map<MVC.Api.Endpoints.UpdateUser>(Record));
+
+  /// <inheritdoc />
+#pragma warning disable CS1998
+  protected override async Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+#pragma warning restore CS1998
+  {
+//    await tabDetails!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabImages!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabStoredFiles!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    // await tabDesigner!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabPricing!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabShipping!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabPurchasing!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabRestrictions!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+//    await tabAssociations!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabTaxes!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabInventory!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabReturning!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabNotifications!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabCategories!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabManufacturers!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabVendors!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//#endif
+//#if BRANDADMIN || FRANCHISEADMIN
+//    await tabStores!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//#endif
+//#if BRANDADMIN
+//    await tabFranchises!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+//#endif
+    // await tabAttributes!.ExtendedRecordDataEnforcementOnSaveAsync(timestamp).ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+#pragma warning disable CS1998
+  protected override async Task ExtendedRecordDataCallsOnAfterSaveAsync(DateTime timestamp)
+#pragma warning restore CS1998
+  {
+//#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+//    await tabPricing!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabInventory!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabManufacturers!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+//    await tabVendors!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+//#if BRANDADMIN || FRANCHISEADMIN
+//    await tabStores!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+//#endif
+//#if BRANDADMIN
+//    await tabFranchises!.ExtendedRecordDataCallsOnAfterSaveAsync(timestamp).ConfigureAwait(false);
+//#endif
+//#endif
+  }
+  #endregion
+}

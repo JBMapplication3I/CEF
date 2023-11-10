@@ -1,0 +1,39 @@
+﻿<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover table-bordered"
+                   id="shopping-list-cart-table-{{shoppingListsTableCtrl.index}}">
+                <thead>
+                    <tr class="first last">
+                        <th class="col-sm-8" data-translate="ui.storefront.common.Name"></th>
+                        <th class="col-sm-3 text-center"
+                            data-translate="ui.storefront.common.Date"></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="!shoppingListsTableCtrl.lists.length">
+                        <td colspan="8">
+                            <p class="h4"
+                               data-translate="ui.storefront.product.widgets.compare.noItemsHaveBeenSelected"></p>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in shoppingListsTableCtrl.lists">
+                        <td><p ng-bind="item.Name"></p></td>
+                        <td class="text-center">
+                            <p ng-bind="item.CreatedDate | date: 'yyyy-MM-dd hh:mm a'"></p>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-block btn-primary"
+                                    translate-attr="{ table: 'ui.storefront.common.View',
+                                                      'aria-label': 'ui.storefront.common.View' }"
+                                    data-translate="ui.storefront.common.View"
+                                    ng-click="shoppingListsTableCtrl.openList(item)">
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

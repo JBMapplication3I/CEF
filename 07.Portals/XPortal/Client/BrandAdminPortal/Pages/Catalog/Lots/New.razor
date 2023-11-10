@@ -1,0 +1,363 @@
+﻿@page "/catalog/lots/creator/for-auction/{IDStr}"
+@using Clarity.Ecommerce.MVC.Core
+@inherits MVC.Core.CreatorViewTemplatedControllerBase<LotModel, MVC.Api.Endpoints.CreateLot>
+
+@if (PortalRoute is not null)
+{
+  <CEFPageTitle Value="@(PortalRoute.Title + RoutingOptions.PageTitleSuffix)" />
+}
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="lotCreatorPage">
+    @if (ViewState.loading || Record == null! && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (EditContext != null! && Record is not null)
+    {
+      <Validations
+        EditContext="EditContext"
+        Mode="ValidationMode.Manual"
+        ValidateOnLoad="true">
+        <EditForm EditContext="EditContext">
+          <DataAnnotationsValidator />
+          <Div Class="page-content-with-footer">
+            <Container Fluid="true">
+              <Row>
+                <Column>
+                  <Heading Size="HeadingSize.Is1">
+                    <Blazorise.Icons.FontAwesome.Icon Name="@("fa-ball-pile")" Class="mr-1" />
+                    @(Record!.Name ?? string.Empty)
+                  </Heading>
+                </Column>
+              </Row>
+              <Tabs SelectedTab="@SelectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+                <Items>
+                  <Tab Class="font-weight-bold" TextColor="TextColor.Danger" Name="details">Details</Tab>
+                  <Tab Class="font-weight-bold" TextColor="TextColor.Danger" Name="product">Product</Tab>
+                  <Tab Class="font-weight-bold" TextColor="TextColor.Danger" Name="attributes">Attributes</Tab>
+                </Items>
+                <Content>
+                  <TabPanel Name="details">
+                    <Row>
+                      <Column>
+                        <Heading Size="HeadingSize.Is2">Lot Information</Heading>
+                        <TextFormGroup
+                          FormIdentifier="Name"
+                          LabelText="Name"
+                          PlaceholderText="Lot Name"
+                          @bind-Value="@Record.Name"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The name of the lot"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                        <TextFormGroup
+                          FormIdentifier="CustomKey"
+                          LabelText="Lot Key"
+                          PlaceholderText="Lot Key"
+                          @bind-Value="Record.CustomKey"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The unique lot key"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                        <Heading Size="HeadingSize.Is2">Lot Description</Heading>
+                        <TextAreaFormGroup
+                          FormIdentifier="Description"
+                          LabelText="Long Description"
+                          PlaceholderText="Lot Long Description"
+                          @bind-Value="Record.Description"
+                          Required="true"
+                          Disabled="@ViewState.InputDisable"
+                          TooltipText="The description of the lot"
+                          ShowValidTooltip="true"
+                          StartTouched="true"
+                        />
+                      </Column>
+                    </Row>
+                  </TabPanel>
+                  <TabPanel Name="product">
+                    <Heading Size="HeadingSize.Is2">Lot Product</Heading>
+                    <Row Class="flex-lg-row flex-sm-column-reverse">
+                      <Column>
+                        <Heading Size="HeadingSize.Is3">Add Assignment with the plus sign</Heading>
+                        <Table Striped="true" Hoverable="true" Class="table-condensed">
+                          <TableHeader>
+                            <TableRow>
+                              <TableHeaderCell Class="w-0" Style="width:43px"></TableHeaderCell>
+                              <TableHeaderCell Class="w-15"></TableHeaderCell>
+                              <TableHeaderCell Class="w-65"></TableHeaderCell>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <Repeater Items="ProductCollection">
+                              <ChildContent Context="model">
+                                <TableRow>
+                                  <TableRowCell>
+                                    <Blazorise.Button
+                                      Type="ButtonType.Button"
+                                      Color="Color.Primary"
+                                      Size="Size.Small"
+                                      Clicked="_ => Add(model)">
+                                      <Blazorise.Icons.FontAwesome.Icon Name="FontAwesomeIcons.Plus" Class="fa-fw" />
+                                      <Span Class="sr-only">Add Assignment</Span>
+                                    </Blazorise.Button>
+                                  </TableRowCell>
+                                  <TableRowCell>@model.ID</TableRowCell>
+                                  <TableRowCell>@model.Name</TableRowCell>
+                                </TableRow>
+                              </ChildContent>
+                            </Repeater>
+                          </TableBody>
+                        </Table>
+                      </Column>
+                      <Column>
+                        <Heading Size="HeadingSize.Is3">Assigned</Heading>
+                        <Table Striped="true" Hoverable="true" Class="table-condensed">
+                          <TableHeader>
+                            <TableRowHeader>
+                              <TableHeaderCell Class="w-10">ID</TableHeaderCell>
+                              <TableHeaderCell Class="w-35">Name</TableHeaderCell>
+                              <TableHeaderCell Class="w-35">Key</TableHeaderCell>
+                              @*<TableHeaderCell Class="w-0" Style="width:43px"></TableHeaderCell>*@
+                              <TableHeaderCell Class="w-0" Style="width:43px"></TableHeaderCell>
+                            </TableRowHeader>
+                          </TableHeader>
+                          <TableBody>
+                            @if (!Contract.CheckValidID(Record.ProductID))
+                            {
+                              <TableRow>
+                                <TableRowCell ColumnSpan="4">None</TableRowCell>
+                              </TableRow>
+                            }
+                            else
+                            {
+                              <TableRow>
+                                <TableRowCell>@(Record.ProductID)</TableRowCell>
+                                <TableRowCell>@(Record.ProductName)</TableRowCell>
+                                <TableRowCell>@(Record.ProductKey)</TableRowCell>
+                                @*
+                                <TableRowCell>
+                                  <Blazorise.Button
+                                    Type="ButtonType.Button"
+                                    Size="Size.Small"
+                                    Color="Color.Primary"
+                                    Clicked="@(_ => { editModel = Record.Product; StateHasChanged(); })">
+                                    <Blazorise.Icons.FontAwesome.Icon Name="Icons.Pencil" Class="fa-fw" />
+                                    <Span Class="sr-only">Edit Assignment</Span>
+                                  </Blazorise.Button>
+                                </TableRowCell>
+                                *@
+                                @*
+                                <TableRowCell>
+                                  <Blazorise.Button
+                                    Type="ButtonType.Button"
+                                    Color="Color.Danger"
+                                    Size="Size.Small"
+                                    Clicked="_ => { Record.Product.Remove(model); StateHasChanged(); }">
+                                    <Blazorise.Icons.FontAwesome.Icon Name="Icons.Trash" Class="fa-fw" />
+                                    <Span Class="sr-only">Delete Assignment</Span>
+                                  </Blazorise.Button>
+                                </TableRowCell>
+                                *@
+                              </TableRow>
+                            }
+                          </TableBody>
+                        </Table>
+                      </Column>
+                    </Row>
+                  </TabPanel>
+                  <TabPanel Name="attributes">
+                    <RecordAttributes
+                      Record="Record"
+                      OtherTypeName="Lot"
+                    />
+                  </TabPanel>
+                </Content>
+              </Tabs>
+            </Container>
+          </Div>
+          <Div Class="page-footer">
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Color="Color.Primary"
+              Block="true"
+              Class="mb-3"
+              Disabled="@(FormInvalid || ViewState.saving || ViewState.running || ViewState.pristine)"
+              Clicked="OnSave">
+              Save Changes
+            </Blazorise.Button>
+            <Blazorise.Button
+              Type="ButtonType.Button"
+              Block="true"
+              Class="btn-outline-secondary mb-3"
+              Disabled="@(ViewState.dirty || ViewState.InputDisable)"
+              Clicked="@(() => NavigationManager.NavigateToPortalRouteFor(RoutingOptions, GridRouteFormat))">
+              Back
+            </Blazorise.Button>
+            @((MarkupString)ViewState.AsHTMLDebugBlock())
+            <Blazorise.ValidationSummary />
+          </Div>
+        </EditForm>
+      </Validations>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  #region Properties
+  /// <summary>Gets or sets the identifier string.</summary>
+  /// <value>The identifier string.</value>
+  [Parameter]
+  public string? IDStr { get; set; }
+
+  private int ID { get; set; }
+
+  /// <inheritdoc />
+  protected override string GridRouteFormat => "/catalog/lots";
+
+  /// <inheritdoc />
+  protected override string EditorRouteFormat => GridRouteFormat + "/editor/{0}";
+  #endregion
+
+  /// <inheritdoc />
+  protected override Task LoadExtendedDataAsync()
+  {
+    ID = Contract.RequiresValidID(int.Parse(Contract.RequiresValidKey(IDStr!)));
+    Record.AuctionID = ID;
+    return Task.WhenAll(LoadTypesAsync(), LoadStatusesAsync(), LoadAuction(), LoadProducts());
+  }
+
+  #region IHaveATypeBaseModel Handling
+  /// <summary>Gets or sets the types.</summary>
+  /// <value>The types.</value>
+  private List<TypeModel>? Types { get; set; }
+
+  /// <summary>Loads types.</summary>
+  /// <returns>The types.</returns>
+  private async Task LoadTypesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetLotTypes(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Types = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region IHaveAStatusBaseModel Handling
+  /// <summary>Gets or sets the statuses.</summary>
+  /// <value>The statuses.</value>
+  private List<StatusModel>? Statuses { get; set; }
+
+  /// <summary>Loads statuses.</summary>
+  /// <returns>The statuses.</returns>
+  private async Task LoadStatusesAsync()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetLotStatuses(new() { Active = true }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Statuses = result.data.Results;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region Saving
+  /// <inheritdoc />
+  protected override Func<MVC.Api.Endpoints.CreateLot, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> CreateCallerFunc
+    => record => cvApi.CreateLot(record);
+
+  /// <inheritdoc />
+  protected override Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    if (!Contract.CheckValidID(Record.TypeID))
+    {
+      Record.TypeID = Types?.First().ID ?? 1;
+    }
+    if (!Contract.CheckValidID(Record.StatusID))
+    {
+      Record.StatusID = Statuses?.First().ID ?? 1;
+    }
+    return Task.CompletedTask;
+  }
+
+  /// <inheritdoc />
+  protected override Func<int, DateTime, Task<IHttpPromiseCallbackArg<CEFActionResponse<int>>>> AssocToMasterCallerFunc
+#if BRANDADMIN
+    => (newID, timestamp) => cvApi.CreateBrandAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif FRANCHISEADMIN
+    => (newID, timestamp) => cvApi.CreateFranchiseAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif MANUFACTURERADMIN
+    => (newID, timestamp) => cvApi.CreateManufacturerAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif STOREADMIN
+    => (newID, timestamp) => cvApi.CreateStoreAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#elif VENDORADMIN
+    => (newID, timestamp) => cvApi.CreateVendorAuction(
+      new() { MasterID = Master!.ID, SlaveID = newID, Active = true, CreatedDate = timestamp, });
+#endif
+  #endregion
+
+  #region Auction Association
+
+  /// <summary>Gets or sets the auctions.</summary>
+  /// <value>The auctions.</value>
+  private AuctionModel? Auction { get; set; }
+
+  private async Task LoadAuction()
+  {
+    DebugBeginMethod();
+    var result = await cvApi.GetAuctionByID(new() { ID = ID }).ConfigureAwait(false);
+    if (result.data is not null)
+    {
+      Auction = result.data;
+    }
+    DebugEndMethod();
+  }
+  #endregion
+
+  #region Product Association
+  /// <summary>Gets or sets the product collection.</summary>
+  /// <value>The product collection.</value>
+  private List<ProductModel> ProductCollection { get; set; } = new() { };
+
+  private async Task LoadProducts()
+  {
+      DebugBeginMethod();
+      var result = await cvApi.AdminGetProductsForPortal().ConfigureAwait(false);
+      if (result.data is not null && result.data.Results is not null)
+      {
+          ProductCollection = result.data.Results;
+      }
+      DebugEndMethod();
+  }
+
+  /// <summary>Adds a product.</summary>
+  /// <param name="pm">The product model.</param>
+  private void Add(ProductModel pm)
+  {
+    Record.Product = pm;
+    Record.ProductID = pm.ID;
+    Record.ProductKey = pm.CustomKey;
+    Record.ProductName = pm.Name;
+  }
+  #endregion
+}

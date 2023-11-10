@@ -1,0 +1,28 @@
+﻿<div class="row product-specifications">
+    <table class="col-md-12 standard-view">
+        <tr ng-repeat="row in productDetailsAttributesCtrl.specifications" class="product-specifications-row">
+            <td ng-repeat="feature in row">
+                <table class="col-sm-12 product-specification" ng-if="feature.length !== 0">
+                    <tr class="product-specification-row">
+                        <td ng-if="feature.Key.toLowerCase() !== 'upccode'" class="key" ng-bind="feature.Key | camelCaseToHuman : true"></td>
+                        <td ng-if="feature.Key.toLowerCase() === 'upccode'" class="key" ng-bind="UPC Code"></td>
+                        <td class="value" ng-bind="feature.Value + ' ' + feature.UofM"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table class="col-lg-12 mobile-view">
+        <tr ng-repeat="row in productDetailsAttributesCtrl.specificationsMobile" class="product-specifications-row">
+            <td ng-repeat="feature in row">
+                <table class="col-sm-12 product-specification" ng-if="feature.length !== 0">
+                    <tr class="product-specification-row">
+                        <td ng-if="feature.Key.toLowerCase() !== 'upccode'" class="key" ng-bind="feature.Key | camelCaseToHuman : true"></td>
+                        <td ng-if="feature.Key.toLowerCase() === 'upccode'" class="key" ng-bind="UPC Code"></td>
+                        <td class="value" ng-bind="feature.Value + ' ' + feature.UofM"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

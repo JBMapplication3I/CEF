@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Owin.Security\Microsoft.Owin.Security.csproj" />
+    <ProjectReference Include="..\Microsoft.Owin\Microsoft.Owin.csproj" />
+    <ProjectReference Include="..\Owin\Owin.csproj" />
+  </ItemGroup>
+
+</Project>

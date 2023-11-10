@@ -1,0 +1,26 @@
+<div class="row my-3" style="min-height: 50vh;">
+    <div class="col-12">
+        <h1><span data-translate="ui.storefront.common.Category.Plural"></span></h1>
+    </div>
+    <div ng-repeat="cat in abstractCatCtrl.categories | orderBy: 'SortOrder'" class="col text-center">
+        <a class="pointer" ng-click="abstractCatCtrl.goToChildrenOrResults(cat.ID)">
+            <div ng-show="abstractCatCtrl.cefConfig.catalog.displayImages">
+                <img ng-show="cat.PrimaryImageFileName  == null || cat.PrimaryImageFileName == ''"
+                    class="img-responsive center-block" ng-class="{'text-capitalize': !cat.DisplayName}"
+                    alt="cat | cleanSearchCategoryName"
+                    src="./images/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both" />
+                <img ng-show="cat.PrimaryImageFileName != null && cat.PrimaryImageFileName != ''"
+                    class="img-responsive center-block" ng-class="{'text-capitalize': !cat.DisplayName}"
+                    alt="cat | cleanSearchCategoryName"
+                    ng-src="/Images/ecommerce/Category/Images/{{cat.PrimaryImageFileName}}?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both" />
+            </div>
+            <label class="mt-1 category-title pointer" ng-class="{'text-capitalize':!cat.DisplayName}"
+                   ng-bind="cat | cleanSearchCategoryName"></label>
+        </a>
+    </div>
+    <div ng-if="abstractCatCtrl.viewState.running"
+         cef-loading-widget
+         overlay="true"
+         message="abstractCatCtrl.viewState.waitMessage">
+    </div>
+</div>

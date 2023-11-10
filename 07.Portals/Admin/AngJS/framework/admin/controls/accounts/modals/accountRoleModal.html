@@ -1,0 +1,88 @@
+﻿<div class="container-fluid cv-modal">
+    <div class="form-vertical" ng-form="accountRoleDetails.forms.MngRole">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group" ng-if="accountRoleDetails.dgType == 'Remove'"
+                     data-translate="ui.admin.controls.accounts.modals.accountRoleModal.AreYouSureYouWantToRemoveThisRoleThisActionCannotBeUndone"></div>
+                <div class="form-group" ng-class="{'has-error': accountRoleDetails.forms.MngRole.ddlDGRole.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.common.Role"></label>
+                    <div class="input-group">
+                        <!-- TODO: Filter out roles that they already have on 'Add' -->
+                        <select class="form-control" id="ddlDGRole" name="ddlDGRole"
+                                ng-disabled="accountRoleDetails.dgType != 'Add'"
+                                ng-model="accountRoleDetails.role.RoleId"
+                                ng-required="accountRoleDetails.dgType == 'Add'"
+                                ng-options="value as name for (name,value) in accountRoleDetails.roles">
+                            <option value="" ng-disabled="true" data-translate="ui.admin.common.SelectARole"></option>
+                        </select>
+                    </div>
+                    <div ng-messages="accountRoleDetails.forms.MngRole.ddlDGRole.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': accountRoleDetails.forms.MngRole.dateStartDate.$invalid || accountRoleDetails.forms.MngRole.timeStartDate.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.controls.accounts.modals.accountRoleModal.StartOptional"></label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="dateStartDate" name="dateStartDate"
+                               style="width: 60%;"
+                               ng-disabled="accountRoleDetails.dgType == 'Remove'"
+                               ng-required="false"
+                               ng-model="accountRoleDetails.role.StartDate" />
+                        <input type="time" class="form-control" id="timeStartDate" name="timeStartDate"
+                               style="width: 40%;"
+                               ng-disabled="accountRoleDetails.dgType == 'Remove'"
+                               ng-required="false"
+                               ng-model="accountRoleDetails.role.StartDate" />
+                    </div>
+                    <div ng-messages="accountRoleDetails.forms.MngRole.dateStartDate.$error || accountRoleDetails.forms.MngRole.timeStartDate.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': accountRoleDetails.forms.MngRole.dateEndDate.$invalid || accountRoleDetails.forms.MngRole.timeEndDate.$invalid}">
+                    <label class="control-label" data-translate="ui.admin.controls.accounts.modals.accountRoleModal.EndOptional"></label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="dateEndDate" name="dateEndDate"
+                               style="width: 60%;"
+                               ng-disabled="accountRoleDetails.dgType == 'Remove'"
+                               ng-required="false"
+                               ng-model="accountRoleDetails.role.EndDate" />
+                        <input type="time" class="form-control" id="timeEndDate" name="timeEndDate"
+                               style="width: 40%;"
+                               ng-disabled="accountRoleDetails.dgType == 'Remove'"
+                               ng-required="false"
+                               ng-model="accountRoleDetails.role.EndDate" />
+                    </div>
+                    <div ng-messages="accountRoleDetails.forms.MngRole.dateEndDate.$error || accountRoleDetails.forms.MngRole.timeEndDate.$error">
+                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group btn-group-justified" ng-if="accountRoleDetails.dgType == 'Add'">
+                            <button type="button" class="btn btn-success"
+                                    ng-disabled="accountRoleDetails.forms.MngRole.$invalid || accountRoleDetails.forms.MngRole.$pristine"
+                                    ng-click="accountRoleDetails.save()"
+                                    ><i class="far fa-plus"></i>&nbsp;<span data-translate="ui.admin.common.Add"></span></button>
+                        </div>
+                        <div class="btn-group btn-group-justified" ng-if="accountRoleDetails.dgType == 'Update'">
+                            <button type="button" class="btn btn-success"
+                                    ng-disabled="accountRoleDetails.forms.MngRole.$invalid || accountRoleDetails.forms.MngRole.$pristine"
+                                    ng-click="accountRoleDetails.save()"
+                                    ><i class="far fa-save"></i>&nbsp;<span data-translate="ui.admin.common.Save"></span></button>
+                        </div>
+                        <div class="btn-group btn-group-justified" ng-if="accountRoleDetails.dgType == 'Remove'">
+                            <button type="button" class="btn btn-danger"
+                                    ng-click="accountRoleDetails.save()"
+                                    ><i class="far fa-times"></i>&nbsp;<span data-translate="ui.admin.common.Confirm"></span></button>
+                        </div>
+                        <div class="btn-group btn-group-justified">
+                            <button type="button" class="btn btn-primary"
+                                    ng-click="accountRoleDetails.close()"
+                                    ><i class="far fa-undo"></i>&nbsp;<span data-translate="ui.admin.common.Cancel"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

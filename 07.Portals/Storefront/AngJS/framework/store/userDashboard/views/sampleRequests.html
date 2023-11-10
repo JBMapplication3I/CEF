@@ -1,0 +1,16 @@
+﻿<div ng-controller="StoreSearchController as search">
+    <cv-grid show-pager="true" page-sizes="8,16,32,64" server-paging="true"
+             force-show-labels="true"
+             on-search="search.getCurrentAccountSampleRequests"
+             detail-state="userDashboard.sampleRequests.detail,[ID]">
+        <cv-column filter hidden field="StatusID" title="Status" filter-type="select" on-option-repeat="$parent.search.getSampleRequestStatuses">
+            <option value="" selected data-translate="ui.storefront.userDashboard2.views.sampleRequests.Any"></option>
+        </cv-column>
+        <cv-column filter field="ID" title="ID" width="30px" filter-type="id" />
+        <cv-column filter field="CustomKey" title="Sample Request Key" />
+        <!-- <cv-column field="ItemQuantity" title="Quantity" format="number:0" cell-class="text-right" width="80px" /> -->
+        <cv-column field="Totals.Total" title="Total" format="currency" cell-class="text-right" width="100px" />
+        <cv-column filter field="CreatedDate" title="Request Date" type="date" width="100px" filter-type="minMaxDate" filter-colspan="5" />
+        <cv-column field="StatusName" title="Status" />
+    </cv-grid>
+</div>

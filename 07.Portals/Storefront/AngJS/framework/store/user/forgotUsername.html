@@ -1,0 +1,62 @@
+﻿<div class="row form-vertical">
+  <div class="col-12">
+    <h2 class="text-center" data-translate="ui.storefront.user.forgotUsername.RequestYourUsername"></h2>
+    <div data-translate="ui.storefront.user.forgotUsernameMessage"></div>
+    <p ng-bind="funCtrl.cefConfig.featureSet.login.emailForForgot"></p>
+  </div>
+  <div class="col-12">
+    <div class="row" ng-form="funCtrl.forms.fu">
+      <div class="form-group col-12"
+         ng-class="{'has-error': funCtrl.forms.fu.txtForgotUsernameEmail.$invalid}">
+        <label class="control-label" for="txtForgotUsernameEmail">
+          <span data-translate="ui.storefront.common.Email"></span>&nbsp;<!--
+          --><span class="text-danger">*</span>
+        </label>
+        <div class="input-group">
+          <div class="input-group-prepend input-group-text">
+            <i class="far fa-at fa-fw" aria-hidden="true"></i>
+          </div>
+          <input type="email" class="form-control"
+            id="txtForgotUsernameEmail" name="txtForgotUsernameEmail"
+            placeholder="john.smith@email.com"
+            ng-required="true"
+            ng-model="funCtrl.data.Email" />
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col text-right">
+        <!--
+        <a ui-sref-plus uisrp-area="registration">
+          <span data-translate="ui.storefront.common.Register"></span>
+        </a><br/>
+        -->
+        <a ui-sref-plus uisrp-area="login">
+          <span data-translate="ui.storefront.common.Login"></span>
+        </a>
+      </div>
+      <div class="col-auto">
+        <button type="button" class="btn btn-primary"
+          translate-attr="{ title: 'ui.storefront.user.forgotUsername.RetrieveUsername',
+                            'aria-label': 'ui.storefront.user.forgotUsername.RetrieveUsername' }"
+          data-translate="ui.storefront.user.forgotUsername.RetrieveUsername"
+          ng-disabled="funCtrl.forms.fu.$invalid || fpCtrl.wasSent"
+          ng-click="funCtrl.submit()">
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 mt-3" ng-if="funCtrl.hasError" role="alert">
+    <div class="alert alert-danger">
+      <span data-translate="ui.storefront.user.forgotUsername.ThereWasAnIssueRetrievingTheUsernamePleaseCheckYourInputsAndTryAgainIf"></span>&nbsp;<!--
+      --><a ui-sref-plus uisrp-area="contactUs"
+        ><span data-translate="ui.storefront.common.ContactUs"></span></a>
+    </div>
+  </div>
+  <div class="col-12 mt-3" ng-if="funCtrl.wasSent" role="alert">
+    <div class="alert alert-success">
+      <i class="far fa-check fa-2x fa-fw"></i>&nbsp;<!--
+      --><b data-translate="ui.storefront.user.forgotUsername.CheckYourEmailForYourUsername"></b>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,170 @@
+/**
+ * @file brand-admin.scss
+ * Styles for the brand admin
+ */
+.cef-brand-admin-dashboard-container {
+  ul.nav.nav-tabs {
+    margin-left: 0;
+  }
+  cef-side-menu,
+  [cef-side-menu] {
+    height: 100%;
+    min-height: calc(100vh - 150px - 284px);
+    margin: 0 -15px;
+    background: #fcfcfc;
+    border-right: solid 1px darken(#fcfcfc, 10%);
+    .navbar-default {
+      background: transparent;
+      border: none;
+      color: #777;
+      .navbar-header {
+        margin-bottom: 0;
+        background: transparent;
+        border: none;
+        .navbar-brand {
+          margin: 0;
+          text-transform: uppercase;
+          font-size: 12px;
+          width: 100%;
+        }
+      }
+      .navbar-collapse {
+        padding: 0;
+        margin: 0;
+        border: none;
+        background: transparent;
+        .nav.navbar-nav {
+          li {
+            width: 100%;
+            .btn.btn-block.btn-default {
+              border-radius: 0;
+              border: none;
+              text-align: left;
+              background: transparent;
+              font-weight: bold;
+              color: #777;
+              &:hover {
+                background: #eee;
+              }
+            }
+            &.active {
+              .btn.btn-block.btn-default {
+                color: white;
+                background: $info;
+                &:hover {
+                  background: lighten($info, 6%);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  cef-breadcrumb-widget,
+  [cef-breadcrumb-widget] {
+    margin: 0;
+    padding: 0;
+    .breadcrumb {
+      // These two settings override DNN's default <ul> CSS
+      margin-left: 0;
+      margin-bottom: 0;
+      // The rest is CEF
+      border-radius: 0;
+      background: transparent;
+      padding-left: 0;
+      .breadcrumb-item {
+        color: #777;
+        text-transform: uppercase;
+        font-size: 12px;
+        a {
+          color: #777;
+        }
+      }
+    }
+  }
+  cef-title-widget,
+  [cef-title-widget] {
+    h1,
+    .h1 {
+      margin: 15px 0;
+      color: #777;
+    }
+  }
+  cef-seller-dashboard,
+  [cef-seller-dashboard] {
+    .title-row {
+      h4,
+      .h4 {
+        color: #777;
+      }
+      a {
+        color: #777;
+      }
+    }
+  }
+  cef-sales-quote-detail,
+  [cef-sales-quote-detail] {
+    h3,
+    .h3 {
+      color: #777;
+    }
+    h4,
+    .h4 {
+      color: #777;
+    }
+  }
+  cef-sales-quote-response,
+  [cef-sales-quote-response] {
+    .has-error label {
+      color: $danger;
+    }
+  }
+  cef-product-detail,
+  [cef-product-detail] {
+    .has-error label {
+      color: lighten($danger, 30%);
+    }
+    .text-danger {
+      color: $danger;
+    }
+    uib-tab-heading {
+      span {
+        font-weight: bold;
+      }
+      .text-danger {
+        color: lighten($danger, 30%);
+      }
+    }
+    textarea.form-control {
+      border-radius: $input-border-radius;
+      resize: vertical;
+      min-height: 70px;
+      max-height: 300px;
+    }
+    input[type="text"].form-control,
+    input[type="number"].form-control,
+    textarea.form-control,
+    table.k-editor-widget {
+      border: solid 1px darken($input-border-color, 10%);
+    }
+    .has-error {
+      input[type="text"].form-control,
+      input[type="number"].form-control,
+      textarea.form-control,
+      table.k-editor-widget {
+        border-color: lighten($danger, 30%);
+      }
+      .input-group-addon,
+      .input-group-btn {
+        background-color: lighten($danger, 30%);
+        border-color: lighten($danger, 30%);
+      }
+    }
+  }
+}
+.modal-content {
+  ul.nav.nav-tabs {
+    margin-left: 0;
+  }
+}

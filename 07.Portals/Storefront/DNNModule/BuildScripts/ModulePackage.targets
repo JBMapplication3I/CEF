@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="windows-1252"?>
+
+<!-- WARNING, WARNING, WARNING -->
+<!-- REMEMBER THAT IF YOU MODIFY THE TARGETS FILE YOU NEED TO CLOSE/OPEN THE PROJECT FOR THE CHANGES TO TAKE EFFECT -->
+
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="MSBuild.Community.Tasks.Targets" />
+  <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <XmlRead Prefix="n"
+             Namespace="http://schemas.microsoft.com/developer/msbuild/2003"
+             XPath="dotnetnuke/packages/package[1]/@version"
+             XmlFileName="$(DNNFileName).dnn">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </XmlRead>
+
+    <!--in VS 2012 we exclude the packages folder -->
+    <ItemGroup>
+      <InstallInclude Include="**\*.ascx" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\*.asmx" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\*.css" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\*.html" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\*.htm" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\*.resx" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\*.aspx" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\*.js" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\*.txt"  Exclude="**\obj\**;**\_ReSharper*\**;packages\**;**\.git\**;PersonaBar\**;" />
+      <InstallInclude Include="**\images\**" Exclude="packages\**;PersonaBar\**;" />
+      <InstallInclude Include="**\CEFComponents\*.CDef.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PersonaBarInclude Include="PersonaBar\**" />
+    </ItemGroup>
+
+    <CreateItem Include="$(DNNFileName).dnn">
+      <Output TaskParameter="Include" ItemName="PackageManifestFiles" />
+    </CreateItem>
+
+    <CreateItem Include="**\License.txt">
+      <Output TaskParameter="Include" ItemName="PackageTxtFiles" />
+    </CreateItem>
+
+    <CreateItem Include="**\ReleaseNotes.txt">
+      <Output TaskParameter="Include" ItemName="PackageTxtFiles" />
+    </CreateItem>
+
+    <CreateItem Include="**\*.sqldataprovider">
+      <Output TaskParameter="Include" ItemName="SqlDataProviderFiles" />
+    </CreateItem>
+
+    <CreateItem Include="**\bin\*.dll">
+      <Output TaskParameter="Include" ItemName="BinFiles" />
+    </CreateItem>
+
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Package\bin"/>
+    <Copy SourceFiles="@(SqlDataProviderFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Package\%(RecursiveDir)" />
+    <Copy SourceFiles="@(PackageManifestFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Package" />
+    <Copy SourceFiles="@(PackageTxtFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Package" />
+
+    <!-- create the INSTALL RESOURCES.ZIP file -->
+    <Copy SourceFiles="@(InstallInclude)" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\%(RecursiveDir)" />
+
+    <CreateItem Include="$(MSBuildProjectDirectory)\ResourcesZip\**\*.*">
+      <Output TaskParameter="Include" ItemName="ResourcesContent" />
+    </CreateItem>
+
+    <Zip Files="@(ResourcesContent)" WorkingDirectory="$(MSBuildProjectDirectory)\ResourcesZip" ZipFileName="Resources.$(Extension)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Resources.$(Extension)" DestinationFolder="package/" />
+
+
+    <!-- create the INSTALL RESOURCES_PERSONABAR.ZIP file -->
+    <Copy SourceFiles="@(PersonaBarInclude)" DestinationFolder="$(MSBuildProjectDirectory)\Resources_PersonaBarZip\%(RecursiveDir)" />
+
+    <CreateItem Include="$(MSBuildProjectDirectory)\Resources_PersonaBarZip\**\*.*">
+      <Output TaskParameter="Include" ItemName="Resources_PersonaBarContent" />
+    </CreateItem>
+
+    <Zip Files="@(Resources_PersonaBarContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Resources_PersonaBarZip" ZipFileName="Resources_PersonaBar.$(Extension)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Resources_PersonaBar.$(Extension)" DestinationFolder="package/" />
+
+    <CreateItem Include="$(MSBuildProjectDirectory)\Package\**\*.*">
+      <Output TaskParameter="Include" ItemName="OutputContent" />
+    </CreateItem>
+    <!-- Create the Install package -->
+    <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_$(Version)_Install.$(Extension)" />
+    <!-- Copy the Install package to the Packages folder -->
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install.$(Extension)" DestinationFolder="install/" />
+
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\ResourcesZip" />
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\Resources_PersonaBarZip" />
+
+    <Delete Files="$(MSBuildProjectDirectory)\Resources.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\Resources_PersonaBar.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install.$(Extension)" />
+
+  </Target>
+</Project>

@@ -1,0 +1,117 @@
+﻿<div class="row"
+  ng-if="!productDetailsCtrl.productToDisplay || productDetailsCtrl.viewState.running">
+  <div cef-loading-widget
+    overlay="true"
+    message="productDetailsCtrl.viewState.waitMessage">
+  </div>
+</div>
+<div class="row"
+  ng-if="productDetailsCtrl.productToDisplay">
+  <div class="col-12">
+    <div cef-product-details-breadcrumb
+      product="productDetailsCtrl.productToDisplay"
+      last-item="{{productDetailsCtrl.productToDisplay.Name}}">
+    </div>
+  </div>
+</div>
+<div class="row cef-product-view" ng-if="productDetailsCtrl.productToDisplay">
+  <div class="col-12 col-md-4 mb-3" cef-product-images>
+  </div>
+  <div class="col-12 col-md-8 mb-3">
+    <h1 ng-if="productDetailsCtrl.previewMode"
+      id="isPreview" class="text-danger">
+      This is a Preview of a version of this data and not
+      reflective of what is live on the website.
+    </h1>
+    <h1 id="productName"
+      class="cef-product-title mt-0"
+      ng-bind="productDetailsCtrl.productToDisplay.Name">
+    </h1>
+    <div class="row">
+      <div class="col-md-8 cef-product-info">
+        <div ng-if="productDetailsCtrl.cefConfig.featureSet.reviews.enabled"
+          class="cef-ratings w-100 mb-3">
+          <div cef-rating-summary
+            value="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Value"
+            count="productDetailsCtrl.cvProductReviewsService.getCached(productDetailsCtrl.productWhichIsTheMaster.ID).Count"
+            scale="5">
+          </div>
+        </div>
+        <!--shareThis start
+        <div class="w-100">
+          <div class="sharethis-inline-share-buttons"></div>
+          <hr class="mt-3 mb-1" />
+        </div>
+        shareThis end-->
+        <div class="row">
+          <div class="col-12"
+            cef-product-price
+            product="productDetailsCtrl.productToDisplay">
+          </div>
+          <div class="col-12"
+            cef-product-stock
+            product="productDetailsCtrl.productToDisplay">
+          </div>
+          <div class="col-12"
+            cef-product-common-data
+            product="productDetailsCtrl.productToDisplay">
+          </div>
+          <div ng-if="productDetailsCtrl.productVariants.length"
+            class="col-12"
+            cef-product-variants-table
+            master-controller="productDetailsCtrl">
+          </div>
+          <div ng-if="productDetailsCtrl.productVariants.length"
+            class="col-12"
+            cef-product-variant-swatches
+            product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+            product-variants="productDetailsCtrl.productVariants">
+          </div>
+          <div class="col-12">
+            <hr />
+          </div>
+          <div class="col-12"
+            cef-product-short-description
+            product="productDetailsCtrl.productToDisplay">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-12 mb-3"
+            cef-product-buy-block
+            product-to-display="productDetailsCtrl.productToDisplay"
+            product-which-is-the-master="productDetailsCtrl.productWhichIsTheMaster"
+            product-which-is-the-current-variant="productDetailsCtrl.productWhichIsTheCurrentVariant"
+            product-id-for-the-current-variant="productDetailsCtrl.productIDForTheCurrentVariant"
+            product-variants="productDetailsCtrl.productVariants"
+            quantity-for-add-to-cart="productDetailsCtrl.quantityForAddToCart"
+            get-serializable-attributes="productDetailsCtrl.getSerializableAttributes">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12"
+            cef-product-actions-group
+            product="productDetailsCtrl.productToDisplay"
+            store-product="productDetailsCtrl.storeProduct">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="productDetailsCtrl.productToDisplay.TypeKey === 'VARIANT-KIT'
+    || productDetailsCtrl.productToDisplay.TypeKey === 'KIT'"
+    class="col-12 mb-3"
+    cef-product-kit-components>
+  </div>
+  <div class="col-12 mb-3"
+    cef-product-tabs
+    product="productDetailsCtrl.productToDisplay">
+  </div>
+  <div class="col-12"
+    related-products-list
+    products="productDetailsCtrl.productWhichIsTheMaster.ProductAssociations"
+    type="Related Product"
+    size="4">
+  </div>
+</div>

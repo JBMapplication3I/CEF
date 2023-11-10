@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<base href="/" />
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+<title>Clarity eCommerce Framework Administration Portal</title>
+<script src="/UI/lib/cef/js/0-jQuery.min.js"></script>
+<script src="/UI/lib/cef/js/1-angular.min.js"></script>
+<script src="/UI/lib/cef/js/2-kendo.min.js"></script>
+<link rel="stylesheet" href="/UI/lib/cef/css/admin-bundle.css" />
+<link rel="preload" href="https://kit.fontawesome.com/4d87c1b73b.js" crossorigin="anonymous" as="script" />
+</head>
+<body>
+<div class="standalone full-height" ng-cloak ng-if="$root.globalBrandSiteDomain.Url">
+<div class="container-fluid menu-hidden">
+<div id="header" cv-admin-site-menu-2></div>
+</div>
+<div id="content" ng-controller="AppController"
+ng-class="{'cvContentNoAuth': !$root.currentUser.isAuthenticated}">
+<div class="innerLR" cef-admin-body>
+<div ui-view="page" class="full-height"></div>
+</div>
+</div>
+</div>
+<script defer src="/UI/lib/cef/js/3-cef-admin-base.min.js"></script>
+<script defer src="/UI/lib/cef/js/4-cef-admin-main.js"></script>
+<script defer src="/UI/lib/cef/js/5-cef-admin-templates.min.js"></script>
+<script defer src="/API-Admin/JSConfigs/Admin"></script>
+<script defer src="/UI/lib/cef/js/6-cef-admin-init.min.js"></script>
+</body>
+</html>

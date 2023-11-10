@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Bridgepay.Core.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Bridgepay.Core.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="AuthObjectResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseObjectResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AVSMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AVSResult" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AuthorizationCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AuthorizedAmount" type="xs:int" />
+          <xs:element minOccurs="0" name="Balance" type="xs:int" />
+          <xs:element minOccurs="0" name="CVMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CVResult" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CardType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CashBackAmount" type="xs:int" />
+          <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsCommercialCard" type="xs:boolean" />
+          <xs:element minOccurs="0" name="OriginalAmount" type="xs:int" />
+          <xs:element minOccurs="0" name="ReferenceNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RemainingAmount" type="xs:int" />
+          <xs:element minOccurs="0" name="StreetMatchMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TransactionCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TransactionDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="WalletID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WalletPaymentMethodID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WalletResponseCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WalletResponseMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ZipMatchMessage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="AuthObjectResponse" nillable="true" type="tns:AuthObjectResponse" />
+  <xs:complexType name="BaseObjectResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GatewayMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GatewayResult" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GatewayTransId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BaseObjectResponse" nillable="true" type="tns:BaseObjectResponse" />
+  <xs:complexType name="VoidRefundObjectResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseObjectResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MerchantAccountCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ReferenceNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RemainingAmount" type="xs:int" />
+          <xs:element minOccurs="0" name="ResponseType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TransactionCode" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="VoidRefundObjectResponse" nillable="true" type="tns:VoidRefundObjectResponse" />
+  <xs:complexType name="MerchantInfoObjectResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseObjectResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MerchantAccountCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MerchantCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MerchantName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MerchantInfoObjectResponse" nillable="true" type="tns:MerchantInfoObjectResponse" />
+  <xs:complexType name="TokenObjectResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:BaseObjectResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TokenObjectResponse" nillable="true" type="tns:TokenObjectResponse" />
+</xs:schema>

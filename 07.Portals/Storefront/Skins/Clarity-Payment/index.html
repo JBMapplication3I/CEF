@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+
+<head ng-controller="genericCtrl as genericCtrl">
+  <title ng-bind="genericCtrl.cefConfig.companyName"></title>
+  <style>
+    .imgLogo {
+      aspect-ratio: 400 / 70;
+    }
+
+    /* Hide translations before they load */
+    .translate-cloak {
+      display: none !important;
+    }
+  </style>
+  <script src="/DesktopModules/ClarityEcommerce/UI-Storefront/lib/cef/js/0-jQuery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/thirdparty/kendo.common-bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/css/thirdparty/kendo.bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/css/clarity.css" />
+  <link rel="stylesheet" type="text/css" href="/css/ie11.shiv.css" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png" />
+  <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16" />
+  <link rel="manifest" href="/favicon/manifest.json" />
+
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="">
+  <meta name="keywords" content="payment portal">
+</head>
+
+<body class="reactive-body">
+  <header id="header" class="container-fluid d-print-none" ng-controller="genericCtrl as genericCtrl">
+    <div id="headerTop" class="row"></div>
+    <div id="headerMid" class="row bg-light align-items-center"
+      ng-style="{ 'min-height': genericCtrl.cefConfig.featureSet.languages.enabled ? 0 : 70 }">
+      <div class="row w-100">
+        <div class="col-6 xs-text-center col-sm-6 sm-text-center col-md-auto col-lg-auto col-xl-auto w-50 m-2">
+          <a class="navbar-brand" title="Clarity Payment Hub" ui-sref-plus uisrp-is-dashboard="true" uisrp-state="userDashboard.dashboard">
+            <img class="img-fluid lazyload ml-5" alt="Clarity Payment Hub" height="75"
+              data-src="/Portals/0/clarity-ecommerce-logo.png" />
+          </a>
+          <div cef-brand-formatting-header></div>
+        </div>
+        <div ng-if="genericCtrl.cefConfig.featureSet.login.enabled" class="nav-item row w-50 justify-content-end d-flex align-items-center">
+          <div cef-mini-menu class="mr-3"></div>
+        </div>
+        <div class="row align-items-center mb-2" ng-if="genericCtrl.cefConfig.featureSet.languages.enabled">
+          <!--
+          <div class="nav-item col">
+            <div cef-affiliate-account-selector></div>
+          </div>
+          -->
+          <div class="nav-item col-auto" cef-language-selector-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="headerBot" class="row" hidden>
+      <div class="col-12 bg-dark-blue">
+        <div class="container">
+          <nav class="navbar navbar-expand-md navbar-dark bg-dark-blue row md-py-0 lg-py-0 xl-py-0 tk-py-0 fk-py-0">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#headerBotContent"
+              aria-controls="headerBotContent" aria-expanded="false"
+              translate-attr="{ 'aria-label': 'ui.storefront.userDashboard.ToggleNavigation' }">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="headerBotContent" class="collapse navbar-collapse">
+              <div class="navbar-nav">
+                <!-- <dnn:MENU ID="MENUVerticalTabsNav" MenuStyle="VerticalTabsNav" runat="server"></dnn:MENU> -->
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="row header-rule"></div>
+  </header>
+  <main class="main reactive-content-area position-relative" ng-controller="genericCtrl as genericCtrl">
+    <div class="payhub-main-background" ng-if="!genericCtrl.cvAuthenticationService.isAuthenticated()">
+      &nbsp;
+    </div>
+    <div class="container-fluid">
+      <div ui-view="main"></div>
+    </div>
+  </main>
+
+  <footer id="footer" class="container-fluid footer-bg-color text-light py-4 d-print-none text-white-50 translate-cloak"
+  translate-cloak ng-controller="genericCtrl as genericCtrl">
+    <div id="footerMid" class="row">
+      <div class="order-1 mr-auto col-auto text-center small d-flex align-items-end" id="copyright-entry">
+        <span class="pl-3">
+          Copyright <span class="current-year"></span> by Clarity Ventures&nbsp;|&nbsp;
+          <a class="text-white-50" href="https://www.clarity-ventures.com/" target="_blank" rel="noopener">
+            Powered by Clarity Payment Hub
+          </a>
+        </span>
+      </div>
+      <div class="order-2 ml-auto col-auto">
+        <h4 class="text-uppercase small text-light">Contact us</h4>
+        <div class="row no-gutters align-items-center">
+          <div class="col-auto">
+            <div class="border border-light rounded-circle p-1">
+              <i class="far fa-phone-rotary fa-fw fa-lg"></i>
+            </div>
+          </div>
+          <div class="col pl-3" id="companyPhone">
+            <a class="text-white-50 small" href="tel:800-928-8160">800-928-8160</a>
+          </div>
+        </div>
+        <div class="row no-gutters align-items-center mt-2">
+          <div class="col-auto">
+            <div class="border border-light rounded-circle p-1">
+              <i class="far fa-at fa-fw fa-lg"></i>
+            </div>
+          </div>
+          <div class="col pl-3" id="companyEmail">
+            <a class="text-white-50 small" href="mailto:rfq@clarity-ventures.com">rfq@clarity-ventures.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="order-3 col-auto">
+        <a href="https://www.facebook.com/ClarityTeam" title="Facebook"><i
+            class="fab fa-facebook-square fa-3x text-white-50"></i></a>
+        <a href="https://twitter.com/ClarityTeam" title="Twitter"><i
+            class="fab fa-twitter-square fa-3x text-white-50"></i></a>
+        <a href="https://www.linkedin.com/company/1155055" title="LinkedIn"><i
+            class="fab fa-linkedin fa-3x text-white-50"></i></a>
+      </div>
+      <div class="order-4 col-auto mr-3">
+        <i class="fab fa-cc-paypal fa-3x"></i>
+        <i class="fab fa-cc-visa fa-3x"></i>
+        <i class="fab fa-cc-mastercard fa-3x"></i>
+        <i class="fab fa-cc-amex fa-3x"></i>
+        <i class="fab fa-cc-discover fa-3x"></i>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="/DesktopModules/ClarityEcommerce/UI-Storefront/lib/cef/js/1-angular.js"></script>
+  <script defer src="/DesktopModules/ClarityEcommerce/UI-Storefront/lib/cef/js/2-kendo.min.js"></script>
+  <script defer src="/js/lazysizes.min.js"></script>
+  <script defer src="/bootstrap/javascripts/bootstrap.bundle.min.js"></script>
+  <script defer src="/DesktopModules/ClarityEcommerce/UI-Storefront/lib/cef/js/4-cef-store-main.js"></script>
+  <script defer src="/DesktopModules/ClarityEcommerce/UI-Storefront/lib/cef/js/5-cef-store-templates.min.js"></script>
+  <script defer src="/DesktopModules/ClarityEcommerce/API-Storefront/JSConfigs/StoreFront"></script>
+  <script defer src="/DesktopModules/ClarityEcommerce/UI-Storefront/lib/cef/js/6-cef-store-init.min.js"></script>
+  <script defer src="https://kit.fontawesome.com/4d87c1b73b.js" crossorigin="anonymous"></script>
+  <script src="/js/custom.js"></script>
+  <script src="/js/doubletaptogo.min.js"></script>
+  <script src="/js/scripts.js"></script>
+  <noscript>This website requires JavaScript to be enabled to operate.</noscript>
+</body>
+
+</html>

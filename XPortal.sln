@@ -1,0 +1,101 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31521.260
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{F8C358F4-6E5B-4B83-8CE9-83F06B3B4C3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.BrandAdminPortal.Client", "07.Portals\XPortal\Client\BrandAdminPortal\XPortal.BrandAdminPortal.Client.csproj", "{CF4B116C-6A2D-4807-AE19-601A66845FD6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.BrandAdminPortal.Server", "07.Portals\XPortal\Server\BrandAdminPortal\XPortal.BrandAdminPortal.Server.csproj", "{C11D49C5-B86E-475B-8AE8-F7F4F8CE5616}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.StoreAdminPortal.Client", "07.Portals\XPortal\Client\StoreAdminPortal\XPortal.StoreAdminPortal.Client.csproj", "{85E18730-AE3F-4657-8942-DE2FD9132E2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.StoreAdminPortal.Server", "07.Portals\XPortal\Server\StoreAdminPortal\XPortal.StoreAdminPortal.Server.csproj", "{C11D49C5-B86E-475B-8AE8-F7F4F8CE5617}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.FranchiseAdminPortal.Client", "07.Portals\XPortal\Client\FranchiseAdminPortal\XPortal.FranchiseAdminPortal.Client.csproj", "{4249068F-57EF-4A93-A5BF-14FFB8ED2488}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.FranchiseAdminPortal.Server", "07.Portals\XPortal\Server\FranchiseAdminPortal\XPortal.FranchiseAdminPortal.Server.csproj", "{EE9EDC9C-CEB2-4A10-9714-2A5F9D665319}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.ManufacturerAdminPortal.Client", "07.Portals\XPortal\Client\ManufacturerAdminPortal\XPortal.ManufacturerAdminPortal.Client.csproj", "{D288F0E5-681A-4848-B2DF-C7ADE4D27C7E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.ManufacturerAdminPortal.Server", "07.Portals\XPortal\Server\ManufacturerAdminPortal\XPortal.ManufacturerAdminPortal.Server.csproj", "{2A09A9F5-1BC8-40E7-ACDE-29140449F27A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.VendorAdminPortal.Client", "07.Portals\XPortal\Client\VendorAdminPortal\XPortal.VendorAdminPortal.Client.csproj", "{BA9D3B79-546A-4F63-B0E8-37C03F816D80}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPortal.VendorAdminPortal.Server", "07.Portals\XPortal\Server\VendorAdminPortal\XPortal.VendorAdminPortal.Server.csproj", "{260BAA0A-45FC-4D68-A836-62C00932A130}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{107D1B86-B552-4F50-B68E-7CF41C8B6974}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Solution Items\appSettings.config = Solution Items\appSettings.config
+		Solution Items\appSettings.ConnectionStrings.json = Solution Items\appSettings.ConnectionStrings.json
+		Solution Items\connectionStrings.config = Solution Items\connectionStrings.config
+		07.Portals\XPortal\Client\Directory.Build.props = 07.Portals\XPortal\Client\Directory.Build.props
+		07.Portals\XPortal\Server\Directory.Build.props = 07.Portals\XPortal\Server\Directory.Build.props
+		Solution Items\mailSettings.config = Solution Items\mailSettings.config
+		Solution Items\quick-install-settings-base.bat = Solution Items\quick-install-settings-base.bat
+		Solution Items\quick-install-settings.bat = Solution Items\quick-install-settings.bat
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF4B116C-6A2D-4807-AE19-601A66845FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4B116C-6A2D-4807-AE19-601A66845FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4B116C-6A2D-4807-AE19-601A66845FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4B116C-6A2D-4807-AE19-601A66845FD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85E18730-AE3F-4657-8942-DE2FD9132E2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85E18730-AE3F-4657-8942-DE2FD9132E2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85E18730-AE3F-4657-8942-DE2FD9132E2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85E18730-AE3F-4657-8942-DE2FD9132E2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4249068F-57EF-4A93-A5BF-14FFB8ED2488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4249068F-57EF-4A93-A5BF-14FFB8ED2488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4249068F-57EF-4A93-A5BF-14FFB8ED2488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4249068F-57EF-4A93-A5BF-14FFB8ED2488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE9EDC9C-CEB2-4A10-9714-2A5F9D665319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE9EDC9C-CEB2-4A10-9714-2A5F9D665319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE9EDC9C-CEB2-4A10-9714-2A5F9D665319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE9EDC9C-CEB2-4A10-9714-2A5F9D665319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D288F0E5-681A-4848-B2DF-C7ADE4D27C7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D288F0E5-681A-4848-B2DF-C7ADE4D27C7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D288F0E5-681A-4848-B2DF-C7ADE4D27C7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D288F0E5-681A-4848-B2DF-C7ADE4D27C7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A09A9F5-1BC8-40E7-ACDE-29140449F27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A09A9F5-1BC8-40E7-ACDE-29140449F27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A09A9F5-1BC8-40E7-ACDE-29140449F27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A09A9F5-1BC8-40E7-ACDE-29140449F27A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA9D3B79-546A-4F63-B0E8-37C03F816D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA9D3B79-546A-4F63-B0E8-37C03F816D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA9D3B79-546A-4F63-B0E8-37C03F816D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA9D3B79-546A-4F63-B0E8-37C03F816D80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260BAA0A-45FC-4D68-A836-62C00932A130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260BAA0A-45FC-4D68-A836-62C00932A130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260BAA0A-45FC-4D68-A836-62C00932A130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260BAA0A-45FC-4D68-A836-62C00932A130}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5616} = {F8C358F4-6E5B-4B83-8CE9-83F06B3B4C3E}
+		{C11D49C5-B86E-475B-8AE8-F7F4F8CE5617} = {F8C358F4-6E5B-4B83-8CE9-83F06B3B4C3E}
+		{EE9EDC9C-CEB2-4A10-9714-2A5F9D665319} = {F8C358F4-6E5B-4B83-8CE9-83F06B3B4C3E}
+		{2A09A9F5-1BC8-40E7-ACDE-29140449F27A} = {F8C358F4-6E5B-4B83-8CE9-83F06B3B4C3E}
+		{260BAA0A-45FC-4D68-A836-62C00932A130} = {F8C358F4-6E5B-4B83-8CE9-83F06B3B4C3E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6B2DD06B-2A48-4DFC-A090-B27FAD0D529C}
+	EndGlobalSection
+EndGlobal

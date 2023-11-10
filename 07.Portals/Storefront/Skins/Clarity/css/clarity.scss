@@ -1,0 +1,56 @@
+// Primary Clarity CSS, for CEF-2020.1.x+ w/ BS4
+
+// Clarity overrides to the variable values
+@import 'bootstrapVariables';
+// Default bootstrap 4 variables
+@import '../bootstrap/stylesheets/bootstrap';
+// Default dnn styles
+@import 'dnn';
+#dnn_uxHeader_dnnLOGO_imgLogo {
+    max-width: 100%;
+    height: auto;
+}
+// css fixes for DNN asset manager
+#dnnModuleDigitalAssetsSelectionToolbar {
+    min-height: 40px !important;
+}
+
+.rgMasterTable{
+    margin-bottom: 30px;
+}
+@import 'components/angular-bootstrap-toggle';
+// Classes that assist with setting up templates quickly
+// without having to edit css
+@import 'components/helpers';
+// Header, which includes menus, logos, etc.
+@import 'components/header';
+// Footer, which includes logos, commonly used links,
+// copyright info, contact info, etc.
+@import 'components/footer';
+// Specific stylings for regular dropdown menus
+@import 'components/dropdowns';
+// For UIB Typeaheads, styles so the popups can display
+// appropriately
+@import 'components/popup-wrappers';
+// Catalog styles
+@import 'components/catalog';
+// Product Details styles
+@import 'components/product';
+// CV-Grid styles, that merge with kendo's
+@import 'components/cv-grid';
+// Styles for the User Dashboard Side-bar
+@import 'components/userDashSidebar';
+// User Dashboard
+@import 'components/ecommerce/dashboard/dashboard';
+// Mega Menu styles
+@import 'components/navMegaMenu';
+// Mini Menu styles
+@import 'components/navMiniMenu';
+// Carousel styles
+@import 'components/carousel';
+// Brand Admin
+@import 'components/brand-admin';
+
+[cef-loading-widget] .fa-cog {
+    padding-top: 6px;
+}

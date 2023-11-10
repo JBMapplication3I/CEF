@@ -1,0 +1,419 @@
+﻿@dark: #21262C;
+@gray: #32373B;
+@hoverblue: #27b9dd;
+
+.cv-details-form,
+.cv-wizard-form {
+    /* Main Area should be white background and full height and scrollable here
+       instead of full screen scrollable since the header menu and titles are
+       static */
+    min-height: 100%;
+    background: #fff;
+    overflow-y: visible;
+
+    toggle.btn {
+        padding: 0;
+    }
+
+    /* Main Title */
+    .details-header,
+    .wizard-header {
+        background: #ddd;
+        .details-title,
+        .wizard-title {
+            margin-top: 9px;
+            margin-bottom: 9px;
+            font-size: 20px;
+        }
+    }
+    .details-body,
+    .wizard-body {
+        @media(min-width:@screen-md-min) {
+            /* Body should be full height minus the area of the Detail Title for md and lg screens
+               use natural height for others */
+            height: calc(~"100% - 46px - 64px");
+        }
+
+        /* The left side is a tab view showing the details of the order */
+        .order-tabs {
+            background: #fff;
+            padding-left: 0;
+            padding-right: 0;
+            min-height: 100%;
+            height: 100%;
+            > div {
+                min-height: 100%;
+                height: 100%;
+                > ul.nav.nav-tabs {
+                    > li.uib-tab.nav-item {
+                        border: none;
+                        border-radius: 0;
+                        a {
+                            border: none;
+                            border-radius: 0;
+                            padding: 8px;
+                            text-shadow: none;
+                            color: #fff;
+                            background: @gray;
+                            font-size: 18px;
+                            &:hover {
+                                color: #fff;
+                                background: @hoverblue;
+                            }
+                        }
+                        &.active {
+                            background: @hoverblue;
+                            a {
+                                color: #fff;
+                                background: @hoverblue;
+                            }
+                        }
+                    }
+                }
+                > .tab-content {
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                    background: transparent;
+                    min-height: calc(~"100% - 41px");
+                    height: calc(~"100% - 41px");
+                    overflow-x: auto;
+                    > .tab-pane {
+                        min-height: 100%;
+                        height: 100%;
+                        background: transparent;
+                        > div {
+                            min-height: 100%;
+                            height: 100%;
+                            background: transparent;
+                            div[cef-line-items-widget] {
+                                .table-outer {
+                                    min-height: calc(~"100% - 105px");
+                                    height: calc(~"100% - 105px");
+                                    .table-responsive {
+                                        box-shadow: inset 0 5px 5px -5px black, inset 0 -5px 5px -5px black;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /* The right side is a single pane that shows a summary of
+           information and actions that can be taken with the order */
+        .order-summary {
+            /* Full Height */
+            min-height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: 10vh;
+            /* Dark background so we will need light color text on labels for contrast */
+            background: @dark;
+            .control-label { color: @cef-btn-primary-color; }
+            p { color: #fff; }
+            /* Pad the top and bottom to match the bootstrap sides */
+            padding-top: 15px;
+            padding-bottom: 15px;
+
+            .form-vertical {
+                .form-group { margin-bottom: 10px; }
+            }
+            p.total { font-size: 38px; }
+            .order-invoices,
+            .order-purchase-orders {
+                a {
+                    color: @cef-btn-info-color;
+                    &:hover {
+                        color: @hoverblue;
+                    }
+                }
+            }
+        }
+
+        /* Full-width Full-Height except for Header and Footer */
+        .wizard-steps,
+        .product-editor,
+        .warehouse-editor,
+        .vendor-editor,
+        .manufacturer-editor,
+        .category-editor,
+        .attribute-editor,
+        .carrier-account-editor,
+        .package-editor,
+        .setting-editor,
+        .account-editor,
+        .user-editor,
+        .role-editor,
+        .discount-editor,
+        .store-editor,
+        .brand-editor,
+        .badge-editor,
+        .site-domain-editor,
+        .social-provider-editor,
+        .review-editor,
+        .import-export-mapping-editor,
+        .subscription-editor,
+        .subscription-type-editor,
+        .type-editor,
+        .status-editor,
+        .state-editor {
+            height: 100%;
+            overflow: hidden;
+            padding-left: 0;
+            padding-right: 0;
+            > .tabs-left {
+                height: 100%;
+                > ul.nav.nav-tabs {
+                    background-color: #32373B;
+                    border-right: 0px solid transparent;
+                    @media (max-width: @screen-xs-max) {
+                        float: none;
+                    }
+                    li {
+                        margin-bottom: -2px;
+                        border: none;
+                        border-radius: 0;
+                        a {
+                            border: none;
+                            border-radius: 0;
+                            padding: 8px;
+                            text-shadow: none;
+                            color: #fff;
+                            background: @gray;
+                            font-size: 18px;
+                            &:hover,
+                            &.active {
+                                color: #fff;
+                                background: @hoverblue;
+                            }
+                            > uib-tab-heading {
+                                > span {
+                                    > i.fa,> i.far {
+                                        width: 30px;
+                                        text-align: center;
+                                    }
+                                }
+                            }
+                        }
+                        &.active {
+                            background: @hoverblue;
+                            a {
+                                color: #fff;
+                                background: @hoverblue;
+                            }
+                        }
+                    }
+                }
+                > .tab-content {
+                    height: 100%;
+                    overflow-x: hidden;
+                    overflow-y: scroll;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+
+                    .form-group.override-bottom-margin-none {
+                        margin-bottom: 0;
+                    }
+                    table.ng-invalid,
+                    textarea.ng-invalid,
+                    select.ng-invalid,
+                    input[type='date'].ng-invalid,
+                    input[type='time'].ng-invalid,
+                    input[type='text'].ng-invalid,
+                    input[type='number'].ng-invalid,
+                    .input-group-addon + input[type='text'].ng-invalid,
+                    .input-group-addon + input[type='number'].ng-invalid {
+                        border: solid 1px @cef-btn-danger-bg;
+                    }
+                    .alert {
+                        padding: 10px;
+                        border-radius: 0;
+                    }
+                    .table {
+                        > tbody > tr > td,
+                        > tbody > tr > th,
+                        > tfoot > tr > td,
+                        > tfoot > tr > th,
+                        > thead > tr > td,
+                        > thead > tr > th {
+                            border-top-color: #efefef;
+                            padding: 3px;
+                        }
+                    }
+                    [uib-typeahead-popup].dropdown-menu {
+                        top: 100% !important;
+                    }
+                    .input-group {
+                        .chosen-container {
+                            .search-field {
+                                width: 100% !important;
+                                input[type='text'].default {
+                                    width: 100% !important;
+                                }
+                            }
+                        }
+                        > .input-group-addon {
+                            &.stack {
+                                width: 100px;
+                            }
+                            &.with-control {
+                                margin-top: -1px;
+                                border: none;
+                                padding: 0;
+                                > .form-control {
+                                    margin: 0;
+                                    min-width: 75px;
+                                }
+                            }
+                        }
+                    }
+                    .square-image {
+                        height: 150px;
+                        width: 150px;
+                        margin: 0 auto;
+                    }
+                }
+            }
+        }
+        .sales-quote-response-wizard {
+            height: 100%;
+            overflow: hidden;
+            padding-left: 0;
+            padding-right: 0;
+            > .tabs-left {
+                height: 100%;
+                > ul.nav.nav-tabs {
+                    background-color: #32373B;
+                    border-right: 0px solid transparent;
+                    @media (max-width: @screen-xs-max) {
+                        float: none;
+                    }
+                    li {
+                        margin-bottom: -2px;
+                        border: none;
+                        border-radius: 0;
+                        a {
+                            border: none;
+                            border-radius: 0;
+                            padding: 8px;
+                            text-shadow: none;
+                            color: #fff;
+                            background: @gray;
+                            font-size: 18px;
+                            &:hover {
+                                color: #fff;
+                                background: @hoverblue;
+                            }
+                            > uib-tab-heading {
+                                > span {
+                                    > i.fa,> i.far {
+                                        width: 30px;
+                                        text-align: center;
+                                    }
+                                }
+                            }
+                        }
+                        &.active {
+                            background: @hoverblue;
+                            a {
+                                color: #fff;
+                                background: @hoverblue;
+                            }
+                        }
+                    }
+                }
+                > .tab-content {
+                    height: 100%;
+                    > .tab-pane {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+
+        .account-editor {
+            .icon-invisible { visibility: hidden; }
+
+            .addressBlock {
+                padding: 15px !important;
+                background: lightblue;
+                border-radius: 15px;
+            }
+        }
+
+        .tab-content {
+            border: 1px solid #ddd;
+            border-top: none;
+        }
+    }
+    .details-footer,
+    .wizard-footer {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        background: #ddd;
+        cef-standard-detail-footer-buttons {
+            .alert {
+                margin-bottom: 0;
+                border-radius: 0;
+            }
+        }
+    }
+}
+
+.modal-body [cef-json-attributes-editor] .table-responsive {
+    max-height: calc(~"100vh - 435px");
+}
+.no-tab-pad {
+    .tab-content {
+        padding: 0 !important;
+    }
+}
+.v-scroll-overflow {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    &.with-shadow {
+        box-shadow: inset 0 5px 5px -5px black, inset 0 -5px 5px -5px black;
+    }
+}
+.modal-body.fills-and-scrolls {
+    min-height: calc(~"100vh - 245px");
+    max-height: calc(~"100vh - 245px");
+    height: calc(~"100vh - 245px");
+    padding: 0;
+    > .modal-body-wrap {
+        min-height: calc(~"100vh - 245px");
+        max-height: calc(~"100vh - 245px");
+        height: calc(~"100vh - 245px");
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 0 15px 0 15px;
+        box-shadow: inset 0 5px 5px -5px black, inset 0 -5px 5px -5px black;
+    }
+}
+
+// Extra Small Screens Only
+@media (max-width: @screen-xs-max) {
+}
+
+// Small Screens Only
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+}
+
+// Small Screens and Up
+@media (min-width: @screen-sm-min) {
+}
+
+// Medium Screens Only
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+}
+
+// Medium Screens and Up
+@media (min-width: @screen-md-min) {
+}
+
+// Large Screens
+@media (min-width: @screen-lg-min) {
+}

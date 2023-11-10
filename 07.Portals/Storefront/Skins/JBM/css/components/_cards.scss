@@ -1,0 +1,66 @@
+.card {
+	width: 100%;
+	margin-bottom: rem-calc(30);
+
+	&.card-secondary {
+		background: $white;
+
+		.card-head {
+			height: rem-calc(240);
+			padding: rem-calc(15 15 0);
+		}
+	}
+}
+
+.card-head {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: rem-calc(220);
+	background: $white;
+
+	img {
+		@extend %imgcover;
+	}
+}
+
+.card-body {
+	>* {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	+.card-footer {
+		padding-top: rem-calc(2);
+	}
+}
+
+.card-footer {
+	background: transparent;
+	border: none;
+}
+
+.cards-holder {
+	margin-left: rem-calc(-16);
+	margin-right: rem-calc(-16);
+
+	.card {
+		@include media-breakpoint-down(xs) {
+			max-width: rem-calc(320);
+		}
+	}
+
+
+	&:last-child {
+		margin-bottom: rem-calc(-30);
+	}
+
+	>[class^="col"],
+	>[class*="col"] {
+		display: flex;
+		justify-content: center;
+		padding-left: rem-calc(16);
+		padding-right: rem-calc(16);
+	}
+}

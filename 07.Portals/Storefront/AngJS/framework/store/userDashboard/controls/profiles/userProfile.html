@@ -1,0 +1,234 @@
+﻿<div class="row user-profile" ng-form="userProfileCtrl.forms.User">
+  <div class="col-12">
+    <h1 sid="MyProfileText" data-translate="ui.storefront.userDashboard2.userDashboard.MyProfile"></h1>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <!-- TODO: Respect Show First/Last settings -->
+      <text-input-form-group
+        ng-if="userProfileCtrl.showFirstName || true"
+        class="col-6"
+        key="ProfileFirstName"
+        ng-model="userProfileCtrl.currentUser.Contact.FirstName"
+        label-key="ui.storefront.common.FirstName"
+        placeholder-key="ui.storefront.common.FirstName"
+        max-length="128"
+        ng-required="true">
+      </text-input-form-group>
+      <text-input-form-group
+        ng-if="userProfileCtrl.showLastName || true"
+        class="col-6"
+        key="ProfileLastName"
+        ng-model="userProfileCtrl.currentUser.Contact.LastName"
+        label-key="ui.storefront.common.LastName"
+        placeholder-key="ui.storefront.common.LastName"
+        max-length="128"
+        ng-required="true">
+      </text-input-form-group>
+      <text-input-form-group
+        ng-if="contactCtrl.showDisplayName || true"
+        class="col-12"
+        key="ProfileDisplayName"
+        ng-model="userProfileCtrl.currentUser.DisplayName"
+        label-key="ui.storefront.common.DisplayName"
+        placeholder-key="ui.storefront.common.DisplayName"
+        max-length="128"
+        ng-required="false">
+      </text-input-form-group>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <text-input-form-group
+        ng-if="userProfileCtrl.showPhone || true"
+        class="col-6"
+        key="ProfilePhone1"
+        ng-model="userProfileCtrl.currentUser.Contact.Phone1"
+        label-key="ui.storefront.common.Phone"
+        placeholder-text="+1(555)555-5555 x55555"
+        when-changed="userProfileCtrl.currentUser.Phone = userProfileCtrl.currentUser.Contact.Phone1;"
+        ng-required="false">
+      </text-input-form-group>
+      <text-input-form-group
+        ng-if="userProfileCtrl.showFax || true"
+        class="col-6"
+        key="ProfileFax1"
+        ng-model="userProfileCtrl.currentUser.Contact.Fax1"
+        label-key="ui.storefront.common.Fax"
+        placeholder-text="+1(555)555-5555"
+        ng-required="false">
+      </text-input-form-group>
+      <text-input-form-group
+        ng-if="userProfileCtrl.showEmail || true"
+        class="col-12"
+        key="ProfileEmail"
+        ng-model="userProfileCtrl.currentUser.Email"
+        label-key="ui.storefront.common.Email"
+        placeholder-key="ui.storefront.common.Email"
+        when-changed="userProfileCtrl.currentUser.Contact.Email1 = userProfileCtrl.currentUser.Email"
+        ng-required="true"
+        fails-on="userProfileCtrl.emailValidityState == 'Invalid'"
+        is-email="true">
+      </text-input-form-group>
+      <!-- TODO: userProfileCtrl.currentUser.EmailConfirmed: Email is Confirmed State -->
+    </div>
+    <!-- TODO: userProfileCtrl.currentUser.LanguageID: User's preferred Language -->
+    <!-- TODO: userProfileCtrl.currentUser.CurrencyID: User's preferred Currency -->
+  </div>
+  <div class="col-12" ng-if="userProfileCtrl.cefConfig.featureSet.profile.storedFiles.enabled">
+    <h3 class="mt-1" data-translate="ui.storefront.common.UploadFiles"></h3>
+    <div cef-upload-file-widget
+       class="mb-3"
+       master="userProfileCtrl.currentUser"
+       upload-type="StoredFileUser"
+       type-key="General"
+       allow-multiple="true"
+       upload-callback="userProfileCtrl.onStoredFileUploaded">
+    </div>
+  </div>
+  <div ng-if="userProfileCtrl.cefConfig.featureSet.profile.storedFiles.enabled"
+     ng-repeat="file in userProfileCtrl.currentUser.StoredFiles | orderBy: ['SortOrder','Slave.DisplayName','Slave.Name']"
+     class="col-sm-4 col-md-3">
+    <a class="mb-1"
+       ng-href="{{file.Name | corsStoredFilesLink : 'users'}}"
+       target="_blank"
+       ng-bind="file.SlaveName"></a><br/>
+    <small class="d-block" ng-bind="file.CreatedDate | date: 'yyyy-MM-dd hh:mm a'"></small>
+    <button type="button" class="btn btn-danger mt-1 mb-3"
+        translate-attr="{ title: 'ui.storefront.common.Delete',
+                  'aria-label': 'ui.storefront.common.Delete' }"
+        ng-click="userProfileCtrl.removeStoredFile($index)">
+      <i class="far fa-trash"></i>&nbsp;<!--
+      --><span data-translate="ui.storefront.common.Delete"></span>
+    </button>
+  </div>
+  <div class="col-12" ng-if="userProfileCtrl.cefConfig.featureSet.profile.images.enabled">
+    <h3 class="mt-1" data-translate="ui.storefront.common.UploadImages"></h3>
+    <div cef-upload-image-widget
+       class="mb-3"
+       master="userProfileCtrl.currentUser"
+       upload-type="ImageUser"
+       type-key="General"
+       allow-multiple="true"
+       upload-callback="userProfileCtrl.onImageUploaded">
+    </div>
+  </div>
+  <div ng-if="userProfileCtrl.cefConfig.featureSet.profile.images.enabled"
+     ng-repeat="image in userProfileCtrl.currentUser.Images | orderBy: ['SortOrder','DisplayName','OriginalFileName']"
+     class="col-sm-4 col-md-3">
+    <img alt="{{image.DisplayName || image.OriginalFileName}}"
+       ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+             | corsImageLink : 'users' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+       class="img-thumbnail mb-1" />
+    <span class="d-block" ng-bind="image.OriginalFileName"></span>
+    <small class="d-block" ng-bind="('Created:' | translate) + ' ' + (image.CreatedDate | date: 'yyyy-MM-dd hh:mm a')"></small>
+    <!--<span class="d-block" ng-bind="image.TypeName"></span>-->
+    <button type="button" class="btn btn-danger mt-1 mb-3"
+        translate-attr="{ title: 'ui.storefront.common.Delete',
+                  'aria-label': 'ui.storefront.common.Delete' }"
+        ng-click="userProfileCtrl.removeImage($index)">
+      <i class="far fa-trash"></i>&nbsp;<!--
+      --><span data-translate="ui.storefront.common.Delete"></span>
+    </button>
+  </div>
+  <div class="col-12">
+    <hr class="w-100 mt-0 mb-3" />
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <password-input-form-group
+        class="col-12"
+        sid="CurrentPasswordText"
+        key="ProfilePassword"
+        ng-model="userProfileCtrl.password"
+        label-key="ui.storefront.userDashboard2.controls.userProfile.CurrentPasswordRequiredForProfileChanges"
+        placeholder-key="ui.storefront.userDashboard2.controls.userProfile.EnterYourCurrentPassword"
+        tooltip-key="ui.storefront.user.registration.PasswordRequirements.Message"
+        ng-required="userProfileCtrl.forms.User.$dirty"
+        force-tooltip-with-focus="true">
+      </password-input-form-group>
+      <!-- TODO: userProfileCtrl.currentUser.TwoFactorEnabled: Two-factor authentication enabled state -->
+      <password-input-form-group
+        class="col-12"
+        sid="SetANewPasswordText"
+        key="ProfileNewPassword"
+        ng-model="userProfileCtrl.newPassword"
+        label-key="ui.storefront.userDashboard2.controls.userProfile.OptionallySetANewPassword"
+        placeholder-key="ui.storefront.userDashboard2.controls.userProfile.EnterYourNewPassword"
+        tooltip-key="ui.storefront.user.registration.PasswordRequirements.Message"
+        ng-required="false"
+        force-tooltip-with-focus="true"
+        is-new="true"
+        show-valid-tooltip="true">
+      </password-input-form-group>
+    </div>
+  </div>
+  <div class="col-md-6"
+    ng-if="userProfileCtrl.cefConfig.authProviderMFAEnabled
+      && !userProfileCtrl.cefConfig.authProviderMFAForced">
+    <div class="row">
+      <toggle-form-group
+        class="col-12"
+        key="TwoFactor"
+        ng-model="userProfileCtrl.currentUser.TwoFactorEnabled"
+        label-key="ui.storefront.profile.user.twoFactor"
+        tog-on-key="ui.storefront.common.Yes" tog-on-style="btn-info"
+        tog-off-key="ui.storefront.common.No" tog-off-style="btn-error"
+        ng-required="false">
+      </toggle-form-group>
+    </div>
+  </div>
+  <!-- Disabling until verified for core
+  <div class="col-12">
+    <hr class="w-100 mt-0 mb-3" />
+    <label>
+      <input type="checkbox"
+           id="NotificationsTextSettings" name="NotificationsTextSettings"
+           ng-click="userProfileCtrl.ClickNotificationSettings(userProfileCtrl.NotificationSettings.TextSettings ? 'TEXT' : 'MODAL' )"
+           ng-model="userProfileCtrl.NotificationSettings.TextSettings" />&nbsp;<!- -
+      - -><span data-translate="Get Product Change Notifications via SMS Text Message"></span>
+    </label>
+    <br/>
+    <label>
+      <input type="checkbox"
+           id="NotificationsModalSettings" name="NotificationsModalSettings"
+           ng-click="userProfileCtrl.ClickNotificationSettings(userProfileCtrl.NotificationSettings.ModalSettings ? 'MODAL' : 'TEXT')"
+           ng-model="userProfileCtrl.NotificationSettings.ModalSettings" />&nbsp;<!- -
+        - -><span data-translate="Get Product Change Notifications via Modal on the Page"></span>
+    </label>
+  </div>
+  -->
+  <div class="col-12">
+    <div class="row">
+      <div class="col-auto">
+        <button type="button" class="btn btn-lg btn-primary mb-3"
+          id="btnSaveUserProfile" name="btnSaveUserProfile"
+          translate-attr="{ title: 'ui.storefront.common.Save',
+                            'aria-label': 'ui.storefront.common.Save' }"
+          data-translate="ui.storefront.common.Save"
+          ng-disabled="userProfileCtrl.forms.User.$invalid
+            || userProfileCtrl.forms.User.$pristine
+            || userProfileCtrl.viewState.running
+            || userProfileCtrl.status == 'saving'"
+          ng-click="userProfileCtrl.save()">
+        </button>
+      </div>
+      <div class="col">
+        <div ng-if="userProfileCtrl.status == 'saving'"
+          class="alert alert-info p-2 ml-3 mb-3" role="alert">
+          <i class="far fa-question-circle" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.userDashboard2.controls.userProfile.Saving"></span></div>
+        <div ng-if="userProfileCtrl.status == 'done' && userProfileCtrl.viewState.success"
+          class="alert alert-success p-2 ml-3 mb-3" role="alert">
+          <i class="far fa-check-circle" aria-hidden="true"></i>&nbsp;<!--
+          --><span data-translate="ui.storefront.userDashboard2.controls.userProfile.SaveSuccessful"></span></div>
+        <div ng-if="(userProfileCtrl.status == 'done' && !userProfileCtrl.viewState.success) || userProfileCtrl.status == 'error'"
+          class="alert alert-danger p-2 ml-3 mb-3" role="alert">
+          <i class="far fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;<!--
+          --><span sid="MyProfileErrorMessageText"
+            data-translate="ui.storefront.userDashboard2.controls.userProfile.AnErrorWasEncounteredPleaseTryAgain">
+          </span></div>
+      </div>
+    </div>
+  </div>
+</div>

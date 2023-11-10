@@ -1,0 +1,73 @@
+<!-- Disabled until verified for core
+<div class="row">
+    <div class="col-sm-12 md-text-right lg-text-right">
+        <button type="button" class="btn btn-info mb-3"
+                id="btnImportUsers" name="btnImportUsers"
+                translate-attr="{ title: 'ui.storefront.common.ImportUser.Plural',
+                                  'aria-label': 'ui.storefront.common.ImportUser.Plural' }"
+                data-translate="ui.storefront.common.ImportUser.Plural"
+                ui-sref="userDashboard.users.import">
+        </button>
+        <button type="button" class="btn btn-info mb-3"
+                id="btnCreateBulkOrder" name="btnCreateBulkOrder"
+                translate-attr="{ title: 'ui.storefront.userDashboard2.views.users.StartANewBulkOrder',
+                                  'aria-label': 'ui.storefront.userDashboard2.views.users.StartANewBulkOrder' }"
+                data-translate="ui.storefront.userDashboard2.views.users.StartANewBulkOrder"
+                ui-sref="userDashboard.users.createBulkOrder">
+        </button>
+    </div>
+</div>
+-->
+<div ng-controller="StoreSearchController as search">
+    <cv-grid show-pager="true" page-sizes="10,20,50" default-page-size="10" server-paging="true"
+             sortable="false" server-sorting="true"
+             force-show-labels="true" labels-on-top="true"
+             dont-use-full-height="true"
+             on-search="search.getCurrentAccountUsers">
+        <!-- detail-state="userDashboard.users.detail,[ID]" -->
+        <cv-column field="ID" title="#"
+                   width="5%" header-class="text-center" cell-class="text-right"
+                   filter filter-type="id"
+                   sort-by="5" sort-by-direction="asc"
+                   groupable="false" />
+        <cv-column field="CustomKey" title="Key"
+                   width="15%"
+                   filter
+                   sort-by="1" sort-by-direction="asc"
+                   groupable="false" />
+        <cv-column field="UserName" title="Username"
+                   width="15%"
+                   filter
+                   sort-by="2" sort-by-direction="asc"
+                   groupable="false" />
+        <cv-column hidden field="ContactFirstName" title="First Name"
+                   filter
+                   groupable="false" />
+        <cv-column hidden field="ContactLastName" title="Last Name"
+                   filter
+                   groupable="false" />
+        <cv-column field="ContactFirstNameLastName" title="Name"
+                   width="15%"
+                   groupable="false">
+            <cv-column-template><script type="x-column-template"
+                ><span title="{{dataItem.ContactFirstName + ' ' + dataItem.ContactLastName}}"
+                       ng-bind="dataItem.ContactFirstName + ' ' + dataItem.ContactLastName"
+                       ></span></script></cv-column-template>
+        </cv-column>
+        <cv-column field="ContactEmail" title="Email"
+                   width="20%"
+                   filter filter-field="Email"
+                   groupable="false" />
+        <cv-column field="AccountKey" title="Account"
+                   width="15%"
+                   groupable="false">
+            <cv-column-template><script type="x-column-template"
+                ><span title="{{dataItem.AccountID + ' ' + dataItem.AccountKey + ' ' + dataItem.AccountName}}"
+                       ng-bind="dataItem.AccountID + ' ' + dataItem.AccountKey + ' ' + dataItem.AccountName"
+                       ></span></script></cv-column-template>
+        </cv-column>
+        <cv-column field="CreatedDate" title="Created" type="date"
+                   width="10%"
+                   groupable="false" />
+    </cv-grid>
+</div>

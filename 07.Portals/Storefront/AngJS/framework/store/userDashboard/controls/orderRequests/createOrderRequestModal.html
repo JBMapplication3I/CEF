@@ -1,0 +1,39 @@
+﻿<div class="modal-header bg-dark text-light">
+    <h3 class="modal-title" sid="ModalCreateListText"
+        data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.CreateList"></h3>
+    <button type="button" class="close"
+            translate-attr="{ title: 'ui.storefront.common.Close',
+                              'aria-label': 'ui.storefront.common.Close' }"
+            ng-click="orderRequestCreateModalCtrl.cancel()">
+        <i class="far fa-times text-light" aria-hidden="true"></i>
+        <span sid="CloseCreateOrderRequestModalBtn" class="sr-only" data-translate="ui.storefront.common.Close"></span>
+    </button>
+</div>
+<div class="modal-body form-vertical" ng-form="orderRequestCreateModalCtrl.forms.edit">
+    <text-input-form-group
+        key="ModalOrderRequestCreateName"
+        ng-model="orderRequestCreateModalCtrl.newName"
+        label-key="ui.storefront.userDashboard2.controls.createOrderRequest.NewOrderRequestName"
+        max-length="128"
+        ng-required="true"
+        ng-keydown="orderRequestCreateModalCtrl.inputKeyPress">
+    </text-input-form-group>
+    <p ng-if="orderRequestCreateModalCtrl.createdMessage"
+       ><span ng-bind="orderRequestCreateModalCtrl.createdMessage"></span>&nbsp;<span
+        data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.HasBeenCreated"></span></p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary"
+            id="btnModalOrderRequestCreateClose" name="btnModalOrderRequestCreateClose"
+            translate-attr="{ title: 'ui.storefront.common.Cancel',
+                              'aria-label': 'ui.storefront.common.Cancel' }"
+            data-translate="ui.storefront.common.Cancel"
+            ng-click="orderRequestCreateModalCtrl.cancel()"></button>
+    <button type="button" class="btn btn-primary"
+            id="btnModalOrderRequestCreateSubmit" name="btnModalOrderRequestCreateSubmit"
+            translate-attr="{ title: 'ui.storefront.userDashboard2.controls.createOrderRequest.CreateList',
+                              'aria-label': 'ui.storefront.userDashboard2.controls.createOrderRequest.CreateList' }"
+            data-translate="ui.storefront.userDashboard2.controls.createOrderRequest.CreateList"
+            ng-disabled="orderRequestCreateModalCtrl.forms.edit.$invalid || orderRequestCreateModalCtrl.viewState.running"
+            ng-click="orderRequestCreateModalCtrl.ok()"></button>
+</div>

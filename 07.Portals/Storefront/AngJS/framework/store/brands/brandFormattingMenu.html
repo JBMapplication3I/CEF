@@ -1,0 +1,11 @@
+﻿<li ng-repeat="item in bfmc.parseMenu()" ng-class="{'dropdown':item.SubMenus && item.SubMenus.length > 0}">
+    <a ui-sref-plus uisrp-root="{{item.URL}}" ng-if="!item.SubMenus || item.SubMenus.length <= 0" ng-bind="item.Title"></a>
+    <a ui-sref-plus uisrp-root="{{item.URL}}" ng-if="item.SubMenus && item.SubMenus.length > 0"
+       data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <span ng-bind="item.Title"></span>
+        <span class="caret" ng-if="item.SubMenus && item.SubMenus.length > 0"></span>
+    </a>
+    <ul class="dropdown-menu" ng-if="item.SubMenus && item.SubMenus.length > 0">
+        <li ng-repeat="subItem in item.SubMenus"><a ui-sref-plus uisrp-root="{{subItem.URL}}" ng-bind="subItem.Title"></a></li>
+    </ul>
+</li>

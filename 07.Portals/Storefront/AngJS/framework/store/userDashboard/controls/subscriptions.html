@@ -1,0 +1,80 @@
+<div class="row" ng-form="subscriptionsCtrl.forms.Subscriptions">
+    <div class="col-12" ng-if="subscriptionsCtrl.showAlert">
+        <div class="alert alert-danger">
+            <span ng-bind="subscriptionsCtrl.alertMessage"></span>
+        </div>
+    </div>
+    <div class="col-sm-6" ng-if="subscriptionsCtrl.record">
+        <div class="row">
+            <div class="col-sm-4">
+                <img class="img-fluid d-block mx-auto" alt="Graphic"
+                     ng-src="{{subscriptionsCtrl.imagePath}}"
+                     src="/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both" />
+            </div>
+            <div class="col-sm-8">
+                <h3><span data-translate="Subscription ID"></span>&nbsp;<!--
+                --><span ng-bind="subscriptionsCtrl.record.CustomKey || subscriptionsCtrl.record.ID"></span></h3>
+                <p>
+                    <span class="w-49" data-translate="Started"></span>
+                    <span class="w-49" ng-bind="subscriptionsCtrl.record.StartDate | date: 'MMMM dd, yyyy'"></span>
+                    <span class="w-49" data-translate="Ends"></span>
+                    <span class="w-49" ng-bind="subscriptionsCtrl.record.EndDate | date: 'MMMM dd, yyyy'"></span>
+                </p>
+                <button type="button" class="btn btn-link text-danger"
+                        translate-attr="{ title: 'ui.storefront.common.Cancel',
+                                          'aria-label': 'ui.storefront.common.Cancel' }"
+                        data-translate="ui.storefront.common.Cancel"
+                        ng-disabled="subscriptionsCtrl.notEligibleToCancel"
+                        ng-click="subscriptionsCtrl.cancel()"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="donut-progress-control">
+                    <span class="text-primary very-big"
+                          ng-bind="subscriptionsCtrl.daysRemaining"></span><br/>
+                    <span class="text-muted text-capitalize"
+                          data-translate="Days Remaining"></span>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <h3 ng-bind="subscriptionsCtrl.record.Name"></h3>
+                <p data-translate="ui.storefront.userDashboard2.controls.subscriptions.NextPayment.Template"
+                   translate-value-date="{{subscriptionsCtrl.record.NextPaymentDate | 'MMMM dd, yyyy'}}"
+                   translate-value-card="{{subscriptionsCtrl.record.Last4CardDigits}}"></p>
+                <div class="w-100">
+                    <button type="button" class="btn btn-link text-primary w-48"
+                            translate-attr="{ title: 'ui.storefront.storeDashboard.storeOrderDetail.BillingInformation',
+                                              'aria-label': 'ui.storefront.storeDashboard.storeOrderDetail.BillingInformation' }"
+                            data-translate="ui.storefront.storeDashboard.storeOrderDetail.BillingInformation"
+                            ng-disabled="subscriptionsCtrl.notEligibleToEditBilling"
+                            ng-click="subscriptionsCtrl.editBilling()"></button><!--
+                    -->&nbsp;|&nbsp;<!--
+                    --><button type="button" class="btn btn-link text-primary w-48"
+                            translate-attr="{ title: 'ui.storefront.common.ShippingInformation',
+                                              'aria-label': 'ui.storefront.common.ShippingInformation' }"
+                            data-translate="ui.storefront.common.ShippingInformation"
+                            ng-disabled="subscriptionsCtrl.notEligibleToEditShipping"
+                            ng-click="subscriptionsCtrl.editShipping()"></button><!--
+                    -->&nbsp;|&nbsp;<!--
+                    --><button type="button" class="btn btn-link text-primary"
+                            translate-attr="{ title: 'ui.storefront.checkout.checkoutPanels.paymentInformation',
+                                              'aria-label': 'ui.storefront.checkout.checkoutPanels.paymentInformation' }"
+                            data-translate="ui.storefront.checkout.checkoutPanels.paymentInformation"
+                            ng-disabled="subscriptionsCtrl.notEligibleToEditWallet"
+                            ng-click="subscriptionsCtrl.editWallet()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12" ng-if="subscriptionsCtrl.record">
+        <h3 data-translate="Subscription Details"></h3>
+        <div ng-bind-html="subscriptionsCtrl.record.Description"></div>
+    </div>
+    <div class="col-12" ng-if="subscriptionsCtrl.pastPayments.length">
+        <h3 data-translate="Subscription History"></h3>
+        <div ng-bind-html="subscriptionsCtrl.pastPayments"></div>
+    </div>
+</div>

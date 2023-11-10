@@ -1,0 +1,31 @@
+<div ng-form="confirmModalCtrl.forms.edit">
+  <div class="modal-header">
+    <h2 class="my-0" data-translate="{{confirmModalCtrl.headerKey}}"></h2>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        <div id="confirmModalLabel"
+          ng-bind-html="confirmModalCtrl.displayMessage | trustedHtml">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer p-3">
+    <button type="button" class="btn btn-danger"
+      id="btnConfirmModalCancel" name="btnConfirmModalCancel"
+      translate-attr="{ title: confirmModalCtrl.noKey,
+                        'aria-label': confirmModalCtrl.noKey }"
+      data-translate="{{confirmModalCtrl.noKey}}"
+      ng-click="confirmModalCtrl.cancel()">
+    </button>
+    <button type="button" class="btn btn-success"
+      id="btnConfirmModalOk" name="btnConfirmModalOk"
+      ng-disabled="confirmModalCtrl.forms.edit.$invalid"
+      translate-attr="{ title: confirmModalCtrl.yesKey,
+                        'aria-label': confirmModalCtrl.yesKey }"
+      data-translate="{{confirmModalCtrl.yesKey}}"
+      ng-click="confirmModalCtrl.ok()">
+    </button>
+  </div>
+</div>

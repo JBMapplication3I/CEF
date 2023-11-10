@@ -1,0 +1,124 @@
+﻿@page "/details/reports"
+@inherits MVC.Core.TemplatedControllerBase
+@inject IJSRuntime jsRuntime
+@inject NavigationManager navigationManager
+@inject CEFConfig cefConfig
+@inject CEFAPI cvApi
+
+<CascadingValue Value="ViewState">
+  <Div Class="page h-100" ElementId="reportsPage">
+    @if (ViewState.loading || Data is null && !ViewState.hasError)
+    {
+      <Div Class="page-content p-3">
+        <LoadingBlock />
+      </Div>
+    }
+    else if (ViewState.hasError)
+    {
+      <Div Class="page-content p-3 w-100">
+        <ErrorBlock />
+      </Div>
+    }
+    else if (Data is not null)
+    {
+      <Div Class="page-content-with-footer">
+        <Container Fluid="true">
+          <Row>
+            <Column>
+              <Heading Size="HeadingSize.Is1">Reports</Heading>
+              <Heading Size="HeadingSize.Is3">Popular Keywords</Heading>
+              <Row>
+                <Column ColumnSize="ColumnSize.IsAuto">
+                  <Blazorise.Label For="dateStartDate">Start Date</Blazorise.Label>
+                  <DatePicker
+                    ElementId="dateStartDate"
+                    TValue="DateTime?"
+                    @bind-Date="StartDate"
+                    Max="@EndDate"
+                    Placeholder="YYYY-MM-DD"
+                    Class="mb-3"
+                  />
+                </Column>
+                <Column ColumnSize="ColumnSize.IsAuto">
+                  <Label For="dateEndDate">End Date</Label>
+                  <DatePicker
+                    ElementId="dateEndDate"
+                    TValue="DateTime?"
+                    @bind-Date="EndDate"
+                    Min="@StartDate"
+                    Placeholder="YYYY-MM-DD"
+                    Class="mb-3">
+                  </DatePicker>
+                </Column>
+                <Column ColumnSize="ColumnSize.IsAuto">
+                  <Label Class="d-block">Filter</Label>
+                  <Blazorise.Button
+                    Color="Color.Info"
+                    Clicked="LoadReportDataAsync">
+                    Run
+                  </Blazorise.Button>
+                </Column>
+                <Column />
+              </Row>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHeaderCell>Keyword</TableHeaderCell>
+                    <TableHeaderCell>Count</TableHeaderCell>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <Repeater Items="Data" Take="50" Skip="0">
+                    <TableRow>
+                      <TableRowCell>@context.Key</TableRowCell>
+                      <TableRowCell>@context.Value</TableRowCell>
+                    </TableRow>
+                  </Repeater>
+                </TableBody>
+              </Table>
+            </Column>
+          </Row>
+        </Container>
+      </Div>
+    }
+  </Div>
+</CascadingValue>
+
+@code
+{
+  /// <summary>The data.</summary>
+  protected List<KeyValuePair<string, int>>? Data;
+
+  private DateTime? StartDate { get; set; }
+
+  private DateTime? EndDate { get; set; }
+
+  /// <summary>Executes the initialized action.</summary>
+  /// <returns>A Task.</returns>
+  protected override async Task OnInitializedAsync()
+  {
+    DebugBeginMethod();
+    await base.OnInitializedAsync().ConfigureAwait(false);
+    await SetRunningAsync().ConfigureAwait(false);
+    await LoadReportDataAsync().ConfigureAwait(false);
+    await FinishRunningAsync().ConfigureAwait(false);
+    ViewState.loading = false;
+    DebugEndMethod();
+  }
+
+  private async Task LoadReportDataAsync()
+  {
+    DebugBeginMethod();
+#if BRANDADMIN || VENDORADMIN
+    var result = await Task.Run(() => Task.FromResult(new { data = new List<KeyValuePair<string, int>>() })).ConfigureAwait(false);
+#elif STOREADMIN
+    var result = await cvApi.GetCommonKeywords(new() { StartDate = StartDate, EndDate = EndDate, }).ConfigureAwait(false);
+#endif
+    ConsoleDebug(result.data);
+    if (result.data is not null)
+    {
+      Data = result.data.OrderByDescending(x => x.Value).ToList();
+    }
+    DebugEndMethod();
+  }
+}

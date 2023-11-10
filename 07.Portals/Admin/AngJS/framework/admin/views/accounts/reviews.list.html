@@ -1,0 +1,49 @@
+﻿<cv-page caption="Manage Reviews" head-icon="fa-star-half-alt"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.Reviews')">
+    <cv-widget>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     filter-side="true" force-show-labels="true"
+                     on-search="search.getReviews"
+                     partial-reset="false"
+                     sortable="true" server-sorting="true"
+                     on-deactivate="search.deactivateReview"
+                     on-reactivate="search.reactivateReview"
+                     on-delete="search.deleteReview"
+                     edit-state="accounts.reviews.detail,[ID]"
+                     permissions-base="Reviews.Review">
+                <cv-column hidden field="TypeID" title-key="ui.admin.common.Type"
+                           filter filter-type="select" filter-order="1"
+                           on-option-repeat="$parent.search.searchTypes.getReviewTypes">
+                    <option value="" selected data-translate="ui.admin.views.accounts.reviewslist.Any"></option>
+                </cv-column>
+                <cv-column field="ID" title-key="ui.admin.common.Number.Symbol"
+                           width="8%"
+                           filter filter-type="id" filter-order="2"
+                           groupable="false" />
+                <cv-column field="Title" title-key="ui.admin.common.Title"
+                           width="50%"
+                           groupable="false" />
+                <cv-column field="Value" title-key="ui.admin.controls.accounts.reviewDetail.Rating"
+                           type="number"
+                           width="8%" cell-class="text-center" header-class="text-center"
+                           groupable="false" />
+                <cv-column field="CreatedDate" title-key="ui.admin.common.Date"
+                           type="date"
+                           width="20%"
+                           format="yyyy MMM dd hh:mm a"
+                           filter filter-type="minmaxdate" filter-order="3"
+                           sort-by="3" sort-by-direction="desc"
+                           groupable="false" />
+                <cv-column field="Approved" title-key="ui.admin.controls.accounts.reviewDetail.Approved"
+                           type="boolean"
+                           width="8%" cell-class="text-center" header-class="text-center"
+                           groupable="false" />
+                <cv-column field="SortOrder" type="number" title-key="ui.admin.common.Sort"
+                           width="6%" header-class="text-center" cell-class="text-right"
+                           sort-by="1" sort-by-direction="asc"
+                           groupable="false" />
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

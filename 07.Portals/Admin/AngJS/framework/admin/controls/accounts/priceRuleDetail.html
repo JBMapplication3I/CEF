@@ -1,0 +1,1141 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div cef-standard-detail-header-widget
+         record="priceRuleDetailCtrl.record"
+         new-kind-key="ui.admin.common.PriceRule.New"
+         existing-kind-key="ui.admin.common.PriceRule">
+    </div>
+    <div class="row details-body">
+        <div class="col-sm-12 vendor-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger':priceRuleDetailCtrl.forms.Details.$invalid}"
+                        ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <text-input-form-group
+                                    key="CustomKey"
+                                    ng-model="priceRuleDetailCtrl.record.CustomKey"
+                                    label-key="ui.admin.common.Key"
+                                    tooltip-key="ui.admin.common.CustomKey.Tooltip"
+                                    placeholder-key="ui.admin.common.Key"
+                                    max-length="128"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <text-input-form-group
+                                    key="Name"
+                                    ng-model="priceRuleDetailCtrl.record.Name"
+                                    label-key="ui.admin.common.Name"
+                                    tooltip-key="ui.admin.common.Name.Tooltip"
+                                    placeholder-key="ui.admin.common.Name"
+                                    max-length="128"
+                                    ng-required="true">
+                                </text-input-form-group>
+                                <div class="row">
+                                    <toggle-form-group
+                                        class="col-sm-6"
+                                        key="IsExclusive"
+                                        ng-model="priceRuleDetailCtrl.record.IsExclusive"
+                                        label-key="ui.admin.controls.inventory.priceRuleDetail.IsExclusive"
+                                        tog-on-key="ui.admin.controls.inventory.priceRuleDetail.Exclusive" tog-on-style="btn-info"
+                                        tog-off-key="ui.admin.controls.inventory.priceRuleDetail.Combinable" tog-off-style="btn-info"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                    <number-input-form-group
+                                        class="col-sm-6"
+                                        key="Priority"
+                                        ng-model="priceRuleDetailCtrl.record.Priority"
+                                        label-key="ui.admin.common.Priority"
+                                        placeholder-key="ui.admin.common.Priority"
+                                        step="1"
+                                        precision="0"
+                                        ng-required="priceRuleDetailCtrl.record.IsExclusive">
+                                    </number-input-form-group>
+                                </div>
+                                <div class="row">
+                                    <select-form-group
+                                        class="col-sm-6"
+                                        key="CurrencyID"
+                                        ng-model="priceRuleDetailCtrl.record.CurrencyID"
+                                        selections="priceRuleDetailCtrl.currencies"
+                                        label-key="ui.admin.common.Currency"
+                                        include-null="true" null-key="ui.admin.controls.inventory.productDetail.SelectACurrency"
+                                        ng-required="false">
+                                    </select-form-group>
+                                    <toggle-form-group
+                                        class="col-sm-6"
+                                        key="IsOnlyForAnonymousUsers"
+                                        ng-model="priceRuleDetailCtrl.record.IsOnlyForAnonymousUsers"
+                                        label-key="ui.admin.controls.inventory.priceRuleDetail.IsOnlyForAnonymousUsers"
+                                        tog-on-key="ui.admin.common.Yes" tog-on-style="btn-info"
+                                        tog-off-key="ui.admin.common.No" tog-off-style="btn-info"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                </div>
+                                <div class="row">
+                                    <h4 class="col-sm-12"
+                                        data-translate="ui.admin.controls.inventory.priceRuleDetail.PriceAdjustment"></h4>
+                                    <number-input-form-group
+                                        class="col-sm-6"
+                                        key="PriceAdjustment"
+                                        ng-model="priceRuleDetailCtrl.record.PriceAdjustment"
+                                        label-key="ui.admin.common.Value"
+                                        placeholder-key="ui.admin.common.Value"
+                                        step="0.00001"
+                                        precision="5"
+                                        ng-required="true">
+                                    </number-input-form-group>
+                                    <toggle-form-group
+                                        class="col-sm-6"
+                                        key="IsPercentage"
+                                        ng-model="priceRuleDetailCtrl.record.IsPercentage"
+                                        label-key="ui.admin.controls.accounts.priceRuleDetail.IsPercentage"
+                                        tog-on-key="ui.admin.controls.inventory.priceRuleDetail.Percent" tog-on-style="btn-success"
+                                        tog-off-key="ui.admin.controls.inventory.priceRuleDetail.Amount" tog-off-style="btn-success"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                    <toggle-form-group
+                                        class="col-sm-6"
+                                        key="IsMarkup"
+                                        ng-model="priceRuleDetailCtrl.record.IsMarkup"
+                                        label-key="ui.admin.controls.accounts.priceRuleDetail.MarkUpOrDown"
+                                        tog-on-key="ui.admin.common.Markup" tog-on-style="btn-success"
+                                        tog-off-key="ui.admin.controls.inventory.priceRuleDetail.Markdown" tog-off-style="btn-success"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                    <toggle-form-group
+                                        class="col-sm-6"
+                                        key="UsePriceBase"
+                                        ng-model="priceRuleDetailCtrl.record.UsePriceBase"
+                                        label-key="ui.admin.controls.accounts.priceRuleDetail.UseBasePrice"
+                                        tog-on-key="ui.admin.controls.accounts.priceRuleDetail.BasePrice" tog-on-style="btn-success"
+                                        tog-off-key="ui.admin.common.SalePrice" tog-off-style="btn-success"
+                                        ng-required="false">
+                                    </toggle-form-group>
+                                </div>
+                                <div class="row">
+                                    <h4 class="col-sm-12"
+                                        data-translate="ui.admin.controls.accounts.priceRuleDetail.OptionalConditions"></h4>
+                                    <div class="col-sm-6">
+                                        <date-input-form-group
+                                            key="StartDate"
+                                            ng-model="priceRuleDetailCtrl.record.StartDate"
+                                            label-key="ui.admin.common.StartDate"
+                                            placeholder-key="ui.admin.common.StartDate"
+                                            max="priceRuleDetailCtrl.record.EndDate"
+                                            ng-required="false">
+                                        </date-input-form-group>
+                                        <date-input-form-group
+                                            key="EndDate"
+                                            ng-model="priceRuleDetailCtrl.record.EndDate"
+                                            label-key="ui.admin.common.EndDate"
+                                            placeholder-key="ui.admin.common.EndDate"
+                                            min="priceRuleDetailCtrl.record.StartDate"
+                                            ng-required="false">
+                                        </date-input-form-group>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <number-input-form-group
+                                            key="MinQuantity"
+                                            ng-model="priceRuleDetailCtrl.record.MinQuantity"
+                                            label-key="ui.admin.controls.inventory.productDetail.MinQuantity"
+                                            placeholder-key="ui.admin.controls.inventory.productDetail.MinQuantity"
+                                            step="0.0001" precision="4"
+                                            min="0" max="priceRuleDetailCtrl.record.MaxQuantity || 99999999"
+                                            ng-required="false">
+                                        </number-input-form-group>
+                                        <number-input-form-group
+                                            key="MaxQuantity"
+                                            ng-model="priceRuleDetailCtrl.record.MaxQuantity"
+                                            label-key="ui.admin.controls.inventory.productDetail.MaxQuantity"
+                                            placeholder-key="ui.admin.controls.inventory.productDetail.MaxQuantity"
+                                            step="0.0001" precision="4"
+                                            min="priceRuleDetailCtrl.record.MinQuantity || 0" max="99999999"
+                                            ng-required="false">
+                                        </number-input-form-group>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <text-input-form-group
+                                            key="UnitOfMeasure"
+                                            ng-model="priceRuleDetailCtrl.record.UnitOfMeasure"
+                                            label-key="ui.admin.common.UnitOfMeasure"
+                                            tooltip-key="ui.admin.common.UnitOfMeasure.Tooltip"
+                                            placeholder-key="ui.admin.common.UnitOfMeasure"
+                                            max-length="128"
+                                            ng-required="false">
+                                        </text-input-form-group>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <p>
+                                            <span>A(n)</span><!--
+                                            -->&nbsp;<!--
+                                            --><span class="bold" ng-if="priceRuleDetailCtrl.record.IsExclusive" data-translate="Exclusive"></span><!--
+                                            --><span class="bold" ng-if="!priceRuleDetailCtrl.record.IsExclusive" data-translate="Combinable"></span><!--
+                                            -->&nbsp;<!--
+                                            --><span class="bold" ng-if="priceRuleDetailCtrl.record.IsPercentage"><span ng-bind="(priceRuleDetailCtrl.record.PriceAdjustment || 0) | number"></span>%</span><!--
+                                            --><span class="bold" ng-if="!priceRuleDetailCtrl.record.IsPercentage"><span ng-bind="(priceRuleDetailCtrl.record.PriceAdjustment || 0) | currency"></span></span><!--
+                                            -->&nbsp;<!--
+                                            --><span class="bold" ng-if="priceRuleDetailCtrl.record.IsMarkup" data-translate="Markup"></span><!--
+                                            --><span class="bold" ng-if="!priceRuleDetailCtrl.record.IsMarkup" data-translate="Markdown"></span><!--
+                                            -->&nbsp;<!--
+                                            -->against the<!--
+                                            -->&nbsp;<!--
+                                            --><span class="bold" ng-if="priceRuleDetailCtrl.record.UsePriceBase" data-translate="Base Price"></span><!--
+                                            --><span class="bold" ng-if="!priceRuleDetailCtrl.record.UsePriceBase" data-translate="Sale Price"></span><!--
+                                            -->&nbsp;<!--
+                                            -->will be applied<!--
+                                            --><span ng-if="priceRuleDetailCtrl.record.MinQuantity > 0 && !priceRuleDetailCtrl.record.MaxQuantity"><!--
+                                                -->&nbsp;when the quantity is <b>above {{priceRuleDetailCtrl.record.MinQuantity | number}}</b> and <b>not below</b><!--
+                                                --></span><!--
+                                            --><span ng-if="!priceRuleDetailCtrl.record.MinQuantity && priceRuleDetailCtrl.record.MaxQuantity > 0"><!--
+                                                -->&nbsp;when the quantity is <b>below {{priceRuleDetailCtrl.record.MaxQuantity | number}}</b> and <b>not above</b><!--
+                                                --></span><!--
+                                            --><span ng-if="priceRuleDetailCtrl.record.MinQuantity > 0 && priceRuleDetailCtrl.record.MaxQuantity > 0"><!--
+                                                -->&nbsp;when the quantity is <b>between {{priceRuleDetailCtrl.record.MinQuantity | number}} and {{priceRuleDetailCtrl.record.MaxQuantity | number}}</b><!--
+                                                --></span><!--
+                                            --><span ng-if="priceRuleDetailCtrl.record.StartDate && !priceRuleDetailCtrl.record.EndDate"><!--
+                                                -->&nbsp;when the date is <b>after {{priceRuleDetailCtrl.record.StartDate | date: 'yyyy-MM-dd'}}</b> and <b>not before</b><!--
+                                                --></span><!--
+                                            --><span ng-if="!priceRuleDetailCtrl.record.StartDate && priceRuleDetailCtrl.record.EndDate"><!--
+                                                -->&nbsp;when the date is <b>before {{priceRuleDetailCtrl.record.EndDate | date: 'yyyy-MM-dd'}}</b> and <b>not after</b><!--
+                                                --></span><!--
+                                            --><span ng-if="priceRuleDetailCtrl.record.StartDate && priceRuleDetailCtrl.record.EndDate"><!--
+                                                -->&nbsp;when the date is <b>between {{priceRuleDetailCtrl.record.StartDate | date: 'yyyy-MM-dd'}} and {{priceRuleDetailCtrl.record.EndDate | date: 'yyyy-MM-dd'}}</b><!--
+                                                --></span><!--
+                                            -->&nbsp;<!--
+                                            -->to all applicable products.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <textarea-wysiwyg-form-group
+                                    key="Description"
+                                    ng-model="priceRuleDetailCtrl.record.Description"
+                                    label-key="ui.admin.common.Description"
+                                    tooltip-key="ui.admin.common.Description.Tooltip"
+                                    placeholder-key="ui.admin.common.Description"
+                                    ng-required="false">
+                                </textarea-wysiwyg-form-group>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': priceRuleDetailCtrl.forms.Products.$invalid}"
+                        ><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Product.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.Products">
+                        <div class="row"><div class="col-sm-12"
+                            ><h3 class="mb-3" data-translate="ui.admin.controls.inventory.priceRuleDetail.ProductsAssociatedWithThisPriceRule"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 col-lg-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectProductsToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.productPaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.productPaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.productPaging.filteredData[priceRuleDetailCtrl.productPaging.currentPage]
+                                                           | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                           | limitTo: priceRuleDetailCtrl.productPaging.pageSize
+                                                                    : priceRuleDetailCtrl.productPaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addProduct(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4 scroll-over-500">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedProducts"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedProductsQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Product"></th>
+                                            <th data-translate="ui.admin.controls.inventory.priceRuleDetail.DoOverride.Question"></th>
+                                            <th data-translate="ui.admin.controls.inventory.priceRuleDetail.OverrideSalePrice"></th>
+                                            <th data-translate="ui.admin.controls.inventory.priceRuleDetail.OverrideBasePrice"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.Products | filter: { $: priceRuleDetailCtrl.addedProductsQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.Products | filter: { $: priceRuleDetailCtrl.addedProductsQuickFilter } | orderBy: ['ProductName','Product.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.ProductName || p.Product.Name"></label>
+                                            </td>
+                                            <td>
+                                                <toggle id="ckOverridePrice" name="ckOverridePrice" class="btn-block"
+                                                        ng-model="priceRuleProduct.OverridePrice"
+                                                        data-on="{{'ui.admin.common.Yes' | translate}}" data-truestyle="btn-success"
+                                                        data-off="{{'ui.admin.common.No' | translate}}" data-offstyle="btn-info" />
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control text-right"
+                                                       id="ckOverrideSalePrice" name="ckOverrideSalePrice"
+                                                       min="0" ng-min="0" step="0.0001" placeholder="0.00"
+                                                       ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                                                       ng-disabled="!priceRuleProduct.OverridePrice"
+                                                       ng-required="false"
+                                                       ng-model="priceRuleProduct.OverrideSalePrice" />
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control text-right"
+                                                       id="ckOverrideBasePrice" name="ckOverrideBasePrice"
+                                                       min="0" ng-min="0" step="0.0001" placeholder="0.00"
+                                                       ng-pattern="/^[0-9]+(\.[0-9]{1,4})?$/"
+                                                       ng-disabled="!priceRuleProduct.OverridePrice"
+                                                       ng-required="false"
+                                                       ng-model="priceRuleProduct.OverrideBasePrice" />
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeProduct($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.Accounts.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.Account.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.Accounts">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.AccountsAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectAccountsToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.accountPaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.accountPaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.accountPaging.filteredData[priceRuleDetailCtrl.accountPaging.currentPage]
+                                                            | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                            | limitTo: priceRuleDetailCtrl.accountPaging.pageSize
+                                                                     : priceRuleDetailCtrl.accountPaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addAccount(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedAccounts"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedAccountsQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Account"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.Accounts | filter: { $: priceRuleDetailCtrl.addedAccountsQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.Accounts | filter: { $: priceRuleDetailCtrl.addedAccountsQuickFilter } | orderBy: ['SlaveName','Slave.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.SlaveName || p.Slave.Name"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeAccount($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.Categories.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.Category.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.Categories">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.CategoriesAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectCategoriesToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.categoryPaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.categoryPaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.categoryPaging.filteredData[priceRuleDetailCtrl.categoryPaging.currentPage]
+                                                            | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                            | limitTo: priceRuleDetailCtrl.categoryPaging.pageSize
+                                                                     : priceRuleDetailCtrl.categoryPaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addCategory(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedCategories"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedCategoriesQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Category"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.PriceRuleCategories | filter: { $: priceRuleDetailCtrl.addedCategoriesQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.PriceRuleCategories | filter: { $: priceRuleDetailCtrl.addedCategoriesQuickFilter } | orderBy: ['CategoryName','Category.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.SlaveName || p.Slave.Name"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeCategory($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.Manufacturers.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.Manufacturer.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.Manufacturers">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.ManufacturersAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectManufacturersToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.manufacturerPaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.manufacturerPaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.manufacturerPaging.filteredData[priceRuleDetailCtrl.manufacturerPaging.currentPage]
+                                                           | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                           | limitTo: priceRuleDetailCtrl.manufacturerPaging.pageSize
+                                                                    : priceRuleDetailCtrl.manufacturerPaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addManufacturer(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedManufacturers"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedManufacturersQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Manufacturer"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.Manufacturers | filter: { $: priceRuleDetailCtrl.addedManufacturersQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.Manufacturers
+                                                       | filter: { $: priceRuleDetailCtrl.addedManufacturersQuickFilter }
+                                                       | orderBy: ['ManufacturerName','Manufacturer.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.SlaveName || p.Slave.Name"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeManufacturer($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.Stores.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.Store.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.Stores">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.StoresAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectStoresToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.storePaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.storePaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.storePaging.filteredData[priceRuleDetailCtrl.storePaging.currentPage]
+                                                            | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                            | limitTo: priceRuleDetailCtrl.storePaging.pageSize
+                                                                     : priceRuleDetailCtrl.storePaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addStore(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedStores"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedStoresQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Store"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.Stores | filter: { $: priceRuleDetailCtrl.addedStoresQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.Stores
+                                                       | filter: { $: priceRuleDetailCtrl.addedStoresQuickFilter }
+                                                       | orderBy: ['StoreName','Store.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.SlaveName || p.Slave.Name"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeStore($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.Vendors.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.Vendor.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.Vendors">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.VendorsAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectVendorsToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.vendorPaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.vendorPaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.vendorPaging.filteredData[priceRuleDetailCtrl.vendorPaging.currentPage]
+                                                            | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                            | limitTo: priceRuleDetailCtrl.vendorPaging.pageSize
+                                                                     : priceRuleDetailCtrl.vendorPaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addVendor(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedVendors"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedVendorsQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Vendor"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.Vendors | filter: { $: priceRuleDetailCtrl.addedVendorsQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.Vendors | filter: { $: priceRuleDetailCtrl.addedVendorsQuickFilter } | orderBy: ['VendorName','Vendor.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.SlaveName || p.Slave.Name"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeVendor($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.ProductTypes.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.ProductType.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.ProductTypes">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.ProductTypesAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectProductTypesToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.productTypePaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.productTypePaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.productTypePaging.filteredData[priceRuleDetailCtrl.productTypePaging.currentPage]
+                                                            | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                            | limitTo: priceRuleDetailCtrl.productTypePaging.pageSize
+                                                                     : priceRuleDetailCtrl.productTypePaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addProductType(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedProductTypes"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedProductTypesQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.ProductType"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.PriceRuleProductTypes | filter: { $: priceRuleDetailCtrl.addedProductTypesQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.PriceRuleProductTypes | filter: { $: priceRuleDetailCtrl.addedProductTypesQuickFilter } | orderBy: ['ProductTypeName','ProductType.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.SlaveName || p.Slave.Name"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeProductType($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.AccountTypes.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.AccountType.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.AccountTypes">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.AccountTypesAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectAccountTypesToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.accountTypePaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.accountTypePaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.accountTypePaging.filteredData[priceRuleDetailCtrl.accountTypePaging.currentPage]
+                                                            | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                            | limitTo: priceRuleDetailCtrl.accountTypePaging.pageSize
+                                                                     : priceRuleDetailCtrl.accountTypePaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addAccountType(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedAccountTypes"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedAccountTypesQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.AccountType"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.PriceRuleAccountTypes | filter: { $: priceRuleDetailCtrl.addedAccountTypesQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.PriceRuleAccountTypes | filter: { $: priceRuleDetailCtrl.addedAccountTypesQuickFilter } | orderBy: ['AccountTypeName','AccountType.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.SlaveName || p.Slave.Name"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeAccountType($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.UserRoles.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.UserRole.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.UserRoles">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.UserRolesAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectUserRolesToAdd"></h4>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-95" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.roles.length === 0">
+                                                <td colspan="6" data-translate="No Roles"></td>
+                                            </tr>
+                                            <tr ng-repeat="(name, id) in priceRuleDetailCtrl.roles">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="id"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addUserRole(name)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedUserRoles"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedUserRolesQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.UserRole"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.PriceRuleUserRoles
+                                                    | filter: { $: priceRuleDetailCtrl.addedUserRolesQuickFilter }).length <= 0">
+                                            <td colspan="2"
+                                                data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.PriceRuleUserRoles
+                                                       | filter: { $: priceRuleDetailCtrl.addedUserRolesQuickFilter }
+                                                       | orderBy: ['RoleName']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.RoleName}}"
+                                                       ng-bind="p.RoleName"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeUserRole($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger': priceRuleDetailCtrl.forms.Countries.$invalid}"><i class="far fa-lg fa-users"></i>&nbsp;<span data-translate="ui.admin.common.Country.Plural"></span></span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="priceRuleDetailCtrl.forms.Countries">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 class="mb-3"
+                                    data-translate="ui.admin.controls.inventory.priceRuleDetail.CountriesAssociatedWithThisPriceRule"></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.SelectCountriesToAdd"></h4>
+                                <div cef-paging-header paging="priceRuleDetailCtrl.countryPaging"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-condensed mb-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-5" data-translate="ui.admin.common.Number.Symbol"></th>
+                                                <th class="w-35" data-translate="ui.admin.common.Key"></th>
+                                                <th class="w-60" data-translate="ui.admin.common.Name"></th>
+                                                <th style="width:43px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="priceRuleDetailCtrl.countryPaging.filteredCount === 0">
+                                                <td colspan="6" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                            </tr>
+                                            <tr ng-repeat="p in priceRuleDetailCtrl.countryPaging.filteredData[priceRuleDetailCtrl.countryPaging.currentPage]
+                                                            | orderBy: ['SortOrder','Group','DisplayName || Name','CustomKey']
+                                                            | limitTo: priceRuleDetailCtrl.countryPaging.pageSize
+                                                                     : priceRuleDetailCtrl.countryPaging.skip()">
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.ID"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.CustomKey"></label></td>
+                                                <td><label class="font-weight-normal form-control-static" ng-bind="p.Name"></label></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-success"
+                                                            translate-attr="{ title: 'ui.admin.common.Add',
+                                                                              'aria-label': 'ui.admin.common.Add' }"
+                                                            ng-click="priceRuleDetailCtrl.addCountry(p.ID)">
+                                                        <i class="far fa-plus"></i>
+                                                        <span class="sr-only" data-translate="ui.admin.common.Add"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 data-translate="ui.admin.controls.accounts.discountDetail.AddedCountries"></h4>
+                                <input type="text" class="form-control"
+                                       translate-attr="{ placeholder: 'ui.admin.common.QuickFilter' }"
+                                       ng-model="priceRuleDetailCtrl.addedCountriesQuickFilter" />
+                                <table class="table table-striped table-hover table-condensed mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th data-translate="ui.admin.common.Country"></th>
+                                            <th style="width:43px;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="(priceRuleDetailCtrl.record.PriceRuleCountries | filter: { $: priceRuleDetailCtrl.addedCountriesQuickFilter }).length <= 0">
+                                            <td colspan="2" data-translate="ui.admin.controls.sales.modals.editALineItemModal.NoResultsFound"></td>
+                                        </tr>
+                                        <tr ng-repeat="p in priceRuleDetailCtrl.record.PriceRuleCountries | filter: { $: priceRuleDetailCtrl.addedCountriesQuickFilter } | orderBy: ['CountryName','Country.Name']">
+                                            <td>
+                                                <label class="font-weight-normal form-control-static"
+                                                       uib-tooltip="{{p.SlaveID + ' ' + (p.SlaveKey || p.Slave.CustomKey) + ' ' + (p.SlaveName || p.Slave.Name)}}"
+                                                       ng-bind="p.SlaveName || p.Slave.Name"></label>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger"
+                                                        translate-attr="{ title: 'ui.admin.controls.accounts.discountDetail.Deselect',
+                                                                          'aria-label': 'ui.admin.controls.accounts.discountDetail.Deselect' }"
+                                                        ng-click="priceRuleDetailCtrl.removeCountry($index)">
+                                                    <i class="far fa-times"></i>
+                                                    <span class="sr-only" data-translate="ui.admin.controls.accounts.discountDetail.Deselect"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="priceRuleDetailCtrl"
+                return-state="accounts.priceRules.list"
+                permissions-base="Pricing.PriceRule">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

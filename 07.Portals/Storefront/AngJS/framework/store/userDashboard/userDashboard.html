@@ -1,0 +1,67 @@
+﻿<div ng-if="udCtrl.currentUser.isAuthenticated"
+  class="row cef-dashboard-container">
+  <div ng-if="udCtrl.showSideMenu()" class="col-auto d-print-none cef-dashboard-nav bg-light pl-4 pt-5 pr-3 pb-3"
+    style="min-height: 70vh;">
+    <div cef-user-dashboard-side-menu></div>
+  </div>
+  <div class="col col-pr-12 cef-dashboard-content">
+    <div class="row">
+      <div class="col-12">
+        <div class="row d-none d-sm-block d-print-none">
+          <nav class="breadcrumbs">
+            <ol class="breadcrumb bg-transparent">
+              <li class="breadcrumb-item">
+                <a ui-sref-plus uisrp-area="site" uisrp-is-home="true">
+                  <span sid="btnHomeBreadcrumb"
+                    data-translate="ui.storefront.common.Home">
+                  </span>
+                </a>
+              </li>
+              <li class="breadcrumb-item">
+                <a ui-sref="userDashboard.dashboard"
+                  sid="btnMyDashboardBreadcrumb"
+                  data-translate="ui.storefront.common.MyDashboard">
+                </a>
+              </li>
+              <li class="breadcrumb-item"
+                sid="UserDashboardTabBreadcrumb"
+                ng-if="!udCtrl.$state.is('userDashboard.dashboard')"
+                class="active"
+                ng-bind="$root.$breadcrumbs[0].translatedTitle
+                  || udCtrl.$state.current.title
+                  || udCtrl.$state.current.parent
+                    && udCtrl.$state.get(udCtrl.$state.current.parent).title">
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div ng-if="!udCtrl.$state.current.hasOverrideTitleInTemplate"
+        class="col-12">
+        <h1>
+          <span ng-if="udCtrl.$state.is('userDashboard.dashboard')"
+            data-translate="ui.storefront.common.MyDashboard">
+          </span>
+          <i sid="UserDashboardTabHeaderIcon"
+            ng-if="!udCtrl.$state.is('userDashboard.dashboard')
+              && !udCtrl.$state.is('userDashboard.salesOrders.detail')"
+            ng-class="udCtrl.$state.current.icon
+              || udCtrl.$state.current.parent
+                && udCtrl.$state.get(udCtrl.$state.current.parent).icon"
+            aria-hidden="true">
+          </i>
+          <span sid="UserDashboardTabHeaderText"
+            ng-if="!udCtrl.$state.is('userDashboard.dashboard')
+              && !udCtrl.$state.is('userDashboard.salesOrders.detail')"
+            ng-bind="$root.$breadcrumbs[0].translatedTitle
+              || udCtrl.$state.current.title
+              || udCtrl.$state.current.parent
+                && udCtrl.$state.get(udCtrl.$state.current.parent).title">
+          </span>
+        </h1>
+      </div>
+      <div class="col-12" ui-view="dashboard">
+      </div>
+    </div>
+  </div>
+</div>

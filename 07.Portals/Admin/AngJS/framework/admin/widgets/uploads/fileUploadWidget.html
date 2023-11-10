@@ -1,0 +1,6 @@
+﻿<input name="StoredFiles" type="file" kendo-upload
+       k-multiple="cefUploadFileWidgetCtrl.allowMultiple"
+       k-upload="cefUploadFileWidgetCtrl.uploadFile"
+       k-success="cefUploadFileWidgetCtrl.uploadedFile"
+       k-async="{ saveUrl: '{{'/Media/StoredFiles/Upload/.json' | corsLink: 'api'}}', autoUpload: true }"
+       k-localization="{ select: cefUploadFileWidgetCtrl.text }" />

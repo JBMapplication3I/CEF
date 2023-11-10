@@ -1,0 +1,49 @@
+﻿﻿<#@ template debug="true" hostspecific="True" language="C#"
+#><#@ output extension=".cstxt"
+#><#@ assembly name="System"
+#><#@ assembly name="System.Core"
+#><#@ assembly name="System.Web.dll"
+#><#@ assembly name="$(UserProfile)\.nuget\packages\entityframework\6.4.4\lib\net45\EntityFramework.dll"
+#><#@ assembly name="$(SolutionDir)packages\ServiceStack.Interfaces.4.5.14\lib\portable-wp80+sl5+net45+win8+wpa81+monotouch+monoandroid+xamarin.ios10\ServiceStack.Interfaces.dll"
+#><#@ assembly name="$(SolutionDir)packages\ServiceStack.Text.Signed.4.5.14\lib\net45\ServiceStack.Text.dll"
+#><#@ assembly name="$(SolutionDir)01.DataAccessLayer\01.Clarity.Ecommerce.DataModel\bin\Debug\net472\Clarity.Ecommerce.DataModel.dll"
+#><#@ assembly name="$(SolutionDir)02.Interfaces\02.Clarity.Ecommerce.Interfaces.Models\bin\Debug\net472\Clarity.Ecommerce.Interfaces.Models.dll"
+#><#@ assembly name="$(SolutionDir)03.ModelsAndMapping\03.Clarity.Ecommerce.Models\bin\Debug\net472\Clarity.Ecommerce.Models.dll"
+#><#@ assembly name="$(SolutionDir)06.Services\06.Clarity.Ecommerce.Service\bin\Clarity.Ecommerce.Service.dll"
+#><#@ assembly name="$(SolutionDir)11.T4\11.T4.CodeGenerator\bin\Debug\net472\CodeGenerator.dll"
+#><#@ assembly name="$(SolutionDir)11.T4\11.T4.ServiceStack.CodeGenerator.TypeScript\bin\Debug\net472\ServiceStack.CodeGenerator.TypeScript.dll"
+#><#@ import namespace="System.Collections.Generic"
+#><#@ import namespace="System.ComponentModel.DataAnnotations"
+#><#@ import namespace="System.ComponentModel.DataAnnotations.Schema"
+#><#@ import namespace="System.Data.Entity"
+#><#@ import namespace="System.Linq"
+#><#@ import namespace="System.Reflection"
+#><#@ import namespace="System.Runtime.InteropServices"
+#><#@ import namespace="ServiceStack"
+#><#@ import namespace="ServiceStack.CodeGenerator.TypeScript"
+#><#@ import namespace="CodeGenerator"
+#><#@ import namespace="Clarity.Ecommerce.DataModel"
+#><#@ import namespace="Clarity.Ecommerce.Interfaces.DataModel"
+#><#@ include file="$(SolutionDir)11.T4\11.T4.CodeGenerator\MultiOutput.old.ttinclude"
+#><#@ include file="Services.ttinclude"
+#><#
+var tableClasses = AppDomain.CurrentDomain.GetAssemblies()
+    .Where(x => x.FullName.StartsWith("Clarity.Ecommerce.DataModel"))
+    .SelectMany(x => x.GetTypes().Where(t => t.CustomAttributes.Any(at => at.AttributeType == typeof(SqlSchemaAttribute))))
+    .OrderBy(x => ((SqlSchemaAttribute)Attribute.GetCustomAttribute(x, typeof(SqlSchemaAttribute))).Both)
+    .GroupBy(x => ((SqlSchemaAttribute)Attribute.GetCustomAttribute(x, typeof(SqlSchemaAttribute))).Schema);
+var routes = new List<Type>();
+var skips = new List<string> { "RoleUser", "Report" };
+foreach (var group in tableClasses)
+{
+    var schema = group.Key;
+    foreach (var table in group)
+    {
+        var td = new TypeDeterminer(table);
+        if (td.IsExcludedFromT4 || skips.Contains(table.Name)) { continue; }
+        routes.Add(table);
+        GenerateServicesFile(table, group.Key);
+        SaveOutput("Services." + schema + "." + table.Name.Replace("Clarity.Ecommerce.DataModel.", ""), "cs");
+    }
+}
+DeleteOldOutputs(); #>

@@ -1,0 +1,40 @@
+<div class="row" ng-form="discountsWidgetCtrl.forms.discounts">
+    <div class="col-sm-12" ng-if="!discountsWidgetCtrl.hideHeader">
+        <h3 class="mt-3"
+            data-translate="ui.admin.common.Discount.PluralApplied"></h3>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group"
+             ng-show="discountsWidgetCtrl.isEditable">
+            <div class="input-group">
+                <input type="text" class="form-control"
+                       id="txtDiscountcode" name="txtDiscountCode"
+                       placeholder="Enter a Discount Code..."
+                       ng-required="true"
+                       ng-model="discountsWidgetCtrl.NewDiscountCode" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info"
+                            ng-disabled="discountsWidgetCtrl.forms.discounts.$invalid"
+                            ng-click="discountsWidgetCtrl.applyDiscountCode()"
+                            data-translate="ui.admin.common.Apply"></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12"
+            ng-hide="discountsWidgetCtrl.discountItems.length > 0">
+        <p data-translate="ui.admin.common.NoDiscountsApplied"></p>
+    </div>
+    <div class="col-sm-12"
+            ng-show="discountsWidgetCtrl.discountItems.length > 0">
+        <kendo-grid k-data-source="discountsWidgetCtrl.discountItems"
+                    k-rebind="discountsWidgetCtrl.discountItems"
+                    k-options="discountsWidgetCtrl.discountGridConfiguration"></kendo-grid>
+        <!--
+        { field: "ItemType", title: "Type", width: "60px;", headerAttributes: { style: "text-align: center;" } },
+        { field: "Name", title: "Name" },
+        { field: "DiscountPrice", format: "${0:#,##0.00}", title: "Discount Value", width: "100px",
+            attributes: { style: "text-align: right;" }, headerAttributes: { style: "text-align: center;" } }
+        -->
+    </div>
+</div>

@@ -1,0 +1,92 @@
+﻿<cv-page caption="Manage Discounts" head-icon="fa-usd"
+    ng-if="$root.cvSecurityService.hasPermission('Admin.Accounts.Discounts')">
+    <cv-widget>
+        <widget-menu-item caption="Add Discount" icon-class="fa-plus-circle"
+                          click="$root.$state.go('accounts.discounts.detail',{ID:'New'})"
+                          permission="'Discounts.Discount.Create'"></widget-menu-item>
+        <widget-body ng-controller="SearchController as search">
+            <cv-grid show-pager="true" page-sizes="8,16,32,64,128" server-paging="true"
+                     filter-side="true" force-show-labels="true"
+                     sortable="false" server-sorting="true"
+                     groupable="false"
+                     on-search="search.getDiscounts"
+                     partial-reset="false"
+                     on-deactivate="search.deactivateDiscount"
+                     on-reactivate="search.reactivateDiscount"
+                     on-delete="search.deleteDiscount"
+                     edit-state="accounts.discounts.detail,[ID]"
+                     permissions-base="Discounts.Discount">
+                <cv-column field="ID" title="ID"
+                           width="5%" header-class="text-center" cell-class="text-right"
+                           filter filter-type="id"
+                           groupable="false" />
+                <cv-column field="Name"
+                           width="20%"
+                           filter
+                           sort-by="2" sort-by-direction="asc"
+                           groupable="false" />
+                <cv-column field="Value" title="Value"
+                           width="7%" header-class="text-center" cell-class="text-right"
+                           groupable="false">
+                    <cv-column-template>
+                        <script type="text/kendo-template">
+                            <div ng-if="dataItem.ValueType == 0"
+                                 ng-bind="(dataItem.Value | number:2) + '%'"></div>
+                            <div ng-if="dataItem.ValueType == 1"
+                                 ng-bind="dataItem.Value | globalizedCurrency"></div>
+                        </script>
+                    </cv-column-template>
+                </cv-column>
+                <cv-column field="StartDate" title="Start Date" type="date"
+                           width="10%"
+                           groupable="false" />
+                <cv-column field="EndDate" title="End Date" type="date"
+                           width="10%"
+                           groupable="false" />
+                <cv-column field="DiscountTypeID" title="Applies to"
+                           hidden
+                           groupable="false">
+                    <cv-group-header-template>
+                        <script type="x-group-header-template">
+                            <span>
+                                <span data-translate="Applies To:"></span>&nbsp;<!--
+                                --><span ng-if="!(dataItem.items[0].DiscountTypeID || dataItem.items[0].items[0].DiscountTypeID || dataItem.items[0].items[0].items[0].DiscountTypeID)">Order</span><!--
+                                --><span ng-if="(dataItem.items[0].DiscountTypeID || dataItem.items[0].items[0].DiscountTypeID || dataItem.items[0].items[0].items[0].DiscountTypeID) === 1">Product</span><!--
+                                --><span ng-if="(dataItem.items[0].DiscountTypeID || dataItem.items[0].items[0].DiscountTypeID || dataItem.items[0].items[0].items[0].DiscountTypeID) === 2">Shipping</span><!--
+                                --><span ng-if="(dataItem.items[0].DiscountTypeID || dataItem.items[0].items[0].DiscountTypeID || dataItem.items[0].items[0].items[0].DiscountTypeID) === 3">Buy X/Get Y</span>
+                            </span>
+                        </script>
+                    </cv-group-header-template>
+                </cv-column>
+                <cv-column field="Priority" title="Priority"
+                           width="7%"
+                           sort-by="1" sort-by-direction="desc"
+                           groupable="false" />
+                <cv-column field="IsAutoApplied" title="Auto" type="boolean"
+                           width="5%" header-class="text-center" cell-class="text-center"
+                           filter filter-type="boolean" filter-value="true" />
+                <cv-column field="CanCombine" title="Cmb" type="boolean"
+                           width="5%" header-class="text-center" cell-class="text-center"
+                           filter filter-type="boolean" filter-value="true" />
+                <cv-column field="Active" title="Active" type="boolean"
+                           width="5%" header-class="text-center" cell-class="text-center"
+                           filter filter-type="boolean" filter-value="true" />
+                <cv-column hidden field="Code" title-key="Code" filter />
+                <cv-column field="Code" title-key="Codes"
+                           width="20%"
+                           groupable="false"
+                           sortable="false">
+                    <cv-column-template>
+                        <script type="text/kendo-template">
+                            <div ng-if="!dataItem.Codes.length"
+                                 data-translate="ui.admin.views.accounts.discountslist.None"></div>
+                            <div ng-repeat="code in dataItem.Codes | orderBy: 'Code' | limitTo: 3"
+                                 class="inline-block"
+                                 ng-bind="($first ? '' : ', ') + code.Code"></div>
+                        </script>
+                    </cv-column-template>
+                </cv-column>
+            </cv-grid>
+        </widget-body>
+    </cv-widget>
+</cv-page>

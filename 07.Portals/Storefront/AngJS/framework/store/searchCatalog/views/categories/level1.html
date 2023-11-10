@@ -1,0 +1,43 @@
+﻿<div class="row">
+<div class="col-12">
+<h1 class="mt-0"
+data-translate="ui.storefront.searchCatalog.categories.level1.FindYourItemByDepartment"></h1>
+<div class="row mb-3">
+<div ng-class="searchCatalogCtrl.cefConfig.catalog.displayImages ? 'col-12 col-sm-6 col-md-3' : 'col-12'"
+ng-repeat="catP in searchCatalogCtrl.service.activeSearchViewModel.CategoriesTree.Children
+| orderBy: 'Key'">
+<a ng-class="{'disabled':searchCatalogCtrl.service.searchIsRunning}"
+ng-click="!searchCatalogCtrl.service.searchIsRunning
+&& searchCatalogCtrl.service.pushCategory('single', catP.Key)">
+<div ng-show="searchCatalogCtrl.cefConfig.catalog.displayImages">
+<img ng-hide="catP.PrimaryImageFileName"
+class="img-fluid d-block mx-auto"
+ng-class="{'text-capitalize':!catP.DisplayName}"
+alt="{{catP | cleanSearchCategoryName}}"
+src="./images/placeholder.jpg?maxwidth=250&maxheight=250&mode=pad&scale=both" />
+<img ng-show="catP.PrimaryImageFileName"
+class="img-fluid d-block mx-auto"
+ng-class="{'text-capitalize':!catP.DisplayName}"
+alt="{{catP | cleanSearchCategoryName}}"
+ng-src="{{('/Images/ecommerce/Category/Images/' | corsLink) + catP.PrimaryImageFileName}}
+?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both" />
+</div>
+<label class="mt-1 category-title col-md-12"
+ng-class="{'text-capitalize':!catP.DisplayName}"
+ng-bind="catP | cleanSearchCategoryName"></label>
+</a>
+<div ng-show="!searchCatalogCtrl.cefConfig.catalog.displayImages"
+class="col-12 mb-5">
+<a ng-repeat="child in catP.Children"
+class="clearfix">
+<span class="category-title pl-3"
+ng-class="{'text-capitalize':!child.DisplayName}"
+ng-click="!searchCatalogCtrl.service.searchIsRunning
+&& searchCatalogCtrl.service.pushCategory('single', child.Key)"
+ng-bind="child | cleanSearchCategoryName"></span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>

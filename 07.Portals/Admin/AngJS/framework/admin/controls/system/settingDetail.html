@@ -1,0 +1,74 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row details-header">
+        <h2 ng-hide="settingDetailCtrl.record.ID > 0" class="col-md-12 details-title"><span data-translate="ui.admin.controls.system.settingDetail.NewSetting"></span> {{settingDetailCtrl.record.Name}} [{{settingDetailCtrl.record.CustomKey}}]</h2>
+        <h2 ng-show="settingDetailCtrl.record.ID > 0" class="col-md-12 details-title"><span data-translate="ui.admin.controls.system.settingDetail.Setting"></span> #{{settingDetailCtrl.record.ID}}: {{settingDetailCtrl.record.Name}} [{{settingDetailCtrl.record.CustomKey}}]</h2>
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 setting-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': settingDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="settingDetailCtrl.forms.Details">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.controls.system.settingDetail.SettingValue"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{'has-error': settingDetailCtrl.forms.Details.ddlType.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.settingDetail.Type"></label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="ddlType" name="ddlType"
+                                                ng-required="true"
+                                                ng-change="settingDetailCtrl.updateType()"
+                                                ng-model="settingDetailCtrl.record.TypeID"
+                                                ng-options="t.ID as ((t.DisplayName || t.Name) + (t.CustomKey && t.CustomKey != '' ? ' [' + t.CustomKey + ']' : '')) for t in settingDetailCtrl.types | orderBy: ['SortOrder','DisplayName || Name']">
+                                            <option value="" ng-disabled="true" data-translate="ui.admin.common.Type.SelectA"></option>
+                                        </select>
+                                    </div>
+                                    <div ng-messages="settingDetailCtrl.forms.Details.ddlType.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': settingDetailCtrl.forms.Details.txtaValue.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Value"></label>
+                                    <div class="input-group">
+                                        <textarea class="form-control"
+                                                  id="txtaValue" name="txtaValue"
+                                                  ng-required="true"
+                                                  ng-model="settingDetailCtrl.record.Value"></textarea>
+                                    </div>
+                                    <div ng-messages="settingDetailCtrl.forms.Details.txtaValue.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': settingDetailCtrl.forms.Details.ddlStoreID.$invalid}">
+                                    <label class="control-label"><span data-translate="ui.admin.common.Store"></span> #</label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="ddlStoreID" name="ddlStoreID"
+                                                ng-required="false"
+                                                ng-model="settingDetailCtrl.record.StoreID"
+                                                ng-change="settingDetailCtrl.updateStore()"
+                                                ng-options="s.ID as ((s.DisplayName || s.Name) + (s.CustomKey && s.CustomKey != '' ? ' [' + s.CustomKey + ']' : '')) for s in settingDetailCtrl.stores | orderBy: ['SortOrder','DisplayName || Name']">
+                                            <option value="" data-translate="ui.admin.controls.system.settingDetail.Unassigned"></option>
+                                        </select>
+                                    </div>
+                                    <div ng-messages="settingDetailCtrl.forms.Details.ddlStoreID.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="settingDetailCtrl"
+                return-state="system.settings.list"
+                permissions-base="System.Setting">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

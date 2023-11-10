@@ -1,0 +1,102 @@
+﻿<div class="row" id="results-table" ng-init="kind = 'lots'">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped table-hover mb-0">
+        <thead>
+          <tr>
+            <th class="w-16" data-translate="ui.storefront.common.Name"></th>
+            <th class="w-16" ng-if="!sclotCtrl.hideK"
+              data-translate="ui.storefront.cart.SKU">
+            </th>
+            <th class="w-auto" ng-if="!sclotCtrl.hideS"
+              data-translate="ui.storefront.searchCatalog.compare.Stock">
+            </th>
+            <th class="w-8" data-translate="ui.storefront.common.Price"></th>
+            <th class="w-auto" data-translate="ui.storefront.cart.addToCart"></th>
+            <th class="w-auto" ng-if="!sclotCtrl.hideI"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="recordID in sclotCtrl.service.activeSearchViewModel.ResultIDs
+                         | orderBy: sclotCtrl.service.getSorter()"
+            class="lot catalog-result-card"
+            id="lotTableBlock{{recordID}}"
+            name="lotTableBlock{{recordID}}">
+            <!-- Name -->
+            <td class="w-16">
+              <div cef-lot-card-name-widget
+                lot="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                lot-id="recordID"
+                lot-seo-url="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                lot-name="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                rows="sclotCtrl.nameR"
+                index="$index">
+              </div>
+            </td>
+            <!-- SKU -->
+            <td class="w-16" ng-if="!sclotCtrl.hideK">
+              <div style="overflow-wrap: break-word;"
+                cef-lot-card-sku-widget
+                lot="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                lot-id="recordID"
+                lot-seo-url="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                lot-name="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                hide-sku="sclotCtrl.hideK">
+              </div>
+            </td>
+            <!-- Stock -->
+            <td class="w-auto" ng-if="!sclotCtrl.hideS">
+              <div style="overflow-wrap: break-word;"
+                cef-lot-card-stock-widget
+                lot="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                lot-id="recordID"
+                lot-seo-url="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                lot-name="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-labels="true"
+                left="true"
+                hide-stock="sclotCtrl.hideS">
+              </div>
+            </td>
+            <!-- Price -->
+            <td class="w-8">
+              <div cef-lot-card-pricing-widget
+                lot="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                lot-id="recordID"
+                lot-seo-url="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                lot-name="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                display-style="sclotCtrl.pds">
+              </div>
+            </td>
+            <!-- Action -->
+            <td class="w-auto">
+              <div cef-lot-card-action-button-widget
+                lot="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                lot-id="recordID"
+                lot-seo-url="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                lot-name="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                as-icon="true"
+                quick-add="sclotCtrl.quickA"
+                button-view="sclotCtrl.abv">
+              </div>
+            </td>
+            <!-- Controls -->
+            <td class="w-auto" ng-if="!sclotCtrl.hideI">
+              <div cef-lot-card-controls-widget
+                lot="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }"
+                lot-id="recordID"
+                lot-seo-url="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).SeoUrl"
+                lot-name="sclotCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).Name"
+                hide-favorites-list="sclotCtrl.hideFL"
+                hide-wish-list="sclotCtrl.hideWL"
+                hide-notify-me="sclotCtrl.hideNM"
+                hide-compare="sclotCtrl.hideC"
+                hide-icons="sclotCtrl.hideI">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

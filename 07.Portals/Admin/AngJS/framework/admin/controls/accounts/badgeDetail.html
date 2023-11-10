@@ -1,0 +1,142 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row details-header">
+        <h2 ng-hide="badgeDetailCtrl.record.ID > 0" class="col-md-12 details-title"><span data-translate="ui.admin.controls.accounts.badgeDetail.Badge.New"></span> {{badgeDetailCtrl.record.Name}} [{{badgeDetailCtrl.record.CustomKey}}]</h2>
+        <h2 ng-show="badgeDetailCtrl.record.ID > 0" class="col-md-12 details-title"><span data-translate="ui.admin.common.Badge"></span># {{badgeDetailCtrl.record.ID}}: {{badgeDetailCtrl.record.Name}} [{{badgeDetailCtrl.record.CustomKey}}]</h2>
+    </div>
+    <div class="row details-body">
+        <div class="col-sm-12 badge-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': badgeDetailCtrl.forms.Details.$invalid}"><i class="far fa-lg fa-info"></i>&nbsp;<span data-translate="ui.admin.common.Detail.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="badgeDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3 data-translate="ui.admin.common.BasicInformation"></h3>
+                                <div class="form-group" ng-class="{'has-error': badgeDetailCtrl.forms.Details.txtName.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtName" name="txtName"
+                                               maxlength="256"
+                                               ng-required="true"
+                                               ng-model="badgeDetailCtrl.record.Name" />
+                                    </div>
+                                    <div ng-messages="badgeDetailCtrl.forms.Details.txtName.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': badgeDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="txtCustomKey" name="txtCustomKey"
+                                               maxlength="128"
+                                               ng-required="false"
+                                               ng-model="badgeDetailCtrl.record.CustomKey" />
+                                    </div>
+                                    <div ng-messages="badgeDetailCtrl.forms.Details.txtCustomKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': badgeDetailCtrl.forms.Details.ddlType.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Type"></label>
+                                    <div class="input-group">
+                                        <select class="form-control" id="ddlType" name="ddlType"
+                                                ng-required="true"
+                                                ng-model="badgeDetailCtrl.record.TypeID"
+                                                ng-options="t.ID as ((t.DisplayName || t.Name) + (t.CustomKey && t.CustomKey != '' ? ' [' + t.CustomKey + ']' : '')) for t in badgeDetailCtrl.badgeTypes | orderBy: ['SortOrder','DisplayName || Name']">
+                                            <option value="" ng-disabled="true" data-translate="ui.admin.common.Type.SelectA"></option>
+                                        </select>
+                                    </div>
+                                    <div ng-messages="badgeDetailCtrl.forms.Details.ddlType.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab>
+                    <uib-tab-heading><span ng-class="{'text-danger': badgeDetailCtrl.forms.Images.$invalid}"><i class="far fa-lg fa-picture-o"></i>&nbsp;<span data-translate="ui.admin.common.Image.Plural"></span></span></uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="badgeDetailCtrl.forms.Images">
+                        <div class="row"><div class="col-sm-12"><h3 data-translate="ui.admin.common.Image.Plural"></h3></div></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Uploader -->
+                                <div cef-upload-image-widget
+                                     master="badgeDetailCtrl.record"
+                                     upload-type="ImageBrand"
+                                     type-key="General"
+                                     allow-multiple="true"
+                                     is-primary="false">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- Thumbnails -->
+                                <div class="form-group">
+                                    <label class="control-label" data-translate="ui.admin.common.UploadedImage.Plural"></label>
+                                    <div class="input-group">
+                                        <div ng-if="!badgeDetailCtrl.record.Images.length"
+                                             data-translate="ui.admin.common.NoImagesHaveBeenUploaded"></div>
+                                        <div ng-repeat="image in badgeDetailCtrl.record.Images" class="thumbnail col-sm-4 col-md-3 col-lg-2">
+                                            <div class="form-vertical">
+                                                <div class="form-group">
+                                                    <img alt="{{image.Name}}" class="col-sm-12 img-rounded"
+                                                         ng-src="{{(image.ThumbnailFileName || image.OriginalFileName)
+                                                                   | corsImageLink : 'badges' : { 'maxwidth': 250, 'maxheight': 250, 'mode': 'pad', 'scale': 'both' } }}"
+                                                         onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Admin/framework/store/img/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+                                                </div>
+                                                <text-input-form-group
+                                                    key="ImageName{{$index}}"
+                                                    ng-model="image.Name"
+                                                    label-key="ui.admin.common.Name"
+                                                    max-length="128"
+                                                    ng-required="true">
+                                                </text-input-form-group>
+                                                <select-form-group
+                                                    key="ImageTypeID{{$index}}"
+                                                    ng-model="image.TypeID"
+                                                    selections="badgeDetailCtrl.imageTypes"
+                                                    label-key="ui.admin.common.Type"
+                                                    tooltip-text="The type of the record."
+                                                    placeholder-key="ui.admin.common.Type"
+                                                    ng-required="true">
+                                                </select-form-group>
+                                                <toggle-form-group
+                                                    key="ImageIsPrimary{{$index}}"
+                                                    ng-change="badgeDetailCtrl.clearOtherPrimaryImagesNew($index)"
+                                                    ng-model="image.IsPrimary"
+                                                    label-key="ui.admin.controls.inventory.productDetail.PrimaryImageShownFirst"
+                                                    tog-on-key="ui.admin.common.Primary" tog-on-style="btn-success"
+                                                    tog-off-key="ui.admin.common.Other" tog-off-style="btn-info"
+                                                    ng-required="false">
+                                                </toggle-form-group>
+                                                <button type="button" class="btn btn-danger btn-block"
+                                                        translate-attr="{ title: 'ui.admin.common.Delete',
+                                                                          'aria-label': 'ui.admin.common.Delete' }"
+                                                        ng-click="badgeDetailCtrl.removeImageNew($index)"
+                                                        ><i class="far fa-trash-o"></i>&nbsp;<!--
+                                                        --><span data-translate="ui.admin.common.Delete"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="badgeDetailCtrl"
+                return-state="accounts.badges.list"
+                permissions-base="Badges.Badge">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

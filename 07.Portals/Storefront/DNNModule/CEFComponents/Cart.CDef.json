@@ -1,0 +1,32 @@
+{
+  "Name": "Cart",
+  "FriendlyName": "Cart",
+  "Description": "CEF Cart",
+  "ComponentType": "UserControl",
+  "Parameters": {
+    "CartType": {
+      "Name": "CartType",
+      "FriendlyName": "Cart Type",
+      "Description": "Enter a valid Cart Type ['Cart', ???/] (Include single quotes)",
+      "Type": "System.String",
+      "Value": "'Cart'",
+      "Order": 1
+    },
+    "IncludeQuickOrder": {
+      "Name": "IncludeQuickOrder",
+      "FriendlyName": "Include Quick Order",
+      "Description": "Check to include the Quick Order option in the Cart.",
+      "Type": "System.Boolean",
+      "Value": false,
+      "Order": 2
+    },
+    "IncludeDiscounts": {
+      "Name": "IncludeDiscounts",
+      "FriendlyName": "Include Discounts",
+      "Description": "Check to include Discounts in the Cart.",
+      "Type": "System.Boolean",
+      "Value": false,
+      "Order": 3
+    }
+  }
+}

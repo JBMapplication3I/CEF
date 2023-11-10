@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h2 class="mt-0"
+    data-translate="ui.storefront.userDashboard2.modals.DefaultBillingAddress.ChangeDefaultBillingAddress">
+  </h2>
+</div>
+<div class="modal-body form-vertical p-3"
+  ng-form="setDefaultBillingModalCtrl.forms.edit">
+  <div class="form-group">
+    <label class="control-label" for="ddlAddresses"
+      data-translate="ui.storefront.userDashboard2.modals.DefaultBillingAddress">
+    </label>
+    <div class="input-group">
+      <select class="form-control"
+        id="ddlAddresses" name="ddlAddresses"
+        ng-required="true"
+        ng-options="ac.SlaveID as (ac.Name || ac.CustomKey || ac.Slave.CustomKey)
+                    for ac in setDefaultBillingModalCtrl.addressBook"
+        ng-model="setDefaultBillingModalCtrl.selectedID">
+      </select>
+    </div>
+  </div>
+</div>
+<div class="modal-footer p-3 text-right">
+  <button type="button" class="btn btn-large btn-secondary"
+    translate-attr="{ title: 'ui.storefront.common.Cancel',
+                      'aria-label': 'ui.storefront.common.Cancel' }"
+    data-translate="ui.storefront.common.Cancel"
+    ng-click="setDefaultBillingModalCtrl.cancel()">
+  </button>
+  <button type="button" class="btn btn-large btn-primary"
+    translate-attr="{ title: 'ui.storefront.common.Save',
+                      'aria-label': 'ui.storefront.common.Save' }"
+    data-translate="ui.storefront.common.Save"
+    ng-disabled="setDefaultBillingModalCtrl.forms.edit.$invalid"
+    ng-click="setDefaultBillingModalCtrl.ok()">
+  </button>
+</div>

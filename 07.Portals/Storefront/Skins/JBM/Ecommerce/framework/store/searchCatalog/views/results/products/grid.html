@@ -1,0 +1,71 @@
+﻿<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 row-cols-tk-5 row-cols-fk-6 results-grid-products results-grid"
+  id="results-grid" ng-init="kind = 'products'">
+  <div ng-repeat="recordID in scprgCtrl.service.activeSearchViewModel.ResultIDs
+                  | orderBy: scprgCtrl.service.getSorter()"
+    class="col mb-3 catalog-result-card"
+    id="cardCatalogGridProduct_{{recordID}}"
+    name="cardCatalogGridProduct_{{recordID}}"
+    sid="cardCatalogGridProduct_{{product.CustomKey}}">
+    <div ng-if="scprgCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).ID"
+      class="card border-0 d-grid grid-layout">
+      <!-- Product Image, with controls in the overlay -->
+      <div class="card-img-top bg-white"
+        cef-product-card-thumbnail-with-overlay-widget
+        product-id="recordID"
+        width="scprgCtrl.thumbW"
+        height="scprgCtrl.thumbH"
+        index="$index"
+        hide-favorites-list="scprgCtrl.hideFL"
+        hide-wish-list="scprgCtrl.hideWL"
+        hide-notify-me="scprgCtrl.hideNM"
+        hide-compare="scprgCtrl.hideC"
+        hide-icons="scprgCtrl.hideI">
+      </div>
+      <!-- Product Stock Information -->
+      <div class="stock-info card-text mt-1 mb-2 d-flex justify-content-between"
+        ng-if="!scprgCtrl.hideS"
+        cef-product-card-stock-widget
+        product-id="recordID"
+        hide-stock="scprgCtrl.hideS">
+      </div>
+      <!-- Product Name -->
+      <div cef-product-card-name-widget
+        product-id="recordID"
+        rows="scprgCtrl.nameR"
+        index="$index"
+        class="product-name">
+      </div>
+      <!-- Product Short Description -->
+      <div class="product-desc card-text my-1"
+        ng-if="!scprgCtrl.hideD"
+        cef-product-card-short-desc-widget
+        product-id="recordID"
+        rows="scprgCtrl.shortDescR">
+      </div>
+      <!-- Product SKU Information -->
+      <div class="sku-info my-1"
+        ng-if="!scprgCtrl.hideK"
+        cef-product-card-sku-widget
+        product-id="recordID"
+        hide-sku="scprgCtrl.hideK">
+      </div>
+      <!-- Product Pricing -->
+      <div class="product-price mt-1"
+        cef-product-card-pricing-widget
+        product-id="recordID"
+        display-style="scprgCtrl.pds">
+      </div>
+      <!-- Call to Action Button -->
+      <div cef-product-card-action-button-widget
+        class="action-btn card-footer w-100"
+        product-id="recordID"
+        quick-add="scprgCtrl.quickA"
+        button-view="scprgCtrl.abv"
+        index="$index">
+      </div>
+    </div>
+    <div ng-if="!scprgCtrl.service.getServiceForKind(kind).getCached({ id: recordID }).ID"
+      cef-loading-widget overlay="false">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,251 @@
+﻿@using Newtonsoft.Json
+@using Clarity.Ecommerce.MVC.Core
+@inherits MVC.Core.ModalEditAssociationBase<ProductAssociationModel>
+@inject CEFAPI cvApi
+
+<Modal @ref="ModalRef">
+  <ModalContent Centered="true">
+    <ModalHeader Background="Background.Dark" TextColor="TextColor.Light" Padding="Padding.Is2.OnY">
+      <ModalTitle>Edit Product Association #@(Association?.ID)</ModalTitle>
+      <CloseButton
+        TextColor="TextColor.Light"
+        Clicked="@(() => HideAsync(false))"
+      />
+    </ModalHeader>
+    <ModalBody Padding="Padding.Is0.FromBottom">
+      @if (Association is not null)
+      {
+        <Row>
+          <Column>
+            <SelectFormGroup
+              TValue="int"
+              FormIdentifier="AssocTypeID"
+              LabelText="Type"
+              @bind-Value="Association.TypeID"
+              OptionsList="@associationTypes"
+              ItemValueFunc="@(x => ((TypeModel)x).ID)"
+              ItemLabelFunc="@(x => ((TypeModel)x).DisplayName ?? ((TypeModel)x).Name)"
+              Required="true"
+              StartTouched="true"
+              ReadOnly="true"
+            />
+            <NumericFormGroup
+              TValue="int?"
+              FormIdentifier="SortOrder"
+              IsHorizontal="false"
+              LabelText="Sort Order"
+              PlaceholderText="Sort Order"
+              @bind-Value="@Association.SortOrder"
+              Step="1"
+              Required="false"
+              ShowValidTooltip="false"
+              StartTouched="false"
+            />
+            <Row>
+              <Column ColumnSize="ColumnSize.IsHalf">
+                <TextFormGroup
+                  FormIdentifier="AssocUOfM"
+                  LabelText="Unit of Measure"
+                  PlaceholderText="Each"
+                  @bind-Value="Association.UnitOfMeasure"
+                  Required="false"
+                  ShowValidTooltip="true"
+                  StartTouched="false"
+                />
+              </Column>
+              <Column ColumnSize="ColumnSize.IsHalf">
+                <NumericFormGroup
+                  FormIdentifier="AssocQuantity"
+                  LabelText="Quantity"
+                  @bind-Value="Association.Quantity"
+                  Autocomplete="off"
+                  PlaceholderText="0"
+                  Required="false"
+                  Min="0"
+                  Step="1m"
+                  InputClasses="text-right"
+                  StartTouched="false"
+                />
+              </Column>
+            </Row>
+          </Column>
+        </Row>
+      }
+    </ModalBody>
+    <ModalFooter Background="Background.Dark" Padding="Padding.Is2.OnY">
+      <Blazorise.Button
+        Color="Color.Secondary"
+        Clicked="@(() => HideAsync(false))">
+        Cancel
+      </Blazorise.Button>
+      <Blazorise.Button
+        Color="Color.Primary"
+        Clicked="@(() => HideAsync(true))">
+        Save
+      </Blazorise.Button>
+    </ModalFooter>
+  </ModalContent>
+</Modal>
+@code
+{
+  private List<TypeModel>? associationTypes;
+
+  /// <inheritdoc />
+  public override async Task ShowAsync(
+    ProductAssociationModel association,
+    Action<bool, ProductAssociationModel>? callback = null)
+  {
+    Association = JsonConvert.DeserializeObject<ProductAssociationModel>(JsonConvert.SerializeObject(association))!;
+    Callback = callback;
+    Result = false;
+    await LoadAssociationTypesAsync().ConfigureAwait(false);
+    await ModalRef!.Show().ConfigureAwait(false);
+  }
+
+  /// <inheritdoc />
+  public override async Task ShowAsync(
+    ProductAssociationModel association,
+    Func<bool, ProductAssociationModel, Task>? callback = null)
+  {
+    Association = JsonConvert.DeserializeObject<ProductAssociationModel>(JsonConvert.SerializeObject(association))!;
+    CallbackAsync = callback;
+    Result = false;
+    await LoadAssociationTypesAsync().ConfigureAwait(false);
+    await ModalRef!.Show().ConfigureAwait(false);
+  }
+
+  private async Task LoadAssociationTypesAsync()
+  {
+    associationTypes = await LoadCollection<MVC.Api.Endpoints.GetProductAssociationTypes, ProductAssociationTypePagedResults, TypeModel>(
+        cvApi.GetProductAssociationTypes,
+        new() { Active = true })
+      .ConfigureAwait(false);
+    StateHasChanged();
+  }
+
+  /// <summary>Loads a collection.</summary>
+  /// <typeparam name="TSearchModel"> Type of the search model.</typeparam>
+  /// <typeparam name="TPagedResults">Type of the paged results.</typeparam>
+  /// <typeparam name="TModel">       Type of the model.</typeparam>
+  /// <param name="apiCall">    The API call.</param>
+  /// <param name="searchModel">The search model.</param>
+  /// <returns>The collection.</returns>
+  protected virtual async Task<List<TModel>?> LoadCollection<TSearchModel, TPagedResults, TModel>(
+      Func<TSearchModel, Task<IHttpPromiseCallbackArg<TPagedResults>>> apiCall,
+      TSearchModel searchModel)
+    where TPagedResults : PagedResultsBase<TModel>
+  {
+    var logPrefix = $"LoadCollection<TSearchModel '{typeof(TSearchModel).Name}', TPagedResults '{typeof(TPagedResults).Name}', TModel '{typeof(TModel).Name}'>: ";
+    ////ConsoleDebug(logPrefix + "Start");
+    var r = await apiCall(searchModel).ConfigureAwait(false);
+    ////ConsoleDebug(logPrefix + "Call finished");
+    if (r.data is null)
+    {
+      ////await FinishRunningAsync(true, r.data).ConfigureAwait(false);
+      ////ConsoleDebug(logPrefix + "Result null-a: Return r.data");
+      return default;
+    }
+    if (r.data.Results is null)
+    {
+      ////await FinishRunningAsync(true, "The result was null, please contact support.").ConfigureAwait(false);
+      ////ConsoleDebug(logPrefix + "Result null-b: Return default");
+      return default;
+    }
+    ////ConsoleDebug(logPrefix + "Return r.data.Results");
+    return r.data.Results;
+  }
+}
+
+@*
+@code
+{
+  private ProductAssociationModel Association { get; set; } = null!;
+  private Action<bool, ProductAssociationModel>? Callback { get; set; }
+  private Func<bool, ProductAssociationModel, Task>? CallbackAsync { get; set; }
+  private Modal? modalRef;
+
+  /// <summary>Shows.</summary>
+  /// <param name="association">The association.</param>
+  /// <param name="callback">   The callback.</param>
+  /// <returns>A Task.</returns>
+  public async Task ShowAsync(
+    ProductAssociationModel association,
+    Action<bool, ProductAssociationModel>? callback = null)
+  {
+    Association = JsonConvert.DeserializeObject<ProductAssociationModel>(
+      JsonConvert.SerializeObject(association))!;
+    Callback = callback;
+    Result = false;
+    await LoadAssociationTypesAsync().ConfigureAwait(false);
+    await modalRef!.Show().ConfigureAwait(false);
+  }
+
+  /// <summary>Shows.</summary>
+  /// <param name="association">The association.</param>
+  /// <param name="callback">   The callback.</param>
+  /// <returns>A Task.</returns>
+  public async Task ShowAsync(
+    ProductAssociationModel association,
+    Func<bool, ProductAssociationModel, Task>? callback = null)
+  {
+    Association = JsonConvert.DeserializeObject<ProductAssociationModel>(
+      JsonConvert.SerializeObject(association))!;
+    CallbackAsync = callback;
+    Result = false;
+    await LoadAssociationTypesAsync().ConfigureAwait(false);
+    await modalRef!.Show().ConfigureAwait(false);
+  }
+
+  /// <summary>Gets a value indicating whether the result was true or false.</summary>
+  /// <value>True if result, false if not.</value>
+  public bool Result { get; private set; }
+
+  private async Task HideModalAsync(bool accept)
+  {
+    Result = accept;
+    await modalRef!.Hide();
+    if (Callback is not null)
+    {
+      Callback(accept, Association);
+    }
+    else if (CallbackAsync is not null)
+    {
+      await CallbackAsync(accept, Association).ConfigureAwait(false);
+    }
+  }
+
+  /// <summary>Loads a collection.</summary>
+  /// <typeparam name="TSearchModel"> Type of the search model.</typeparam>
+  /// <typeparam name="TPagedResults">Type of the paged results.</typeparam>
+  /// <typeparam name="TModel">       Type of the model.</typeparam>
+  /// <param name="apiCall">    The API call.</param>
+  /// <param name="searchModel">The search model.</param>
+  /// <returns>The collection.</returns>
+#pragma warning disable CS0693
+  private async Task<List<TModel>?> LoadCollection<TSearchModel, TPagedResults, TModel>(
+#pragma warning restore CS0693
+      Func<TSearchModel, Task<IHttpPromiseCallbackArg<TPagedResults>>> apiCall,
+      TSearchModel searchModel)
+    where TPagedResults : PagedResultsBase<TModel>
+  {
+    ////var logPrefix = $"LoadCollection<TSearchModel '{typeof(TSearchModel).Name}', TPagedResults '{typeof(TPagedResults).Name}', TModel '{typeof(TModel).Name}'>: ";
+    ////ConsoleDebug(logPrefix + "Start");
+    var r = await apiCall(searchModel).ConfigureAwait(false);
+    ////ConsoleDebug(logPrefix + "Call finished");
+    if (r.data is null)
+    {
+      ////await FinishRunningAsync(true, r.data).ConfigureAwait(false);
+      ////ConsoleDebug(logPrefix + "Result null-a: Return r.data");
+      return default;
+    }
+    if (r.data.Results is null)
+    {
+      ////await FinishRunningAsync(true, "The result was null, please contact support.").ConfigureAwait(false);
+      ////ConsoleDebug(logPrefix + "Result null-b: Return default");
+      return default;
+    }
+    ////ConsoleDebug(logPrefix + "Return r.data.Results");
+    return r.data.Results;
+  }
+}
+*@

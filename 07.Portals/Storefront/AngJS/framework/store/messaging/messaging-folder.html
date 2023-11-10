@@ -1,0 +1,33 @@
+﻿<div class="row">
+    <style>
+        .k-grid-content.k-auto-scrollable {
+            height: 500px !important;
+        }
+    </style>
+    <div class="col-12">
+        <ui-view></ui-view>
+    </div>
+    <div class="col-12">
+        <cv-grid show-pager="true"
+                page-sizes="20"
+                server-paging="true"
+                on-search="messageBoxCtrl.messageBox.getMessages">
+            <cv-column field="model.SentByUserUserName" title="From" translate-attr="{ title: 'ui.storefront.messaging.messaging-folder.From' }" />
+            <cv-column field="model.Subject" title="Subject" translate-attr="{ title: 'ui.storefront.messaging.messaging-folder.Subject' }">
+                <cv-column-template>
+                    <script type="text/kendo-template">
+                        <span ui-sref="userDashboard.inbox.read({id:dataItem.model.ID})">{{ dataItem.model.Subject }}</span>
+                    </script>
+                </cv-column-template>
+            </cv-column>
+            <cv-column field="model.CreatedDate" title="Sent" translate-attr="{ title: 'ui.storefront.messaging.messaging-folder.Sent' }" type="date" width="125px" />
+            <cv-column field="model.ID" title=" " width="50px">
+                <cv-column-template>
+                    <script type="text/kendo-template">
+                        <button type="button" ui-sref="userDashboard.inbox.delete({id:dataItem.model.ID, msg: dataItem})" class="btn btn-sm btn-danger"><i class="far fa-trash"></i></button>
+                    </script>
+                </cv-column-template>
+            </cv-column>
+        </cv-grid>
+    </div>
+</div>

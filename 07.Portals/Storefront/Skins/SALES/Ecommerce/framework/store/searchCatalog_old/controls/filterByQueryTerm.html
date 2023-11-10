@@ -1,0 +1,31 @@
+﻿<div uib-accordion-group is-open="false" template-url="cat-filters-group-template.html">
+    <div uib-accordion-heading>
+        <!-- <i class="fa fa-fw fa-search mr-2 small"></i> -->
+        <span class="small"
+              data-translate="ui.storefront.searchCatalog.filters.SearchTerm"></span>
+    </div>
+    <div class="input-group">
+        <input type="text" class="form-control"
+               id="txtTerm" name="txtTerm"
+               translate-attr="{ placeholder: 'ui.storefront.searchCatalog.controls.externalSearchBox.Search.Ellipses' }"
+               uib-typeahead="sug.Name as (sug.CustomKey + ' ' + sug.Name + (sug.Score > 0 ? ' (' + sug.Score + ')' : ''))
+                              for sug in searchCatalogFilterByQueryTermCtrl.cvSearchCatalogService.getSuggestionsPromise()"
+               typeahead-loading="loadingSuggestions" typeahead-wait-ms="500"
+               typeahead-min-length="1" typeahead-focus-first="false"
+               ng-disabled="searchCatalogFilterByQueryTermCtrl.cvSearchCatalogService.searchIsRunning"
+               ng-change="searchCatalogFilterByQueryTermCtrl.cvSearchCatalogService.getSuggestionsPromise()"
+               ng-keypress="searchCatalogFilterByQueryTermCtrl.inputKeyPress($event)"
+               ng-model="searchCatalogFilterByQueryTermCtrl.cvSearchCatalogService.queryTerm" />
+        <!-- typeahead-on-select($item, $model, $label) (Defaults: null) : A callback executed when a match is selected -->
+        <div class="input-group-append">
+            <button type="button" class="btn btn-outline-secondary"
+                    ng-disabled="searchCatalogFilterByQueryTermCtrl.cvSearchCatalogService.searchIsRunning"
+                    ng-click="searchCatalogFilterByQueryTermCtrl.cvSearchCatalogService.productSearchViewModel.Form.Query
+                              = searchCatalogFilterByQueryTermCtrl.cvSearchCatalogService.queryTerm;">
+                <i class="fa"
+                   ng-class="searchCatalogFilterByQueryTermCtrl.cvSearchCatalogService.searchIsRunning ? 'fa-spinner fa-spin' : 'fa-search'"></i><!--
+                --><span class="sr-only" data-translate="ui.storefront.stores.storeDirectory.Search"></span>
+            </button>
+        </div>
+    </div>
+</div>

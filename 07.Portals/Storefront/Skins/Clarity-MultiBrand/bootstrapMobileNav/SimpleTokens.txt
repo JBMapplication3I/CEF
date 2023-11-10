@@ -1,0 +1,34 @@
+<ul class="nav navbar-nav">
+[*>NODE]
+</ul>
+[>NODE]
+    <li class="[?NODE]dropdown [/?][?SELECTED]active[/?]">
+    [?ENABLED]
+        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+           href="[=URL]" [?TARGET]target="[=TARGET]"[/?] [?NODE] [/?] >[=TEXT] [?NODE][/?]</a>
+    [?ELSE]
+        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+           [?NODE][/?]>[=TEXT] [?NODE][/?]</a>
+    [/?]
+    [?NODE]
+        <ul class="dropdown-menu" role="menu">
+        [*>NODE]
+        </ul>
+    [/?]
+    </li>
+[/>]
+
+<script type="text/javascript">
+(function($){
+    $(document).ready(function(){
+        $(".nav-pills > li a").on("mouseover", function(event){
+            var $this = $(this).parent().find(">ul");
+            if($this.length == 0) return;
+            dnn.addIframeMask($this[0]);
+        });
+        $(".dropdown").attr("aria-haspopup", "true");
+        $(".dropdownactive").attr("aria-haspopup", "true");
+        $(".dropdown-menu").attr("aria-haspopup", "false");
+    });
+})(jQuery);
+</script>

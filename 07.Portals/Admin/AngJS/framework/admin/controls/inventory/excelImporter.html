@@ -1,0 +1,124 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-info mb-3"
+           translate-attr="{ title: 'ui.admin.controls.inventory.excelImporter.DownloadImportTemplate',
+                             'aria-label': 'ui.admin.controls.inventory.excelImporter.DownloadImportTemplate' }"
+           data-translate="ui.admin.controls.inventory.excelImporter.DownloadImportTemplate"
+           download
+           target="_blank"
+           ng-href="{{'/Content/Product-Import-Data-Demo.xlsx' | corsLink: 'ui'}}"></a>
+    </div>
+    <div class="col-md-12">
+        <div class="form-inline mb-3">
+            <div class="form-group">
+                <div class="input-group">
+                    <input name="Images" type="file" kendo-upload
+                           k-multiple="false"
+                           k-upload="excelCtrl.uploadSheet"
+                           k-success="excelCtrl.uploadedSheet"
+                           k-async="{ saveUrl: '{{'/Media/StoredFiles/Upload/.json' | corsLink: 'api'}}', autoUpload: true }"
+                           k-localization="{ select: 'Select excel file by Drag and Drop to this row or clicking this button...' }" />
+                </div>
+            </div>
+            <div class="form-group xs-ml-0 sm-ml-0 md-ml-3 lg-ml-3" style="vertical-align: top;">
+                <div class="input-group">
+                    <button type="button" class="btn btn-primary"
+                            id="btnImport" name="btnImport"
+                            translate-attr="{ title: 'Import Products',
+                                              'aria-label': 'Import Products' }"
+                            data-translate="Import Products"
+                            ng-disabled="excelCtrl.viewState.running"
+                            ng-click="excelCtrl.importSheet()"></button>
+                </div>
+                <div class="ml-2 input-group">
+                    <button type="button" class="btn btn-primary"
+                            id="btnImport" name="btnImport"
+                            translate-attr="{ title: 'Import SEO Keywords',
+                                              'aria-label': 'Import SEO Keywords' }"
+                            data-translate="Import SEO Keywords"
+                            ng-disabled="excelCtrl.viewState.running"
+                            ng-click="excelCtrl.importSEOSheet()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mb-3" ng-if="excelCtrl.viewState.running">
+        <i class="far fa-5x fa-spin fa-spinner"></i>&nbsp;<!--
+        --><h2 class="inline-block"
+               id="lbImporting" name="lbImporting"
+               data-translate="ui.admin.controls.inventory.excelImporter.ImportingPleaseWait.Ellipses"></h2>
+    </div>
+    <div class="col-md-12 importLog" ng-if="excelCtrl.importLog">
+        <h3 data-translate="ui.admin.controls.inventory.excelImporter.ImportLog"></h3>
+        <div ng-if="!excelCtrl.importLog.DebugMessages.length
+                    && !excelCtrl.importLog.InfoMessages.length
+                    && !excelCtrl.importLog.ErrorMessages.length">
+            <p id="lbNoErrors" name="lbNoErrors"
+               data-translate="ui.admin.controls.inventory.productImport.NoErrors.Message"></p>
+        </div>
+        <button type="button" class="btn btn-primary mb-3"
+                id="btnViewProducts" name="btnViewProducts"
+                ui-sref="inventory.products.list"
+                ><span data-translate="ui.admin.common.ViewProducts"></span></button>
+        <div class="panel-group mb-3" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default" ng-if="excelCtrl.importLog.ErrorMessages.length">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                           aria-expanded="true" aria-controls="collapseOne"
+                           ><span data-translate="ui.admin.controls.inventory.excelImporter.Error.Plural"></span>&nbsp;<!--
+                           -->(<span ng-bind="excelCtrl.importLog.ErrorMessages.length"></span>)</a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body scroll-over-500">
+                        <span ng-repeat="message in excelCtrl.importLog.ErrorMessages track by $index"
+                              class="message"
+                              ng-bind-html="message | trustedHtml"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-if="excelCtrl.importLog.InfoMessages.length">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                           aria-expanded="false" aria-controls="collapseTwo"
+                           ><span data-translate="ui.admin.controls.inventory.excelImporter.InformationMessage.Plural"></span>&nbsp;<!--
+                           -->(<span ng-bind="excelCtrl.importLog.InfoMessages.length"></span>)</a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body scroll-over-500">
+                        <span ng-repeat="message in excelCtrl.importLog.InfoMessages track by $index"
+                              class="message"
+                              ng-bind-html="message | trustedHtml"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" ng-if="excelCtrl.importLog.DebugMessages.length">
+                <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+                           aria-expanded="false" aria-controls="collapseThree"
+                           ><span data-translate="ui.admin.controls.inventory.excelImporter.DebugMessage.Plural"></span>&nbsp;<!--
+                           -->(<span ng-bind="excelCtrl.importLog.DebugMessages.length"></span>)</a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body scroll-over-500">
+                        <span ng-repeat="message in excelCtrl.importLog.DebugMessages track by $index"
+                              class="message"
+                              ng-bind-html="message | trustedHtml"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button ng-if="excelCtrl.importLog.DebugMessages.length
+                       || excelCtrl.importLog.InfoMessages.length
+                       || excelCtrl.importLog.ErrorMessages.length"
+                type="button" class="btn btn-primary mb-3"
+                id="btnViewProducts2" name="btnViewProducts2"
+                ui-sref="inventory.products.list"
+                ><span data-translate="ui.admin.common.ViewProducts"></span></button>
+    </div>
+</div>

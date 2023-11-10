@@ -1,0 +1,87 @@
+﻿{
+  "configName": "RFQ Export for Vendors Raw data",
+  "sheetName": "ItemDataRaw",
+  "columnSkip": 0,
+  "rowSkip": 1,
+  "headerRowCount": 1,
+  "coreEntity": "SalesQuote",
+  "recordsAre": "SalesQuote.SalesItems",
+  "mapUnmappedTo": {
+    "entity": "SalesQuote.SalesItems",
+    "to": [ "JsonAttributes" ]
+  },
+  "mappings": [
+    {
+      "header": [ "VOA_Tracker_ID" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "VA-17-0005048" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Row_Num" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "10001" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Product_Name" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "SYSTEM PUMP SINGLE ACTION 10ML VACUUM SYRINGE DUAL CHECK VALVE CONTINUOUS FLOW ADJUSTABLE LENGTH TUBING" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Manufacturer" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "BOSTON SCIENTIFIC" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Salient_Char" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "SYSTEM PUMP, URETEROSCOPY AND LASER LITHOTRIPSY, SINGLE ACTION, CONTINUOUS FLOW, DUAL CHECK ONE-WAY VALVE W/ AUTOMATIC REFILL, LATEX-FREE, ADJUSTABLE LENGTH TUBING, 10CC VACUUM SYRINGE" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    },
+    {
+      "header": [ "PMO_Base_Year_Est" ],
+      "headerOccurrence": 0,
+      "ignore": [ "n/a" ],
+      "examples": [ "38533" ],
+      "assignments": [
+        {
+          "entity": "SalesQuote.SalesItems",
+          "to": [ "JsonAttributes" ]
+        }
+      ]
+    }
+  ]
+}

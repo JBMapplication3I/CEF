@@ -1,0 +1,490 @@
+$bootstrap-sass-asset-helper: false !default;
+
+// Variables
+
+//== Color system
+
+//## Gray colors used in clarity scss files.
+$white: #ffffff;
+$gray-100: #f4f5f5; // #f8f9fa;
+$gray-200: #f1f1f1; //#e9ecef;
+$gray-250: #e2e2e2;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #9d9d9d; // #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #4b4b4b; // #495057;
+$gray-800: #343a40;
+$gray-900: #1e242b; // #212529;
+$black: #1a1b1b; // #000;
+
+$grays: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$grays: map-merge(
+  (
+    "100": $gray-100,
+    "200": $gray-200,
+    "250": $gray-250,
+    "300": $gray-300,
+    "400": $gray-400,
+    "500": $gray-500,
+    "600": $gray-600,
+    "700": $gray-700,
+    "800": $gray-800,
+    "900": $gray-900
+  ),
+  $grays
+);
+
+$blue: #357bff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e6717c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #31a746;
+$green-fade: lighten($green, 50%);
+$teal: #20c997;
+$cyan: #17a2b8;
+$dark-blue: #153166;
+
+$colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$colors: map-merge(
+  (
+    "blue": $blue,
+    "indigo": $indigo,
+    "purple": $purple,
+    "pink": $pink,
+    "red": $red,
+    "orange": $orange,
+    "yellow": $yellow,
+    "green": $green,
+    "green-fade": $green-fade,
+    "teal": $teal,
+    "cyan": $cyan,
+    "white": $white,
+    "gray": $gray-600,
+    "gray-dark": $gray-800
+  ),
+  $colors
+);
+
+$primary: $blue;
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$medium: $gray-400;
+$dark: $gray-900;
+
+$theme-colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-colors: map-merge(
+  (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "medium": $medium,
+    "dark": $dark
+  ),
+  $theme-colors
+);
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+
+$spacer: 1rem;
+$spacers: map-merge(
+  (
+    0: 0,
+    1: (
+      $spacer * 0.25
+    ),
+    2: (
+      $spacer * 0.5
+    ),
+    3: $spacer,
+    4: (
+      $spacer * 1.5
+    ),
+    5: (
+      $spacer * 3
+    ),
+    6: (
+      $spacer * 6
+    )
+  ),
+  ()
+);
+
+// This variable affects the `.h-*` and `.w-*` classes.
+$sizes: ();
+// stylelint-disable-next-line scss/dollar-variable-default
+$sizes: map-merge(
+  (
+    1: 1%,
+    2: 2%,
+    3: 3%,
+    4: 4%,
+    5: 5%,
+    6: 6%,
+    7: 7%,
+    8: 8%,
+    9: 9%,
+    10: 10%,
+    11: 11%,
+    12: 12%,
+    13: 13%,
+    14: 14%,
+    15: 15%,
+    16: 16%,
+    17: 17%,
+    18: 18%,
+    19: 19%,
+    20: 20%,
+    21: 21%,
+    22: 22%,
+    23: 23%,
+    24: 24%,
+    25: 25%,
+    26: 26%,
+    27: 27%,
+    28: 28%,
+    29: 29%,
+    30: 30%,
+    31: 31%,
+    32: 32%,
+    33: 33%,
+    34: 34%,
+    35: 35%,
+    36: 36%,
+    37: 37%,
+    38: 38%,
+    39: 39%,
+    40: 40%,
+    41: 41%,
+    42: 42%,
+    43: 43%,
+    44: 44%,
+    45: 45%,
+    46: 46%,
+    47: 47%,
+    48: 48%,
+    49: 49%,
+    50: 50%,
+    51: 51%,
+    52: 52%,
+    53: 53%,
+    54: 54%,
+    55: 55%,
+    56: 56%,
+    57: 57%,
+    58: 58%,
+    59: 59%,
+    60: 60%,
+    61: 61%,
+    62: 62%,
+    63: 63%,
+    64: 64%,
+    65: 65%,
+    66: 66%,
+    67: 67%,
+    68: 68%,
+    69: 69%,
+    70: 70%,
+    71: 71%,
+    72: 72%,
+    73: 73%,
+    74: 74%,
+    75: 75%,
+    76: 76%,
+    77: 77%,
+    78: 78%,
+    79: 79%,
+    80: 80%,
+    81: 81%,
+    82: 82%,
+    83: 83%,
+    84: 84%,
+    85: 85%,
+    86: 86%,
+    87: 87%,
+    88: 88%,
+    89: 89%,
+    90: 90%,
+    91: 91%,
+    92: 92%,
+    93: 93%,
+    94: 94%,
+    95: 95%,
+    96: 96%,
+    97: 97%,
+    98: 98%,
+    99: 99%,
+    auto: auto
+  ),
+  $sizes
+);
+
+//** Background color for `<body>`.
+$body-bg: $white;
+//** Global textual link color.
+$link-color: $primary; // #009fdc;
+//** Link hover color set via `darken()` function.
+$link-hover-color: darken($link-color, 15%);
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+$font-family-serif: Georgia, "Times New Roman", Times, serif !default;
+$font-family-sans-serif: "Avenir Medium", Avenir Medium, Arial, sans-serif;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+$font-size-base: 1rem;
+$font-size-xxl: $font-size-base * 2.25; // 2.25rem / 36.0px
+$font-size-xl: $font-size-base * 1.75; // 1.75rem / 28.0px
+$font-size-lg: $font-size-base * 1.15; // 1.15rem / 18.4px
+$font-size-md: $font-size-base * 1; // 1.00rem / 16.0px
+$font-size-ll: $font-size-base * 0.9; // 0.90rem / 14.4px
+$font-size-sm: $font-size-base * 0.8; // 0.80rem / 12.8px
+$font-size-xs: $font-size-base * 0.65; // 0.65rem / 10.4px
+
+$h1-font-size: $font-size-base * 2.25 !default;
+$h2-font-size: $font-size-base * 2 !default;
+$h3-font-size: $font-size-base * 1.75 !default;
+$h4-font-size: $font-size-base * 1.5 !default;
+$h5-font-size: $font-size-base * 1.25 !default;
+$h6-font-size: $font-size-base !default;
+
+//** Unit-less `line-height` for use in components like buttons.
+$line-height-base: 1.5; // 20/14
+$line-height-lg: 1.5; // extra decimals for Win 8.1 Chrome
+$line-height-sm: 1.5;
+
+//** By default, this inherits from the `<body>`.
+$headings-font-family: inherit;
+$headings-line-height: 1.1;
+$headings-color: inherit;
+
+//== Iconography
+//
+//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
+
+//** Load fonts from this directory.
+
+// [converter] If $bootstrap-sass-asset-helper if used, provide path relative to the assets load path.
+// [converter] This is because some asset helpers, such as Sprockets, do not work with file-relative paths.
+$icon-font-path: if(
+  $bootstrap-sass-asset-helper,
+  "bootstrap/",
+  "../fonts/bootstrap/"
+) !default;
+
+//** File name for all font files.
+$icon-font-name: "glyphicons-halflings-regular" !default;
+//** Element ID within SVG icon file.
+$icon-font-svg-id: "glyphicons_halflingsregular" !default;
+
+// Components
+//
+// Define common padding and border radius sizes and more.
+
+$border-radius: 0.1875rem;
+$border-radius-lg: 0; // orig 0.3rem
+$border-radius-sm: 0; // orig 0.2rem
+
+$border-color: $gray-500;
+
+$component-active-bg: $info;
+
+//** Width of the `border` for generating carets that indicator dropdowns.
+$caret-width: 0.25rem;
+//** Carets increase slightly in size for larger components.
+$caret-width-large: 0.3125rem !default;
+
+//== Tables
+//
+//## Customizes the `.table` component with basic values, each used across all table variations.
+
+//** Padding for `<th>`s and `<td>`s.
+$table-cell-padding: 0.5rem;
+//** Padding for cells in `.table-condensed`/`.table-sm`.
+$table-condensed-cell-padding: 0.3125rem !default;
+
+//** Default background color used for all tables.
+$table-bg: transparent;
+//** Background color used for `.table-striped`.
+$table-accent-bg: #f9f9f9;
+//** Background color used for `.table-hover`.
+$table-hover-bg: #f5f5f5;
+
+//** Border color for table and cell borders.
+$table-border-color: #ddd;
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+$btn-font-weight: 0.875rem;
+
+//== Forms
+//
+//##
+
+//** `<input disabled>` background color
+$input-disabled-bg: $gray-200;
+
+//** Text color for `<input>`s
+$input-color: $gray-700;
+//** `<input>` border color
+$input-border-color: $gray-400;
+
+//** Border color for inputs on focus
+$input-focus-border-color: #66afe9;
+
+//** Placeholder text color
+$input-placeholder-color: $gray-600;
+
+//** `.form-group` margin
+$form-group-margin-bottom: 0.9375rem;
+$form-check-input-margin-x: 0.25rem !default;
+
+$legend-color: $gray-800;
+$legend-border-color: $gray-800;
+
+//** Background color for textual input addons
+$input-group-addon-bg: $gray-200;
+
+//** Disabled cursor for form controls and buttons.
+$cursor-disabled: not-allowed;
+
+//== Dropdowns
+//
+//## Dropdown menu container and contents.
+
+//** Divider color for between dropdown items.
+$dropdown-divider-bg: #e5e5e5;
+
+//** Dropdown padding set to none;
+$dropdown-padding-y: 0;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  tk: 2000px,
+  fk: 3000px
+);
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+/*
+Size | Breakpoint | Container-Max-Width |  % off
+-----+------------+---------------------+-------
+xs   |          0 |                  -  |      -
+sm   |        576 |                540  | 6.250%
+md   |        768 |                720  | 6.250%
+lg   |        992 |                960  | 3.226%
+xl   |       1200 |               1140  | 5.000%
+tk   |       2000 |               1880  | 6.250%
+fk   |       3000 |               1882  | X.XXX%
+*/
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  tk: 1880px,
+  fk: 1882px // there's a rule that it has to be larger than previous
+);
+
+$grid-gutter-width: 30px;
+
+//== Navbar
+//
+//##
+$navbar-padding-x: 0;
+
+//== Pagination
+//
+//##
+$pagination-border-color: $gray-300;
+
+//== Jumbotron
+//
+//##
+$jumbotron-color: inherit;
+
+//== Alerts
+//
+//## Define alert colors, border radius, and padding.
+
+//== Tooltips
+//
+//##
+
+//** Tooltip arrow width
+$tooltip-arrow-width: 0.3125rem;
+
+//== Popovers
+//
+//##
+
+//== Modals
+//
+//##
+$modal-xl: 1140px;
+$modal-lg: 800px;
+$modal-md: 500px;
+$modal-sm: 300px;
+
+//== Progress bars
+//
+//##
+$progress-bg: $gray-200;
+
+//== List group
+//
+//##
+
+//** `.list-group-item` border color
+$list-group-border-color: rgba($black, 0.125);
+
+//== Code
+//
+//##
+
+$code-color: $pink;
+
+//== Type
+//
+//##
+
+//** Horizontal offset for forms and lists.
+$component-offset-horizontal: 180px !default;

@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Clarity.Ecommerce.Scheduler</RootNamespace>
+    <Company>Clarity Ventures, Inc.</Company>
+    <Authors>Clarity Ventures, Inc.</Authors>
+    <AssemblyVersion>2021.4.2.*</AssemblyVersion>
+    <FileVersion>2021.4</FileVersion>
+    <Copyright>Copyright © 2016-2023</Copyright>
+    <Version>2021.4.2</Version>
+    <AssemblyName>Clarity.Ecommerce.Scheduler.Net5</AssemblyName>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;JETBRAINS_ANNOTATIONS;NET5</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.354">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\00.Core\00.Clarity.Ecommerce.Core\00.Clarity.Ecommerce.Core.Net5.csproj" />
+    <ProjectReference Include="..\..\..\00.Core\00.Clarity.Ecommerce.RegistryLoader\00.Clarity.Ecommerce.RegistryLoader.Net5.csproj" />
+    <ProjectReference Include="..\..\..\02.Interfaces\02.Clarity.Ecommerce.Interfaces.Workflows\02.Clarity.Ecommerce.Interfaces.Workflows.Net5.csproj" />
+    <ProjectReference Include="..\..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models.Mapping\03.Clarity.Ecommerce.Models.Mapping.Net5.csproj" />
+    <ProjectReference Include="..\..\..\03.ModelsAndMapping\03.Clarity.Ecommerce.Models\03.Clarity.Ecommerce.Models.Net5.csproj" />
+    <ProjectReference Include="..\..\..\04.Providers\Clarity.Ecommerce.Providers.ScheduledTasks\Clarity.Ecommerce.Providers.ScheduledTasks.Net5.csproj" />
+    <ProjectReference Include="..\..\..\05.BusinessLogic\05.Clarity.Ecommerce.Workflow\05.Clarity.Ecommerce.Workflow.Net5.csproj" />
+    <ProjectReference Include="..\..\..\06.Services\06.Clarity.Ecommerce.Service.Core\06.Clarity.Ecommerce.Service.Core.Net5.csproj" />
+  </ItemGroup>
+
+</Project>

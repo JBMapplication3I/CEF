@@ -1,0 +1,68 @@
+﻿<div ng-switch="magicImageCarouselCtrl.template">
+  <div class="d-flex flex-row-reverse" ng-switch-when="Clothing">
+    <a ng-href="{{magicImageCarouselCtrl.imagesResized[0].largeImageUrl
+      ? magicImageCarouselCtrl.imagesResized[0].largeImageUrl
+      : '/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both'}}"
+      class="MagicZoom ml-4"
+      id="productDetailImage" name="productDetailImage"
+      data-options="{{magicImageCarouselCtrl.options}}">
+      <img ng-src="{{magicImageCarouselCtrl.imagesResized[0].mediumImageUrl
+        ? magicImageCarouselCtrl.imagesResized[0].mediumImageUrl
+        : '/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both'}}"
+        onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+    </a>
+    <div class="MagicScroll" id="scroll-1"
+      data-options="{{magicImageCarouselCtrl.scrollOptions}}">
+    </div>
+    <script type="text/ng-template" id="magic-scroll-template">
+      <a ng-repeat="image in magicImageCarouselCtrl.imagesResized"
+        class="pre-thumb"
+        ng-href="{{image.largeImageUrl}}"
+        data-zoom-id="productDetailImage"
+        data-image="{{image.mediumImageUrl}}">
+        <img ng-srcset="{{image.thumbImageUrl + ' 2x'}}"
+          ng-style="{ width: 101, height: 101}"
+          ng-src="{{image.thumbImageUrl}}" />
+      </a>
+    </script>
+  </div>
+  <div ng-switch-default>
+    <a ng-href="{{magicImageCarouselCtrl.imagesResized[0].largeImageUrl
+      ? magicImageCarouselCtrl.imagesResized[0].largeImageUrl
+      : '/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both'}}"
+      class="MagicZoom mb-3"
+      id="productDetailImage" name="productDetailImage"
+      data-options="{{magicImageCarouselCtrl.options}}">
+      <img ng-src="{{magicImageCarouselCtrl.imagesResized[0].mediumImageUrl
+        ? magicImageCarouselCtrl.imagesResized[0].mediumImageUrl
+        : '/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both'}}"
+        onerror="this.onerror=null;this.src='/DesktopModules/ClarityEcommerce/UI-Storefront/Content/placeholder.jpg?maxwidth=250&amp;maxheight=250&amp;mode=pad&amp;scale=both';" />
+    </a>
+    <div class="MagicScroll" id="scroll-1"
+      data-options="{{magicImageCarouselCtrl.scrollOptions}}">
+    </div>
+    <script type="text/ng-template" id="magic-scroll-template">
+      <a ng-repeat="image in magicImageCarouselCtrl.imagesResized"
+        class="pre-thumb mb-3 ml-1 mr-1"
+        ng-href="{{image.largeImageUrl}}"
+        data-zoom-id="productDetailImage"
+        data-image="{{image.mediumImageUrl}}">
+        <img ng-srcset="{{image.thumbImageUrl + ' 2x'}}"
+          ng-style="{ width: 51 }"
+          ng-src="{{image.thumbImageUrl}}" />
+      </a>
+    </script>
+    <!--
+    <div class="Magi cScroll" id="scrol l-1"
+      data-options="{{magicImageCarouselCtrl.scrollOptions}}">
+      <a ng-repeat="image in magicImageCarouselCtrl.imagesResized"
+        ng-href="{{image.largeImageUrl}}"
+        data-zoom-id="productDetailImage"
+        data-image="{{image.mediumImageUrl}}">
+        <img ng-srcset="{{image.thumbImageUrl + ' 2x'}}"
+          ng-src="{{image.thumbImageUrl}}" />
+      </a>
+    </div>
+    -->
+  </div>
+</div>

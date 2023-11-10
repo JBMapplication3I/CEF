@@ -1,0 +1,108 @@
+﻿<div class="container-fluid cv-details-form full-height">
+    <div class="row details-header">
+        <span ng-if="!importExportMappingDetailCtrl.record.ID" class="col-md-12 details-title h2">
+            <span data-translate="ui.admin.controls.system.importExportMappingDetail.NewImportExportMapping"></span><!--
+            --><span ng-bind="importExportMappingDetailCtrl.record.Name"></span><!--
+            --><span ng-if="importExportMappingDetailCtrl.record.CustomKey">&nbsp;[{{importExportMappingDetailCtrl.record.CustomKey}}]</span>
+        </span>
+        <span ng-if="importExportMappingDetailCtrl.record.ID > 0" class="col-md-12 details-title h2">
+            <span data-translate="ui.admin.controls.system.importExportMappingDetail.ImportExportMapping"></span>&nbsp;<!--
+            -->#<span ng-bind="importExportMappingDetailCtrl.record.ID"></span>:&nbsp;<!--
+            --><span ng-bind="importExportMappingDetailCtrl.record.Name"></span><!--
+            --><span ng-if="importExportMappingDetailCtrl.record.CustomKey">&nbsp;[{{importExportMappingDetailCtrl.record.CustomKey}}]</span>
+        </span>
+    </div>
+    <div class="row details-body">
+        <div class="col-md-12 import-export-mapping-editor">
+            <uib-tabset class="tabs-left" vertical="true">
+                <uib-tab>
+                    <uib-tab-heading>
+                        <span ng-class="{'text-danger':importExportMappingDetailCtrl.forms.Details.$invalid}">
+                            <i class="far fa-lg fa-info"></i>&nbsp;<!--
+                            --><span data-translate="ui.admin.common.Detail.Plural"></span>
+                        </span>
+                    </uib-tab-heading>
+                    <div class="form-vertical container-fluid" ng-form="importExportMappingDetailCtrl.forms.Details">
+                        <div class="row">
+                            <div class="col-sm-12"><h3 data-translate="ui.admin.controls.system.importExportMappingDetail.Mapping"></h3></div>
+                            <div class="col-md-6">
+                                <div class="form-group" ng-class="{'has-error': importExportMappingDetailCtrl.forms.Details.txtName.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Name"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtName" name="txtName"
+                                               ng-required="true"
+                                               ng-model="importExportMappingDetailCtrl.record.Name" />
+                                    </div>
+                                    <div ng-messages="importExportMappingDetailCtrl.forms.Details.txtName.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': importExportMappingDetailCtrl.forms.Details.txtCustomKey.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.common.Key"></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                               id="txtCustomKey" name="txtCustomKey"
+                                               ng-required="false"
+                                               ng-model="importExportMappingDetailCtrl.record.CustomKey" />
+                                    </div>
+                                    <div ng-messages="importExportMappingDetailCtrl.forms.Details.txtCustomKey.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error': importExportMappingDetailCtrl.forms.Details.txtaMapping.$invalid}">
+                                    <label class="control-label" data-translate="ui.admin.controls.system.importExportMappingDetail.Mapping"></label>
+                                    <div class="input-group">
+                                        <textarea class="form-control" wrap="soft"
+                                                  style="min-height: 300px; resize: vertical; font-family: lucinda console, courier new, courier;"
+                                                  id="txtaMapping" name="txtaMapping"
+                                                  cef-controlled-caret caret="importExportMappingDetailCtrl.mappingCaret"
+                                                  ng-required="true"
+                                                  ng-change="importExportMappingDetailCtrl.validateMappingAgainstSchema()"
+                                                  ng-model="importExportMappingDetailCtrl.record.MappingJson"></textarea>
+                                    </div>
+                                    <div ng-messages="importExportMappingDetailCtrl.forms.Details.txtaMapping.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" ng-class="{'has-error': importExportMappingDetailCtrl.forms.Details.txtaSchema.$invalid}">
+                                    <label class="control-label"
+                                           data-translate="ui.admin.controls.system.importExportMappingDetail.Schema"></label>
+                                    <div class="input-group">
+                                        <textarea class="form-control"
+                                                  style="min-height: 300px; max-height: 300px; height: 300px; resize: none; font-family: lucinda console, courier new, courier;"
+                                                  wrap="soft"
+                                                  id="txtaSchema" name="txtaSchema"
+                                                  ng-required="false"
+                                                  ng-change="importExportMappingDetailCtrl.validateMappingAgainstSchema()"
+                                                  ng-model="importExportMappingDetailCtrl.schema"></textarea>
+                                    </div>
+                                    <div ng-messages="importExportMappingDetailCtrl.forms.Details.txtaSchema.$error">
+                                        <div ng-messages-include="{{'/framework/admin/widgets/forms/_validationMessages.html' | corsLink: 'ui'}}"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="control-label"
+                                           data-translate="ui.admin.controls.system.importExportMappingDetail.Validations"></label>
+                                    <p ng-bind="importExportMappingDetailCtrl.validationResults"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <!-- Form actions -->
+    <div class="row details-footer">
+        <div class="col-md-12">
+            <cef-standard-detail-footer-buttons
+                master-controller="importExportMappingDetailCtrl"
+                return-state="system.importExportMappings.list"
+                permissions-base="System.ImportExportMapping">
+            </cef-standard-detail-footer-buttons>
+        </div>
+    </div>
+</div>

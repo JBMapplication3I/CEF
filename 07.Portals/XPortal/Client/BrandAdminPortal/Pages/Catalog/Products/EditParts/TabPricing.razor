@@ -1,0 +1,181 @@
+﻿@using Clarity.Ecommerce.MVC.Core;
+@inherits TemplatedControllerBase;
+@inject CEFConfig cefConfig;
+@inject CEFAPI cvApi;
+
+<Heading Size="HeadingSize.Is2">Pricing</Heading>
+@if (RawPrices is null)
+{
+  <Paragraph>Pricing data is null</Paragraph>
+}
+else
+{
+  <Row>
+    @if (CEFConfig.featureSet?.pricing?.msrp?.enabled == true)
+    {
+      <Column ColumnSize="CS.Declare(CW.Is6, CW.Is3, CW.Is3, CW.Is3, CW.Is3)">
+        <NumericFormGroup
+          TValue="decimal?"
+          FormIdentifier="PriceMsrp"
+          @bind-Value="RawPrices.PriceMsrp"
+          LabelText="MSRP"
+          InputClasses="text-right"
+          Step="0.01m"
+          Min="0"
+          PlaceholderText="1.00"
+          Disabled="@ViewState.InputDisable"
+          Required="false"
+          IsCurrency="true"
+        />
+      </Column>
+    }
+    @if (CEFConfig.featureSet?.pricing?.reduction?.enabled == true)
+    {
+      <Column ColumnSize="CS.Declare(CW.Is6, CW.Is3, CW.Is3, CW.Is3, CW.Is3)">
+        <NumericFormGroup
+          TValue="decimal?"
+          FormIdentifier="PriceReduction"
+          @bind-Value="RawPrices.PriceReduction"
+          LabelText="Reduction Price"
+          InputClasses="text-right"
+          Step="0.01m"
+          Min="0"
+          PlaceholderText="1.00"
+          Disabled="@ViewState.InputDisable"
+          Required="false"
+          IsCurrency="true"
+        />
+      </Column>
+    }
+    <Column ColumnSize="CS.Declare(CW.Is6, CW.Is3, CW.Is3, CW.Is3, CW.Is3)">
+      <NumericFormGroup
+        TValue="decimal"
+        FormIdentifier="PriceBase"
+        LabelText="Regular Price"
+        PlaceholderText="1.00"
+        @bind-Value="@RawPrices!.PriceBase"
+        Step="0.0001m"
+        Required="true"
+        Disabled="@ViewState.InputDisable"
+        TooltipText="The base price of the product"
+        ShowValidTooltip="true"
+        StartTouched="true"
+        IsCurrency="true"
+        InputClasses="text-right"
+      />
+    </Column>
+    <Column ColumnSize="CS.Declare(CW.Is6, CW.Is3, CW.Is3, CW.Is3, CW.Is3)">
+      <NumericFormGroup
+        TValue="decimal?"
+        FormIdentifier="PriceSale"
+        LabelText="Sale Price"
+        PlaceholderText="1.00"
+        @bind-Value="@RawPrices!.PriceSale"
+        Step="0.0001m"
+        Required="false"
+        Disabled="@ViewState.InputDisable"
+        TooltipText="The sale price of the product"
+        ShowValidTooltip="true"
+        StartTouched="true"
+        IsCurrency="true"
+        InputClasses="text-right"
+      />
+    </Column>
+    <Column ColumnSize="CS.Declare(CW.Is6, CW.Is3, CW.Is3, CW.Is3, CW.Is3)">
+      <NumericFormGroup
+        FormIdentifier="KitBaseQuantityPriceMultiplier"
+        @bind-Value="Record.KitBaseQuantityPriceMultiplier"
+        LabelText="KitBaseQuantityPriceMultiplier"
+        TooltipText="KitBaseQuantityPriceMultiplier.Tooltip"
+        PlaceholderText="1.00"
+        Step="0.01m"
+        Disabled="Record.NothingToShip"
+        Required="false"
+        InputClasses="text-right"
+      />
+    </Column>
+  </Row>
+  @* TODO: Product Price Points, see CEFAdmin Product Editor to copy the table *@
+}
+
+@code
+{
+  #region Parameters
+  /// <summary>Gets or sets the record.</summary>
+  /// <value>The record.</value>
+  [Parameter, EditorRequired]
+  public ProductModel Record { get; set; } = null!;
+  #endregion
+
+  /// <inheritdoc />
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync().ConfigureAwait(false);
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+    await Task.WhenAll(LoadPriceForEditingAsync()).ConfigureAwait(false);
+#endif
+  }
+
+  /// <summary>Extended record data enforcement on save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataEnforcementOnSaveAsync(DateTime timestamp)
+  {
+    return Task.CompletedTask;
+  }
+
+  /// <summary>Extended record data calls on after save.</summary>
+  /// <param name="timestamp">The timestamp Date/Time.</param>
+  /// <returns>A Task.</returns>
+  public Task ExtendedRecordDataCallsOnAfterSaveAsync(DateTime timestamp)
+  {
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+    return SavePriceAsync();
+#else
+    return Task.CompletedTask;
+#endif
+  }
+
+#if BRANDADMIN || FRANCHISEADMIN || STOREADMIN
+  private bool IncludePricing => true;
+  private RawProductPricesModel? RawPrices { get; set; }
+
+  private async Task LoadPriceForEditingAsync()
+  {
+    DebugBeginMethod();
+    var r = await cvApi.GetRawPricesForProduct(new() { ID = Record.ID }).ConfigureAwait(false);
+    if (r?.data?.ActionSucceeded != true)
+    {
+      ConsoleDebug("ERROR! Reading price data failed");
+      ConsoleDebug(r?.ToString());
+      return;
+    }
+    RawPrices = r.data.Result!;
+    DebugEndMethod();
+  }
+
+  private async Task SavePriceAsync()
+  {
+    DebugBeginMethod();
+    if (RawPrices is null)
+    {
+      DebugEndMethod();
+      return;
+    }
+    await cvApi.UpdateRawPricesForProduct(
+      new()
+      {
+        ID = Record.ID,
+        PriceBase = RawPrices.PriceBase,
+        PriceSale = RawPrices.PriceSale,
+        PriceMsrp = RawPrices.PriceMsrp,
+        PriceReduction = RawPrices.PriceReduction,
+      })
+      .ConfigureAwait(false);
+    DebugEndMethod();
+  }
+#else
+  private bool IncludePricing => false;
+  private RawProductPricesModel? RawPrices { get; set; } = null;
+#endif
+}
